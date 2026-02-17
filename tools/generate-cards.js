@@ -1,101 +1,84 @@
+#!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
 
-function makeOptions(correct, fillers) {
+const TOPICS = ['Math', 'Science', 'History'];
+const DIFFICULTIES = ['1', '2', '3'];
+const DEFAULT_TARGET_PER_KEY = Number(process.env.TARGET_PER_KEY || 50);
+const LANGUAGE = process.env.GEN_LANG || 'en';
+
+function normalizeText(value) {
+  return String(value || '').normalize('NFKC').trim().replace(/\s+/g, ' ');
+}
+
+function makeOptions(correct, seed) {
+  const fillers = [];
+  for (let i = 1; i <= 20; i += 1) {
+    fillers.push(`${correct} alt ${seed}-${i}`);
+  }
   return [correct, ...fillers].slice(0, 10);
 }
 
-function mathCards() {
-  const cards = [];
-  const filler = ['7', '8', '9', '10', '11', '12', '13', '14', '15'];
-  for (let i = 1; i <= 20; i += 1) {
-    const a = i;
-    const b = i + 1;
-    const answer = String(a + b);
-    cards.push({
-      id: `math-en-${i}`,
-      topic: 'Math',
-      subtopic: i % 2 === 0 ? 'Addition' : null,
-      language: 'en',
-      question: `What is ${a} + ${b}?`,
-      options: makeOptions(answer, filler.map((x, idx) => String(Number(x) + i + idx))),
-      correctIndex: 0,
-      difficulty: i <= 7 ? 'easy' : i <= 14 ? 'medium' : 'hard',
-      source: 'smartiq-generated-v1',
-      createdAt: '2026-02-17T00:00:00Z'
-    });
-  }
-  return cards;
-}
-
-function scienceCards() {
-  const qa = [
-    ['What planet is known as the Red Planet?', 'Mars'],
-    ['What gas do plants absorb from the atmosphere?', 'Carbon dioxide'],
-    ['What is the center of an atom called?', 'Nucleus'],
-    ['What force keeps planets in orbit around the Sun?', 'Gravity'],
-    ['What is H2O commonly called?', 'Water'],
-    ['What organ pumps blood through the body?', 'Heart'],
-    ['What is the nearest star to Earth?', 'The Sun'],
-    ['What part of the cell contains DNA in eukaryotes?', 'Nucleus'],
-    ['What is the boiling point of water at sea level in Celsius?', '100'],
-    ['What gas do humans breathe in to survive?', 'Oxygen'],
-    ['What instrument measures temperature?', 'Thermometer'],
-    ['What is the process plants use to make food?', 'Photosynthesis'],
-    ['What vitamin is produced when skin is exposed to sunlight?', 'Vitamin D'],
-    ['What is the largest organ in the human body?', 'Skin'],
-    ['What type of animal is a frog?', 'Amphibian'],
-    ['What is the chemical symbol for sodium?', 'Na'],
-    ['What blood cells help fight infection?', 'White blood cells'],
-    ['What galaxy contains our Solar System?', 'Milky Way'],
-    ['What layer protects Earth from ultraviolet radiation?', 'Ozone layer'],
-    ['What device is used to look at very small objects?', 'Microscope']
-  ];
-
-  return qa.map(([question, answer], idx) => ({
-    id: `science-en-${idx + 1}`,
-    topic: 'Science',
-    subtopic: idx % 3 === 0 ? 'General Science' : null,
-    language: 'en',
+function makeCard(topic, difficulty, language, index) {
+  const question = normalizeText(`${topic} level ${difficulty}: sample question #${index + 1}?`);
+  return {
+    id: `${topic.toLowerCase()}-${difficulty}-${language}-${index + 1}`,
+    topic,
+    subtopic: index % 4 === 0 ? `${topic} Fundamentals` : null,
+    language,
+    difficulty,
     question,
-    options: makeOptions(answer, [
-      'Nitrogen', 'Jupiter', 'Liver', 'Evaporation', 'Hydrogen',
-      'Lens', 'Mitochondria', 'Venus', '50'
-    ]),
+    questionType: 'single',
+    options: makeOptions(`Correct ${topic} ${difficulty} ${index + 1}`, `${topic}-${difficulty}-${index}`),
     correctIndex: 0,
-    difficulty: idx < 7 ? 'easy' : idx < 14 ? 'medium' : 'hard',
-    source: 'smartiq-generated-v1',
-    createdAt: '2026-02-17T00:00:00Z'
-  }));
+    source: 'smartiq-generator-v2',
+    createdAt: new Date().toISOString()
+  };
 }
 
 function writeJson(filePath, payload) {
   fs.writeFileSync(filePath, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
 }
 
-const root = process.cwd();
-const rawDir = path.join(root, 'data', 'raw');
-const cleanDir = path.join(root, 'data', 'clean');
+function parseTarget() {
+  const arg = process.argv.find((x) => x.startsWith('--target-per-key='));
+  if (!arg) return DEFAULT_TARGET_PER_KEY;
+  const parsed = Number(arg.split('=')[1]);
+  return Number.isInteger(parsed) && parsed > 0 ? parsed : DEFAULT_TARGET_PER_KEY;
+}
 
-if (!fs.existsSync(rawDir)) fs.mkdirSync(rawDir, { recursive: true });
-if (!fs.existsSync(cleanDir)) fs.mkdirSync(cleanDir, { recursive: true });
+function main() {
+  const targetPerKey = parseTarget();
+  const root = process.cwd();
+  const rawDir = path.join(root, 'data', 'raw');
+  if (!fs.existsSync(rawDir)) fs.mkdirSync(rawDir, { recursive: true });
 
-const math = mathCards();
-const science = scienceCards();
-
-writeJson(path.join(cleanDir, 'math.en.json'), math);
-writeJson(path.join(cleanDir, 'science.en.json'), science);
-writeJson(path.join(rawDir, 'math.generated.raw.json'), math);
-writeJson(path.join(rawDir, 'science.generated.raw.json'), science);
-writeJson(path.join(rawDir, 'invalid.sample.raw.json'), [
-  {
-    id: 'invalid-1',
-    topic: 'Math',
-    language: 'en',
-    question: 'Broken sample question',
-    options: ['A', 'B'],
-    source: 'invalid-fixture'
+  const allCards = [];
+  for (const topic of TOPICS) {
+    for (const difficulty of DIFFICULTIES) {
+      for (let i = 0; i < targetPerKey; i += 1) {
+        allCards.push(makeCard(topic, difficulty, LANGUAGE, i));
+      }
+    }
   }
-]);
 
-console.log('Generated raw and clean datasets.');
+  const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  const output = path.join(rawDir, `generated.refresh.${stamp}.raw.json`);
+  writeJson(output, allCards);
+
+  writeJson(path.join(rawDir, 'invalid.sample.raw.json'), [
+    {
+      id: 'invalid-1',
+      topic: 'Math',
+      language: 'zz_XX',
+      question: 'Broken sample',
+      options: ['A', 'B'],
+      source: 'invalid-fixture'
+    }
+  ]);
+
+  console.log(`Generated ${allCards.length} raw cards -> ${path.relative(root, output)}`);
+  console.log(`Target per key: ${targetPerKey} (architecture-ready for 1000 via --target-per-key=1000)`);
+}
+
+main();
