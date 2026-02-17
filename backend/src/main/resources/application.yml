@@ -22,3 +22,7 @@ smartiq:
     minimum-per-key: ${SMARTIQ_POOL_MINIMUM_PER_KEY:1000}
     low-watermark-per-key: ${SMARTIQ_POOL_LOW_WATERMARK_PER_KEY:800}
     refill-target-per-key: ${SMARTIQ_POOL_REFILL_TARGET_PER_KEY:1200}
+  session:
+    enabled: ${SMARTIQ_SESSION_DEDUP_ENABLED:true}
+    ttl-minutes: ${SMARTIQ_SESSION_TTL_MINUTES:120}
+    max-sessions: ${SMARTIQ_SESSION_MAX:50000}

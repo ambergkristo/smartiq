@@ -1,11 +1,13 @@
 package com.smartiq.backend.card;
 
+import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.time.Instant;
 import java.util.List;
@@ -62,6 +64,19 @@ class CardControllerTest {
         math.setSource("test");
         math.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
         cardRepository.save(math);
+
+        Card math2 = new Card();
+        math2.setId("math-2");
+        math2.setTopic("Math");
+        math2.setSubtopic("Addition");
+        math2.setLanguage("en");
+        math2.setQuestion("What is 3 + 3?");
+        math2.setOptions(List.of("6", "5", "4", "7", "8", "9", "10", "11", "12", "13"));
+        math2.setCorrectIndex(0);
+        math2.setDifficulty("2");
+        math2.setSource("test");
+        math2.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
+        cardRepository.save(math2);
     }
 
     @Test
@@ -103,5 +118,29 @@ class CardControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.topic").value("Math"))
                 .andExpect(jsonPath("$.difficulty").value("2"));
+    }
+
+    @Test
+    void avoidsDuplicateCardsForSameSession() throws Exception {
+        MvcResult first = mockMvc.perform(get("/api/cards/next")
+                        .param("topic", "Math")
+                        .param("difficulty", "2")
+                        .param("sessionId", "session-1")
+                        .param("lang", "en"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String firstId = JsonPath.read(first.getResponse().getContentAsString(), "$.id");
+
+        MvcResult second = mockMvc.perform(get("/api/cards/next")
+                        .param("topic", "Math")
+                        .param("difficulty", "2")
+                        .param("sessionId", "session-1")
+                        .param("lang", "en"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String secondId = JsonPath.read(second.getResponse().getContentAsString(), "$.id");
+        org.junit.jupiter.api.Assertions.assertNotEquals(firstId, secondId);
     }
 }

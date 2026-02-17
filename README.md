@@ -87,6 +87,14 @@ SMARTIQ_POOL_LOW_WATERMARK_PER_KEY=800
 SMARTIQ_POOL_REFILL_TARGET_PER_KEY=1200
 ```
 
+Session de-duplication (per sessionId):
+
+```bash
+SMARTIQ_SESSION_DEDUP_ENABLED=true
+SMARTIQ_SESSION_TTL_MINUTES=120
+SMARTIQ_SESSION_MAX=50000
+```
+
 Manual e2e checklist script:
 
 ```bash
