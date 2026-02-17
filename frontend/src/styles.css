@@ -82,6 +82,14 @@ button:disabled {
   color: #ffb4b4;
 }
 
+.error-panel {
+  margin: 0.7rem 0;
+  padding: 0.8rem;
+  border-radius: 12px;
+  border: 1px solid rgba(245, 122, 122, 0.45);
+  background: rgba(115, 34, 34, 0.45);
+}
+
 .game-board {
   display: grid;
   grid-template-columns: 280px 1fr;

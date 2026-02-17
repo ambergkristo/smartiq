@@ -25,6 +25,7 @@ export function useGameEngine(roundLength) {
   const [card, setCard] = useState(null);
   const [selectedIndexes, setSelectedIndexes] = useState(new Set());
   const [lastAction, setLastAction] = useState('Ready');
+  const [loadTicket, setLoadTicket] = useState(0);
 
   const currentPlayerIndex = useMemo(() => {
     if (players.length === 0) return 0;
@@ -41,6 +42,7 @@ export function useGameEngine(roundLength) {
     setCard(null);
     setSelectedIndexes(new Set());
     setPhase(GamePhase.LOADING_CARD);
+    setLoadTicket((value) => value + 1);
     setLastAction('Round started');
     return normalizedPlayers;
   }, []);
@@ -49,6 +51,7 @@ export function useGameEngine(roundLength) {
     setPhase(GamePhase.LOADING_CARD);
     setCard(null);
     setSelectedIndexes(new Set());
+    setLoadTicket((value) => value + 1);
     setLastAction('Loading card');
   }, []);
 
@@ -113,6 +116,7 @@ export function useGameEngine(roundLength) {
     setCard(null);
     setSelectedIndexes(new Set());
     setPhase(GamePhase.LOADING_CARD);
+    setLoadTicket((value) => value + 1);
     return { done: false };
   }, [cardIndex, roundLength]);
 
@@ -120,6 +124,7 @@ export function useGameEngine(roundLength) {
     setPhase(GamePhase.SETUP);
     setCard(null);
     setSelectedIndexes(new Set());
+    setLoadTicket(0);
     setLastAction('Ready');
   }, []);
 
@@ -129,6 +134,7 @@ export function useGameEngine(roundLength) {
     scores,
     cardIndex,
     card,
+    loadTicket,
     selectedIndexes,
     currentPlayerIndex,
     currentPlayer,
