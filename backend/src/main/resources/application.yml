@@ -26,3 +26,7 @@ smartiq:
     enabled: ${SMARTIQ_SESSION_DEDUP_ENABLED:true}
     ttl-minutes: ${SMARTIQ_SESSION_TTL_MINUTES:120}
     max-sessions: ${SMARTIQ_SESSION_MAX:50000}
+  cors:
+    allowed-origins:
+      - ${SMARTIQ_CORS_ALLOWED_ORIGIN_LOCAL:http://localhost:5173}
+      - ${SMARTIQ_CORS_ALLOWED_ORIGIN_PUBLIC:https://smartiq.vercel.app}

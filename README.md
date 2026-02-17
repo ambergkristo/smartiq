@@ -47,6 +47,7 @@ Endpoints:
 
 - Frontend: `http://localhost:5173`
 - Backend API: `http://localhost:8080/api`
+- Backend health: `http://localhost:8080/health`
 
 ## API Endpoints
 
@@ -94,6 +95,16 @@ Monthly scheduler:
 
 - GitHub Actions workflow: `.github/workflows/content-refresh.yml`
 - Schedule: first day of each month at 03:00 UTC
+
+## Public Deployment
+
+Deployment target for MVP:
+
+- Frontend: Vercel
+- Backend: Render
+- Database: Managed Postgres
+
+Detailed steps: `docs/deploy.md`
 
 Question pool sizing (backend env vars):
 
