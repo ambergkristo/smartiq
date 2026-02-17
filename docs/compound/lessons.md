@@ -53,3 +53,12 @@
   - Full-directory validation failed because legacy files did not satisfy new option uniqueness checks.
 - Preventive rule:
   - Validate the approved artifact generated in the same run, and track legacy fixture cleanup separately.
+
+## 2026-02-17 - Loop 6 (PR30 Compound Gate Merge)
+
+- Hard part:
+  - Branch divergence after rapid PR merges can interrupt the strict loop cadence.
+- What broke:
+  - `git pull --ff-only` failed due local divergence against updated origin/main.
+- Preventive rule:
+  - If `--ff-only` fails during loop execution, rebase immediately on `origin/main` before any new branch work.
