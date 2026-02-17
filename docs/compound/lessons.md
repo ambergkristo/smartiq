@@ -98,3 +98,12 @@
   - Prometheus endpoint test initially failed until explicit prometheus export config was enabled.
 - Preventive rule:
   - When adding new actuator-backed metrics, verify endpoint exposure settings in integration tests, not only dependency declarations.
+
+## 2026-02-17 - Loop 11 (Phase A Merge)
+
+- Hard part:
+  - Keeping deploy variable naming compatible across Vercel (`VITE_*`) and team-level `BACKEND_URL` conventions.
+- What broke:
+  - Local branch state drifted after squash merge and required explicit main realignment.
+- Preventive rule:
+  - After squash merges, reset local `main` to `origin/main` before starting next phase branch.
