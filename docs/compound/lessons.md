@@ -107,3 +107,12 @@
   - Local branch state drifted after squash merge and required explicit main realignment.
 - Preventive rule:
   - After squash merges, reset local `main` to `origin/main` before starting next phase branch.
+
+## 2026-02-17 - Loop 12 (Phase B Merge)
+
+- Hard part:
+  - Moving from single-question demo flow to a full multi-player round without breaking session de-dup behavior.
+- What broke:
+  - First card fetch could use stale `sessionId` state if fetch started before React state commit.
+- Preventive rule:
+  - For first request in a new session, pass freshly generated session ID directly to API call, not through async state only.
