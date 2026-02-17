@@ -48,6 +48,12 @@ Endpoints:
 - Frontend: `http://localhost:5173`
 - Backend API: `http://localhost:8080/api`
 
+## API Endpoints
+
+- `GET /api/topics`
+- `GET /api/cards/next?topic=&difficulty=&sessionId=&lang=` (preferred)
+- `GET /api/cards/random?topic=` (legacy/backward-compatible)
+
 ## Validation Commands
 
 Backend tests:
@@ -70,6 +76,15 @@ Data validation:
 
 ```bash
 node tools/validate-cards.js data/clean
+```
+
+Question pool sizing (backend env vars):
+
+```bash
+SMARTIQ_POOL_ENABLED=true
+SMARTIQ_POOL_MINIMUM_PER_KEY=1000
+SMARTIQ_POOL_LOW_WATERMARK_PER_KEY=800
+SMARTIQ_POOL_REFILL_TARGET_PER_KEY=1200
 ```
 
 Manual e2e checklist script:

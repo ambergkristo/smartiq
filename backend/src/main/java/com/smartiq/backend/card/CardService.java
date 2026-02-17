@@ -9,9 +9,11 @@ import java.util.NoSuchElementException;
 public class CardService {
 
     private final CardRepository cardRepository;
+    private final QuestionPoolService questionPoolService;
 
-    public CardService(CardRepository cardRepository) {
+    public CardService(CardRepository cardRepository, QuestionPoolService questionPoolService) {
         this.cardRepository = cardRepository;
+        this.questionPoolService = questionPoolService;
     }
 
     public List<TopicCountResponse> getTopicCounts() {
@@ -29,5 +31,9 @@ public class CardService {
             card = cardRepository.findRandomByTopic(topic).orElseThrow(() -> new NoSuchElementException("No cards available for topic: " + topic));
         }
         return CardResponse.fromEntity(card);
+    }
+
+    public CardResponse getNextCard(String topic, String difficulty, String sessionId, String language) {
+        return questionPoolService.nextCard(topic, difficulty, language);
     }
 }

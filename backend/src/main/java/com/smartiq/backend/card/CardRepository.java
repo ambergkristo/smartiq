@@ -12,8 +12,48 @@ public interface CardRepository extends JpaRepository<Card, String> {
     @Query(value = "select * from cards where lower(topic) = lower(:topic) order by random() limit 1", nativeQuery = true)
     Optional<Card> findRandomByTopic(@Param("topic") String topic);
 
+    @Query(value = """
+            select * from cards
+            where (:topic is null or lower(topic) = lower(:topic))
+              and (:difficulty is null or lower(difficulty) = lower(:difficulty))
+              and (:language is null or lower(language) = lower(:language))
+            order by random()
+            limit 1
+            """, nativeQuery = true)
+    Optional<Card> findRandomByFilters(@Param("topic") String topic,
+                                       @Param("difficulty") String difficulty,
+                                       @Param("language") String language);
+
     @Query(value = "select * from cards order by random() limit 1", nativeQuery = true)
     Optional<Card> findRandomOverall();
+
+    @Query(value = """
+            select * from cards
+            where lower(topic) = lower(:topic)
+              and lower(difficulty) = lower(:difficulty)
+              and lower(language) = lower(:language)
+            """, nativeQuery = true)
+    List<Card> findAllByPoolKey(@Param("topic") String topic,
+                                @Param("difficulty") String difficulty,
+                                @Param("language") String language);
+
+    @Query(value = """
+            select topic as topic, difficulty as difficulty, language as language
+            from cards
+            group by topic, difficulty, language
+            """, nativeQuery = true)
+    List<QuestionPoolKeyView> findAllPoolKeys();
+
+    @Query(value = """
+            select count(*)
+            from cards
+            where lower(topic) = lower(:topic)
+              and lower(difficulty) = lower(:difficulty)
+              and lower(language) = lower(:language)
+            """, nativeQuery = true)
+    long countByPoolKey(@Param("topic") String topic,
+                        @Param("difficulty") String difficulty,
+                        @Param("language") String language);
 
     @Query(value = "select topic as topic, count(*) as count from cards group by topic order by topic", nativeQuery = true)
     List<TopicCountView> findTopicCounts();
