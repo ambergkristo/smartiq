@@ -34,4 +34,16 @@ public class CardController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
         }
     }
+
+    @GetMapping("/cards/next")
+    public ResponseEntity<?> getNextCard(@RequestParam(name = "topic", required = false) String topic,
+                                         @RequestParam(name = "difficulty", required = false) String difficulty,
+                                         @RequestParam(name = "sessionId", required = false) String sessionId,
+                                         @RequestParam(name = "lang", required = false) String language) {
+        try {
+            return ResponseEntity.ok(cardService.getNextCard(topic, difficulty, sessionId, language));
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
+        }
+    }
 }

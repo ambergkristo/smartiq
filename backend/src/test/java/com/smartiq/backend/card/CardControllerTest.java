@@ -16,6 +16,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(properties = {
         "smartiq.import.enabled=false",
+        "smartiq.pool.enabled=true",
+        "smartiq.pool.minimum-per-key=1",
+        "smartiq.pool.low-watermark-per-key=1",
+        "smartiq.pool.refill-target-per-key=2",
         "spring.datasource.url=jdbc:h2:mem:smartiq_test;MODE=PostgreSQL;DB_CLOSE_DELAY=-1",
         "spring.datasource.username=sa",
         "spring.datasource.password="
@@ -41,7 +45,7 @@ class CardControllerTest {
         science.setQuestion("What planet is known as the Red Planet?");
         science.setOptions(List.of("Mars", "Earth", "Venus", "Jupiter", "Saturn", "Uranus", "Neptune", "Mercury", "Pluto", "Moon"));
         science.setCorrectIndex(0);
-        science.setDifficulty("easy");
+        science.setDifficulty("2");
         science.setSource("test");
         science.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
         cardRepository.save(science);
@@ -54,7 +58,7 @@ class CardControllerTest {
         math.setQuestion("What is 2 + 2?");
         math.setOptions(List.of("4", "3", "5", "6", "7", "8", "9", "10", "11", "12"));
         math.setCorrectIndex(0);
-        math.setDifficulty("easy");
+        math.setDifficulty("2");
         math.setSource("test");
         math.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
         cardRepository.save(math);
@@ -87,5 +91,17 @@ class CardControllerTest {
         mockMvc.perform(get("/api/cards/random").param("topic", "Unknown"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.error").exists());
+    }
+
+    @Test
+    void returnsNextCardForTopicDifficultySession() throws Exception {
+        mockMvc.perform(get("/api/cards/next")
+                        .param("topic", "Math")
+                        .param("difficulty", "2")
+                        .param("sessionId", "test-session")
+                        .param("lang", "en"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.topic").value("Math"))
+                .andExpect(jsonPath("$.difficulty").value("2"));
     }
 }
