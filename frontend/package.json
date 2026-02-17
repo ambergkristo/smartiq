@@ -1,0 +1,9 @@
+{
+  "name": "smartiq-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "lint": "node -e \"console.log('lint placeholder: add frontend linter')\"",
+    "build": "node -e \"console.log('build placeholder: add frontend build pipeline')\""
+  }
+}

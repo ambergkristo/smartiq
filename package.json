@@ -1,0 +1,9 @@
+{
+  "name": "smartiq",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev:all": "npm run dev:all:check",
+    "dev:all:check": "node tools/dev-all-check.js"
+  }
+}
