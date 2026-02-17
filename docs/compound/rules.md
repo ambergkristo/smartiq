@@ -28,3 +28,4 @@
   - what broke
   - the rule to prevent it next time
 - For session-dedup APIs, include tests that make repeated requests for the same session and assert non-duplication.
+- Treat compound-update PR merge as a required gate before starting the next feature branch.
