@@ -58,6 +58,13 @@ Endpoints:
 - `GET /api/cards/next?topic=&difficulty=&sessionId=&lang=` (preferred)
 - `GET /api/cards/random?topic=` (legacy/backward-compatible)
 
+## Game Flow v1
+
+- Start screen allows selecting `topic`, `difficulty` (1-3), `language`, round length, and player names.
+- Game screen fetches cards from `GET /api/cards/next` and renders 10 options.
+- Players can select multiple options, then use `Reveal / Check` or `Pass (keep points)`.
+- Round rotates turns by player and shows a summary after the configured card count.
+
 ## Validation Commands
 
 Backend tests:

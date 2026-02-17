@@ -11,12 +11,14 @@ export async function fetchTopics() {
   return res.json();
 }
 
-export async function fetchRandomCard(topic) {
-  const url = topic
-    ? `${API_BASE}/api/cards/random?topic=${encodeURIComponent(topic)}`
-    : `${API_BASE}/api/cards/random`;
+export async function fetchNextCard({ topic, difficulty, sessionId, lang }) {
+  const params = new URLSearchParams();
+  if (topic) params.set('topic', topic);
+  if (difficulty) params.set('difficulty', String(difficulty));
+  if (sessionId) params.set('sessionId', sessionId);
+  if (lang) params.set('lang', lang);
 
-  const res = await fetch(url);
+  const res = await fetch(`${API_BASE}/api/cards/next?${params.toString()}`);
   if (!res.ok) {
     throw new Error(`Failed to fetch card: ${res.status}`);
   }
