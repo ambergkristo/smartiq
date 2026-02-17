@@ -33,3 +33,4 @@
 - For scheduler/config PRs, avoid committing generated artifact churn unless explicitly required.
 - Open one tracking issue per mandatory post-merge compound update and close via the compound PR.
 - Before each new branch in high-cadence merge periods, verify branch base with `git status --branch` and rebase if needed.
+- For observability rollouts, add an integration test that hits the expected actuator/internal endpoint.
