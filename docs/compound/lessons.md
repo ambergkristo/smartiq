@@ -80,3 +80,12 @@
   - None functionally, but compliance overhead is easy to miss without explicit tracking issues.
 - Preventive rule:
   - Create a dedicated tracking issue for every post-merge compound update and close it only after merge.
+
+## 2026-02-17 - Loop 9 (PR5 Deployment Merge)
+
+- Hard part:
+  - Keeping branch alignment stable while merging many sequential PRs with strict gating.
+- What broke:
+  - Repeated `--ff-only` pull failures due local divergence after merge cadence.
+- Preventive rule:
+  - Standardize on `git rebase origin/main` as the immediate recovery path before starting each follow-up loop.
