@@ -1,5 +1,5 @@
-﻿import { useEffect, useState } from 'react';
-import { fetchNextCard, fetchTopics } from './api';
+﻿import { useEffect, useRef, useState } from 'react';
+import { fetchNextCard, fetchTopics, resolveCardErrorMessage } from './api';
 import GameBoard from './components/GameBoard';
 import RoundSummary from './components/RoundSummary';
 import { expectedCorrectIndexes } from './state/scoring';
@@ -15,8 +15,11 @@ const STRINGS = {
   startRound: 'Start round',
   loadingCard: 'Loading next card...',
   cardError: 'Could not load card for current settings.',
+  retry: 'Retry',
   passNote: 'Pass keeps current score unchanged.'
 };
+const SESSION_STORAGE_KEY = 'smartiq.sessionId';
+const RECENT_CARD_LIMIT = 20;
 
 function StartScreen({ topics, config, setConfig, onStart }) {
   return (
@@ -100,9 +103,10 @@ export default function App() {
   });
   const [sessionId, setSessionId] = useState('');
   const [cardError, setCardError] = useState('');
+  const recentCardIdsRef = useRef([]);
 
   const engine = useGameEngine(config.roundLength);
-  const { phase, cardLoaded, cardLoadFailed } = engine;
+  const { phase, loadTicket, cardLoaded, cardLoadFailed } = engine;
 
   useEffect(() => {
     async function loadTopics() {
@@ -120,6 +124,11 @@ export default function App() {
     }
 
     loadTopics();
+
+    const savedSession = localStorage.getItem(SESSION_STORAGE_KEY);
+    if (savedSession) {
+      setSessionId(savedSession);
+    }
   }, []);
 
   useEffect(() => {
@@ -129,25 +138,37 @@ export default function App() {
 
       try {
         setCardError('');
-        const card = await fetchNextCard({
+        let card = await fetchNextCard({
           topic: config.topic,
           difficulty: config.difficulty,
           sessionId,
           lang: config.lang
         });
+        let attempts = 0;
+        while (recentCardIdsRef.current.includes(card.id) && attempts < 2) {
+          card = await fetchNextCard({
+            topic: config.topic,
+            difficulty: config.difficulty,
+            sessionId,
+            lang: config.lang
+          });
+          attempts += 1;
+        }
+        recentCardIdsRef.current = [card.id, ...recentCardIdsRef.current].slice(0, RECENT_CARD_LIMIT);
         cardLoaded(card);
       } catch (error) {
         console.error(error);
-        setCardError(STRINGS.cardError);
+        setCardError(resolveCardErrorMessage(error));
         cardLoadFailed();
       }
     }
 
     loadCard();
   }, [
-    phase,
+    loadTicket,
     cardLoaded,
     cardLoadFailed,
+    phase,
     sessionId,
     config.topic,
     config.difficulty,
@@ -157,14 +178,13 @@ export default function App() {
   function handleStartRound() {
     const freshSessionId = globalThis.crypto?.randomUUID?.() || `session-${Date.now()}`;
     setSessionId(freshSessionId);
+    localStorage.setItem(SESSION_STORAGE_KEY, freshSessionId);
+    recentCardIdsRef.current = [];
     engine.startRound(config.playersText);
   }
 
   function handleNext() {
-    const result = engine.nextStep();
-    if (!result.done) {
-      engine.beginCardLoad();
-    }
+    engine.nextStep();
   }
 
   function handleRestart() {
@@ -188,7 +208,14 @@ export default function App() {
       {engine.phase !== GamePhase.SETUP && engine.phase !== GamePhase.ROUND_SUMMARY ? (
         <>
           {engine.phase === GamePhase.LOADING_CARD ? <p>{STRINGS.loadingCard}</p> : null}
-          {cardError ? <p className="error">{cardError}</p> : null}
+          {cardError ? (
+            <div className="error-panel">
+              <p className="error">{cardError}</p>
+              <button type="button" onClick={engine.beginCardLoad}>
+                {STRINGS.retry}
+              </button>
+            </div>
+          ) : null}
           {engine.card ? (
             <GameBoard
               card={engine.card}
@@ -225,3 +252,4 @@ export default function App() {
     </main>
   );
 }
+
