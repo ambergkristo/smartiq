@@ -89,3 +89,12 @@
   - Repeated `--ff-only` pull failures due local divergence after merge cadence.
 - Preventive rule:
   - Standardize on `git rebase origin/main` as the immediate recovery path before starting each follow-up loop.
+
+## 2026-02-17 - Loop 10 (Production Phase Merge)
+
+- Hard part:
+  - Shipping observability, bank guarantees, concurrency safety, workflow dry-run, and deploy hardening together without breaking runtime behavior.
+- What broke:
+  - Prometheus endpoint test initially failed until explicit prometheus export config was enabled.
+- Preventive rule:
+  - When adding new actuator-backed metrics, verify endpoint exposure settings in integration tests, not only dependency declarations.
