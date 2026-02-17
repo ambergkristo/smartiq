@@ -15,34 +15,77 @@ Monorepo for SmartIQ services and tooling.
 
 - JDK 21
 - Node.js LTS (with npm)
-- Docker (optional, if local dependencies are containerized)
+- Docker (for PostgreSQL during local runtime)
 
 ## Local Setup
 
-1. Clone the repository.
-2. Copy environment template:
+1. Clone repository and create environment file:
    - `cp .env.example .env` (macOS/Linux)
    - `Copy-Item .env.example .env` (PowerShell)
-3. Install dependencies:
-   - Backend: `cd backend && mvn -q -DskipTests compile`
-   - Frontend: `cd frontend && npm ci`
+2. Install frontend and root dependencies:
+   - `npm ci`
+   - `cd frontend && npm ci && cd ..`
+3. Optional backend verification:
+   - `cd backend && mvn -q test && cd ..`
 
 ## One-Command Dev Run
 
-- Preferred: `npm run dev:all`
-- Alternative (if Make is available): `make dev`
+Primary command:
 
-The `dev:all` command currently validates that both workspaces are present and is intended as the monorepo entrypoint.
+```bash
+make dev
+```
 
-## CI
+Equivalent command chain:
 
-- Backend workflow runs Maven tests and build.
-- Frontend workflow runs npm install, lint, and build.
+```bash
+docker compose up -d
+npm run dev:all
+```
+
+Endpoints:
+
+- Frontend: `http://localhost:5173`
+- Backend API: `http://localhost:8080/api`
+
+## Validation Commands
+
+Backend tests:
+
+```bash
+cd backend
+mvn -q test
+```
+
+Frontend lint/build:
+
+```bash
+cd frontend
+npm ci
+npm run lint
+npm run build
+```
+
+Data validation:
+
+```bash
+node tools/validate-cards.js data/clean
+```
+
+Manual e2e checklist script:
+
+```bash
+bash tools/manual-e2e.sh
+```
 
 ## Data Pipeline
 
 - Raw card inputs live in `data/raw/`.
 - QA-approved card inputs live in `data/clean/`.
-- Validate cards before import with:
-  - `node tools/validate-cards.js data/clean`
+- Import consumes only files from `data/clean/`.
 - Pipeline details: `docs/data-pipeline.md`
+
+## CI
+
+- Backend workflow: `mvn -q test` + package build.
+- Frontend workflow: `npm ci` + `npm run lint` + `npm run build`.

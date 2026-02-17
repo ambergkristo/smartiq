@@ -4,6 +4,7 @@
 *.war
 *.ear
 *.log
+*.mv.db
 .mvn/
 target/
 

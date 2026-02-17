@@ -3,7 +3,12 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "dev:all": "npm run dev:all:check",
-    "dev:all:check": "node tools/dev-all-check.js"
+    "dev:backend": "mvn -q -f backend/pom.xml spring-boot:run",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:all": "concurrently -n backend,frontend -c cyan,green \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "validate:cards": "node tools/validate-cards.js data/clean"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
 }
