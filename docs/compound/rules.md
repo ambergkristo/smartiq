@@ -38,3 +38,4 @@
 - For new gameplay sessions, use the freshly generated `sessionId` directly in the first backend request to avoid stale-state fetches.
 - For every new `@SpringBootTest`, define explicit H2 datasource properties in test-local config to avoid environment-leak failures.
 - For prod access-control filters, add tests that verify unauthenticated denial and authenticated success on protected endpoints.
+- For phased frontend rewrites, require one state-hook test suite and one UI happy-path test before merging integration/error-handling PRs.

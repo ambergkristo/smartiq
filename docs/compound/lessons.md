@@ -134,3 +134,12 @@
   - Security filter behavior can silently drift without prod-profile integration coverage.
 - Preventive rule:
   - Every prod-only access control change must include MockMvc tests that assert both blocked and allowed paths.
+
+## 2026-02-17 - Loop 15 (Frontend Final-Look PR Sequence)
+
+- Hard part:
+  - Splitting a frontend refactor into five PR-sized slices while keeping each step deployable and green.
+- What broke:
+  - Game-engine transitions and API fetch timing caused edge-case retries and one failing test assertion.
+- Preventive rule:
+  - For multi-PR frontend flows, lock phase transitions first with hook tests, then layer API retries and UI integration tests.
