@@ -48,6 +48,8 @@ Endpoints:
 - Frontend: `http://localhost:5173`
 - Backend API: `http://localhost:8080/api`
 - Backend health: `http://localhost:8080/health`
+- Backend metrics: `http://localhost:8080/actuator/prometheus`
+- Internal pool stats: `http://localhost:8080/internal/pool-stats`
 
 ## API Endpoints
 
@@ -91,6 +93,18 @@ Scale generation target for runtime planning:
 TARGET_PER_KEY=1000 npm run pipeline:cards
 ```
 
+Load test (500 sessions / 10k requests default):
+
+```bash
+npm run load:test
+```
+
+Stability gate (production readiness check):
+
+```bash
+npm run stability:gate
+```
+
 Monthly scheduler:
 
 - GitHub Actions workflow: `.github/workflows/content-refresh.yml`
@@ -106,13 +120,17 @@ Deployment target for MVP:
 
 Detailed steps: `docs/deploy.md`
 
+Observability reference: `docs/observability.md`
+
 Question pool sizing (backend env vars):
 
 ```bash
 SMARTIQ_POOL_ENABLED=true
-SMARTIQ_POOL_MINIMUM_PER_KEY=1000
-SMARTIQ_POOL_LOW_WATERMARK_PER_KEY=800
-SMARTIQ_POOL_REFILL_TARGET_PER_KEY=1200
+MIN_BANK_SIZE=1000
+POOL_LOW_WATERMARK=800
+POOL_TARGET=1200
+SMARTIQ_BLOCK_ON_LOW_BANK=false
+SMARTIQ_TRIGGER_PIPELINE_ON_LOW_BANK=false
 ```
 
 Session de-duplication (per sessionId):

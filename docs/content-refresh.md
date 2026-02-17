@@ -27,3 +27,8 @@ GitHub Actions scheduler is defined in `.github/workflows/content-refresh.yml`:
 - cron: `0 3 1 * *` (every month on day 1 at 03:00 UTC)
 - flow: generate -> review -> merge approved -> validate
 - auto PR branch format: `chore/content-refresh-YYYYMM`
+
+Manual dry-run in GitHub Actions:
+
+- trigger `workflow_dispatch`
+- set input `dry_run=true` to verify pipeline without opening PR

@@ -1,8 +1,9 @@
 package com.smartiq.backend.card;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 import com.smartiq.backend.config.QuestionPoolProperties;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Tag;
+import io.micrometer.core.instrument.Tags;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,6 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class QuestionPoolService {
@@ -27,16 +27,21 @@ public class QuestionPoolService {
     private final CardRepository cardRepository;
     private final SessionCardTrackerService sessionCardTrackerService;
     private final QuestionPoolProperties properties;
-    private final Cache<QuestionPoolKey, ConcurrentLinkedQueue<CardResponse>> poolCache =
-            Caffeine.newBuilder().expireAfterAccess(2, TimeUnit.HOURS).maximumSize(1000).build();
+    private final QuestionPoolStore poolStore;
+    private final MeterRegistry meterRegistry;
     private final Set<QuestionPoolKey> refillInFlight = ConcurrentHashMap.newKeySet();
+    private final Set<QuestionPoolKey> registeredMeters = ConcurrentHashMap.newKeySet();
 
     public QuestionPoolService(CardRepository cardRepository,
                                SessionCardTrackerService sessionCardTrackerService,
-                               QuestionPoolProperties properties) {
+                               QuestionPoolProperties properties,
+                               QuestionPoolStore poolStore,
+                               MeterRegistry meterRegistry) {
         this.cardRepository = cardRepository;
         this.sessionCardTrackerService = sessionCardTrackerService;
         this.properties = properties;
+        this.poolStore = poolStore;
+        this.meterRegistry = meterRegistry;
     }
 
     @PostConstruct
@@ -48,37 +53,62 @@ public class QuestionPoolService {
 
         for (QuestionPoolKeyView keyView : cardRepository.findAllPoolKeys()) {
             QuestionPoolKey key = QuestionPoolKey.from(keyView.getTopic(), keyView.getDifficulty(), keyView.getLanguage());
+            registerMetersIfNeeded(key);
             refillPool(key);
         }
     }
 
     public CardResponse nextCard(String topic, String difficulty, String language, String sessionId) {
         Set<String> servedIds = sessionCardTrackerService.servedIdsForSession(sessionId);
+        QuestionPoolKey key = QuestionPoolKey.from(topic, difficulty, language);
+        registerMetersIfNeeded(key);
 
         if (!properties.enabled() || isBlank(topic) || isBlank(difficulty)) {
-            CardResponse fallback = fallbackRandom(topic, difficulty, language, servedIds);
-            sessionCardTrackerService.markServed(sessionId, fallback.id());
-            return fallback;
+            return fallbackWithReservation(topic, difficulty, language, sessionId, servedIds, key);
         }
 
-        QuestionPoolKey key = QuestionPoolKey.from(topic, difficulty, language);
-        ConcurrentLinkedQueue<CardResponse> queue = poolCache.get(key, ignored -> new ConcurrentLinkedQueue<>());
-        CardResponse fromPool = pullNonDuplicate(queue, servedIds);
+        ConcurrentLinkedQueue<CardResponse> queue = poolStore.queueForKey(key);
+        CardResponse fromPool = pullNonDuplicateAndReserve(queue, servedIds, sessionId, key);
 
         if (queue.size() < properties.lowWatermarkPerKey()) {
             asyncRefill(key);
         }
 
         if (fromPool != null) {
-            sessionCardTrackerService.markServed(sessionId, fromPool.id());
+            poolStore.recordCacheHit(key);
+            meterRegistry.counter("smartiq.pool.cache.hits", metricTags(key)).increment();
             return fromPool;
         }
 
+        poolStore.recordCacheMiss(key);
+        meterRegistry.counter("smartiq.pool.cache.misses", metricTags(key)).increment();
         log.warn("Question pool empty for key topic={} difficulty={} language={}; using DB fallback.",
                 key.topic(), key.difficulty(), key.language());
-        CardResponse fallback = fallbackRandom(topic, difficulty, language, servedIds);
-        sessionCardTrackerService.markServed(sessionId, fallback.id());
-        return fallback;
+        return fallbackWithReservation(topic, difficulty, language, sessionId, servedIds, key);
+    }
+
+    public List<PoolKeyStats> getPoolStats() {
+        return poolStore.snapshot();
+    }
+
+    private CardResponse fallbackWithReservation(String topic,
+                                                 String difficulty,
+                                                 String language,
+                                                 String sessionId,
+                                                 Set<String> servedIds,
+                                                 QuestionPoolKey key) {
+        poolStore.recordFallbackDbHit(key);
+        meterRegistry.counter("smartiq.pool.fallback.db.hits", metricTags(key)).increment();
+
+        for (int i = 0; i < 5; i += 1) {
+            CardResponse fallback = fallbackRandom(topic, difficulty, language, servedIds);
+            if (sessionCardTrackerService.tryMarkServed(sessionId, fallback.id())) {
+                return fallback;
+            }
+            servedIds = sessionCardTrackerService.servedIdsForSession(sessionId);
+        }
+
+        throw new NoSuchElementException("No non-duplicate cards available for session");
     }
 
     private CardResponse fallbackRandom(String topic, String difficulty, String language, Set<String> servedIds) {
@@ -99,26 +129,36 @@ public class QuestionPoolService {
         return CardResponse.fromEntity(card);
     }
 
-    private CardResponse pullNonDuplicate(ConcurrentLinkedQueue<CardResponse> queue, Set<String> servedIds) {
+    private CardResponse pullNonDuplicateAndReserve(ConcurrentLinkedQueue<CardResponse> queue,
+                                                    Set<String> servedIds,
+                                                    String sessionId,
+                                                    QuestionPoolKey key) {
         if (queue.isEmpty()) {
             return null;
-        }
-        if (servedIds.isEmpty()) {
-            return queue.poll();
         }
 
         List<CardResponse> skipped = new ArrayList<>();
         int attempts = queue.size();
+
         for (int i = 0; i < attempts; i += 1) {
             CardResponse candidate = queue.poll();
             if (candidate == null) {
                 break;
             }
-            if (!servedIds.contains(candidate.id())) {
+
+            if (servedIds.contains(candidate.id())) {
+                skipped.add(candidate);
+                continue;
+            }
+
+            if (sessionCardTrackerService.tryMarkServed(sessionId, candidate.id())) {
                 skipped.forEach(queue::add);
                 return candidate;
             }
+
             skipped.add(candidate);
+            poolStore.recordCacheMiss(key);
+            servedIds = sessionCardTrackerService.servedIdsForSession(sessionId);
         }
 
         skipped.forEach(queue::add);
@@ -140,11 +180,11 @@ public class QuestionPoolService {
     }
 
     private void refillPool(QuestionPoolKey key) {
-        ConcurrentLinkedQueue<CardResponse> queue = poolCache.get(key, ignored -> new ConcurrentLinkedQueue<>());
+        ConcurrentLinkedQueue<CardResponse> queue = poolStore.queueForKey(key);
         long bankSize = cardRepository.countByPoolKey(key.topic(), key.difficulty(), key.language());
 
         if (bankSize < properties.minimumPerKey()) {
-            log.warn("Insufficient bank for topic={} difficulty={} language={} available={} required={}",
+            log.warn("bank_low topic={} difficulty={} language={} available={} required={}",
                     key.topic(), key.difficulty(), key.language(), bankSize, properties.minimumPerKey());
         }
 
@@ -159,12 +199,53 @@ public class QuestionPoolService {
         }
 
         Collections.shuffle(cards);
+        int added = 0;
         for (Card card : cards) {
             if (queue.size() >= refillTarget) {
                 break;
             }
             queue.add(CardResponse.fromEntity(card));
+            added += 1;
         }
+
+        if (added > 0) {
+            poolStore.recordRefill(key, added);
+            meterRegistry.counter("smartiq.pool.refills", metricTags(key)).increment();
+        }
+    }
+
+    private void registerMetersIfNeeded(QuestionPoolKey key) {
+        if (!registeredMeters.add(key)) {
+            return;
+        }
+
+        Tags tags = Tags.of(
+                "topic", safeTag(key.topic()),
+                "difficulty", safeTag(key.difficulty()),
+                "language", safeTag(key.language())
+        );
+
+        meterRegistry.gauge("smartiq.pool.size", tags, poolStore.queueForKey(key), ConcurrentLinkedQueue::size);
+        meterRegistry.gauge("smartiq.pool.cache.hit.rate", tags, this,
+                ignored -> poolStore.snapshot().stream()
+                        .filter(stat -> key.topic().equals(stat.topic())
+                                && key.difficulty().equals(stat.difficulty())
+                                && key.language().equals(stat.language()))
+                        .findFirst()
+                        .map(PoolKeyStats::cacheHitRate)
+                        .orElse(0.0));
+    }
+
+    private Iterable<Tag> metricTags(QuestionPoolKey key) {
+        return Tags.of(
+                "topic", safeTag(key.topic()),
+                "difficulty", safeTag(key.difficulty()),
+                "language", safeTag(key.language())
+        );
+    }
+
+    private static String safeTag(String value) {
+        return value == null ? "unknown" : value;
     }
 
     private static boolean isBlank(String value) {

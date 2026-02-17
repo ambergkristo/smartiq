@@ -13,19 +13,37 @@ spring:
     console:
       enabled: true
 
+management:
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: never
+
 smartiq:
   import:
     enabled: ${SMARTIQ_IMPORT_ENABLED:true}
     path: ${SMARTIQ_IMPORT_PATH:../data/clean}
   pool:
     enabled: ${SMARTIQ_POOL_ENABLED:true}
-    minimum-per-key: ${SMARTIQ_POOL_MINIMUM_PER_KEY:1000}
-    low-watermark-per-key: ${SMARTIQ_POOL_LOW_WATERMARK_PER_KEY:800}
-    refill-target-per-key: ${SMARTIQ_POOL_REFILL_TARGET_PER_KEY:1200}
+    minimum-per-key: ${MIN_BANK_SIZE:1000}
+    low-watermark-per-key: ${POOL_LOW_WATERMARK:800}
+    refill-target-per-key: ${POOL_TARGET:1200}
   session:
     enabled: ${SMARTIQ_SESSION_DEDUP_ENABLED:true}
     ttl-minutes: ${SMARTIQ_SESSION_TTL_MINUTES:120}
     max-sessions: ${SMARTIQ_SESSION_MAX:50000}
+  bank:
+    min-size: ${MIN_BANK_SIZE:1000}
+    block-on-low-bank: ${SMARTIQ_BLOCK_ON_LOW_BANK:false}
+    trigger-pipeline-on-low-bank: ${SMARTIQ_TRIGGER_PIPELINE_ON_LOW_BANK:false}
+    pipeline-command: ${SMARTIQ_PIPELINE_COMMAND:npm run pipeline:cards}
   cors:
     allowed-origins:
       - ${SMARTIQ_CORS_ALLOWED_ORIGIN_LOCAL:http://localhost:5173}

@@ -37,4 +37,11 @@ public class SessionCardTrackerService {
         }
         servedIdsForSession(sessionId).add(cardId);
     }
+
+    public boolean tryMarkServed(String sessionId, String cardId) {
+        if (!properties.enabled() || sessionId == null || sessionId.isBlank()) {
+            return true;
+        }
+        return servedIdsForSession(sessionId).add(cardId);
+    }
 }
