@@ -1,4 +1,12 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+
 smartiq:
   bank:
     block-on-low-bank: true
     trigger-pipeline-on-low-bank: false
+  internal-access:
+    enabled: true
