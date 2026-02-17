@@ -6,7 +6,10 @@
     "dev:backend": "mvn -q -f backend/pom.xml spring-boot:run",
     "dev:frontend": "npm --prefix frontend run dev",
     "dev:all": "concurrently -n backend,frontend -c cyan,green \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "validate:cards": "node tools/validate-cards.js data/clean"
+    "generate:cards": "node tools/generate-cards.js",
+    "review:cards": "node tools/review-cards.js",
+    "validate:cards": "node tools/validate-cards.js data/clean",
+    "pipeline:cards": "node tools/build-content-pipeline.js"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

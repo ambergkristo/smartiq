@@ -78,6 +78,18 @@ Data validation:
 node tools/validate-cards.js data/clean
 ```
 
+Content refresh pipeline (generate -> review -> validate):
+
+```bash
+npm run pipeline:cards
+```
+
+Scale generation target for runtime planning:
+
+```bash
+TARGET_PER_KEY=1000 npm run pipeline:cards
+```
+
 Question pool sizing (backend env vars):
 
 ```bash
