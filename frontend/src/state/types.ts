@@ -1,0 +1,12 @@
+export const GamePhase = {
+  SETUP: 'SETUP',
+  LOADING_CARD: 'LOADING_CARD',
+  CHOOSING: 'CHOOSING',
+  CONFIRMING: 'CONFIRMING',
+  RESOLVED: 'RESOLVED',
+  PASSED: 'PASSED',
+  ROUND_SUMMARY: 'ROUND_SUMMARY'
+};
+
+export const DEFAULT_PLAYERS = ['Player 1'];
+export const DEFAULT_LANGS = ['en', 'et', 'ru'];

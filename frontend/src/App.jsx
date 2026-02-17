@@ -1,7 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { fetchNextCard, fetchTopics } from './api';
 import GameBoard from './components/GameBoard';
 import RoundSummary from './components/RoundSummary';
+import { expectedCorrectIndexes } from './state/scoring';
+import { useGameEngine } from './state/useGameEngine';
+import { DEFAULT_LANGS, GamePhase } from './state/types';
 
 const STRINGS = {
   title: 'SmartIQ',
@@ -14,45 +17,6 @@ const STRINGS = {
   cardError: 'Could not load card for current settings.',
   passNote: 'Pass keeps current score unchanged.'
 };
-
-const DEFAULT_PLAYERS = ['Player 1'];
-const DEFAULT_LANGS = ['en', 'et', 'ru'];
-
-function normalizePlayers(raw) {
-  const players = raw
-    .split(',')
-    .map((x) => x.trim())
-    .filter(Boolean);
-  return players.length > 0 ? players : DEFAULT_PLAYERS;
-}
-
-function expectedCorrectIndexes(card) {
-  if (Array.isArray(card.correctFlags) && card.correctFlags.length === 10) {
-    return new Set(
-      card.correctFlags
-        .map((flag, idx) => (flag ? idx : null))
-        .filter((idx) => idx !== null)
-    );
-  }
-
-  if (Number.isInteger(card.correctIndex)) {
-    return new Set([card.correctIndex]);
-  }
-
-  return new Set();
-}
-
-function sameSet(a, b) {
-  if (a.size !== b.size) return false;
-  for (const item of a) if (!b.has(item)) return false;
-  return true;
-}
-
-function scoreDelta(card, selectedIndexes, passed) {
-  if (passed) return 0;
-  const expected = expectedCorrectIndexes(card);
-  return sameSet(expected, selectedIndexes) ? 1 : 0;
-}
 
 function StartScreen({ topics, config, setConfig, onStart }) {
   return (
@@ -127,7 +91,6 @@ function StartScreen({ topics, config, setConfig, onStart }) {
 export default function App() {
   const [topics, setTopics] = useState([]);
   const [topicState, setTopicState] = useState('loading');
-  const [screen, setScreen] = useState('start');
   const [config, setConfig] = useState({
     topic: '',
     difficulty: '2',
@@ -135,15 +98,11 @@ export default function App() {
     roundLength: 10,
     playersText: 'Player 1'
   });
-  const [players, setPlayers] = useState(DEFAULT_PLAYERS);
-  const [scores, setScores] = useState({ 'Player 1': 0 });
-  const [cardIndex, setCardIndex] = useState(0);
-  const [cardState, setCardState] = useState('idle');
-  const [card, setCard] = useState(null);
-  const [selectedIndexes, setSelectedIndexes] = useState(new Set());
-  const [revealed, setRevealed] = useState(false);
   const [sessionId, setSessionId] = useState('');
-  const [lastAction, setLastAction] = useState('Ready');
+  const [cardError, setCardError] = useState('');
+
+  const engine = useGameEngine(config.roundLength);
+  const { phase, cardLoaded, cardLoadFailed } = engine;
 
   useEffect(() => {
     async function loadTopics() {
@@ -163,139 +122,105 @@ export default function App() {
     loadTopics();
   }, []);
 
-  const currentPlayerIndex = useMemo(() => {
-    if (players.length === 0) return 0;
-    return cardIndex % players.length;
-  }, [cardIndex, players]);
+  useEffect(() => {
+    async function loadCard() {
+      if (phase !== GamePhase.LOADING_CARD) return;
+      if (!sessionId) return;
 
-  const currentPlayer = players[currentPlayerIndex] ?? 'Player 1';
-
-  async function fetchCard(activeSessionId = sessionId) {
-    setCardState('loading');
-    setRevealed(false);
-    setSelectedIndexes(new Set());
-    setLastAction('Loading card');
-    try {
-      const data = await fetchNextCard({
-        topic: config.topic,
-        difficulty: config.difficulty,
-        sessionId: activeSessionId,
-        lang: config.lang
-      });
-      setCard(data);
-      setCardState('ready');
-      setLastAction('Card loaded');
-    } catch (error) {
-      console.error(error);
-      setCardState('error');
-      setCard(null);
-      setLastAction('Load failed');
+      try {
+        setCardError('');
+        const card = await fetchNextCard({
+          topic: config.topic,
+          difficulty: config.difficulty,
+          sessionId,
+          lang: config.lang
+        });
+        cardLoaded(card);
+      } catch (error) {
+        console.error(error);
+        setCardError(STRINGS.cardError);
+        cardLoadFailed();
+      }
     }
-  }
 
-  async function startRound() {
-    const normalizedPlayers = normalizePlayers(config.playersText);
+    loadCard();
+  }, [
+    phase,
+    cardLoaded,
+    cardLoadFailed,
+    sessionId,
+    config.topic,
+    config.difficulty,
+    config.lang
+  ]);
+
+  function handleStartRound() {
     const freshSessionId = globalThis.crypto?.randomUUID?.() || `session-${Date.now()}`;
     setSessionId(freshSessionId);
-    setPlayers(normalizedPlayers);
-
-    const nextScores = {};
-    normalizedPlayers.forEach((player) => {
-      nextScores[player] = 0;
-    });
-    setScores(nextScores);
-    setCardIndex(0);
-    setScreen('game');
-    setLastAction('Round started');
-    await fetchCard(freshSessionId);
+    engine.startRound(config.playersText);
   }
 
-  function toggleIndex(index) {
-    setSelectedIndexes((prev) => {
-      const next = new Set(prev);
-      if (next.has(index)) {
-        next.delete(index);
-      } else {
-        next.add(index);
-      }
-      return next;
-    });
-  }
-
-  function revealAndScore(passed) {
-    if (!card) return;
-    const delta = scoreDelta(card, selectedIndexes, passed);
-    setScores((prev) => ({
-      ...prev,
-      [currentPlayer]: (prev[currentPlayer] ?? 0) + delta
-    }));
-    setLastAction(passed ? `${currentPlayer} passed` : `${currentPlayer} answered (${delta > 0 ? '+1' : '0'})`);
-    setRevealed(true);
-  }
-
-  async function nextCard() {
-    const nextIndex = cardIndex + 1;
-    if (nextIndex >= config.roundLength) {
-      setScreen('summary');
-      setLastAction('Round complete');
-      return;
+  function handleNext() {
+    const result = engine.nextStep();
+    if (!result.done) {
+      engine.beginCardLoad();
     }
-
-    setCardIndex(nextIndex);
-    await fetchCard();
   }
 
-  function restart() {
-    setScreen('start');
-    setCard(null);
-    setCardState('idle');
-    setSelectedIndexes(new Set());
-    setRevealed(false);
-    setLastAction('Ready');
+  function handleRestart() {
+    engine.resetToSetup();
+    setCardError('');
   }
 
   return (
     <main>
-      {screen === 'start' ? (
+      {engine.phase === GamePhase.SETUP ? (
         <>
           {topicState === 'loading' ? <p>{STRINGS.loadingTopics}</p> : null}
           {topicState === 'error' ? <p className="error">{STRINGS.loadError}</p> : null}
           {topicState === 'ready' && topics.length > 0 ? (
-            <StartScreen topics={topics} config={config} setConfig={setConfig} onStart={startRound} />
+            <StartScreen topics={topics} config={config} setConfig={setConfig} onStart={handleStartRound} />
           ) : null}
           {topicState === 'ready' && topics.length === 0 ? <p className="error">{STRINGS.noTopics}</p> : null}
         </>
       ) : null}
 
-      {screen === 'game' ? (
+      {engine.phase !== GamePhase.SETUP && engine.phase !== GamePhase.ROUND_SUMMARY ? (
         <>
-          {cardState === 'loading' ? <p>{STRINGS.loadingCard}</p> : null}
-          {cardState === 'error' ? <p className="error">{STRINGS.cardError}</p> : null}
-          {cardState === 'ready' && card ? (
+          {engine.phase === GamePhase.LOADING_CARD ? <p>{STRINGS.loadingCard}</p> : null}
+          {cardError ? <p className="error">{cardError}</p> : null}
+          {engine.card ? (
             <GameBoard
-              card={card}
-              selectedIndexes={selectedIndexes}
-              toggleIndex={toggleIndex}
-              revealed={revealed}
-              onReveal={() => revealAndScore(false)}
-              onPass={() => revealAndScore(true)}
-              onNext={nextCard}
-              isLast={cardIndex + 1 >= config.roundLength}
-              players={players}
-              scores={scores}
-              currentPlayerIndex={currentPlayerIndex}
-              cardIndex={cardIndex}
+              card={engine.card}
+              selectedIndexes={engine.selectedIndexes}
+              toggleIndex={engine.toggleOption}
+              phase={engine.phase}
+              onAnswer={engine.requestConfirm}
+              onConfirm={engine.confirmAnswer}
+              onCancelConfirm={engine.cancelConfirm}
+              onPass={engine.passTurn}
+              onNext={handleNext}
+              isLast={engine.cardIndex + 1 >= config.roundLength}
+              players={engine.players}
+              scores={engine.scores}
+              currentPlayerIndex={engine.currentPlayerIndex}
+              cardIndex={engine.cardIndex}
               roundLength={config.roundLength}
               passNote={STRINGS.passNote}
-              lastAction={lastAction}
-              correctIndexes={expectedCorrectIndexes(card)}
+              lastAction={engine.lastAction}
+              correctIndexes={expectedCorrectIndexes(engine.card)}
             />
           ) : null}
         </>
       ) : null}
 
-      {screen === 'summary' ? (
-        <RoundSummary players={players} scores={scores} roundLength={config.roundLength} onRestart={restart} />
+      {engine.phase === GamePhase.ROUND_SUMMARY ? (
+        <RoundSummary
+          players={engine.players}
+          scores={engine.scores}
+          roundLength={config.roundLength}
+          onRestart={handleRestart}
+        />
       ) : null}
     </main>
   );

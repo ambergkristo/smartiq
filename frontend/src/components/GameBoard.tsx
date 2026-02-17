@@ -16,8 +16,10 @@ export default function GameBoard({
   card,
   selectedIndexes,
   toggleIndex,
-  revealed,
-  onReveal,
+  phase,
+  onAnswer,
+  onConfirm,
+  onCancelConfirm,
   onPass,
   onNext,
   isLast,
@@ -30,6 +32,9 @@ export default function GameBoard({
   lastAction,
   correctIndexes
 }) {
+  const revealed = phase === 'RESOLVED' || phase === 'PASSED';
+  const canChoose = phase === 'CHOOSING' || phase === 'CONFIRMING';
+
   return (
     <section className="game-board">
       <PlayersPanel
@@ -59,26 +64,47 @@ export default function GameBoard({
               option={option}
               state={getTileState(index, selectedIndexes, revealed, correctIndexes)}
               onClick={() => toggleIndex(index)}
-              disabled={revealed}
+              disabled={!canChoose}
             />
           ))}
         </div>
 
         <footer className="action-bar">
-          {!revealed ? (
+          {phase === 'CHOOSING' ? (
             <>
-              <button onClick={onReveal} type="button">
+              <button onClick={onAnswer} type="button">
                 ANSWER
               </button>
               <button onClick={onPass} type="button">
                 PASS
               </button>
             </>
-          ) : (
+          ) : null}
+          {phase === 'CONFIRMING' ? (
+            <>
+              <button onClick={onConfirm} type="button">
+                LOCK IN
+              </button>
+              <button onClick={onCancelConfirm} type="button">
+                BACK
+              </button>
+            </>
+          ) : null}
+          {phase === 'RESOLVED' || phase === 'PASSED' ? (
             <button onClick={onNext} type="button">
               {isLast ? 'ROUND END' : 'NEXT'}
             </button>
-          )}
+          ) : null}
+          {phase === 'LOADING_CARD' ? (
+            <button disabled type="button">
+              LOADING...
+            </button>
+          ) : null}
+          {phase !== 'CHOOSING' && phase !== 'CONFIRMING' && phase !== 'RESOLVED' && phase !== 'PASSED' && phase !== 'LOADING_CARD' ? (
+            <button disabled type="button">
+              WAITING...
+            </button>
+          ) : null}
         </footer>
       </div>
     </section>
