@@ -71,3 +71,12 @@
   - Local verification rewrote generated files and introduced noisy, non-goal diffs.
 - Preventive rule:
   - For workflow-only PRs, restore generated artifacts unless artifact updates are explicitly part of scope.
+
+## 2026-02-17 - Loop 8 (PR35 Compound Merge)
+
+- Hard part:
+  - High merge frequency increases risk of skipping mandatory loop bookkeeping.
+- What broke:
+  - None functionally, but compliance overhead is easy to miss without explicit tracking issues.
+- Preventive rule:
+  - Create a dedicated tracking issue for every post-merge compound update and close it only after merge.
