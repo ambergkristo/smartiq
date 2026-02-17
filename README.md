@@ -38,3 +38,7 @@ The `dev:all` command currently validates that both workspaces are present and i
 
 - Backend workflow runs Maven tests and build.
 - Frontend workflow runs npm install, lint, and build.
+
+## Contributing
+
+See `CONTRIBUTING.md` for branch, validation, and PR expectations.
