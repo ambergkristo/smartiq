@@ -1,0 +1,91 @@
+package com.smartiq.backend.card;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.time.Instant;
+import java.util.List;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest(properties = {
+        "smartiq.import.enabled=false",
+        "spring.datasource.url=jdbc:h2:mem:smartiq_test;MODE=PostgreSQL;DB_CLOSE_DELAY=-1",
+        "spring.datasource.username=sa",
+        "spring.datasource.password="
+})
+@AutoConfigureMockMvc
+class CardControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private CardRepository cardRepository;
+
+    @BeforeEach
+    void setUp() {
+        cardRepository.deleteAll();
+
+        Card science = new Card();
+        science.setId("science-1");
+        science.setTopic("Science");
+        science.setSubtopic("General Science");
+        science.setLanguage("en");
+        science.setQuestion("What planet is known as the Red Planet?");
+        science.setOptions(List.of("Mars", "Earth", "Venus", "Jupiter", "Saturn", "Uranus", "Neptune", "Mercury", "Pluto", "Moon"));
+        science.setCorrectIndex(0);
+        science.setDifficulty("easy");
+        science.setSource("test");
+        science.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
+        cardRepository.save(science);
+
+        Card math = new Card();
+        math.setId("math-1");
+        math.setTopic("Math");
+        math.setSubtopic("Addition");
+        math.setLanguage("en");
+        math.setQuestion("What is 2 + 2?");
+        math.setOptions(List.of("4", "3", "5", "6", "7", "8", "9", "10", "11", "12"));
+        math.setCorrectIndex(0);
+        math.setDifficulty("easy");
+        math.setSource("test");
+        math.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
+        cardRepository.save(math);
+    }
+
+    @Test
+    void returnsTopicCounts() throws Exception {
+        mockMvc.perform(get("/api/topics"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].topic").value("Math"))
+                .andExpect(jsonPath("$[1].topic").value("Science"));
+    }
+
+    @Test
+    void returnsRandomCardByTopic() throws Exception {
+        mockMvc.perform(get("/api/cards/random").param("topic", "Science"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.topic").value("Science"));
+    }
+
+    @Test
+    void returnsRandomCardOverall() throws Exception {
+        mockMvc.perform(get("/api/cards/random"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists());
+    }
+
+    @Test
+    void returnsNotFoundForMissingTopic() throws Exception {
+        mockMvc.perform(get("/api/cards/random").param("topic", "Unknown"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.error").exists());
+    }
+}
