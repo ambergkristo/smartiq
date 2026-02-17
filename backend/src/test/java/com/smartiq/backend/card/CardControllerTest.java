@@ -150,4 +150,16 @@ class CardControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("UP"));
     }
+
+    @Test
+    void poolStatsEndpointIsAvailable() throws Exception {
+        mockMvc.perform(get("/internal/pool-stats"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void prometheusEndpointIsAvailable() throws Exception {
+        mockMvc.perform(get("/actuator/prometheus"))
+                .andExpect(status().isOk());
+    }
 }

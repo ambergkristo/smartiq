@@ -33,6 +33,7 @@ function main() {
 
   const cards = readJsonArray(absoluteInput);
   const flagged = [];
+  const duplicates = [];
   const approved = [];
   const seenQuestionByKey = new Map();
 
@@ -46,15 +47,20 @@ function main() {
 
     if (Array.isArray(card.options)) {
       const normalizedOptions = card.options.map(normalize);
-      if (new Set(normalizedOptions).size < normalizedOptions.length) reasons.push('duplicate_options');
+      if (new Set(normalizedOptions).size < normalizedOptions.length) {
+        reasons.push('duplicate_options');
+        duplicates.push({ id: card.id, type: 'duplicate_options', score: 1.0 });
+      }
     } else {
       reasons.push('missing_options_array');
     }
 
     const prior = seenQuestionByKey.get(key) || [];
     for (const previousQuestion of prior) {
-      if (jaccard(q, previousQuestion) >= 0.9) {
+      const score = jaccard(q, previousQuestion);
+      if (score >= 0.9) {
         reasons.push('too_similar_to_existing_question');
+        duplicates.push({ id: card.id, type: 'near_duplicate_question', score });
         break;
       }
     }
@@ -70,22 +76,26 @@ function main() {
 
   const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
   const flaggedFile = path.join(reviewDir, `flagged.${stamp}.json`);
+  const duplicatesFile = path.join(reviewDir, `duplicates.${stamp}.json`);
   const approvedFile = path.join(reviewDir, `approved.${stamp}.json`);
   const reportFile = path.join(reviewDir, `report.${stamp}.json`);
 
   fs.writeFileSync(flaggedFile, `${JSON.stringify(flagged, null, 2)}\n`, 'utf8');
+  fs.writeFileSync(duplicatesFile, `${JSON.stringify(duplicates, null, 2)}\n`, 'utf8');
   fs.writeFileSync(approvedFile, `${JSON.stringify(approved, null, 2)}\n`, 'utf8');
   fs.writeFileSync(reportFile, `${JSON.stringify({
     inputFile: path.relative(process.cwd(), absoluteInput),
     total: cards.length,
     approved: approved.length,
     flagged: flagged.length,
+    duplicates: duplicates.length,
     generatedAt: new Date().toISOString()
   }, null, 2)}\n`, 'utf8');
 
   console.log(`Review complete. Approved: ${approved.length}, Flagged: ${flagged.length}`);
   console.log(`- ${path.relative(process.cwd(), approvedFile)}`);
   console.log(`- ${path.relative(process.cwd(), flaggedFile)}`);
+  console.log(`- ${path.relative(process.cwd(), duplicatesFile)}`);
   console.log(`- ${path.relative(process.cwd(), reportFile)}`);
 }
 

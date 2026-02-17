@@ -8,7 +8,8 @@ import org.springframework.context.annotation.Configuration;
         ImportProperties.class,
         QuestionPoolProperties.class,
         SessionDedupProperties.class,
-        CorsProperties.class
+        CorsProperties.class,
+        BankEnforcerProperties.class
 })
 public class ImportConfiguration {
 }

@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: smartiq-backend
+    runtime: docker
+    rootDir: backend
+    healthCheckPath: /health
+    autoDeploy: true

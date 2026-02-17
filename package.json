@@ -9,7 +9,10 @@
     "generate:cards": "node tools/generate-cards.js",
     "review:cards": "node tools/review-cards.js",
     "validate:cards": "node tools/validate-cards.js data/clean",
-    "pipeline:cards": "node tools/build-content-pipeline.js"
+    "pipeline:cards": "node tools/build-content-pipeline.js",
+    "load:test": "node tools/load-test.js",
+    "validate:deploy-env": "node tools/validate-deploy-env.js",
+    "stability:gate": "node tools/stability-gate.js"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

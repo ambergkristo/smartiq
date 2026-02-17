@@ -1,0 +1,4 @@
+smartiq:
+  bank:
+    block-on-low-bank: true
+    trigger-pipeline-on-low-bank: false

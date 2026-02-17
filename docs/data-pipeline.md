@@ -49,6 +49,7 @@ TARGET_PER_KEY=1000 npm run pipeline:cards
 
 - `data/review/approved.<date>.json`
 - `data/review/flagged.<date>.json`
+- `data/review/duplicates.<date>.json`
 - `data/review/report.<date>.json`
 
 Sanity check malformed raw sample (expected to fail):
