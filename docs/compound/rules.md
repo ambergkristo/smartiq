@@ -31,3 +31,4 @@
 - Treat compound-update PR merge as a required gate before starting the next feature branch.
 - When `git pull --ff-only` fails, run `git rebase origin/main` before continuing.
 - For scheduler/config PRs, avoid committing generated artifact churn unless explicitly required.
+- Open one tracking issue per mandatory post-merge compound update and close via the compound PR.
