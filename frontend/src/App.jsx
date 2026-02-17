@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { fetchNextCard, fetchTopics } from './api';
+import GameBoard from './components/GameBoard';
+import RoundSummary from './components/RoundSummary';
 
 const STRINGS = {
   title: 'SmartIQ',
@@ -10,13 +12,7 @@ const STRINGS = {
   startRound: 'Start round',
   loadingCard: 'Loading next card...',
   cardError: 'Could not load card for current settings.',
-  reveal: 'Reveal / Check',
-  pass: 'Pass (keep points)',
-  next: 'Next card',
-  finish: 'Finish round',
-  restart: 'New round',
-  passNote: 'Pass keeps current score unchanged.',
-  roundSummary: 'Round summary'
+  passNote: 'Pass keeps current score unchanged.'
 };
 
 const DEFAULT_PLAYERS = ['Player 1'];
@@ -60,7 +56,7 @@ function scoreDelta(card, selectedIndexes, passed) {
 
 function StartScreen({ topics, config, setConfig, onStart }) {
   return (
-    <section className="panel">
+    <section className="setup-panel board-surface">
       <h1>{STRINGS.title}</h1>
       <p>{STRINGS.subtitle}</p>
 
@@ -121,95 +117,9 @@ function StartScreen({ topics, config, setConfig, onStart }) {
         placeholder="Player 1, Player 2"
       />
 
-      <button onClick={onStart}>{STRINGS.startRound}</button>
-    </section>
-  );
-}
-
-function ScoreBoard({ players, scores, currentPlayerIndex, cardIndex, roundLength }) {
-  return (
-    <section className="panel scoreboard">
-      <h2>Scoreboard</h2>
-      <p>
-        Turn: <strong>{players[currentPlayerIndex]}</strong>
-      </p>
-      <p>
-        Card {cardIndex + 1} / {roundLength}
-      </p>
-      <ul>
-        {players.map((player, idx) => (
-          <li key={player} className={idx === currentPlayerIndex ? 'active-player' : ''}>
-            <span>{player}</span>
-            <strong>{scores[player] ?? 0}</strong>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
-
-function CardView({ card, selectedIndexes, toggleIndex, revealed, onReveal, onPass, onNext, isLast }) {
-  const correctIndexes = expectedCorrectIndexes(card);
-
-  return (
-    <section className="panel">
-      <h2>
-        {card.topic} · Difficulty {card.difficulty} · {card.language}
-      </h2>
-      <p className="question">{card.question}</p>
-      <p>{STRINGS.passNote}</p>
-
-      <div className="options">
-        {card.options.map((option, index) => {
-          const selected = selectedIndexes.has(index);
-          const correct = revealed && correctIndexes.has(index);
-          const wrong = revealed && selected && !correctIndexes.has(index);
-          const className = ['option', selected ? 'selected' : '', correct ? 'correct' : '', wrong ? 'wrong' : '']
-            .filter(Boolean)
-            .join(' ');
-
-          return (
-            <button
-              key={`${card.id}-${index}`}
-              className={className}
-              onClick={() => toggleIndex(index)}
-              disabled={revealed}
-            >
-              {index + 1}. {option}
-            </button>
-          );
-        })}
-      </div>
-
-      <div className="actions">
-        {!revealed ? (
-          <>
-            <button onClick={onPass}>{STRINGS.pass}</button>
-            <button onClick={onReveal}>{STRINGS.reveal}</button>
-          </>
-        ) : (
-          <button onClick={onNext}>{isLast ? STRINGS.finish : STRINGS.next}</button>
-        )}
-      </div>
-    </section>
-  );
-}
-
-function RoundSummary({ players, scores, roundLength, onRestart }) {
-  const sorted = [...players].sort((a, b) => (scores[b] ?? 0) - (scores[a] ?? 0));
-
-  return (
-    <section className="panel">
-      <h1>{STRINGS.roundSummary}</h1>
-      <p>Round length: {roundLength} cards</p>
-      <ol>
-        {sorted.map((player) => (
-          <li key={player}>
-            {player}: <strong>{scores[player] ?? 0}</strong>
-          </li>
-        ))}
-      </ol>
-      <button onClick={onRestart}>{STRINGS.restart}</button>
+      <button onClick={onStart} type="button">
+        {STRINGS.startRound}
+      </button>
     </section>
   );
 }
@@ -233,6 +143,7 @@ export default function App() {
   const [selectedIndexes, setSelectedIndexes] = useState(new Set());
   const [revealed, setRevealed] = useState(false);
   const [sessionId, setSessionId] = useState('');
+  const [lastAction, setLastAction] = useState('Ready');
 
   useEffect(() => {
     async function loadTopics() {
@@ -263,6 +174,7 @@ export default function App() {
     setCardState('loading');
     setRevealed(false);
     setSelectedIndexes(new Set());
+    setLastAction('Loading card');
     try {
       const data = await fetchNextCard({
         topic: config.topic,
@@ -272,10 +184,12 @@ export default function App() {
       });
       setCard(data);
       setCardState('ready');
+      setLastAction('Card loaded');
     } catch (error) {
       console.error(error);
       setCardState('error');
       setCard(null);
+      setLastAction('Load failed');
     }
   }
 
@@ -292,6 +206,7 @@ export default function App() {
     setScores(nextScores);
     setCardIndex(0);
     setScreen('game');
+    setLastAction('Round started');
     await fetchCard(freshSessionId);
   }
 
@@ -314,6 +229,7 @@ export default function App() {
       ...prev,
       [currentPlayer]: (prev[currentPlayer] ?? 0) + delta
     }));
+    setLastAction(passed ? `${currentPlayer} passed` : `${currentPlayer} answered (${delta > 0 ? '+1' : '0'})`);
     setRevealed(true);
   }
 
@@ -321,6 +237,7 @@ export default function App() {
     const nextIndex = cardIndex + 1;
     if (nextIndex >= config.roundLength) {
       setScreen('summary');
+      setLastAction('Round complete');
       return;
     }
 
@@ -334,6 +251,7 @@ export default function App() {
     setCardState('idle');
     setSelectedIndexes(new Set());
     setRevealed(false);
+    setLastAction('Ready');
   }
 
   return (
@@ -351,18 +269,10 @@ export default function App() {
 
       {screen === 'game' ? (
         <>
-          <ScoreBoard
-            players={players}
-            scores={scores}
-            currentPlayerIndex={currentPlayerIndex}
-            cardIndex={cardIndex}
-            roundLength={config.roundLength}
-          />
-
           {cardState === 'loading' ? <p>{STRINGS.loadingCard}</p> : null}
           {cardState === 'error' ? <p className="error">{STRINGS.cardError}</p> : null}
           {cardState === 'ready' && card ? (
-            <CardView
+            <GameBoard
               card={card}
               selectedIndexes={selectedIndexes}
               toggleIndex={toggleIndex}
@@ -371,6 +281,14 @@ export default function App() {
               onPass={() => revealAndScore(true)}
               onNext={nextCard}
               isLast={cardIndex + 1 >= config.roundLength}
+              players={players}
+              scores={scores}
+              currentPlayerIndex={currentPlayerIndex}
+              cardIndex={cardIndex}
+              roundLength={config.roundLength}
+              passNote={STRINGS.passNote}
+              lastAction={lastAction}
+              correctIndexes={expectedCorrectIndexes(card)}
             />
           ) : null}
         </>
