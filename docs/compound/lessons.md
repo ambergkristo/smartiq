@@ -125,3 +125,12 @@
   - New test attempted PostgreSQL auth from environment instead of isolated H2 config and failed startup.
 - Preventive rule:
   - Every new Spring integration test must explicitly pin test datasource properties (H2 URL/user/pass) in test annotation.
+
+## 2026-02-17 - Loop 14 (Phase D Merge)
+
+- Hard part:
+  - Hardening internal/public endpoint boundaries without breaking public health and gameplay routes.
+- What broke:
+  - Security filter behavior can silently drift without prod-profile integration coverage.
+- Preventive rule:
+  - Every prod-only access control change must include MockMvc tests that assert both blocked and allowed paths.
