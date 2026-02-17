@@ -152,6 +152,14 @@ class CardControllerTest {
     }
 
     @Test
+    void versionEndpointIsAvailable() throws Exception {
+        mockMvc.perform(get("/version"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.commitSha").exists())
+                .andExpect(jsonPath("$.buildTime").exists());
+    }
+
+    @Test
     void poolStatsEndpointIsAvailable() throws Exception {
         mockMvc.perform(get("/internal/pool-stats"))
                 .andExpect(status().isOk());

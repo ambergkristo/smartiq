@@ -27,6 +27,9 @@ management:
       show-details: never
 
 smartiq:
+  build:
+    commit-sha: ${SMARTIQ_BUILD_SHA:unknown}
+    time: ${SMARTIQ_BUILD_TIME:unknown}
   import:
     enabled: ${SMARTIQ_IMPORT_ENABLED:true}
     path: ${SMARTIQ_IMPORT_PATH:../data/clean}
