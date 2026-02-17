@@ -35,3 +35,21 @@
   - Exclusion query requires separate handling for empty and non-empty exclusion sets.
 - Preventive rule:
   - For exclusion-based random fetches, always branch query path on whether exclusion set is empty.
+
+## 2026-02-17 - Loop 4 (Compound Follow-up PR Merge)
+
+- Hard part:
+  - Keeping mandatory compound-update cadence while multiple feature PRs are in-flight.
+- What broke:
+  - Merge sequencing can drift if compound PR is not treated as a first-class step.
+- Preventive rule:
+  - Reserve a dedicated post-merge slot for compound updates before starting the next feature PR.
+
+## 2026-02-17 - Loop 5 (PR3 Pipeline Hardening Merge)
+
+- Hard part:
+  - Applying stricter validator rules without stalling pipeline execution on legacy fixtures.
+- What broke:
+  - Full-directory validation failed because legacy files did not satisfy new option uniqueness checks.
+- Preventive rule:
+  - Validate the approved artifact generated in the same run, and track legacy fixture cleanup separately.
