@@ -145,6 +145,7 @@ Deployment target for MVP:
 - Database: Managed Postgres
 
 Detailed steps: `docs/deploy.md`
+Release gate checklist: `docs/release.md`
 
 Observability reference: `docs/observability.md`
 

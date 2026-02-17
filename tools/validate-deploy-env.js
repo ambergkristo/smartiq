@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 const requiredFrontend = ['VITE_API_BASE_URL'];
 const requiredBackend = [
+  'SPRING_PROFILES_ACTIVE',
   'SPRING_DATASOURCE_URL',
   'SPRING_DATASOURCE_USERNAME',
   'SPRING_DATASOURCE_PASSWORD',
-  'SMARTIQ_CORS_ALLOWED_ORIGIN_PUBLIC'
+  'SMARTIQ_CORS_ALLOWED_ORIGIN_PUBLIC',
+  'SMARTIQ_INTERNAL_API_KEY'
 ];
 
 function missing(vars) {

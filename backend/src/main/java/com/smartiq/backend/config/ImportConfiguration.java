@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Configuration;
         QuestionPoolProperties.class,
         SessionDedupProperties.class,
         CorsProperties.class,
-        BankEnforcerProperties.class
+        BankEnforcerProperties.class,
+        InternalAccessProperties.class
 })
 public class ImportConfiguration {
 }
