@@ -36,3 +36,4 @@
 - For observability rollouts, add an integration test that hits the expected actuator/internal endpoint.
 - After squash merge cycles, prefer `git checkout -B main origin/main` to avoid local drift.
 - For new gameplay sessions, use the freshly generated `sessionId` directly in the first backend request to avoid stale-state fetches.
+- For every new `@SpringBootTest`, define explicit H2 datasource properties in test-local config to avoid environment-leak failures.
