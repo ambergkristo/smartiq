@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface CardRepository extends JpaRepository<Card, String> {
 
@@ -23,6 +24,20 @@ public interface CardRepository extends JpaRepository<Card, String> {
     Optional<Card> findRandomByFilters(@Param("topic") String topic,
                                        @Param("difficulty") String difficulty,
                                        @Param("language") String language);
+
+    @Query(value = """
+            select * from cards
+            where (:topic is null or lower(topic) = lower(:topic))
+              and (:difficulty is null or lower(difficulty) = lower(:difficulty))
+              and (:language is null or lower(language) = lower(:language))
+              and id not in (:excludedIds)
+            order by random()
+            limit 1
+            """, nativeQuery = true)
+    Optional<Card> findRandomByFiltersExcludingIds(@Param("topic") String topic,
+                                                   @Param("difficulty") String difficulty,
+                                                   @Param("language") String language,
+                                                   @Param("excludedIds") Set<String> excludedIds);
 
     @Query(value = "select * from cards order by random() limit 1", nativeQuery = true)
     Optional<Card> findRandomOverall();

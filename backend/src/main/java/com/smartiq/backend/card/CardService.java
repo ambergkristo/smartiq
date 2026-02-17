@@ -34,6 +34,6 @@ public class CardService {
     }
 
     public CardResponse getNextCard(String topic, String difficulty, String sessionId, String language) {
-        return questionPoolService.nextCard(topic, difficulty, language);
+        return questionPoolService.nextCard(topic, difficulty, language, sessionId);
     }
 }
