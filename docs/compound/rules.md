@@ -6,6 +6,7 @@
 - Do include `(#issue)` in every commit message.
 - Do open PRs to `main` only.
 - Do merge PRs only after CI passes.
+- Do request reviewer assignment immediately for protected branches.
 - Do not commit directly to `main`.
 - Do not force-push `main`.
 - Do not rewrite history of merged PRs.
