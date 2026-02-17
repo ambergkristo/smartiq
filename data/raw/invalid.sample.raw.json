@@ -1,0 +1,13 @@
+[
+  {
+    "id": "invalid-1",
+    "topic": "Math",
+    "language": "en",
+    "question": "Broken sample question",
+    "options": [
+      "A",
+      "B"
+    ],
+    "source": "invalid-fixture"
+  }
+]

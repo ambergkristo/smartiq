@@ -1,0 +1,27 @@
+# Compound Rules
+
+## Git and PR
+
+- Do use only `feat/*`, `fix/*`, `chore/*` branches.
+- Do include `(#issue)` in every commit message.
+- Do open PRs to `main` only.
+- Do merge PRs only after CI passes.
+- Do not commit directly to `main`.
+- Do not force-push `main`.
+- Do not rewrite history of merged PRs.
+
+## CI and Secrets
+
+- Do keep CI enabled on every PR.
+- Do run backend and frontend checks before merge.
+- Do keep real secrets and API keys out of git.
+- Do maintain `.env.example` with placeholder values only.
+
+## Compound Loop
+
+- After every merged PR, update `docs/compound/lessons.md`.
+- After every merged PR, update `docs/compound/rules.md`.
+- In every PR description, include:
+  - what was hard
+  - what broke
+  - the rule to prevent it next time

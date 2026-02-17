@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/smartiq}
+    username: ${SPRING_DATASOURCE_USERNAME:smartiq}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+  h2:
+    console:
+      enabled: true
+
+smartiq:
+  import:
+    enabled: ${SMARTIQ_IMPORT_ENABLED:true}
+    path: ${SMARTIQ_IMPORT_PATH:../data/clean}

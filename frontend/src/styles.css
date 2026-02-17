@@ -1,0 +1,115 @@
+:root {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.45;
+  font-weight: 400;
+  color: #f5f7fa;
+  background: radial-gradient(circle at top, #1f3b59, #0d1622 65%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
+.panel {
+  background: rgba(11, 22, 34, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+}
+
+h1,
+h2 {
+  margin-top: 0;
+}
+
+select,
+button {
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  padding: 0.7rem;
+  margin-top: 0.75rem;
+  font-size: 1rem;
+}
+
+button {
+  background: #1d7cb8;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.question {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.option {
+  text-align: left;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.option.selected {
+  outline: 2px solid #69b8e6;
+}
+
+.option.correct {
+  background: #1d8b4e;
+}
+
+.option.wrong {
+  background: #9a2d2d;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.result {
+  margin-top: 0.9rem;
+  font-weight: 700;
+}
+
+.result.ok {
+  color: #8de1b1;
+}
+
+.result.fail {
+  color: #ffc2c2;
+}
+
+.error {
+  color: #ffb3b3;
+}
+
+@media (max-width: 620px) {
+  .actions {
+    grid-template-columns: 1fr;
+  }
+}
