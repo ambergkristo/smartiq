@@ -116,3 +116,12 @@
   - First card fetch could use stale `sessionId` state if fetch started before React state commit.
 - Preventive rule:
   - For first request in a new session, pass freshly generated session ID directly to API call, not through async state only.
+
+## 2026-02-17 - Loop 13 (Phase C Merge)
+
+- Hard part:
+  - Adding new import-focused integration tests without inheriting machine-specific datasource settings.
+- What broke:
+  - New test attempted PostgreSQL auth from environment instead of isolated H2 config and failed startup.
+- Preventive rule:
+  - Every new Spring integration test must explicitly pin test datasource properties (H2 URL/user/pass) in test annotation.
