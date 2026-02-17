@@ -61,9 +61,10 @@ Endpoints:
 ## Game Flow v1
 
 - Start screen allows selecting `topic`, `difficulty` (1-3), `language`, round length, and player names.
-- Game screen fetches cards from `GET /api/cards/next` and renders 10 options.
-- Players can select multiple options, then use `Reveal / Check` or `Pass (keep points)`.
+- Game board fetches cards from `GET /api/cards/next` and renders 10 answer tiles.
+- Players use `ANSWER -> LOCK IN` or `PASS`, then continue with `NEXT`.
 - Round rotates turns by player and shows a summary after the configured card count.
+- Full UI/state-machine reference: `docs/ui.md`.
 
 ## Validation Commands
 
@@ -81,6 +82,13 @@ cd frontend
 npm ci
 npm run lint
 npm run build
+```
+
+Frontend tests:
+
+```bash
+cd frontend
+npm run test -- --run
 ```
 
 Data validation:
