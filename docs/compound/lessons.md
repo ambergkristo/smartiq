@@ -26,3 +26,12 @@
   - During tests, pool could be empty before fixture setup, causing false assumptions about warmup state.
 - Preventive rule:
   - All pool-backed endpoints must include deterministic DB fallback and explicit warning logs.
+
+## 2026-02-17 - Loop 3 (PR2 Session De-dup)
+
+- Hard part:
+  - Combining pool-based retrieval with per-session exclusion logic while preserving fallback reliability.
+- What broke:
+  - Exclusion query requires separate handling for empty and non-empty exclusion sets.
+- Preventive rule:
+  - For exclusion-based random fetches, always branch query path on whether exclusion set is empty.

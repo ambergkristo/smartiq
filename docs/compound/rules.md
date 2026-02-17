@@ -27,3 +27,4 @@
   - what was hard
   - what broke
   - the rule to prevent it next time
+- For session-dedup APIs, include tests that make repeated requests for the same session and assert non-duplication.
