@@ -29,5 +29,13 @@ export default [
       'no-unused-vars': 'off',
       'no-console': ['warn', { allow: ['error'] }]
     }
+  },
+  {
+    files: ['**/*.test.{js,jsx,ts,tsx}'],
+    languageOptions: {
+      globals: {
+        ...globals.vitest
+      }
+    }
   }
 ];
