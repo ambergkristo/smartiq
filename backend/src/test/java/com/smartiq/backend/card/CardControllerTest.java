@@ -143,4 +143,11 @@ class CardControllerTest {
         String secondId = JsonPath.read(second.getResponse().getContentAsString(), "$.id");
         org.junit.jupiter.api.Assertions.assertNotEquals(firstId, secondId);
     }
+
+    @Test
+    void healthEndpointIsUp() throws Exception {
+        mockMvc.perform(get("/health"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("UP"));
+    }
 }
