@@ -30,3 +30,6 @@ out/
 # OS
 .DS_Store
 Thumbs.db
+
+# Pipeline runtime state
+data/review/generation-budget.json

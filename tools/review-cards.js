@@ -79,24 +79,31 @@ function main() {
   const duplicatesFile = path.join(reviewDir, `duplicates.${stamp}.json`);
   const approvedFile = path.join(reviewDir, `approved.${stamp}.json`);
   const reportFile = path.join(reviewDir, `report.${stamp}.json`);
+  const latestDuplicatesFile = path.join(reviewDir, 'duplicates.latest.json');
+  const latestReportFile = path.join(reviewDir, 'report.latest.json');
 
   fs.writeFileSync(flaggedFile, `${JSON.stringify(flagged, null, 2)}\n`, 'utf8');
   fs.writeFileSync(duplicatesFile, `${JSON.stringify(duplicates, null, 2)}\n`, 'utf8');
   fs.writeFileSync(approvedFile, `${JSON.stringify(approved, null, 2)}\n`, 'utf8');
-  fs.writeFileSync(reportFile, `${JSON.stringify({
+  const reportPayload = {
     inputFile: path.relative(process.cwd(), absoluteInput),
     total: cards.length,
     approved: approved.length,
     flagged: flagged.length,
     duplicates: duplicates.length,
     generatedAt: new Date().toISOString()
-  }, null, 2)}\n`, 'utf8');
+  };
+  fs.writeFileSync(reportFile, `${JSON.stringify(reportPayload, null, 2)}\n`, 'utf8');
+  fs.copyFileSync(duplicatesFile, latestDuplicatesFile);
+  fs.copyFileSync(reportFile, latestReportFile);
 
   console.log(`Review complete. Approved: ${approved.length}, Flagged: ${flagged.length}`);
   console.log(`- ${path.relative(process.cwd(), approvedFile)}`);
   console.log(`- ${path.relative(process.cwd(), flaggedFile)}`);
   console.log(`- ${path.relative(process.cwd(), duplicatesFile)}`);
   console.log(`- ${path.relative(process.cwd(), reportFile)}`);
+  console.log(`- ${path.relative(process.cwd(), latestDuplicatesFile)}`);
+  console.log(`- ${path.relative(process.cwd(), latestReportFile)}`);
 }
 
 main();

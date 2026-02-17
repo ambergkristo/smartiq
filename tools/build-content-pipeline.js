@@ -35,6 +35,7 @@ function main() {
   fs.copyFileSync(latestApproved, cleanTarget);
   console.log(`Updated clean dataset: ${path.relative(process.cwd(), cleanTarget)}`);
 
+  run('node tools/review-summary.js');
   run(`node tools/validate-cards.js ${cleanTarget}`);
 }
 

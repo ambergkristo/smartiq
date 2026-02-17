@@ -95,6 +95,18 @@ Content refresh pipeline (generate -> review -> validate):
 npm run pipeline:cards
 ```
 
+Review artifact summary:
+
+```bash
+npm run review:summary
+```
+
+Golden dataset validation:
+
+```bash
+npm run test:golden
+```
+
 Scale generation target for runtime planning:
 
 ```bash

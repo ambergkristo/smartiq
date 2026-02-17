@@ -34,7 +34,29 @@ jobs:
       - name: Generate + review + validate content
         env:
           TARGET_PER_KEY: 1000
+          MAX_GENERATION_PER_RUN: 10000
+          MAX_DAILY_GENERATION: 10000
         run: npm run pipeline:cards
+
+      - name: Validate golden dataset
+        run: npm run test:golden
+
+      - name: Build review summary for PR
+        run: |
+          node tools/review-summary.js > review-summary.md
+          {
+            echo "PR_BODY<<EOF"
+            echo "## Summary"
+            echo "- run monthly generate -> review -> validate pipeline"
+            echo "- update raw, review, and clean card artifacts"
+            echo
+            cat review-summary.md
+            echo
+            echo "## Validation"
+            echo "- \`npm run pipeline:cards\`"
+            echo "- \`npm run test:golden\`"
+            echo "EOF"
+          } >> $GITHUB_ENV
 
       - name: Compute branch name
         run: echo "REFRESH_BRANCH=chore/content-refresh-$(date -u +%Y%m)" >> $GITHUB_ENV
@@ -47,13 +69,7 @@ jobs:
           branch: ${{ env.REFRESH_BRANCH }}
           commit-message: "chore(data): monthly content refresh"
           title: "chore(data): monthly content refresh"
-          body: |
-            ## Summary
-            - run monthly generate -> review -> validate pipeline
-            - update raw, review, and clean card artifacts
-
-            ## Validation
-            - `npm run pipeline:cards`
+          body: ${{ env.PR_BODY }}
           labels: |
             chore
           delete-branch: false
