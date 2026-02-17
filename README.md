@@ -90,6 +90,11 @@ Scale generation target for runtime planning:
 TARGET_PER_KEY=1000 npm run pipeline:cards
 ```
 
+Monthly scheduler:
+
+- GitHub Actions workflow: `.github/workflows/content-refresh.yml`
+- Schedule: first day of each month at 03:00 UTC
+
 Question pool sizing (backend env vars):
 
 ```bash

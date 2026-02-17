@@ -19,3 +19,11 @@ For production-scale rehearsal:
 ```bash
 TARGET_PER_KEY=1000 npm run pipeline:cards
 ```
+
+## Scheduled Automation
+
+GitHub Actions scheduler is defined in `.github/workflows/content-refresh.yml`:
+
+- cron: `0 3 1 * *` (every month on day 1 at 03:00 UTC)
+- flow: generate -> review -> merge approved -> validate
+- auto PR branch format: `chore/content-refresh-YYYYMM`
