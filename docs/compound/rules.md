@@ -17,6 +17,7 @@
 - Do run backend and frontend checks before merge.
 - Do keep real secrets and API keys out of git.
 - Do maintain `.env.example` with placeholder values only.
+- Do require fallback paths for any cache/pool-dependent API route.
 
 ## Compound Loop
 
