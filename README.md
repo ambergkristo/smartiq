@@ -38,3 +38,11 @@ The `dev:all` command currently validates that both workspaces are present and i
 
 - Backend workflow runs Maven tests and build.
 - Frontend workflow runs npm install, lint, and build.
+
+## Data Pipeline
+
+- Raw card inputs live in `data/raw/`.
+- QA-approved card inputs live in `data/clean/`.
+- Validate cards before import with:
+  - `node tools/validate-cards.js data/clean`
+- Pipeline details: `docs/data-pipeline.md`
