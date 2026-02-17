@@ -17,3 +17,12 @@
   - Self-approval is disallowed, so standard merge flow could not complete from a single-account automation context.
 - Preventive rule:
   - For protected branches, assign a reviewer at PR creation time and avoid end-of-cycle merge blocking.
+
+## 2026-02-17 - Loop 2 (PR1 Question Pool)
+
+- Hard part:
+  - Building pool behavior that handles under-filled banks without returning server errors.
+- What broke:
+  - During tests, pool could be empty before fixture setup, causing false assumptions about warmup state.
+- Preventive rule:
+  - All pool-backed endpoints must include deterministic DB fallback and explicit warning logs.
