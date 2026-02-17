@@ -62,3 +62,12 @@
   - `git pull --ff-only` failed due local divergence against updated origin/main.
 - Preventive rule:
   - If `--ff-only` fails during loop execution, rebase immediately on `origin/main` before any new branch work.
+
+## 2026-02-17 - Loop 7 (PR4 Scheduler Merge)
+
+- Hard part:
+  - Verifying scheduler command path without polluting PR scope with regenerated data artifacts.
+- What broke:
+  - Local verification rewrote generated files and introduced noisy, non-goal diffs.
+- Preventive rule:
+  - For workflow-only PRs, restore generated artifacts unless artifact updates are explicitly part of scope.

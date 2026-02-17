@@ -30,3 +30,4 @@
 - For session-dedup APIs, include tests that make repeated requests for the same session and assert non-duplication.
 - Treat compound-update PR merge as a required gate before starting the next feature branch.
 - When `git pull --ff-only` fails, run `git rebase origin/main` before continuing.
+- For scheduler/config PRs, avoid committing generated artifact churn unless explicitly required.
