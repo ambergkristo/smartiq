@@ -35,6 +35,7 @@ h2 {
 }
 
 select,
+input,
 button {
   width: 100%;
   border-radius: 10px;
@@ -106,6 +107,26 @@ button:disabled {
 
 .error {
   color: #ffb3b3;
+}
+
+.scoreboard ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.scoreboard li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.scoreboard li.active-player {
+  border: 1px solid #69b8e6;
 }
 
 @media (max-width: 620px) {
