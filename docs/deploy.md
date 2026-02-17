@@ -48,6 +48,8 @@ Create a Vercel project from this repository:
 Set frontend environment variable:
 
 - `VITE_API_BASE_URL=https://<your-backend-domain>`
+- Optional alias: `VITE_BACKEND_URL=https://<your-backend-domain>`
+- Team-facing var naming: `BACKEND_URL=https://<your-backend-domain>` (map to `VITE_*` in Vercel env)
 
 Validate deployment env vars locally:
 
@@ -60,3 +62,9 @@ npm run validate:deploy-env
 1. `GET https://<backend-domain>/health` returns `{\"status\":\"UP\"}`.
 2. Frontend loads topics from backend.
 3. `/api/cards/next` works from deployed frontend domain without CORS errors.
+
+Public smoke test command:
+
+```bash
+BACKEND_URL=https://<backend-domain> npm run smoke:test
+```

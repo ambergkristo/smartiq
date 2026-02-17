@@ -48,6 +48,7 @@ Endpoints:
 - Frontend: `http://localhost:5173`
 - Backend API: `http://localhost:8080/api`
 - Backend health: `http://localhost:8080/health`
+- Backend version: `http://localhost:8080/version`
 - Backend metrics: `http://localhost:8080/actuator/prometheus`
 - Internal pool stats: `http://localhost:8080/internal/pool-stats`
 
@@ -97,6 +98,12 @@ Load test (500 sessions / 10k requests default):
 
 ```bash
 npm run load:test
+```
+
+Public smoke test:
+
+```bash
+BACKEND_URL=https://<backend-domain> npm run smoke:test
 ```
 
 Stability gate (production readiness check):

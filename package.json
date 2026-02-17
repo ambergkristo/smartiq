@@ -11,6 +11,7 @@
     "validate:cards": "node tools/validate-cards.js data/clean",
     "pipeline:cards": "node tools/build-content-pipeline.js",
     "load:test": "node tools/load-test.js",
+    "smoke:test": "node tools/smoke-test.js",
     "validate:deploy-env": "node tools/validate-deploy-env.js",
     "stability:gate": "node tools/stability-gate.js"
   },
