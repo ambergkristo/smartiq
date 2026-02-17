@@ -290,3 +290,7 @@ node scripts/verify_runtime_deck.js
 
 - Backend workflow: `mvn -q test` + package build.
 - Frontend workflow: `npm ci` + `npm run lint` + `npm run build`.
+
+## Contributing
+
+See `CONTRIBUTING.md` for branch, validation, and PR expectations.

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: SmartIQ documentation
+    url: https://github.com/ambergkristo/smartiq/tree/main/docs
+    about: Check project docs before opening a new issue.
