@@ -23,8 +23,8 @@ function makeCard(id, correctIndex = 0) {
   };
 }
 
-describe('App gameplay flow', () => {
-  test('plays a happy path with answer and pass', async () => {
+describe('App Smart10 round flow', () => {
+  test('plays one-card round and advances to next round', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
     fetchNextCard
       .mockResolvedValueOnce(makeCard('c1', 0))
@@ -32,19 +32,23 @@ describe('App gameplay flow', () => {
 
     render(<App />);
 
-    await waitFor(() => expect(screen.getByRole('button', { name: /start round/i })).toBeInTheDocument());
-    fireEvent.click(screen.getByRole('button', { name: /start round/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
+    fireEvent.change(screen.getByLabelText(/players/i), { target: { value: 'Alice,Bob' } });
+    fireEvent.click(screen.getByRole('button', { name: /start game/i }));
 
     await waitFor(() => expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument());
-    fireEvent.click(screen.getByRole('button', { name: /alpha/i }));
+    fireEvent.click(screen.getByRole('button', { name: /beta/i }));
     fireEvent.click(screen.getByRole('button', { name: /answer/i }));
-    fireEvent.click(screen.getByRole('button', { name: /check/i }));
-
-    expect(screen.getByText(/last action:/i)).toHaveTextContent('+1');
-    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+    fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^next$/i }));
 
     await waitFor(() => expect(screen.getByRole('button', { name: /pass/i })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /pass/i }));
-    expect(screen.getByText(/last action:/i)).toHaveTextContent('passed');
+    fireEvent.click(screen.getByRole('button', { name: /^next$/i }));
+
+    await waitFor(() => expect(screen.getByRole('heading', { name: /round summary/i })).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /next round/i }));
+
+    await waitFor(() => expect(screen.getByText(/question c2/i)).toBeInTheDocument());
   });
 });

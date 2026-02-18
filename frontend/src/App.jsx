@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { fetchNextCard, fetchTopics, resolveCardErrorMessage } from './api';
 import GameBoard from './components/GameBoard';
 import RoundSummary from './components/RoundSummary';
@@ -8,15 +8,15 @@ import { DEFAULT_LANGS, GamePhase } from './state/types';
 
 const STRINGS = {
   title: 'SmartIQ',
-  subtitle: 'Configure a round and start playing.',
+  subtitle: 'Configure players and play Smart10-style rounds.',
   loadingTopics: 'Loading topics...',
   loadError: 'Could not load topics.',
   noTopics: 'No topics available.',
-  startRound: 'Start round',
-  loadingCard: 'Loading next card...',
-  cardError: 'Could not load card for current settings.',
+  startRound: 'Start game',
+  loadingCard: 'Loading round card...',
   retry: 'Retry',
-  passNote: 'Pass keeps current score unchanged.'
+  passNote: 'Pass keeps points and skips your turn for this round.',
+  cardErrorFallback: 'Fallback mode: backend is unavailable right now. Retry to continue.'
 };
 const SESSION_STORAGE_KEY = 'smartiq.sessionId';
 const CONFIG_STORAGE_KEY = 'smartiq.roundConfig';
@@ -67,17 +67,6 @@ function StartScreen({ topics, config, setConfig, onStart }) {
         ))}
       </select>
 
-      <label htmlFor="roundLength">Cards in round</label>
-      <select
-        id="roundLength"
-        value={config.roundLength}
-        onChange={(event) => setConfig((prev) => ({ ...prev, roundLength: Number(event.target.value) }))}
-      >
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="15">15</option>
-      </select>
-
       <label htmlFor="players">Players (comma separated)</label>
       <input
         id="players"
@@ -104,7 +93,6 @@ function loadStoredConfig() {
       topic: typeof parsed.topic === 'string' ? parsed.topic : '',
       difficulty: ['1', '2', '3'].includes(String(parsed.difficulty)) ? String(parsed.difficulty) : '2',
       lang: DEFAULT_LANGS.includes(parsed.lang) ? parsed.lang : 'en',
-      roundLength: [5, 10, 15].includes(Number(parsed.roundLength)) ? Number(parsed.roundLength) : 10,
       playersText: typeof parsed.playersText === 'string' && parsed.playersText.trim() ? parsed.playersText : 'Player 1'
     };
   } catch {
@@ -120,14 +108,13 @@ export default function App() {
     topic: storedConfig?.topic ?? '',
     difficulty: storedConfig?.difficulty ?? '2',
     lang: storedConfig?.lang ?? 'en',
-    roundLength: storedConfig?.roundLength ?? 10,
     playersText: storedConfig?.playersText ?? 'Player 1'
   });
   const [sessionId, setSessionId] = useState('');
   const [cardError, setCardError] = useState('');
   const recentCardIdsRef = useRef([]);
 
-  const engine = useGameEngine(config.roundLength);
+  const engine = useGameEngine(30);
   const { phase, loadTicket, cardLoaded, cardLoadFailed } = engine;
 
   useEffect(() => {
@@ -187,22 +174,13 @@ export default function App() {
         cardLoaded(card);
       } catch (error) {
         console.error(error);
-        setCardError(resolveCardErrorMessage(error));
+        setCardError(resolveCardErrorMessage(error) || STRINGS.cardErrorFallback);
         cardLoadFailed();
       }
     }
 
     loadCard();
-  }, [
-    loadTicket,
-    cardLoaded,
-    cardLoadFailed,
-    phase,
-    sessionId,
-    config.topic,
-    config.difficulty,
-    config.lang
-  ]);
+  }, [loadTicket, cardLoaded, cardLoadFailed, phase, sessionId, config.topic, config.difficulty, config.lang]);
 
   function handleStartRound() {
     const freshSessionId = globalThis.crypto?.randomUUID?.() || `session-${Date.now()}`;
@@ -210,10 +188,6 @@ export default function App() {
     localStorage.setItem(SESSION_STORAGE_KEY, freshSessionId);
     recentCardIdsRef.current = [];
     engine.startRound(config.playersText);
-  }
-
-  function handleNext() {
-    engine.nextStep();
   }
 
   function handleRestart() {
@@ -234,7 +208,7 @@ export default function App() {
         </>
       ) : null}
 
-      {engine.phase !== GamePhase.SETUP && engine.phase !== GamePhase.ROUND_SUMMARY ? (
+      {engine.phase !== GamePhase.SETUP && engine.phase !== GamePhase.ROUND_SUMMARY && engine.phase !== GamePhase.GAME_OVER ? (
         <>
           {engine.phase === GamePhase.LOADING_CARD ? <p>{STRINGS.loadingCard}</p> : null}
           {cardError ? (
@@ -249,37 +223,41 @@ export default function App() {
             <GameBoard
               card={engine.card}
               selectedIndexes={engine.selectedIndexes}
+              revealedIndexes={engine.revealedIndexes}
+              wrongIndexes={engine.wrongIndexes}
               toggleIndex={engine.toggleOption}
               phase={engine.phase}
               onAnswer={engine.requestConfirm}
               onConfirm={engine.confirmAnswer}
               onCancelConfirm={engine.cancelConfirm}
               onPass={engine.passTurn}
-              onNext={handleNext}
-              isLast={engine.cardIndex + 1 >= config.roundLength}
+              onNext={engine.nextStep}
               players={engine.players}
               scores={engine.scores}
               currentPlayerIndex={engine.currentPlayerIndex}
-              cardIndex={engine.cardIndex}
-              roundLength={config.roundLength}
+              roundNumber={engine.roundNumber}
               passNote={STRINGS.passNote}
               lastAction={engine.lastAction}
               currentPlayer={engine.currentPlayer}
+              targetScore={engine.targetScore}
+              eliminatedPlayers={engine.eliminatedPlayers}
+              passedPlayers={engine.passedPlayers}
               correctIndexes={expectedCorrectIndexes(engine.card)}
             />
           ) : null}
         </>
       ) : null}
 
-      {engine.phase === GamePhase.ROUND_SUMMARY ? (
+      {engine.phase === GamePhase.ROUND_SUMMARY || engine.phase === GamePhase.GAME_OVER ? (
         <RoundSummary
           players={engine.players}
           scores={engine.scores}
-          roundLength={config.roundLength}
+          roundNumber={engine.roundNumber}
+          onNextRound={engine.nextStep}
           onRestart={handleRestart}
+          winner={engine.winner}
         />
       ) : null}
     </main>
   );
 }
-

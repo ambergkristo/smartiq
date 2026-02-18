@@ -2,20 +2,27 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import AnswerTile from './AnswerTile';
 import PlayersPanel from './PlayersPanel';
 
-function getTileState(index, selectedIndexes, revealed, correctIndexes) {
-  const selected = selectedIndexes.has(index);
-  if (!revealed) {
-    return selected ? 'selected' : 'hidden';
-  }
-  if (correctIndexes.has(index)) {
+function getTileState(index, selectedIndexes, correctIndexes, revealedIndexes, wrongIndexes) {
+  if (revealedIndexes.has(index)) {
     return 'correct';
   }
-  return selected ? 'wrong' : 'revealed';
+  if (wrongIndexes.has(index)) {
+    return 'wrong';
+  }
+  if (selectedIndexes.has(index)) {
+    return 'selected';
+  }
+  if (correctIndexes.has(index)) {
+    return 'hidden';
+  }
+  return 'hidden';
 }
 
 export default function GameBoard({
   card,
   selectedIndexes,
+  revealedIndexes,
+  wrongIndexes,
   toggleIndex,
   phase,
   onAnswer,
@@ -23,18 +30,18 @@ export default function GameBoard({
   onCancelConfirm,
   onPass,
   onNext,
-  isLast,
   players,
   scores,
   currentPlayerIndex,
-  cardIndex,
-  roundLength,
+  roundNumber,
   passNote,
   lastAction,
   currentPlayer,
+  targetScore,
+  eliminatedPlayers,
+  passedPlayers,
   correctIndexes
 }) {
-  const revealed = phase === 'RESOLVED' || phase === 'PASSED';
   const canChoose = phase === 'CHOOSING' || phase === 'CONFIRMING';
   const phaseLabel = phase.replace('_', ' ').toLowerCase();
   const layoutRef = useRef(null);
@@ -75,11 +82,13 @@ export default function GameBoard({
         players={players}
         scores={scores}
         currentPlayerIndex={currentPlayerIndex}
-        cardIndex={cardIndex}
-        roundLength={roundLength}
+        roundNumber={roundNumber}
         lastAction={lastAction}
         phaseLabel={phaseLabel}
         currentPlayer={currentPlayer}
+        targetScore={targetScore}
+        eliminatedPlayers={eliminatedPlayers}
+        passedPlayers={passedPlayers}
       />
 
       <div className="center-board board-surface">
@@ -100,7 +109,7 @@ export default function GameBoard({
                   key={`${card.id}-${index}`}
                   index={index}
                   option={option}
-                  state={getTileState(index, selectedIndexes, revealed, correctIndexes)}
+                  state={getTileState(index, selectedIndexes, correctIndexes, revealedIndexes, wrongIndexes)}
                   onClick={() => toggleIndex(index)}
                   disabled={!canChoose}
                 />
@@ -120,7 +129,7 @@ export default function GameBoard({
                   <AnswerTile
                     index={index}
                     option={option}
-                    state={getTileState(index, selectedIndexes, revealed, correctIndexes)}
+                    state={getTileState(index, selectedIndexes, correctIndexes, revealedIndexes, wrongIndexes)}
                     onClick={() => toggleIndex(index)}
                     disabled={!canChoose}
                   />
@@ -144,7 +153,7 @@ export default function GameBoard({
           {phase === 'CONFIRMING' ? (
             <>
               <button onClick={onConfirm} type="button">
-                CHECK
+                LOCK IN
               </button>
               <button onClick={onCancelConfirm} type="button">
                 BACK
@@ -153,7 +162,7 @@ export default function GameBoard({
           ) : null}
           {phase === 'RESOLVED' || phase === 'PASSED' ? (
             <button onClick={onNext} type="button">
-              {isLast ? 'ROUND END' : 'NEXT'}
+              NEXT
             </button>
           ) : null}
           {phase === 'LOADING_CARD' ? (

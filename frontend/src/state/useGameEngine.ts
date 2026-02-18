@@ -1,6 +1,8 @@
 import { useCallback, useMemo, useState } from 'react';
 import { DEFAULT_PLAYERS, GamePhase } from './types';
-import { scoreDelta } from './scoring';
+import { expectedCorrectIndexes } from './scoring';
+
+const TARGET_SCORE_DEFAULT = 30;
 
 function normalizePlayers(raw) {
   const players = raw
@@ -17,33 +19,64 @@ function initialScores(players) {
   }, {});
 }
 
-export function useGameEngine(roundLength) {
+function nextActiveIndex(players, startIndex, eliminatedPlayers, passedPlayers) {
+  if (players.length === 0) return 0;
+
+  for (let step = 1; step <= players.length; step += 1) {
+    const idx = (startIndex + step) % players.length;
+    const player = players[idx];
+    if (!eliminatedPlayers.has(player) && !passedPlayers.has(player)) {
+      return idx;
+    }
+  }
+
+  return -1;
+}
+
+export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   const [phase, setPhase] = useState(GamePhase.SETUP);
   const [players, setPlayers] = useState(DEFAULT_PLAYERS);
   const [scores, setScores] = useState({ 'Player 1': 0 });
-  const [cardIndex, setCardIndex] = useState(0);
+  const [roundNumber, setRoundNumber] = useState(0);
   const [card, setCard] = useState(null);
   const [selectedIndexes, setSelectedIndexes] = useState(new Set());
+  const [revealedIndexes, setRevealedIndexes] = useState(new Set());
+  const [wrongIndexes, setWrongIndexes] = useState(new Set());
+  const [eliminatedPlayers, setEliminatedPlayers] = useState(new Set());
+  const [passedPlayers, setPassedPlayers] = useState(new Set());
   const [lastAction, setLastAction] = useState('Ready');
   const [loadTicket, setLoadTicket] = useState(0);
-
-  const currentPlayerIndex = useMemo(() => {
-    if (players.length === 0) return 0;
-    return cardIndex % players.length;
-  }, [cardIndex, players]);
+  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+  const [winner, setWinner] = useState(null);
 
   const currentPlayer = players[currentPlayerIndex] ?? 'Player 1';
+
+  const allSlotsResolved = useMemo(() => {
+    if (!card?.options?.length) return false;
+    return revealedIndexes.size + wrongIndexes.size >= card.options.length;
+  }, [card, revealedIndexes, wrongIndexes]);
+
+  const noPlayersAvailable = useMemo(() => {
+    if (players.length === 0) return true;
+    return players.every((player) => eliminatedPlayers.has(player) || passedPlayers.has(player));
+  }, [eliminatedPlayers, passedPlayers, players]);
 
   const startRound = useCallback((playersText) => {
     const normalizedPlayers = normalizePlayers(playersText);
     setPlayers(normalizedPlayers);
     setScores(initialScores(normalizedPlayers));
-    setCardIndex(0);
+    setRoundNumber(1);
     setCard(null);
     setSelectedIndexes(new Set());
+    setRevealedIndexes(new Set());
+    setWrongIndexes(new Set());
+    setEliminatedPlayers(new Set());
+    setPassedPlayers(new Set());
+    setCurrentPlayerIndex(0);
+    setWinner(null);
     setPhase(GamePhase.LOADING_CARD);
     setLoadTicket((value) => value + 1);
-    setLastAction('Round started');
+    setLastAction('Game started');
     return normalizedPlayers;
   }, []);
 
@@ -51,16 +84,26 @@ export function useGameEngine(roundLength) {
     setPhase(GamePhase.LOADING_CARD);
     setCard(null);
     setSelectedIndexes(new Set());
+    setRevealedIndexes(new Set());
+    setWrongIndexes(new Set());
+    setEliminatedPlayers(new Set());
+    setPassedPlayers(new Set());
+    setCurrentPlayerIndex(0);
     setLoadTicket((value) => value + 1);
-    setLastAction('Loading card');
+    setLastAction('Loading round card');
   }, []);
 
   const cardLoaded = useCallback((nextCard) => {
     setCard(nextCard);
     setSelectedIndexes(new Set());
+    setRevealedIndexes(new Set());
+    setWrongIndexes(new Set());
+    setEliminatedPlayers(new Set());
+    setPassedPlayers(new Set());
+    setCurrentPlayerIndex(0);
     setPhase(GamePhase.CHOOSING);
-    setLastAction('Card loaded');
-  }, []);
+    setLastAction(`Round ${roundNumber} card loaded`);
+  }, [roundNumber]);
 
   const cardLoadFailed = useCallback(() => {
     setPhase(GamePhase.LOADING_CARD);
@@ -70,19 +113,21 @@ export function useGameEngine(roundLength) {
 
   const toggleOption = useCallback((index) => {
     if (phase !== GamePhase.CHOOSING && phase !== GamePhase.CONFIRMING) return;
+    if (revealedIndexes.has(index) || wrongIndexes.has(index)) return;
+
     setSelectedIndexes((prev) => {
-      const next = new Set(prev);
-      if (next.has(index)) next.delete(index);
-      else next.add(index);
-      return next;
+      if (prev.has(index) && prev.size === 1) {
+        return new Set();
+      }
+      return new Set([index]);
     });
     setPhase(GamePhase.CHOOSING);
-  }, [phase]);
+  }, [phase, revealedIndexes, wrongIndexes]);
 
   const requestConfirm = useCallback(() => {
-    if (phase !== GamePhase.CHOOSING) return;
+    if (phase !== GamePhase.CHOOSING || selectedIndexes.size === 0) return;
     setPhase(GamePhase.CONFIRMING);
-  }, [phase]);
+  }, [phase, selectedIndexes]);
 
   const cancelConfirm = useCallback(() => {
     if (phase !== GamePhase.CONFIRMING) return;
@@ -90,41 +135,109 @@ export function useGameEngine(roundLength) {
   }, [phase]);
 
   const confirmAnswer = useCallback(() => {
-    if (!card) return;
-    const delta = scoreDelta(card, selectedIndexes, false);
-    setScores((prev) => ({
-      ...prev,
-      [currentPlayer]: (prev[currentPlayer] ?? 0) + delta
-    }));
+    if (!card || selectedIndexes.size === 0) return;
+    const selectedIndex = [...selectedIndexes][0];
+    const correctIndexes = expectedCorrectIndexes(card);
+    const isCorrect = correctIndexes.has(selectedIndex);
+
+    if (isCorrect) {
+      const nextScore = (scores[currentPlayer] ?? 0) + 1;
+      const reachedTarget = nextScore >= targetScore;
+      setScores((prev) => ({
+        ...prev,
+        [currentPlayer]: nextScore
+      }));
+      setRevealedIndexes((prev) => new Set(prev).add(selectedIndex));
+      if (reachedTarget) {
+        setWinner(currentPlayer);
+        setPhase(GamePhase.GAME_OVER);
+        setLastAction(`${currentPlayer} reached ${targetScore} points`);
+        return;
+      }
+      setLastAction(`${currentPlayer} answered correctly (+1)`);
+    } else {
+      setWrongIndexes((prev) => new Set(prev).add(selectedIndex));
+      setEliminatedPlayers((prev) => new Set(prev).add(currentPlayer));
+      setLastAction(`${currentPlayer} answered wrong (eliminated)`);
+    }
+
     setPhase(GamePhase.RESOLVED);
-    setLastAction(`${currentPlayer} answered (${delta > 0 ? '+1' : '0'})`);
-  }, [card, currentPlayer, selectedIndexes]);
+  }, [card, currentPlayer, scores, selectedIndexes, targetScore]);
 
   const passTurn = useCallback(() => {
+    if (phase !== GamePhase.CHOOSING) return;
+    setPassedPlayers((prev) => new Set(prev).add(currentPlayer));
     setPhase(GamePhase.PASSED);
     setLastAction(`${currentPlayer} passed`);
-  }, [currentPlayer]);
+  }, [currentPlayer, phase]);
 
   const nextStep = useCallback(() => {
-    const nextIndex = cardIndex + 1;
-    if (nextIndex >= roundLength) {
-      setPhase(GamePhase.ROUND_SUMMARY);
-      setLastAction('Round complete');
-      return { done: true };
+    if (phase === GamePhase.ROUND_SUMMARY) {
+      setRoundNumber((prev) => prev + 1);
+      beginCardLoad();
+      return { done: false };
     }
-    setCardIndex(nextIndex);
-    setCard(null);
+
+    if (phase !== GamePhase.RESOLVED && phase !== GamePhase.PASSED) {
+      return { done: false };
+    }
+
+    const resolved = allSlotsResolved;
+    const blocked = noPlayersAvailable;
+
+    if (resolved || blocked) {
+      const top = [...players].sort((a, b) => (scores[b] ?? 0) - (scores[a] ?? 0))[0] ?? null;
+      const topScore = top ? scores[top] ?? 0 : 0;
+
+      if (topScore >= targetScore) {
+        setWinner(top);
+        setPhase(GamePhase.GAME_OVER);
+        setLastAction(`${top} reached ${targetScore} points`);
+        return { done: true, winner: top };
+      }
+
+      setPhase(GamePhase.ROUND_SUMMARY);
+      setLastAction(`Round ${roundNumber} complete`);
+      return { done: false };
+    }
+
+    const nextIdx = nextActiveIndex(players, currentPlayerIndex, eliminatedPlayers, passedPlayers);
+    if (nextIdx < 0) {
+      setPhase(GamePhase.ROUND_SUMMARY);
+      setLastAction(`Round ${roundNumber} complete`);
+      return { done: false };
+    }
+
+    setCurrentPlayerIndex(nextIdx);
     setSelectedIndexes(new Set());
-    setPhase(GamePhase.LOADING_CARD);
-    setLoadTicket((value) => value + 1);
+    setPhase(GamePhase.CHOOSING);
     return { done: false };
-  }, [cardIndex, roundLength]);
+  }, [
+    allSlotsResolved,
+    beginCardLoad,
+    currentPlayerIndex,
+    eliminatedPlayers,
+    noPlayersAvailable,
+    passedPlayers,
+    phase,
+    players,
+    roundNumber,
+    scores,
+    targetScore
+  ]);
 
   const resetToSetup = useCallback(() => {
     setPhase(GamePhase.SETUP);
     setCard(null);
     setSelectedIndexes(new Set());
+    setRevealedIndexes(new Set());
+    setWrongIndexes(new Set());
+    setEliminatedPlayers(new Set());
+    setPassedPlayers(new Set());
     setLoadTicket(0);
+    setRoundNumber(0);
+    setCurrentPlayerIndex(0);
+    setWinner(null);
     setLastAction('Ready');
   }, []);
 
@@ -132,13 +245,19 @@ export function useGameEngine(roundLength) {
     phase,
     players,
     scores,
-    cardIndex,
+    roundNumber,
     card,
     loadTicket,
     selectedIndexes,
+    revealedIndexes,
+    wrongIndexes,
+    eliminatedPlayers,
+    passedPlayers,
     currentPlayerIndex,
     currentPlayer,
     lastAction,
+    winner,
+    targetScore,
     startRound,
     beginCardLoad,
     cardLoaded,

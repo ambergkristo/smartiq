@@ -14,43 +14,100 @@ function sampleCard(correctIndex = 0) {
   };
 }
 
-describe('useGameEngine transitions', () => {
-  test('starts in SETUP', () => {
-    const { result } = renderHook(() => useGameEngine(3));
+describe('useGameEngine Smart10 round semantics', () => {
+  test('starts in SETUP and enters LOADING_CARD on game start', () => {
+    const { result } = renderHook(() => useGameEngine(30));
     expect(result.current.phase).toBe(GamePhase.SETUP);
-  });
 
-  test('startRound moves to LOADING_CARD', () => {
-    const { result } = renderHook(() => useGameEngine(3));
     act(() => {
       result.current.startRound('Alice,Bob');
     });
     expect(result.current.phase).toBe(GamePhase.LOADING_CARD);
+    expect(result.current.roundNumber).toBe(1);
   });
 
-  test('loaded card enables choosing and confirming flow', () => {
-    const { result } = renderHook(() => useGameEngine(3));
+  test('wrong answer eliminates player for current round', () => {
+    const { result } = renderHook(() => useGameEngine(30));
     act(() => {
-      result.current.startRound('Alice');
+      result.current.startRound('Alice,Bob');
+    });
+    act(() => {
       result.current.cardLoaded(sampleCard(0));
     });
-    expect(result.current.phase).toBe(GamePhase.CHOOSING);
-
+    act(() => {
+      result.current.toggleOption(1);
+    });
     act(() => {
       result.current.requestConfirm();
     });
-    expect(result.current.phase).toBe(GamePhase.CONFIRMING);
+    act(() => {
+      result.current.confirmAnswer();
+    });
+
+    expect(result.current.phase).toBe(GamePhase.RESOLVED);
+    expect(result.current.eliminatedPlayers.has('Alice')).toBe(true);
 
     act(() => {
-      result.current.cancelConfirm();
+      result.current.nextStep();
     });
+
     expect(result.current.phase).toBe(GamePhase.CHOOSING);
+    expect(result.current.currentPlayer).toBe('Bob');
   });
 
-  test('confirmAnswer updates score and resolves', () => {
-    const { result } = renderHook(() => useGameEngine(3));
+  test('pass marks player as passed and advances turn', () => {
+    const { result } = renderHook(() => useGameEngine(30));
+    act(() => {
+      result.current.startRound('Alice,Bob');
+    });
+    act(() => {
+      result.current.cardLoaded(sampleCard(0));
+    });
+    act(() => {
+      result.current.passTurn();
+    });
+
+    expect(result.current.phase).toBe(GamePhase.PASSED);
+    expect(result.current.passedPlayers.has('Alice')).toBe(true);
+
+    act(() => {
+      result.current.nextStep();
+    });
+
+    expect(result.current.phase).toBe(GamePhase.CHOOSING);
+    expect(result.current.currentPlayer).toBe('Bob');
+  });
+
+  test('round ends when all players passed or eliminated', () => {
+    const { result } = renderHook(() => useGameEngine(30));
+    act(() => {
+      result.current.startRound('Alice,Bob');
+    });
+    act(() => {
+      result.current.cardLoaded(sampleCard(0));
+    });
+    act(() => {
+      result.current.passTurn();
+    });
+    act(() => {
+      result.current.nextStep();
+    });
+    act(() => {
+      result.current.passTurn();
+    });
+    act(() => {
+      result.current.nextStep();
+    });
+
+    expect(result.current.phase).toBe(GamePhase.ROUND_SUMMARY);
+  });
+
+  test('reaching target score ends game', () => {
+    const { result } = renderHook(() => useGameEngine(1));
     act(() => {
       result.current.startRound('Alice');
+    });
+    act(() => {
       result.current.cardLoaded(sampleCard(0));
     });
     act(() => {
@@ -62,22 +119,11 @@ describe('useGameEngine transitions', () => {
     act(() => {
       result.current.confirmAnswer();
     });
-    expect(result.current.phase).toBe(GamePhase.RESOLVED);
-    expect(result.current.scores.Alice).toBe(1);
-  });
-
-  test('pass and round completion transitions', () => {
-    const { result } = renderHook(() => useGameEngine(1));
-    act(() => {
-      result.current.startRound('Alice');
-      result.current.cardLoaded(sampleCard(0));
-      result.current.passTurn();
-    });
-    expect(result.current.phase).toBe(GamePhase.PASSED);
-
     act(() => {
       result.current.nextStep();
     });
-    expect(result.current.phase).toBe(GamePhase.ROUND_SUMMARY);
+
+    expect(result.current.phase).toBe(GamePhase.GAME_OVER);
+    expect(result.current.winner).toBe('Alice');
   });
 });
