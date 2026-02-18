@@ -1,4 +1,4 @@
-﻿const API_BASE =
+export const API_BASE =
   import.meta.env.VITE_API_BASE_URL ||
   import.meta.env.VITE_BACKEND_URL ||
   'http://localhost:8080';
@@ -43,6 +43,38 @@ async function fetchJson(url, { timeoutMs = 8000 } = {}) {
 
 export async function fetchTopics() {
   return fetchJson(`${API_BASE}/api/topics`);
+}
+
+export function resolveTopicsErrorState(error) {
+  if (error?.code === 'TIMEOUT') {
+    return {
+      title: 'Backend request timed out.',
+      detail: 'Check if backend is running, then retry.',
+      kind: 'backend-unreachable'
+    };
+  }
+
+  if (error?.code === 'NETWORK_ERROR') {
+    return {
+      title: 'Backend is unreachable.',
+      detail: 'Verify backend URL and that the API server is running.',
+      kind: 'backend-unreachable'
+    };
+  }
+
+  if (error?.status === 403) {
+    return {
+      title: 'API call was blocked (403).',
+      detail: 'Check CORS allowed origins and frontend URL.',
+      kind: 'backend-unreachable'
+    };
+  }
+
+  return {
+    title: 'Could not load topics.',
+    detail: 'Unexpected backend response. Retry and inspect backend logs.',
+    kind: 'backend-unreachable'
+  };
 }
 
 function isRetryable(error) {

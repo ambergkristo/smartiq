@@ -38,6 +38,10 @@ main {
   gap: 0.25rem;
 }
 
+.startup-panel {
+  gap: 0.5rem;
+}
+
 h1,
 h2,
 h3,
@@ -97,6 +101,20 @@ button:disabled {
   border-radius: 12px;
   border: 1px solid rgba(245, 122, 122, 0.45);
   background: rgba(115, 34, 34, 0.45);
+}
+
+.startup-hint {
+  color: #ffdcb7;
+  margin: 0;
+}
+
+.startup-hint code {
+  color: #ffeed8;
+}
+
+.inline-link {
+  color: #ffd7a9;
+  font-weight: 700;
 }
 
 .game-board {

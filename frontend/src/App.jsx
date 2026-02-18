@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { fetchNextCard, fetchTopics, resolveCardErrorMessage } from './api';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { API_BASE, fetchNextCard, fetchTopics, resolveCardErrorMessage, resolveTopicsErrorState } from './api';
 import GameBoard from './components/GameBoard';
 import RoundSummary from './components/RoundSummary';
 import { expectedCorrectIndexes } from './state/scoring';
@@ -10,17 +10,24 @@ const STRINGS = {
   title: 'SmartIQ',
   subtitle: 'Configure players and play Smart10-style rounds.',
   loadingTopics: 'Loading topics...',
-  loadError: 'Could not load topics.',
   noTopics: 'No topics available.',
   startRound: 'Start game',
   loadingCard: 'Loading round card...',
   retry: 'Retry',
+  checkBackendUrl: 'Check backend URL:',
+  openHealth: 'Open health',
   passNote: 'Pass keeps points and skips your turn for this round.',
   cardErrorFallback: 'Fallback mode: backend is unavailable right now. Retry to continue.'
 };
 const SESSION_STORAGE_KEY = 'smartiq.sessionId';
 const CONFIG_STORAGE_KEY = 'smartiq.roundConfig';
 const RECENT_CARD_LIMIT = 20;
+const STARTUP_PHASE = {
+  LOADING: 'loading',
+  BACKEND_UNREACHABLE: 'backend-unreachable',
+  TOPICS_EMPTY: 'topics-empty',
+  READY: 'ready'
+};
 
 function StartScreen({ topics, config, setConfig, onStart }) {
   const canStart = Boolean(config.topic) && config.playersText.trim().length > 0;
@@ -100,10 +107,59 @@ function loadStoredConfig() {
   }
 }
 
+function StartupStatePanel({ startup, onRetry }) {
+  if (startup.phase === STARTUP_PHASE.READY) {
+    return null;
+  }
+
+  if (startup.phase === STARTUP_PHASE.LOADING) {
+    return (
+      <section className="setup-panel board-surface startup-panel">
+        <h1>{STRINGS.title}</h1>
+        <p>{STRINGS.loadingTopics}</p>
+      </section>
+    );
+  }
+
+  if (startup.phase === STARTUP_PHASE.TOPICS_EMPTY) {
+    return (
+      <section className="setup-panel board-surface startup-panel">
+        <h1>{STRINGS.title}</h1>
+        <p className="error">{STRINGS.noTopics}</p>
+        <button type="button" onClick={onRetry}>
+          {STRINGS.retry}
+        </button>
+      </section>
+    );
+  }
+
+  return (
+    <section className="setup-panel board-surface startup-panel">
+      <h1>{STRINGS.title}</h1>
+      <div className="error-panel">
+        <p className="error">{startup.error?.title ?? 'Could not load topics.'}</p>
+        <p>{startup.error?.detail}</p>
+      </div>
+      <button type="button" onClick={onRetry}>
+        {STRINGS.retry}
+      </button>
+      <p className="startup-hint">
+        {STRINGS.checkBackendUrl} <code>{API_BASE}</code>
+      </p>
+      <a className="inline-link" href={`${API_BASE}/health`} target="_blank" rel="noreferrer">
+        {STRINGS.openHealth}
+      </a>
+    </section>
+  );
+}
+
 export default function App() {
   const storedConfig = loadStoredConfig();
   const [topics, setTopics] = useState([]);
-  const [topicState, setTopicState] = useState('loading');
+  const [startup, setStartup] = useState({
+    phase: STARTUP_PHASE.LOADING,
+    error: null
+  });
   const [config, setConfig] = useState({
     topic: storedConfig?.topic ?? '',
     difficulty: storedConfig?.difficulty ?? '2',
@@ -117,31 +173,48 @@ export default function App() {
   const engine = useGameEngine(30);
   const { phase, loadTicket, cardLoaded, cardLoadFailed } = engine;
 
-  useEffect(() => {
-    async function loadTopics() {
-      try {
-        const data = await fetchTopics();
-        setTopics(data);
-        setTopicState('ready');
-        if (data.length > 0) {
-          setConfig((prev) => {
-            const topicExists = data.some((entry) => entry.topic === prev.topic);
-            return { ...prev, topic: topicExists ? prev.topic : data[0].topic };
-          });
-        }
-      } catch (error) {
-        console.error(error);
-        setTopicState('error');
-      }
-    }
+  const loadTopics = useCallback(async () => {
+    setStartup({
+      phase: STARTUP_PHASE.LOADING,
+      error: null
+    });
 
+    try {
+      const data = await fetchTopics();
+      setTopics(data);
+      if (data.length > 0) {
+        setStartup({
+          phase: STARTUP_PHASE.READY,
+          error: null
+        });
+        setConfig((prev) => {
+          const topicExists = data.some((entry) => entry.topic === prev.topic);
+          return { ...prev, topic: topicExists ? prev.topic : data[0].topic };
+        });
+        return;
+      }
+
+      setStartup({
+        phase: STARTUP_PHASE.TOPICS_EMPTY,
+        error: null
+      });
+    } catch (error) {
+      console.error(error);
+      setStartup({
+        phase: STARTUP_PHASE.BACKEND_UNREACHABLE,
+        error: resolveTopicsErrorState(error)
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     loadTopics();
 
     const savedSession = localStorage.getItem(SESSION_STORAGE_KEY);
     if (savedSession) {
       setSessionId(savedSession);
     }
-  }, []);
+  }, [loadTopics]);
 
   useEffect(() => {
     localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(config));
@@ -199,12 +272,10 @@ export default function App() {
     <main>
       {engine.phase === GamePhase.SETUP ? (
         <>
-          {topicState === 'loading' ? <p>{STRINGS.loadingTopics}</p> : null}
-          {topicState === 'error' ? <p className="error">{STRINGS.loadError}</p> : null}
-          {topicState === 'ready' && topics.length > 0 ? (
+          {startup.phase !== STARTUP_PHASE.READY ? <StartupStatePanel startup={startup} onRetry={loadTopics} /> : null}
+          {startup.phase === STARTUP_PHASE.READY && topics.length > 0 ? (
             <StartScreen topics={topics} config={config} setConfig={setConfig} onStart={handleStartRound} />
           ) : null}
-          {topicState === 'ready' && topics.length === 0 ? <p className="error">{STRINGS.noTopics}</p> : null}
         </>
       ) : null}
 
