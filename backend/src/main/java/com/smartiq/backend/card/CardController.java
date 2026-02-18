@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+@Validated
 @RestController
 @RequestMapping("/api")
 public class CardController {
