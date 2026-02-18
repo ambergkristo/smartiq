@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         "smartiq.pool.enabled=false",
         "smartiq.session.enabled=false",
         "MIN_BANK_SIZE=1",
+        "spring.flyway.placeholders.seed_core_enabled=false",
         "spring.datasource.url=jdbc:h2:mem:smartiq_golden_test;MODE=PostgreSQL;DB_CLOSE_DELAY=-1",
         "spring.datasource.username=sa",
         "spring.datasource.password="
