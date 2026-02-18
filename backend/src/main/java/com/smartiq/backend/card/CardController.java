@@ -36,14 +36,28 @@ public class CardController {
     }
 
     @GetMapping("/cards/next")
-    public ResponseEntity<?> getNextCard(@RequestParam(name = "topic", required = false) String topic,
-                                         @RequestParam(name = "difficulty", required = false) String difficulty,
+    public ResponseEntity<?> getNextCard(@RequestParam(name = "topicId", required = false) String topicId,
+                                         @RequestParam(name = "topic", required = false) String topic,
+                                         @RequestParam(name = "difficulty", defaultValue = "1") String difficulty,
                                          @RequestParam(name = "sessionId", required = false) String sessionId,
-                                         @RequestParam(name = "lang", required = false) String language) {
+                                         @RequestParam(name = "lang", defaultValue = "en") String language) {
         try {
-            return ResponseEntity.ok(cardService.getNextCard(topic, difficulty, sessionId, language));
+            String resolvedTopic = resolveTopic(topicId, topic);
+            return ResponseEntity.ok(cardService.getNextCard(resolvedTopic, difficulty, sessionId, language));
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
         } catch (NoSuchElementException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
         }
+    }
+
+    private static String resolveTopic(String topicId, String legacyTopic) {
+        if (topicId != null && !topicId.isBlank()) {
+            return topicId.trim();
+        }
+        if (legacyTopic != null && !legacyTopic.isBlank()) {
+            return legacyTopic.trim();
+        }
+        throw new IllegalArgumentException("topicId is required");
     }
 }

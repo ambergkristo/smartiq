@@ -77,6 +77,19 @@ class CardControllerTest {
         math2.setSource("test");
         math2.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
         cardRepository.save(math2);
+
+        Card mathEasy = new Card();
+        mathEasy.setId("math-easy-1");
+        mathEasy.setTopic("Math");
+        mathEasy.setSubtopic("Addition");
+        mathEasy.setLanguage("en");
+        mathEasy.setQuestion("What is 1 + 1?");
+        mathEasy.setOptions(List.of("2", "1", "3", "4", "5", "6", "7", "8", "9", "10"));
+        mathEasy.setCorrectIndex(0);
+        mathEasy.setDifficulty("1");
+        mathEasy.setSource("test");
+        mathEasy.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
+        cardRepository.save(mathEasy);
     }
 
     @Test
@@ -111,19 +124,20 @@ class CardControllerTest {
     @Test
     void returnsNextCardForTopicDifficultySession() throws Exception {
         mockMvc.perform(get("/api/cards/next")
-                        .param("topic", "Math")
+                        .param("topicId", "Math")
                         .param("difficulty", "2")
                         .param("sessionId", "test-session")
                         .param("lang", "en"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.topic").value("Math"))
-                .andExpect(jsonPath("$.difficulty").value("2"));
+                .andExpect(jsonPath("$.difficulty").value("2"))
+                .andExpect(jsonPath("$.cardId").exists());
     }
 
     @Test
     void avoidsDuplicateCardsForSameSession() throws Exception {
         MvcResult first = mockMvc.perform(get("/api/cards/next")
-                        .param("topic", "Math")
+                        .param("topicId", "Math")
                         .param("difficulty", "2")
                         .param("sessionId", "session-1")
                         .param("lang", "en"))
@@ -133,7 +147,7 @@ class CardControllerTest {
         String firstId = JsonPath.read(first.getResponse().getContentAsString(), "$.id");
 
         MvcResult second = mockMvc.perform(get("/api/cards/next")
-                        .param("topic", "Math")
+                        .param("topicId", "Math")
                         .param("difficulty", "2")
                         .param("sessionId", "session-1")
                         .param("lang", "en"))
@@ -142,6 +156,37 @@ class CardControllerTest {
 
         String secondId = JsonPath.read(second.getResponse().getContentAsString(), "$.id");
         org.junit.jupiter.api.Assertions.assertNotEquals(firstId, secondId);
+    }
+
+    @Test
+    void returnsDefaultDifficultyAndLanguageWhenMissing() throws Exception {
+        mockMvc.perform(get("/api/cards/next")
+                        .param("topicId", "Math")
+                        .param("sessionId", "session-default"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.topic").value("Math"))
+                .andExpect(jsonPath("$.difficulty").value("1"))
+                .andExpect(jsonPath("$.language").value("en"));
+    }
+
+    @Test
+    void returnsBadRequestWhenTopicMissing() throws Exception {
+        mockMvc.perform(get("/api/cards/next")
+                        .param("difficulty", "2")
+                        .param("sessionId", "missing-topic"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("topicId is required"));
+    }
+
+    @Test
+    void returnsNotFoundWhenNoCardsForTopicFilter() throws Exception {
+        mockMvc.perform(get("/api/cards/next")
+                        .param("topicId", "Unknown")
+                        .param("difficulty", "1")
+                        .param("sessionId", "missing-cards")
+                        .param("lang", "en"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.error").exists());
     }
 
     @Test
