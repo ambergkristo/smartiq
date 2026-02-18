@@ -3,9 +3,15 @@ import App from './App';
 
 vi.mock('./api', () => {
   return {
+    API_BASE: 'http://localhost:8080',
     fetchTopics: vi.fn(),
     fetchNextCard: vi.fn(),
-    resolveCardErrorMessage: vi.fn(() => 'Fallback mode')
+    resolveCardErrorMessage: vi.fn(() => 'Fallback mode'),
+    resolveTopicsErrorState: vi.fn(() => ({
+      title: 'Could not load topics.',
+      detail: 'Unexpected backend response.',
+      kind: 'backend-unreachable'
+    }))
   };
 });
 
@@ -24,6 +30,11 @@ function makeCard(id, correctIndex = 0) {
 }
 
 describe('App Smart10 round flow', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    localStorage.clear();
+  });
+
   test('plays one-card round and advances to next round', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
     fetchNextCard
