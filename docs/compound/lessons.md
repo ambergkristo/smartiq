@@ -170,3 +170,12 @@
   - Initial hook tests produced false negatives because multiple actions were executed in one `act`, masking phase-gated callbacks.
 - Preventive rule:
   - For phase-gated hooks, execute one state transition per `act` in tests and assert round-end/win conditions explicitly (`pass`, `eliminate`, `target-score`).
+
+## 2026-02-18 - Loop 19 (PR77 Flyway Seed Data Merge)
+
+- Hard part:
+  - Keeping repeatable seed SQL compatible across PostgreSQL production and H2 test runtime.
+- What broke:
+  - Initial migration CTE syntax passed on PostgreSQL style assumptions but failed under H2 parsing in CI tests.
+- Preventive rule:
+  - Validate new Flyway SQL with `mvn clean test` early, and use portable `INSERT ... WITH RECURSIVE ... SELECT` statements for cross-database test compatibility.
