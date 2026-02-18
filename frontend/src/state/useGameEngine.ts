@@ -33,6 +33,10 @@ function nextActiveIndex(players, startIndex, eliminatedPlayers, passedPlayers) 
   return -1;
 }
 
+function isPlayerActive(player, eliminatedPlayers, passedPlayers) {
+  return !eliminatedPlayers.has(player) && !passedPlayers.has(player);
+}
+
 export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   const [phase, setPhase] = useState(GamePhase.SETUP);
   const [players, setPlayers] = useState(DEFAULT_PLAYERS);
@@ -114,6 +118,7 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   const toggleOption = useCallback((index) => {
     if (phase !== GamePhase.CHOOSING && phase !== GamePhase.CONFIRMING) return;
     if (revealedIndexes.has(index) || wrongIndexes.has(index)) return;
+    if (!isPlayerActive(currentPlayer, eliminatedPlayers, passedPlayers)) return;
 
     setSelectedIndexes((prev) => {
       if (prev.has(index) && prev.size === 1) {
@@ -122,12 +127,13 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       return new Set([index]);
     });
     setPhase(GamePhase.CHOOSING);
-  }, [phase, revealedIndexes, wrongIndexes]);
+  }, [currentPlayer, eliminatedPlayers, passedPlayers, phase, revealedIndexes, wrongIndexes]);
 
   const requestConfirm = useCallback(() => {
     if (phase !== GamePhase.CHOOSING || selectedIndexes.size === 0) return;
+    if (!isPlayerActive(currentPlayer, eliminatedPlayers, passedPlayers)) return;
     setPhase(GamePhase.CONFIRMING);
-  }, [phase, selectedIndexes]);
+  }, [currentPlayer, eliminatedPlayers, passedPlayers, phase, selectedIndexes]);
 
   const cancelConfirm = useCallback(() => {
     if (phase !== GamePhase.CONFIRMING) return;
@@ -135,7 +141,9 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   }, [phase]);
 
   const confirmAnswer = useCallback(() => {
+    if (phase !== GamePhase.CONFIRMING) return;
     if (!card || selectedIndexes.size === 0) return;
+    if (!isPlayerActive(currentPlayer, eliminatedPlayers, passedPlayers)) return;
     const selectedIndex = [...selectedIndexes][0];
     const correctIndexes = expectedCorrectIndexes(card);
     const isCorrect = correctIndexes.has(selectedIndex);
@@ -162,14 +170,17 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     }
 
     setPhase(GamePhase.RESOLVED);
-  }, [card, currentPlayer, scores, selectedIndexes, targetScore]);
+    setSelectedIndexes(new Set());
+  }, [card, currentPlayer, eliminatedPlayers, passedPlayers, phase, scores, selectedIndexes, targetScore]);
 
   const passTurn = useCallback(() => {
     if (phase !== GamePhase.CHOOSING) return;
+    if (!isPlayerActive(currentPlayer, eliminatedPlayers, passedPlayers)) return;
     setPassedPlayers((prev) => new Set(prev).add(currentPlayer));
+    setSelectedIndexes(new Set());
     setPhase(GamePhase.PASSED);
     setLastAction(`${currentPlayer} passed`);
-  }, [currentPlayer, phase]);
+  }, [currentPlayer, eliminatedPlayers, passedPlayers, phase]);
 
   const nextStep = useCallback(() => {
     if (phase === GamePhase.ROUND_SUMMARY) {
