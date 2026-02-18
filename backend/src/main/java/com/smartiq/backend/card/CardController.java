@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,7 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/api")
 public class CardController {
+    private static final Logger log = LoggerFactory.getLogger(CardController.class);
 
     private static final String DEPRECATION_LINK = "</api/cards/nextRandom>; rel=\"successor-version\"";
     private static final String SUNSET_DATE = "Thu, 31 Dec 2026 23:59:59 GMT";
@@ -30,11 +33,13 @@ public class CardController {
 
     @GetMapping("/topics")
     public List<TopicCountResponse> getTopics() {
+        log.info("api_topics_fetch");
         return cardService.getTopicCounts();
     }
 
     @GetMapping("/cards/random")
     public ResponseEntity<?> getRandomCard(@RequestParam(name = "topic", required = false) String topic) {
+        log.info("api_card_random topic={}", topic == null ? "any" : topic);
         try {
             return legacyResponse(HttpStatus.OK).body(cardService.getRandomCard(topic));
         } catch (NoSuchElementException ex) {
