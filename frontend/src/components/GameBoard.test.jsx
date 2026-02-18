@@ -40,16 +40,21 @@ describe('GameBoard layout', () => {
     globalThis.__setResizeObserverWidth(1024);
     render(<GameBoard {...makeProps()} />);
 
+    const shell = screen.getByTestId('wheel-board').closest('.answers-shell');
+    expect(shell).toHaveAttribute('data-layout', 'wheel');
     const wheel = screen.getByTestId('wheel-board');
     expect(wheel).toBeInTheDocument();
     expect(within(wheel).getAllByRole('button')).toHaveLength(10);
+    expect(screen.getByTestId('action-hint')).toHaveTextContent(/choose one answer/i);
   });
 
   test('falls back to grid on narrow container', () => {
     globalThis.__setResizeObserverWidth(640);
     render(<GameBoard {...makeProps()} />);
 
-    expect(screen.getByTestId('fallback-grid')).toBeInTheDocument();
+    const fallback = screen.getByTestId('fallback-grid');
+    expect(fallback).toBeInTheDocument();
+    expect(fallback.closest('.answers-shell')).toHaveAttribute('data-layout', 'fallback');
     expect(screen.queryByTestId('wheel-board')).not.toBeInTheDocument();
   });
 });

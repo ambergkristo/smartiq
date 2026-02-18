@@ -18,6 +18,23 @@ function getTileState(index, selectedIndexes, correctIndexes, revealedIndexes, w
   return 'hidden';
 }
 
+function actionHint(phase, currentPlayer) {
+  switch (phase) {
+    case 'CHOOSING':
+      return `${currentPlayer}: choose one answer, then press ANSWER or PASS.`;
+    case 'CONFIRMING':
+      return `${currentPlayer}: confirm with LOCK IN or go BACK.`;
+    case 'RESOLVED':
+      return 'Answer resolved. Press NEXT to continue turn flow.';
+    case 'PASSED':
+      return 'Turn passed. Press NEXT for next player or round summary.';
+    case 'LOADING_CARD':
+      return 'Loading next round card...';
+    default:
+      return 'Waiting for game state update...';
+  }
+}
+
 export default function GameBoard({
   card,
   selectedIndexes,
@@ -99,6 +116,9 @@ export default function GameBoard({
           </p>
           <h2>{card.question}</h2>
           <p className="pass-note">{passNote}</p>
+          <p className="action-hint" data-testid="action-hint">
+            {actionHint(phase, currentPlayer)}
+          </p>
         </header>
 
         <div className="answers-shell" data-layout={isFallbackLayout ? 'fallback' : 'wheel'} ref={layoutRef}>
