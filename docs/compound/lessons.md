@@ -179,3 +179,12 @@
   - Initial migration CTE syntax passed on PostgreSQL style assumptions but failed under H2 parsing in CI tests.
 - Preventive rule:
   - Validate new Flyway SQL with `mvn clean test` early, and use portable `INSERT ... WITH RECURSIVE ... SELECT` statements for cross-database test compatibility.
+
+## 2026-02-18 - Loop 20 (PR85 Frontend Startup Resilience Merge)
+
+- Hard part:
+  - Converting a generic topic-load failure into deterministic startup states without touching gameplay flow.
+- What broke:
+  - Users saw an opaque dark screen state with only a generic message, making backend/CORS/runtime diagnosis too slow.
+- Preventive rule:
+  - Frontend setup boot must expose explicit `loading`, `backend-unreachable`, `topics-empty`, and `ready` states with retry + health-link actions.

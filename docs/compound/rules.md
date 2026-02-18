@@ -43,3 +43,4 @@
 - For UI-only milestones, separate layout PRs from behavior PRs and verify scope by test coverage focused on structure rather than game rules.
 - For turn-based game-engine changes, include tests for pass rotation, wrong-answer elimination, round-end condition, and target-score game-over before merge.
 - For Flyway migrations that must run in both prod and tests, prefer SQL constructs proven in both Postgres and H2, and always verify with `mvn clean test` before opening PR.
+- For frontend boot/setup flow, require explicit startup-state tests for `loading`, `backend-unreachable`, `topics-empty`, and `ready` before merge.
