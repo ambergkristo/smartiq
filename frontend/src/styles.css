@@ -167,10 +167,47 @@ button:disabled {
   margin-bottom: 0;
 }
 
+.answers-shell {
+  width: 100%;
+}
+
 .tile-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.55rem;
+}
+
+.wheel-board {
+  position: relative;
+  margin: 0 auto;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 202, 145, 0.3);
+  background: radial-gradient(circle, rgba(255, 216, 166, 0.08) 0%, rgba(25, 10, 3, 0.08) 62%, transparent 64%);
+}
+
+.wheel-hub {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 34%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 210, 165, 0.45);
+  background: rgba(52, 22, 8, 0.8);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-weight: 700;
+  color: #ffd9ad;
+  padding: 0.6rem;
+}
+
+.wheel-slot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(160px, 22vw, 220px);
 }
 
 .answer-tile {
@@ -255,9 +292,36 @@ button:disabled {
   .center-board {
     order: 1;
   }
+
+  .wheel-slot {
+    width: clamp(140px, 34vw, 220px);
+  }
 }
 
 @media (max-width: 640px) {
+  .wheel-slot {
+    position: static;
+    width: auto;
+    transform: none;
+  }
+
+  .wheel-board {
+    width: 100% !important;
+    height: auto !important;
+    border: 0;
+    background: transparent;
+    border-radius: 0;
+  }
+
+  .wheel-hub {
+    position: static;
+    transform: none;
+    width: 100%;
+    aspect-ratio: auto;
+    border-radius: 12px;
+    margin-bottom: 0.6rem;
+  }
+
   .tile-grid,
   .action-bar {
     grid-template-columns: 1fr;

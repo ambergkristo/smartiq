@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useRef, useState } from 'react';
 import AnswerTile from './AnswerTile';
 import PlayersPanel from './PlayersPanel';
 
@@ -36,6 +37,37 @@ export default function GameBoard({
   const revealed = phase === 'RESOLVED' || phase === 'PASSED';
   const canChoose = phase === 'CHOOSING' || phase === 'CONFIRMING';
   const phaseLabel = phase.replace('_', ' ').toLowerCase();
+  const layoutRef = useRef(null);
+  const [isFallbackLayout, setIsFallbackLayout] = useState(false);
+  const [wheelSize, setWheelSize] = useState(560);
+
+  useEffect(() => {
+    const target = layoutRef.current;
+    if (!target || typeof ResizeObserver === 'undefined') {
+      return undefined;
+    }
+
+    const observer = new ResizeObserver(([entry]) => {
+      const width = entry.contentRect.width;
+      setIsFallbackLayout(width < 720);
+      setWheelSize(Math.max(360, Math.min(width - 24, 680)));
+    });
+    observer.observe(target);
+
+    return () => observer.disconnect();
+  }, []);
+
+  const wheelPositions = useMemo(() => {
+    const radius = wheelSize * 0.36;
+    const step = 360 / Math.max(card.options.length, 1);
+    return card.options.map((_, index) => {
+      const angle = (step * index - 90) * (Math.PI / 180);
+      return {
+        x: Math.cos(angle) * radius,
+        y: Math.sin(angle) * radius
+      };
+    });
+  }, [card.options, wheelSize]);
 
   return (
     <section className="game-board">
@@ -60,17 +92,42 @@ export default function GameBoard({
           <p className="pass-note">{passNote}</p>
         </header>
 
-        <div className="tile-grid">
-          {card.options.map((option, index) => (
-            <AnswerTile
-              key={`${card.id}-${index}`}
-              index={index}
-              option={option}
-              state={getTileState(index, selectedIndexes, revealed, correctIndexes)}
-              onClick={() => toggleIndex(index)}
-              disabled={!canChoose}
-            />
-          ))}
+        <div className="answers-shell" data-layout={isFallbackLayout ? 'fallback' : 'wheel'} ref={layoutRef}>
+          {isFallbackLayout ? (
+            <div className="tile-grid" data-testid="fallback-grid">
+              {card.options.map((option, index) => (
+                <AnswerTile
+                  key={`${card.id}-${index}`}
+                  index={index}
+                  option={option}
+                  state={getTileState(index, selectedIndexes, revealed, correctIndexes)}
+                  onClick={() => toggleIndex(index)}
+                  disabled={!canChoose}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="wheel-board" data-testid="wheel-board" style={{ width: `${wheelSize}px`, height: `${wheelSize}px` }}>
+              <div className="wheel-hub">
+                <span>{card.topic}</span>
+              </div>
+              {card.options.map((option, index) => (
+                <div
+                  className="wheel-slot"
+                  key={`${card.id}-${index}`}
+                  style={{ transform: `translate(calc(-50% + ${wheelPositions[index].x}px), calc(-50% + ${wheelPositions[index].y}px))` }}
+                >
+                  <AnswerTile
+                    index={index}
+                    option={option}
+                    state={getTileState(index, selectedIndexes, revealed, correctIndexes)}
+                    onClick={() => toggleIndex(index)}
+                    disabled={!canChoose}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <footer className="action-bar">
