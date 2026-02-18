@@ -19,24 +19,28 @@ Monorepo for SmartIQ services and tooling.
 
 ## Local Setup
 
-1. Clone repository and create environment file:
+Trusted local path (from repo root):
+
+1. Create env file:
    - `cp .env.example .env` (macOS/Linux)
    - `Copy-Item .env.example .env` (PowerShell)
-2. Install frontend and root dependencies:
+2. Install dependencies:
    - `npm ci`
-   - `cd frontend && npm ci && cd ..`
-3. Optional backend verification:
-   - `cd backend && mvn -q test && cd ..`
+   - `npm --prefix frontend ci`
+3. Start local database:
+   - `docker compose up -d`
+4. Run the stack:
+   - `make dev`
 
 ## One-Command Dev Run
 
-Primary command:
+Primary command (single source of truth):
 
 ```bash
 make dev
 ```
 
-Equivalent command chain:
+Equivalent command chain (if `make` is unavailable):
 
 ```bash
 docker compose up -d
@@ -68,27 +72,18 @@ Endpoints:
 
 ## Validation Commands
 
-Backend tests:
+Backend tests (repo root):
 
 ```bash
-cd backend
-mvn -q test
+mvn -q -f backend/pom.xml test
 ```
 
-Frontend lint/build:
+Frontend lint/test/build (repo root):
 
 ```bash
-cd frontend
-npm ci
-npm run lint
-npm run build
-```
-
-Frontend tests:
-
-```bash
-cd frontend
-npm run test -- --run
+npm --prefix frontend run lint
+npm --prefix frontend run test -- --run
+npm --prefix frontend run build
 ```
 
 Data validation:
@@ -127,10 +122,12 @@ Load test (500 sessions / 10k requests default):
 npm run load:test
 ```
 
-Public smoke test:
+Public/local smoke test:
 
 ```bash
 BACKEND_URL=https://<backend-domain> npm run smoke:test
+# local backend example:
+BACKEND_URL=http://localhost:8080 npm run smoke:test
 ```
 
 Stability gate (production readiness check):
