@@ -30,10 +30,12 @@ export default function GameBoard({
   roundLength,
   passNote,
   lastAction,
+  currentPlayer,
   correctIndexes
 }) {
   const revealed = phase === 'RESOLVED' || phase === 'PASSED';
   const canChoose = phase === 'CHOOSING' || phase === 'CONFIRMING';
+  const phaseLabel = phase.replace('_', ' ').toLowerCase();
 
   return (
     <section className="game-board">
@@ -44,13 +46,15 @@ export default function GameBoard({
         cardIndex={cardIndex}
         roundLength={roundLength}
         lastAction={lastAction}
+        phaseLabel={phaseLabel}
+        currentPlayer={currentPlayer}
       />
 
       <div className="center-board board-surface">
         <header className="card-header">
           <p className="topic-pill">{card.topic}</p>
           <p className="meta-line">
-            Difficulty {card.difficulty} · {card.language}
+            Difficulty {card.difficulty} | {card.language}
           </p>
           <h2>{card.question}</h2>
           <p className="pass-note">{passNote}</p>
@@ -83,7 +87,7 @@ export default function GameBoard({
           {phase === 'CONFIRMING' ? (
             <>
               <button onClick={onConfirm} type="button">
-                LOCK IN
+                CHECK
               </button>
               <button onClick={onCancelConfirm} type="button">
                 BACK

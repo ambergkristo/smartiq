@@ -19,9 +19,12 @@ const STRINGS = {
   passNote: 'Pass keeps current score unchanged.'
 };
 const SESSION_STORAGE_KEY = 'smartiq.sessionId';
+const CONFIG_STORAGE_KEY = 'smartiq.roundConfig';
 const RECENT_CARD_LIMIT = 20;
 
 function StartScreen({ topics, config, setConfig, onStart }) {
+  const canStart = Boolean(config.topic) && config.playersText.trim().length > 0;
+
   return (
     <section className="setup-panel board-surface">
       <h1>{STRINGS.title}</h1>
@@ -84,22 +87,41 @@ function StartScreen({ topics, config, setConfig, onStart }) {
         placeholder="Player 1, Player 2"
       />
 
-      <button onClick={onStart} type="button">
+      <button onClick={onStart} disabled={!canStart} type="button">
         {STRINGS.startRound}
       </button>
     </section>
   );
 }
 
+function loadStoredConfig() {
+  try {
+    const raw = localStorage.getItem(CONFIG_STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object') return null;
+    return {
+      topic: typeof parsed.topic === 'string' ? parsed.topic : '',
+      difficulty: ['1', '2', '3'].includes(String(parsed.difficulty)) ? String(parsed.difficulty) : '2',
+      lang: DEFAULT_LANGS.includes(parsed.lang) ? parsed.lang : 'en',
+      roundLength: [5, 10, 15].includes(Number(parsed.roundLength)) ? Number(parsed.roundLength) : 10,
+      playersText: typeof parsed.playersText === 'string' && parsed.playersText.trim() ? parsed.playersText : 'Player 1'
+    };
+  } catch {
+    return null;
+  }
+}
+
 export default function App() {
+  const storedConfig = loadStoredConfig();
   const [topics, setTopics] = useState([]);
   const [topicState, setTopicState] = useState('loading');
   const [config, setConfig] = useState({
-    topic: '',
-    difficulty: '2',
-    lang: 'en',
-    roundLength: 10,
-    playersText: 'Player 1'
+    topic: storedConfig?.topic ?? '',
+    difficulty: storedConfig?.difficulty ?? '2',
+    lang: storedConfig?.lang ?? 'en',
+    roundLength: storedConfig?.roundLength ?? 10,
+    playersText: storedConfig?.playersText ?? 'Player 1'
   });
   const [sessionId, setSessionId] = useState('');
   const [cardError, setCardError] = useState('');
@@ -115,7 +137,10 @@ export default function App() {
         setTopics(data);
         setTopicState('ready');
         if (data.length > 0) {
-          setConfig((prev) => ({ ...prev, topic: prev.topic || data[0].topic }));
+          setConfig((prev) => {
+            const topicExists = data.some((entry) => entry.topic === prev.topic);
+            return { ...prev, topic: topicExists ? prev.topic : data[0].topic };
+          });
         }
       } catch (error) {
         console.error(error);
@@ -130,6 +155,10 @@ export default function App() {
       setSessionId(savedSession);
     }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(config));
+  }, [config]);
 
   useEffect(() => {
     async function loadCard() {
@@ -235,6 +264,7 @@ export default function App() {
               roundLength={config.roundLength}
               passNote={STRINGS.passNote}
               lastAction={engine.lastAction}
+              currentPlayer={engine.currentPlayer}
               correctIndexes={expectedCorrectIndexes(engine.card)}
             />
           ) : null}

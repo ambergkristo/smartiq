@@ -38,7 +38,7 @@ describe('App gameplay flow', () => {
     await waitFor(() => expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /alpha/i }));
     fireEvent.click(screen.getByRole('button', { name: /answer/i }));
-    fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
+    fireEvent.click(screen.getByRole('button', { name: /check/i }));
 
     expect(screen.getByText(/last action:/i)).toHaveTextContent('+1');
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
