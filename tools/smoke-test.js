@@ -83,12 +83,21 @@ async function main() {
   const topics = await getJsonWithRetry(`${baseUrl}/api/topics`);
   assert(topics.status === 200, describeResponse('/api/topics expected 200', topics));
   assert(Array.isArray(topics.json), '/api/topics must return array');
+  assert(topics.json.length > 0, '/api/topics returned empty list');
 
-  const card = await getJsonWithRetry(`${baseUrl}/api/cards/next?topic=Math&difficulty=2&sessionId=smoke&lang=en`);
+  const preferredTopic = topics.json.find((entry) => entry?.topic === 'Math');
+  const topic = preferredTopic?.topic || topics.json[0]?.topic;
+  assert(typeof topic === 'string' && topic.length > 0, 'Unable to resolve smoke-test topic');
+
+  const cardUrl =
+    `${baseUrl}/api/cards/next` +
+    `?topic=${encodeURIComponent(topic)}` +
+    '&difficulty=2&sessionId=smoke&lang=en';
+  const card = await getJsonWithRetry(cardUrl);
   assert(card.status === 200, describeResponse('/api/cards/next expected 200', card));
   validateCard(card.json);
 
-  console.log(JSON.stringify({ ok: true, baseUrl }, null, 2));
+  console.log(JSON.stringify({ ok: true, baseUrl, topic }, null, 2));
 }
 
 main().catch((err) => {

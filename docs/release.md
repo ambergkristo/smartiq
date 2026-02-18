@@ -1,37 +1,73 @@
 # Release Checklist
 
-Use this checklist before marking SmartIQ MVP public release as stable.
+Use this checklist before calling the current build "playable now".
 
-## Build and CI
+## 1. Local Gate (must pass first)
 
-- [ ] Backend CI green (`mvn -q test` + build).
-- [ ] Frontend CI green (`npm ci`, `npm run lint`, `npm run build`).
-- [ ] Smoke workflow green against deployed backend URL.
+Run from repo root:
 
-## Runtime and Gameplay
+```bash
+npm --prefix frontend run lint
+npm --prefix frontend run test -- --run
+npm --prefix frontend run build
+mvn -q -f backend/pom.xml test
+```
 
-- [ ] `make dev` starts backend + frontend locally.
-- [ ] Start screen loads topics and allows topic/difficulty/language selection.
-- [ ] Full round is playable to summary view (Reveal, Pass, Next card).
-- [ ] Session requests use `/api/cards/next` and avoid duplicates per session.
+Expected:
 
-## Content Ops
+- all commands exit `0`
+- no failing tests
 
-- [ ] `npm run pipeline:cards` succeeds with guardrails.
-- [ ] `npm run test:golden` passes.
-- [ ] Monthly refresh workflow creates PR with review artifact summary and duplicates report.
+## 2. Local Runtime Gate
 
-## Security and Access
+```bash
+docker compose up -d
+make dev
+```
 
-- [ ] Public endpoints verified: `/health`, `/api/topics`, `/api/cards/next`.
-- [ ] `/internal/*` returns `401` without API key in prod.
-- [ ] `/api/admin/*` is not available in prod profile.
-- [ ] Actuator is limited in prod to `health`, `info`, `prometheus`.
-- [ ] `SMARTIQ_INTERNAL_API_KEY` rotation runbook tested.
+Verify manually:
 
-## Deployment
+1. Setup screen renders and topic list loads.
+2. Start a game with at least 2 players.
+3. Card loads with 10 answer tiles.
+4. `ANSWER -> LOCK IN` works.
+5. `PASS` works and turn advances.
+6. Round summary appears and `NEXT ROUND` loads another card.
 
-- [ ] Frontend live on Vercel with `VITE_API_BASE_URL` set.
-- [ ] Backend live on Render with Postgres and `SPRING_PROFILES_ACTIVE=prod`.
-- [ ] CORS allows only deployed frontend domain in prod.
-- [ ] `/version` returns commit SHA and build time.
+## 3. Backend Smoke Gate (public or local)
+
+```bash
+BACKEND_URL=https://<backend-domain> npm run smoke:test
+# local example
+# BACKEND_URL=http://localhost:8080 npm run smoke:test
+```
+
+The smoke test must validate:
+
+- `GET /health` -> `200`
+- `GET /api/topics` -> `200` + non-empty array
+- `GET /api/cards/next?topic=<resolved>&difficulty=2&sessionId=smoke&lang=en` -> `200` + card schema
+
+## 4. Public Deployment Gate
+
+- Frontend (Vercel) live and points to backend via `VITE_API_BASE_URL`.
+- Backend (Render) live with `SPRING_PROFILES_ACTIVE=prod`.
+- CORS allows only expected frontend origin(s).
+- `/version` returns commit SHA and build time.
+
+## 5. Security Gate
+
+- `/health`, `/api/topics`, `/api/cards/next` are publicly accessible.
+- `/internal/*` returns `401` without internal API key in `prod`.
+- `/api/admin/*` is disabled or protected in `prod`.
+- Prod actuator exposure is limited as documented in `docs/deploy.md`.
+
+## 6. Content/Refresh Gate
+
+- `npm run test:golden` passes.
+- Monthly content refresh workflow remains green and PR-capable.
+
+## Go / No-Go
+
+- `GO`: all six gates pass.
+- `NO-GO`: any gate fails; fix in follow-up PR and rerun checklist.
