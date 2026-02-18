@@ -143,3 +143,12 @@
   - Game-engine transitions and API fetch timing caused edge-case retries and one failing test assertion.
 - Preventive rule:
   - For multi-PR frontend flows, lock phase transitions first with hook tests, then layer API retries and UI integration tests.
+
+## 2026-02-18 - Loop 16 (PR68 Fix + CI Gate Merge)
+
+- Hard part:
+  - A blank frontend could pass lint/build while failing at runtime due to missing `React` symbol in `main.jsx`.
+- What broke:
+  - `React.StrictMode` rendered with `React is not defined` in browser console, causing an empty screen.
+- Preventive rule:
+  - Any entrypoint using `React.*` symbols must explicitly import `React`, and frontend CI must run tests in addition to lint/build before merge.
