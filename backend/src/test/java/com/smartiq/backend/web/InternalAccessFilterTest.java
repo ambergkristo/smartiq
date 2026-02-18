@@ -14,8 +14,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "smartiq.import.enabled=false",
         "smartiq.pool.enabled=false",
         "smartiq.session.enabled=false",
+        "smartiq.bank.block-on-low-bank=false",
         "smartiq.internal-access.enabled=true",
         "smartiq.internal-access.api-key=test-internal-key",
+        "spring.flyway.placeholders.seed_core_enabled=false",
         "spring.datasource.url=jdbc:h2:mem:smartiq_internal_access_test;MODE=PostgreSQL;DB_CLOSE_DELAY=-1",
         "spring.datasource.username=sa",
         "spring.datasource.password="
