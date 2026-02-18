@@ -161,3 +161,12 @@
   - Initial wheel layout test used a fragile accessible-name selector and failed even though layout rendered correctly.
 - Preventive rule:
   - For layout-only PRs, enforce robust structural tests (`data-testid` and container-scoped queries) and keep gameplay/state logic untouched.
+
+## 2026-02-18 - Loop 18 (PR72 Smart10 Round Semantics Merge)
+
+- Hard part:
+  - Converting from multi-card rounds to one-card Smart10 rounds touched state transitions, turn rotation, and end-of-game flow at once.
+- What broke:
+  - Initial hook tests produced false negatives because multiple actions were executed in one `act`, masking phase-gated callbacks.
+- Preventive rule:
+  - For phase-gated hooks, execute one state transition per `act` in tests and assert round-end/win conditions explicitly (`pass`, `eliminate`, `target-score`).
