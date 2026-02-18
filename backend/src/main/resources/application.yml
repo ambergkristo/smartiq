@@ -60,3 +60,8 @@ smartiq:
       - /actuator/env
       - /actuator/configprops
       - /actuator/beans
+  rate-limit:
+    enabled: ${SMARTIQ_RATE_LIMIT_ENABLED:true}
+    window-seconds: ${SMARTIQ_RATE_LIMIT_WINDOW_SECONDS:60}
+    cards-next-per-minute: ${SMARTIQ_RATE_LIMIT_CARDS_NEXT_PER_MINUTE:120}
+    session-answer-per-minute: ${SMARTIQ_RATE_LIMIT_SESSION_ANSWER_PER_MINUTE:180}
