@@ -152,3 +152,12 @@
   - `React.StrictMode` rendered with `React is not defined` in browser console, causing an empty screen.
 - Preventive rule:
   - Any entrypoint using `React.*` symbols must explicitly import `React`, and frontend CI must run tests in addition to lint/build before merge.
+
+## 2026-02-18 - Loop 17 (PR70 Wheel Layout Merge)
+
+- Hard part:
+  - Delivering a large visual refactor while keeping behavior strictly unchanged required tighter scope boundaries than usual.
+- What broke:
+  - Initial wheel layout test used a fragile accessible-name selector and failed even though layout rendered correctly.
+- Preventive rule:
+  - For layout-only PRs, enforce robust structural tests (`data-testid` and container-scoped queries) and keep gameplay/state logic untouched.
