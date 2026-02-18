@@ -22,12 +22,14 @@ export default function PlayersPanel({
         {players.map((player, idx) => {
           const isOut = eliminatedPlayers.has(player);
           const isPassed = passedPlayers.has(player);
+          const isActive = idx === currentPlayerIndex;
           return (
-            <li key={player} className={idx === currentPlayerIndex ? 'active' : ''}>
-              <span>
+            <li key={player} className={isActive ? 'active' : ''}>
+              <span className="player-label">
                 {player}
-                {isOut ? ' (out)' : ''}
-                {!isOut && isPassed ? ' (passed)' : ''}
+                {isActive ? <span className="player-chip active-chip">TURN</span> : null}
+                {isOut ? <span className="player-chip out-chip">OUT</span> : null}
+                {!isOut && isPassed ? <span className="player-chip passed-chip">PASSED</span> : null}
               </span>
               <strong>{scores[player] ?? 0}</strong>
             </li>
