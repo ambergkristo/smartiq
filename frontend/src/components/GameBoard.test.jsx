@@ -12,6 +12,8 @@ function makeProps() {
       options: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     },
     selectedIndexes: new Set(),
+    revealedIndexes: new Set(),
+    wrongIndexes: new Set(),
     toggleIndex: vi.fn(),
     phase: 'CHOOSING',
     onAnswer: vi.fn(),
@@ -19,15 +21,16 @@ function makeProps() {
     onCancelConfirm: vi.fn(),
     onPass: vi.fn(),
     onNext: vi.fn(),
-    isLast: false,
     players: ['Player 1', 'Player 2'],
     scores: { 'Player 1': 0, 'Player 2': 0 },
     currentPlayerIndex: 0,
-    cardIndex: 0,
-    roundLength: 10,
+    roundNumber: 1,
     passNote: 'Pass keeps score',
     lastAction: 'Ready',
     currentPlayer: 'Player 1',
+    targetScore: 30,
+    eliminatedPlayers: new Set(),
+    passedPlayers: new Set(),
     correctIndexes: new Set([0])
   };
 }
