@@ -188,3 +188,12 @@
   - Users saw an opaque dark screen state with only a generic message, making backend/CORS/runtime diagnosis too slow.
 - Preventive rule:
   - Frontend setup boot must expose explicit `loading`, `backend-unreachable`, `topics-empty`, and `ready` states with retry + health-link actions.
+
+## 2026-02-18 - Loop 21 (PR89 Smart10 Core-Flow Guards Merge)
+
+- Hard part:
+  - Enforcing strict one-card round semantics without rewriting the whole engine.
+- What broke:
+  - Without phase guards, `confirmAnswer` could execute outside `CONFIRMING`, creating invalid score/reveal transitions.
+- Preventive rule:
+  - For turn-based phase machines, gate every action by phase and active-player status, and test cross-round reset behavior explicitly.

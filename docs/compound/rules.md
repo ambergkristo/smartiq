@@ -44,3 +44,4 @@
 - For turn-based game-engine changes, include tests for pass rotation, wrong-answer elimination, round-end condition, and target-score game-over before merge.
 - For Flyway migrations that must run in both prod and tests, prefer SQL constructs proven in both Postgres and H2, and always verify with `mvn clean test` before opening PR.
 - For frontend boot/setup flow, require explicit startup-state tests for `loading`, `backend-unreachable`, `topics-empty`, and `ready` before merge.
+- For turn-based frontend engines, enforce phase guards for all player actions (`choose`, `confirm`, `pass`) and add tests proving round-state reset on next round.
