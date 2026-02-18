@@ -197,3 +197,12 @@
   - Without phase guards, `confirmAnswer` could execute outside `CONFIRMING`, creating invalid score/reveal transitions.
 - Preventive rule:
   - For turn-based phase machines, gate every action by phase and active-player status, and test cross-round reset behavior explicitly.
+
+## 2026-02-18 - Loop 22 (PR93 Wheel-Board Polish Merge)
+
+- Hard part:
+  - Improving gameplay readability without leaking into behavior/state refactors.
+- What broke:
+  - Before explicit action hints and status chips, users could misread the next legal step even though engine state was correct.
+- Preventive rule:
+  - For UI-polish PRs on turn-based games, add explicit “next action” copy and visual player-state markers, then verify with layout-scoped tests.
