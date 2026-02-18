@@ -105,7 +105,10 @@ class CardControllerTest {
     void returnsNotFoundForMissingTopic() throws Exception {
         mockMvc.perform(get("/api/cards/random").param("topic", "Unknown"))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.error").exists());
+                .andExpect(jsonPath("$.status").value(404))
+                .andExpect(jsonPath("$.error").value("Not Found"))
+                .andExpect(jsonPath("$.path").value("/api/cards/random"))
+                .andExpect(jsonPath("$.message").exists());
     }
 
     @Test
@@ -118,6 +121,20 @@ class CardControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.topic").value("Math"))
                 .andExpect(jsonPath("$.difficulty").value("2"));
+    }
+
+    @Test
+    void returnsBadRequestForInvalidDifficulty() throws Exception {
+        mockMvc.perform(get("/api/cards/next")
+                        .param("topic", "Math")
+                        .param("difficulty", "invalid")
+                        .param("sessionId", "test-session")
+                        .param("lang", "en"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.error").value("Bad Request"))
+                .andExpect(jsonPath("$.path").value("/api/cards/next"))
+                .andExpect(jsonPath("$.message").exists());
     }
 
     @Test
