@@ -34,7 +34,7 @@ smartiq:
     time: ${SMARTIQ_BUILD_TIME:unknown}
   import:
     enabled: ${SMARTIQ_IMPORT_ENABLED:true}
-    path: ${SMARTIQ_IMPORT_PATH:../data/clean,../out}
+    path: ${SMARTIQ_IMPORT_PATH:../data/smart10}
   pool:
     enabled: ${SMARTIQ_POOL_ENABLED:true}
     minimum-per-key: ${MIN_BANK_SIZE:1000}

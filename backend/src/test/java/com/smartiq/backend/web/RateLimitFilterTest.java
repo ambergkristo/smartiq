@@ -44,6 +44,7 @@ class RateLimitFilterTest {
         card.setId("math-rate-limit");
         card.setTopic("Math");
         card.setSubtopic("General");
+        card.setCategory("OPEN");
         card.setLanguage("en");
         card.setQuestion("Rate limit test question");
         card.setOptions(List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"));
