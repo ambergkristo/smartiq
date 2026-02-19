@@ -5,8 +5,12 @@ SmartIQ uses a two-stage card data flow:
 - `data/raw/*.json`: generated or imported raw question sets
 - `data/clean/*.json`: QA-approved card sets used by backend import
 - `data/review/*.json`: agent-review artifacts (`approved`, `flagged`, `report`)
+- `out/*.json`: high-volume factory output (topic/category blocks with nested cards)
 
-Only files under `data/clean` are allowed as import source for the game database.
+Backend boot-time import sources are configurable via `SMARTIQ_IMPORT_PATH` (comma-separated).  
+Default order is:
+- `../data/clean`
+- `../out`
 
 ## Card Schema (MVP)
 
@@ -22,6 +26,14 @@ Each card must provide:
 - `difficulty`
 - `source`
 - `createdAt`
+
+Importer supports two JSON layouts:
+
+1. Flat card array (current `data/clean/*.json`)
+2. Factory block array (`out/*.json`) where each block contains:
+   - `topic`
+   - `category`
+   - `cards[]` with nested `options[]` objects (`text`, `correct`)
 
 ## Validation Command
 

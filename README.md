@@ -207,7 +207,8 @@ bash tools/manual-e2e.sh
 
 - Raw card inputs live in `data/raw/`.
 - QA-approved card inputs live in `data/clean/`.
-- Import consumes only files from `data/clean/`.
+- Backend boot import scans JSON files from `data/clean` and `out` by default.
+- You can override import sources with `SMARTIQ_IMPORT_PATH` (comma-separated paths).
 - Pipeline details: `docs/data-pipeline.md`
 
 ## CI
