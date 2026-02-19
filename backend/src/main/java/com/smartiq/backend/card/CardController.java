@@ -61,6 +61,19 @@ public class CardController {
         }
     }
 
+    @GetMapping("/cards/nextRandom")
+    public ResponseEntity<?> getNextRandomCard(@RequestParam(name = "language") String language,
+                                               @RequestParam(name = "gameId") String gameId,
+                                               @RequestParam(name = "topic", required = false) String topic) {
+        try {
+            return ResponseEntity.ok(cardService.getNextRandomCard(language, gameId, topic));
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
+        }
+    }
+
     private static String resolveTopic(String topicId, String legacyTopic) {
         if (topicId != null && !topicId.isBlank()) {
             return topicId.trim();

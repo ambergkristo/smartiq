@@ -44,6 +44,14 @@ public interface CardRepository extends JpaRepository<Card, String> {
 
     @Query(value = """
             select * from cards
+            where lower(language) = lower(:language)
+              and (:topic is null or lower(topic) = lower(:topic))
+            """, nativeQuery = true)
+    List<Card> findDeckPool(@Param("language") String language,
+                            @Param("topic") String topic);
+
+    @Query(value = """
+            select * from cards
             where lower(topic) = lower(:topic)
               and lower(difficulty) = lower(:difficulty)
               and lower(language) = lower(:language)

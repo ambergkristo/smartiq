@@ -5,7 +5,7 @@ vi.mock('./api', () => {
   return {
     API_BASE: 'http://localhost:8080',
     fetchTopics: vi.fn(),
-    fetchNextCard: vi.fn(),
+    fetchNextRandomCard: vi.fn(),
     resolveCardErrorMessage: vi.fn(() => 'Fallback mode'),
     resolveTopicsErrorState: vi.fn(() => ({
       title: 'Backend is unreachable.',

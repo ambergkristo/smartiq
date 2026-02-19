@@ -164,6 +164,23 @@ class CardControllerTest {
     }
 
     @Test
+    void returnsNextRandomCardForGameIdAndLanguage() throws Exception {
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .param("language", "en")
+                        .param("gameId", "game-1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.language").value("en"));
+    }
+
+    @Test
+    void returnsBadRequestWhenNextRandomGameIdMissing() throws Exception {
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .param("language", "en"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void returnsNextCardForTopicDifficultySession() throws Exception {
         mockMvc.perform(get("/api/cards/next")
                         .param("topicId", "Math")

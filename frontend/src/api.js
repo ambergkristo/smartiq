@@ -128,6 +128,30 @@ export async function fetchNextCard({ topic, difficulty, sessionId, lang, retrie
   throw lastError;
 }
 
+export async function fetchNextRandomCard({ language, gameId, topic, retries = 2 }) {
+  const params = new URLSearchParams();
+  if (language) params.set('language', language);
+  if (gameId) params.set('gameId', gameId);
+  if (topic) params.set('topic', topic);
+
+  const url = `${API_BASE}/api/cards/nextRandom?${params.toString()}`;
+
+  let lastError = null;
+  for (let attempt = 0; attempt <= retries; attempt += 1) {
+    try {
+      return await fetchJson(url);
+    } catch (error) {
+      lastError = error;
+      if (!isRetryable(error) || attempt === retries) {
+        throw error;
+      }
+      await delay(250 * (attempt + 1));
+    }
+  }
+
+  throw lastError;
+}
+
 export function resolveCardErrorMessage(error) {
   if (error?.code === 'TIMEOUT' || error?.code === 'NETWORK_ERROR') {
     return 'Backend unreachable. Check API availability and retry.';
