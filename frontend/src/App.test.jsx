@@ -55,7 +55,7 @@ describe('App Smart10 round flow', () => {
     fireEvent.click(startButton);
 
     await waitFor(() => expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument());
-    fireEvent.click(screen.getByRole('button', { name: /beta/i }));
+    fireEvent.click(screen.getByRole('button', { name: /marker 2/i }));
     fireEvent.click(screen.getByRole('button', { name: /answer/i }));
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
     fireEvent.click(screen.getByRole('button', { name: /next card/i }));

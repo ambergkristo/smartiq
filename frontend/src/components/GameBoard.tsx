@@ -1,27 +1,34 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import AnswerTile from './AnswerTile';
 import PlayersPanel from './PlayersPanel';
 
-function getTileState(index, selectedIndexes, correctIndexes, revealedIndexes, wrongIndexes) {
-  if (revealedIndexes.has(index)) {
-    return 'correct';
+const CATEGORY_COLORS = {
+  TRUE_FALSE: '#ef8f32',
+  NUMBER: '#f1c83d',
+  ORDER: '#5ba85d',
+  CENTURY_DECADE: '#1c3f84',
+  COLOR: '#d95b95',
+  OPEN: '#79c7de'
+};
+
+function resolveCategory(card) {
+  const key = String(card?.category ?? '').toUpperCase();
+  return CATEGORY_COLORS[key] ? key : 'TRUE_FALSE';
+}
+
+function resolveOptionText(option) {
+  if (typeof option === 'string') {
+    return option;
   }
-  if (wrongIndexes.has(index)) {
-    return 'wrong';
+  if (option && typeof option === 'object' && typeof option.text === 'string') {
+    return option.text;
   }
-  if (selectedIndexes.has(index)) {
-    return 'selected';
-  }
-  if (correctIndexes.has(index)) {
-    return 'hidden';
-  }
-  return 'hidden';
+  return '';
 }
 
 function actionHint(phase, currentPlayer) {
   switch (phase) {
     case 'CHOOSING':
-      return `${currentPlayer}: choose one answer, then press ANSWER or PASS.`;
+      return `${currentPlayer}: choose a marker, then press ANSWER or PASS.`;
     case 'CONFIRMING':
       return `${currentPlayer}: confirm with LOCK IN or go BACK.`;
     case 'RESOLVED':
@@ -59,30 +66,35 @@ export default function GameBoard({
   passedPlayers,
   correctIndexes
 }) {
-  const canChoose = phase === 'CHOOSING' || phase === 'CONFIRMING';
-  const phaseLabel = phase.replace('_', ' ').toLowerCase();
-  const layoutRef = useRef(null);
-  const [isFallbackLayout, setIsFallbackLayout] = useState(false);
-  const [wheelSize, setWheelSize] = useState(560);
+  const boardRef = useRef(null);
+  const [boardSize, setBoardSize] = useState(560);
+  const [revealedByClick, setRevealedByClick] = useState(() => new Set());
+  const category = resolveCategory(card);
+  const categoryColor = CATEGORY_COLORS[category];
 
   useEffect(() => {
-    const target = layoutRef.current;
+    const target = boardRef.current;
     if (!target || typeof ResizeObserver === 'undefined') {
       return undefined;
     }
 
     const observer = new ResizeObserver(([entry]) => {
       const width = entry.contentRect.width;
-      setIsFallbackLayout(width < 720);
-      setWheelSize(Math.max(360, Math.min(width - 24, 680)));
+      const height = entry.contentRect.height || width;
+      const minSide = Math.min(width, height);
+      setBoardSize(Math.max(320, Math.min(minSide - 12, 780)));
     });
-    observer.observe(target);
 
+    observer.observe(target);
     return () => observer.disconnect();
   }, []);
 
-  const wheelPositions = useMemo(() => {
-    const radius = wheelSize * 0.36;
+  useEffect(() => {
+    setRevealedByClick(new Set());
+  }, [card?.id]);
+
+  const pegPositions = useMemo(() => {
+    const radius = boardSize * 0.42;
     const step = 360 / Math.max(card.options.length, 1);
     return card.options.map((_, index) => {
       const angle = (step * index - 90) * (Math.PI / 180);
@@ -91,7 +103,20 @@ export default function GameBoard({
         y: Math.sin(angle) * radius
       };
     });
-  }, [card.options, wheelSize]);
+  }, [boardSize, card.options]);
+
+  function handlePegClick(index) {
+    setRevealedByClick((prev) => {
+      const next = new Set(prev);
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+      return next;
+    });
+    toggleIndex(index);
+  }
 
   return (
     <section className="game-board">
@@ -101,7 +126,7 @@ export default function GameBoard({
         currentPlayerIndex={currentPlayerIndex}
         roundNumber={roundNumber}
         lastAction={lastAction}
-        phaseLabel={phaseLabel}
+        phaseLabel={phase.replace('_', ' ').toLowerCase()}
         currentPlayer={currentPlayer}
         targetScore={targetScore}
         eliminatedPlayers={eliminatedPlayers}
@@ -109,57 +134,52 @@ export default function GameBoard({
       />
 
       <div className="center-board board-surface">
-        <header className="card-header">
-          <div className="card-topline">
-            <p className="topic-pill">
-              {card.topic} â€¢ {card.difficulty} â€¢ {card.language.toUpperCase()}
-            </p>
-            <p className="meta-line">Round {roundNumber}</p>
-          </div>
-          <h2>{card.question}</h2>
-          <p className="pass-note">Choose one answer then press ANSWER or PASS.</p>
+        <header className="card-header smart10-header">
+          <p className="topic-pill">
+            {card.topic} • {card.language.toUpperCase()} • Round {roundNumber}
+          </p>
           <p className="action-hint" data-testid="action-hint">
             {actionHint(phase, currentPlayer)}
           </p>
           <p className="pass-note">{passNote}</p>
         </header>
 
-        <div className="answers-shell" data-layout={isFallbackLayout ? 'fallback' : 'wheel'} ref={layoutRef}>
-          {isFallbackLayout ? (
-            <div className="tile-grid" data-testid="fallback-grid">
-              {card.options.map((option, index) => (
-                <AnswerTile
-                  key={`${card.id}-${index}`}
-                  index={index}
-                  option={option}
-                  state={getTileState(index, selectedIndexes, correctIndexes, revealedIndexes, wrongIndexes)}
-                  onClick={() => toggleIndex(index)}
-                  disabled={!canChoose}
-                />
-              ))}
+        <div className="smart10-stage" ref={boardRef}>
+          <div
+            className="smart10-board"
+            data-testid="smart10-board"
+            style={{ width: `${boardSize}px`, height: `${boardSize}px` }}
+          >
+            <div className="smart10-face" />
+            <div className="smart10-category-ring" style={{ borderColor: categoryColor }} />
+            <div className="smart10-center">
+              <h2>{card.question}</h2>
             </div>
-          ) : (
-            <div className="wheel-board" data-testid="wheel-board" style={{ width: `${wheelSize}px`, height: `${wheelSize}px` }}>
-              <div className="wheel-hub">
-                <span>{card.topic}</span>
-              </div>
-              {card.options.map((option, index) => (
-                <div
-                  className="wheel-slot"
+
+            {card.options.map((option, index) => {
+              const resolvedCorrect = revealedIndexes.has(index) || correctIndexes.has(index);
+              const resolvedWrong = wrongIndexes.has(index);
+              const isOpen = revealedByClick.has(index);
+
+              return (
+                <button
                   key={`${card.id}-${index}`}
-                  style={{ transform: `translate(calc(-50% + ${wheelPositions[index].x}px), calc(-50% + ${wheelPositions[index].y}px))` }}
+                  type="button"
+                  className={`smart10-peg${isOpen ? ' is-open' : ''}${resolvedCorrect ? ' is-correct' : ''}${resolvedWrong ? ' is-wrong' : ''}${selectedIndexes.has(index) ? ' is-selected' : ''}`}
+                  style={{
+                    transform: `translate(calc(-50% + ${pegPositions[index].x}px), calc(-50% + ${pegPositions[index].y}px))`
+                  }}
+                  onClick={() => handlePegClick(index)}
+                  aria-label={`Marker ${index + 1}`}
+                  title={isOpen ? resolveOptionText(option) : `Marker ${index + 1}`}
                 >
-                  <AnswerTile
-                    index={index}
-                    option={option}
-                    state={getTileState(index, selectedIndexes, correctIndexes, revealedIndexes, wrongIndexes)}
-                    onClick={() => toggleIndex(index)}
-                    disabled={!canChoose}
-                  />
-                </div>
-              ))}
-            </div>
-          )}
+                  <span className="peg-content">{isOpen ? resolveOptionText(option) : index + 1}</span>
+                  {resolvedCorrect ? <span className="peg-feedback">?</span> : null}
+                  {resolvedWrong ? <span className="peg-feedback">?</span> : null}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         <footer className="action-bar">

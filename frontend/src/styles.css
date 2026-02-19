@@ -663,3 +663,132 @@ button:disabled {
     grid-template-columns: 1fr;
   }
 }
+
+.smart10-header {
+  text-align: center;
+}
+
+.smart10-stage {
+  width: 100%;
+  min-height: min(78vh, 820px);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.smart10-board {
+  position: relative;
+  aspect-ratio: 1 / 1;
+}
+
+.smart10-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffcb89 0%, #eb9739 40%, #cf7d24 100%);
+  box-shadow: inset 0 0 0 6px rgba(0, 0, 0, 0.12), 0 20px 35px rgba(0, 0, 0, 0.28);
+}
+
+.smart10-category-ring {
+  position: absolute;
+  inset: 14%;
+  border-radius: 50%;
+  border: 20px solid #ef8f32;
+  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.15);
+}
+
+.smart10-center {
+  position: absolute;
+  inset: 29%;
+  border-radius: 50%;
+  background: #fff;
+  color: #111;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.24);
+}
+
+.smart10-center h2 {
+  font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+  line-height: 1.25;
+}
+
+.smart10-peg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(70px, 9vw, 88px);
+  height: clamp(70px, 9vw, 88px);
+  border-radius: 50%;
+  border: 2px solid #101010;
+  background: #2a2a2a;
+  color: #fff;
+  padding: 8px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-weight: 800;
+  z-index: 3;
+}
+
+.smart10-peg.is-open {
+  background: #f8f0df;
+  color: #101010;
+}
+
+.smart10-peg.is-selected {
+  box-shadow: 0 0 0 3px #ffe17f;
+}
+
+.smart10-peg.is-correct {
+  border-color: #2d9e44;
+}
+
+.smart10-peg.is-wrong {
+  border-color: #d13d3d;
+}
+
+.peg-content {
+  font-size: clamp(0.7rem, 1.1vw, 0.82rem);
+  line-height: 1.15;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.peg-feedback {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 0.92rem;
+}
+
+@media (max-width: 980px) {
+  .smart10-stage {
+    min-height: min(62vh, 560px);
+  }
+}
+
+@media (max-width: 720px) {
+  .smart10-category-ring {
+    border-width: 12px;
+  }
+
+  .smart10-center {
+    inset: 30%;
+    padding: 10px;
+  }
+
+  .smart10-peg {
+    width: 58px;
+    height: 58px;
+    padding: 6px;
+  }
+
+  .peg-content {
+    font-size: 0.62rem;
+  }
+}

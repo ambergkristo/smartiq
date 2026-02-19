@@ -1,14 +1,15 @@
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import GameBoard from './GameBoard';
 
 function makeProps() {
   return {
     card: {
       id: 'c1',
-      topic: 'Math',
+      category: 'NUMBER',
+      topic: 'Science',
       difficulty: '2',
       language: 'en',
-      question: 'Question?',
+      question: 'Which option is the right answer?',
       options: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     },
     selectedIndexes: new Set(),
@@ -36,25 +37,24 @@ function makeProps() {
 }
 
 describe('GameBoard layout', () => {
-  test('renders radial wheel layout by default', () => {
+  test('renders centered smart10 board with 10 pegs', () => {
     globalThis.__setResizeObserverWidth(1024);
     render(<GameBoard {...makeProps()} />);
 
-    const shell = screen.getByTestId('wheel-board').closest('.answers-shell');
-    expect(shell).toHaveAttribute('data-layout', 'wheel');
-    const wheel = screen.getByTestId('wheel-board');
-    expect(wheel).toBeInTheDocument();
-    expect(within(wheel).getAllByRole('button')).toHaveLength(10);
-    expect(screen.getByTestId('action-hint')).toHaveTextContent(/choose one answer/i);
+    const board = screen.getByTestId('smart10-board');
+    expect(board).toBeInTheDocument();
+    expect(within(board).getAllByRole('button', { name: /marker/i })).toHaveLength(10);
+    expect(screen.getByTestId('action-hint')).toHaveTextContent(/choose a marker/i);
   });
 
-  test('falls back to grid on narrow container', () => {
-    globalThis.__setResizeObserverWidth(640);
+  test('reveals peg text when marker is clicked', () => {
     render(<GameBoard {...makeProps()} />);
 
-    const fallback = screen.getByTestId('fallback-grid');
-    expect(fallback).toBeInTheDocument();
-    expect(fallback.closest('.answers-shell')).toHaveAttribute('data-layout', 'fallback');
-    expect(screen.queryByTestId('wheel-board')).not.toBeInTheDocument();
+    const marker1 = screen.getByRole('button', { name: 'Marker 1' });
+    expect(marker1).toHaveTextContent('1');
+
+    fireEvent.click(marker1);
+
+    expect(marker1).toHaveTextContent('A');
   });
 });
