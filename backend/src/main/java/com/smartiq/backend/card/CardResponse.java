@@ -1,5 +1,7 @@
 package com.smartiq.backend.card;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.Instant;
 import java.util.List;
 
@@ -14,7 +16,8 @@ public record CardResponse(
         Integer correctIndex,
         String difficulty,
         String source,
-        Instant createdAt
+        Instant createdAt,
+        @JsonIgnore String correctFlags
 ) {
     static CardResponse fromEntity(Card card) {
         return new CardResponse(
@@ -28,7 +31,8 @@ public record CardResponse(
                 card.getCorrectIndex(),
                 card.getDifficulty(),
                 card.getSource(),
-                card.getCreatedAt()
+                card.getCreatedAt(),
+                card.getCorrectFlags()
         );
     }
 }
