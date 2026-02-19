@@ -1,0 +1,51 @@
+[
+  {
+    "topic": "Science",
+    "category": "TRUE_FALSE",
+    "cards": [
+      {
+        "id": "science_truefalse_001",
+        "difficulty": 2,
+        "language": "en",
+        "question": "Which of these are true?",
+        "options": [
+          { "id": 1, "text": "Option 1", "correct": true },
+          { "id": 2, "text": "Option 2", "correct": false },
+          { "id": 3, "text": "Option 3", "correct": false },
+          { "id": 4, "text": "Option 4", "correct": false },
+          { "id": 5, "text": "Option 5", "correct": false },
+          { "id": 6, "text": "Option 6", "correct": false },
+          { "id": 7, "text": "Option 7", "correct": false },
+          { "id": 8, "text": "Option 8", "correct": false },
+          { "id": 9, "text": "Option 9", "correct": false },
+          { "id": 10, "text": "Option 10", "correct": true }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Science",
+    "category": "NUMBER",
+    "cards": [
+      {
+        "id": "science_number_001",
+        "difficulty": 1,
+        "language": "en",
+        "question": "Pick the correct numeric answer",
+        "options": [
+          { "id": 1, "text": "42", "correct": true },
+          { "id": 2, "text": "10", "correct": false },
+          { "id": 3, "text": "11", "correct": false },
+          { "id": 4, "text": "12", "correct": false },
+          { "id": 5, "text": "13", "correct": false },
+          { "id": 6, "text": "14", "correct": false },
+          { "id": 7, "text": "15", "correct": false },
+          { "id": 8, "text": "16", "correct": false },
+          { "id": 9, "text": "17", "correct": false },
+          { "id": 10, "text": "18", "correct": false }
+        ]
+      }
+    ]
+  }
+]
+
