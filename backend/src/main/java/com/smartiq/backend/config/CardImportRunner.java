@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.smartiq.backend.card.Card;
 import com.smartiq.backend.card.CardRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -22,6 +24,8 @@ import java.util.stream.Stream;
 
 @Component
 public class CardImportRunner implements ApplicationRunner {
+
+    private static final Logger log = LoggerFactory.getLogger(CardImportRunner.class);
 
     private final CardRepository cardRepository;
     private final ImportProperties importProperties;
@@ -83,12 +87,27 @@ public class CardImportRunner implements ApplicationRunner {
     private void importFile(Path path) {
         try {
             List<CardSeed> seeds = readSeeds(path);
+            int inserted = 0;
+            int duplicates = 0;
+            int invalid = 0;
+
             for (CardSeed seed : seeds) {
                 if (cardRepository.existsById(seed.id())) {
+                    duplicates++;
                     continue;
                 }
-                cardRepository.save(toEntity(seed));
+                try {
+                    cardRepository.save(toEntity(seed));
+                    inserted++;
+                } catch (IllegalArgumentException ex) {
+                    invalid++;
+                    log.warn("Skipping invalid card id={} sourceFile={} reason={}",
+                            seed.id(), path.getFileName(), ex.getMessage());
+                }
             }
+
+            log.info("Card import completed file={} total={} inserted={} duplicates={} invalid={}",
+                    path.getFileName(), seeds.size(), inserted, duplicates, invalid);
         } catch (IOException ex) {
             throw new IllegalStateException("Failed to import cards from " + path, ex);
         }
