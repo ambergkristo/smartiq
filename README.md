@@ -56,6 +56,30 @@ Endpoints:
 - Backend metrics: `http://localhost:8080/actuator/prometheus`
 - Internal pool stats: `http://localhost:8080/internal/pool-stats`
 
+## Windows Quickstart (8081 + 5173)
+
+PowerShell commands from repo root:
+
+```powershell
+npm ci
+npm --prefix frontend ci
+docker compose up -d
+npm run dev:smoke
+```
+
+This starts:
+
+- Frontend: `http://localhost:5173`
+- Backend: `http://localhost:8081`
+- Health check: `http://localhost:8081/health`
+- Cards API: `http://localhost:8081/api/cards/next`
+
+If you use frontend against backend on `8081`, set:
+
+```powershell
+$env:VITE_API_BASE_URL="http://localhost:8081"
+```
+
 ## Local Dev Port and CORS Behavior
 
 - Vite prefers port `5173` but can move to another free localhost port when `5173` is busy.
