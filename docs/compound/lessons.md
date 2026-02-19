@@ -254,3 +254,12 @@
 - Preventive rule:
   - Boot import must be idempotent and format-aware (flat clean + factory blocks) instead of gated by `count()==0`.
 
+## 2026-02-19 - Loop 28 (PR113 Unique-Constraint Hotfix Merge)
+
+- Hard part:
+  - Preserving large-card import flexibility while keeping database query performance acceptable.
+- What broke:
+  - Startup crashed on `uk_cards_topic_lang_question` because factory datasets legitimately repeated question text for the same topic/language.
+- Preventive rule:
+  - Do not enforce uniqueness on `(topic, language, question)` for generated banks; keep uniqueness on `id` and use non-unique lookup indexes for reads.
+
