@@ -44,8 +44,15 @@ describe('App Smart10 round flow', () => {
     render(<App />);
 
     await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
-    fireEvent.change(screen.getByLabelText(/players/i), { target: { value: 'Alice,Bob' } });
-    fireEvent.click(screen.getByRole('button', { name: /start game/i }));
+    const startButton = screen.getByRole('button', { name: /start game/i });
+    expect(startButton).toBeDisabled();
+    const playersInput = screen.getByLabelText(/players/i);
+    fireEvent.change(playersInput, { target: { value: 'Alice, Bob' } });
+    fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
+    expect(screen.getByRole('button', { name: /alice/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /bob/i })).toBeInTheDocument();
+    expect(startButton).toBeEnabled();
+    fireEvent.click(startButton);
 
     await waitFor(() => expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /beta/i }));
