@@ -50,3 +50,4 @@
 - For gameplay action-button label changes, update UI tests in the same PR to keep behavior verification stable.
 - For summary/analytics UI additions, enforce null-safe default props and include one integration test covering summary render path.
 - For frontend API error handling, maintain a tested status-code map and never collapse 401/403 into network-unreachable messaging.
+- For content ingestion, never gate boot import on total row count; keep import idempotent and support all approved dataset formats used in-repo.

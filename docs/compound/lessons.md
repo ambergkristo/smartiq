@@ -245,3 +245,12 @@
 - Preventive rule:
   - Error mappers must explicitly branch by status class (401/403, 404, 409, 5xx, network/timeout) and be unit-tested.
 
+## 2026-02-19 - Loop 27 (PR109 Content Activation Import Merge)
+
+- Hard part:
+  - Activating large runtime datasets without breaking existing clean-data import flow.
+- What broke:
+  - Import runner skipped all boot import when DB already had seed rows, so new dataset files never reached API topics/cards.
+- Preventive rule:
+  - Boot import must be idempotent and format-aware (flat clean + factory blocks) instead of gated by `count()==0`.
+
