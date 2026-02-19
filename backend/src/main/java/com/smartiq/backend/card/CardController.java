@@ -40,12 +40,22 @@ public class CardController {
                                          @RequestParam(name = "topic", required = false) String topic,
                                          @RequestParam(name = "difficulty", defaultValue = "1") String difficulty,
                                          @RequestParam(name = "sessionId", required = false) String sessionId,
-                                         @RequestParam(name = "lang", defaultValue = "en") String language) {
+                                         @RequestParam(name = "lang", defaultValue = "en") String language,
+                                         @RequestParam(name = "v", defaultValue = "1") int version) {
         try {
             String resolvedTopic = resolveTopic(topicId, topic);
-            return ResponseEntity.ok(cardService.getNextCard(resolvedTopic, difficulty, sessionId, language));
+            CardResponse card = cardService.getNextCard(resolvedTopic, difficulty, sessionId, language);
+            if (version == 1) {
+                return ResponseEntity.ok(card);
+            }
+            if (version == 2) {
+                return ResponseEntity.ok(CardResponseV2Mapper.toV2(card));
+            }
+            throw new IllegalArgumentException("Unsupported API version: " + version);
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
+        } catch (InvalidCardContractException ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", ex.getMessage()));
         } catch (NoSuchElementException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
         }

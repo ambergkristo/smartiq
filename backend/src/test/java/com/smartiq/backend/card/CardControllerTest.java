@@ -15,6 +15,7 @@ import java.util.List;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.hamcrest.Matchers.hasItem;
 
 @SpringBootTest(properties = {
         "smartiq.import.enabled=false",
@@ -90,14 +91,55 @@ class CardControllerTest {
         mathEasy.setSource("test");
         mathEasy.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
         cardRepository.save(mathEasy);
+
+        Card singleV2 = new Card();
+        singleV2.setId("single-v2-1");
+        singleV2.setTopic("SingleV2");
+        singleV2.setSubtopic("Validation");
+        singleV2.setLanguage("en");
+        singleV2.setQuestion("Single correct answer card");
+        singleV2.setOptions(List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"));
+        singleV2.setCorrectIndex(3);
+        singleV2.setDifficulty("2");
+        singleV2.setSource("test");
+        singleV2.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
+        cardRepository.save(singleV2);
+
+        Card multiV2 = new Card();
+        multiV2.setId("multi-v2-1");
+        multiV2.setTopic("MultiV2");
+        multiV2.setSubtopic("Validation");
+        multiV2.setLanguage("en");
+        multiV2.setQuestion("Multi correct answer card");
+        multiV2.setOptions(List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"));
+        multiV2.setCorrectIndex(null);
+        multiV2.setCorrectFlags("true,false,true,false,false,false,false,false,false,false");
+        multiV2.setDifficulty("2");
+        multiV2.setSource("test");
+        multiV2.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
+        cardRepository.save(multiV2);
+
+        Card brokenV2 = new Card();
+        brokenV2.setId("broken-v2-1");
+        brokenV2.setTopic("BrokenV2");
+        brokenV2.setSubtopic("Validation");
+        brokenV2.setLanguage("en");
+        brokenV2.setQuestion("Broken correctness metadata card");
+        brokenV2.setOptions(List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"));
+        brokenV2.setCorrectIndex(null);
+        brokenV2.setCorrectFlags(null);
+        brokenV2.setDifficulty("2");
+        brokenV2.setSource("test");
+        brokenV2.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
+        cardRepository.save(brokenV2);
     }
 
     @Test
     void returnsTopicCounts() throws Exception {
         mockMvc.perform(get("/api/topics"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].topic").value("Math"))
-                .andExpect(jsonPath("$[1].topic").value("Science"));
+                .andExpect(jsonPath("$[?(@.topic=='Math')].count", hasItem(3)))
+                .andExpect(jsonPath("$[?(@.topic=='Science')].count", hasItem(1)));
     }
 
     @Test
@@ -167,6 +209,64 @@ class CardControllerTest {
                 .andExpect(jsonPath("$.topic").value("Math"))
                 .andExpect(jsonPath("$.difficulty").value("1"))
                 .andExpect(jsonPath("$.language").value("en"));
+    }
+
+    @Test
+    void returnsV2CardWithNumericDifficultyAndOptionObjects() throws Exception {
+        mockMvc.perform(get("/api/cards/next")
+                        .param("topicId", "SingleV2")
+                        .param("difficulty", "2")
+                        .param("sessionId", "single-v2-session")
+                        .param("lang", "en")
+                        .param("v", "2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.difficulty").value(2))
+                .andExpect(jsonPath("$.options.length()").value(10))
+                .andExpect(jsonPath("$.options[0].id").value(0))
+                .andExpect(jsonPath("$.options[0].text").value("A"));
+    }
+
+    @Test
+    void returnsMultiCorrectMetadataInV2Response() throws Exception {
+        mockMvc.perform(get("/api/cards/next")
+                        .param("topicId", "MultiV2")
+                        .param("difficulty", "2")
+                        .param("sessionId", "multi-v2-session")
+                        .param("lang", "en")
+                        .param("v", "2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.multiCorrect").value(true))
+                .andExpect(jsonPath("$.correctIndex").isEmpty())
+                .andExpect(jsonPath("$.correctIndexes.length()").value(2))
+                .andExpect(jsonPath("$.correctIndexes[0]").value(0))
+                .andExpect(jsonPath("$.correctIndexes[1]").value(2));
+    }
+
+    @Test
+    void returnsSingleCorrectMetadataInV2Response() throws Exception {
+        mockMvc.perform(get("/api/cards/next")
+                        .param("topicId", "SingleV2")
+                        .param("difficulty", "2")
+                        .param("sessionId", "single-v2-metadata-session")
+                        .param("lang", "en")
+                        .param("v", "2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.multiCorrect").value(false))
+                .andExpect(jsonPath("$.correctIndex").value(3))
+                .andExpect(jsonPath("$.correctIndexes.length()").value(1))
+                .andExpect(jsonPath("$.correctIndexes[0]").value(3));
+    }
+
+    @Test
+    void returnsInternalServerErrorForInvalidCorrectnessMetadataInV2() throws Exception {
+        mockMvc.perform(get("/api/cards/next")
+                        .param("topicId", "BrokenV2")
+                        .param("difficulty", "2")
+                        .param("sessionId", "broken-v2-session")
+                        .param("lang", "en")
+                        .param("v", "2"))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.error").exists());
     }
 
     @Test
