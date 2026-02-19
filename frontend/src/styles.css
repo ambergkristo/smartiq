@@ -249,6 +249,21 @@ button:disabled {
   background: rgba(115, 34, 34, 0.35);
 }
 
+.card-loading-panel {
+  margin-bottom: 12px;
+  padding: 16px;
+  display: grid;
+  gap: 10px;
+  animation: panel-in 220ms ease-out;
+}
+
+.card-loading-skeleton {
+  height: 54px;
+  border-radius: 12px;
+  border: 1px solid var(--stroke);
+  background: linear-gradient(100deg, rgba(255, 229, 193, 0.14), rgba(255, 229, 193, 0.04));
+}
+
 .startup-hint {
   color: var(--muted);
   margin: 0;

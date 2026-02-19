@@ -30,6 +30,7 @@ const STARTUP_PHASE = {
   BACKEND_UNREACHABLE: 'backend-unreachable',
   FORBIDDEN: 'forbidden',
   SERVER_ERROR: 'server-error',
+  NOT_FOUND: 'not-found',
   TOPICS_EMPTY: 'topics-empty',
   READY: 'ready'
 };
@@ -295,6 +296,8 @@ export default function App() {
             ? STARTUP_PHASE.FORBIDDEN
             : resolved.kind === 'server-error'
               ? STARTUP_PHASE.SERVER_ERROR
+              : resolved.kind === 'not-found'
+                ? STARTUP_PHASE.NOT_FOUND
               : STARTUP_PHASE.BACKEND_UNREACHABLE,
         error: resolved
       });
@@ -387,7 +390,12 @@ export default function App() {
 
       {engine.phase !== GamePhase.SETUP && engine.phase !== GamePhase.ROUND_SUMMARY && engine.phase !== GamePhase.GAME_OVER ? (
         <>
-          {engine.phase === GamePhase.LOADING_CARD ? <p>{STRINGS.loadingCard}</p> : null}
+          {engine.phase === GamePhase.LOADING_CARD ? (
+            <section className="board-surface card-loading-panel" data-testid="card-loading-panel">
+              <p>{STRINGS.loadingCard}</p>
+              <div className="card-loading-skeleton" aria-hidden />
+            </section>
+          ) : null}
           {cardError ? (
             <div className="error-panel">
               <p className="error">{cardError}</p>

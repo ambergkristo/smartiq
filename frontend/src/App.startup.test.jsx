@@ -80,6 +80,19 @@ describe('App startup resilience', () => {
     expect(screen.getByRole('button', { name: /retry/i })).toBeInTheDocument();
   });
 
+  test('shows not found startup error copy', async () => {
+    fetchTopics.mockRejectedValue(new Error('404'));
+    resolveTopicsErrorState.mockReturnValue({
+      title: 'Not found.',
+      detail: 'Topics endpoint is missing or routed incorrectly.',
+      kind: 'not-found'
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByText(/not found/i)).toBeInTheDocument());
+  });
+
   test('retry button re-requests topics', async () => {
     fetchTopics
       .mockRejectedValueOnce(new Error('network'))
