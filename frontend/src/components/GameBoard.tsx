@@ -64,6 +64,11 @@ export default function GameBoard({
   const layoutRef = useRef(null);
   const [isFallbackLayout, setIsFallbackLayout] = useState(false);
   const [wheelSize, setWheelSize] = useState(560);
+  const [questionExpanded, setQuestionExpanded] = useState(false);
+
+  useEffect(() => {
+    setQuestionExpanded(false);
+  }, [card.id]);
 
   useEffect(() => {
     const target = layoutRef.current;
@@ -73,8 +78,10 @@ export default function GameBoard({
 
     const observer = new ResizeObserver(([entry]) => {
       const width = entry.contentRect.width;
-      setIsFallbackLayout(width < 720);
-      setWheelSize(Math.max(360, Math.min(width - 24, 680)));
+      const height = entry.contentRect.height;
+      const maxDiameter = Math.max(320, Math.min(width - 16, height - 16, 760));
+      setIsFallbackLayout(width < 720 || height < 460);
+      setWheelSize(maxDiameter);
     });
     observer.observe(target);
 
@@ -92,6 +99,8 @@ export default function GameBoard({
       };
     });
   }, [card.options, wheelSize]);
+
+  const isLongQuestion = card.question.length > 180;
 
   return (
     <section className="game-board">
@@ -116,7 +125,16 @@ export default function GameBoard({
             </p>
             <p className="meta-line">Round {roundNumber}</p>
           </div>
-          <h2>{card.question}</h2>
+          <h2 className={`question-text${!questionExpanded ? ' clamped' : ''}`}>{card.question}</h2>
+          {isLongQuestion ? (
+            <button
+              type="button"
+              className="question-toggle"
+              onClick={() => setQuestionExpanded((prev) => !prev)}
+            >
+              {questionExpanded ? 'Show less' : 'Show more'}
+            </button>
+          ) : null}
           <p className="pass-note">Choose one answer then press ANSWER or PASS.</p>
           <p className="action-hint" data-testid="action-hint">
             {actionHint(phase, currentPlayer)}

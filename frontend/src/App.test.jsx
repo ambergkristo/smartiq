@@ -55,6 +55,15 @@ describe('App Smart10 round flow', () => {
     fireEvent.click(startButton);
 
     await waitFor(() => expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument());
+    await waitFor(() =>
+      expect(fetchNextCard).toHaveBeenCalledWith(
+        expect.objectContaining({
+          topic: 'Math',
+          difficulty: '2',
+          lang: 'en'
+        })
+      )
+    );
     fireEvent.click(screen.getByRole('button', { name: /beta/i }));
     fireEvent.click(screen.getByRole('button', { name: /answer/i }));
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
