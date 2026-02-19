@@ -349,10 +349,22 @@ export default function App() {
     loadCard();
   }, [loadTicket, cardLoaded, cardLoadFailed, phase, sessionId, config.topic, config.difficulty, config.lang]);
 
-function handleStartRound() {
+  function handleStartRound() {
+    const freshSessionId = createFreshSession();
+    recentCardIdsRef.current = [];
+    engine.startRound(config.playersText);
+    return freshSessionId;
+  }
+
+  function createFreshSession() {
     const freshSessionId = globalThis.crypto?.randomUUID?.() || `session-${Date.now()}`;
     setSessionId(freshSessionId);
     localStorage.setItem(SESSION_STORAGE_KEY, freshSessionId);
+    return freshSessionId;
+  }
+
+  function handlePlayAgain() {
+    createFreshSession();
     recentCardIdsRef.current = [];
     engine.startRound(config.playersText);
   }
@@ -417,9 +429,11 @@ function handleStartRound() {
         <RoundSummary
           players={engine.players}
           scores={engine.scores}
+          stats={engine.stats}
           roundNumber={engine.roundNumber}
           onNextRound={engine.nextStep}
           onRestart={handleRestart}
+          onPlayAgain={handlePlayAgain}
           winner={engine.winner}
         />
       ) : null}
