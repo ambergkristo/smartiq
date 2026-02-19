@@ -226,3 +226,12 @@
 - Preventive rule:
   - UI copy updates on action buttons must include same-PR test updates for all affected user flows.
 
+## 2026-02-19 - Loop 25 (PR103 Summary Screen Merge)
+
+- Hard part:
+  - Adding summary stats without introducing backend contract dependencies.
+- What broke:
+  - Summary render crashed when stats was missing from engine return path.
+- Preventive rule:
+  - Any newly introduced UI aggregate model must have default-safe props and be asserted in integration tests before merge.
+

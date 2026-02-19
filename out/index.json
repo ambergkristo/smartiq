@@ -1,0 +1,65 @@
+{
+  "generatedAt": "deterministic",
+  "topics": [
+    {
+      "topic": "art",
+      "file": "out/art.json",
+      "sha256": "c5ef6d0813114a75250fb8cc4a4e0487bc0854ed84ee00a69e5fe71ebcfb4c63"
+    },
+    {
+      "topic": "culture",
+      "file": "out/culture.json",
+      "sha256": "665b276ce0e2bf9113686c16d004de4ae619ed86c748dc61529774688094ec6d"
+    },
+    {
+      "topic": "geography",
+      "file": "out/geography.json",
+      "sha256": "3869f4f72844d7fcda6fcc3eadabcd320ce09b1e44f5b242ce16854eab22f26f"
+    },
+    {
+      "topic": "history",
+      "file": "out/history.json",
+      "sha256": "0d8c2175c5a00d609bb65f5a74aeced81ced0536b7081599a00cebb212f5a2fc"
+    },
+    {
+      "topic": "music",
+      "file": "out/music.json",
+      "sha256": "92c540667cd85bc3b1c439837629d685ccffc08123b7bc1853ae881d098ea55a"
+    },
+    {
+      "topic": "nature",
+      "file": "out/nature.json",
+      "sha256": "b99d5b16ee47d467bf371ac5981e6979866a4a6980709793843b1e854efead21"
+    },
+    {
+      "topic": "politics",
+      "file": "out/politics.json",
+      "sha256": "9dcc45bb7e44dd6ef043423f91fd2f88a8850fc28be362d64befca3df9d6c9f6"
+    },
+    {
+      "topic": "science",
+      "file": "out/science.json",
+      "sha256": "7f40dfbe9f2c803475791d2e9b3625bca516ab19419d42fa4bb9f90e4f212155"
+    },
+    {
+      "topic": "sports",
+      "file": "out/sports.json",
+      "sha256": "63e0356c42198039972149377e32b6344ccdb69f58e63a1fe479d66a5c35ef58"
+    },
+    {
+      "topic": "technology",
+      "file": "out/technology.json",
+      "sha256": "fc8c6d6c1c8eabed9bb74c1116e34bda1fb8bbbb5eadab2a6d7f32a5eab47239"
+    }
+  ],
+  "totals": {
+    "topics": 10,
+    "categories": 6,
+    "cardsPerCategory": 250,
+    "totalCards": 15000,
+    "totalOptions": 150000,
+    "sizeMode": "default",
+    "outputBytes": 42591036,
+    "maxOutputMB": 50
+  }
+}
