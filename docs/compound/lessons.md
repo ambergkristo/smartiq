@@ -216,3 +216,13 @@
 - Preventive rule:
   - Setup CTA must be driven by parsed player chips and selected topic, not raw text defaults; enforce with startup + integration tests.
 
+
+## 2026-02-19 - Loop 24 (PR101 Game Session Final Layout Merge)
+
+- Hard part:
+  - Improving gameplay readability without touching state transitions or backend contract.
+- What broke:
+  - Button copy changes (NEXT -> NEXT CARD) broke an integration test that used exact-label matching.
+- Preventive rule:
+  - UI copy updates on action buttons must include same-PR test updates for all affected user flows.
+
