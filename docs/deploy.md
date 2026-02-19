@@ -18,6 +18,7 @@ Create a new Web Service from this repository:
 Set environment variables:
 
 - `SPRING_PROFILES_ACTIVE=prod`
+- `APP_CORS_ALLOWED_ORIGINS=https://<your-vercel-domain>`
 - `SPRING_DATASOURCE_URL`
 - `SPRING_DATASOURCE_USERNAME`
 - `SPRING_DATASOURCE_PASSWORD`
@@ -30,8 +31,6 @@ Set environment variables:
 - `SMARTIQ_SESSION_DEDUP_ENABLED=true`
 - `SMARTIQ_SESSION_TTL_MINUTES=120`
 - `SMARTIQ_SESSION_MAX=50000`
-- `SMARTIQ_CORS_ALLOWED_ORIGIN_PUBLIC=https://<your-vercel-domain>`
-- `SMARTIQ_CORS_ALLOWED_ORIGIN_LOCAL=http://localhost:5173`
 - `SMARTIQ_INTERNAL_ACCESS_ENABLED=true`
 - `SMARTIQ_INTERNAL_API_KEY_HEADER=X-Internal-Api-Key`
 - `SMARTIQ_INTERNAL_API_KEY=<strong-random-value>`
@@ -39,6 +38,7 @@ Set environment variables:
 Health check endpoint:
 
 - `/health`
+- Dev-only CORS convenience (`localhost:*`, `127.0.0.1:*`) is profile-gated and not active in `prod`
 - `/internal/*` now requires `X-Internal-Api-Key` in `prod`
 - `/api/admin/*` is disabled in `prod` by profile
 - Actuator in `prod` exposes only `health`, `info`, and `prometheus`

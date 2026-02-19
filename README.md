@@ -56,6 +56,30 @@ Endpoints:
 - Backend metrics: `http://localhost:8080/actuator/prometheus`
 - Internal pool stats: `http://localhost:8080/internal/pool-stats`
 
+## Local Dev Port and CORS Behavior
+
+- Vite prefers port `5173` but can move to another free localhost port when `5173` is busy.
+- Backend dev CORS accepts localhost origins on any port:
+  - `http://localhost:*`
+  - `http://127.0.0.1:*`
+- Production CORS stays strict and must use explicit `APP_CORS_ALLOWED_ORIGINS` values.
+
+Optional Windows helpers to free common dev ports:
+
+```powershell
+netstat -ano | findstr :5173
+taskkill /PID <PID> /F
+```
+
+Frontend API base URL examples:
+
+```powershell
+# local backend
+$env:VITE_API_BASE_URL="http://localhost:8080"
+# render backend
+$env:VITE_API_BASE_URL="https://<your-backend-domain>"
+```
+
 ## API Endpoints
 
 - `GET /api/topics`
