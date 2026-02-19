@@ -1,8 +1,9 @@
 package com.smartiq.backend.config;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.smartiq.backend.card.Card;
 import com.smartiq.backend.card.CardRepository;
 import org.slf4j.Logger;
@@ -18,14 +19,24 @@ import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Stream;
 
 @Component
 public class CardImportRunner implements ApplicationRunner {
 
     private static final Logger log = LoggerFactory.getLogger(CardImportRunner.class);
+    private static final Set<String> VALID_CATEGORIES = Set.of(
+            "TRUE_FALSE",
+            "NUMBER",
+            "ORDER",
+            "CENTURY_DECADE",
+            "COLOR",
+            "OPEN"
+    );
 
     private final CardRepository cardRepository;
     private final ImportProperties importProperties;
@@ -124,15 +135,97 @@ public class CardImportRunner implements ApplicationRunner {
             return readFactoryBlocks(root);
         }
 
-        return objectMapper.convertValue(root, new TypeReference<>() {
-        });
+        return readFlatCards(root);
+    }
+
+    private List<CardSeed> readFlatCards(JsonNode root) {
+        List<CardSeed> seeds = new ArrayList<>();
+        for (JsonNode cardNode : root) {
+            String id = textOrNull(cardNode.get("id"));
+            String topic = textOrNull(cardNode.get("topic"));
+            String category = normalizeCategory(textOrNull(cardNode.get("category")));
+            String language = fallback(textOrNull(cardNode.get("language")), "en");
+            String question = textOrNull(cardNode.get("question"));
+            String difficulty = normalizeDifficulty(cardNode.get("difficulty"));
+            String source = fallback(textOrNull(cardNode.get("source")), "smartiq-import");
+
+            JsonNode optionsNode = cardNode.get("options");
+            if (optionsNode == null || !optionsNode.isArray()) {
+                continue;
+            }
+            List<String> options = new ArrayList<>();
+            List<Boolean> optionFlags = new ArrayList<>();
+            for (JsonNode optionNode : optionsNode) {
+                if (optionNode.isObject()) {
+                    options.add(textOrNull(optionNode.get("text")));
+                    optionFlags.add(optionNode.path("correct").asBoolean(false));
+                } else {
+                    options.add(textOrNull(optionNode));
+                    optionFlags.add(false);
+                }
+            }
+
+            JsonNode correctNode = cardNode.get("correct");
+            if (correctNode == null || correctNode.isNull()) {
+                correctNode = legacyCorrectNode(cardNode);
+            }
+            String correctMeta = normalizeCorrectMeta(correctNode, category, optionFlags);
+            Integer correctIndex = resolveCorrectIndex(correctNode, category, optionFlags);
+            String correctFlags = resolveCorrectFlags(correctNode, category, optionFlags);
+
+            seeds.add(new CardSeed(
+                    id,
+                    topic,
+                    category,
+                    language,
+                    question,
+                    options,
+                    correctIndex,
+                    correctFlags,
+                    correctMeta,
+                    difficulty,
+                    source,
+                    Instant.now()
+            ));
+        }
+        return seeds;
+    }
+
+    private JsonNode legacyCorrectNode(JsonNode cardNode) {
+        ObjectNode node = objectMapper.createObjectNode();
+        boolean hasAny = false;
+
+        JsonNode correctIndexNode = cardNode.get("correctIndex");
+        if (correctIndexNode != null && correctIndexNode.isNumber()) {
+            node.put("correctIndex", correctIndexNode.asInt());
+            hasAny = true;
+        }
+
+        JsonNode correctFlagsNode = cardNode.get("correctFlags");
+        if (correctFlagsNode != null && correctFlagsNode.isArray()) {
+            ArrayNode indexes = node.putArray("correctIndexes");
+            for (int i = 0; i < correctFlagsNode.size(); i++) {
+                if (correctFlagsNode.get(i).asBoolean(false)) {
+                    indexes.add(i);
+                }
+            }
+            hasAny = indexes.size() > 0;
+        }
+
+        JsonNode correctOrderNode = cardNode.get("correctOrder");
+        if (correctOrderNode != null && correctOrderNode.isArray()) {
+            node.set("correctOrder", correctOrderNode.deepCopy());
+            hasAny = true;
+        }
+
+        return hasAny ? node : null;
     }
 
     private List<CardSeed> readFactoryBlocks(JsonNode root) {
         List<CardSeed> seeds = new ArrayList<>();
         for (JsonNode block : root) {
             String topic = textOrNull(block.get("topic"));
-            String category = textOrNull(block.get("category"));
+            String category = normalizeCategory(textOrNull(block.get("category")));
             JsonNode cardsNode = block.get("cards");
             if (cardsNode == null || !cardsNode.isArray()) {
                 continue;
@@ -144,6 +237,7 @@ public class CardImportRunner implements ApplicationRunner {
                 String language = fallback(textOrNull(cardNode.get("language")), "en");
                 String difficulty = normalizeDifficulty(cardNode.get("difficulty"));
                 String source = fallback(textOrNull(cardNode.get("source")), "smartiq-factory");
+                String cardCategory = normalizeCategory(fallback(textOrNull(cardNode.get("category")), category));
 
                 JsonNode optionsNode = cardNode.get("options");
                 if (optionsNode == null || !optionsNode.isArray()) {
@@ -157,16 +251,20 @@ public class CardImportRunner implements ApplicationRunner {
                     correctFlags.add(optionNode.path("correct").asBoolean(false));
                 }
 
-                Integer correctIndex = singleCorrectIndex(correctFlags);
+                JsonNode correctNode = cardNode.get("correct");
+                String correctMeta = normalizeCorrectMeta(correctNode, cardCategory, correctFlags);
+                Integer correctIndex = resolveCorrectIndex(correctNode, cardCategory, correctFlags);
+                String correctFlagsRaw = resolveCorrectFlags(correctNode, cardCategory, correctFlags);
                 seeds.add(new CardSeed(
                         id,
                         topic,
-                        category,
+                        cardCategory,
                         language,
                         question,
                         options,
                         correctIndex,
-                        correctFlags,
+                        correctFlagsRaw,
+                        correctMeta,
                         difficulty,
                         source,
                         Instant.now()
@@ -200,6 +298,91 @@ public class CardImportRunner implements ApplicationRunner {
         return found == -1 ? null : found;
     }
 
+    private String normalizeCategory(String rawCategory) {
+        String category = fallback(rawCategory, "OPEN").toUpperCase();
+        if (!VALID_CATEGORIES.contains(category)) {
+            throw new IllegalArgumentException("Unsupported card category: " + category);
+        }
+        return category;
+    }
+
+    private Integer resolveCorrectIndex(JsonNode correctNode, String category, List<Boolean> optionFlags) {
+        if ("TRUE_FALSE".equals(category) || "ORDER".equals(category)) {
+            return null;
+        }
+
+        if (correctNode != null && correctNode.has("correctIndex")) {
+            return correctNode.get("correctIndex").asInt();
+        }
+        return singleCorrectIndex(optionFlags);
+    }
+
+    private String resolveCorrectFlags(JsonNode correctNode, String category, List<Boolean> optionFlags) {
+        if ("TRUE_FALSE".equals(category)) {
+            List<Integer> indexes = readCorrectIndexes(correctNode, optionFlags);
+            boolean[] flags = new boolean[optionFlags.size()];
+            for (Integer index : indexes) {
+                if (index >= 0 && index < flags.length) {
+                    flags[index] = true;
+                }
+            }
+            List<String> values = new ArrayList<>(flags.length);
+            for (boolean flag : flags) {
+                values.add(Boolean.toString(flag));
+            }
+            return String.join(",", values);
+        }
+
+        if (optionFlags.stream().anyMatch(Boolean::booleanValue)) {
+            return String.join(",", optionFlags.stream().map(String::valueOf).toList());
+        }
+        return null;
+    }
+
+    private List<Integer> readCorrectIndexes(JsonNode correctNode, List<Boolean> optionFlags) {
+        if (correctNode != null && correctNode.has("correctIndexes")) {
+            JsonNode array = correctNode.get("correctIndexes");
+            List<Integer> indexes = new ArrayList<>();
+            if (array.isArray()) {
+                array.forEach(item -> indexes.add(item.asInt()));
+            }
+            return List.copyOf(new LinkedHashSet<>(indexes));
+        }
+
+        List<Integer> indexes = new ArrayList<>();
+        for (int i = 0; i < optionFlags.size(); i++) {
+            if (Boolean.TRUE.equals(optionFlags.get(i))) {
+                indexes.add(i);
+            }
+        }
+        return indexes;
+    }
+
+    private String normalizeCorrectMeta(JsonNode correctNode, String category, List<Boolean> optionFlags) {
+        try {
+            if (correctNode != null && !correctNode.isNull()) {
+                return objectMapper.writeValueAsString(correctNode);
+            }
+
+            if ("TRUE_FALSE".equals(category)) {
+                return objectMapper.writeValueAsString(Collections.singletonMap("correctIndexes", readCorrectIndexes(null, optionFlags)));
+            }
+
+            if ("ORDER".equals(category)) {
+                throw new IllegalArgumentException("ORDER cards require correct metadata");
+            }
+
+            Integer idx = singleCorrectIndex(optionFlags);
+            if (idx != null) {
+                return objectMapper.writeValueAsString(Collections.singletonMap("correctIndex", idx));
+            }
+
+            return null;
+        } catch (Exception ex) {
+            throw new IllegalArgumentException("Failed to serialize correctness metadata", ex);
+        }
+    }
+
     private String textOrNull(JsonNode node) {
         if (node == null || node.isNull()) {
             return null;
@@ -221,16 +404,17 @@ public class CardImportRunner implements ApplicationRunner {
     private Card toEntity(CardSeed seed) {
         requireText(seed.id(), "Card id is required");
         requireText(seed.topic(), "Card topic is required: " + seed.id());
+        requireText(seed.category(), "Card category is required: " + seed.id());
         requireText(seed.language(), "Card language is required: " + seed.id());
         requireText(seed.question(), "Card question is required: " + seed.id());
         requireText(seed.difficulty(), "Card difficulty is required: " + seed.id());
         if (seed.options() == null || seed.options().size() != 10) {
             throw new IllegalArgumentException("Card must contain exactly 10 options: " + seed.id());
         }
-        if (seed.correctIndex() == null && (seed.correctFlags() == null || seed.correctFlags().size() != 10)) {
-            throw new IllegalArgumentException("Card must include correctIndex or correctFlags: " + seed.id());
+        if (seed.correctIndex() == null && !StringUtils.hasText(seed.correctFlags()) && !StringUtils.hasText(seed.correctMeta())) {
+            throw new IllegalArgumentException("Card must include correctness metadata: " + seed.id());
         }
-        boolean anyCorrect = seed.correctIndex() != null || seed.correctFlags().stream().anyMatch(Boolean::booleanValue);
+        boolean anyCorrect = seed.correctIndex() != null || StringUtils.hasText(seed.correctFlags()) || StringUtils.hasText(seed.correctMeta());
         if (!anyCorrect) {
             throw new IllegalArgumentException("Card must include at least one correct answer: " + seed.id());
         }
@@ -238,12 +422,14 @@ public class CardImportRunner implements ApplicationRunner {
         Card card = new Card();
         card.setId(seed.id());
         card.setTopic(seed.topic());
-        card.setSubtopic(seed.subtopic());
+        card.setSubtopic(seed.category());
+        card.setCategory(seed.category());
         card.setLanguage(seed.language());
         card.setQuestion(seed.question());
         card.setOptions(seed.options());
         card.setCorrectIndex(seed.correctIndex());
-        card.setCorrectFlags(seed.correctFlags() == null ? null : String.join(",", seed.correctFlags().stream().map(String::valueOf).toList()));
+        card.setCorrectFlags(seed.correctFlags());
+        card.setCorrectMeta(seed.correctMeta());
         card.setDifficulty(seed.difficulty());
         card.setSource(fallback(seed.source(), "smartiq-import"));
         card.setCreatedAt(seed.createdAt() == null ? Instant.now() : seed.createdAt());
@@ -253,12 +439,13 @@ public class CardImportRunner implements ApplicationRunner {
     private record CardSeed(
             String id,
             String topic,
-            String subtopic,
+            String category,
             String language,
             String question,
             List<String> options,
             Integer correctIndex,
-            List<Boolean> correctFlags,
+            String correctFlags,
+            String correctMeta,
             String difficulty,
             String source,
             Instant createdAt
@@ -270,8 +457,5 @@ public class CardImportRunner implements ApplicationRunner {
             return options.stream().filter(Objects::nonNull).toList();
         }
 
-        public List<Boolean> correctFlags() {
-            return correctFlags == null ? Collections.emptyList() : correctFlags;
-        }
     }
 }

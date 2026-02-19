@@ -1,0 +1,8744 @@
+[
+  {
+    "id": "history-true_false-001",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "History: Which statements are true?",
+    "options": [
+      "10 is even",
+      "11 is prime",
+      "12 is even",
+      "13 is prime",
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-true_false-002",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "History: Which statements are true?",
+    "options": [
+      "11 is greater than 0",
+      "12 is prime",
+      "13 is even",
+      "14 is prime",
+      "15 is even",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-true_false-003",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "History: Which statements are true?",
+    "options": [
+      "12 is even",
+      "13 is prime",
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-true_false-004",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "History: Which statements are true?",
+    "options": [
+      "13 is greater than 0",
+      "14 is prime",
+      "15 is even",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-true_false-005",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "History: Which statements are true?",
+    "options": [
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-true_false-006",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "History: Which statements are true?",
+    "options": [
+      "15 is greater than 0",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime",
+      "23 is even",
+      "24 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-true_false-007",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "History: Which statements are true?",
+    "options": [
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime",
+      "24 is even",
+      "25 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-true_false-008",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "History: Which statements are true?",
+    "options": [
+      "17 is greater than 0",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime",
+      "23 is even",
+      "24 is prime",
+      "25 is even",
+      "26 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-true_false-009",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "History: Which statements are true?",
+    "options": [
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime",
+      "24 is even",
+      "25 is prime",
+      "26 is even",
+      "27 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-true_false-001",
+    "topic": "Sports",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Sports: Which statements are true?",
+    "options": [
+      "10 is even",
+      "11 is prime",
+      "12 is even",
+      "13 is prime",
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-true_false-002",
+    "topic": "Sports",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Sports: Which statements are true?",
+    "options": [
+      "11 is greater than 0",
+      "12 is prime",
+      "13 is even",
+      "14 is prime",
+      "15 is even",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-true_false-003",
+    "topic": "Sports",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Sports: Which statements are true?",
+    "options": [
+      "12 is even",
+      "13 is prime",
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-true_false-004",
+    "topic": "Sports",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Sports: Which statements are true?",
+    "options": [
+      "13 is greater than 0",
+      "14 is prime",
+      "15 is even",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-true_false-005",
+    "topic": "Sports",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Sports: Which statements are true?",
+    "options": [
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-true_false-006",
+    "topic": "Sports",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Sports: Which statements are true?",
+    "options": [
+      "15 is greater than 0",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime",
+      "23 is even",
+      "24 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-true_false-007",
+    "topic": "Sports",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Sports: Which statements are true?",
+    "options": [
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime",
+      "24 is even",
+      "25 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-true_false-008",
+    "topic": "Sports",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Sports: Which statements are true?",
+    "options": [
+      "17 is greater than 0",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime",
+      "23 is even",
+      "24 is prime",
+      "25 is even",
+      "26 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-true_false-009",
+    "topic": "Sports",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Sports: Which statements are true?",
+    "options": [
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime",
+      "24 is even",
+      "25 is prime",
+      "26 is even",
+      "27 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-true_false-001",
+    "topic": "Geography",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Geography: Which statements are true?",
+    "options": [
+      "10 is even",
+      "11 is prime",
+      "12 is even",
+      "13 is prime",
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-true_false-002",
+    "topic": "Geography",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Geography: Which statements are true?",
+    "options": [
+      "11 is greater than 0",
+      "12 is prime",
+      "13 is even",
+      "14 is prime",
+      "15 is even",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-true_false-003",
+    "topic": "Geography",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Geography: Which statements are true?",
+    "options": [
+      "12 is even",
+      "13 is prime",
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-true_false-004",
+    "topic": "Geography",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Geography: Which statements are true?",
+    "options": [
+      "13 is greater than 0",
+      "14 is prime",
+      "15 is even",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-true_false-005",
+    "topic": "Geography",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Geography: Which statements are true?",
+    "options": [
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-true_false-006",
+    "topic": "Geography",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Geography: Which statements are true?",
+    "options": [
+      "15 is greater than 0",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime",
+      "23 is even",
+      "24 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-true_false-007",
+    "topic": "Geography",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Geography: Which statements are true?",
+    "options": [
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime",
+      "24 is even",
+      "25 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-true_false-008",
+    "topic": "Geography",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Geography: Which statements are true?",
+    "options": [
+      "17 is greater than 0",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime",
+      "23 is even",
+      "24 is prime",
+      "25 is even",
+      "26 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-true_false-009",
+    "topic": "Geography",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Geography: Which statements are true?",
+    "options": [
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime",
+      "24 is even",
+      "25 is prime",
+      "26 is even",
+      "27 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-true_false-001",
+    "topic": "Culture",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Culture: Which statements are true?",
+    "options": [
+      "10 is even",
+      "11 is prime",
+      "12 is even",
+      "13 is prime",
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-true_false-002",
+    "topic": "Culture",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Culture: Which statements are true?",
+    "options": [
+      "11 is greater than 0",
+      "12 is prime",
+      "13 is even",
+      "14 is prime",
+      "15 is even",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-true_false-003",
+    "topic": "Culture",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Culture: Which statements are true?",
+    "options": [
+      "12 is even",
+      "13 is prime",
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-true_false-004",
+    "topic": "Culture",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Culture: Which statements are true?",
+    "options": [
+      "13 is greater than 0",
+      "14 is prime",
+      "15 is even",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-true_false-005",
+    "topic": "Culture",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Culture: Which statements are true?",
+    "options": [
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-true_false-006",
+    "topic": "Culture",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Culture: Which statements are true?",
+    "options": [
+      "15 is greater than 0",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime",
+      "23 is even",
+      "24 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-true_false-007",
+    "topic": "Culture",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Culture: Which statements are true?",
+    "options": [
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime",
+      "24 is even",
+      "25 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-true_false-008",
+    "topic": "Culture",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Culture: Which statements are true?",
+    "options": [
+      "17 is greater than 0",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime",
+      "23 is even",
+      "24 is prime",
+      "25 is even",
+      "26 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-true_false-009",
+    "topic": "Culture",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Culture: Which statements are true?",
+    "options": [
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime",
+      "24 is even",
+      "25 is prime",
+      "26 is even",
+      "27 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-true_false-001",
+    "topic": "Science",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Science: Which statements are true?",
+    "options": [
+      "10 is even",
+      "11 is prime",
+      "12 is even",
+      "13 is prime",
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-true_false-002",
+    "topic": "Science",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Science: Which statements are true?",
+    "options": [
+      "11 is greater than 0",
+      "12 is prime",
+      "13 is even",
+      "14 is prime",
+      "15 is even",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-true_false-003",
+    "topic": "Science",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Science: Which statements are true?",
+    "options": [
+      "12 is even",
+      "13 is prime",
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-true_false-004",
+    "topic": "Science",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Science: Which statements are true?",
+    "options": [
+      "13 is greater than 0",
+      "14 is prime",
+      "15 is even",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-true_false-005",
+    "topic": "Science",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Science: Which statements are true?",
+    "options": [
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-true_false-006",
+    "topic": "Science",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Science: Which statements are true?",
+    "options": [
+      "15 is greater than 0",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime",
+      "23 is even",
+      "24 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-true_false-007",
+    "topic": "Science",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Science: Which statements are true?",
+    "options": [
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime",
+      "24 is even",
+      "25 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-true_false-008",
+    "topic": "Science",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Science: Which statements are true?",
+    "options": [
+      "17 is greater than 0",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime",
+      "23 is even",
+      "24 is prime",
+      "25 is even",
+      "26 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-true_false-009",
+    "topic": "Science",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Science: Which statements are true?",
+    "options": [
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime",
+      "24 is even",
+      "25 is prime",
+      "26 is even",
+      "27 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-true_false-001",
+    "topic": "Varia",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Varia: Which statements are true?",
+    "options": [
+      "10 is even",
+      "11 is prime",
+      "12 is even",
+      "13 is prime",
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-true_false-002",
+    "topic": "Varia",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Varia: Which statements are true?",
+    "options": [
+      "11 is greater than 0",
+      "12 is prime",
+      "13 is even",
+      "14 is prime",
+      "15 is even",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-true_false-003",
+    "topic": "Varia",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Varia: Which statements are true?",
+    "options": [
+      "12 is even",
+      "13 is prime",
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-true_false-004",
+    "topic": "Varia",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Varia: Which statements are true?",
+    "options": [
+      "13 is greater than 0",
+      "14 is prime",
+      "15 is even",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-true_false-005",
+    "topic": "Varia",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Varia: Which statements are true?",
+    "options": [
+      "14 is even",
+      "15 is prime",
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-true_false-006",
+    "topic": "Varia",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Varia: Which statements are true?",
+    "options": [
+      "15 is greater than 0",
+      "16 is prime",
+      "17 is even",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime",
+      "23 is even",
+      "24 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-true_false-007",
+    "topic": "Varia",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Varia: Which statements are true?",
+    "options": [
+      "16 is even",
+      "17 is prime",
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime",
+      "24 is even",
+      "25 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-true_false-008",
+    "topic": "Varia",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Varia: Which statements are true?",
+    "options": [
+      "17 is greater than 0",
+      "18 is prime",
+      "19 is even",
+      "20 is prime",
+      "21 is even",
+      "22 is prime",
+      "23 is even",
+      "24 is prime",
+      "25 is even",
+      "26 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-true_false-009",
+    "topic": "Varia",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Varia: Which statements are true?",
+    "options": [
+      "18 is even",
+      "19 is prime",
+      "20 is even",
+      "21 is prime",
+      "22 is even",
+      "23 is prime",
+      "24 is even",
+      "25 is prime",
+      "26 is even",
+      "27 is prime"
+    ],
+    "correct": {
+      "correctIndexes": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-number-001",
+    "topic": "History",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "History: What is 20 + 7?",
+    "options": [
+      "27",
+      "26",
+      "28",
+      "25",
+      "29",
+      "24",
+      "30",
+      "31",
+      "23",
+      "32"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 27
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-number-002",
+    "topic": "History",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "History: What is 21 + 8?",
+    "options": [
+      "29",
+      "28",
+      "30",
+      "27",
+      "31",
+      "26",
+      "32",
+      "33",
+      "25",
+      "34"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 29
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-number-003",
+    "topic": "History",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "History: What is 22 + 9?",
+    "options": [
+      "31",
+      "30",
+      "32",
+      "29",
+      "33",
+      "28",
+      "34",
+      "35",
+      "27",
+      "36"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 31
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-number-004",
+    "topic": "History",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "History: What is 23 + 10?",
+    "options": [
+      "33",
+      "32",
+      "34",
+      "31",
+      "35",
+      "30",
+      "36",
+      "37",
+      "29",
+      "38"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 33
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-number-005",
+    "topic": "History",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "History: What is 24 + 11?",
+    "options": [
+      "35",
+      "34",
+      "36",
+      "33",
+      "37",
+      "32",
+      "38",
+      "39",
+      "31",
+      "40"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 35
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-number-006",
+    "topic": "History",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "History: What is 25 + 12?",
+    "options": [
+      "37",
+      "36",
+      "38",
+      "35",
+      "39",
+      "34",
+      "40",
+      "41",
+      "33",
+      "42"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 37
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-number-007",
+    "topic": "History",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "History: What is 26 + 13?",
+    "options": [
+      "39",
+      "38",
+      "40",
+      "37",
+      "41",
+      "36",
+      "42",
+      "43",
+      "35",
+      "44"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 39
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-number-008",
+    "topic": "History",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "History: What is 27 + 14?",
+    "options": [
+      "41",
+      "40",
+      "42",
+      "39",
+      "43",
+      "38",
+      "44",
+      "45",
+      "37",
+      "46"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 41
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-number-009",
+    "topic": "History",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "History: What is 28 + 15?",
+    "options": [
+      "43",
+      "42",
+      "44",
+      "41",
+      "45",
+      "40",
+      "46",
+      "47",
+      "39",
+      "48"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 43
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-number-001",
+    "topic": "Sports",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Sports: What is 20 + 7?",
+    "options": [
+      "27",
+      "26",
+      "28",
+      "25",
+      "29",
+      "24",
+      "30",
+      "31",
+      "23",
+      "32"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 27
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-number-002",
+    "topic": "Sports",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Sports: What is 21 + 8?",
+    "options": [
+      "29",
+      "28",
+      "30",
+      "27",
+      "31",
+      "26",
+      "32",
+      "33",
+      "25",
+      "34"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 29
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-number-003",
+    "topic": "Sports",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Sports: What is 22 + 9?",
+    "options": [
+      "31",
+      "30",
+      "32",
+      "29",
+      "33",
+      "28",
+      "34",
+      "35",
+      "27",
+      "36"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 31
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-number-004",
+    "topic": "Sports",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Sports: What is 23 + 10?",
+    "options": [
+      "33",
+      "32",
+      "34",
+      "31",
+      "35",
+      "30",
+      "36",
+      "37",
+      "29",
+      "38"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 33
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-number-005",
+    "topic": "Sports",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Sports: What is 24 + 11?",
+    "options": [
+      "35",
+      "34",
+      "36",
+      "33",
+      "37",
+      "32",
+      "38",
+      "39",
+      "31",
+      "40"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 35
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-number-006",
+    "topic": "Sports",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Sports: What is 25 + 12?",
+    "options": [
+      "37",
+      "36",
+      "38",
+      "35",
+      "39",
+      "34",
+      "40",
+      "41",
+      "33",
+      "42"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 37
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-number-007",
+    "topic": "Sports",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Sports: What is 26 + 13?",
+    "options": [
+      "39",
+      "38",
+      "40",
+      "37",
+      "41",
+      "36",
+      "42",
+      "43",
+      "35",
+      "44"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 39
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-number-008",
+    "topic": "Sports",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Sports: What is 27 + 14?",
+    "options": [
+      "41",
+      "40",
+      "42",
+      "39",
+      "43",
+      "38",
+      "44",
+      "45",
+      "37",
+      "46"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 41
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-number-009",
+    "topic": "Sports",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Sports: What is 28 + 15?",
+    "options": [
+      "43",
+      "42",
+      "44",
+      "41",
+      "45",
+      "40",
+      "46",
+      "47",
+      "39",
+      "48"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 43
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-number-001",
+    "topic": "Geography",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Geography: What is 20 + 7?",
+    "options": [
+      "27",
+      "26",
+      "28",
+      "25",
+      "29",
+      "24",
+      "30",
+      "31",
+      "23",
+      "32"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 27
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-number-002",
+    "topic": "Geography",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Geography: What is 21 + 8?",
+    "options": [
+      "29",
+      "28",
+      "30",
+      "27",
+      "31",
+      "26",
+      "32",
+      "33",
+      "25",
+      "34"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 29
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-number-003",
+    "topic": "Geography",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Geography: What is 22 + 9?",
+    "options": [
+      "31",
+      "30",
+      "32",
+      "29",
+      "33",
+      "28",
+      "34",
+      "35",
+      "27",
+      "36"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 31
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-number-004",
+    "topic": "Geography",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Geography: What is 23 + 10?",
+    "options": [
+      "33",
+      "32",
+      "34",
+      "31",
+      "35",
+      "30",
+      "36",
+      "37",
+      "29",
+      "38"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 33
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-number-005",
+    "topic": "Geography",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Geography: What is 24 + 11?",
+    "options": [
+      "35",
+      "34",
+      "36",
+      "33",
+      "37",
+      "32",
+      "38",
+      "39",
+      "31",
+      "40"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 35
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-number-006",
+    "topic": "Geography",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Geography: What is 25 + 12?",
+    "options": [
+      "37",
+      "36",
+      "38",
+      "35",
+      "39",
+      "34",
+      "40",
+      "41",
+      "33",
+      "42"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 37
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-number-007",
+    "topic": "Geography",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Geography: What is 26 + 13?",
+    "options": [
+      "39",
+      "38",
+      "40",
+      "37",
+      "41",
+      "36",
+      "42",
+      "43",
+      "35",
+      "44"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 39
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-number-008",
+    "topic": "Geography",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Geography: What is 27 + 14?",
+    "options": [
+      "41",
+      "40",
+      "42",
+      "39",
+      "43",
+      "38",
+      "44",
+      "45",
+      "37",
+      "46"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 41
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-number-009",
+    "topic": "Geography",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Geography: What is 28 + 15?",
+    "options": [
+      "43",
+      "42",
+      "44",
+      "41",
+      "45",
+      "40",
+      "46",
+      "47",
+      "39",
+      "48"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 43
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-number-001",
+    "topic": "Culture",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Culture: What is 20 + 7?",
+    "options": [
+      "27",
+      "26",
+      "28",
+      "25",
+      "29",
+      "24",
+      "30",
+      "31",
+      "23",
+      "32"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 27
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-number-002",
+    "topic": "Culture",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Culture: What is 21 + 8?",
+    "options": [
+      "29",
+      "28",
+      "30",
+      "27",
+      "31",
+      "26",
+      "32",
+      "33",
+      "25",
+      "34"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 29
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-number-003",
+    "topic": "Culture",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Culture: What is 22 + 9?",
+    "options": [
+      "31",
+      "30",
+      "32",
+      "29",
+      "33",
+      "28",
+      "34",
+      "35",
+      "27",
+      "36"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 31
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-number-004",
+    "topic": "Culture",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Culture: What is 23 + 10?",
+    "options": [
+      "33",
+      "32",
+      "34",
+      "31",
+      "35",
+      "30",
+      "36",
+      "37",
+      "29",
+      "38"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 33
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-number-005",
+    "topic": "Culture",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Culture: What is 24 + 11?",
+    "options": [
+      "35",
+      "34",
+      "36",
+      "33",
+      "37",
+      "32",
+      "38",
+      "39",
+      "31",
+      "40"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 35
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-number-006",
+    "topic": "Culture",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Culture: What is 25 + 12?",
+    "options": [
+      "37",
+      "36",
+      "38",
+      "35",
+      "39",
+      "34",
+      "40",
+      "41",
+      "33",
+      "42"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 37
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-number-007",
+    "topic": "Culture",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Culture: What is 26 + 13?",
+    "options": [
+      "39",
+      "38",
+      "40",
+      "37",
+      "41",
+      "36",
+      "42",
+      "43",
+      "35",
+      "44"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 39
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-number-008",
+    "topic": "Culture",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Culture: What is 27 + 14?",
+    "options": [
+      "41",
+      "40",
+      "42",
+      "39",
+      "43",
+      "38",
+      "44",
+      "45",
+      "37",
+      "46"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 41
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-number-009",
+    "topic": "Culture",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Culture: What is 28 + 15?",
+    "options": [
+      "43",
+      "42",
+      "44",
+      "41",
+      "45",
+      "40",
+      "46",
+      "47",
+      "39",
+      "48"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 43
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-number-001",
+    "topic": "Science",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Science: What is 20 + 7?",
+    "options": [
+      "27",
+      "26",
+      "28",
+      "25",
+      "29",
+      "24",
+      "30",
+      "31",
+      "23",
+      "32"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 27
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-number-002",
+    "topic": "Science",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Science: What is 21 + 8?",
+    "options": [
+      "29",
+      "28",
+      "30",
+      "27",
+      "31",
+      "26",
+      "32",
+      "33",
+      "25",
+      "34"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 29
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-number-003",
+    "topic": "Science",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Science: What is 22 + 9?",
+    "options": [
+      "31",
+      "30",
+      "32",
+      "29",
+      "33",
+      "28",
+      "34",
+      "35",
+      "27",
+      "36"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 31
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-number-004",
+    "topic": "Science",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Science: What is 23 + 10?",
+    "options": [
+      "33",
+      "32",
+      "34",
+      "31",
+      "35",
+      "30",
+      "36",
+      "37",
+      "29",
+      "38"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 33
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-number-005",
+    "topic": "Science",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Science: What is 24 + 11?",
+    "options": [
+      "35",
+      "34",
+      "36",
+      "33",
+      "37",
+      "32",
+      "38",
+      "39",
+      "31",
+      "40"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 35
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-number-006",
+    "topic": "Science",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Science: What is 25 + 12?",
+    "options": [
+      "37",
+      "36",
+      "38",
+      "35",
+      "39",
+      "34",
+      "40",
+      "41",
+      "33",
+      "42"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 37
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-number-007",
+    "topic": "Science",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Science: What is 26 + 13?",
+    "options": [
+      "39",
+      "38",
+      "40",
+      "37",
+      "41",
+      "36",
+      "42",
+      "43",
+      "35",
+      "44"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 39
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-number-008",
+    "topic": "Science",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Science: What is 27 + 14?",
+    "options": [
+      "41",
+      "40",
+      "42",
+      "39",
+      "43",
+      "38",
+      "44",
+      "45",
+      "37",
+      "46"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 41
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-number-009",
+    "topic": "Science",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Science: What is 28 + 15?",
+    "options": [
+      "43",
+      "42",
+      "44",
+      "41",
+      "45",
+      "40",
+      "46",
+      "47",
+      "39",
+      "48"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 43
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-number-001",
+    "topic": "Varia",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Varia: What is 20 + 7?",
+    "options": [
+      "27",
+      "26",
+      "28",
+      "25",
+      "29",
+      "24",
+      "30",
+      "31",
+      "23",
+      "32"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 27
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-number-002",
+    "topic": "Varia",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Varia: What is 21 + 8?",
+    "options": [
+      "29",
+      "28",
+      "30",
+      "27",
+      "31",
+      "26",
+      "32",
+      "33",
+      "25",
+      "34"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 29
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-number-003",
+    "topic": "Varia",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Varia: What is 22 + 9?",
+    "options": [
+      "31",
+      "30",
+      "32",
+      "29",
+      "33",
+      "28",
+      "34",
+      "35",
+      "27",
+      "36"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 31
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-number-004",
+    "topic": "Varia",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Varia: What is 23 + 10?",
+    "options": [
+      "33",
+      "32",
+      "34",
+      "31",
+      "35",
+      "30",
+      "36",
+      "37",
+      "29",
+      "38"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 33
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-number-005",
+    "topic": "Varia",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Varia: What is 24 + 11?",
+    "options": [
+      "35",
+      "34",
+      "36",
+      "33",
+      "37",
+      "32",
+      "38",
+      "39",
+      "31",
+      "40"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 35
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-number-006",
+    "topic": "Varia",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Varia: What is 25 + 12?",
+    "options": [
+      "37",
+      "36",
+      "38",
+      "35",
+      "39",
+      "34",
+      "40",
+      "41",
+      "33",
+      "42"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 37
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-number-007",
+    "topic": "Varia",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Varia: What is 26 + 13?",
+    "options": [
+      "39",
+      "38",
+      "40",
+      "37",
+      "41",
+      "36",
+      "42",
+      "43",
+      "35",
+      "44"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 39
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-number-008",
+    "topic": "Varia",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Varia: What is 27 + 14?",
+    "options": [
+      "41",
+      "40",
+      "42",
+      "39",
+      "43",
+      "38",
+      "44",
+      "45",
+      "37",
+      "46"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 41
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-number-009",
+    "topic": "Varia",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Varia: What is 28 + 15?",
+    "options": [
+      "43",
+      "42",
+      "44",
+      "41",
+      "45",
+      "40",
+      "46",
+      "47",
+      "39",
+      "48"
+    ],
+    "correct": {
+      "correctIndex": 0,
+      "numericValue": 43
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-order-001",
+    "topic": "History",
+    "category": "ORDER",
+    "language": "en",
+    "question": "History: Order these years from earliest to latest.",
+    "options": [
+      "1965",
+      "1962",
+      "1971",
+      "1974",
+      "1959",
+      "1950",
+      "1956",
+      "1977",
+      "1953",
+      "1968"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        5,
+        8,
+        9,
+        4,
+        1,
+        3,
+        10,
+        2,
+        7
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-order-002",
+    "topic": "History",
+    "category": "ORDER",
+    "language": "en",
+    "question": "History: Order these years from earliest to latest.",
+    "options": [
+      "1978",
+      "1969",
+      "1957",
+      "1966",
+      "1972",
+      "1975",
+      "1963",
+      "1954",
+      "1960",
+      "1951"
+    ],
+    "correct": {
+      "correctOrder": [
+        10,
+        7,
+        3,
+        6,
+        8,
+        9,
+        5,
+        2,
+        4,
+        1
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-order-003",
+    "topic": "History",
+    "category": "ORDER",
+    "language": "en",
+    "question": "History: Order these years from earliest to latest.",
+    "options": [
+      "1967",
+      "1964",
+      "1952",
+      "1973",
+      "1958",
+      "1979",
+      "1955",
+      "1961",
+      "1970",
+      "1976"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        5,
+        1,
+        8,
+        3,
+        10,
+        2,
+        4,
+        7,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-order-004",
+    "topic": "History",
+    "category": "ORDER",
+    "language": "en",
+    "question": "History: Order these years from earliest to latest.",
+    "options": [
+      "1953",
+      "1971",
+      "1959",
+      "1965",
+      "1962",
+      "1980",
+      "1956",
+      "1968",
+      "1977",
+      "1974"
+    ],
+    "correct": {
+      "correctOrder": [
+        1,
+        7,
+        3,
+        5,
+        4,
+        10,
+        2,
+        6,
+        9,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-order-005",
+    "topic": "History",
+    "category": "ORDER",
+    "language": "en",
+    "question": "History: Order these years from earliest to latest.",
+    "options": [
+      "1969",
+      "1975",
+      "1966",
+      "1954",
+      "1960",
+      "1978",
+      "1981",
+      "1963",
+      "1957",
+      "1972"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        8,
+        5,
+        1,
+        3,
+        9,
+        10,
+        4,
+        2,
+        7
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-order-006",
+    "topic": "History",
+    "category": "ORDER",
+    "language": "en",
+    "question": "History: Order these years from earliest to latest.",
+    "options": [
+      "1958",
+      "1955",
+      "1964",
+      "1982",
+      "1961",
+      "1970",
+      "1967",
+      "1979",
+      "1973",
+      "1976"
+    ],
+    "correct": {
+      "correctOrder": [
+        2,
+        1,
+        4,
+        10,
+        3,
+        6,
+        5,
+        9,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-order-007",
+    "topic": "History",
+    "category": "ORDER",
+    "language": "en",
+    "question": "History: Order these years from earliest to latest.",
+    "options": [
+      "1968",
+      "1983",
+      "1974",
+      "1962",
+      "1959",
+      "1980",
+      "1977",
+      "1965",
+      "1956",
+      "1971"
+    ],
+    "correct": {
+      "correctOrder": [
+        5,
+        10,
+        7,
+        3,
+        2,
+        9,
+        8,
+        4,
+        1,
+        6
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-order-008",
+    "topic": "History",
+    "category": "ORDER",
+    "language": "en",
+    "question": "History: Order these years from earliest to latest.",
+    "options": [
+      "1966",
+      "1984",
+      "1981",
+      "1978",
+      "1960",
+      "1975",
+      "1972",
+      "1969",
+      "1963",
+      "1957"
+    ],
+    "correct": {
+      "correctOrder": [
+        4,
+        10,
+        9,
+        8,
+        2,
+        7,
+        6,
+        5,
+        3,
+        1
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-order-009",
+    "topic": "History",
+    "category": "ORDER",
+    "language": "en",
+    "question": "History: Order these years from earliest to latest.",
+    "options": [
+      "1961",
+      "1967",
+      "1964",
+      "1970",
+      "1976",
+      "1985",
+      "1958",
+      "1973",
+      "1979",
+      "1982"
+    ],
+    "correct": {
+      "correctOrder": [
+        2,
+        4,
+        3,
+        5,
+        7,
+        10,
+        1,
+        6,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-order-001",
+    "topic": "Sports",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Sports: Order these years from earliest to latest.",
+    "options": [
+      "1965",
+      "1962",
+      "1971",
+      "1974",
+      "1959",
+      "1950",
+      "1956",
+      "1977",
+      "1953",
+      "1968"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        5,
+        8,
+        9,
+        4,
+        1,
+        3,
+        10,
+        2,
+        7
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-order-002",
+    "topic": "Sports",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Sports: Order these years from earliest to latest.",
+    "options": [
+      "1978",
+      "1969",
+      "1957",
+      "1966",
+      "1972",
+      "1975",
+      "1963",
+      "1954",
+      "1960",
+      "1951"
+    ],
+    "correct": {
+      "correctOrder": [
+        10,
+        7,
+        3,
+        6,
+        8,
+        9,
+        5,
+        2,
+        4,
+        1
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-order-003",
+    "topic": "Sports",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Sports: Order these years from earliest to latest.",
+    "options": [
+      "1967",
+      "1964",
+      "1952",
+      "1973",
+      "1958",
+      "1979",
+      "1955",
+      "1961",
+      "1970",
+      "1976"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        5,
+        1,
+        8,
+        3,
+        10,
+        2,
+        4,
+        7,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-order-004",
+    "topic": "Sports",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Sports: Order these years from earliest to latest.",
+    "options": [
+      "1953",
+      "1971",
+      "1959",
+      "1965",
+      "1962",
+      "1980",
+      "1956",
+      "1968",
+      "1977",
+      "1974"
+    ],
+    "correct": {
+      "correctOrder": [
+        1,
+        7,
+        3,
+        5,
+        4,
+        10,
+        2,
+        6,
+        9,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-order-005",
+    "topic": "Sports",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Sports: Order these years from earliest to latest.",
+    "options": [
+      "1969",
+      "1975",
+      "1966",
+      "1954",
+      "1960",
+      "1978",
+      "1981",
+      "1963",
+      "1957",
+      "1972"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        8,
+        5,
+        1,
+        3,
+        9,
+        10,
+        4,
+        2,
+        7
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-order-006",
+    "topic": "Sports",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Sports: Order these years from earliest to latest.",
+    "options": [
+      "1958",
+      "1955",
+      "1964",
+      "1982",
+      "1961",
+      "1970",
+      "1967",
+      "1979",
+      "1973",
+      "1976"
+    ],
+    "correct": {
+      "correctOrder": [
+        2,
+        1,
+        4,
+        10,
+        3,
+        6,
+        5,
+        9,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-order-007",
+    "topic": "Sports",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Sports: Order these years from earliest to latest.",
+    "options": [
+      "1968",
+      "1983",
+      "1974",
+      "1962",
+      "1959",
+      "1980",
+      "1977",
+      "1965",
+      "1956",
+      "1971"
+    ],
+    "correct": {
+      "correctOrder": [
+        5,
+        10,
+        7,
+        3,
+        2,
+        9,
+        8,
+        4,
+        1,
+        6
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-order-008",
+    "topic": "Sports",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Sports: Order these years from earliest to latest.",
+    "options": [
+      "1966",
+      "1984",
+      "1981",
+      "1978",
+      "1960",
+      "1975",
+      "1972",
+      "1969",
+      "1963",
+      "1957"
+    ],
+    "correct": {
+      "correctOrder": [
+        4,
+        10,
+        9,
+        8,
+        2,
+        7,
+        6,
+        5,
+        3,
+        1
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-order-009",
+    "topic": "Sports",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Sports: Order these years from earliest to latest.",
+    "options": [
+      "1961",
+      "1967",
+      "1964",
+      "1970",
+      "1976",
+      "1985",
+      "1958",
+      "1973",
+      "1979",
+      "1982"
+    ],
+    "correct": {
+      "correctOrder": [
+        2,
+        4,
+        3,
+        5,
+        7,
+        10,
+        1,
+        6,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-order-001",
+    "topic": "Geography",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Geography: Order these years from earliest to latest.",
+    "options": [
+      "1965",
+      "1962",
+      "1971",
+      "1974",
+      "1959",
+      "1950",
+      "1956",
+      "1977",
+      "1953",
+      "1968"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        5,
+        8,
+        9,
+        4,
+        1,
+        3,
+        10,
+        2,
+        7
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-order-002",
+    "topic": "Geography",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Geography: Order these years from earliest to latest.",
+    "options": [
+      "1978",
+      "1969",
+      "1957",
+      "1966",
+      "1972",
+      "1975",
+      "1963",
+      "1954",
+      "1960",
+      "1951"
+    ],
+    "correct": {
+      "correctOrder": [
+        10,
+        7,
+        3,
+        6,
+        8,
+        9,
+        5,
+        2,
+        4,
+        1
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-order-003",
+    "topic": "Geography",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Geography: Order these years from earliest to latest.",
+    "options": [
+      "1967",
+      "1964",
+      "1952",
+      "1973",
+      "1958",
+      "1979",
+      "1955",
+      "1961",
+      "1970",
+      "1976"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        5,
+        1,
+        8,
+        3,
+        10,
+        2,
+        4,
+        7,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-order-004",
+    "topic": "Geography",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Geography: Order these years from earliest to latest.",
+    "options": [
+      "1953",
+      "1971",
+      "1959",
+      "1965",
+      "1962",
+      "1980",
+      "1956",
+      "1968",
+      "1977",
+      "1974"
+    ],
+    "correct": {
+      "correctOrder": [
+        1,
+        7,
+        3,
+        5,
+        4,
+        10,
+        2,
+        6,
+        9,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-order-005",
+    "topic": "Geography",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Geography: Order these years from earliest to latest.",
+    "options": [
+      "1969",
+      "1975",
+      "1966",
+      "1954",
+      "1960",
+      "1978",
+      "1981",
+      "1963",
+      "1957",
+      "1972"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        8,
+        5,
+        1,
+        3,
+        9,
+        10,
+        4,
+        2,
+        7
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-order-006",
+    "topic": "Geography",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Geography: Order these years from earliest to latest.",
+    "options": [
+      "1958",
+      "1955",
+      "1964",
+      "1982",
+      "1961",
+      "1970",
+      "1967",
+      "1979",
+      "1973",
+      "1976"
+    ],
+    "correct": {
+      "correctOrder": [
+        2,
+        1,
+        4,
+        10,
+        3,
+        6,
+        5,
+        9,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-order-007",
+    "topic": "Geography",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Geography: Order these years from earliest to latest.",
+    "options": [
+      "1968",
+      "1983",
+      "1974",
+      "1962",
+      "1959",
+      "1980",
+      "1977",
+      "1965",
+      "1956",
+      "1971"
+    ],
+    "correct": {
+      "correctOrder": [
+        5,
+        10,
+        7,
+        3,
+        2,
+        9,
+        8,
+        4,
+        1,
+        6
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-order-008",
+    "topic": "Geography",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Geography: Order these years from earliest to latest.",
+    "options": [
+      "1966",
+      "1984",
+      "1981",
+      "1978",
+      "1960",
+      "1975",
+      "1972",
+      "1969",
+      "1963",
+      "1957"
+    ],
+    "correct": {
+      "correctOrder": [
+        4,
+        10,
+        9,
+        8,
+        2,
+        7,
+        6,
+        5,
+        3,
+        1
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-order-009",
+    "topic": "Geography",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Geography: Order these years from earliest to latest.",
+    "options": [
+      "1961",
+      "1967",
+      "1964",
+      "1970",
+      "1976",
+      "1985",
+      "1958",
+      "1973",
+      "1979",
+      "1982"
+    ],
+    "correct": {
+      "correctOrder": [
+        2,
+        4,
+        3,
+        5,
+        7,
+        10,
+        1,
+        6,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-order-001",
+    "topic": "Culture",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Culture: Order these years from earliest to latest.",
+    "options": [
+      "1965",
+      "1962",
+      "1971",
+      "1974",
+      "1959",
+      "1950",
+      "1956",
+      "1977",
+      "1953",
+      "1968"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        5,
+        8,
+        9,
+        4,
+        1,
+        3,
+        10,
+        2,
+        7
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-order-002",
+    "topic": "Culture",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Culture: Order these years from earliest to latest.",
+    "options": [
+      "1978",
+      "1969",
+      "1957",
+      "1966",
+      "1972",
+      "1975",
+      "1963",
+      "1954",
+      "1960",
+      "1951"
+    ],
+    "correct": {
+      "correctOrder": [
+        10,
+        7,
+        3,
+        6,
+        8,
+        9,
+        5,
+        2,
+        4,
+        1
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-order-003",
+    "topic": "Culture",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Culture: Order these years from earliest to latest.",
+    "options": [
+      "1967",
+      "1964",
+      "1952",
+      "1973",
+      "1958",
+      "1979",
+      "1955",
+      "1961",
+      "1970",
+      "1976"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        5,
+        1,
+        8,
+        3,
+        10,
+        2,
+        4,
+        7,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-order-004",
+    "topic": "Culture",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Culture: Order these years from earliest to latest.",
+    "options": [
+      "1953",
+      "1971",
+      "1959",
+      "1965",
+      "1962",
+      "1980",
+      "1956",
+      "1968",
+      "1977",
+      "1974"
+    ],
+    "correct": {
+      "correctOrder": [
+        1,
+        7,
+        3,
+        5,
+        4,
+        10,
+        2,
+        6,
+        9,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-order-005",
+    "topic": "Culture",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Culture: Order these years from earliest to latest.",
+    "options": [
+      "1969",
+      "1975",
+      "1966",
+      "1954",
+      "1960",
+      "1978",
+      "1981",
+      "1963",
+      "1957",
+      "1972"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        8,
+        5,
+        1,
+        3,
+        9,
+        10,
+        4,
+        2,
+        7
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-order-006",
+    "topic": "Culture",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Culture: Order these years from earliest to latest.",
+    "options": [
+      "1958",
+      "1955",
+      "1964",
+      "1982",
+      "1961",
+      "1970",
+      "1967",
+      "1979",
+      "1973",
+      "1976"
+    ],
+    "correct": {
+      "correctOrder": [
+        2,
+        1,
+        4,
+        10,
+        3,
+        6,
+        5,
+        9,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-order-007",
+    "topic": "Culture",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Culture: Order these years from earliest to latest.",
+    "options": [
+      "1968",
+      "1983",
+      "1974",
+      "1962",
+      "1959",
+      "1980",
+      "1977",
+      "1965",
+      "1956",
+      "1971"
+    ],
+    "correct": {
+      "correctOrder": [
+        5,
+        10,
+        7,
+        3,
+        2,
+        9,
+        8,
+        4,
+        1,
+        6
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-order-008",
+    "topic": "Culture",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Culture: Order these years from earliest to latest.",
+    "options": [
+      "1966",
+      "1984",
+      "1981",
+      "1978",
+      "1960",
+      "1975",
+      "1972",
+      "1969",
+      "1963",
+      "1957"
+    ],
+    "correct": {
+      "correctOrder": [
+        4,
+        10,
+        9,
+        8,
+        2,
+        7,
+        6,
+        5,
+        3,
+        1
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-order-009",
+    "topic": "Culture",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Culture: Order these years from earliest to latest.",
+    "options": [
+      "1961",
+      "1967",
+      "1964",
+      "1970",
+      "1976",
+      "1985",
+      "1958",
+      "1973",
+      "1979",
+      "1982"
+    ],
+    "correct": {
+      "correctOrder": [
+        2,
+        4,
+        3,
+        5,
+        7,
+        10,
+        1,
+        6,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-order-001",
+    "topic": "Science",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Science: Order these years from earliest to latest.",
+    "options": [
+      "1965",
+      "1962",
+      "1971",
+      "1974",
+      "1959",
+      "1950",
+      "1956",
+      "1977",
+      "1953",
+      "1968"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        5,
+        8,
+        9,
+        4,
+        1,
+        3,
+        10,
+        2,
+        7
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-order-002",
+    "topic": "Science",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Science: Order these years from earliest to latest.",
+    "options": [
+      "1978",
+      "1969",
+      "1957",
+      "1966",
+      "1972",
+      "1975",
+      "1963",
+      "1954",
+      "1960",
+      "1951"
+    ],
+    "correct": {
+      "correctOrder": [
+        10,
+        7,
+        3,
+        6,
+        8,
+        9,
+        5,
+        2,
+        4,
+        1
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-order-003",
+    "topic": "Science",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Science: Order these years from earliest to latest.",
+    "options": [
+      "1967",
+      "1964",
+      "1952",
+      "1973",
+      "1958",
+      "1979",
+      "1955",
+      "1961",
+      "1970",
+      "1976"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        5,
+        1,
+        8,
+        3,
+        10,
+        2,
+        4,
+        7,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-order-004",
+    "topic": "Science",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Science: Order these years from earliest to latest.",
+    "options": [
+      "1953",
+      "1971",
+      "1959",
+      "1965",
+      "1962",
+      "1980",
+      "1956",
+      "1968",
+      "1977",
+      "1974"
+    ],
+    "correct": {
+      "correctOrder": [
+        1,
+        7,
+        3,
+        5,
+        4,
+        10,
+        2,
+        6,
+        9,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-order-005",
+    "topic": "Science",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Science: Order these years from earliest to latest.",
+    "options": [
+      "1969",
+      "1975",
+      "1966",
+      "1954",
+      "1960",
+      "1978",
+      "1981",
+      "1963",
+      "1957",
+      "1972"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        8,
+        5,
+        1,
+        3,
+        9,
+        10,
+        4,
+        2,
+        7
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-order-006",
+    "topic": "Science",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Science: Order these years from earliest to latest.",
+    "options": [
+      "1958",
+      "1955",
+      "1964",
+      "1982",
+      "1961",
+      "1970",
+      "1967",
+      "1979",
+      "1973",
+      "1976"
+    ],
+    "correct": {
+      "correctOrder": [
+        2,
+        1,
+        4,
+        10,
+        3,
+        6,
+        5,
+        9,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-order-007",
+    "topic": "Science",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Science: Order these years from earliest to latest.",
+    "options": [
+      "1968",
+      "1983",
+      "1974",
+      "1962",
+      "1959",
+      "1980",
+      "1977",
+      "1965",
+      "1956",
+      "1971"
+    ],
+    "correct": {
+      "correctOrder": [
+        5,
+        10,
+        7,
+        3,
+        2,
+        9,
+        8,
+        4,
+        1,
+        6
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-order-008",
+    "topic": "Science",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Science: Order these years from earliest to latest.",
+    "options": [
+      "1966",
+      "1984",
+      "1981",
+      "1978",
+      "1960",
+      "1975",
+      "1972",
+      "1969",
+      "1963",
+      "1957"
+    ],
+    "correct": {
+      "correctOrder": [
+        4,
+        10,
+        9,
+        8,
+        2,
+        7,
+        6,
+        5,
+        3,
+        1
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-order-009",
+    "topic": "Science",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Science: Order these years from earliest to latest.",
+    "options": [
+      "1961",
+      "1967",
+      "1964",
+      "1970",
+      "1976",
+      "1985",
+      "1958",
+      "1973",
+      "1979",
+      "1982"
+    ],
+    "correct": {
+      "correctOrder": [
+        2,
+        4,
+        3,
+        5,
+        7,
+        10,
+        1,
+        6,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-order-001",
+    "topic": "Varia",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Varia: Order these years from earliest to latest.",
+    "options": [
+      "1965",
+      "1962",
+      "1971",
+      "1974",
+      "1959",
+      "1950",
+      "1956",
+      "1977",
+      "1953",
+      "1968"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        5,
+        8,
+        9,
+        4,
+        1,
+        3,
+        10,
+        2,
+        7
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-order-002",
+    "topic": "Varia",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Varia: Order these years from earliest to latest.",
+    "options": [
+      "1978",
+      "1969",
+      "1957",
+      "1966",
+      "1972",
+      "1975",
+      "1963",
+      "1954",
+      "1960",
+      "1951"
+    ],
+    "correct": {
+      "correctOrder": [
+        10,
+        7,
+        3,
+        6,
+        8,
+        9,
+        5,
+        2,
+        4,
+        1
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-order-003",
+    "topic": "Varia",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Varia: Order these years from earliest to latest.",
+    "options": [
+      "1967",
+      "1964",
+      "1952",
+      "1973",
+      "1958",
+      "1979",
+      "1955",
+      "1961",
+      "1970",
+      "1976"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        5,
+        1,
+        8,
+        3,
+        10,
+        2,
+        4,
+        7,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-order-004",
+    "topic": "Varia",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Varia: Order these years from earliest to latest.",
+    "options": [
+      "1953",
+      "1971",
+      "1959",
+      "1965",
+      "1962",
+      "1980",
+      "1956",
+      "1968",
+      "1977",
+      "1974"
+    ],
+    "correct": {
+      "correctOrder": [
+        1,
+        7,
+        3,
+        5,
+        4,
+        10,
+        2,
+        6,
+        9,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-order-005",
+    "topic": "Varia",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Varia: Order these years from earliest to latest.",
+    "options": [
+      "1969",
+      "1975",
+      "1966",
+      "1954",
+      "1960",
+      "1978",
+      "1981",
+      "1963",
+      "1957",
+      "1972"
+    ],
+    "correct": {
+      "correctOrder": [
+        6,
+        8,
+        5,
+        1,
+        3,
+        9,
+        10,
+        4,
+        2,
+        7
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-order-006",
+    "topic": "Varia",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Varia: Order these years from earliest to latest.",
+    "options": [
+      "1958",
+      "1955",
+      "1964",
+      "1982",
+      "1961",
+      "1970",
+      "1967",
+      "1979",
+      "1973",
+      "1976"
+    ],
+    "correct": {
+      "correctOrder": [
+        2,
+        1,
+        4,
+        10,
+        3,
+        6,
+        5,
+        9,
+        7,
+        8
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-order-007",
+    "topic": "Varia",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Varia: Order these years from earliest to latest.",
+    "options": [
+      "1968",
+      "1983",
+      "1974",
+      "1962",
+      "1959",
+      "1980",
+      "1977",
+      "1965",
+      "1956",
+      "1971"
+    ],
+    "correct": {
+      "correctOrder": [
+        5,
+        10,
+        7,
+        3,
+        2,
+        9,
+        8,
+        4,
+        1,
+        6
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-order-008",
+    "topic": "Varia",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Varia: Order these years from earliest to latest.",
+    "options": [
+      "1966",
+      "1984",
+      "1981",
+      "1978",
+      "1960",
+      "1975",
+      "1972",
+      "1969",
+      "1963",
+      "1957"
+    ],
+    "correct": {
+      "correctOrder": [
+        4,
+        10,
+        9,
+        8,
+        2,
+        7,
+        6,
+        5,
+        3,
+        1
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-order-009",
+    "topic": "Varia",
+    "category": "ORDER",
+    "language": "en",
+    "question": "Varia: Order these years from earliest to latest.",
+    "options": [
+      "1961",
+      "1967",
+      "1964",
+      "1970",
+      "1976",
+      "1985",
+      "1958",
+      "1973",
+      "1979",
+      "1982"
+    ],
+    "correct": {
+      "correctOrder": [
+        2,
+        4,
+        3,
+        5,
+        7,
+        10,
+        1,
+        6,
+        8,
+        9
+      ]
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-century_decade-001",
+    "topic": "History",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "History: In which century did the year 1605 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-century_decade-002",
+    "topic": "History",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "History: In which century did the year 1612 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-century_decade-003",
+    "topic": "History",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "History: In which century did the year 1619 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-century_decade-004",
+    "topic": "History",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "History: In which century did the year 1626 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-century_decade-005",
+    "topic": "History",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "History: In which century did the year 1633 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-century_decade-006",
+    "topic": "History",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "History: In which century did the year 1640 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-century_decade-007",
+    "topic": "History",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "History: In which century did the year 1647 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-century_decade-008",
+    "topic": "History",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "History: In which century did the year 1654 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-century_decade-009",
+    "topic": "History",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "History: In which century did the year 1661 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-century_decade-001",
+    "topic": "Sports",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Sports: In which century did the year 1605 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-century_decade-002",
+    "topic": "Sports",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Sports: In which century did the year 1612 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-century_decade-003",
+    "topic": "Sports",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Sports: In which century did the year 1619 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-century_decade-004",
+    "topic": "Sports",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Sports: In which century did the year 1626 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-century_decade-005",
+    "topic": "Sports",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Sports: In which century did the year 1633 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-century_decade-006",
+    "topic": "Sports",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Sports: In which century did the year 1640 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-century_decade-007",
+    "topic": "Sports",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Sports: In which century did the year 1647 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-century_decade-008",
+    "topic": "Sports",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Sports: In which century did the year 1654 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-century_decade-009",
+    "topic": "Sports",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Sports: In which century did the year 1661 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-century_decade-001",
+    "topic": "Geography",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Geography: In which century did the year 1605 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-century_decade-002",
+    "topic": "Geography",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Geography: In which century did the year 1612 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-century_decade-003",
+    "topic": "Geography",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Geography: In which century did the year 1619 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-century_decade-004",
+    "topic": "Geography",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Geography: In which century did the year 1626 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-century_decade-005",
+    "topic": "Geography",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Geography: In which century did the year 1633 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-century_decade-006",
+    "topic": "Geography",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Geography: In which century did the year 1640 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-century_decade-007",
+    "topic": "Geography",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Geography: In which century did the year 1647 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-century_decade-008",
+    "topic": "Geography",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Geography: In which century did the year 1654 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-century_decade-009",
+    "topic": "Geography",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Geography: In which century did the year 1661 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-century_decade-001",
+    "topic": "Culture",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Culture: In which century did the year 1605 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-century_decade-002",
+    "topic": "Culture",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Culture: In which century did the year 1612 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-century_decade-003",
+    "topic": "Culture",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Culture: In which century did the year 1619 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-century_decade-004",
+    "topic": "Culture",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Culture: In which century did the year 1626 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-century_decade-005",
+    "topic": "Culture",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Culture: In which century did the year 1633 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-century_decade-006",
+    "topic": "Culture",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Culture: In which century did the year 1640 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-century_decade-007",
+    "topic": "Culture",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Culture: In which century did the year 1647 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-century_decade-008",
+    "topic": "Culture",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Culture: In which century did the year 1654 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-century_decade-009",
+    "topic": "Culture",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Culture: In which century did the year 1661 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-century_decade-001",
+    "topic": "Science",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Science: In which century did the year 1605 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-century_decade-002",
+    "topic": "Science",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Science: In which century did the year 1612 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-century_decade-003",
+    "topic": "Science",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Science: In which century did the year 1619 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-century_decade-004",
+    "topic": "Science",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Science: In which century did the year 1626 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-century_decade-005",
+    "topic": "Science",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Science: In which century did the year 1633 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-century_decade-006",
+    "topic": "Science",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Science: In which century did the year 1640 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-century_decade-007",
+    "topic": "Science",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Science: In which century did the year 1647 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-century_decade-008",
+    "topic": "Science",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Science: In which century did the year 1654 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-century_decade-009",
+    "topic": "Science",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Science: In which century did the year 1661 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-century_decade-001",
+    "topic": "Varia",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Varia: In which century did the year 1605 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-century_decade-002",
+    "topic": "Varia",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Varia: In which century did the year 1612 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-century_decade-003",
+    "topic": "Varia",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Varia: In which century did the year 1619 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-century_decade-004",
+    "topic": "Varia",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Varia: In which century did the year 1626 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-century_decade-005",
+    "topic": "Varia",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Varia: In which century did the year 1633 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-century_decade-006",
+    "topic": "Varia",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Varia: In which century did the year 1640 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-century_decade-007",
+    "topic": "Varia",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Varia: In which century did the year 1647 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-century_decade-008",
+    "topic": "Varia",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Varia: In which century did the year 1654 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-century_decade-009",
+    "topic": "Varia",
+    "category": "CENTURY_DECADE",
+    "language": "en",
+    "question": "Varia: In which century did the year 1661 occur?",
+    "options": [
+      "17th century",
+      "16th century",
+      "18th century",
+      "19th century",
+      "15th century",
+      "20th century",
+      "14th century",
+      "21th century",
+      "13th century",
+      "22th century"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-color-001",
+    "topic": "History",
+    "category": "COLOR",
+    "language": "en",
+    "question": "History: Which color comes from mixing blue and yellow?",
+    "options": [
+      "green",
+      "red",
+      "blue",
+      "yellow",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-color-002",
+    "topic": "History",
+    "category": "COLOR",
+    "language": "en",
+    "question": "History: Which color comes from mixing red and blue?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-color-003",
+    "topic": "History",
+    "category": "COLOR",
+    "language": "en",
+    "question": "History: Which color comes from mixing red and yellow?",
+    "options": [
+      "orange",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-color-004",
+    "topic": "History",
+    "category": "COLOR",
+    "language": "en",
+    "question": "History: Which color comes from mixing black and white?",
+    "options": [
+      "gray",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-color-005",
+    "topic": "History",
+    "category": "COLOR",
+    "language": "en",
+    "question": "History: Which color comes from mixing red and white?",
+    "options": [
+      "pink",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-color-006",
+    "topic": "History",
+    "category": "COLOR",
+    "language": "en",
+    "question": "History: Which color comes from mixing blue and red?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-color-007",
+    "topic": "History",
+    "category": "COLOR",
+    "language": "en",
+    "question": "History: Which color comes from mixing blue and yellow?",
+    "options": [
+      "green",
+      "red",
+      "blue",
+      "yellow",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-color-008",
+    "topic": "History",
+    "category": "COLOR",
+    "language": "en",
+    "question": "History: Which color comes from mixing red and blue?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-color-009",
+    "topic": "History",
+    "category": "COLOR",
+    "language": "en",
+    "question": "History: Which color comes from mixing red and yellow?",
+    "options": [
+      "orange",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-color-001",
+    "topic": "Sports",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Sports: Which color comes from mixing blue and yellow?",
+    "options": [
+      "green",
+      "red",
+      "blue",
+      "yellow",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-color-002",
+    "topic": "Sports",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Sports: Which color comes from mixing red and blue?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-color-003",
+    "topic": "Sports",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Sports: Which color comes from mixing red and yellow?",
+    "options": [
+      "orange",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-color-004",
+    "topic": "Sports",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Sports: Which color comes from mixing black and white?",
+    "options": [
+      "gray",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-color-005",
+    "topic": "Sports",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Sports: Which color comes from mixing red and white?",
+    "options": [
+      "pink",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-color-006",
+    "topic": "Sports",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Sports: Which color comes from mixing blue and red?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-color-007",
+    "topic": "Sports",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Sports: Which color comes from mixing blue and yellow?",
+    "options": [
+      "green",
+      "red",
+      "blue",
+      "yellow",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-color-008",
+    "topic": "Sports",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Sports: Which color comes from mixing red and blue?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-color-009",
+    "topic": "Sports",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Sports: Which color comes from mixing red and yellow?",
+    "options": [
+      "orange",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-color-001",
+    "topic": "Geography",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Geography: Which color comes from mixing blue and yellow?",
+    "options": [
+      "green",
+      "red",
+      "blue",
+      "yellow",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-color-002",
+    "topic": "Geography",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Geography: Which color comes from mixing red and blue?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-color-003",
+    "topic": "Geography",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Geography: Which color comes from mixing red and yellow?",
+    "options": [
+      "orange",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-color-004",
+    "topic": "Geography",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Geography: Which color comes from mixing black and white?",
+    "options": [
+      "gray",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-color-005",
+    "topic": "Geography",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Geography: Which color comes from mixing red and white?",
+    "options": [
+      "pink",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-color-006",
+    "topic": "Geography",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Geography: Which color comes from mixing blue and red?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-color-007",
+    "topic": "Geography",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Geography: Which color comes from mixing blue and yellow?",
+    "options": [
+      "green",
+      "red",
+      "blue",
+      "yellow",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-color-008",
+    "topic": "Geography",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Geography: Which color comes from mixing red and blue?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-color-009",
+    "topic": "Geography",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Geography: Which color comes from mixing red and yellow?",
+    "options": [
+      "orange",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-color-001",
+    "topic": "Culture",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Culture: Which color comes from mixing blue and yellow?",
+    "options": [
+      "green",
+      "red",
+      "blue",
+      "yellow",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-color-002",
+    "topic": "Culture",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Culture: Which color comes from mixing red and blue?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-color-003",
+    "topic": "Culture",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Culture: Which color comes from mixing red and yellow?",
+    "options": [
+      "orange",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-color-004",
+    "topic": "Culture",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Culture: Which color comes from mixing black and white?",
+    "options": [
+      "gray",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-color-005",
+    "topic": "Culture",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Culture: Which color comes from mixing red and white?",
+    "options": [
+      "pink",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-color-006",
+    "topic": "Culture",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Culture: Which color comes from mixing blue and red?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-color-007",
+    "topic": "Culture",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Culture: Which color comes from mixing blue and yellow?",
+    "options": [
+      "green",
+      "red",
+      "blue",
+      "yellow",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-color-008",
+    "topic": "Culture",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Culture: Which color comes from mixing red and blue?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-color-009",
+    "topic": "Culture",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Culture: Which color comes from mixing red and yellow?",
+    "options": [
+      "orange",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-color-001",
+    "topic": "Science",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Science: Which color comes from mixing blue and yellow?",
+    "options": [
+      "green",
+      "red",
+      "blue",
+      "yellow",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-color-002",
+    "topic": "Science",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Science: Which color comes from mixing red and blue?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-color-003",
+    "topic": "Science",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Science: Which color comes from mixing red and yellow?",
+    "options": [
+      "orange",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-color-004",
+    "topic": "Science",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Science: Which color comes from mixing black and white?",
+    "options": [
+      "gray",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-color-005",
+    "topic": "Science",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Science: Which color comes from mixing red and white?",
+    "options": [
+      "pink",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-color-006",
+    "topic": "Science",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Science: Which color comes from mixing blue and red?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-color-007",
+    "topic": "Science",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Science: Which color comes from mixing blue and yellow?",
+    "options": [
+      "green",
+      "red",
+      "blue",
+      "yellow",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-color-008",
+    "topic": "Science",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Science: Which color comes from mixing red and blue?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-color-009",
+    "topic": "Science",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Science: Which color comes from mixing red and yellow?",
+    "options": [
+      "orange",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-color-001",
+    "topic": "Varia",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Varia: Which color comes from mixing blue and yellow?",
+    "options": [
+      "green",
+      "red",
+      "blue",
+      "yellow",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-color-002",
+    "topic": "Varia",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Varia: Which color comes from mixing red and blue?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-color-003",
+    "topic": "Varia",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Varia: Which color comes from mixing red and yellow?",
+    "options": [
+      "orange",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-color-004",
+    "topic": "Varia",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Varia: Which color comes from mixing black and white?",
+    "options": [
+      "gray",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-color-005",
+    "topic": "Varia",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Varia: Which color comes from mixing red and white?",
+    "options": [
+      "pink",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-color-006",
+    "topic": "Varia",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Varia: Which color comes from mixing blue and red?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-color-007",
+    "topic": "Varia",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Varia: Which color comes from mixing blue and yellow?",
+    "options": [
+      "green",
+      "red",
+      "blue",
+      "yellow",
+      "orange",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-color-008",
+    "topic": "Varia",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Varia: Which color comes from mixing red and blue?",
+    "options": [
+      "purple",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "orange",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-color-009",
+    "topic": "Varia",
+    "category": "COLOR",
+    "language": "en",
+    "question": "Varia: Which color comes from mixing red and yellow?",
+    "options": [
+      "orange",
+      "red",
+      "blue",
+      "yellow",
+      "green",
+      "purple",
+      "brown",
+      "black",
+      "white",
+      "shade9"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-open-001",
+    "topic": "History",
+    "category": "OPEN",
+    "language": "en",
+    "question": "History: Who led India to independence through nonviolent resistance?",
+    "options": [
+      "Mahatma Gandhi",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-open-002",
+    "topic": "History",
+    "category": "OPEN",
+    "language": "en",
+    "question": "History: Which wall fell in 1989, symbolizing the Cold War's end?",
+    "options": [
+      "Berlin Wall",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-open-003",
+    "topic": "History",
+    "category": "OPEN",
+    "language": "en",
+    "question": "History: Which ship famously sank in 1912 on its maiden voyage?",
+    "options": [
+      "Titanic",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-open-004",
+    "topic": "History",
+    "category": "OPEN",
+    "language": "en",
+    "question": "History: Who led India to independence through nonviolent resistance?",
+    "options": [
+      "Mahatma Gandhi",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-open-005",
+    "topic": "History",
+    "category": "OPEN",
+    "language": "en",
+    "question": "History: Which wall fell in 1989, symbolizing the Cold War's end?",
+    "options": [
+      "Berlin Wall",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-open-006",
+    "topic": "History",
+    "category": "OPEN",
+    "language": "en",
+    "question": "History: Which ship famously sank in 1912 on its maiden voyage?",
+    "options": [
+      "Titanic",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-open-007",
+    "topic": "History",
+    "category": "OPEN",
+    "language": "en",
+    "question": "History: Who led India to independence through nonviolent resistance?",
+    "options": [
+      "Mahatma Gandhi",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-open-008",
+    "topic": "History",
+    "category": "OPEN",
+    "language": "en",
+    "question": "History: Which wall fell in 1989, symbolizing the Cold War's end?",
+    "options": [
+      "Berlin Wall",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "history-open-009",
+    "topic": "History",
+    "category": "OPEN",
+    "language": "en",
+    "question": "History: Which ship famously sank in 1912 on its maiden voyage?",
+    "options": [
+      "Titanic",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-open-001",
+    "topic": "Sports",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Sports: How many players are on the field per soccer team?",
+    "options": [
+      "11",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-open-002",
+    "topic": "Sports",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Sports: In tennis, what is a score of zero called?",
+    "options": [
+      "Love",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-open-003",
+    "topic": "Sports",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Sports: How many points is a touchdown worth in American football?",
+    "options": [
+      "6",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-open-004",
+    "topic": "Sports",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Sports: How many players are on the field per soccer team?",
+    "options": [
+      "11",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-open-005",
+    "topic": "Sports",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Sports: In tennis, what is a score of zero called?",
+    "options": [
+      "Love",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-open-006",
+    "topic": "Sports",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Sports: How many points is a touchdown worth in American football?",
+    "options": [
+      "6",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-open-007",
+    "topic": "Sports",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Sports: How many players are on the field per soccer team?",
+    "options": [
+      "11",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-open-008",
+    "topic": "Sports",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Sports: In tennis, what is a score of zero called?",
+    "options": [
+      "Love",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "sports-open-009",
+    "topic": "Sports",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Sports: How many points is a touchdown worth in American football?",
+    "options": [
+      "6",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-open-001",
+    "topic": "Geography",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Geography: Which river runs through Egypt into the Mediterranean?",
+    "options": [
+      "Nile",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-open-002",
+    "topic": "Geography",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Geography: Which country has the largest population today?",
+    "options": [
+      "India",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-open-003",
+    "topic": "Geography",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Geography: What is the capital city of Australia?",
+    "options": [
+      "Canberra",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-open-004",
+    "topic": "Geography",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Geography: Which river runs through Egypt into the Mediterranean?",
+    "options": [
+      "Nile",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-open-005",
+    "topic": "Geography",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Geography: Which country has the largest population today?",
+    "options": [
+      "India",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-open-006",
+    "topic": "Geography",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Geography: What is the capital city of Australia?",
+    "options": [
+      "Canberra",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-open-007",
+    "topic": "Geography",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Geography: Which river runs through Egypt into the Mediterranean?",
+    "options": [
+      "Nile",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-open-008",
+    "topic": "Geography",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Geography: Which country has the largest population today?",
+    "options": [
+      "India",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "geography-open-009",
+    "topic": "Geography",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Geography: What is the capital city of Australia?",
+    "options": [
+      "Canberra",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-open-001",
+    "topic": "Culture",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Culture: Who wrote the play Romeo and Juliet?",
+    "options": [
+      "William Shakespeare",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-open-002",
+    "topic": "Culture",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Culture: Which instrument has 88 keys on a standard model?",
+    "options": [
+      "Piano",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-open-003",
+    "topic": "Culture",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Culture: Which art museum is home to the Mona Lisa?",
+    "options": [
+      "Louvre",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-open-004",
+    "topic": "Culture",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Culture: Who wrote the play Romeo and Juliet?",
+    "options": [
+      "William Shakespeare",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-open-005",
+    "topic": "Culture",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Culture: Which instrument has 88 keys on a standard model?",
+    "options": [
+      "Piano",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-open-006",
+    "topic": "Culture",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Culture: Which art museum is home to the Mona Lisa?",
+    "options": [
+      "Louvre",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-open-007",
+    "topic": "Culture",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Culture: Who wrote the play Romeo and Juliet?",
+    "options": [
+      "William Shakespeare",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-open-008",
+    "topic": "Culture",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Culture: Which instrument has 88 keys on a standard model?",
+    "options": [
+      "Piano",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "culture-open-009",
+    "topic": "Culture",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Culture: Which art museum is home to the Mona Lisa?",
+    "options": [
+      "Louvre",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-open-001",
+    "topic": "Science",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Science: What gas do humans need to breathe to survive?",
+    "options": [
+      "Oxygen",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-open-002",
+    "topic": "Science",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Science: Which planet is known as the Red Planet?",
+    "options": [
+      "Mars",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-open-003",
+    "topic": "Science",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Science: What is H2O commonly called?",
+    "options": [
+      "Water",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-open-004",
+    "topic": "Science",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Science: What gas do humans need to breathe to survive?",
+    "options": [
+      "Oxygen",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-open-005",
+    "topic": "Science",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Science: Which planet is known as the Red Planet?",
+    "options": [
+      "Mars",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-open-006",
+    "topic": "Science",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Science: What is H2O commonly called?",
+    "options": [
+      "Water",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-open-007",
+    "topic": "Science",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Science: What gas do humans need to breathe to survive?",
+    "options": [
+      "Oxygen",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-open-008",
+    "topic": "Science",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Science: Which planet is known as the Red Planet?",
+    "options": [
+      "Mars",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "science-open-009",
+    "topic": "Science",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Science: What is H2O commonly called?",
+    "options": [
+      "Water",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-open-001",
+    "topic": "Varia",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Varia: How many days are in a leap year?",
+    "options": [
+      "366",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-open-002",
+    "topic": "Varia",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Varia: What device is used to tell time on your wrist?",
+    "options": [
+      "Watch",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-open-003",
+    "topic": "Varia",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Varia: Which season comes after spring in the Northern Hemisphere?",
+    "options": [
+      "Summer",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-open-004",
+    "topic": "Varia",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Varia: How many days are in a leap year?",
+    "options": [
+      "366",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-open-005",
+    "topic": "Varia",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Varia: What device is used to tell time on your wrist?",
+    "options": [
+      "Watch",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-open-006",
+    "topic": "Varia",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Varia: Which season comes after spring in the Northern Hemisphere?",
+    "options": [
+      "Summer",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-open-007",
+    "topic": "Varia",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Varia: How many days are in a leap year?",
+    "options": [
+      "366",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-open-008",
+    "topic": "Varia",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Varia: What device is used to tell time on your wrist?",
+    "options": [
+      "Watch",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  },
+  {
+    "id": "varia-open-009",
+    "topic": "Varia",
+    "category": "OPEN",
+    "language": "en",
+    "question": "Varia: Which season comes after spring in the Northern Hemisphere?",
+    "options": [
+      "Summer",
+      "London",
+      "Paris",
+      "Berlin",
+      "Tokyo",
+      "Venus",
+      "Mercury",
+      "Hydrogen",
+      "Nitrogen",
+      "Cello"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smart10-generator-v1"
+  }
+]

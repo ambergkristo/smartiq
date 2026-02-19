@@ -28,6 +28,9 @@ public class Card {
     @Column
     private String subtopic;
 
+    @Column(nullable = false, length = 32)
+    private String category;
+
     @Column(nullable = false, length = 8)
     private String language;
 
@@ -45,6 +48,9 @@ public class Card {
 
     @Column(name = "correct_flags", length = 2000)
     private String correctFlags;
+
+    @Column(name = "correct_meta", length = 4000)
+    private String correctMeta;
 
     @Column(nullable = false, length = 32)
     private String difficulty;
@@ -113,6 +119,22 @@ public class Card {
 
     public String getCorrectFlags() {
         return correctFlags;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCorrectMeta() {
+        return correctMeta;
+    }
+
+    public void setCorrectMeta(String correctMeta) {
+        this.correctMeta = correctMeta;
     }
 
     public void setCorrectFlags(String correctFlags) {

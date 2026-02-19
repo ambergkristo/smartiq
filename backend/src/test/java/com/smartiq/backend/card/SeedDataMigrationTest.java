@@ -31,7 +31,7 @@ class SeedDataMigrationTest {
         mockMvc.perform(get("/api/topics"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(greaterThanOrEqualTo(6)))
-                .andExpect(jsonPath("$[*].topic").value(hasItem("Math")))
-                .andExpect(jsonPath("$[?(@.topic=='Math')].count").value(hasItem(20)));
+                .andExpect(jsonPath("$[*].topic").value(hasItem("History")))
+                .andExpect(jsonPath("$[?(@.topic=='History')].count").value(hasItem(10)));
     }
 }

@@ -44,6 +44,7 @@ class CardControllerTest {
         science.setId("science-1");
         science.setTopic("Science");
         science.setSubtopic("General Science");
+        science.setCategory("OPEN");
         science.setLanguage("en");
         science.setQuestion("What planet is known as the Red Planet?");
         science.setOptions(List.of("Mars", "Earth", "Venus", "Jupiter", "Saturn", "Uranus", "Neptune", "Mercury", "Pluto", "Moon"));
@@ -57,6 +58,7 @@ class CardControllerTest {
         math.setId("math-1");
         math.setTopic("Math");
         math.setSubtopic("Addition");
+        math.setCategory("OPEN");
         math.setLanguage("en");
         math.setQuestion("What is 2 + 2?");
         math.setOptions(List.of("4", "3", "5", "6", "7", "8", "9", "10", "11", "12"));
@@ -70,6 +72,7 @@ class CardControllerTest {
         math2.setId("math-2");
         math2.setTopic("Math");
         math2.setSubtopic("Addition");
+        math2.setCategory("OPEN");
         math2.setLanguage("en");
         math2.setQuestion("What is 3 + 3?");
         math2.setOptions(List.of("6", "5", "4", "7", "8", "9", "10", "11", "12", "13"));
@@ -83,6 +86,7 @@ class CardControllerTest {
         mathEasy.setId("math-easy-1");
         mathEasy.setTopic("Math");
         mathEasy.setSubtopic("Addition");
+        mathEasy.setCategory("OPEN");
         mathEasy.setLanguage("en");
         mathEasy.setQuestion("What is 1 + 1?");
         mathEasy.setOptions(List.of("2", "1", "3", "4", "5", "6", "7", "8", "9", "10"));
@@ -96,6 +100,7 @@ class CardControllerTest {
         singleV2.setId("single-v2-1");
         singleV2.setTopic("SingleV2");
         singleV2.setSubtopic("Validation");
+        singleV2.setCategory("NUMBER");
         singleV2.setLanguage("en");
         singleV2.setQuestion("Single correct answer card");
         singleV2.setOptions(List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"));
@@ -109,6 +114,7 @@ class CardControllerTest {
         multiV2.setId("multi-v2-1");
         multiV2.setTopic("MultiV2");
         multiV2.setSubtopic("Validation");
+        multiV2.setCategory("TRUE_FALSE");
         multiV2.setLanguage("en");
         multiV2.setQuestion("Multi correct answer card");
         multiV2.setOptions(List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"));
@@ -123,6 +129,7 @@ class CardControllerTest {
         brokenV2.setId("broken-v2-1");
         brokenV2.setTopic("BrokenV2");
         brokenV2.setSubtopic("Validation");
+        brokenV2.setCategory("OPEN");
         brokenV2.setLanguage("en");
         brokenV2.setQuestion("Broken correctness metadata card");
         brokenV2.setOptions(List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"));
