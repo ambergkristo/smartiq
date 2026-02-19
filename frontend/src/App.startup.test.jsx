@@ -15,7 +15,7 @@ vi.mock('./api', () => {
   };
 });
 
-import { fetchTopics } from './api';
+import { fetchTopics, resolveTopicsErrorState } from './api';
 
 describe('App startup resilience', () => {
   let consoleErrorSpy;
@@ -35,7 +35,7 @@ describe('App startup resilience', () => {
 
     render(<App />);
 
-    expect(screen.getByText(/loading topics/i)).toBeInTheDocument();
+    expect(screen.getByTestId('setup-skeleton')).toBeInTheDocument();
   });
 
   test('shows actionable backend error with retry', async () => {
@@ -54,7 +54,7 @@ describe('App startup resilience', () => {
 
     render(<App />);
 
-    await waitFor(() => expect(screen.getByText(/no topics available/i)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/no topics yet/i)).toBeInTheDocument());
   });
 
   test('renders setup screen when topics are available', async () => {
@@ -63,7 +63,21 @@ describe('App startup resilience', () => {
     render(<App />);
 
     await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
-    expect(screen.getByLabelText(/topic/i)).toBeInTheDocument();
+    expect(screen.getByRole('radiogroup', { name: /topic options/i })).toBeInTheDocument();
+  });
+
+  test('maps forbidden state with explicit message', async () => {
+    fetchTopics.mockRejectedValue(new Error('403'));
+    resolveTopicsErrorState.mockReturnValue({
+      title: 'Forbidden (CORS/security).',
+      detail: 'Check dev env / CORS origins.',
+      kind: 'forbidden'
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByText(/forbidden/i)).toBeInTheDocument());
+    expect(screen.getByRole('button', { name: /retry/i })).toBeInTheDocument();
   });
 
   test('retry button re-requests topics', async () => {
