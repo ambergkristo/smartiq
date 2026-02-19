@@ -12,12 +12,20 @@ export default function PlayersPanel({
 }) {
   return (
     <aside className="players-panel board-surface">
-      <h2>Players</h2>
-      <p className="round-line">Round {roundNumber}</p>
-      <p className="round-line">Turn: {currentPlayer}</p>
-      <p className="round-line">Phase: {phaseLabel}</p>
-      <p className="round-line">Target: {targetScore} points</p>
-      <p className="round-line">Last action: {lastAction}</p>
+      <h2 className="panel-title">Players</h2>
+      <div className="panel-meta">
+        <p className="round-line">Round {roundNumber}</p>
+        <p className="round-line">Target: {targetScore} pts</p>
+      </div>
+      <p className="round-line">
+        <strong>Turn:</strong> {currentPlayer}
+      </p>
+      <p className="round-line">
+        <strong>Phase:</strong> {phaseLabel}
+      </p>
+      <p className="round-line last-action">
+        <strong>Last:</strong> {lastAction}
+      </p>
       <ul>
         {players.map((player, idx) => {
           const isOut = eliminatedPlayers.has(player);

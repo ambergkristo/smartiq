@@ -110,15 +110,18 @@ export default function GameBoard({
 
       <div className="center-board board-surface">
         <header className="card-header">
-          <p className="topic-pill">{card.topic}</p>
-          <p className="meta-line">
-            Difficulty {card.difficulty} | {card.language}
-          </p>
+          <div className="card-topline">
+            <p className="topic-pill">
+              {card.topic} • {card.difficulty} • {card.language.toUpperCase()}
+            </p>
+            <p className="meta-line">Round {roundNumber}</p>
+          </div>
           <h2>{card.question}</h2>
-          <p className="pass-note">{passNote}</p>
+          <p className="pass-note">Choose one answer then press ANSWER or PASS.</p>
           <p className="action-hint" data-testid="action-hint">
             {actionHint(phase, currentPlayer)}
           </p>
+          <p className="pass-note">{passNote}</p>
         </header>
 
         <div className="answers-shell" data-layout={isFallbackLayout ? 'fallback' : 'wheel'} ref={layoutRef}>
@@ -182,7 +185,7 @@ export default function GameBoard({
           ) : null}
           {phase === 'RESOLVED' || phase === 'PASSED' ? (
             <button onClick={onNext} type="button">
-              NEXT
+              NEXT CARD
             </button>
           ) : null}
           {phase === 'LOADING_CARD' ? (
