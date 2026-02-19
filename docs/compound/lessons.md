@@ -263,3 +263,12 @@
 - Preventive rule:
   - Do not enforce uniqueness on `(topic, language, question)` for generated banks; keep uniqueness on `id` and use non-unique lookup indexes for reads.
 
+## 2026-02-19 - Loop 29 (PR117 Import Resilience Merge)
+
+- Hard part:
+  - Keeping strict data validation while avoiding full startup failure due to one malformed card.
+- What broke:
+  - Boot import aborted application startup on the first invalid row (`no correct answer`), even though the rest of the dataset was usable.
+- Preventive rule:
+  - Import pipelines must handle per-record validation failures as skip+log events and continue processing valid records.
+
