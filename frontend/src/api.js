@@ -105,17 +105,41 @@ function isRetryable(error) {
 
 export async function fetchNextCard({ topic, difficulty, sessionId, lang, retries = 2 }) {
   const params = new URLSearchParams();
-  if (topic) params.set('topic', topic);
+  const hasTopic = Boolean(topic && String(topic).trim());
+  if (hasTopic) params.set('topic', topic);
   if (difficulty) params.set('difficulty', String(difficulty));
   if (sessionId) params.set('sessionId', sessionId);
   if (lang) params.set('lang', lang);
+  params.set('v', '2');
 
-  const url = `${API_BASE}/api/cards/next?${params.toString()}`;
+  const url = hasTopic
+    ? `${API_BASE}/api/cards/next?${params.toString()}`
+    : `${API_BASE}/api/cards/random?${params.toString()}`;
+
+  function normalizeCard(raw) {
+    const normalizedOptions = Array.isArray(raw.options)
+      ? raw.options.map((option, idx) => {
+          if (typeof option === 'string') return option;
+          if (option && typeof option === 'object' && typeof option.text === 'string') return option.text;
+          return `Option ${idx + 1}`;
+        })
+      : [];
+
+    return {
+      ...raw,
+      options: normalizedOptions,
+      correct: raw.correct || {
+        correctIndex: Number.isInteger(raw.correctIndex) ? raw.correctIndex : null,
+        correctIndexes: Array.isArray(raw.correctIndexes) ? raw.correctIndexes : []
+      }
+    };
+  }
 
   let lastError = null;
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     try {
-      return await fetchJson(url);
+      const raw = await fetchJson(url);
+      return normalizeCard(raw);
     } catch (error) {
       lastError = error;
       if (!isRetryable(error) || attempt === retries) {

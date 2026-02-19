@@ -75,7 +75,7 @@ function SetupSkeleton() {
 
 function StartScreen({ topics, config, setConfig, onStart }) {
   const players = parsePlayers(config.playersText);
-  const canStart = Boolean(config.topic) && players.length > 0;
+  const canStart = players.length > 0;
 
   function addPlayers(rawValue) {
     const incoming = parsePlayers(rawValue);
@@ -113,6 +113,15 @@ function StartScreen({ topics, config, setConfig, onStart }) {
 
       <h2 className="section-title">Topic</h2>
       <div className="topic-grid" role="radiogroup" aria-label="Topic options">
+        <button
+          type="button"
+          className={`topic-tile${config.topic === '' ? ' selected' : ''}`}
+          onClick={() => setConfig((prev) => ({ ...prev, topic: '' }))}
+          aria-pressed={config.topic === ''}
+        >
+          <span className="topic-title">Any Topic</span>
+          <span className="topic-count">Random deck</span>
+        </button>
         {topics.map((topic) => {
           const selected = config.topic === topic.topic;
           return (
@@ -278,7 +287,7 @@ export default function App() {
         });
         setConfig((prev) => {
           const topicExists = data.some((entry) => entry.topic === prev.topic);
-          return { ...prev, topic: topicExists ? prev.topic : data[0].topic };
+          return { ...prev, topic: topicExists || prev.topic === '' ? prev.topic : '' };
         });
         return;
       }
@@ -428,6 +437,10 @@ export default function App() {
               eliminatedPlayers={engine.eliminatedPlayers}
               passedPlayers={engine.passedPlayers}
               correctIndexes={expectedCorrectIndexes(engine.card)}
+              numberGuess={engine.numberGuess}
+              orderRank={engine.orderRank}
+              onNumberGuessChange={engine.setNumberGuess}
+              onOrderRankChange={engine.setOrderRank}
             />
           ) : null}
         </>

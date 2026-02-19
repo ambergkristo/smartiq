@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { DEFAULT_PLAYERS, GamePhase } from './types';
-import { expectedCorrectIndexes } from './scoring';
+import { evaluateAttempt } from './scoring';
 
 const TARGET_SCORE_DEFAULT = 30;
 
@@ -60,6 +60,8 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   const [loadTicket, setLoadTicket] = useState(0);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [winner, setWinner] = useState(null);
+  const [numberGuess, setNumberGuess] = useState('');
+  const [orderRank, setOrderRank] = useState(1);
 
   const currentPlayer = players[currentPlayerIndex] ?? 'Player 1';
 
@@ -87,6 +89,8 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setPassedPlayers(new Set());
     setCurrentPlayerIndex(0);
     setWinner(null);
+    setNumberGuess('');
+    setOrderRank(1);
     setPhase(GamePhase.LOADING_CARD);
     setLoadTicket((value) => value + 1);
     setLastAction('Game started');
@@ -102,6 +106,8 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setEliminatedPlayers(new Set());
     setPassedPlayers(new Set());
     setCurrentPlayerIndex(0);
+    setNumberGuess('');
+    setOrderRank(1);
     setLoadTicket((value) => value + 1);
     setLastAction('Loading round card');
   }, []);
@@ -114,6 +120,8 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setEliminatedPlayers(new Set());
     setPassedPlayers(new Set());
     setCurrentPlayerIndex(0);
+    setNumberGuess('');
+    setOrderRank(1);
     setPhase(GamePhase.CHOOSING);
     setLastAction(`Round ${roundNumber} card loaded`);
   }, [roundNumber]);
@@ -154,8 +162,7 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     if (!card || selectedIndexes.size === 0) return;
     if (!isPlayerActive(currentPlayer, eliminatedPlayers, passedPlayers)) return;
     const selectedIndex = [...selectedIndexes][0];
-    const correctIndexes = expectedCorrectIndexes(card);
-    const isCorrect = correctIndexes.has(selectedIndex);
+    const isCorrect = evaluateAttempt(card, { selectedIndex, numberGuess, orderRank });
 
     if (isCorrect) {
       const nextScore = (scores[currentPlayer] ?? 0) + 1;
@@ -194,7 +201,9 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
 
     setPhase(GamePhase.RESOLVED);
     setSelectedIndexes(new Set());
-  }, [card, currentPlayer, eliminatedPlayers, passedPlayers, phase, scores, selectedIndexes, targetScore]);
+    setNumberGuess('');
+    setOrderRank(1);
+  }, [card, currentPlayer, eliminatedPlayers, numberGuess, orderRank, passedPlayers, phase, scores, selectedIndexes, targetScore]);
 
   const passTurn = useCallback(() => {
     if (phase !== GamePhase.CHOOSING) return;
@@ -208,6 +217,8 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       }
     }));
     setSelectedIndexes(new Set());
+    setNumberGuess('');
+    setOrderRank(1);
     setPhase(GamePhase.PASSED);
     setLastAction(`${currentPlayer} passed`);
   }, [currentPlayer, eliminatedPlayers, passedPlayers, phase]);
@@ -251,6 +262,8 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
 
     setCurrentPlayerIndex(nextIdx);
     setSelectedIndexes(new Set());
+    setNumberGuess('');
+    setOrderRank(1);
     setPhase(GamePhase.CHOOSING);
     return { done: false };
   }, [
@@ -280,6 +293,8 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setStats({ 'Player 1': { correct: 0, wrong: 0, passes: 0 } });
     setCurrentPlayerIndex(0);
     setWinner(null);
+    setNumberGuess('');
+    setOrderRank(1);
     setLastAction('Ready');
   }, []);
 
@@ -301,6 +316,8 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     lastAction,
     winner,
     targetScore,
+    numberGuess,
+    orderRank,
     startRound,
     beginCardLoad,
     cardLoaded,
@@ -309,6 +326,8 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     requestConfirm,
     cancelConfirm,
     confirmAnswer,
+    setNumberGuess,
+    setOrderRank,
     passTurn,
     nextStep,
     resetToSetup

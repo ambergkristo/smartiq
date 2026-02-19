@@ -16,25 +16,21 @@ function resolveCategory(card) {
 }
 
 function resolveOptionText(option) {
-  if (typeof option === 'string') {
-    return option;
-  }
-  if (option && typeof option === 'object' && typeof option.text === 'string') {
-    return option.text;
-  }
+  if (typeof option === 'string') return option;
+  if (option && typeof option === 'object' && typeof option.text === 'string') return option.text;
   return '';
 }
 
 function actionHint(phase, currentPlayer) {
   switch (phase) {
     case 'CHOOSING':
-      return `${currentPlayer}: choose a marker, then press ANSWER or PASS.`;
+      return `${currentPlayer}: reveal a marker, then ANSWER or PASS.`;
     case 'CONFIRMING':
       return `${currentPlayer}: confirm with LOCK IN or go BACK.`;
     case 'RESOLVED':
-      return 'Answer resolved. Press NEXT to continue turn flow.';
+      return 'Answer resolved. Press NEXT to continue.';
     case 'PASSED':
-      return 'Turn passed. Press NEXT for next player or round summary.';
+      return 'Turn passed. Press NEXT.';
     case 'LOADING_CARD':
       return 'Loading next round card...';
     default:
@@ -64,7 +60,11 @@ export default function GameBoard({
   targetScore,
   eliminatedPlayers,
   passedPlayers,
-  correctIndexes
+  correctIndexes,
+  numberGuess,
+  orderRank,
+  onNumberGuessChange,
+  onOrderRankChange
 }) {
   const boardRef = useRef(null);
   const [boardSize, setBoardSize] = useState(560);
@@ -74,9 +74,7 @@ export default function GameBoard({
 
   useEffect(() => {
     const target = boardRef.current;
-    if (!target || typeof ResizeObserver === 'undefined') {
-      return undefined;
-    }
+    if (!target || typeof ResizeObserver === 'undefined') return undefined;
 
     const observer = new ResizeObserver(([entry]) => {
       const width = entry.contentRect.width;
@@ -108,11 +106,8 @@ export default function GameBoard({
   function handlePegClick(index) {
     setRevealedByClick((prev) => {
       const next = new Set(prev);
-      if (next.has(index)) {
-        next.delete(index);
-      } else {
-        next.add(index);
-      }
+      if (next.has(index)) next.delete(index);
+      else next.add(index);
       return next;
     });
     toggleIndex(index);
@@ -136,7 +131,7 @@ export default function GameBoard({
       <div className="center-board board-surface">
         <header className="card-header smart10-header">
           <p className="topic-pill">
-            {card.topic} • {card.language.toUpperCase()} • Round {roundNumber}
+            {card.topic} - {category} - {card.language.toUpperCase()} - Round {roundNumber}
           </p>
           <p className="action-hint" data-testid="action-hint">
             {actionHint(phase, currentPlayer)}
@@ -145,11 +140,7 @@ export default function GameBoard({
         </header>
 
         <div className="smart10-stage" ref={boardRef}>
-          <div
-            className="smart10-board"
-            data-testid="smart10-board"
-            style={{ width: `${boardSize}px`, height: `${boardSize}px` }}
-          >
+          <div className="smart10-board" data-testid="smart10-board" style={{ width: `${boardSize}px`, height: `${boardSize}px` }}>
             <div className="smart10-face" />
             <div className="smart10-category-ring" style={{ borderColor: categoryColor }} />
             <div className="smart10-center">
@@ -166,21 +157,45 @@ export default function GameBoard({
                   key={`${card.id}-${index}`}
                   type="button"
                   className={`smart10-peg${isOpen ? ' is-open' : ''}${resolvedCorrect ? ' is-correct' : ''}${resolvedWrong ? ' is-wrong' : ''}${selectedIndexes.has(index) ? ' is-selected' : ''}`}
-                  style={{
-                    transform: `translate(calc(-50% + ${pegPositions[index].x}px), calc(-50% + ${pegPositions[index].y}px))`
-                  }}
+                  style={{ transform: `translate(calc(-50% + ${pegPositions[index].x}px), calc(-50% + ${pegPositions[index].y}px))` }}
                   onClick={() => handlePegClick(index)}
                   aria-label={`Marker ${index + 1}`}
                   title={isOpen ? resolveOptionText(option) : `Marker ${index + 1}`}
                 >
                   <span className="peg-content">{isOpen ? resolveOptionText(option) : index + 1}</span>
-                  {resolvedCorrect ? <span className="peg-feedback">?</span> : null}
-                  {resolvedWrong ? <span className="peg-feedback">?</span> : null}
+                  {resolvedCorrect ? <span className="peg-feedback">OK</span> : null}
+                  {resolvedWrong ? <span className="peg-feedback">X</span> : null}
                 </button>
               );
             })}
           </div>
         </div>
+
+        {category === 'NUMBER' ? (
+          <div className="category-input">
+            <label htmlFor="number-guess">Number guess</label>
+            <input
+              id="number-guess"
+              type="text"
+              value={numberGuess}
+              onChange={(event) => onNumberGuessChange(event.target.value)}
+              placeholder="Type exact value"
+            />
+          </div>
+        ) : null}
+
+        {category === 'ORDER' ? (
+          <div className="category-input">
+            <label htmlFor="order-rank">Target position</label>
+            <select id="order-rank" value={orderRank} onChange={(event) => onOrderRankChange(Number(event.target.value))}>
+              {Array.from({ length: 10 }).map((_, idx) => (
+                <option key={idx} value={idx + 1}>
+                  {idx + 1}
+                </option>
+              ))}
+            </select>
+          </div>
+        ) : null}
 
         <footer className="action-bar">
           {phase === 'CHOOSING' ? (

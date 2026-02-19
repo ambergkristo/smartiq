@@ -33,6 +33,11 @@ function makeProps() {
     eliminatedPlayers: new Set(),
     passedPlayers: new Set(),
     correctIndexes: new Set([0])
+    ,
+    numberGuess: '',
+    orderRank: 1,
+    onNumberGuessChange: vi.fn(),
+    onOrderRankChange: vi.fn()
   };
 }
 
@@ -44,7 +49,7 @@ describe('GameBoard layout', () => {
     const board = screen.getByTestId('smart10-board');
     expect(board).toBeInTheDocument();
     expect(within(board).getAllByRole('button', { name: /marker/i })).toHaveLength(10);
-    expect(screen.getByTestId('action-hint')).toHaveTextContent(/choose a marker/i);
+    expect(screen.getByTestId('action-hint')).toHaveTextContent(/reveal a marker/i);
   });
 
   test('reveals peg text when marker is clicked', () => {
