@@ -235,3 +235,13 @@
 - Preventive rule:
   - Any newly introduced UI aggregate model must have default-safe props and be asserted in integration tests before merge.
 
+
+## 2026-02-19 - Loop 26 (PR106 Error + Loading Polish Merge)
+
+- Hard part:
+  - Distinguishing transport failures from auth/cors/status failures across startup and in-game card fetch paths.
+- What broke:
+  - Users previously saw backend-unreachable copy for forbidden responses, causing wrong debugging path.
+- Preventive rule:
+  - Error mappers must explicitly branch by status class (401/403, 404, 409, 5xx, network/timeout) and be unit-tested.
+
