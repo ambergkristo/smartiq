@@ -46,3 +46,4 @@
 - For frontend boot/setup flow, require explicit startup-state tests for `loading`, `backend-unreachable`, `topics-empty`, and `ready` before merge.
 - For turn-based frontend engines, enforce phase guards for all player actions (`choose`, `confirm`, `pass`) and add tests proving round-state reset on next round.
 - For UI-only turn-flow polish, include explicit action-hint copy and visible player status markers (`TURN`, `OUT`, `PASSED`) plus fallback/wheel layout assertions.
+- For setup-screen UX changes, require tests that assert Start CTA remains disabled until both topic selection and at least one parsed player chip exist.

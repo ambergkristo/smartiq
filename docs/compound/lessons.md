@@ -206,3 +206,13 @@
   - Before explicit action hints and status chips, users could misread the next legal step even though engine state was correct.
 - Preventive rule:
   - For UI-polish PRs on turn-based games, add explicit “next action” copy and visual player-state markers, then verify with layout-scoped tests.
+
+## 2026-02-19 - Loop 23 (PR99 Topic Selection Final UX Merge)
+
+- Hard part:
+  - Upgrading setup UX to premium tile/chip flow without breaking existing gameplay startup behavior.
+- What broke:
+  - Old setup assumptions (playersText defaulted to a player) kept CTA enabled and masked gating regressions.
+- Preventive rule:
+  - Setup CTA must be driven by parsed player chips and selected topic, not raw text defaults; enforce with startup + integration tests.
+
