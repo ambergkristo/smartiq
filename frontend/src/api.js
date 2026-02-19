@@ -62,17 +62,33 @@ export function resolveTopicsErrorState(error) {
     };
   }
 
-  if (error?.status === 403) {
+  if (error?.status === 401 || error?.status === 403) {
     return {
-      title: 'API call was blocked (403).',
-      detail: 'Check CORS allowed origins and frontend URL.',
-      kind: 'backend-unreachable'
+      title: 'Forbidden (CORS/security).',
+      detail: 'Check dev env / CORS origins.',
+      kind: 'forbidden'
+    };
+  }
+
+  if (error?.status === 404) {
+    return {
+      title: 'Not found.',
+      detail: 'Topics endpoint is missing or routed incorrectly.',
+      kind: 'not-found'
+    };
+  }
+
+  if (error?.status >= 500) {
+    return {
+      title: 'Server error.',
+      detail: 'Backend responded with a server error. Retry in a moment.',
+      kind: 'server-error'
     };
   }
 
   return {
     title: 'Could not load topics.',
-    detail: 'Unexpected backend response. Retry and inspect backend logs.',
+    detail: 'Unexpected response. Retry and inspect backend logs.',
     kind: 'backend-unreachable'
   };
 }
@@ -113,8 +129,24 @@ export async function fetchNextCard({ topic, difficulty, sessionId, lang, retrie
 }
 
 export function resolveCardErrorMessage(error) {
-  if (error instanceof ApiError && error.status === 404) {
-    return 'Question bank is empty for this filter. Run content pipeline in dev and import clean data.';
+  if (error?.code === 'TIMEOUT' || error?.code === 'NETWORK_ERROR') {
+    return 'Backend unreachable. Check API availability and retry.';
+  }
+
+  if (error?.status === 401 || error?.status === 403) {
+    return 'Forbidden (CORS/security). Check dev env / CORS origins.';
+  }
+
+  if (error?.status === 404) {
+    return 'Not found. Question bank is empty for this filter.';
+  }
+
+  if (error?.status === 409) {
+    return 'Conflict (slot/card unavailable). Please retry.';
+  }
+
+  if (error?.status >= 500) {
+    return 'Server error. Retry to continue.';
   }
 
   return 'Fallback mode: backend is unavailable right now. Retry to continue.';
