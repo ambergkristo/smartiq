@@ -18,7 +18,7 @@ const STRINGS = {
   checkBackendUrl: 'Check backend URL:',
   openHealth: 'Open health',
   passNote: 'Pass keeps points and skips your turn for this round.',
-  cardErrorFallback: 'Fallback mode: backend is unavailable right now. Retry to continue.',
+  cardErrorFallback: 'Could not load card from backend. Retry to continue.',
   playersPlaceholder: 'Type player names and press Enter (or comma)',
   addPlayerHint: 'At least one player is required.'
 };
@@ -233,11 +233,13 @@ function StartupStatePanel({ startup, onRetry }) {
         {STRINGS.retry}
       </button>
       <p className="startup-hint">
-        {STRINGS.checkBackendUrl} <code>{API_BASE}</code>
+        {STRINGS.checkBackendUrl} <code>{API_BASE || '(missing VITE_API_BASE_URL)'}</code>
       </p>
-      <a className="inline-link" href={`${API_BASE}/health`} target="_blank" rel="noreferrer">
-        {STRINGS.openHealth}
-      </a>
+      {API_BASE ? (
+        <a className="inline-link" href={`${API_BASE}/health`} target="_blank" rel="noreferrer">
+          {STRINGS.openHealth}
+        </a>
+      ) : null}
     </section>
   );
 }
@@ -288,7 +290,6 @@ export default function App() {
         error: null
       });
     } catch (error) {
-      console.error(error);
       const resolved = resolveTopicsErrorState(error);
       setStartup({
         phase:
@@ -343,7 +344,6 @@ export default function App() {
         recentCardIdsRef.current = [card.id, ...recentCardIdsRef.current].slice(0, RECENT_CARD_LIMIT);
         cardLoaded(card);
       } catch (error) {
-        console.error(error);
         setCardError(resolveCardErrorMessage(error) || STRINGS.cardErrorFallback);
         cardLoadFailed();
       }
@@ -378,7 +378,7 @@ export default function App() {
   }
 
   return (
-    <main>
+    <main data-phase={engine.phase === GamePhase.SETUP ? 'setup' : 'game'}>
       {engine.phase === GamePhase.SETUP ? (
         <>
           {startup.phase !== STARTUP_PHASE.READY ? <StartupStatePanel startup={startup} onRetry={loadTopics} /> : null}

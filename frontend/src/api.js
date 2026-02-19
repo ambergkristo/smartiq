@@ -1,7 +1,6 @@
-export const API_BASE =
-  import.meta.env.VITE_API_BASE_URL ||
-  import.meta.env.VITE_BACKEND_URL ||
-  'http://localhost:8080';
+export const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').trim();
+export const USE_SAMPLE_MODE = String(import.meta.env.VITE_USE_SAMPLE || '').toLowerCase() === 'true';
+const DEV_API_DEBUG = import.meta.env.DEV && String(import.meta.env.VITE_DEBUG_API || '').toLowerCase() === 'true';
 
 class ApiError extends Error {
   constructor(message, status, code) {
@@ -10,6 +9,31 @@ class ApiError extends Error {
     this.status = status;
     this.code = code;
   }
+}
+
+const SAMPLE_TOPICS = [
+  { topic: 'Science', count: 120 },
+  { topic: 'History', count: 120 },
+  { topic: 'Math', count: 120 }
+];
+
+function sampleCard({ topic, difficulty, language }) {
+  const normalizedTopic = topic || 'Science';
+  const normalizedDifficulty = normalizeDifficulty(difficulty);
+  const normalizedLanguage = normalizeLanguage(language);
+  return {
+    id: `sample-${normalizedTopic.toLowerCase()}-${normalizedDifficulty}`,
+    cardId: `sample-${normalizedTopic.toLowerCase()}-${normalizedDifficulty}`,
+    topic: normalizedTopic,
+    subtopic: 'SAMPLE',
+    language: normalizedLanguage,
+    question: `${normalizedTopic} sample question (${normalizedLanguage.toUpperCase()})`,
+    options: Array.from({ length: 10 }, (_, index) => `${normalizedTopic} option ${index + 1}`),
+    correctIndex: 0,
+    difficulty: String(normalizedDifficulty),
+    source: 'sample-mode',
+    createdAt: new Date().toISOString()
+  };
 }
 
 async function delay(ms) {
@@ -41,7 +65,47 @@ async function fetchJson(url, { timeoutMs = 8000 } = {}) {
   }
 }
 
+function requireApiBase() {
+  if (!API_BASE && !USE_SAMPLE_MODE) {
+    throw new ApiError(
+      'Missing VITE_API_BASE_URL. Configure frontend env before starting game.',
+      0,
+      'CONFIG_ERROR'
+    );
+  }
+}
+
+function normalizeDifficulty(difficulty) {
+  const value = String(difficulty ?? '').trim().toLowerCase();
+  if (value === 'easy') return 1;
+  if (value === 'medium') return 2;
+  if (value === 'hard') return 3;
+  if (value === '1' || value === '2' || value === '3') return Number(value);
+  return 1;
+}
+
+function normalizeLanguage(lang) {
+  const value = String(lang ?? '').trim().toLowerCase();
+  return value === 'et' ? 'et' : 'en';
+}
+
+export function buildNextCardQuery({ topic, difficulty, language }) {
+  const params = new URLSearchParams();
+  if (topic) {
+    params.set('topic', String(topic));
+  }
+  params.set('difficulty', String(normalizeDifficulty(difficulty)));
+  const normalizedLanguage = normalizeLanguage(language);
+  params.set('language', normalizedLanguage);
+  params.set('lang', normalizedLanguage);
+  return params;
+}
+
 export async function fetchTopics() {
+  requireApiBase();
+  if (USE_SAMPLE_MODE) {
+    return SAMPLE_TOPICS;
+  }
   return fetchJson(`${API_BASE}/api/topics`);
 }
 
@@ -59,6 +123,14 @@ export function resolveTopicsErrorState(error) {
       title: 'Backend is unreachable.',
       detail: 'Verify backend URL and that the API server is running.',
       kind: 'backend-unreachable'
+    };
+  }
+
+  if (error?.code === 'CONFIG_ERROR') {
+    return {
+      title: 'Frontend API is not configured.',
+      detail: 'Set VITE_API_BASE_URL (example: http://localhost:8081).',
+      kind: 'config-error'
     };
   }
 
@@ -104,18 +176,31 @@ function isRetryable(error) {
 }
 
 export async function fetchNextCard({ topic, difficulty, sessionId, lang, retries = 2 }) {
-  const params = new URLSearchParams();
-  if (topic) params.set('topic', topic);
-  if (difficulty) params.set('difficulty', String(difficulty));
+  requireApiBase();
+  const params = buildNextCardQuery({ topic, difficulty, language: lang });
   if (sessionId) params.set('sessionId', sessionId);
-  if (lang) params.set('lang', lang);
+  if (USE_SAMPLE_MODE) {
+    const fallbackCard = sampleCard({
+      topic,
+      difficulty: params.get('difficulty'),
+      language: params.get('language')
+    });
+    if (DEV_API_DEBUG) {
+      console.info(`[api] Loaded cardId from sample: ${fallbackCard.cardId}`);
+    }
+    return fallbackCard;
+  }
 
   const url = `${API_BASE}/api/cards/next?${params.toString()}`;
 
   let lastError = null;
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     try {
-      return await fetchJson(url);
+      const card = await fetchJson(url);
+      if (DEV_API_DEBUG && card?.cardId) {
+        console.info(`[api] Loaded cardId from API: ${card.cardId}`);
+      }
+      return card;
     } catch (error) {
       lastError = error;
       if (!isRetryable(error) || attempt === retries) {
@@ -129,6 +214,10 @@ export async function fetchNextCard({ topic, difficulty, sessionId, lang, retrie
 }
 
 export function resolveCardErrorMessage(error) {
+  if (error?.code === 'CONFIG_ERROR') {
+    return 'Frontend API is not configured. Set VITE_API_BASE_URL and retry.';
+  }
+
   if (error?.code === 'TIMEOUT' || error?.code === 'NETWORK_ERROR') {
     return 'Backend unreachable. Check API availability and retry.';
   }
@@ -149,5 +238,5 @@ export function resolveCardErrorMessage(error) {
     return 'Server error. Retry to continue.';
   }
 
-  return 'Fallback mode: backend is unavailable right now. Retry to continue.';
+  return 'Could not load card from backend. Retry to continue.';
 }
