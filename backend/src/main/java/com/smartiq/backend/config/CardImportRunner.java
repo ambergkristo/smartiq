@@ -146,6 +146,7 @@ public class CardImportRunner implements ApplicationRunner {
             String category = normalizeCategory(textOrNull(cardNode.get("category")));
             String language = fallback(textOrNull(cardNode.get("language")), "en");
             String question = textOrNull(cardNode.get("question"));
+            String explanation = textOrNull(cardNode.get("explanation"));
             String difficulty = normalizeDifficulty(cardNode.get("difficulty"));
             String source = fallback(textOrNull(cardNode.get("source")), "smartiq-import");
 
@@ -179,6 +180,7 @@ public class CardImportRunner implements ApplicationRunner {
                     category,
                     language,
                     question,
+                    explanation,
                     options,
                     correctIndex,
                     correctFlags,
@@ -234,6 +236,7 @@ public class CardImportRunner implements ApplicationRunner {
             for (JsonNode cardNode : cardsNode) {
                 String id = textOrNull(cardNode.get("id"));
                 String question = textOrNull(cardNode.get("question"));
+                String explanation = textOrNull(cardNode.get("explanation"));
                 String language = fallback(textOrNull(cardNode.get("language")), "en");
                 String difficulty = normalizeDifficulty(cardNode.get("difficulty"));
                 String source = fallback(textOrNull(cardNode.get("source")), "smartiq-factory");
@@ -261,6 +264,7 @@ public class CardImportRunner implements ApplicationRunner {
                         cardCategory,
                         language,
                         question,
+                        explanation,
                         options,
                         correctIndex,
                         correctFlagsRaw,
@@ -426,6 +430,7 @@ public class CardImportRunner implements ApplicationRunner {
         card.setCategory(seed.category());
         card.setLanguage(seed.language());
         card.setQuestion(seed.question());
+        card.setExplanation(seed.explanation());
         card.setOptions(seed.options());
         card.setCorrectIndex(seed.correctIndex());
         card.setCorrectFlags(seed.correctFlags());
@@ -442,6 +447,7 @@ public class CardImportRunner implements ApplicationRunner {
             String category,
             String language,
             String question,
+            String explanation,
             List<String> options,
             Integer correctIndex,
             String correctFlags,

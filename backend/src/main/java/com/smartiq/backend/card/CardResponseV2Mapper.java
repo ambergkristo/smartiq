@@ -51,7 +51,8 @@ final class CardResponseV2Mapper {
                 correct,
                 difficulty,
                 source.source(),
-                source.createdAt()
+                source.createdAt(),
+                source.explanation()
         );
     }
 

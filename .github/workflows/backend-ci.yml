@@ -21,6 +21,15 @@ jobs:
           java-version: '21'
           cache: maven
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate Smart10 cards dataset
+        working-directory: .
+        run: python tools/validate_cards.py data/smart10/cards.en.json --min-per-pair 30
+
       - name: Maven test
         run: mvn -q test
 

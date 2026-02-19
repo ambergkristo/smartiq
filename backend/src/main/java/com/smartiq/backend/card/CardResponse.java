@@ -17,7 +17,8 @@ public record CardResponse(
         String source,
         Instant createdAt,
         String correctFlags,
-        String correctMeta
+        String correctMeta,
+        String explanation
 ) {
     static CardResponse fromEntity(Card card) {
         return new CardResponse(
@@ -34,7 +35,8 @@ public record CardResponse(
                 card.getSource(),
                 card.getCreatedAt(),
                 card.getCorrectFlags(),
-                card.getCorrectMeta()
+                card.getCorrectMeta(),
+                card.getExplanation()
         );
     }
 }

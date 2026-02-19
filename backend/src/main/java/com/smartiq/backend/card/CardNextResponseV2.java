@@ -19,6 +19,7 @@ public record CardNextResponseV2(
         Map<String, Object> correct,
         int difficulty,
         String source,
-        Instant createdAt
+        Instant createdAt,
+        String explanation
 ) {
 }

@@ -52,6 +52,9 @@ public class Card {
     @Column(name = "correct_meta", length = 4000)
     private String correctMeta;
 
+    @Column(length = 1000)
+    private String explanation;
+
     @Column(nullable = false, length = 32)
     private String difficulty;
 
@@ -135,6 +138,14 @@ public class Card {
 
     public void setCorrectMeta(String correctMeta) {
         this.correctMeta = correctMeta;
+    }
+
+    public String getExplanation() {
+        return explanation;
+    }
+
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
     }
 
     public void setCorrectFlags(String correctFlags) {
