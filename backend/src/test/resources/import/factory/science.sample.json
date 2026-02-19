@@ -44,6 +44,24 @@
           { "id": 9, "text": "17", "correct": false },
           { "id": 10, "text": "18", "correct": false }
         ]
+      },
+      {
+        "id": "art_number_001",
+        "difficulty": 1,
+        "language": "en",
+        "question": "This card is intentionally invalid",
+        "options": [
+          { "id": 1, "text": "A", "correct": false },
+          { "id": 2, "text": "B", "correct": false },
+          { "id": 3, "text": "C", "correct": false },
+          { "id": 4, "text": "D", "correct": false },
+          { "id": 5, "text": "E", "correct": false },
+          { "id": 6, "text": "F", "correct": false },
+          { "id": 7, "text": "G", "correct": false },
+          { "id": 8, "text": "H", "correct": false },
+          { "id": 9, "text": "I", "correct": false },
+          { "id": 10, "text": "J", "correct": false }
+        ]
       }
     ]
   }
