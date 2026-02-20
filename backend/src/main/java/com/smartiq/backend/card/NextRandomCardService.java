@@ -45,7 +45,8 @@ public class NextRandomCardService {
 
         List<Card> pool = cardRepository.findDeckPool(normalizedLanguage, normalizedTopic);
         if (pool.isEmpty()) {
-            throw new NoSuchElementException("No cards available for filters");
+            String topicPart = normalizedTopic == null ? "any" : normalizedTopic;
+            throw new NoSuchElementException("No cards available for language=" + normalizedLanguage + ", topic=" + topicPart);
         }
 
         GameState state = gameHistory.computeIfAbsent(normalizedGameId, ignored -> new GameState());

@@ -31,6 +31,14 @@ describe('api error mapping', () => {
     expect(resolveCardErrorMessage({ status: 403, code: 'HTTP_ERROR' }).toLowerCase()).toContain('forbidden');
   });
 
+  test('includes backend detail for card not found', () => {
+    expect(resolveCardErrorMessage({
+      status: 404,
+      code: 'HTTP_ERROR',
+      detail: 'No cards available for language=et, topic=any'
+    })).toContain('No cards available for language=et, topic=any');
+  });
+
   test('builds cards/next query with backend contract params', () => {
     const params = buildNextCardQuery({ topic: 'Science', difficulty: 'hard', language: 'et' });
     expect(params.get('topic')).toBe('Science');
