@@ -133,12 +133,12 @@ QUESTION_TEMPLATES = {
 }
 
 STATEMENT_HINT = {
-    "History": "is a historical era, event, or figure.",
-    "Sports": "is mainly a sport, move, or tournament.",
-    "Geography": "is a place, landform, or geographic feature.",
-    "Culture": "is a cultural work, creator, or art movement.",
-    "Science": "is a scientific concept, entity, or law.",
-    "Varia": "is an everyday object, place, or activity."
+    "History": "is linked to history.",
+    "Sports": "is linked to sports.",
+    "Geography": "is linked to geography.",
+    "Culture": "is linked to culture.",
+    "Science": "is linked to science.",
+    "Varia": "is linked to everyday life."
 }
 
 YEAR_BASE = {
