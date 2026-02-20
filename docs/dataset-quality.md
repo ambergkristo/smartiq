@@ -62,11 +62,11 @@ This script is a warning gate (non-blocking by default) that reports:
 
 Use strict mode locally when needed:
 
-- `node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.70`
+- `node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.80`
 
 CI threshold gate:
 
-- Backend CI enforces `--fail-threshold=0.70` as a baseline regression guard.
+- Backend CI enforces `--fail-threshold=0.80` as a baseline regression guard.
 - Raise this threshold gradually as dataset diversity improves.
 
 ## Runtime Source Guard
