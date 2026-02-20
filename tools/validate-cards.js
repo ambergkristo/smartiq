@@ -7,6 +7,7 @@ const CATEGORIES = ['TRUE_FALSE', 'NUMBER', 'ORDER', 'CENTURY_DECADE', 'COLOR', 
 const MAX_OPTION_LEN = 42;
 const MIN_UNIQUE_QUESTIONS_PER_PAIR = 4;
 const BANNED_TEMPLATE_PHRASE = /belongs to/i;
+const MAX_ELLIPSIS_RATIO = 0.02;
 
 function normalizeText(value) {
   return String(value || '').normalize('NFKC').trim().replace(/\s+/g, ' ');
@@ -90,6 +91,8 @@ function main() {
   const questionVarietyByPair = new Map();
   const tfCounts = [];
   const sourceCounts = new Map();
+  let optionsCount = 0;
+  let truncatedOptionCount = 0;
 
   cards.forEach((card, idx) => {
     const context = `cards[${idx}] id=${card?.id ?? 'missing'}`;
@@ -115,6 +118,8 @@ function main() {
       errors.push(`${context} options must contain exactly 10 entries`);
     } else {
       const opts = card.options.map((o) => normalizeText(o));
+      optionsCount += opts.length;
+      truncatedOptionCount += opts.filter((o) => o.endsWith('...')).length;
       if (opts.some((o) => !o)) {
         errors.push(`${context} options contain empty text`);
       }
@@ -183,6 +188,15 @@ function main() {
           `question variety check failed for ${pairKey}: expected >=${MIN_UNIQUE_QUESTIONS_PER_PAIR}, got ${uniqueQuestions}`
         );
       }
+    }
+  }
+
+  if (optionsCount > 0) {
+    const truncatedRatio = truncatedOptionCount / optionsCount;
+    if (truncatedRatio > MAX_ELLIPSIS_RATIO) {
+      errors.push(
+        `option truncation ratio too high: ${truncatedOptionCount}/${optionsCount} (${(truncatedRatio * 100).toFixed(2)}%)`
+      );
     }
   }
 
