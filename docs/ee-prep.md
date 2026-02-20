@@ -34,6 +34,7 @@ This document defines the technical baseline for Estonian (`et`) locale support 
   - `python tools/localize_et_dataset.py --check`
 - ET full validation pipeline:
   - `node tools/validate_et_pipeline.js data/smart10`
+  - verbose diagnostics: `node tools/validate_et_pipeline.js data/smart10 --verbose`
 
 Locale-pack validator rules:
 
