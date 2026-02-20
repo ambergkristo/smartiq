@@ -4,7 +4,7 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const DEFAULT_DATA_DIR = 'data/smart10';
-const REQUIRED_LOCALES = ['en'];
+const REQUIRED_LOCALES = ['en', 'et'];
 
 function normalize(value) {
   return String(value ?? '').trim().toLowerCase();
@@ -56,10 +56,6 @@ function main() {
     if (status !== 0) {
       failures += 1;
     }
-  }
-
-  if (!foundLocales.includes('et')) {
-    console.log('\nEE pack status: cards.et.json not present yet (expected during prep phase).');
   }
 
   if (failures > 0) {
