@@ -148,6 +148,7 @@ Dataset quality score (warning gate):
 
 ```bash
 node tools/score_cards_quality.js data/smart10/cards.en.json
+node tools/score_cards_quality.js data/smart10/cards.et.json
 ```
 
 Content refresh pipeline (generate -> review -> validate):
