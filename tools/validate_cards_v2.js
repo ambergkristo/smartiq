@@ -88,6 +88,8 @@ function validateCorrectByCategory(card, context, hardErrors) {
 
 function main() {
   const datasetPath = process.argv[2] || 'data/smart10/cards.en.json';
+  const maxWarningsArg = process.argv.find((arg) => arg.startsWith('--max-warnings='));
+  const maxWarnings = maxWarningsArg ? Number.parseInt(maxWarningsArg.split('=')[1], 10) : null;
   const { absPath, cards } = parseDataset(datasetPath);
 
   const hardErrors = [];
@@ -253,6 +255,11 @@ function main() {
     if (hardErrors.length > 200) {
       console.error(`- ...and ${hardErrors.length - 200} more`);
     }
+    process.exit(1);
+  }
+
+  if (maxWarnings != null && Number.isFinite(maxWarnings) && warnings.length > maxWarnings) {
+    console.error(`\nWarning limit exceeded: warnings=${warnings.length}, maxWarnings=${maxWarnings}`);
     process.exit(1);
   }
 

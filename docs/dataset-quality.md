@@ -28,7 +28,7 @@ Each card in `data/smart10/cards.en.json` must contain:
 
 Validator script:
 
-- `node tools/validate_cards_v2.js data/smart10/cards.en.json`
+- `node tools/validate_cards_v2.js data/smart10/cards.en.json --max-warnings=0`
 
 Checks:
 
@@ -46,6 +46,7 @@ Checks:
 - Duplicate and normalized near-duplicate question detection.
 
 Hard violations exit non-zero and fail CI.
+Warning overrun above configured limit (`--max-warnings`) also exits non-zero.
 
 ## Quality Rubric Score
 

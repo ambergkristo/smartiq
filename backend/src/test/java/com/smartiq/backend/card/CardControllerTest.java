@@ -193,6 +193,7 @@ class CardControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.cardId").exists())
                 .andExpect(jsonPath("$.language").value("en"))
+                .andExpect(jsonPath("$.source").value("smartiq-v2"))
                 .andExpect(jsonPath("$.correct").exists())
                 .andExpect(jsonPath("$.options.length()").value(10));
     }

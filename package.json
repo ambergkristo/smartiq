@@ -12,7 +12,7 @@
     "generate:cards": "node tools/generate-cards.js",
     "review:cards": "node tools/review-cards.js",
     "review:summary": "node tools/review-summary.js",
-    "validate:cards": "node tools/validate_cards_v2.js data/smart10/cards.en.json",
+    "validate:cards": "node tools/validate_cards_v2.js data/smart10/cards.en.json --max-warnings=0",
     "score:cards:quality": "node tools/score_cards_quality.js data/smart10/cards.en.json",
     "score:cards:quality:ci": "node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.70",
     "validate:cards:legacy": "node tools/validate-cards.js data/smart10/cards.en.json",
