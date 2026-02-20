@@ -10,6 +10,7 @@
     "dev:all": "concurrently -n backend,frontend -c cyan,green \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:smoke": "concurrently -n backend,frontend -c cyan,green \"npm run dev:backend:8081\" \"npm run dev:frontend:5173\"",
     "localize:cards:et": "python tools/localize_et_dataset.py",
+    "validate:cards:et:idempotent": "python tools/localize_et_dataset.py --check",
     "generate:cards": "node tools/generate-cards.js",
     "review:cards": "node tools/review-cards.js",
     "review:summary": "node tools/review-summary.js",
