@@ -334,6 +334,16 @@ button:disabled {
   background: rgba(250, 181, 77, 0.16);
 }
 
+.players-panel li.is-out {
+  border-color: rgba(239, 111, 111, 0.5);
+  background: rgba(157, 55, 55, 0.2);
+}
+
+.players-panel li.is-passed:not(.active):not(.is-out) {
+  border-color: rgba(178, 194, 221, 0.45);
+  background: rgba(156, 171, 196, 0.14);
+}
+
 .player-label {
   display: inline-flex;
   align-items: center;

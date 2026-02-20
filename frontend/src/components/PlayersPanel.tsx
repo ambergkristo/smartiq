@@ -35,8 +35,11 @@ export default function PlayersPanel({
           const isOut = eliminatedPlayers.has(player);
           const isPassed = passedPlayers.has(player);
           const isActive = idx === currentPlayerIndex;
+          const rowClass = [isActive ? 'active' : '', isOut ? 'is-out' : '', !isOut && isPassed ? 'is-passed' : '']
+            .filter(Boolean)
+            .join(' ');
           return (
-            <li key={player} className={isActive ? 'active' : ''}>
+            <li key={player} className={rowClass}>
               <span className="player-label">
                 {player}
                 {isActive ? <span className="player-chip active-chip">TURN</span> : null}

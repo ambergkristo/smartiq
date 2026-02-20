@@ -108,6 +108,9 @@ export default function GameBoard({
   }, [card.options, wheelSize]);
 
   const isLongQuestion = card.question.length > 180;
+  const hasSelectedPeg = selectedIndexes.size > 0;
+  const requiresRank = category === 'ORDER';
+  const canAnswer = hasSelectedPeg && (!requiresRank || selectedRank != null);
 
   return (
     <section className="game-board">
@@ -210,7 +213,7 @@ export default function GameBoard({
         <footer className="action-bar">
           {phase === 'CHOOSING' ? (
             <>
-              <button onClick={onAnswer} type="button">
+              <button onClick={onAnswer} type="button" disabled={!canAnswer}>
                 ANSWER
               </button>
               <button onClick={onPass} type="button">
