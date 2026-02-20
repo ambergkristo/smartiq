@@ -141,6 +141,12 @@ Data validation:
 node tools/validate_cards_v2.js data/smart10/cards.en.json
 ```
 
+Dataset quality score (warning gate):
+
+```bash
+node tools/score_cards_quality.js data/smart10/cards.en.json
+```
+
 Content refresh pipeline (generate -> review -> validate):
 
 ```bash
