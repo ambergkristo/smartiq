@@ -46,9 +46,11 @@ public interface CardRepository extends JpaRepository<Card, String> {
             select * from cards
             where lower(language) = lower(:language)
               and (:topic is null or lower(topic) = lower(:topic))
+              and coalesce(lower(source), '') not in (:excludedSources)
             """, nativeQuery = true)
     List<Card> findDeckPool(@Param("language") String language,
-                            @Param("topic") String topic);
+                            @Param("topic") String topic,
+                            @Param("excludedSources") List<String> excludedSources);
 
     @Query(value = """
             select * from cards
