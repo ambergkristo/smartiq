@@ -4,6 +4,7 @@ import re
 from pathlib import Path
 
 INPUT_PATH = Path("data/smart10/cards.et.json")
+OVERRIDES_PATH = Path("data/smart10/et.localization.overrides.json")
 
 TOPIC_LABELS = {
     "History": "Ajalugu",
@@ -453,6 +454,29 @@ def cleanup_text(value: str) -> str:
     return text
 
 
+def load_external_replacements() -> list[tuple[str, str]]:
+    if not OVERRIDES_PATH.exists():
+        return []
+    parsed = json.loads(OVERRIDES_PATH.read_text(encoding="utf-8"))
+    items = parsed.get("replacements", [])
+    pairs = []
+    for entry in items:
+        if not isinstance(entry, dict):
+            continue
+        source = str(entry.get("from", "")).strip()
+        target = str(entry.get("to", "")).strip()
+        if source and target:
+            pairs.append((source, target))
+    return pairs
+
+
+def apply_external_replacements(value: str, replacements: list[tuple[str, str]]) -> str:
+    text = str(value)
+    for source, target in replacements:
+        text = text.replace(source, target)
+    return text
+
+
 def localize_order_option(value: str) -> str:
     text = str(value).strip()
     if text in ORDER_OPTION_PHRASE_MAP:
@@ -472,6 +496,7 @@ def main() -> None:
     cards = json.loads(raw)
     if not isinstance(cards, list):
         raise SystemExit("cards.et.json must be a JSON array")
+    external_replacements = load_external_replacements()
 
     for card in cards:
         card["question"] = localize_anchor_slots(
@@ -479,6 +504,7 @@ def main() -> None:
             str(card.get("cardId") or card.get("id") or ""),
         )
         card["question"] = cleanup_text(card["question"])
+        card["question"] = apply_external_replacements(card["question"], external_replacements)
         category = str(card.get("category", "")).upper()
         options = card.get("options", [])
         if not isinstance(options, list):
@@ -494,6 +520,7 @@ def main() -> None:
             card["options"] = [clamp_option(localize_order_option(str(option))) for option in options]
 
         card["options"] = [cleanup_text(str(option)) for option in card["options"]]
+        card["options"] = [apply_external_replacements(str(option), external_replacements) for option in card["options"]]
 
     INPUT_PATH.write_text(json.dumps(cards, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Localized {len(cards)} ET cards in {INPUT_PATH}")

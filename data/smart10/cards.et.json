@@ -924,7 +924,7 @@
     "options": [
       "Tour de France on ujumisvoistlus.",
       "Wimbledon on tenniseturniir.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Suluseis on jalgpalli reegel.",
       "Kriketis ei kasutata kurikat.",
       "Maratoni pikkus on 12 km.",
@@ -954,7 +954,7 @@
       "Kriketis ei kasutata kurikat.",
       "Hat trick tahendab kolme varavat.",
       "Tennis on ainult siseala.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Stanley karikas on korvpallile.",
       "Tennist saab mangida savivaljakul.",
       "Wimbledon on tenniseturniir.",
@@ -1077,7 +1077,7 @@
       "Kriketis kasutatakse wickets'eid.",
       "Hat trick tahendab viit varavat.",
       "Stanley karikas on jaahokile.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Wimbledon on tenniseturniir.",
       "Kriketis ei kasutata kurikat.",
       "Korvpallis kasutatakse korvi.",
@@ -1105,7 +1105,7 @@
     "language": "et",
     "question": "Sport: Margi selle teema toesed vaited. Fookus: kaart 007.",
     "options": [
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Suluseis on tennise reegel.",
       "Vabavise kuulub korvpalli.",
       "Korvpallis kasutatakse korvi.",
@@ -1168,7 +1168,7 @@
       "Suluseis on tennise reegel.",
       "Tour de France on ujumisvoistlus.",
       "Tennis on ainult siseala.",
-      "Olumpiamangud toimuvad iga nelja aasta...",
+      "Olümpiamängud toimuvad iga nelja aasta...",
       "Hat trick tahendab viit varavat.",
       "Ragbis kasutatakse lauatennisepalli.",
       "Ragbis kasutatakse ovaalset palli."
@@ -1192,7 +1192,7 @@
     "language": "et",
     "question": "Sport: Vali koik toesed vaited. Fookus: kaart 010.",
     "options": [
-      "Olumpiamangud toimuvad iga nelja aasta...",
+      "Olümpiamängud toimuvad iga nelja aasta...",
       "Maratoni pikkus on 12 km.",
       "Kriketis ei kasutata kurikat.",
       "Tour de France on ujumisvoistlus.",
@@ -1230,7 +1230,7 @@
       "Suluseis on jalgpalli reegel.",
       "Wimbledon on tenniseturniir.",
       "Korvpallis kasutatakse korvi.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Ragbis kasutatakse lauatennisepalli.",
       "Maratoni pikkus on 12 km."
     ],
@@ -1321,7 +1321,7 @@
       "Suluseis on jalgpalli reegel.",
       "Tour de France on ujumisvoistlus.",
       "Korvpallis pole korvi.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Suluseis on tennise reegel.",
       "Tour de France on rattasoidu voistlus.",
       "Hat trick tahendab viit varavat.",
@@ -1349,7 +1349,7 @@
       "Suluseis on tennise reegel.",
       "Kriketis ei kasutata kurikat.",
       "Ragbis kasutatakse lauatennisepalli.",
-      "Olumpiamangud toimuvad iga nelja aasta...",
+      "Olümpiamängud toimuvad iga nelja aasta...",
       "Tour de France on rattasoidu voistlus.",
       "Korvpallis pole korvi.",
       "Vabavise kuulub korvpalli.",
@@ -1415,7 +1415,7 @@
       "Hat trick tahendab kolme varavat.",
       "Korvpallis pole korvi.",
       "Maratoni pikkus on 12 km.",
-      "Olumpiamangud toimuvad iga nelja aasta..."
+      "Olümpiamängud toimuvad iga nelja aasta..."
     ],
     "correct": {
       "correctIndexes": [
@@ -1445,7 +1445,7 @@
       "Tennist saab mangida savivaljakul.",
       "Korvpallis kasutatakse korvi.",
       "Stanley karikas on jaahokile.",
-      "Olumpiamangud toimuvad iga nelja aasta...",
+      "Olümpiamängud toimuvad iga nelja aasta...",
       "Wimbledon on tenniseturniir.",
       "Kriketis kasutatakse wickets'eid."
     ],
@@ -1477,9 +1477,9 @@
       "Tour de France on ujumisvoistlus.",
       "Tennis on ainult siseala.",
       "Vabavise kuulub korvpalli.",
-      "Olumpiamangud toimuvad iga nelja aasta...",
+      "Olümpiamängud toimuvad iga nelja aasta...",
       "Suluseis on tennise reegel.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Ragbis kasutatakse lauatennisepalli."
     ],
     "correct": {
@@ -1531,8 +1531,8 @@
       "Maratoni pikkus on 12 km.",
       "Korvpallis kasutatakse korvi.",
       "Tennis on ainult siseala.",
-      "Olumpiamangud toimuvad igal aastal.",
-      "Olumpiamangud toimuvad iga nelja aasta...",
+      "Olümpiamängud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad iga nelja aasta...",
       "Wimbledon on golfi suurturniir.",
       "Ragbis kasutatakse lauatennisepalli.",
       "Maratoni pikkus on 42,195 km.",
@@ -1567,7 +1567,7 @@
       "Wimbledon on golfi suurturniir.",
       "Stanley karikas on korvpallile.",
       "Wimbledon on tenniseturniir.",
-      "Olumpiamangud toimuvad igal aastal."
+      "Olümpiamängud toimuvad igal aastal."
     ],
     "correct": {
       "correctIndexes": [
@@ -1595,7 +1595,7 @@
       "Maratoni pikkus on 12 km.",
       "Vabavise kuulub korvpalli.",
       "Korvpallis pole korvi.",
-      "Olumpiamangud toimuvad iga nelja aasta...",
+      "Olümpiamängud toimuvad iga nelja aasta...",
       "Stanley karikas on korvpallile.",
       "Korvpallis kasutatakse korvi.",
       "Hat trick tahendab viit varavat."
@@ -1658,11 +1658,11 @@
       "Tennis on ainult siseala.",
       "Kriketis ei kasutata kurikat.",
       "Ragbis kasutatakse ovaalset palli.",
-      "Olumpiamangud toimuvad iga nelja aasta...",
+      "Olümpiamängud toimuvad iga nelja aasta...",
       "Korvpallis pole korvi.",
       "Suluseis on tennise reegel.",
       "Maratoni pikkus on 12 km.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Stanley karikas on korvpallile."
     ],
     "correct": {
@@ -1714,12 +1714,12 @@
       "Ragbis kasutatakse lauatennisepalli.",
       "Vabavise kuulub pesapalli.",
       "Tennis on ainult siseala.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Suluseis on jalgpalli reegel.",
       "Hat trick tahendab viit varavat.",
       "Maratoni pikkus on 42,195 km.",
       "Vabavise kuulub korvpalli.",
-      "Olumpiamangud toimuvad iga nelja aasta...",
+      "Olümpiamängud toimuvad iga nelja aasta...",
       "Suluseis on tennise reegel."
     ],
     "correct": {
@@ -1806,7 +1806,7 @@
     "options": [
       "Vabavise kuulub korvpalli.",
       "Maratoni pikkus on 42,195 km.",
-      "Olumpiamangud toimuvad iga nelja aasta...",
+      "Olümpiamängud toimuvad iga nelja aasta...",
       "Wimbledon on tenniseturniir.",
       "Wimbledon on golfi suurturniir.",
       "Suluseis on jalgpalli reegel.",
@@ -11302,7 +11302,7 @@
       "Jalgpalli poolaeg",
       "100m sprint voistlus",
       "Boxing round",
-      "Kriketi T20 mang"
+      "Kriketi t20 mang"
     ],
     "correct": {
       "rankByIndex": [
@@ -11408,7 +11408,7 @@
       "Korvpalli veerandaeg",
       "Testkriketi mangupaev",
       "Jalgpalli poolaeg",
-      "Kriketi T20 mang",
+      "Kriketi t20 mang",
       "Tennise sett",
       "Pesapallimang"
     ],
@@ -11518,7 +11518,7 @@
       "100m sprint voistlus",
       "Testkriketi mangupaev",
       "Boxing round",
-      "Kriketi T20 mang"
+      "Kriketi t20 mang"
     ],
     "correct": {
       "rankByIndex": [
@@ -11620,7 +11620,7 @@
       "Tennise sett",
       "Ragbi poolaeg",
       "100m sprint voistlus",
-      "Kriketi T20 mang",
+      "Kriketi t20 mang",
       "Jalgpalli poolaeg",
       "Korvpalli veerandaeg",
       "Lauatennise pallivahetus",
@@ -11728,7 +11728,7 @@
       "Pesapallimang",
       "Tennise sett",
       "100m sprint voistlus",
-      "Kriketi T20 mang",
+      "Kriketi t20 mang",
       "Lauatennise pallivahetus",
       "Jalgpalli poolaeg",
       "Ragbi poolaeg",
@@ -11841,7 +11841,7 @@
       "Jalgpalli poolaeg",
       "100m sprint voistlus",
       "Boxing round",
-      "Kriketi T20 mang",
+      "Kriketi t20 mang",
       "Korvpalli veerandaeg"
     ],
     "correct": {
@@ -11941,7 +11941,7 @@
     "language": "et",
     "question": "Sport: Order by event duration, shortest first. Pane varaseim/madalaim kohale 1. Teema: kaart 020.",
     "options": [
-      "Kriketi T20 mang",
+      "Kriketi t20 mang",
       "100m sprint voistlus",
       "Ragbi poolaeg",
       "Jalgpalli poolaeg",
@@ -12051,7 +12051,7 @@
     "options": [
       "Lauatennise pallivahetus",
       "Korvpalli veerandaeg",
-      "Kriketi T20 mang",
+      "Kriketi t20 mang",
       "Pesapallimang",
       "Boxing round",
       "Tennise sett",
@@ -12161,7 +12161,7 @@
       "Tennise sett",
       "Jalgpalli poolaeg",
       "Testkriketi mangupaev",
-      "Kriketi T20 mang",
+      "Kriketi t20 mang",
       "Ragbi poolaeg",
       "Lauatennise pallivahetus",
       "Boxing round",
@@ -12271,7 +12271,7 @@
       "Boxing round",
       "Tennise sett",
       "Jalgpalli poolaeg",
-      "Kriketi T20 mang",
+      "Kriketi t20 mang",
       "Pesapallimang",
       "Korvpalli veerandaeg",
       "Testkriketi mangupaev"
@@ -26542,7 +26542,7 @@
     "options": [
       "Ragbis kasutatakse ovaalset palli.",
       "Hat trick tahendab viit varavat.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Tennis on ainult siseala.",
       "Ragbis kasutatakse lauatennisepalli.",
       "Tour de France on ujumisvoistlus.",
@@ -26570,7 +26570,7 @@
     "options": [
       "Vabavise kuulub pesapalli.",
       "Ragbis kasutatakse lauatennisepalli.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Tour de France on ujumisvoistlus.",
       "Wimbledon on tenniseturniir.",
       "Hat trick tahendab kolme varavat.",
@@ -26597,7 +26597,7 @@
     "language": "et",
     "question": "Sport: Vali koik toesed vaited. Teemavihe: kaart 003.",
     "options": [
-      "Olumpiamangud toimuvad iga nelja aasta...",
+      "Olümpiamängud toimuvad iga nelja aasta...",
       "Vabavise kuulub pesapalli.",
       "Ragbis kasutatakse lauatennisepalli.",
       "Korvpallis pole korvi.",
@@ -26636,7 +26636,7 @@
       "Ragbis kasutatakse lauatennisepalli.",
       "Stanley karikas on jaahokile.",
       "Korvpallis pole korvi.",
-      "Olumpiamangud toimuvad iga nelja aasta..."
+      "Olümpiamängud toimuvad iga nelja aasta..."
     ],
     "correct": {
       "correctIndexes": [
@@ -26722,7 +26722,7 @@
       "Korvpallis kasutatakse korvi.",
       "Tour de France on ujumisvoistlus.",
       "Vabavise kuulub korvpalli.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Suluseis on tennise reegel.",
       "Ragbis kasutatakse lauatennisepalli."
     ],
@@ -26748,7 +26748,7 @@
       "Hat trick tahendab kolme varavat.",
       "Kriketis ei kasutata kurikat.",
       "Tennis on ainult siseala.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Tennist saab mangida savivaljakul.",
       "Kriketis kasutatakse wickets'eid.",
       "Suluseis on jalgpalli reegel.",
@@ -26776,7 +26776,7 @@
     "language": "et",
     "question": "Sport: Vali koik toesed vaited. Teemavihe: kaart 009.",
     "options": [
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Suluseis on tennise reegel.",
       "Kriketis kasutatakse wickets'eid.",
       "Tennis on ainult siseala.",
@@ -26812,8 +26812,8 @@
       "Vabavise kuulub korvpalli.",
       "Wimbledon on golfi suurturniir.",
       "Vabavise kuulub pesapalli.",
-      "Olumpiamangud toimuvad igal aastal.",
-      "Olumpiamangud toimuvad iga nelja aasta..."
+      "Olümpiamängud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad iga nelja aasta..."
     ],
     "correct": {
       "correctIndexes": [
@@ -26840,7 +26840,7 @@
       "Maratoni pikkus on 12 km.",
       "Tour de France on rattasoidu voistlus.",
       "Wimbledon on golfi suurturniir.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Vabavise kuulub korvpalli.",
       "Stanley karikas on korvpallile."
     ],
@@ -26899,7 +26899,7 @@
       "Hat trick tahendab viit varavat.",
       "Ragbis kasutatakse ovaalset palli.",
       "Suluseis on jalgpalli reegel.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Tennis on ainult siseala.",
       "Kriketis ei kasutata kurikat.",
       "Suluseis on tennise reegel.",
@@ -26927,7 +26927,7 @@
       "Vabavise kuulub pesapalli.",
       "Hat trick tahendab viit varavat.",
       "Wimbledon on tenniseturniir.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Kriketis ei kasutata kurikat.",
       "Maratoni pikkus on 12 km.",
       "Maratoni pikkus on 42,195 km.",
@@ -26959,7 +26959,7 @@
       "Suluseis on tennise reegel.",
       "Tour de France on rattasoidu voistlus.",
       "Kriketis ei kasutata kurikat.",
-      "Olumpiamangud toimuvad iga nelja aasta...",
+      "Olümpiamängud toimuvad iga nelja aasta...",
       "Korvpallis pole korvi."
     ],
     "correct": {
@@ -26986,7 +26986,7 @@
       "Tennist saab mangida savivaljakul.",
       "Vabavise kuulub korvpalli.",
       "Maratoni pikkus on 42,195 km.",
-      "Olumpiamangud toimuvad iga nelja aasta...",
+      "Olümpiamängud toimuvad iga nelja aasta...",
       "Tennis on ainult siseala.",
       "Vabavise kuulub pesapalli.",
       "Korvpallis kasutatakse korvi.",
@@ -27021,7 +27021,7 @@
       "Korvpallis pole korvi.",
       "Maratoni pikkus on 12 km.",
       "Kriketis ei kasutata kurikat.",
-      "Olumpiamangud toimuvad iga nelja aasta..."
+      "Olümpiamängud toimuvad iga nelja aasta..."
     ],
     "correct": {
       "correctIndexes": [
@@ -27077,8 +27077,8 @@
       "Tour de France on rattasoidu voistlus.",
       "Maratoni pikkus on 12 km.",
       "Tour de France on ujumisvoistlus.",
-      "Olumpiamangud toimuvad iga nelja aasta...",
-      "Olumpiamangud toimuvad igal aastal."
+      "Olümpiamängud toimuvad iga nelja aasta...",
+      "Olümpiamängud toimuvad igal aastal."
     ],
     "correct": {
       "correctIndexes": [
@@ -27099,7 +27099,7 @@
     "language": "et",
     "question": "Sport: Millised vaited on oiged? Teemavihe: kaart 020.",
     "options": [
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Wimbledon on tenniseturniir.",
       "Stanley karikas on jaahokile.",
       "Tour de France on rattasoidu voistlus.",
@@ -27132,11 +27132,11 @@
     "options": [
       "Hat trick tahendab viit varavat.",
       "Hat trick tahendab kolme varavat.",
-      "Olumpiamangud toimuvad iga nelja aasta...",
+      "Olümpiamängud toimuvad iga nelja aasta...",
       "Stanley karikas on korvpallile.",
       "Kriketis ei kasutata kurikat.",
       "Vabavise kuulub pesapalli.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Wimbledon on golfi suurturniir.",
       "Suluseis on tennise reegel.",
       "Maratoni pikkus on 12 km."
@@ -27164,7 +27164,7 @@
       "Vabavise kuulub pesapalli.",
       "Kriketis ei kasutata kurikat.",
       "Kriketis kasutatakse wickets'eid.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Maratoni pikkus on 42,195 km.",
       "Tennis on ainult siseala.",
       "Stanley karikas on korvpallile."
@@ -27220,10 +27220,10 @@
       "Kriketis kasutatakse wickets'eid.",
       "Maratoni pikkus on 42,195 km.",
       "Tour de France on ujumisvoistlus.",
-      "Olumpiamangud toimuvad iga nelja aasta...",
+      "Olümpiamängud toimuvad iga nelja aasta...",
       "Wimbledon on golfi suurturniir.",
       "Vabavise kuulub korvpalli.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Stanley karikas on jaahokile.",
       "Tennis on ainult siseala.",
       "Suluseis on tennise reegel."
@@ -27251,7 +27251,7 @@
       "Kriketis ei kasutata kurikat.",
       "Ragbis kasutatakse lauatennisepalli.",
       "Wimbledon on golfi suurturniir.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Vabavise kuulub pesapalli.",
       "Stanley karikas on korvpallile.",
       "Stanley karikas on jaahokile.",
@@ -27310,7 +27310,7 @@
       "Korvpallis pole korvi.",
       "Wimbledon on golfi suurturniir.",
       "Ragbis kasutatakse ovaalset palli.",
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Ragbis kasutatakse lauatennisepalli.",
       "Tour de France on ujumisvoistlus.",
       "Vabavise kuulub pesapalli.",
@@ -27343,7 +27343,7 @@
       "Tennist saab mangida savivaljakul.",
       "Stanley karikas on korvpallile.",
       "Maratoni pikkus on 42,195 km.",
-      "Olumpiamangud toimuvad iga nelja aasta...",
+      "Olümpiamängud toimuvad iga nelja aasta...",
       "Wimbledon on golfi suurturniir."
     ],
     "correct": {
@@ -27394,7 +27394,7 @@
     "language": "et",
     "question": "Sport: Vali koik kehtivad vaited. Teemavihe: kaart 030.",
     "options": [
-      "Olumpiamangud toimuvad igal aastal.",
+      "Olümpiamängud toimuvad igal aastal.",
       "Tennist saab mangida savivaljakul.",
       "Vabavise kuulub pesapalli.",
       "Korvpallis pole korvi.",
