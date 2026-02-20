@@ -41,8 +41,8 @@ public class CardService {
         return questionPoolService.nextCard(topic, difficulty, language, sessionId);
     }
 
-    public CardResponse getNextRandomCard(String language, String gameId, String topic) {
+    public CardDeckResponse getNextRandomCard(String language, String gameId, String topic) {
         Card card = nextRandomCardService.nextRandom(language, gameId, topic);
-        return CardResponse.fromEntity(card);
+        return CardDeckResponseMapper.toDeckResponse(CardResponse.fromEntity(card));
     }
 }
