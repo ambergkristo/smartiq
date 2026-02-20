@@ -26,6 +26,8 @@ This document defines the technical baseline for Estonian (`et`) locale support 
   - `node tools/validate_locale_packs.js data/smart10`
 - ET localization residue validator:
   - `node tools/validate_et_localization.js data/smart10/cards.et.json`
+- ET glossary consistency validator:
+  - `node tools/validate_et_glossary.js data/smart10/cards.et.json`
 
 Locale-pack validator rules:
 
@@ -40,7 +42,8 @@ Backend CI runs:
 1. strict EN validation,
 2. strict ET validation (via locale pack gate),
 3. ET localization residue gate (forbidden EN scaffolding fragments),
-4. quality score gates for EN and ET.
+4. ET glossary consistency gate (forbidden legacy ET variants),
+5. quality score gates for EN and ET.
 
 ## ET Quality Checklist (Next Milestone)
 
@@ -49,6 +52,7 @@ Backend CI runs:
    - `python tools/localize_et_dataset.py`
    - `node tools/validate_cards_v2.js data/smart10/cards.et.json --max-warnings=0`
    - `node tools/validate_et_localization.js data/smart10/cards.et.json`
+   - `node tools/validate_et_glossary.js data/smart10/cards.et.json`
    - `node tools/validate_locale_packs.js data/smart10`
 3. Validate runtime manually:
    - `curl \"http://localhost:8081/api/cards/nextRandom?language=et&gameId=smoke-et\"`
