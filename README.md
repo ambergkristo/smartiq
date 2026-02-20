@@ -107,7 +107,8 @@ $env:VITE_API_BASE_URL="https://<your-backend-domain>"
 ## API Endpoints
 
 - `GET /api/topics`
-- `GET /api/cards/next?topic=&difficulty=&sessionId=&lang=` (preferred)
+- `GET /api/cards/nextRandom?language=&gameId=&topic=` (preferred)
+- `GET /api/cards/next?topic=&difficulty=&sessionId=&lang=` (legacy/custom mode)
 - `GET /api/cards/random?topic=` (legacy/backward-compatible)
 
 ## Game Flow v1
