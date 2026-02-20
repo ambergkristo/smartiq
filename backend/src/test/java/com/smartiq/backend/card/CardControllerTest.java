@@ -139,6 +139,20 @@ class CardControllerTest {
         brokenV2.setSource("test");
         brokenV2.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
         cardRepository.save(brokenV2);
+
+        Card legacyFactory = new Card();
+        legacyFactory.setId("legacy-factory-1");
+        legacyFactory.setTopic("LegacyOnly");
+        legacyFactory.setSubtopic("OPEN");
+        legacyFactory.setCategory("OPEN");
+        legacyFactory.setLanguage("en");
+        legacyFactory.setQuestion("Legacy factory card should be filtered");
+        legacyFactory.setOptions(List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"));
+        legacyFactory.setCorrectIndex(0);
+        legacyFactory.setDifficulty("2");
+        legacyFactory.setSource("smartiq-factory");
+        legacyFactory.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
+        cardRepository.save(legacyFactory);
     }
 
     @Test
@@ -188,6 +202,16 @@ class CardControllerTest {
         mockMvc.perform(get("/api/cards/nextRandom")
                         .param("language", "en"))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void returnsNotFoundWhenOnlyDeprecatedSourcesMatchNextRandomPool() throws Exception {
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .param("language", "en")
+                        .param("gameId", "game-legacy")
+                        .param("topic", "LegacyOnly"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.error").value("No cards available for language=en, topic=LegacyOnly"));
     }
 
     @Test
