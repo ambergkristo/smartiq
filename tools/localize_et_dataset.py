@@ -299,6 +299,25 @@ def localize_question(question: str) -> str:
     return text
 
 
+def anchor_id_from_card_id(card_id: str) -> str:
+    match = re.search(r"-(\d{3})(?:-et)?$", str(card_id))
+    if not match:
+        return "000"
+    return match.group(1)
+
+
+def localize_anchor_slots(question: str, card_id: str) -> str:
+    anchor_no = anchor_id_from_card_id(card_id)
+    text = str(question)
+    for marker in ("Fookus:", "Kontekst:", "Teema:", "Teemavihe:"):
+        text = re.sub(
+            rf"{re.escape(marker)}\s*[^.]+(\.)",
+            f"{marker} kaart {anchor_no}\\1",
+            text,
+        )
+    return text
+
+
 def localize_century_decade_option(value: str) -> str:
     text = str(value)
     match = re.fullmatch(r"(\d+)(st|nd|rd|th) century", text)
@@ -314,6 +333,98 @@ def clamp_option(value: str, limit: int = 42) -> str:
     return text[: limit - 3].rstrip() + "..."
 
 
+ORDER_OPTION_PHRASE_MAP = {
+    "Basketball quarter": "Korvpalli veerandaeg",
+    "Football half": "Jalgpalli poolaeg",
+    "Tennis set": "Tennise sett",
+    "Baseball inning": "Pesapalli voor",
+    "Rugby half": "Ragbi poolaeg",
+    "Volleyball set": "Vorkpalli sett",
+    "Handball half": "Kasipalli poolaeg",
+    "Hockey period": "Hoki periood",
+    "Cricket T20 match": "Kriketi T20 matsh",
+    "Test cricket day": "Testkriketi paev",
+    "1 cent": "1 sent",
+    "10 cents": "10 senti",
+    "50 cents": "50 senti",
+    "Half marathon": "Poolmaraton",
+    "World cup": "MM",
+    "World war i": "Esimene maailmasoda",
+    "World war ii": "Teine maailmasoda",
+    "World soda i": "Esimene maailmasoda",
+    "World soda ii": "Teine maailmasoda",
+    "Wwi begins": "Esimene maailmasoda algab",
+    "Wwii begins": "Teine maailmasoda algab",
+    "Wwii ends": "Teine maailmasoda lopp",
+    "Cold war": "Kulm soda",
+    "Cold soda": "Kulm soda",
+    "Berlin wall falls": "Berliini muur langeb",
+    "Ussr dissolves": "NSVL laguneb",
+    "Apollo 11 landing": "Apollo 11 maandumine",
+    "Magna carta signed": "Magna Carta allkirjastatud",
+    "Battle of waterloo": "Waterloo lahing",
+    "Columbus reaches americas": "Columbus jouab Ameerikasse",
+    "French revolution starts": "Prantsuse revolutsioon algab",
+    "Poolaeg marathon": "Poolmaraton",
+    "Industrial revolution": "Toostusrevolutsioon",
+    "Middle ages": "Keskaeg",
+    "Classical antiquity": "Klassikaline antiik",
+    "Renaissance literature": "Renessansi kirjandus",
+    "Enlightenment writing": "Valgustusajastu kirjandus",
+    "Contemporary fiction": "Nuudiskirjandus",
+    "Epic poetry age": "Eepika ajastu",
+    "Classical art": "Klassikaline kunst",
+    "Medieval art": "Keskaegne kunst",
+    "Baroque": "Barokk",
+    "Impressionism": "Impressionism",
+    "Cubism": "Kubism",
+    "Surrealism": "Surrealism",
+    "Pop art": "Popkunst",
+}
+
+ORDER_WORD_MAP = {
+    "quarter": "veerandaeg",
+    "half": "poolaeg",
+    "set": "sett",
+    "inning": "voor",
+    "period": "periood",
+    "match": "matsh",
+    "day": "paev",
+    "age": "ajastu",
+    "era": "ajastu",
+    "dynasty": "dunastia",
+    "run": "jooks",
+    "race": "voistlus",
+    "dollar": "dollar",
+    "cents": "senti",
+    "cent": "sent",
+    "byte": "bait",
+    "kilobyte": "kilobait",
+    "megabyte": "megabait",
+    "gigabyte": "gigabait",
+    "terabyte": "terabait",
+    "petabyte": "petabait",
+    "exabyte": "eksabait",
+    "zettabyte": "zettabait",
+}
+
+ORDER_OPTION_PHRASE_MAP_LOWER = {k.lower(): v for k, v in ORDER_OPTION_PHRASE_MAP.items()}
+
+
+def localize_order_option(value: str) -> str:
+    text = str(value).strip()
+    if text in ORDER_OPTION_PHRASE_MAP:
+        return ORDER_OPTION_PHRASE_MAP[text]
+    lowered = text.lower()
+    if lowered in ORDER_OPTION_PHRASE_MAP_LOWER:
+        return ORDER_OPTION_PHRASE_MAP_LOWER[lowered]
+    for source, target in ORDER_WORD_MAP.items():
+        lowered = re.sub(rf"\b{re.escape(source)}\b", target, lowered)
+    if lowered in ORDER_OPTION_PHRASE_MAP_LOWER:
+        return ORDER_OPTION_PHRASE_MAP_LOWER[lowered]
+    return lowered[:1].upper() + lowered[1:] if lowered else lowered
+
+
 def main() -> None:
     raw = INPUT_PATH.read_text(encoding="utf-8")
     cards = json.loads(raw)
@@ -321,7 +432,10 @@ def main() -> None:
         raise SystemExit("cards.et.json must be a JSON array")
 
     for card in cards:
-        card["question"] = localize_question(card.get("question", ""))
+        card["question"] = localize_anchor_slots(
+            localize_question(card.get("question", "")),
+            str(card.get("cardId") or card.get("id") or ""),
+        )
         category = str(card.get("category", "")).upper()
         options = card.get("options", [])
         if not isinstance(options, list):
@@ -333,6 +447,8 @@ def main() -> None:
             card["options"] = [clamp_option(localize_century_decade_option(str(option))) for option in options]
         elif category in {"TRUE_FALSE", "OPEN"}:
             card["options"] = [clamp_option(STATEMENT_MAP.get(str(option), str(option))) for option in options]
+        elif category == "ORDER":
+            card["options"] = [clamp_option(localize_order_option(str(option))) for option in options]
 
     INPUT_PATH.write_text(json.dumps(cards, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Localized {len(cards)} ET cards in {INPUT_PATH}")
