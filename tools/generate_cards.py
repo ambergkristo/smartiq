@@ -81,6 +81,66 @@ COLOR_CLUES = [
     ("silver coin", "Silver")
 ]
 
+QUESTION_TEMPLATES = {
+    "TRUE_FALSE": [
+        "{topic}: Mark statements that are true for this topic.",
+        "{topic}: Which claims are accurate?",
+        "{topic}: Find the statements that fit.",
+        "{topic}: Select all true statements.",
+        "{topic}: Which lines are correct?",
+        "{topic}: Identify valid statements."
+    ],
+    "NUMBER": [
+        "{topic}: How many letters are in '{term}'?",
+        "{topic}: Count the letters in '{term}'.",
+        "{topic}: Letter count for '{term}'?",
+        "{topic}: How many characters (letters only) in '{term}'?",
+        "{topic}: What's the letter total in '{term}'?",
+        "{topic}: Choose the letter count of '{term}'."
+    ],
+    "ORDER": [
+        "{topic}: Sort these from A to Z.",
+        "{topic}: Put these entries in alphabetical order.",
+        "{topic}: Rank items alphabetically (A to Z).",
+        "{topic}: Arrange all options by alphabet.",
+        "{topic}: Order the list lexicographically.",
+        "{topic}: Build an A-Z order for these options."
+    ],
+    "CENTURY_DECADE": [
+        "{topic}: Which decade includes {year}?",
+        "{topic}: Pick the decade for {year}.",
+        "{topic}: {year} falls in which decade?",
+        "{topic}: In which century is {year}?",
+        "{topic}: Choose the century that contains {year}.",
+        "{topic}: {year} falls in which century?"
+    ],
+    "COLOR": [
+        "{topic}: Which color matches '{clue}'?",
+        "{topic}: Pick the color best matching '{clue}'.",
+        "{topic}: Select the color for '{clue}'.",
+        "{topic}: '{clue}' is closest to which color?",
+        "{topic}: Which option names the right color for '{clue}'?",
+        "{topic}: Choose the color cue: '{clue}'."
+    ],
+    "OPEN": [
+        "{topic}: Select options that match this topic.",
+        "{topic}: Which entries belong in this topic set?",
+        "{topic}: Pick all options that fit the topic.",
+        "{topic}: Identify items relevant to this topic.",
+        "{topic}: Select every option linked to this topic.",
+        "{topic}: Which options are topic-consistent?"
+    ]
+}
+
+STATEMENT_HINT = {
+    "History": "is a historical era, event, or figure.",
+    "Sports": "is mainly a sport, move, or tournament.",
+    "Geography": "is a place, landform, or geographic feature.",
+    "Culture": "is a cultural work, creator, or art movement.",
+    "Science": "is a scientific concept, entity, or law.",
+    "Varia": "is an everyday object, place, or activity."
+}
+
 YEAR_BASE = {
     "History": 1066,
     "Sports": 1896,
@@ -119,13 +179,14 @@ def build_true_false(topic: str, card_idx: int) -> dict:
     true_terms = local_terms[:true_count]
     false_terms = topic_distractors(topic, rnd, 10 - true_count)
 
-    options = [f"{term} belongs to {topic}." for term in true_terms]
-    options.extend(f"{term} belongs to {topic}." for term in false_terms)
+    hint = STATEMENT_HINT[topic]
+    options = [f"{term} {hint}" for term in true_terms]
+    options.extend(f"{term} {hint}" for term in false_terms)
     rnd.shuffle(options)
 
-    correct_indexes = [index for index, statement in enumerate(options) if statement.split(" belongs to ")[0] in true_terms]
+    correct_indexes = [index for index, statement in enumerate(options) if statement.replace(hint, "").strip() in true_terms]
     return {
-        "question": f"{topic}: Which statements are true?",
+        "question": QUESTION_TEMPLATES["TRUE_FALSE"][card_idx % len(QUESTION_TEMPLATES["TRUE_FALSE"])].format(topic=topic),
         "options": [clamp_option(x) for x in options],
         "correct": {"correctIndexes": sorted(correct_indexes)},
     }
@@ -153,7 +214,7 @@ def build_number(topic: str, card_idx: int) -> dict:
     rnd.shuffle(options)
     correct_index = options.index(answer)
     return {
-        "question": f"{topic}: How many letters are in '{term}'?",
+        "question": QUESTION_TEMPLATES["NUMBER"][card_idx % len(QUESTION_TEMPLATES["NUMBER"])].format(topic=topic, term=term),
         "options": [str(value) for value in options],
         "correct": {"correctIndex": correct_index, "answerType": "number"},
     }
@@ -172,7 +233,7 @@ def build_order(topic: str, card_idx: int) -> dict:
         rank_by_index[idx] = rank
 
     return {
-        "question": f"{topic}: Rank these A-Z.",
+        "question": QUESTION_TEMPLATES["ORDER"][card_idx % len(QUESTION_TEMPLATES["ORDER"])].format(topic=topic),
         "options": options,
         "correct": {"rankByIndex": rank_by_index},
     }
@@ -185,7 +246,7 @@ def build_century_decade(topic: str, card_idx: int) -> dict:
         decade = (year // 10) * 10
         correct_label = f"{decade}s"
         option_pool = [f"{decade + delta}s" for delta in (-40, -30, -20, -10, 0, 10, 20, 30, 40, 50)]
-        question = f"{topic}: Which decade includes {year}?"
+        question = QUESTION_TEMPLATES["CENTURY_DECADE"][card_idx % 3].format(topic=topic, year=year)
     else:
         century = ((year - 1) // 100) + 1
         suffix = "th"
@@ -207,7 +268,7 @@ def build_century_decade(topic: str, card_idx: int) -> dict:
             elif c % 10 == 3 and c % 100 != 13:
                 s = "rd"
             option_pool.append(f"{c}{s} century")
-        question = f"{topic}: In which century is {year}?"
+        question = QUESTION_TEMPLATES["CENTURY_DECADE"][3 + (card_idx % 3)].format(topic=topic, year=year)
 
     options = list(dict.fromkeys(option_pool))
     if correct_label not in options:
@@ -241,7 +302,7 @@ def build_color(topic: str, card_idx: int) -> dict:
     rnd.shuffle(options)
 
     return {
-        "question": f"{topic}: Which color matches '{clue}'?",
+        "question": QUESTION_TEMPLATES["COLOR"][card_idx % len(QUESTION_TEMPLATES["COLOR"])].format(topic=topic, clue=clue),
         "options": options,
         "correct": {"correctIndex": options.index(answer)},
     }
@@ -260,7 +321,7 @@ def build_open(topic: str, card_idx: int) -> dict:
     correct_indexes = [idx for idx, item in enumerate(options) if item in correct_items]
 
     return {
-        "question": f"{topic}: Which options belong to this topic?",
+        "question": QUESTION_TEMPLATES["OPEN"][card_idx % len(QUESTION_TEMPLATES["OPEN"])].format(topic=topic),
         "options": options,
         "correct": {"correctIndexes": sorted(correct_indexes)},
     }

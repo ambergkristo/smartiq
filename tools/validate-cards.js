@@ -5,6 +5,8 @@ const path = require('path');
 const TOPICS = ['History', 'Sports', 'Geography', 'Culture', 'Science', 'Varia'];
 const CATEGORIES = ['TRUE_FALSE', 'NUMBER', 'ORDER', 'CENTURY_DECADE', 'COLOR', 'OPEN'];
 const MAX_OPTION_LEN = 42;
+const MIN_UNIQUE_QUESTIONS_PER_PAIR = 4;
+const BANNED_TEMPLATE_PHRASE = /belongs to/i;
 
 function normalizeText(value) {
   return String(value || '').normalize('NFKC').trim().replace(/\s+/g, ' ');
@@ -85,6 +87,7 @@ function main() {
   const signatures = new Set();
   const looseSignatures = new Set();
   const byPair = new Map();
+  const questionVarietyByPair = new Map();
   const tfCounts = [];
   const sourceCounts = new Map();
 
@@ -124,10 +127,16 @@ function main() {
       if (opts.some((o) => /reference table|assigned index/i.test(o))) {
         errors.push(`${context} contains banned nonsense phrase in options`);
       }
+      if (opts.some((o) => BANNED_TEMPLATE_PHRASE.test(o))) {
+        errors.push(`${context} contains banned templated phrase in options`);
+      }
     }
 
     if (/reference table|assigned index|smartiq-factory/i.test(normalizeText(card.question))) {
       errors.push(`${context} contains banned nonsense phrase in question`);
+    }
+    if (BANNED_TEMPLATE_PHRASE.test(normalizeText(card.question))) {
+      errors.push(`${context} contains banned templated phrase in question`);
     }
 
     validateCorrect(card, errors, context);
@@ -138,6 +147,9 @@ function main() {
 
     const pairKey = `${card.category}|${card.topic}`;
     byPair.set(pairKey, (byPair.get(pairKey) || 0) + 1);
+    const questionSet = questionVarietyByPair.get(pairKey) || new Set();
+    questionSet.add(normalizeLoose(card.question));
+    questionVarietyByPair.set(pairKey, questionSet);
 
     const signature = `${normalizeText(card.topic).toLowerCase()}|${normalizeText(card.category)}|${normalizeText(card.question).toLowerCase()}|${(card.options || []).map((o) => normalizeText(o).toLowerCase()).join('|')}`;
     if (signatures.has(signature)) {
@@ -164,6 +176,12 @@ function main() {
       const count = byPair.get(pairKey) || 0;
       if (count < 30) {
         errors.push(`distribution check failed for ${pairKey}: expected >=30, got ${count}`);
+      }
+      const uniqueQuestions = (questionVarietyByPair.get(pairKey) || new Set()).size;
+      if (count > 0 && uniqueQuestions < MIN_UNIQUE_QUESTIONS_PER_PAIR) {
+        errors.push(
+          `question variety check failed for ${pairKey}: expected >=${MIN_UNIQUE_QUESTIONS_PER_PAIR}, got ${uniqueQuestions}`
+        );
       }
     }
   }
