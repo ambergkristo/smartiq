@@ -8,7 +8,8 @@ export default function PlayersPanel({
   currentPlayer,
   targetScore,
   eliminatedPlayers,
-  passedPlayers
+  passedPlayers,
+  starterPlayer
 }) {
   return (
     <aside className="players-panel board-surface">
@@ -19,6 +20,9 @@ export default function PlayersPanel({
       </div>
       <p className="round-line">
         <strong>Turn:</strong> {currentPlayer}
+      </p>
+      <p className="round-line">
+        <strong>Starter:</strong> {starterPlayer}
       </p>
       <p className="round-line">
         <strong>Phase:</strong> {phaseLabel}

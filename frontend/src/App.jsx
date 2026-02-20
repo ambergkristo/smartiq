@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { API_BASE, fetchNextRandomCard, fetchTopics, resolveCardErrorMessage, resolveTopicsErrorState } from './api';
 import GameBoard from './components/GameBoard';
 import RoundSummary from './components/RoundSummary';
-import { expectedCorrectIndexes } from './state/scoring';
 import { useGameEngine } from './state/useGameEngine';
 import { DEFAULT_LANGS, GamePhase } from './state/types';
 
@@ -178,7 +177,7 @@ function StartScreen({ topics, config, setConfig, onStart }) {
         {players.map((player) => (
           <button key={player} className="player-token" type="button" onClick={() => removePlayer(player)}>
             <span>{player}</span>
-            <span aria-hidden>×</span>
+            <span aria-hidden>x</span>
           </button>
         ))}
       </div>
@@ -396,9 +395,11 @@ export default function App() {
             <GameBoard
               card={engine.card}
               selectedIndexes={engine.selectedIndexes}
+              selectedRank={engine.selectedRank}
               revealedIndexes={engine.revealedIndexes}
               wrongIndexes={engine.wrongIndexes}
               toggleIndex={engine.toggleOption}
+              onRankSelect={engine.chooseRank}
               phase={engine.phase}
               onAnswer={engine.requestConfirm}
               onConfirm={engine.confirmAnswer}
@@ -415,7 +416,7 @@ export default function App() {
               targetScore={engine.targetScore}
               eliminatedPlayers={engine.eliminatedPlayers}
               passedPlayers={engine.passedPlayers}
-              correctIndexes={expectedCorrectIndexes(engine.card)}
+              starterPlayer={engine.players[engine.starterIndex] ?? engine.currentPlayer}
             />
           ) : null}
         </>
@@ -436,3 +437,4 @@ export default function App() {
     </main>
   );
 }
+

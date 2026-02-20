@@ -5,6 +5,8 @@ function makeProps() {
   return {
     card: {
       id: 'c1',
+      cardId: 'c1',
+      category: 'OPEN',
       topic: 'Math',
       difficulty: '2',
       language: 'en',
@@ -12,9 +14,11 @@ function makeProps() {
       options: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     },
     selectedIndexes: new Set(),
+    selectedRank: null,
     revealedIndexes: new Set(),
     wrongIndexes: new Set(),
     toggleIndex: vi.fn(),
+    onRankSelect: vi.fn(),
     phase: 'CHOOSING',
     onAnswer: vi.fn(),
     onConfirm: vi.fn(),
@@ -31,7 +35,7 @@ function makeProps() {
     targetScore: 30,
     eliminatedPlayers: new Set(),
     passedPlayers: new Set(),
-    correctIndexes: new Set([0])
+    starterPlayer: 'Player 1'
   };
 }
 
@@ -45,7 +49,7 @@ describe('GameBoard layout', () => {
     const wheel = screen.getByTestId('wheel-board');
     expect(wheel).toBeInTheDocument();
     expect(within(wheel).getAllByRole('button')).toHaveLength(10);
-    expect(screen.getByTestId('action-hint')).toHaveTextContent(/choose one answer/i);
+    expect(screen.getByTestId('action-hint')).toHaveTextContent(/reveal one peg/i);
   });
 
   test('falls back to grid on narrow container', () => {

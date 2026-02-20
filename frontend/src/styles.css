@@ -424,6 +424,27 @@ button:disabled {
   font-size: 0.92rem;
 }
 
+.rank-selector {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.rank-chip {
+  padding: 6px 0;
+  border-radius: 10px;
+  background: rgba(255, 240, 224, 0.08);
+  color: var(--text);
+  border: 1px solid var(--stroke);
+  font-size: 0.8rem;
+}
+
+.rank-chip.selected {
+  background: rgba(249, 172, 69, 0.24);
+  border-color: var(--accent2);
+}
+
 .question-text {
   margin-top: 8px;
 }
@@ -544,6 +565,11 @@ button:disabled {
 .answer-tile.is-selected {
   border-color: var(--accent2);
   background: rgba(249, 172, 69, 0.24);
+}
+
+.answer-tile.is-hidden .slot-text {
+  color: rgba(255, 225, 189, 0.7);
+  font-style: italic;
 }
 
 .answer-tile.is-correct {
@@ -706,6 +732,10 @@ button:disabled {
   .tile-grid,
   .action-bar {
     grid-template-columns: 1fr;
+  }
+
+  .rank-selector {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .summary-head,

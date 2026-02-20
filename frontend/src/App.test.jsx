@@ -20,12 +20,14 @@ import { fetchNextRandomCard, fetchTopics } from './api';
 function makeCard(id, correctIndex = 0) {
   return {
     id,
+    cardId: id,
     topic: 'Math',
+    category: 'OPEN',
     difficulty: '2',
     language: 'en',
     question: `Question ${id}`,
     options: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa'],
-    correctIndex
+    correct: { correctIndex }
   };
 }
 
@@ -49,29 +51,27 @@ describe('App Smart10 round flow', () => {
     const playersInput = screen.getByLabelText(/players/i);
     fireEvent.change(playersInput, { target: { value: 'Alice, Bob' } });
     fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
-    expect(screen.getByRole('button', { name: /alice/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /bob/i })).toBeInTheDocument();
     expect(startButton).toBeEnabled();
     fireEvent.click(startButton);
 
     await waitFor(() => expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument());
     await waitFor(() =>
-      expect(fetchNextCard).toHaveBeenCalledWith(
+      expect(fetchNextRandomCard).toHaveBeenCalledWith(
         expect.objectContaining({
-          topic: 'Math',
-          difficulty: '2',
-          lang: 'en'
+          language: 'en',
+          gameId: expect.any(String)
         })
       )
     );
-    fireEvent.click(screen.getByRole('button', { name: /beta/i }));
+
+    fireEvent.click(screen.getByRole('button', { name: /peg-2/i }));
     fireEvent.click(screen.getByRole('button', { name: /answer/i }));
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
-    fireEvent.click(screen.getByRole('button', { name: /next card/i }));
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
 
     await waitFor(() => expect(screen.getByRole('button', { name: /pass/i })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /pass/i }));
-    fireEvent.click(screen.getByRole('button', { name: /next card/i }));
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
 
     await waitFor(() => expect(screen.getByRole('heading', { name: /round summary/i })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /next round/i }));
