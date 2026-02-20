@@ -30,7 +30,7 @@ jobs:
         run: node ../tools/validate_cards_v2.js ../data/smart10/cards.en.json
 
       - name: Score Smart10 dataset quality (threshold gate)
-        run: node ../tools/score_cards_quality.js ../data/smart10/cards.en.json --fail-threshold=0.60
+        run: node ../tools/score_cards_quality.js ../data/smart10/cards.en.json --fail-threshold=0.70
 
       - name: Maven test
         run: mvn -q test
