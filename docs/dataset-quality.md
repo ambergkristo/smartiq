@@ -53,6 +53,7 @@ Warning overrun above configured limit (`--max-warnings`) also exits non-zero.
 Quality scoring script:
 
 - `node tools/score_cards_quality.js data/smart10/cards.en.json`
+- `node tools/score_cards_quality.js data/smart10/cards.et.json`
 
 This script is a warning gate (non-blocking by default) that reports:
 
@@ -63,10 +64,11 @@ This script is a warning gate (non-blocking by default) that reports:
 Use strict mode locally when needed:
 
 - `node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.80`
+- `node tools/score_cards_quality.js data/smart10/cards.et.json --fail-threshold=0.80`
 
 CI threshold gate:
 
-- Backend CI enforces `--fail-threshold=0.80` as a baseline regression guard.
+- Backend CI enforces `--fail-threshold=0.80` for both EN and ET locale packs.
 - Raise this threshold gradually as dataset diversity improves.
 
 ## Runtime Source Guard

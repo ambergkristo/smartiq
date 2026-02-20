@@ -35,7 +35,7 @@ Backend CI runs:
 
 1. strict EN validation,
 2. strict ET validation (via locale pack gate),
-3. quality score gate.
+3. quality score gates for EN and ET.
 
 ## ET Quality Checklist (Next Milestone)
 
