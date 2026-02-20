@@ -40,7 +40,7 @@ Importer supports two JSON layouts:
 Run schema + duplicate checks:
 
 ```bash
-node tools/validate-cards.js data/clean
+node tools/validate_cards_v2.js data/smart10/cards.en.json
 ```
 
 ## Monthly Refresh Pipeline (Local Simulation)
@@ -88,5 +88,5 @@ npm run test:golden
 Sanity check malformed raw sample (expected to fail):
 
 ```bash
-node tools/validate-cards.js data/raw
+node tools/validate_cards_v2.js data/smart10/cards.en.json
 ```

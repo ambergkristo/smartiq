@@ -2,7 +2,7 @@
 set -euo pipefail
 
 echo "[1/4] Validate card data"
-node tools/validate-cards.js data/clean
+node tools/validate_cards_v2.js data/smart10/cards.en.json
 
 echo "[2/4] Run backend tests"
 (cd backend && mvn -q test)

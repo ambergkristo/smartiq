@@ -50,7 +50,7 @@ class CardControllerTest {
         science.setOptions(List.of("Mars", "Earth", "Venus", "Jupiter", "Saturn", "Uranus", "Neptune", "Mercury", "Pluto", "Moon"));
         science.setCorrectIndex(0);
         science.setDifficulty("2");
-        science.setSource("test");
+        science.setSource("smartiq-v2");
         science.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
         cardRepository.save(science);
 
@@ -64,7 +64,7 @@ class CardControllerTest {
         math.setOptions(List.of("4", "3", "5", "6", "7", "8", "9", "10", "11", "12"));
         math.setCorrectIndex(0);
         math.setDifficulty("2");
-        math.setSource("test");
+        math.setSource("smartiq-v2");
         math.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
         cardRepository.save(math);
 
@@ -78,7 +78,7 @@ class CardControllerTest {
         math2.setOptions(List.of("6", "5", "4", "7", "8", "9", "10", "11", "12", "13"));
         math2.setCorrectIndex(0);
         math2.setDifficulty("2");
-        math2.setSource("test");
+        math2.setSource("smartiq-v2");
         math2.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
         cardRepository.save(math2);
 
@@ -92,7 +92,7 @@ class CardControllerTest {
         mathEasy.setOptions(List.of("2", "1", "3", "4", "5", "6", "7", "8", "9", "10"));
         mathEasy.setCorrectIndex(0);
         mathEasy.setDifficulty("1");
-        mathEasy.setSource("test");
+        mathEasy.setSource("smartiq-v2");
         mathEasy.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
         cardRepository.save(mathEasy);
 
@@ -106,7 +106,7 @@ class CardControllerTest {
         singleV2.setOptions(List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"));
         singleV2.setCorrectIndex(3);
         singleV2.setDifficulty("2");
-        singleV2.setSource("test");
+        singleV2.setSource("smartiq-v2");
         singleV2.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
         cardRepository.save(singleV2);
 
@@ -121,7 +121,7 @@ class CardControllerTest {
         multiV2.setCorrectIndex(null);
         multiV2.setCorrectFlags("true,false,true,false,false,false,false,false,false,false");
         multiV2.setDifficulty("2");
-        multiV2.setSource("test");
+        multiV2.setSource("smartiq-v2");
         multiV2.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
         cardRepository.save(multiV2);
 
@@ -136,7 +136,7 @@ class CardControllerTest {
         brokenV2.setCorrectIndex(null);
         brokenV2.setCorrectFlags(null);
         brokenV2.setDifficulty("2");
-        brokenV2.setSource("test");
+        brokenV2.setSource("smartiq-v2");
         brokenV2.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
         cardRepository.save(brokenV2);
 

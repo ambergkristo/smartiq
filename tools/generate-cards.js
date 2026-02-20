@@ -33,7 +33,7 @@ function makeCard(topic, difficulty, language, index) {
     questionType: 'single',
     options: makeOptions(`Correct ${topic} ${difficulty} ${index + 1}`, `${topic}-${difficulty}-${index}`),
     correctIndex: 0,
-    source: 'smartiq-generator-v2',
+    source: 'smartiq-v2',
     createdAt: new Date().toISOString()
   };
 }

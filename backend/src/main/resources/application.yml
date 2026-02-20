@@ -44,6 +44,8 @@ smartiq:
     enabled: ${SMARTIQ_SESSION_DEDUP_ENABLED:true}
     ttl-minutes: ${SMARTIQ_SESSION_TTL_MINUTES:120}
     max-sessions: ${SMARTIQ_SESSION_MAX:50000}
+  dataset:
+    min-category-threshold: ${SMARTIQ_MIN_CATEGORY_THRESHOLD:100}
   bank:
     min-size: ${MIN_BANK_SIZE:1000}
     block-on-low-bank: ${SMARTIQ_BLOCK_ON_LOW_BANK:false}

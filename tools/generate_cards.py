@@ -861,7 +861,7 @@ def build_card(topic: str, category: str, idx: int) -> dict:
         "options": payload["options"],
         "correct": payload["correct"],
         "difficulty": "2",
-        "source": "smart10-v6-number-order",
+        "source": "smartiq-v2",
     }
 
 

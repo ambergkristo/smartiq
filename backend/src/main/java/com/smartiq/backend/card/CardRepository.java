@@ -1,8 +1,10 @@
 package com.smartiq.backend.card;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,11 +48,11 @@ public interface CardRepository extends JpaRepository<Card, String> {
             select * from cards
             where lower(language) = lower(:language)
               and (:topic is null or lower(topic) = lower(:topic))
-              and coalesce(lower(source), '') not in (:excludedSources)
+              and lower(source) in (:allowedSources)
             """, nativeQuery = true)
     List<Card> findDeckPool(@Param("language") String language,
                             @Param("topic") String topic,
-                            @Param("excludedSources") List<String> excludedSources);
+                            @Param("allowedSources") List<String> allowedSources);
 
     @Query(value = """
             select * from cards
@@ -83,5 +85,17 @@ public interface CardRepository extends JpaRepository<Card, String> {
     @Query(value = "select topic as topic, count(*) as count from cards group by topic order by topic", nativeQuery = true)
     List<TopicCountView> findTopicCounts();
 
-    long deleteBySourceIn(List<String> sources);
+    @Query(value = "select category as label, count(*) as count from cards group by category order by category", nativeQuery = true)
+    List<LabelCountView> findCategoryCounts();
+
+    @Query(value = "select language as label, count(*) as count from cards group by language order by language", nativeQuery = true)
+    List<LabelCountView> findLanguageCounts();
+
+    @Query(value = "select count(*) from cards where lower(source) in (:sources)", nativeQuery = true)
+    long countBySourcesLower(@Param("sources") List<String> sources);
+
+    @Modifying
+    @Transactional
+    @Query(value = "delete from cards where lower(source) in (:sources)", nativeQuery = true)
+    int deleteBySourcesLower(@Param("sources") List<String> sources);
 }

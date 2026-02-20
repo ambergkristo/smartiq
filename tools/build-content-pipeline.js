@@ -36,7 +36,7 @@ function main() {
   console.log(`Updated clean dataset: ${path.relative(process.cwd(), cleanTarget)}`);
 
   run('node tools/review-summary.js');
-  run(`node tools/validate-cards.js ${cleanTarget}`);
+  run(`node tools/validate_cards_v2.js ${cleanTarget}`);
 }
 
 main();
