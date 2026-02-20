@@ -140,6 +140,7 @@ Data validation:
 ```bash
 node tools/validate_cards_v2.js data/smart10/cards.en.json
 node tools/validate_cards_v2.js data/smart10/cards.en.json --max-warnings=0
+node tools/validate_locale_packs.js data/smart10
 ```
 
 Dataset quality score (warning gate):
