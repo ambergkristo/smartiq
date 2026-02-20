@@ -65,7 +65,7 @@ Use strict mode locally when needed:
 
 CI threshold gate:
 
-- Backend CI enforces `--fail-threshold=0.60` as a baseline regression guard.
+- Backend CI enforces `--fail-threshold=0.70` as a baseline regression guard.
 - Raise this threshold gradually as dataset diversity improves.
 
 ## Runtime Source Guard
