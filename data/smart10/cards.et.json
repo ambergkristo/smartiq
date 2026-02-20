@@ -2780,7 +2780,7 @@
     "language": "et",
     "question": "Kultuur: Millised vaited on oiged? Fookus: kaart 002.",
     "options": [
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Ballett on voitluskunst.",
       "Mona Lisa on skulptuur.",
       "Ooper uhendab muusikat ja draamat.",
@@ -2844,7 +2844,7 @@
       "Van Gogh maalis Viimse ohtusooja.",
       "Mona Lisa on maal.",
       "Jazz algas Ameerika Uhendriikides.",
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Picasso maalis Karje.",
       "Van Gogh maalis Tahelise oo.",
       "Shakespeare kirjutas Don Quijote.",
@@ -2871,7 +2871,7 @@
     "question": "Kultuur: Millised read on oiged? Fookus: kaart 005.",
     "options": [
       "Shakespeare kirjutas Hamleti.",
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Kino eelnes fotograafiale.",
       "Ballett on tantsuvorm.",
       "Jazz algas keskaja Prantsusmaal.",
@@ -3030,7 +3030,7 @@
       "Ballett on voitluskunst.",
       "Beatles loodi Tokyos.",
       "Ooper uhendab muusikat ja draamat.",
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Beethoven ei kirjutanud muusikat."
     ],
     "correct": {
@@ -3092,7 +3092,7 @@
       "Ooper uhendab muusikat ja draamat.",
       "Mozart oli filmirezhissoor.",
       "Mona Lisa on skulptuur.",
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Mona Lisa on maal.",
       "Mozart oli helilooja."
     ],
@@ -3127,7 +3127,7 @@
       "Beatles loodi Tokyos.",
       "Jazz algas keskaja Prantsusmaal.",
       "Mona Lisa on skulptuur.",
-      "Beethoven kirjutas suumfooniaid."
+      "Beethoven kirjutas symfooniaid."
     ],
     "correct": {
       "correctIndexes": [
@@ -3207,7 +3207,7 @@
     "options": [
       "Beatles loodi Liverpoolis.",
       "Ballett on voitluskunst.",
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Van Gogh maalis Viimse ohtusooja.",
       "Shakespeare kirjutas Hamleti.",
       "Ballett on tantsuvorm.",
@@ -3274,7 +3274,7 @@
       "Beatles loodi Tokyos.",
       "Odusseia on modernne romaan.",
       "Ooper uhendab muusikat ja draamat.",
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Picasso maalis Guernica.",
       "Mozart oli helilooja.",
       "Picasso maalis Karje."
@@ -3306,7 +3306,7 @@
       "Mona Lisa on maal.",
       "Ballett on voitluskunst.",
       "Mozart oli filmirezhissoor.",
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Shakespeare kirjutas Don Quijote.",
       "Jazz algas keskaja Prantsusmaal.",
       "Kino eelnes fotograafiale.",
@@ -3389,7 +3389,7 @@
     "question": "Kultuur: Vali koik toesed vaited. Fookus: kaart 022.",
     "options": [
       "Ooperis ei laulda.",
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Shakespeare kirjutas Don Quijote.",
       "Mona Lisa on skulptuur.",
       "Beatles loodi Liverpoolis.",
@@ -3424,7 +3424,7 @@
       "Van Gogh maalis Tahelise oo.",
       "Ballett on tantsuvorm.",
       "Kino eelnes fotograafiale.",
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Ooperis ei laulda.",
       "Picasso maalis Guernica.",
       "Mozart oli filmirezhissoor.",
@@ -3454,7 +3454,7 @@
       "Ooper uhendab muusikat ja draamat.",
       "Mozart oli filmirezhissoor.",
       "Odusseia on eepiline poeem.",
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Beethoven ei kirjutanud muusikat.",
       "Mona Lisa on maal.",
       "Picasso maalis Guernica.",
@@ -3513,7 +3513,7 @@
     "question": "Kultuur: Millised vaited on oiged? Fookus: kaart 026.",
     "options": [
       "Van Gogh maalis Viimse ohtusooja.",
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Odusseia on modernne romaan.",
       "Jazz algas keskaja Prantsusmaal.",
       "Mona Lisa on skulptuur.",
@@ -11264,7 +11264,7 @@
       "10000m jooks",
       "800m jooks",
       "200m sprint",
-      "50km voistlus walk",
+      "50 km kaimisvoistlus",
       "5000m jooks",
       "1500m jooks"
     ],
@@ -11295,14 +11295,14 @@
     "options": [
       "Tennise sett",
       "Pesapallimang",
-      "Testkriketi paev",
+      "Testkriketi mangupaev",
       "Korvpalli veerandaeg",
       "Lauatennise pallivahetus",
       "Ragbi poolaeg",
       "Jalgpalli poolaeg",
       "100m sprint voistlus",
       "Boxing round",
-      "Kriketi t20 matsh"
+      "Kriketi T20 mang"
     ],
     "correct": {
       "rankByIndex": [
@@ -11369,7 +11369,7 @@
       "400m sprint",
       "800m jooks",
       "Poolmaraton",
-      "50km voistlus walk",
+      "50 km kaimisvoistlus",
       "1500m jooks",
       "200m sprint",
       "10000m jooks",
@@ -11406,9 +11406,9 @@
       "100m sprint voistlus",
       "Lauatennise pallivahetus",
       "Korvpalli veerandaeg",
-      "Testkriketi paev",
+      "Testkriketi mangupaev",
       "Jalgpalli poolaeg",
-      "Kriketi t20 matsh",
+      "Kriketi T20 mang",
       "Tennise sett",
       "Pesapallimang"
     ],
@@ -11474,7 +11474,7 @@
     "question": "Sport: Order by distance, shortest first. Kasuta rangelt kasvavat jarjekorda. Teema: kaart 007.",
     "options": [
       "400m sprint",
-      "50km voistlus walk",
+      "50 km kaimisvoistlus",
       "Poolmaraton",
       "200m sprint",
       "1500m jooks",
@@ -11516,9 +11516,9 @@
       "Korvpalli veerandaeg",
       "Jalgpalli poolaeg",
       "100m sprint voistlus",
-      "Testkriketi paev",
+      "Testkriketi mangupaev",
       "Boxing round",
-      "Kriketi t20 matsh"
+      "Kriketi T20 mang"
     ],
     "correct": {
       "rankByIndex": [
@@ -11584,7 +11584,7 @@
       "1500m jooks",
       "Marathon",
       "Poolmaraton",
-      "50km voistlus walk",
+      "50 km kaimisvoistlus",
       "200m sprint",
       "10000m jooks",
       "100m sprint",
@@ -11620,12 +11620,12 @@
       "Tennise sett",
       "Ragbi poolaeg",
       "100m sprint voistlus",
-      "Kriketi t20 matsh",
+      "Kriketi T20 mang",
       "Jalgpalli poolaeg",
       "Korvpalli veerandaeg",
       "Lauatennise pallivahetus",
       "Boxing round",
-      "Testkriketi paev",
+      "Testkriketi mangupaev",
       "Pesapallimang"
     ],
     "correct": {
@@ -11691,7 +11691,7 @@
     "options": [
       "5000m jooks",
       "200m sprint",
-      "50km voistlus walk",
+      "50 km kaimisvoistlus",
       "400m sprint",
       "100m sprint",
       "800m jooks",
@@ -11728,11 +11728,11 @@
       "Pesapallimang",
       "Tennise sett",
       "100m sprint voistlus",
-      "Kriketi t20 matsh",
+      "Kriketi T20 mang",
       "Lauatennise pallivahetus",
       "Jalgpalli poolaeg",
       "Ragbi poolaeg",
-      "Testkriketi paev",
+      "Testkriketi mangupaev",
       "Korvpalli veerandaeg",
       "Boxing round"
     ],
@@ -11805,7 +11805,7 @@
       "1500m jooks",
       "Poolmaraton",
       "200m sprint",
-      "50km voistlus walk",
+      "50 km kaimisvoistlus",
       "Marathon"
     ],
     "correct": {
@@ -11833,7 +11833,7 @@
     "language": "et",
     "question": "Sport: Order by event duration, shortest first. Ara jata uhtegi kohta vahele. Teema: kaart 017.",
     "options": [
-      "Testkriketi paev",
+      "Testkriketi mangupaev",
       "Lauatennise pallivahetus",
       "Ragbi poolaeg",
       "Pesapallimang",
@@ -11841,7 +11841,7 @@
       "Jalgpalli poolaeg",
       "100m sprint voistlus",
       "Boxing round",
-      "Kriketi t20 matsh",
+      "Kriketi T20 mang",
       "Korvpalli veerandaeg"
     ],
     "correct": {
@@ -11914,7 +11914,7 @@
       "5000m jooks",
       "800m jooks",
       "10000m jooks",
-      "50km voistlus walk"
+      "50 km kaimisvoistlus"
     ],
     "correct": {
       "rankByIndex": [
@@ -11941,7 +11941,7 @@
     "language": "et",
     "question": "Sport: Order by event duration, shortest first. Pane varaseim/madalaim kohale 1. Teema: kaart 020.",
     "options": [
-      "Kriketi t20 matsh",
+      "Kriketi T20 mang",
       "100m sprint voistlus",
       "Ragbi poolaeg",
       "Jalgpalli poolaeg",
@@ -11949,7 +11949,7 @@
       "Boxing round",
       "Tennise sett",
       "Korvpalli veerandaeg",
-      "Testkriketi paev",
+      "Testkriketi mangupaev",
       "Pesapallimang"
     ],
     "correct": {
@@ -12016,7 +12016,7 @@
       "100m sprint",
       "Poolmaraton",
       "1500m jooks",
-      "50km voistlus walk",
+      "50 km kaimisvoistlus",
       "800m jooks",
       "400m sprint",
       "200m sprint",
@@ -12051,11 +12051,11 @@
     "options": [
       "Lauatennise pallivahetus",
       "Korvpalli veerandaeg",
-      "Kriketi t20 matsh",
+      "Kriketi T20 mang",
       "Pesapallimang",
       "Boxing round",
       "Tennise sett",
-      "Testkriketi paev",
+      "Testkriketi mangupaev",
       "100m sprint voistlus",
       "Ragbi poolaeg",
       "Jalgpalli poolaeg"
@@ -12124,7 +12124,7 @@
       "Poolmaraton",
       "5000m jooks",
       "200m sprint",
-      "50km voistlus walk",
+      "50 km kaimisvoistlus",
       "1500m jooks",
       "100m sprint",
       "Marathon",
@@ -12160,8 +12160,8 @@
       "Pesapallimang",
       "Tennise sett",
       "Jalgpalli poolaeg",
-      "Testkriketi paev",
-      "Kriketi t20 matsh",
+      "Testkriketi mangupaev",
+      "Kriketi T20 mang",
       "Ragbi poolaeg",
       "Lauatennise pallivahetus",
       "Boxing round",
@@ -12230,7 +12230,7 @@
     "question": "Sport: Order by distance, shortest first. Jarjesta koik variandid esimesest viimaseni. Teema: kaart 028.",
     "options": [
       "200m sprint",
-      "50km voistlus walk",
+      "50 km kaimisvoistlus",
       "100m sprint",
       "800m jooks",
       "10000m jooks",
@@ -12271,10 +12271,10 @@
       "Boxing round",
       "Tennise sett",
       "Jalgpalli poolaeg",
-      "Kriketi t20 matsh",
+      "Kriketi T20 mang",
       "Pesapallimang",
       "Korvpalli veerandaeg",
-      "Testkriketi paev"
+      "Testkriketi mangupaev"
     ],
     "correct": {
       "rankByIndex": [
@@ -25655,7 +25655,7 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali tõesed vaited. Teemavihe: kaart 001.",
+    "question": "Ajalugu: Vali toesed vaited. Teemavihe: kaart 001.",
     "options": [
       "Renessanss algas Itaalias.",
       "Teine maailmasoda loppes 1939. aastal.",
@@ -25712,7 +25712,7 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali koik tõesed vaited. Teemavihe: kaart 003.",
+    "question": "Ajalugu: Vali koik toesed vaited. Teemavihe: kaart 003.",
     "options": [
       "Magna Carta allkirjastati 1215. aastal.",
       "Bytsantsi keskuseks oli Madrid.",
@@ -25830,7 +25830,7 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali tõesed vaited. Teemavihe: kaart 007.",
+    "question": "Ajalugu: Vali toesed vaited. Teemavihe: kaart 007.",
     "options": [
       "Rooma vabariik tuli enne impeeriumi.",
       "Berliini muur langes 1973. aastal.",
@@ -25891,7 +25891,7 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali koik tõesed vaited. Teemavihe: kaart 009.",
+    "question": "Ajalugu: Vali koik toesed vaited. Teemavihe: kaart 009.",
     "options": [
       "Kulm soda jargnes Teisele maailmasojale.",
       "Caesar tapeti 144 eKr.",
@@ -26009,7 +26009,7 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali tõesed vaited. Teemavihe: kaart 013.",
+    "question": "Ajalugu: Vali toesed vaited. Teemavihe: kaart 013.",
     "options": [
       "Berliini muur langes 1973. aastal.",
       "Renessanss algas Itaalias.",
@@ -26066,7 +26066,7 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali koik tõesed vaited. Teemavihe: kaart 015.",
+    "question": "Ajalugu: Vali koik toesed vaited. Teemavihe: kaart 015.",
     "options": [
       "Renessanss algas Austraalias.",
       "Berliini muur langes 1989. aastal.",
@@ -26184,7 +26184,7 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali tõesed vaited. Teemavihe: kaart 019.",
+    "question": "Ajalugu: Vali toesed vaited. Teemavihe: kaart 019.",
     "options": [
       "Rooma impeerium tuli enne vabariiki.",
       "Bytsantsi keskuseks oli Madrid.",
@@ -26245,7 +26245,7 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali koik tõesed vaited. Teemavihe: kaart 021.",
+    "question": "Ajalugu: Vali koik toesed vaited. Teemavihe: kaart 021.",
     "options": [
       "Rooma impeerium tuli enne vabariiki.",
       "Kulm soda algas enne Esimest maailmasoda.",
@@ -26363,7 +26363,7 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali tõesed vaited. Teemavihe: kaart 025.",
+    "question": "Ajalugu: Vali toesed vaited. Teemavihe: kaart 025.",
     "options": [
       "Bytsantsi keskuseks oli Konstantinoopol.",
       "Kulm soda algas enne Esimest maailmasoda.",
@@ -26420,7 +26420,7 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali koik tõesed vaited. Teemavihe: kaart 027.",
+    "question": "Ajalugu: Vali koik toesed vaited. Teemavihe: kaart 027.",
     "options": [
       "Berliini muur langes 1973. aastal.",
       "Napoleon kaotas Waterloos.",
@@ -26538,7 +26538,7 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali tõesed vaited. Teemavihe: kaart 001.",
+    "question": "Sport: Vali toesed vaited. Teemavihe: kaart 001.",
     "options": [
       "Ragbis kasutatakse ovaalset palli.",
       "Hat trick tahendab viit varavat.",
@@ -26595,7 +26595,7 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali koik tõesed vaited. Teemavihe: kaart 003.",
+    "question": "Sport: Vali koik toesed vaited. Teemavihe: kaart 003.",
     "options": [
       "Olumpiamangud toimuvad iga nelja aasta...",
       "Vabavise kuulub pesapalli.",
@@ -26713,7 +26713,7 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali tõesed vaited. Teemavihe: kaart 007.",
+    "question": "Sport: Vali toesed vaited. Teemavihe: kaart 007.",
     "options": [
       "Hat trick tahendab kolme varavat.",
       "Maratoni pikkus on 42,195 km.",
@@ -26774,7 +26774,7 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali koik tõesed vaited. Teemavihe: kaart 009.",
+    "question": "Sport: Vali koik toesed vaited. Teemavihe: kaart 009.",
     "options": [
       "Olumpiamangud toimuvad igal aastal.",
       "Suluseis on tennise reegel.",
@@ -26892,7 +26892,7 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali tõesed vaited. Teemavihe: kaart 013.",
+    "question": "Sport: Vali toesed vaited. Teemavihe: kaart 013.",
     "options": [
       "Vabavise kuulub pesapalli.",
       "Korvpallis pole korvi.",
@@ -26949,7 +26949,7 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali koik tõesed vaited. Teemavihe: kaart 015.",
+    "question": "Sport: Vali koik toesed vaited. Teemavihe: kaart 015.",
     "options": [
       "Hat trick tahendab viit varavat.",
       "Wimbledon on golfi suurturniir.",
@@ -27067,7 +27067,7 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali tõesed vaited. Teemavihe: kaart 019.",
+    "question": "Sport: Vali toesed vaited. Teemavihe: kaart 019.",
     "options": [
       "Ragbis kasutatakse ovaalset palli.",
       "Suluseis on tennise reegel.",
@@ -27128,7 +27128,7 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali koik tõesed vaited. Teemavihe: kaart 021.",
+    "question": "Sport: Vali koik toesed vaited. Teemavihe: kaart 021.",
     "options": [
       "Hat trick tahendab viit varavat.",
       "Hat trick tahendab kolme varavat.",
@@ -27246,7 +27246,7 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali tõesed vaited. Teemavihe: kaart 025.",
+    "question": "Sport: Vali toesed vaited. Teemavihe: kaart 025.",
     "options": [
       "Kriketis ei kasutata kurikat.",
       "Ragbis kasutatakse lauatennisepalli.",
@@ -27303,7 +27303,7 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali koik tõesed vaited. Teemavihe: kaart 027.",
+    "question": "Sport: Vali koik toesed vaited. Teemavihe: kaart 027.",
     "options": [
       "Vabavise kuulub korvpalli.",
       "Hat trick tahendab kolme varavat.",
@@ -27421,7 +27421,7 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali tõesed vaited. Teemavihe: kaart 001.",
+    "question": "Geograafia: Vali toesed vaited. Teemavihe: kaart 001.",
     "options": [
       "Tokyo asub Louna-Koreas.",
       "Island asub troopikas.",
@@ -27478,7 +27478,7 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali koik tõesed vaited. Teemavihe: kaart 003.",
+    "question": "Geograafia: Vali koik toesed vaited. Teemavihe: kaart 003.",
     "options": [
       "Sahara on vihmamets.",
       "Ottawa on USA pealinn.",
@@ -27596,7 +27596,7 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali tõesed vaited. Teemavihe: kaart 007.",
+    "question": "Geograafia: Vali toesed vaited. Teemavihe: kaart 007.",
     "options": [
       "Andid on Louna-Ameerikas.",
       "Andid on Aafrikas.",
@@ -27657,7 +27657,7 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali koik tõesed vaited. Teemavihe: kaart 009.",
+    "question": "Geograafia: Vali koik toesed vaited. Teemavihe: kaart 009.",
     "options": [
       "Sahara on vihmamets.",
       "Niilus voolab labi Brasiilia.",
@@ -27775,7 +27775,7 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali tõesed vaited. Teemavihe: kaart 013.",
+    "question": "Geograafia: Vali toesed vaited. Teemavihe: kaart 013.",
     "options": [
       "Sahara on vihmamets.",
       "Tokyo asub Louna-Koreas.",
@@ -27832,7 +27832,7 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali koik tõesed vaited. Teemavihe: kaart 015.",
+    "question": "Geograafia: Vali koik toesed vaited. Teemavihe: kaart 015.",
     "options": [
       "Everest asub Alpides.",
       "Lissabon asub Hispaanias.",
@@ -27950,7 +27950,7 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali tõesed vaited. Teemavihe: kaart 019.",
+    "question": "Geograafia: Vali toesed vaited. Teemavihe: kaart 019.",
     "options": [
       "Ottawa on Kanada pealinn.",
       "Atlandi ookean on suurim ookean.",
@@ -28011,7 +28011,7 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali koik tõesed vaited. Teemavihe: kaart 021.",
+    "question": "Geograafia: Vali koik toesed vaited. Teemavihe: kaart 021.",
     "options": [
       "Tokyo asub Louna-Koreas.",
       "Lissabon asub Hispaanias.",
@@ -28129,7 +28129,7 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali tõesed vaited. Teemavihe: kaart 025.",
+    "question": "Geograafia: Vali toesed vaited. Teemavihe: kaart 025.",
     "options": [
       "Canberra on Austraalia pealinn.",
       "Doonau voolab labi Austraalia.",
@@ -28186,7 +28186,7 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali koik tõesed vaited. Teemavihe: kaart 027.",
+    "question": "Geograafia: Vali koik toesed vaited. Teemavihe: kaart 027.",
     "options": [
       "Tokyo asub Jaapanis.",
       "Atlandi ookean on suurim ookean.",
@@ -28304,7 +28304,7 @@
     "topic": "Culture",
     "category": "OPEN",
     "language": "et",
-    "question": "Kultuur: Vali tõesed vaited. Teemavihe: kaart 001.",
+    "question": "Kultuur: Vali toesed vaited. Teemavihe: kaart 001.",
     "options": [
       "Ballett on tantsuvorm.",
       "Mona Lisa on skulptuur.",
@@ -28337,7 +28337,7 @@
       "Beethoven ei kirjutanud muusikat.",
       "Odusseia on eepiline poeem.",
       "Picasso maalis Guernica.",
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Ballett on voitluskunst.",
       "Ooperis ei laulda.",
       "Kino eelnes fotograafiale.",
@@ -28361,7 +28361,7 @@
     "topic": "Culture",
     "category": "OPEN",
     "language": "et",
-    "question": "Kultuur: Vali koik tõesed vaited. Teemavihe: kaart 003.",
+    "question": "Kultuur: Vali koik toesed vaited. Teemavihe: kaart 003.",
     "options": [
       "Mona Lisa on skulptuur.",
       "Picasso maalis Guernica.",
@@ -28479,7 +28479,7 @@
     "topic": "Culture",
     "category": "OPEN",
     "language": "et",
-    "question": "Kultuur: Vali tõesed vaited. Teemavihe: kaart 007.",
+    "question": "Kultuur: Vali toesed vaited. Teemavihe: kaart 007.",
     "options": [
       "Van Gogh maalis Viimse ohtusooja.",
       "Ooperis ei laulda.",
@@ -28540,7 +28540,7 @@
     "topic": "Culture",
     "category": "OPEN",
     "language": "et",
-    "question": "Kultuur: Vali koik tõesed vaited. Teemavihe: kaart 009.",
+    "question": "Kultuur: Vali koik toesed vaited. Teemavihe: kaart 009.",
     "options": [
       "Ooper uhendab muusikat ja draamat.",
       "Beatles loodi Tokyos.",
@@ -28570,7 +28570,7 @@
     "language": "et",
     "question": "Kultuur: Tuvasta faktivaided. Teemavihe: kaart 010.",
     "options": [
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Mona Lisa on skulptuur.",
       "Jazz algas keskaja Prantsusmaal.",
       "Odusseia on modernne romaan.",
@@ -28638,7 +28638,7 @@
       "Mona Lisa on skulptuur.",
       "Ooper uhendab muusikat ja draamat.",
       "Shakespeare kirjutas Don Quijote.",
-      "Beethoven kirjutas suumfooniaid."
+      "Beethoven kirjutas symfooniaid."
     ],
     "correct": {
       "correctIndexes": [
@@ -28658,7 +28658,7 @@
     "topic": "Culture",
     "category": "OPEN",
     "language": "et",
-    "question": "Kultuur: Vali tõesed vaited. Teemavihe: kaart 013.",
+    "question": "Kultuur: Vali toesed vaited. Teemavihe: kaart 013.",
     "options": [
       "Beatles loodi Tokyos.",
       "Odusseia on modernne romaan.",
@@ -28715,12 +28715,12 @@
     "topic": "Culture",
     "category": "OPEN",
     "language": "et",
-    "question": "Kultuur: Vali koik tõesed vaited. Teemavihe: kaart 015.",
+    "question": "Kultuur: Vali koik toesed vaited. Teemavihe: kaart 015.",
     "options": [
       "Picasso maalis Karje.",
       "Kino eelnes fotograafiale.",
       "Beatles loodi Liverpoolis.",
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Shakespeare kirjutas Hamleti.",
       "Van Gogh maalis Viimse ohtusooja.",
       "Mozart oli filmirezhissoor.",
@@ -28814,7 +28814,7 @@
       "Kino eelnes fotograafiale.",
       "Jazz algas keskaja Prantsusmaal.",
       "Mona Lisa on skulptuur.",
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Picasso maalis Karje."
     ],
     "correct": {
@@ -28833,7 +28833,7 @@
     "topic": "Culture",
     "category": "OPEN",
     "language": "et",
-    "question": "Kultuur: Vali tõesed vaited. Teemavihe: kaart 019.",
+    "question": "Kultuur: Vali toesed vaited. Teemavihe: kaart 019.",
     "options": [
       "Beatles loodi Tokyos.",
       "Jazz algas Ameerika Uhendriikides.",
@@ -28844,7 +28844,7 @@
       "Odusseia on modernne romaan.",
       "Beethoven ei kirjutanud muusikat.",
       "Van Gogh maalis Viimse ohtusooja.",
-      "Beethoven kirjutas suumfooniaid."
+      "Beethoven kirjutas symfooniaid."
     ],
     "correct": {
       "correctIndexes": [
@@ -28865,7 +28865,7 @@
     "language": "et",
     "question": "Kultuur: Millised vaited on oiged? Teemavihe: kaart 020.",
     "options": [
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Ooper uhendab muusikat ja draamat.",
       "Kino eelnes fotograafiale.",
       "Beatles loodi Liverpoolis.",
@@ -28894,7 +28894,7 @@
     "topic": "Culture",
     "category": "OPEN",
     "language": "et",
-    "question": "Kultuur: Vali koik tõesed vaited. Teemavihe: kaart 021.",
+    "question": "Kultuur: Vali koik toesed vaited. Teemavihe: kaart 021.",
     "options": [
       "Ballett on voitluskunst.",
       "Shakespeare kirjutas Don Quijote.",
@@ -28983,7 +28983,7 @@
     "language": "et",
     "question": "Kultuur: Vali koik kehtivad vaited. Teemavihe: kaart 024.",
     "options": [
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Jazz algas Ameerika Uhendriikides.",
       "Mona Lisa on maal.",
       "Jazz algas keskaja Prantsusmaal.",
@@ -29012,7 +29012,7 @@
     "topic": "Culture",
     "category": "OPEN",
     "language": "et",
-    "question": "Kultuur: Vali tõesed vaited. Teemavihe: kaart 025.",
+    "question": "Kultuur: Vali toesed vaited. Teemavihe: kaart 025.",
     "options": [
       "Mozart oli filmirezhissoor.",
       "Van Gogh maalis Viimse ohtusooja.",
@@ -29069,14 +29069,14 @@
     "topic": "Culture",
     "category": "OPEN",
     "language": "et",
-    "question": "Kultuur: Vali koik tõesed vaited. Teemavihe: kaart 027.",
+    "question": "Kultuur: Vali koik toesed vaited. Teemavihe: kaart 027.",
     "options": [
       "Ooper uhendab muusikat ja draamat.",
       "Mona Lisa on maal.",
       "Jazz algas Ameerika Uhendriikides.",
       "Kino eelnes fotograafiale.",
       "Jazz algas keskaja Prantsusmaal.",
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Beatles loodi Tokyos.",
       "Mona Lisa on skulptuur.",
       "Picasso maalis Karje.",
@@ -29139,7 +29139,7 @@
       "Odusseia on modernne romaan.",
       "Kino kasutab liikuvaid pilte.",
       "Beethoven ei kirjutanud muusikat.",
-      "Beethoven kirjutas suumfooniaid.",
+      "Beethoven kirjutas symfooniaid.",
       "Picasso maalis Karje.",
       "Ooperis ei laulda."
     ],
@@ -29187,7 +29187,7 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali tõesed vaited. Teemavihe: kaart 001.",
+    "question": "Teadus: Vali toesed vaited. Teemavihe: kaart 001.",
     "options": [
       "Taimed kasvavad ilma paikesevalguseta.",
       "Vesi on CO2.",
@@ -29244,7 +29244,7 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali koik tõesed vaited. Teemavihe: kaart 003.",
+    "question": "Teadus: Vali koik toesed vaited. Teemavihe: kaart 003.",
     "options": [
       "Heli levib aeglasemalt kui valgus.",
       "Hapnik toetab polemist.",
@@ -29362,7 +29362,7 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali tõesed vaited. Teemavihe: kaart 007.",
+    "question": "Teadus: Vali toesed vaited. Teemavihe: kaart 007.",
     "options": [
       "Heli levib aeglasemalt kui valgus.",
       "Aatomitel on tuum.",
@@ -29423,7 +29423,7 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali koik tõesed vaited. Teemavihe: kaart 009.",
+    "question": "Teadus: Vali koik toesed vaited. Teemavihe: kaart 009.",
     "options": [
       "Heli levib kiiremini kui valgus.",
       "Vesi keeb 100C juures.",
@@ -29541,7 +29541,7 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali tõesed vaited. Teemavihe: kaart 013.",
+    "question": "Teadus: Vali toesed vaited. Teemavihe: kaart 013.",
     "options": [
       "Vesi keeb 10C juures.",
       "Vesi on CO2.",
@@ -29598,7 +29598,7 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali koik tõesed vaited. Teemavihe: kaart 015.",
+    "question": "Teadus: Vali koik toesed vaited. Teemavihe: kaart 015.",
     "options": [
       "Hapnik ei toeta polemist.",
       "Gravitatsioon toukab koiki masse.",
@@ -29716,7 +29716,7 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali tõesed vaited. Teemavihe: kaart 019.",
+    "question": "Teadus: Vali toesed vaited. Teemavihe: kaart 019.",
     "options": [
       "Neuronid edastavad signaale.",
       "Hapnik toetab polemist.",
@@ -29777,7 +29777,7 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali koik tõesed vaited. Teemavihe: kaart 021.",
+    "question": "Teadus: Vali koik toesed vaited. Teemavihe: kaart 021.",
     "options": [
       "Paike tiirleb umber Maa.",
       "Elektronid on positiivse laenguga.",
@@ -29895,7 +29895,7 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali tõesed vaited. Teemavihe: kaart 025.",
+    "question": "Teadus: Vali toesed vaited. Teemavihe: kaart 025.",
     "options": [
       "Neuronid edastavad signaale.",
       "Neuronid on ainult taimedes.",
@@ -29952,7 +29952,7 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali koik tõesed vaited. Teemavihe: kaart 027.",
+    "question": "Teadus: Vali koik toesed vaited. Teemavihe: kaart 027.",
     "options": [
       "Taimed kasutavad fotosunteesi.",
       "Neuronid on ainult taimedes.",
@@ -30070,7 +30070,7 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali tõesed vaited. Teemavihe: kaart 001.",
+    "question": "Varia: Vali toesed vaited. Teemavihe: kaart 001.",
     "options": [
       "Klaviatuur on tooriist toiduvalmistamis...",
       "Rahakott on jalats.",
@@ -30127,7 +30127,7 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali koik tõesed vaited. Teemavihe: kaart 003.",
+    "question": "Varia: Vali koik toesed vaited. Teemavihe: kaart 003.",
     "options": [
       "Raamatukogu laenutab raamatuid.",
       "Kell naitab aega.",
@@ -30245,7 +30245,7 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali tõesed vaited. Teemavihe: kaart 007.",
+    "question": "Varia: Vali toesed vaited. Teemavihe: kaart 007.",
     "options": [
       "Kohv sisaldab kofeiini.",
       "Lennujaam on ainult rongidele.",
@@ -30306,7 +30306,7 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali koik tõesed vaited. Teemavihe: kaart 009.",
+    "question": "Varia: Vali koik toesed vaited. Teemavihe: kaart 009.",
     "options": [
       "Raamatukogud muuvad autosid.",
       "Lennujaam on ainult rongidele.",
@@ -30424,7 +30424,7 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali tõesed vaited. Teemavihe: kaart 013.",
+    "question": "Varia: Vali toesed vaited. Teemavihe: kaart 013.",
     "options": [
       "Pass on kodu voti.",
       "Kompass moodab temperatuuri.",
@@ -30481,7 +30481,7 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali koik tõesed vaited. Teemavihe: kaart 015.",
+    "question": "Varia: Vali koik toesed vaited. Teemavihe: kaart 015.",
     "options": [
       "Nadalas on uheksa paeva.",
       "Retsept on maksudokument.",
@@ -30599,7 +30599,7 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali tõesed vaited. Teemavihe: kaart 019.",
+    "question": "Varia: Vali toesed vaited. Teemavihe: kaart 019.",
     "options": [
       "Lennujaam teenindab lennureise.",
       "Pass on kodu voti.",
@@ -30660,7 +30660,7 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali koik tõesed vaited. Teemavihe: kaart 021.",
+    "question": "Varia: Vali koik toesed vaited. Teemavihe: kaart 021.",
     "options": [
       "Kompass moodab temperatuuri.",
       "Kell kirjutab e-kirju.",
@@ -30778,7 +30778,7 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali tõesed vaited. Teemavihe: kaart 025.",
+    "question": "Varia: Vali toesed vaited. Teemavihe: kaart 025.",
     "options": [
       "Retsept loetleb koostisosi.",
       "Retsept on maksudokument.",
@@ -30835,7 +30835,7 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali koik tõesed vaited. Teemavihe: kaart 027.",
+    "question": "Varia: Vali koik toesed vaited. Teemavihe: kaart 027.",
     "options": [
       "Kohv sisaldab kofeiini.",
       "Lennujaam teenindab lennureise.",
