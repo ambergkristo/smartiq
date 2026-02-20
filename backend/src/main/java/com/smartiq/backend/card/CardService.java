@@ -10,10 +10,14 @@ public class CardService {
 
     private final CardRepository cardRepository;
     private final QuestionPoolService questionPoolService;
+    private final NextRandomCardService nextRandomCardService;
 
-    public CardService(CardRepository cardRepository, QuestionPoolService questionPoolService) {
+    public CardService(CardRepository cardRepository,
+                       QuestionPoolService questionPoolService,
+                       NextRandomCardService nextRandomCardService) {
         this.cardRepository = cardRepository;
         this.questionPoolService = questionPoolService;
+        this.nextRandomCardService = nextRandomCardService;
     }
 
     public List<TopicCountResponse> getTopicCounts() {
@@ -35,5 +39,10 @@ public class CardService {
 
     public CardResponse getNextCard(String topic, String difficulty, String sessionId, String language) {
         return questionPoolService.nextCard(topic, difficulty, language, sessionId);
+    }
+
+    public CardResponse getNextRandomCard(String language, String gameId, String topic) {
+        Card card = nextRandomCardService.nextRandom(language, gameId, topic);
+        return CardResponse.fromEntity(card);
     }
 }

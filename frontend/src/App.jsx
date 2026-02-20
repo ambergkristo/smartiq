@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { API_BASE, fetchNextCard, fetchTopics, resolveCardErrorMessage, resolveTopicsErrorState } from './api';
+import { useCallback, useEffect, useState } from 'react';
+import { API_BASE, fetchNextRandomCard, fetchTopics, resolveCardErrorMessage, resolveTopicsErrorState } from './api';
 import GameBoard from './components/GameBoard';
 import RoundSummary from './components/RoundSummary';
 import { expectedCorrectIndexes } from './state/scoring';
@@ -8,7 +8,7 @@ import { DEFAULT_LANGS, GamePhase } from './state/types';
 
 const STRINGS = {
   title: 'SmartIQ',
-  subtitle: 'Pick a topic, set difficulty, and start a premium Smart10-style round.',
+  subtitle: 'Start a Smart10-style random deck game. Topic filter is optional.',
   loadingTopics: 'Loading topics...',
   noTopics: 'No topics yet.',
   noTopicsHint: 'Import clean cards to populate topics and retry.',
@@ -22,9 +22,8 @@ const STRINGS = {
   playersPlaceholder: 'Type player names and press Enter (or comma)',
   addPlayerHint: 'At least one player is required.'
 };
-const SESSION_STORAGE_KEY = 'smartiq.sessionId';
+const GAME_STORAGE_KEY = 'smartiq.gameId';
 const CONFIG_STORAGE_KEY = 'smartiq.roundConfig';
-const RECENT_CARD_LIMIT = 20;
 const STARTUP_PHASE = {
   LOADING: 'loading',
   BACKEND_UNREACHABLE: 'backend-unreachable',
@@ -75,7 +74,7 @@ function SetupSkeleton() {
 
 function StartScreen({ topics, config, setConfig, onStart }) {
   const players = parsePlayers(config.playersText);
-  const canStart = Boolean(config.topic) && players.length > 0;
+  const canStart = players.length > 0;
 
   function addPlayers(rawValue) {
     const incoming = parsePlayers(rawValue);
@@ -113,6 +112,15 @@ function StartScreen({ topics, config, setConfig, onStart }) {
 
       <h2 className="section-title">Topic</h2>
       <div className="topic-grid" role="radiogroup" aria-label="Topic options">
+        <button
+          type="button"
+          className={`topic-tile${config.topic === '' ? ' selected' : ''}`}
+          onClick={() => setConfig((prev) => ({ ...prev, topic: '' }))}
+          aria-pressed={config.topic === ''}
+        >
+          <span className="topic-title">Any Topic</span>
+          <span className="topic-count">Random deck</span>
+        </button>
         {topics.map((topic) => {
           const selected = config.topic === topic.topic;
           return (
@@ -257,9 +265,8 @@ export default function App() {
     lang: storedConfig?.lang ?? 'en',
     playersText: storedConfig?.playersText ?? ''
   });
-  const [sessionId, setSessionId] = useState('');
+  const [gameId, setGameId] = useState('');
   const [cardError, setCardError] = useState('');
-  const recentCardIdsRef = useRef([]);
 
   const engine = useGameEngine(30);
   const { phase, loadTicket, cardLoaded, cardLoadFailed } = engine;
@@ -280,7 +287,7 @@ export default function App() {
         });
         setConfig((prev) => {
           const topicExists = data.some((entry) => entry.topic === prev.topic);
-          return { ...prev, topic: topicExists ? prev.topic : data[0].topic };
+          return { ...prev, topic: topicExists ? prev.topic : '' };
         });
         return;
       }
@@ -308,10 +315,15 @@ export default function App() {
   useEffect(() => {
     loadTopics();
 
-    const savedSession = localStorage.getItem(SESSION_STORAGE_KEY);
-    if (savedSession) {
-      setSessionId(savedSession);
+    const savedGameId = localStorage.getItem(GAME_STORAGE_KEY);
+    if (savedGameId) {
+      setGameId(savedGameId);
+      return;
     }
+
+    const generated = globalThis.crypto?.randomUUID?.() || `game-${Date.now()}`;
+    localStorage.setItem(GAME_STORAGE_KEY, generated);
+    setGameId(generated);
   }, [loadTopics]);
 
   useEffect(() => {
@@ -321,27 +333,15 @@ export default function App() {
   useEffect(() => {
     async function loadCard() {
       if (phase !== GamePhase.LOADING_CARD) return;
-      if (!sessionId) return;
+      if (!gameId) return;
 
       try {
         setCardError('');
-        let card = await fetchNextCard({
-          topic: config.topic,
-          difficulty: config.difficulty,
-          sessionId,
-          lang: config.lang
+        const card = await fetchNextRandomCard({
+          topic: config.topic || undefined,
+          language: config.lang,
+          gameId
         });
-        let attempts = 0;
-        while (recentCardIdsRef.current.includes(card.id) && attempts < 2) {
-          card = await fetchNextCard({
-            topic: config.topic,
-            difficulty: config.difficulty,
-            sessionId,
-            lang: config.lang
-          });
-          attempts += 1;
-        }
-        recentCardIdsRef.current = [card.id, ...recentCardIdsRef.current].slice(0, RECENT_CARD_LIMIT);
         cardLoaded(card);
       } catch (error) {
         setCardError(resolveCardErrorMessage(error) || STRINGS.cardErrorFallback);
@@ -350,25 +350,13 @@ export default function App() {
     }
 
     loadCard();
-  }, [loadTicket, cardLoaded, cardLoadFailed, phase, sessionId, config.topic, config.difficulty, config.lang]);
+  }, [loadTicket, cardLoaded, cardLoadFailed, phase, gameId, config.topic, config.lang]);
 
   function handleStartRound() {
-    const freshSessionId = createFreshSession();
-    recentCardIdsRef.current = [];
     engine.startRound(config.playersText);
-    return freshSessionId;
-  }
-
-  function createFreshSession() {
-    const freshSessionId = globalThis.crypto?.randomUUID?.() || `session-${Date.now()}`;
-    setSessionId(freshSessionId);
-    localStorage.setItem(SESSION_STORAGE_KEY, freshSessionId);
-    return freshSessionId;
   }
 
   function handlePlayAgain() {
-    createFreshSession();
-    recentCardIdsRef.current = [];
     engine.startRound(config.playersText);
   }
 
