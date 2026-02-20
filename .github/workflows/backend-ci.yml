@@ -27,7 +27,7 @@ jobs:
           node-version: 'lts/*'
 
       - name: Validate Smart10 dataset
-        run: node ../tools/validate_cards_v2.js ../data/smart10/cards.en.json
+        run: node ../tools/validate_cards_v2.js ../data/smart10/cards.en.json --max-warnings=0
 
       - name: Score Smart10 dataset quality (threshold gate)
         run: node ../tools/score_cards_quality.js ../data/smart10/cards.en.json --fail-threshold=0.70

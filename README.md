@@ -139,6 +139,7 @@ Data validation:
 
 ```bash
 node tools/validate_cards_v2.js data/smart10/cards.en.json
+node tools/validate_cards_v2.js data/smart10/cards.en.json --max-warnings=0
 ```
 
 Dataset quality score (warning gate):
