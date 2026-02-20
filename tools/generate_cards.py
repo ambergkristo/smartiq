@@ -123,12 +123,12 @@ QUESTION_TEMPLATES = {
         "{topic}: Choose the color cue: '{clue}'."
     ],
     "OPEN": [
-        "{topic}: Select options that match this topic.",
-        "{topic}: Which entries belong in this topic set?",
-        "{topic}: Pick all options that fit the topic.",
-        "{topic}: Identify items relevant to this topic.",
-        "{topic}: Select every option linked to this topic.",
-        "{topic}: Which options are topic-consistent?"
+        "{topic}: Select statements that are true.",
+        "{topic}: Which statements are correct?",
+        "{topic}: Pick all true statements.",
+        "{topic}: Identify factual statements.",
+        "{topic}: Which options are accurate?",
+        "{topic}: Select all valid statements."
     ]
 }
 
@@ -486,15 +486,14 @@ def build_color(topic: str, card_idx: int) -> dict:
 
 def build_open(topic: str, card_idx: int) -> dict:
     rnd = random.Random(f"open-{topic}-{card_idx}")
-    local_terms = TOPIC_TERMS[topic][:]
-    rnd.shuffle(local_terms)
+    fact_pool = TRUE_FALSE_FACTS[topic]
     correct_size = [2, 3, 4, 5][card_idx % 4]
-    correct_items = [clamp_option(x) for x in local_terms[:correct_size]]
-
-    distractors = topic_distractors(topic, rnd, 10 - correct_size)
+    correct_items = pick_unique(fact_pool["true"], correct_size, rnd)
+    distractors = pick_unique(fact_pool["false"], 10 - correct_size, rnd)
     options = correct_items + distractors
     rnd.shuffle(options)
-    correct_indexes = [idx for idx, item in enumerate(options) if item in correct_items]
+    correct_set = set(correct_items)
+    correct_indexes = [idx for idx, item in enumerate(options) if item in correct_set]
 
     return {
         "question": QUESTION_TEMPLATES["OPEN"][card_idx % len(QUESTION_TEMPLATES["OPEN"])].format(topic=topic),
@@ -523,7 +522,7 @@ def build_card(topic: str, category: str, idx: int) -> dict:
         "options": payload["options"],
         "correct": payload["correct"],
         "difficulty": "2",
-        "source": "smart10-v4-factual",
+        "source": "smart10-v5-open-factual",
     }
 
 
