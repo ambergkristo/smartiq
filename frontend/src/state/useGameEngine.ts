@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { DEFAULT_PLAYERS, GamePhase } from './types';
-import { expectedCorrectIndexes } from './scoring';
+import { evaluateAttempt } from './scoring';
 
 const TARGET_SCORE_DEFAULT = 30;
 
@@ -26,8 +26,15 @@ function initialStats(players) {
   }, {});
 }
 
+function initialRoundPoints(players) {
+  return players.reduce((acc, player) => {
+    acc[player] = 0;
+    return acc;
+  }, {});
+}
+
 function nextActiveIndex(players, startIndex, eliminatedPlayers, passedPlayers) {
-  if (players.length === 0) return 0;
+  if (players.length === 0) return -1;
 
   for (let step = 1; step <= players.length; step += 1) {
     const idx = (startIndex + step) % players.length;
@@ -44,20 +51,32 @@ function isPlayerActive(player, eliminatedPlayers, passedPlayers) {
   return !eliminatedPlayers.has(player) && !passedPlayers.has(player);
 }
 
+function resolveWinner(scores, targetScore) {
+  const ordered = Object.entries(scores)
+    .sort((a, b) => b[1] - a[1]);
+
+  if (ordered.length === 0) return null;
+  if (ordered[0][1] < targetScore) return null;
+  return ordered[0][0];
+}
+
 export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   const [phase, setPhase] = useState(GamePhase.SETUP);
   const [players, setPlayers] = useState(DEFAULT_PLAYERS);
   const [scores, setScores] = useState({ 'Player 1': 0 });
+  const [roundPoints, setRoundPoints] = useState({ 'Player 1': 0 });
   const [stats, setStats] = useState({ 'Player 1': { correct: 0, wrong: 0, passes: 0 } });
   const [roundNumber, setRoundNumber] = useState(0);
   const [card, setCard] = useState(null);
   const [selectedIndexes, setSelectedIndexes] = useState(new Set());
+  const [selectedRank, setSelectedRank] = useState(null);
   const [revealedIndexes, setRevealedIndexes] = useState(new Set());
   const [wrongIndexes, setWrongIndexes] = useState(new Set());
   const [eliminatedPlayers, setEliminatedPlayers] = useState(new Set());
   const [passedPlayers, setPassedPlayers] = useState(new Set());
   const [lastAction, setLastAction] = useState('Ready');
   const [loadTicket, setLoadTicket] = useState(0);
+  const [starterIndex, setStarterIndex] = useState(0);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [winner, setWinner] = useState(null);
 
@@ -77,15 +96,18 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     const normalizedPlayers = normalizePlayers(playersText);
     setPlayers(normalizedPlayers);
     setScores(initialScores(normalizedPlayers));
+    setRoundPoints(initialRoundPoints(normalizedPlayers));
     setStats(initialStats(normalizedPlayers));
     setRoundNumber(1);
+    setStarterIndex(0);
+    setCurrentPlayerIndex(0);
     setCard(null);
     setSelectedIndexes(new Set());
+    setSelectedRank(null);
     setRevealedIndexes(new Set());
     setWrongIndexes(new Set());
     setEliminatedPlayers(new Set());
     setPassedPlayers(new Set());
-    setCurrentPlayerIndex(0);
     setWinner(null);
     setPhase(GamePhase.LOADING_CARD);
     setLoadTicket((value) => value + 1);
@@ -97,26 +119,35 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setPhase(GamePhase.LOADING_CARD);
     setCard(null);
     setSelectedIndexes(new Set());
+    setSelectedRank(null);
     setRevealedIndexes(new Set());
     setWrongIndexes(new Set());
     setEliminatedPlayers(new Set());
     setPassedPlayers(new Set());
-    setCurrentPlayerIndex(0);
+    setCurrentPlayerIndex(starterIndex);
     setLoadTicket((value) => value + 1);
-    setLastAction('Loading round card');
-  }, []);
+    setLastAction(`Loading round ${roundNumber} card`);
+  }, [roundNumber, starterIndex]);
 
   const cardLoaded = useCallback((nextCard) => {
     setCard(nextCard);
     setSelectedIndexes(new Set());
+    setSelectedRank(null);
     setRevealedIndexes(new Set());
     setWrongIndexes(new Set());
     setEliminatedPlayers(new Set());
     setPassedPlayers(new Set());
-    setCurrentPlayerIndex(0);
+    setCurrentPlayerIndex(starterIndex);
+    setRoundPoints((prev) => {
+      const cleared = { ...prev };
+      players.forEach((player) => {
+        cleared[player] = 0;
+      });
+      return cleared;
+    });
     setPhase(GamePhase.CHOOSING);
     setLastAction(`Round ${roundNumber} card loaded`);
-  }, [roundNumber]);
+  }, [players, roundNumber, starterIndex]);
 
   const cardLoadFailed = useCallback(() => {
     setPhase(GamePhase.LOADING_CARD);
@@ -138,11 +169,22 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setPhase(GamePhase.CHOOSING);
   }, [currentPlayer, eliminatedPlayers, passedPlayers, phase, revealedIndexes, wrongIndexes]);
 
+  const chooseRank = useCallback((rank) => {
+    setSelectedRank(rank);
+  }, []);
+
   const requestConfirm = useCallback(() => {
     if (phase !== GamePhase.CHOOSING || selectedIndexes.size === 0) return;
     if (!isPlayerActive(currentPlayer, eliminatedPlayers, passedPlayers)) return;
+
+    const category = String(card?.category || '').toUpperCase();
+    if (category === 'ORDER') {
+      setPhase(GamePhase.CONFIRMING);
+      return;
+    }
+
     setPhase(GamePhase.CONFIRMING);
-  }, [currentPlayer, eliminatedPlayers, passedPlayers, phase, selectedIndexes]);
+  }, [card?.category, currentPlayer, eliminatedPlayers, passedPlayers, phase, selectedIndexes]);
 
   const cancelConfirm = useCallback(() => {
     if (phase !== GamePhase.CONFIRMING) return;
@@ -153,16 +195,20 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     if (phase !== GamePhase.CONFIRMING) return;
     if (!card || selectedIndexes.size === 0) return;
     if (!isPlayerActive(currentPlayer, eliminatedPlayers, passedPlayers)) return;
-    const selectedIndex = [...selectedIndexes][0];
-    const correctIndexes = expectedCorrectIndexes(card);
-    const isCorrect = correctIndexes.has(selectedIndex);
 
-    if (isCorrect) {
-      const nextScore = (scores[currentPlayer] ?? 0) + 1;
-      const reachedTarget = nextScore >= targetScore;
-      setScores((prev) => ({
+    const selectedIndex = [...selectedIndexes][0];
+    const category = String(card?.category || '').toUpperCase();
+    const requiresRank = category === 'ORDER';
+    if (requiresRank && !Number.isInteger(selectedRank)) {
+      setLastAction(`${currentPlayer}: choose rank first`);
+      return;
+    }
+
+    const result = evaluateAttempt(card, selectedIndex, selectedRank);
+    if (result.correct) {
+      setRoundPoints((prev) => ({
         ...prev,
-        [currentPlayer]: nextScore
+        [currentPlayer]: (prev[currentPlayer] ?? 0) + 1
       }));
       setStats((prev) => ({
         ...prev,
@@ -172,13 +218,7 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
         }
       }));
       setRevealedIndexes((prev) => new Set(prev).add(selectedIndex));
-      if (reachedTarget) {
-        setWinner(currentPlayer);
-        setPhase(GamePhase.GAME_OVER);
-        setLastAction(`${currentPlayer} reached ${targetScore} points`);
-        return;
-      }
-      setLastAction(`${currentPlayer} answered correctly (+1)`);
+      setLastAction(`${currentPlayer} answered correctly (+1 pending)`);
     } else {
       setWrongIndexes((prev) => new Set(prev).add(selectedIndex));
       setEliminatedPlayers((prev) => new Set(prev).add(currentPlayer));
@@ -189,16 +229,18 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
           wrong: (prev[currentPlayer]?.wrong ?? 0) + 1
         }
       }));
-      setLastAction(`${currentPlayer} answered wrong (eliminated)`);
+      setLastAction(`${currentPlayer} answered wrong (dropped for round)`);
     }
 
     setPhase(GamePhase.RESOLVED);
     setSelectedIndexes(new Set());
-  }, [card, currentPlayer, eliminatedPlayers, passedPlayers, phase, scores, selectedIndexes, targetScore]);
+    setSelectedRank(null);
+  }, [card, currentPlayer, eliminatedPlayers, passedPlayers, phase, selectedIndexes, selectedRank]);
 
   const passTurn = useCallback(() => {
     if (phase !== GamePhase.CHOOSING) return;
     if (!isPlayerActive(currentPlayer, eliminatedPlayers, passedPlayers)) return;
+
     setPassedPlayers((prev) => new Set(prev).add(currentPlayer));
     setStats((prev) => ({
       ...prev,
@@ -208,13 +250,25 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       }
     }));
     setSelectedIndexes(new Set());
+    setSelectedRank(null);
     setPhase(GamePhase.PASSED);
-    setLastAction(`${currentPlayer} passed`);
+    setLastAction(`${currentPlayer} passed (inactive this round)`);
   }, [currentPlayer, eliminatedPlayers, passedPlayers, phase]);
+
+  const commitRoundScores = useCallback(() => {
+    const mergedScores = { ...scores };
+    players.forEach((player) => {
+      mergedScores[player] = (mergedScores[player] ?? 0) + (roundPoints[player] ?? 0);
+    });
+    setScores(mergedScores);
+    setRoundPoints(initialRoundPoints(players));
+    return mergedScores;
+  }, [players, roundPoints, scores]);
 
   const nextStep = useCallback(() => {
     if (phase === GamePhase.ROUND_SUMMARY) {
       setRoundNumber((prev) => prev + 1);
+      setStarterIndex((prev) => (players.length === 0 ? 0 : (prev + 1) % players.length));
       beginCardLoad();
       return { done: false };
     }
@@ -227,14 +281,13 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     const blocked = noPlayersAvailable;
 
     if (resolved || blocked) {
-      const top = [...players].sort((a, b) => (scores[b] ?? 0) - (scores[a] ?? 0))[0] ?? null;
-      const topScore = top ? scores[top] ?? 0 : 0;
-
-      if (topScore >= targetScore) {
-        setWinner(top);
+      const mergedScores = commitRoundScores();
+      const roundWinner = resolveWinner(mergedScores, targetScore);
+      if (roundWinner) {
+        setWinner(roundWinner);
         setPhase(GamePhase.GAME_OVER);
-        setLastAction(`${top} reached ${targetScore} points`);
-        return { done: true, winner: top };
+        setLastAction(`${roundWinner} reached ${targetScore} points`);
+        return { done: true, winner: roundWinner };
       }
 
       setPhase(GamePhase.ROUND_SUMMARY);
@@ -244,6 +297,15 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
 
     const nextIdx = nextActiveIndex(players, currentPlayerIndex, eliminatedPlayers, passedPlayers);
     if (nextIdx < 0) {
+      const mergedScores = commitRoundScores();
+      const roundWinner = resolveWinner(mergedScores, targetScore);
+      if (roundWinner) {
+        setWinner(roundWinner);
+        setPhase(GamePhase.GAME_OVER);
+        setLastAction(`${roundWinner} reached ${targetScore} points`);
+        return { done: true, winner: roundWinner };
+      }
+
       setPhase(GamePhase.ROUND_SUMMARY);
       setLastAction(`Round ${roundNumber} complete`);
       return { done: false };
@@ -251,11 +313,13 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
 
     setCurrentPlayerIndex(nextIdx);
     setSelectedIndexes(new Set());
+    setSelectedRank(null);
     setPhase(GamePhase.CHOOSING);
     return { done: false };
   }, [
     allSlotsResolved,
     beginCardLoad,
+    commitRoundScores,
     currentPlayerIndex,
     eliminatedPlayers,
     noPlayersAvailable,
@@ -263,7 +327,6 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     phase,
     players,
     roundNumber,
-    scores,
     targetScore
   ]);
 
@@ -271,13 +334,17 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setPhase(GamePhase.SETUP);
     setCard(null);
     setSelectedIndexes(new Set());
+    setSelectedRank(null);
     setRevealedIndexes(new Set());
     setWrongIndexes(new Set());
     setEliminatedPlayers(new Set());
     setPassedPlayers(new Set());
     setLoadTicket(0);
     setRoundNumber(0);
+    setStarterIndex(0);
     setStats({ 'Player 1': { correct: 0, wrong: 0, passes: 0 } });
+    setScores({ 'Player 1': 0 });
+    setRoundPoints({ 'Player 1': 0 });
     setCurrentPlayerIndex(0);
     setWinner(null);
     setLastAction('Ready');
@@ -287,16 +354,19 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     phase,
     players,
     scores,
+    roundPoints,
     stats,
     roundNumber,
     card,
     loadTicket,
     selectedIndexes,
+    selectedRank,
     revealedIndexes,
     wrongIndexes,
     eliminatedPlayers,
     passedPlayers,
     currentPlayerIndex,
+    starterIndex,
     currentPlayer,
     lastAction,
     winner,
@@ -306,6 +376,7 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     cardLoaded,
     cardLoadFailed,
     toggleOption,
+    chooseRank,
     requestConfirm,
     cancelConfirm,
     confirmAnswer,

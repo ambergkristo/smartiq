@@ -1,6 +1,5 @@
 export const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').trim();
 export const USE_SAMPLE_MODE = String(import.meta.env.VITE_USE_SAMPLE || '').toLowerCase() === 'true';
-const DEV_API_DEBUG = import.meta.env.DEV && String(import.meta.env.VITE_DEBUG_API || '').toLowerCase() === 'true';
 
 class ApiError extends Error {
   constructor(message, status, code) {
@@ -29,10 +28,38 @@ function sampleCard({ topic, difficulty, language }) {
     language: normalizedLanguage,
     question: `${normalizedTopic} sample question (${normalizedLanguage.toUpperCase()})`,
     options: Array.from({ length: 10 }, (_, index) => `${normalizedTopic} option ${index + 1}`),
-    correctIndex: 0,
+    category: 'OPEN',
+    correct: { correctIndex: 0 },
     difficulty: String(normalizedDifficulty),
     source: 'sample-mode',
     createdAt: new Date().toISOString()
+  };
+}
+
+function normalizeCardPayload(raw) {
+  if (!raw || typeof raw !== 'object') return raw;
+  const options = Array.isArray(raw.options)
+    ? raw.options.map((entry) => (entry && typeof entry === 'object' && 'text' in entry ? entry.text : String(entry)))
+    : [];
+
+  let correct = raw.correct;
+  if (!correct || typeof correct !== 'object') {
+    if (Array.isArray(raw.correctIndexes)) {
+      correct = { correctIndexes: raw.correctIndexes };
+    } else if (Number.isInteger(raw.correctIndex)) {
+      correct = { correctIndex: raw.correctIndex };
+    } else {
+      correct = {};
+    }
+  }
+
+  return {
+    ...raw,
+    id: raw.id || raw.cardId,
+    cardId: raw.cardId || raw.id,
+    category: raw.category || raw.subtopic || 'OPEN',
+    options,
+    correct
   };
 }
 
@@ -180,15 +207,11 @@ export async function fetchNextCard({ topic, difficulty, sessionId, lang, retrie
   const params = buildNextCardQuery({ topic, difficulty, language: lang });
   if (sessionId) params.set('sessionId', sessionId);
   if (USE_SAMPLE_MODE) {
-    const fallbackCard = sampleCard({
+    return normalizeCardPayload(sampleCard({
       topic,
       difficulty: params.get('difficulty'),
       language: params.get('language')
-    });
-    if (DEV_API_DEBUG) {
-      console.info(`[api] Loaded cardId from sample: ${fallbackCard.cardId}`);
-    }
-    return fallbackCard;
+    }));
   }
 
   const url = `${API_BASE}/api/cards/next?${params.toString()}`;
@@ -197,10 +220,7 @@ export async function fetchNextCard({ topic, difficulty, sessionId, lang, retrie
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     try {
       const card = await fetchJson(url);
-      if (DEV_API_DEBUG && card?.cardId) {
-        console.info(`[api] Loaded cardId from API: ${card.cardId}`);
-      }
-      return card;
+      return normalizeCardPayload(card);
     } catch (error) {
       lastError = error;
       if (!isRetryable(error) || attempt === retries) {
@@ -224,7 +244,8 @@ export async function fetchNextRandomCard({ language, gameId, topic, retries = 2
   let lastError = null;
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     try {
-      return await fetchJson(url);
+      const card = await fetchJson(url);
+      return normalizeCardPayload(card);
     } catch (error) {
       lastError = error;
       if (!isRetryable(error) || attempt === retries) {

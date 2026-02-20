@@ -2,32 +2,27 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import AnswerTile from './AnswerTile';
 import PlayersPanel from './PlayersPanel';
 
-function getTileState(index, selectedIndexes, correctIndexes, revealedIndexes, wrongIndexes) {
-  if (revealedIndexes.has(index)) {
-    return 'correct';
-  }
-  if (wrongIndexes.has(index)) {
-    return 'wrong';
-  }
-  if (selectedIndexes.has(index)) {
-    return 'selected';
-  }
-  if (correctIndexes.has(index)) {
-    return 'hidden';
-  }
+function getTileState(index, selectedIndexes, revealedIndexes, wrongIndexes) {
+  if (revealedIndexes.has(index)) return 'correct';
+  if (wrongIndexes.has(index)) return 'wrong';
+  if (selectedIndexes.has(index)) return 'selected';
   return 'hidden';
 }
 
-function actionHint(phase, currentPlayer) {
+function actionHint(phase, currentPlayer, category, selectedRank) {
+  if (category === 'ORDER' && phase === 'CHOOSING') {
+    return `${currentPlayer}: choose rank ${selectedRank ?? '(1-10)'} and a peg, then ANSWER.`;
+  }
+
   switch (phase) {
     case 'CHOOSING':
-      return `${currentPlayer}: choose one answer, then press ANSWER or PASS.`;
+      return `${currentPlayer}: reveal one peg, then ANSWER or PASS.`;
     case 'CONFIRMING':
-      return `${currentPlayer}: confirm with LOCK IN or go BACK.`;
+      return `${currentPlayer}: LOCK IN or go BACK.`;
     case 'RESOLVED':
-      return 'Answer resolved. Press NEXT to continue turn flow.';
+      return 'Attempt resolved. Press NEXT to continue.';
     case 'PASSED':
-      return 'Turn passed. Press NEXT for next player or round summary.';
+      return 'Player passed. Press NEXT for next turn.';
     case 'LOADING_CARD':
       return 'Loading next round card...';
     default:
@@ -35,9 +30,19 @@ function actionHint(phase, currentPlayer) {
   }
 }
 
+const CATEGORY_COLORS = {
+  TRUE_FALSE: '#f28b23',
+  NUMBER: '#f2cf1d',
+  ORDER: '#5ea844',
+  CENTURY_DECADE: '#1d3d8f',
+  COLOR: '#e35fa8',
+  OPEN: '#53bde0'
+};
+
 export default function GameBoard({
   card,
   selectedIndexes,
+  selectedRank,
   revealedIndexes,
   wrongIndexes,
   toggleIndex,
@@ -47,6 +52,7 @@ export default function GameBoard({
   onCancelConfirm,
   onPass,
   onNext,
+  onRankSelect,
   players,
   scores,
   currentPlayerIndex,
@@ -57,8 +63,9 @@ export default function GameBoard({
   targetScore,
   eliminatedPlayers,
   passedPlayers,
-  correctIndexes
+  starterPlayer
 }) {
+  const category = String(card?.category || card?.subtopic || 'OPEN').toUpperCase();
   const canChoose = phase === 'CHOOSING' || phase === 'CONFIRMING';
   const phaseLabel = phase.replace('_', ' ').toLowerCase();
   const layoutRef = useRef(null);
@@ -68,7 +75,7 @@ export default function GameBoard({
 
   useEffect(() => {
     setQuestionExpanded(false);
-  }, [card.id]);
+  }, [card.cardId, card.id]);
 
   useEffect(() => {
     const target = layoutRef.current;
@@ -115,13 +122,14 @@ export default function GameBoard({
         targetScore={targetScore}
         eliminatedPlayers={eliminatedPlayers}
         passedPlayers={passedPlayers}
+        starterPlayer={starterPlayer}
       />
 
       <div className="center-board board-surface">
-        <header className="card-header">
+        <header className="card-header" style={{ borderBottomColor: CATEGORY_COLORS[category] || '#f59b1f' }}>
           <div className="card-topline">
             <p className="topic-pill">
-              {card.topic} • {card.difficulty} • {card.language.toUpperCase()}
+              {category} | {card.topic} | {card.language.toUpperCase()}
             </p>
             <p className="meta-line">Round {roundNumber}</p>
           </div>
@@ -135,9 +143,28 @@ export default function GameBoard({
               {questionExpanded ? 'Show less' : 'Show more'}
             </button>
           ) : null}
-          <p className="pass-note">Choose one answer then press ANSWER or PASS.</p>
+          {category === 'ORDER' ? (
+            <div className="rank-selector" role="radiogroup" aria-label="Rank selector">
+              {Array.from({ length: 10 }).map((_, idx) => {
+                const rank = idx + 1;
+                const active = selectedRank === rank;
+                return (
+                  <button
+                    key={rank}
+                    type="button"
+                    className={`rank-chip${active ? ' selected' : ''}`}
+                    onClick={() => onRankSelect(rank)}
+                    aria-pressed={active}
+                    disabled={!canChoose}
+                  >
+                    {rank}
+                  </button>
+                );
+              })}
+            </div>
+          ) : null}
           <p className="action-hint" data-testid="action-hint">
-            {actionHint(phase, currentPlayer)}
+            {actionHint(phase, currentPlayer, category, selectedRank)}
           </p>
           <p className="pass-note">{passNote}</p>
         </header>
@@ -147,10 +174,10 @@ export default function GameBoard({
             <div className="tile-grid" data-testid="fallback-grid">
               {card.options.map((option, index) => (
                 <AnswerTile
-                  key={`${card.id}-${index}`}
+                  key={`${card.cardId || card.id}-${index}`}
                   index={index}
                   option={option}
-                  state={getTileState(index, selectedIndexes, correctIndexes, revealedIndexes, wrongIndexes)}
+                  state={getTileState(index, selectedIndexes, revealedIndexes, wrongIndexes)}
                   onClick={() => toggleIndex(index)}
                   disabled={!canChoose}
                 />
@@ -158,19 +185,19 @@ export default function GameBoard({
             </div>
           ) : (
             <div className="wheel-board" data-testid="wheel-board" style={{ width: `${wheelSize}px`, height: `${wheelSize}px` }}>
-              <div className="wheel-hub">
-                <span>{card.topic}</span>
+              <div className="wheel-hub" style={{ borderColor: CATEGORY_COLORS[category] || '#f59b1f' }}>
+                <span>{category}</span>
               </div>
               {card.options.map((option, index) => (
                 <div
                   className="wheel-slot"
-                  key={`${card.id}-${index}`}
+                  key={`${card.cardId || card.id}-${index}`}
                   style={{ transform: `translate(calc(-50% + ${wheelPositions[index].x}px), calc(-50% + ${wheelPositions[index].y}px))` }}
                 >
                   <AnswerTile
                     index={index}
                     option={option}
-                    state={getTileState(index, selectedIndexes, correctIndexes, revealedIndexes, wrongIndexes)}
+                    state={getTileState(index, selectedIndexes, revealedIndexes, wrongIndexes)}
                     onClick={() => toggleIndex(index)}
                     disabled={!canChoose}
                   />
@@ -203,17 +230,12 @@ export default function GameBoard({
           ) : null}
           {phase === 'RESOLVED' || phase === 'PASSED' ? (
             <button onClick={onNext} type="button">
-              NEXT CARD
+              NEXT
             </button>
           ) : null}
           {phase === 'LOADING_CARD' ? (
             <button disabled type="button">
               LOADING...
-            </button>
-          ) : null}
-          {phase !== 'CHOOSING' && phase !== 'CONFIRMING' && phase !== 'RESOLVED' && phase !== 'PASSED' && phase !== 'LOADING_CARD' ? (
-            <button disabled type="button">
-              WAITING...
             </button>
           ) : null}
         </footer>
