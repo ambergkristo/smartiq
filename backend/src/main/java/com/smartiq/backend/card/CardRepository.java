@@ -80,4 +80,6 @@ public interface CardRepository extends JpaRepository<Card, String> {
 
     @Query(value = "select topic as topic, count(*) as count from cards group by topic order by topic", nativeQuery = true)
     List<TopicCountView> findTopicCounts();
+
+    long deleteBySourceIn(List<String> sources);
 }

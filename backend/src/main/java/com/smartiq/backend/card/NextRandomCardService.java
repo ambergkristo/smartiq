@@ -144,7 +144,10 @@ public class NextRandomCardService {
     }
 
     static String resolveCategory(Card card) {
-        String raw = card.getSubtopic();
+        String raw = card.getCategory();
+        if (raw == null || raw.isBlank()) {
+            raw = card.getSubtopic();
+        }
         if (raw == null || raw.isBlank()) {
             return "OPEN";
         }

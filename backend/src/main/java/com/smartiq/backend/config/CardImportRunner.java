@@ -37,6 +37,11 @@ public class CardImportRunner implements ApplicationRunner {
             "COLOR",
             "OPEN"
     );
+    private static final List<String> DEPRECATED_SOURCES = List.of(
+            "smartiq-factory",
+            "smartiq-generator-v1",
+            "smart10-generator-v1"
+    );
 
     private final CardRepository cardRepository;
     private final ImportProperties importProperties;
@@ -54,8 +59,17 @@ public class CardImportRunner implements ApplicationRunner {
             return;
         }
 
+        cleanupDeprecatedSources();
+
         resolveImportPaths(importProperties.path())
                 .forEach(this::importPath);
+    }
+
+    private void cleanupDeprecatedSources() {
+        long removed = cardRepository.deleteBySourceIn(DEPRECATED_SOURCES);
+        if (removed > 0) {
+            log.info("Removed deprecated seeded cards count={} sources={}", removed, DEPRECATED_SOURCES);
+        }
     }
 
     private void importPath(Path importPath) {

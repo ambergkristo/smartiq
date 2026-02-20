@@ -176,8 +176,10 @@ class CardControllerTest {
                         .param("language", "en")
                         .param("gameId", "game-1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.language").value("en"));
+                .andExpect(jsonPath("$.cardId").exists())
+                .andExpect(jsonPath("$.language").value("en"))
+                .andExpect(jsonPath("$.correct").exists())
+                .andExpect(jsonPath("$.options.length()").value(10));
     }
 
     @Test
