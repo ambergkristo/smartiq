@@ -38,6 +38,9 @@ jobs:
       - name: Validate ET glossary consistency gate
         run: node ../tools/validate_et_glossary.js ../data/smart10/cards.et.json
 
+      - name: Validate ET overrides contract
+        run: node ../tools/validate_et_overrides.js ../data/smart10/et.localization.overrides.json
+
       - name: Validate ET localization idempotence
         run: python ../tools/localize_et_dataset.py --check
 
