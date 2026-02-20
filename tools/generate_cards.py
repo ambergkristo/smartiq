@@ -668,8 +668,9 @@ def clamp_option(text: str, limit: int = 42) -> str:
     return value if len(value) <= limit else value[: limit - 3].rstrip() + "..."
 
 
-def with_set_label(question: str, card_idx: int) -> str:
-    return f"{question} (set {card_idx + 1})"
+def topic_anchor(topic: str, card_idx: int) -> str:
+    terms = TOPIC_TERMS[topic]
+    return terms[card_idx % len(terms)]
 
 
 def topic_distractors(topic: str, rnd: random.Random, count: int) -> list[str]:
@@ -699,10 +700,11 @@ def build_true_false(topic: str, card_idx: int) -> dict:
     rnd.shuffle(options)
     true_set = set(true_terms)
     correct_indexes = [index for index, statement in enumerate(options) if statement in true_set]
+    anchor = topic_anchor(topic, card_idx)
     return {
-        "question": with_set_label(
-            QUESTION_TEMPLATES["TRUE_FALSE"][card_idx % len(QUESTION_TEMPLATES["TRUE_FALSE"])].format(topic=topic),
-            card_idx,
+        "question": (
+            f"{QUESTION_TEMPLATES['TRUE_FALSE'][card_idx % len(QUESTION_TEMPLATES['TRUE_FALSE'])].format(topic=topic)} "
+            f"Focus area: {anchor}."
         ),
         "options": options,
         "correct": {"correctIndexes": sorted(correct_indexes)},
@@ -735,8 +737,9 @@ def build_number(topic: str, card_idx: int) -> dict:
     options = options[:10]
     rnd.shuffle(options)
     correct_index = options.index(answer)
+    anchor = topic_anchor(topic, card_idx)
     return {
-        "question": with_set_label(f"{topic}: {fact['question']}", card_idx),
+        "question": f"{topic}: {fact['question']} Context tag: {anchor}.",
         "options": [str(value) for value in options],
         "correct": {"correctIndex": correct_index, "answerType": "number"},
     }
@@ -754,11 +757,9 @@ def build_order(topic: str, card_idx: int) -> dict:
     for idx, value in enumerate(options):
         rank_by_index[idx] = rank_lookup[value]
 
+    anchor = topic_anchor(topic, card_idx)
     return {
-        "question": with_set_label(
-            f"{sequence['question']} {ORDER_PROMPTS[card_idx % len(ORDER_PROMPTS)]}",
-            card_idx,
-        ),
+        "question": f"{sequence['question']} {ORDER_PROMPTS[card_idx % len(ORDER_PROMPTS)]} Theme: {anchor}.",
         "options": options,
         "correct": {"rankByIndex": rank_by_index},
     }
@@ -804,7 +805,7 @@ def build_century_decade(topic: str, card_idx: int) -> dict:
     rnd.shuffle(options)
 
     return {
-        "question": with_set_label(question, card_idx),
+        "question": question,
         "options": [clamp_option(x) for x in options],
         "correct": {"correctIndex": options.index(correct_label)},
     }
@@ -827,10 +828,7 @@ def build_color(topic: str, card_idx: int) -> dict:
     rnd.shuffle(options)
 
     return {
-        "question": with_set_label(
-            QUESTION_TEMPLATES["COLOR"][card_idx % len(QUESTION_TEMPLATES["COLOR"])].format(topic=topic, clue=clue),
-            card_idx,
-        ),
+        "question": QUESTION_TEMPLATES["COLOR"][card_idx % len(QUESTION_TEMPLATES["COLOR"])].format(topic=topic, clue=clue),
         "options": options,
         "correct": {"correctIndex": options.index(answer)},
     }
@@ -847,10 +845,11 @@ def build_open(topic: str, card_idx: int) -> dict:
     correct_set = set(correct_items)
     correct_indexes = [idx for idx, item in enumerate(options) if item in correct_set]
 
+    anchor = topic_anchor(topic, card_idx)
     return {
-        "question": with_set_label(
-            QUESTION_TEMPLATES["OPEN"][card_idx % len(QUESTION_TEMPLATES["OPEN"])].format(topic=topic),
-            card_idx,
+        "question": (
+            f"{QUESTION_TEMPLATES['OPEN'][card_idx % len(QUESTION_TEMPLATES['OPEN'])].format(topic=topic)} "
+            f"Topic clue: {anchor}."
         ),
         "options": options,
         "correct": {"correctIndexes": sorted(correct_indexes)},
