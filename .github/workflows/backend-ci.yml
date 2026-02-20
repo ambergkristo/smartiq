@@ -32,6 +32,9 @@ jobs:
       - name: Validate locale packs (EN + ET required)
         run: node ../tools/validate_locale_packs.js ../data/smart10
 
+      - name: Validate ET localization residue gate
+        run: node ../tools/validate_et_localization.js ../data/smart10/cards.et.json
+
       - name: Score Smart10 dataset quality (threshold gate)
         run: node ../tools/score_cards_quality.js ../data/smart10/cards.en.json --fail-threshold=0.80
 
