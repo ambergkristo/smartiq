@@ -61,4 +61,27 @@ describe('GameBoard layout', () => {
     expect(fallback.closest('.answers-shell')).toHaveAttribute('data-layout', 'fallback');
     expect(screen.queryByTestId('wheel-board')).not.toBeInTheDocument();
   });
+
+  test('disables ANSWER until a peg is selected for non-ORDER categories', () => {
+    globalThis.__setResizeObserverWidth(1024);
+    const props = makeProps();
+    const { rerender } = render(<GameBoard {...props} />);
+
+    expect(screen.getByRole('button', { name: 'ANSWER' })).toBeDisabled();
+
+    rerender(<GameBoard {...props} selectedIndexes={new Set([0])} />);
+    expect(screen.getByRole('button', { name: 'ANSWER' })).toBeEnabled();
+  });
+
+  test('requires both rank and peg selection to enable ANSWER for ORDER', () => {
+    globalThis.__setResizeObserverWidth(1024);
+    const props = makeProps();
+    const orderCard = { ...props.card, category: 'ORDER' };
+    const { rerender } = render(<GameBoard {...props} card={orderCard} selectedIndexes={new Set([0])} selectedRank={null} />);
+
+    expect(screen.getByRole('button', { name: 'ANSWER' })).toBeDisabled();
+
+    rerender(<GameBoard {...props} card={orderCard} selectedIndexes={new Set([0])} selectedRank={3} />);
+    expect(screen.getByRole('button', { name: 'ANSWER' })).toBeEnabled();
+  });
 });
