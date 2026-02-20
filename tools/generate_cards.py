@@ -132,13 +132,187 @@ QUESTION_TEMPLATES = {
     ]
 }
 
-STATEMENT_HINT = {
-    "History": "is linked to history.",
-    "Sports": "is linked to sports.",
-    "Geography": "is linked to geography.",
-    "Culture": "is linked to culture.",
-    "Science": "is linked to science.",
-    "Varia": "is linked to everyday life."
+TRUE_FALSE_FACTS = {
+    "History": {
+        "true": [
+            "Magna Carta was signed in 1215.",
+            "WWII ended in 1945.",
+            "Apollo 11 landed in 1969.",
+            "Berlin Wall fell in 1989.",
+            "Napoleon lost at Waterloo.",
+            "Renaissance began in Italy.",
+            "USSR dissolved in 1991.",
+            "Printing press spread in 1400s.",
+            "Roman Republic came before Empire.",
+            "Byzantium centered in Constantinople.",
+            "Cold War followed World War II.",
+            "Caesar was killed in 44 BC."
+        ],
+        "false": [
+            "Magna Carta was signed in 1512.",
+            "WWII ended in 1939.",
+            "Apollo 11 landed in 1959.",
+            "Berlin Wall fell in 1973.",
+            "Napoleon won at Waterloo.",
+            "Renaissance began in Australia.",
+            "USSR dissolved in 1961.",
+            "Printing press spread in 1700s.",
+            "Roman Empire came before Republic.",
+            "Byzantium was centered in Madrid.",
+            "Cold War started before WWI.",
+            "Caesar was killed in 144 BC."
+        ]
+    },
+    "Sports": {
+        "true": [
+            "A hat trick means three goals.",
+            "Wimbledon is a tennis tournament.",
+            "Marathon length is 42.195 km.",
+            "Basketball uses a hoop.",
+            "Offside is a football rule.",
+            "Olympics are held every four years.",
+            "Tour de France is a cycling race.",
+            "Free throw is from basketball.",
+            "Stanley Cup is for ice hockey.",
+            "Rugby uses an oval ball.",
+            "Tennis can be played on clay.",
+            "Cricket uses wickets."
+        ],
+        "false": [
+            "Hat trick means five goals.",
+            "Wimbledon is a golf major.",
+            "Marathon length is 12 km.",
+            "Basketball has no hoops.",
+            "Offside is a tennis rule.",
+            "Olympics happen every year.",
+            "Tour de France is a swim race.",
+            "Free throw is from baseball.",
+            "Stanley Cup is for basketball.",
+            "Rugby uses a ping-pong ball.",
+            "Tennis is only indoor sport.",
+            "Cricket has no bat."
+        ]
+    },
+    "Geography": {
+        "true": [
+            "Canberra is Australia's capital.",
+            "Nile flows through Egypt.",
+            "Sahara is a desert.",
+            "Pacific is the largest ocean.",
+            "Tokyo is in Japan.",
+            "Danube flows through Europe.",
+            "Iceland is an island nation.",
+            "Andes are in South America.",
+            "Lisbon is in Portugal.",
+            "Greenland is mostly ice-covered.",
+            "Himalayas include Mount Everest.",
+            "Ottawa is Canada's capital."
+        ],
+        "false": [
+            "Canberra is in New Zealand.",
+            "Nile flows through Brazil.",
+            "Sahara is a rainforest.",
+            "Atlantic is the largest ocean.",
+            "Tokyo is in South Korea.",
+            "Danube flows through Australia.",
+            "Iceland is in the tropics.",
+            "Andes are in Africa.",
+            "Lisbon is in Spain.",
+            "Greenland is near equator.",
+            "Everest is in the Alps.",
+            "Ottawa is US capital."
+        ]
+    },
+    "Culture": {
+        "true": [
+            "Shakespeare wrote Hamlet.",
+            "Mona Lisa is a painting.",
+            "Mozart was a composer.",
+            "Beatles formed in Liverpool.",
+            "Picasso painted Guernica.",
+            "Ballet is a dance form.",
+            "Opera combines music and drama.",
+            "Jazz began in the United States.",
+            "Van Gogh painted Starry Night.",
+            "The Odyssey is an epic poem.",
+            "Cinema uses moving images.",
+            "Beethoven wrote symphonies."
+        ],
+        "false": [
+            "Shakespeare wrote Don Quixote.",
+            "Mona Lisa is a sculpture.",
+            "Mozart was a film director.",
+            "Beatles formed in Tokyo.",
+            "Picasso painted The Scream.",
+            "Ballet is a martial art.",
+            "Opera has no singing.",
+            "Jazz began in medieval France.",
+            "Van Gogh painted The Last Supper.",
+            "The Odyssey is a modern novel.",
+            "Cinema predates photography.",
+            "Beethoven wrote no music."
+        ]
+    },
+    "Science": {
+        "true": [
+            "Water is H2O.",
+            "Earth orbits the Sun.",
+            "DNA carries genetic information.",
+            "Electrons have negative charge.",
+            "Mars is called the Red Planet.",
+            "Plants use photosynthesis.",
+            "Atoms have a nucleus.",
+            "Sound travels slower than light.",
+            "Gravity attracts mass.",
+            "Neurons transmit signals.",
+            "Oxygen supports combustion.",
+            "Water boils at 100C."
+        ],
+        "false": [
+            "Water is CO2.",
+            "Sun orbits the Earth.",
+            "DNA stores photos.",
+            "Electrons are positively charged.",
+            "Mars is the hottest planet.",
+            "Plants grow without sunlight.",
+            "Atoms have no protons.",
+            "Sound travels faster than light.",
+            "Gravity repels all mass.",
+            "Neurons are only in plants.",
+            "Oxygen cannot support fire.",
+            "Water boils at 10C."
+        ]
+    },
+    "Varia": {
+        "true": [
+            "A week has seven days.",
+            "Passport is travel ID.",
+            "Keyboard is an input device.",
+            "Library lends books.",
+            "Coffee contains caffeine.",
+            "Wallet holds cash or cards.",
+            "Compass points north.",
+            "Ticket can grant entry.",
+            "Recipe lists ingredients.",
+            "Umbrella helps in rain.",
+            "Clock shows time.",
+            "Airport serves air travel."
+        ],
+        "false": [
+            "A week has nine days.",
+            "Passport is a house key.",
+            "Keyboard is a cooking tool.",
+            "Libraries sell cars.",
+            "Coffee is made from plastic.",
+            "Wallet is footwear.",
+            "Compass measures temperature.",
+            "Ticket is always free money.",
+            "Recipe is a tax document.",
+            "Umbrella is for underwater use.",
+            "Clock writes emails.",
+            "Airport is only for trains."
+        ]
+    }
 }
 
 YEAR_BASE = {
@@ -170,24 +344,26 @@ def topic_distractors(topic: str, rnd: random.Random, count: int) -> list[str]:
     return [clamp_option(x) for x in pool[:count]]
 
 
+def pick_unique(pool: list[str], count: int, rnd: random.Random) -> list[str]:
+    values = pool[:]
+    rnd.shuffle(values)
+    return values[:count]
+
+
 def build_true_false(topic: str, card_idx: int) -> dict:
     rnd = random.Random(f"tf-{topic}-{card_idx}")
-    local_terms = TOPIC_TERMS[topic][:]
-    rnd.shuffle(local_terms)
+    fact_pool = TRUE_FALSE_FACTS[topic]
     true_count = [2, 3, 4, 5, 6, 7][card_idx % 6]
+    true_terms = pick_unique(fact_pool["true"], true_count, rnd)
+    false_terms = pick_unique(fact_pool["false"], 10 - true_count, rnd)
 
-    true_terms = local_terms[:true_count]
-    false_terms = topic_distractors(topic, rnd, 10 - true_count)
-
-    hint = STATEMENT_HINT[topic]
-    options = [f"{term} {hint}" for term in true_terms]
-    options.extend(f"{term} {hint}" for term in false_terms)
+    options = true_terms + false_terms
     rnd.shuffle(options)
-
-    correct_indexes = [index for index, statement in enumerate(options) if statement.replace(hint, "").strip() in true_terms]
+    true_set = set(true_terms)
+    correct_indexes = [index for index, statement in enumerate(options) if statement in true_set]
     return {
         "question": QUESTION_TEMPLATES["TRUE_FALSE"][card_idx % len(QUESTION_TEMPLATES["TRUE_FALSE"])].format(topic=topic),
-        "options": [clamp_option(x) for x in options],
+        "options": options,
         "correct": {"correctIndexes": sorted(correct_indexes)},
     }
 
@@ -347,7 +523,7 @@ def build_card(topic: str, category: str, idx: int) -> dict:
         "options": payload["options"],
         "correct": payload["correct"],
         "difficulty": "2",
-        "source": "smart10-v2-curated",
+        "source": "smart10-v4-factual",
     }
 
 
