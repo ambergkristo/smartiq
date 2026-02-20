@@ -1,6 +1,5 @@
 export const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').trim();
 export const USE_SAMPLE_MODE = String(import.meta.env.VITE_USE_SAMPLE || '').toLowerCase() === 'true';
-const DEV_API_DEBUG = import.meta.env.DEV && String(import.meta.env.VITE_DEBUG_API || '').toLowerCase() === 'true';
 
 class ApiError extends Error {
   constructor(message, status, code) {
@@ -185,9 +184,6 @@ export async function fetchNextCard({ topic, difficulty, sessionId, lang, retrie
       difficulty: params.get('difficulty'),
       language: params.get('language')
     });
-    if (DEV_API_DEBUG) {
-      console.info(`[api] Loaded cardId from sample: ${fallbackCard.cardId}`);
-    }
     return fallbackCard;
   }
 
@@ -196,11 +192,7 @@ export async function fetchNextCard({ topic, difficulty, sessionId, lang, retrie
   let lastError = null;
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     try {
-      const card = await fetchJson(url);
-      if (DEV_API_DEBUG && card?.cardId) {
-        console.info(`[api] Loaded cardId from API: ${card.cardId}`);
-      }
-      return card;
+      return await fetchJson(url);
     } catch (error) {
       lastError = error;
       if (!isRetryable(error) || attempt === retries) {
