@@ -2,11 +2,12 @@ export const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').trim();
 export const USE_SAMPLE_MODE = String(import.meta.env.VITE_USE_SAMPLE || '').toLowerCase() === 'true';
 
 class ApiError extends Error {
-  constructor(message, status, code) {
+  constructor(message, status, code, detail = null) {
     super(message);
     this.name = 'ApiError';
     this.status = status;
     this.code = code;
+    this.detail = detail;
   }
 }
 
@@ -76,7 +77,16 @@ async function fetchJson(url, { timeoutMs = 8000 } = {}) {
   try {
     const res = await fetch(url, { signal: controller.signal });
     if (!res.ok) {
-      throw new ApiError(`Request failed: ${res.status}`, res.status, 'HTTP_ERROR');
+      let detail = null;
+      try {
+        const payload = await res.json();
+        if (payload && typeof payload.error === 'string') {
+          detail = payload.error;
+        }
+      } catch {
+        detail = null;
+      }
+      throw new ApiError(`Request failed: ${res.status}`, res.status, 'HTTP_ERROR', detail);
     }
     return res.json();
   } catch (error) {
@@ -261,6 +271,9 @@ export function resolveCardErrorMessage(error) {
   }
 
   if (error?.status === 404) {
+    if (typeof error?.detail === 'string' && error.detail.trim().length > 0) {
+      return `Not found. ${error.detail}`;
+    }
     return 'Not found. Question bank is empty for this filter.';
   }
 
