@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import argparse
 import json
 import re
 from pathlib import Path
@@ -491,8 +492,7 @@ def localize_order_option(value: str) -> str:
     return lowered[:1].upper() + lowered[1:] if lowered else lowered
 
 
-def main() -> None:
-    raw = INPUT_PATH.read_text(encoding="utf-8")
+def localize_cards(raw: str) -> tuple[list[dict], str]:
     cards = json.loads(raw)
     if not isinstance(cards, list):
         raise SystemExit("cards.et.json must be a JSON array")
@@ -522,7 +522,28 @@ def main() -> None:
         card["options"] = [cleanup_text(str(option)) for option in card["options"]]
         card["options"] = [apply_external_replacements(str(option), external_replacements) for option in card["options"]]
 
-    INPUT_PATH.write_text(json.dumps(cards, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    rendered = json.dumps(cards, ensure_ascii=False, indent=2) + "\n"
+    return cards, rendered
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Localize ET SmartIQ cards")
+    parser.add_argument("--check", action="store_true", help="Fail if localization output differs from current file")
+    args = parser.parse_args()
+
+    raw = INPUT_PATH.read_text(encoding="utf-8")
+    cards, rendered = localize_cards(raw)
+
+    if args.check:
+        if raw != rendered:
+            raise SystemExit(
+                f"ET localization drift detected for {INPUT_PATH}. "
+                "Run: python tools/localize_et_dataset.py"
+            )
+        print(f"ET localization check passed for {len(cards)} cards in {INPUT_PATH}")
+        return
+
+    INPUT_PATH.write_text(rendered, encoding="utf-8")
     print(f"Localized {len(cards)} ET cards in {INPUT_PATH}")
 
 
