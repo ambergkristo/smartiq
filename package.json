@@ -15,7 +15,7 @@
     "validate:cards": "node tools/validate_cards_v2.js data/smart10/cards.en.json --max-warnings=0",
     "validate:locale-packs": "node tools/validate_locale_packs.js data/smart10",
     "score:cards:quality": "node tools/score_cards_quality.js data/smart10/cards.en.json",
-    "score:cards:quality:ci": "node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.70",
+    "score:cards:quality:ci": "node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.80",
     "validate:cards:legacy": "node tools/validate-cards.js data/smart10/cards.en.json",
     "test:golden": "node tools/validate-cards.js data/clean/golden/golden.dataset.json",
     "pipeline:cards": "node tools/build-content-pipeline.js",
