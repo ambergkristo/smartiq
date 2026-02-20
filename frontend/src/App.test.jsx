@@ -78,4 +78,26 @@ describe('App Smart10 round flow', () => {
 
     await waitFor(() => expect(screen.getByText(/question c2/i)).toBeInTheDocument());
   });
+
+  test('reuses persisted gameId for next card requests', async () => {
+    localStorage.setItem('smartiq.gameId', 'persisted-game-id');
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    fetchNextCard.mockResolvedValueOnce(makeCard('c1', 0));
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
+    const playersInput = screen.getByLabelText(/players/i);
+    fireEvent.change(playersInput, { target: { value: 'Alice' } });
+    fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
+    fireEvent.click(screen.getByRole('button', { name: /start game/i }));
+
+    await waitFor(() =>
+      expect(fetchNextCard).toHaveBeenCalledWith(
+        expect.objectContaining({
+          sessionId: 'persisted-game-id'
+        })
+      )
+    );
+  });
 });
