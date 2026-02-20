@@ -14,6 +14,7 @@
     "review:summary": "node tools/review-summary.js",
     "validate:cards": "node tools/validate_cards_v2.js data/smart10/cards.en.json",
     "score:cards:quality": "node tools/score_cards_quality.js data/smart10/cards.en.json",
+    "score:cards:quality:ci": "node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.60",
     "validate:cards:legacy": "node tools/validate-cards.js data/smart10/cards.en.json",
     "test:golden": "node tools/validate-cards.js data/clean/golden/golden.dataset.json",
     "pipeline:cards": "node tools/build-content-pipeline.js",

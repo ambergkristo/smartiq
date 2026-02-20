@@ -63,6 +63,11 @@ Use strict mode locally when needed:
 
 - `node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.70`
 
+CI threshold gate:
+
+- Backend CI enforces `--fail-threshold=0.60` as a baseline regression guard.
+- Raise this threshold gradually as dataset diversity improves.
+
 ## Runtime Source Guard
 
 `/api/cards/nextRandom` only serves cards from allowed sources:
