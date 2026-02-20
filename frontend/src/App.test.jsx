@@ -5,7 +5,7 @@ vi.mock('./api', () => {
   return {
     API_BASE: 'http://localhost:8080',
     fetchTopics: vi.fn(),
-    fetchNextRandomCard: vi.fn(),
+    fetchNextCard: vi.fn(),
     resolveCardErrorMessage: vi.fn(() => 'Fallback mode'),
     resolveTopicsErrorState: vi.fn(() => ({
       title: 'Could not load topics.',
@@ -15,7 +15,7 @@ vi.mock('./api', () => {
   };
 });
 
-import { fetchNextRandomCard, fetchTopics } from './api';
+import { fetchNextCard, fetchTopics } from './api';
 
 function makeCard(id, correctIndex = 0) {
   return {
@@ -39,7 +39,7 @@ describe('App Smart10 round flow', () => {
 
   test('plays one-card round and advances to next round', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
-    fetchNextRandomCard
+    fetchNextCard
       .mockResolvedValueOnce(makeCard('c1', 0))
       .mockResolvedValueOnce(makeCard('c2', 1));
 
@@ -56,10 +56,10 @@ describe('App Smart10 round flow', () => {
 
     await waitFor(() => expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument());
     await waitFor(() =>
-      expect(fetchNextRandomCard).toHaveBeenCalledWith(
+      expect(fetchNextCard).toHaveBeenCalledWith(
         expect.objectContaining({
-          language: 'en',
-          gameId: expect.any(String)
+          lang: 'en',
+          sessionId: expect.any(String)
         })
       )
     );
