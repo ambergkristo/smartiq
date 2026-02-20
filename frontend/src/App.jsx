@@ -74,6 +74,8 @@ function SetupSkeleton() {
 function StartScreen({ topics, config, setConfig, onStart }) {
   const players = parsePlayers(config.playersText);
   const canStart = players.length > 0;
+  const activeTopic = config.topic || 'Any Topic';
+  const activeLanguage = String(config.lang || 'en').toUpperCase();
 
   function addPlayers(rawValue) {
     const incoming = parsePlayers(rawValue);
@@ -154,6 +156,9 @@ function StartScreen({ topics, config, setConfig, onStart }) {
           );
         })}
       </div>
+      <p className="field-hint active-filter" data-testid="active-filter">
+        Active filter: {activeTopic} | {activeLanguage}
+      </p>
 
       <label htmlFor="players">Players</label>
       <input

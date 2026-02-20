@@ -64,6 +64,7 @@ describe('App startup resilience', () => {
 
     await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
     expect(screen.getByRole('radiogroup', { name: /topic options/i })).toBeInTheDocument();
+    expect(screen.getByTestId('active-filter')).toHaveTextContent(/any topic \| en/i);
   });
 
   test('maps forbidden state with explicit message', async () => {
