@@ -36,7 +36,15 @@ describe('api error mapping', () => {
       status: 404,
       code: 'HTTP_ERROR',
       detail: 'No cards available for language=et, topic=any'
-    })).toContain('No cards available for language=et, topic=any');
+    })).toContain('No playable cards for this filter');
+  });
+
+  test('keeps generic backend detail for non-deck 404 errors', () => {
+    expect(resolveCardErrorMessage({
+      status: 404,
+      code: 'HTTP_ERROR',
+      detail: 'Card id not found'
+    })).toContain('Not found. Card id not found');
   });
 
   test('builds cards/next query with backend contract params', () => {
