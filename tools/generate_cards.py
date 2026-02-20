@@ -315,6 +315,340 @@ TRUE_FALSE_FACTS = {
     }
 }
 
+NUMBER_FACTS = {
+    "History": [
+        {"question": "In which year did WWII end?", "answer": 1945},
+        {"question": "In which year did Berlin Wall fall?", "answer": 1989},
+        {"question": "In which year did Apollo 11 land?", "answer": 1969},
+        {"question": "In which year was Magna Carta signed?", "answer": 1215},
+        {"question": "In which year did USSR dissolve?", "answer": 1991},
+        {"question": "In which year did WWI start?", "answer": 1914},
+    ],
+    "Sports": [
+        {"question": "Players on football team on field?", "answer": 11},
+        {"question": "Points for a basketball free throw?", "answer": 1},
+        {"question": "Holes in a standard golf round?", "answer": 18},
+        {"question": "Sets to win men's Grand Slam match?", "answer": 3},
+        {"question": "Distance of marathon in kilometers?", "answer": 42},
+        {"question": "Minutes in one football half?", "answer": 45},
+    ],
+    "Geography": [
+        {"question": "How many continents are commonly listed?", "answer": 7},
+        {"question": "How many oceans are commonly named?", "answer": 5},
+        {"question": "How many countries are in the EU (2026)?", "answer": 27},
+        {"question": "How many US states are there?", "answer": 50},
+        {"question": "How many time zones does China use?", "answer": 1},
+        {"question": "How many degrees in a full circle?", "answer": 360},
+    ],
+    "Culture": [
+        {"question": "How many strings on a violin?", "answer": 4},
+        {"question": "How many books in LOTR trilogy?", "answer": 3},
+        {"question": "How many Oscars in EGOT acronym?", "answer": 4},
+        {"question": "How many Harry Potter books exist?", "answer": 7},
+        {"question": "How many acts in a classical drama?", "answer": 5},
+        {"question": "How many lines in a Shakespeare sonnet?", "answer": 14},
+    ],
+    "Science": [
+        {"question": "How many planets in Solar System?", "answer": 8},
+        {"question": "How many bones in adult human body?", "answer": 206},
+        {"question": "How many elements in periodic table?", "answer": 118},
+        {"question": "How many DNA bases are canonical?", "answer": 4},
+        {"question": "How many minutes in one day?", "answer": 1440},
+        {"question": "How many protons does carbon have?", "answer": 6},
+    ],
+    "Varia": [
+        {"question": "How many days in leap year?", "answer": 366},
+        {"question": "How many months in one year?", "answer": 12},
+        {"question": "How many hours in one day?", "answer": 24},
+        {"question": "How many minutes in one hour?", "answer": 60},
+        {"question": "How many letters in English alphabet?", "answer": 26},
+        {"question": "How many days in one week?", "answer": 7},
+    ],
+}
+
+ORDER_SEQUENCES = {
+    "History": [
+        {
+            "question": "History: Order earliest to latest.",
+            "ordered": [
+                "Magna Carta signed",
+                "Columbus reaches Americas",
+                "French Revolution starts",
+                "Battle of Waterloo",
+                "WWI begins",
+                "WWII begins",
+                "WWII ends",
+                "Apollo 11 landing",
+                "Berlin Wall falls",
+                "USSR dissolves",
+            ],
+        },
+        {
+            "question": "History: Order oldest era to newest.",
+            "ordered": [
+                "Bronze Age",
+                "Iron Age",
+                "Classical Antiquity",
+                "Middle Ages",
+                "Renaissance",
+                "Enlightenment",
+                "Industrial Revolution",
+                "World War I",
+                "World War II",
+                "Cold War",
+            ],
+        },
+        {
+            "question": "History: Order dates from past to recent.",
+            "ordered": ["1066", "1215", "1492", "1776", "1789", "1815", "1914", "1939", "1969", "1989"],
+        },
+    ],
+    "Sports": [
+        {
+            "question": "Sports: Order by distance, shortest first.",
+            "ordered": [
+                "100m sprint",
+                "200m sprint",
+                "400m sprint",
+                "800m run",
+                "1500m run",
+                "5000m run",
+                "10000m run",
+                "Half marathon",
+                "Marathon",
+                "50km race walk",
+            ],
+        },
+        {
+            "question": "Sports: Order by event duration, shortest first.",
+            "ordered": [
+                "Table tennis rally",
+                "100m sprint race",
+                "Boxing round",
+                "Basketball quarter",
+                "Football half",
+                "Rugby half",
+                "Tennis set",
+                "Baseball game",
+                "Cricket T20 match",
+                "Test cricket day",
+            ],
+        },
+        {
+            "question": "Sports: Order by players per side, low to high.",
+            "ordered": [
+                "Tennis singles",
+                "Beach volleyball",
+                "Basketball",
+                "Volleyball",
+                "Water polo",
+                "Rugby union",
+                "Baseball",
+                "Cricket",
+                "Football",
+                "Aussie rules football",
+            ],
+        },
+    ],
+    "Geography": [
+        {
+            "question": "Geography: Order countries by area, small to large.",
+            "ordered": [
+                "Iceland",
+                "United Kingdom",
+                "France",
+                "Ukraine",
+                "India",
+                "Argentina",
+                "Kazakhstan",
+                "China",
+                "Canada",
+                "Russia",
+            ],
+        },
+        {
+            "question": "Geography: Order city latitude south to north.",
+            "ordered": [
+                "Canberra",
+                "Cape Town",
+                "Buenos Aires",
+                "Nairobi",
+                "Singapore",
+                "Cairo",
+                "Athens",
+                "Paris",
+                "Stockholm",
+                "Reykjavik",
+            ],
+        },
+        {
+            "question": "Geography: Order mountain heights, low to high.",
+            "ordered": [
+                "Mont Blanc",
+                "Denali",
+                "Kilimanjaro",
+                "Aconcagua",
+                "Elbrus",
+                "Vinson Massif",
+                "K2",
+                "Kangchenjunga",
+                "Lhotse",
+                "Everest",
+            ],
+        },
+    ],
+    "Culture": [
+        {
+            "question": "Culture: Order art periods earliest to latest.",
+            "ordered": [
+                "Classical art",
+                "Medieval art",
+                "Renaissance",
+                "Baroque",
+                "Neoclassicism",
+                "Romanticism",
+                "Impressionism",
+                "Cubism",
+                "Surrealism",
+                "Pop art",
+            ],
+        },
+        {
+            "question": "Culture: Order release year, oldest first.",
+            "ordered": [
+                "Citizen Kane",
+                "Casablanca",
+                "Psycho",
+                "The Godfather",
+                "Jaws",
+                "Star Wars",
+                "Blade Runner",
+                "Pulp Fiction",
+                "The Matrix",
+                "Inception",
+            ],
+        },
+        {
+            "question": "Culture: Order literary periods by start.",
+            "ordered": [
+                "Epic poetry age",
+                "Classical drama",
+                "Medieval literature",
+                "Renaissance literature",
+                "Enlightenment writing",
+                "Romanticism",
+                "Realism",
+                "Modernism",
+                "Postmodernism",
+                "Contemporary fiction",
+            ],
+        },
+    ],
+    "Science": [
+        {
+            "question": "Science: Order planets from Sun outward.",
+            "ordered": [
+                "Mercury",
+                "Venus",
+                "Earth",
+                "Mars",
+                "Jupiter",
+                "Saturn",
+                "Uranus",
+                "Neptune",
+                "Pluto",
+                "Eris",
+            ],
+        },
+        {
+            "question": "Science: Order SI prefixes small to large.",
+            "ordered": [
+                "nano",
+                "micro",
+                "milli",
+                "centi",
+                "deci",
+                "base unit",
+                "deca",
+                "hecto",
+                "kilo",
+                "mega",
+            ],
+        },
+        {
+            "question": "Science: Order scale from smallest upward.",
+            "ordered": [
+                "atom",
+                "molecule",
+                "virus",
+                "bacterium",
+                "cell",
+                "tissue",
+                "organ",
+                "organism",
+                "population",
+                "ecosystem",
+            ],
+        },
+    ],
+    "Varia": [
+        {
+            "question": "Varia: Order time units shortest to longest.",
+            "ordered": [
+                "second",
+                "minute",
+                "hour",
+                "day",
+                "week",
+                "month",
+                "year",
+                "decade",
+                "century",
+                "millennium",
+            ],
+        },
+        {
+            "question": "Varia: Order file sizes smallest to largest.",
+            "ordered": [
+                "bit",
+                "byte",
+                "kilobyte",
+                "megabyte",
+                "gigabyte",
+                "terabyte",
+                "petabyte",
+                "exabyte",
+                "zettabyte",
+                "yottabyte",
+            ],
+        },
+        {
+            "question": "Varia: Order currency values low to high.",
+            "ordered": [
+                "1 cent",
+                "5 cents",
+                "10 cents",
+                "25 cents",
+                "50 cents",
+                "1 dollar",
+                "2 dollars",
+                "5 dollars",
+                "10 dollars",
+                "20 dollars",
+            ],
+        },
+    ],
+}
+
+ORDER_PROMPTS = [
+    "Use strict ascending order.",
+    "Place earliest/lowest at rank 1.",
+    "Build one correct sequence.",
+    "Rank all options from first to last.",
+    "Do not skip any rank.",
+    "Each rank is used exactly once.",
+]
+
 YEAR_BASE = {
     "History": 1066,
     "Sports": 1896,
@@ -370,18 +704,23 @@ def build_true_false(topic: str, card_idx: int) -> dict:
 
 def build_number(topic: str, card_idx: int) -> dict:
     rnd = random.Random(f"num-{topic}-{card_idx}")
-    term = TOPIC_TERMS[topic][card_idx % len(TOPIC_TERMS[topic])]
-    answer = len(term.replace(" ", "").replace("-", ""))
-    offsets = [0, -1, 1, -2, 2, -3, 3, -4, 4, 5]
+    fact = NUMBER_FACTS[topic][card_idx % len(NUMBER_FACTS[topic])]
+    answer = int(fact["answer"])
+    if answer <= 20:
+        offsets = [0, -1, 1, -2, 2, -3, 3, -4, 4, 5]
+    elif answer <= 200:
+        offsets = [0, -2, 2, -5, 5, -8, 8, -10, 10, 12]
+    else:
+        offsets = [0, -5, 5, -10, 10, -20, 20, -30, 30, 40]
     options = []
     for off in offsets:
-        value = max(2, answer + off)
+        value = max(1, answer + off)
         if value not in options:
             options.append(value)
-    spread = 6
+    spread = max(6, answer // 10)
     while len(options) < 10:
         candidate = answer + rnd.randint(-spread, spread)
-        spread += 1
+        spread += max(1, spread // 5)
         if candidate < 1:
             continue
         if candidate not in options:
@@ -390,7 +729,7 @@ def build_number(topic: str, card_idx: int) -> dict:
     rnd.shuffle(options)
     correct_index = options.index(answer)
     return {
-        "question": QUESTION_TEMPLATES["NUMBER"][card_idx % len(QUESTION_TEMPLATES["NUMBER"])].format(topic=topic, term=term),
+        "question": f"{topic}: {fact['question']}",
         "options": [str(value) for value in options],
         "correct": {"correctIndex": correct_index, "answerType": "number"},
     }
@@ -398,18 +737,18 @@ def build_number(topic: str, card_idx: int) -> dict:
 
 def build_order(topic: str, card_idx: int) -> dict:
     rnd = random.Random(f"order-{topic}-{card_idx}")
-    candidates = TOPIC_TERMS[topic][:]
-    rnd.shuffle(candidates)
-    picked = candidates[:10]
-    options = [clamp_option(item) for item in picked]
+    sequence = ORDER_SEQUENCES[topic][card_idx % len(ORDER_SEQUENCES[topic])]
+    ordered_values = [clamp_option(item) for item in sequence["ordered"]]
+    options = ordered_values[:]
+    rnd.shuffle(options)
 
-    ranked = sorted((value.lower(), idx) for idx, value in enumerate(options))
+    rank_lookup = {value: rank for rank, value in enumerate(ordered_values, start=1)}
     rank_by_index = [0] * 10
-    for rank, (_, idx) in enumerate(ranked, start=1):
-        rank_by_index[idx] = rank
+    for idx, value in enumerate(options):
+        rank_by_index[idx] = rank_lookup[value]
 
     return {
-        "question": QUESTION_TEMPLATES["ORDER"][card_idx % len(QUESTION_TEMPLATES["ORDER"])].format(topic=topic),
+        "question": f"{sequence['question']} {ORDER_PROMPTS[card_idx % len(ORDER_PROMPTS)]}",
         "options": options,
         "correct": {"rankByIndex": rank_by_index},
     }
@@ -522,7 +861,7 @@ def build_card(topic: str, category: str, idx: int) -> dict:
         "options": payload["options"],
         "correct": payload["correct"],
         "difficulty": "2",
-        "source": "smart10-v5-open-factual",
+        "source": "smart10-v6-number-order",
     }
 
 
