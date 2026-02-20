@@ -214,7 +214,8 @@ export async function fetchNextCard({ topic, difficulty, sessionId, lang, retrie
     }));
   }
 
-  const url = `${API_BASE}/api/cards/next?${params.toString()}`;
+  const gameId = sessionId || 'local-dev';
+  const url = `${API_BASE}/api/cards/nextRandom?language=${lang || 'en'}&gameId=${gameId}${topic ? `&topic=${topic}` : ''}`;
 
   let lastError = null;
   for (let attempt = 0; attempt <= retries; attempt += 1) {
