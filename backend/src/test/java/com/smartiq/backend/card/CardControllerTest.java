@@ -174,7 +174,8 @@ class CardControllerTest {
     void returnsNextRandomCardForGameIdAndLanguage() throws Exception {
         mockMvc.perform(get("/api/cards/nextRandom")
                         .param("language", "en")
-                        .param("gameId", "game-1"))
+                        .param("gameId", "game-1")
+                        .param("topic", "Math"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.cardId").exists())
                 .andExpect(jsonPath("$.language").value("en"))
