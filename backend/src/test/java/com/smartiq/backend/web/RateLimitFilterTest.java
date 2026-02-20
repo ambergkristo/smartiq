@@ -50,7 +50,7 @@ class RateLimitFilterTest {
         card.setOptions(List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"));
         card.setCorrectIndex(0);
         card.setDifficulty("1");
-        card.setSource("test");
+        card.setSource("smartiq-v2");
         card.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
         cardRepository.save(card);
     }

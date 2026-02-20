@@ -6,10 +6,12 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.smartiq.backend.card.Card;
 import com.smartiq.backend.card.CardRepository;
+import com.smartiq.backend.card.LabelCountView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -21,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.LinkedHashMap;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -42,34 +46,80 @@ public class CardImportRunner implements ApplicationRunner {
             "smartiq-generator-v1",
             "smart10-generator-v1"
     );
+    private static final List<String> ALLOWED_SOURCES = List.of(
+            "smartiq-v2",
+            "smartiq-human",
+            "smartiq-verified"
+    );
 
     private final CardRepository cardRepository;
     private final ImportProperties importProperties;
     private final ObjectMapper objectMapper;
+    private final int minimumCategoryThreshold;
 
-    public CardImportRunner(CardRepository cardRepository, ImportProperties importProperties, ObjectMapper objectMapper) {
+    public CardImportRunner(CardRepository cardRepository,
+                            ImportProperties importProperties,
+                            ObjectMapper objectMapper,
+                            @Value("${smartiq.dataset.min-category-threshold:100}") int minimumCategoryThreshold) {
         this.cardRepository = cardRepository;
         this.importProperties = importProperties;
         this.objectMapper = objectMapper;
+        this.minimumCategoryThreshold = minimumCategoryThreshold;
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        if (!importProperties.enabled()) {
-            return;
+        warnIfDeprecatedSourcesDetected();
+
+        if (importProperties.enabled()) {
+            cleanupDeprecatedSources();
+            resolveImportPaths(importProperties.path())
+                    .forEach(this::importPath);
         }
 
-        cleanupDeprecatedSources();
-
-        resolveImportPaths(importProperties.path())
-                .forEach(this::importPath);
+        logDatasetSummary();
     }
 
     private void cleanupDeprecatedSources() {
-        long removed = cardRepository.deleteBySourceIn(DEPRECATED_SOURCES);
+        long removed = cardRepository.deleteBySourcesLower(DEPRECATED_SOURCES);
         if (removed > 0) {
             log.info("Removed deprecated seeded cards count={} sources={}", removed, DEPRECATED_SOURCES);
         }
+    }
+
+    private void warnIfDeprecatedSourcesDetected() {
+        long deprecatedCount = cardRepository.countBySourcesLower(DEPRECATED_SOURCES);
+        if (deprecatedCount > 0) {
+            log.warn("Deprecated card sources detected in DB count={} sources={}", deprecatedCount, DEPRECATED_SOURCES);
+        }
+    }
+
+    private void logDatasetSummary() {
+        long totalCards = cardRepository.count();
+        Map<String, Long> categories = toCountMap(cardRepository.findCategoryCounts());
+        Map<String, Long> topics = cardRepository.findTopicCounts().stream()
+                .collect(LinkedHashMap::new, (map, item) -> map.put(item.getTopic(), item.getCount()), Map::putAll);
+        Map<String, Long> languages = toCountMap(cardRepository.findLanguageCounts());
+        long allowedSourceCards = cardRepository.countBySourcesLower(ALLOWED_SOURCES);
+
+        log.info("Dataset summary total={} categories={} topics={} languages={} allowedSourceCards={}",
+                totalCards, categories, topics, languages, allowedSourceCards);
+
+        for (String category : VALID_CATEGORIES) {
+            long count = categories.getOrDefault(category, 0L);
+            if (count < minimumCategoryThreshold) {
+                log.error("Dataset category below threshold category={} count={} minThreshold={}",
+                        category, count, minimumCategoryThreshold);
+            }
+        }
+    }
+
+    private static Map<String, Long> toCountMap(List<LabelCountView> counts) {
+        Map<String, Long> map = new LinkedHashMap<>();
+        for (LabelCountView item : counts) {
+            map.put(item.getLabel(), item.getCount());
+        }
+        return map;
     }
 
     private void importPath(Path importPath) {

@@ -3,7 +3,7 @@
 Monthly content refresh follows:
 
 1. Generate raw cards (`tools/generate-cards.js`).
-2. Validate schema and normalization (`tools/validate-cards.js`).
+2. Validate schema and normalization (`tools/validate_cards_v2.js`).
 3. Agent review/prune simulation (`tools/review-cards.js`).
 4. Merge approved set into `data/clean/generated.latest.clean.json`.
 5. Backend import consumes only `data/clean`.

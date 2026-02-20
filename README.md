@@ -138,7 +138,7 @@ npm --prefix frontend run build
 Data validation:
 
 ```bash
-node tools/validate-cards.js data/clean
+node tools/validate_cards_v2.js data/smart10/cards.en.json
 ```
 
 Content refresh pipeline (generate -> review -> validate):
@@ -228,6 +228,12 @@ Manual e2e checklist script:
 bash tools/manual-e2e.sh
 ```
 
+Runtime deck verification:
+
+```bash
+node scripts/verify_runtime_deck.js
+```
+
 ## Data Pipeline
 
 - Raw card inputs live in `data/raw/`.
@@ -235,6 +241,7 @@ bash tools/manual-e2e.sh
 - Backend boot import scans JSON files from `data/clean` and `out` by default.
 - You can override import sources with `SMARTIQ_IMPORT_PATH` (comma-separated paths).
 - Pipeline details: `docs/data-pipeline.md`
+- Dataset quality guardrails: `docs/dataset-quality.md`
 
 ## CI
 

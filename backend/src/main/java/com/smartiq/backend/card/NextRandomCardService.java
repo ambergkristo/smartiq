@@ -24,10 +24,10 @@ public class NextRandomCardService {
     private static final Logger log = LoggerFactory.getLogger(NextRandomCardService.class);
 
     static final int LAST_K_DEFAULT = 20;
-    private static final List<String> EXCLUDED_SOURCES = List.of(
-            "smartiq-factory",
-            "smartiq-generator-v1",
-            "smart10-generator-v1"
+    private static final List<String> ALLOWED_SOURCES = List.of(
+            "smartiq-v2",
+            "smartiq-human",
+            "smartiq-verified"
     );
     private static final int MAX_TRACKED_GAMES = 10_000;
     private static final long TTL_MILLIS = Duration.ofHours(2).toMillis();
@@ -48,7 +48,7 @@ public class NextRandomCardService {
 
         maybeCleanup();
 
-        List<Card> pool = cardRepository.findDeckPool(normalizedLanguage, normalizedTopic, EXCLUDED_SOURCES);
+        List<Card> pool = cardRepository.findDeckPool(normalizedLanguage, normalizedTopic, ALLOWED_SOURCES);
         if (pool.isEmpty()) {
             String topicPart = normalizedTopic == null ? "any" : normalizedTopic;
             throw new NoSuchElementException("No cards available for language=" + normalizedLanguage + ", topic=" + topicPart);
