@@ -19,6 +19,7 @@
     "validate:cards:et:localization": "node tools/validate_et_localization.js data/smart10/cards.et.json",
     "validate:cards:et:glossary": "node tools/validate_et_glossary.js data/smart10/cards.et.json",
     "validate:cards:et:overrides": "node tools/validate_et_overrides.js data/smart10/et.localization.overrides.json",
+    "validate:cards:et:pipeline": "node tools/validate_et_pipeline.js data/smart10",
     "validate:locale-packs": "node tools/validate_locale_packs.js data/smart10",
     "score:cards:quality": "node tools/score_cards_quality.js data/smart10/cards.en.json",
     "score:cards:quality:et": "node tools/score_cards_quality.js data/smart10/cards.et.json",

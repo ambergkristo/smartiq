@@ -32,6 +32,8 @@ This document defines the technical baseline for Estonian (`et`) locale support 
   - `node tools/validate_et_overrides.js data/smart10/et.localization.overrides.json`
 - ET localization idempotence validator:
   - `python tools/localize_et_dataset.py --check`
+- ET full validation pipeline:
+  - `node tools/validate_et_pipeline.js data/smart10`
 
 Locale-pack validator rules:
 
@@ -44,18 +46,15 @@ Locale-pack validator rules:
 Backend CI runs:
 
 1. strict EN validation,
-2. strict ET validation (via locale pack gate),
-3. ET localization residue gate (forbidden EN scaffolding fragments),
-4. ET glossary consistency gate (forbidden legacy ET variants),
-5. ET overrides contract gate (override map shape + duplicate guard),
-6. ET localization idempotence gate (generated output must match tracked ET file),
-7. quality score gates for EN and ET.
+2. ET validation pipeline (locale pack + localization residue + glossary + overrides + idempotence),
+3. quality score gates for EN and ET.
 
 ## ET Quality Checklist (Next Milestone)
 
 1. Keep ET card contract aligned with EN.
 2. Run:
    - `python tools/localize_et_dataset.py`
+   - `node tools/validate_et_pipeline.js data/smart10`
    - `python tools/localize_et_dataset.py --check`
    - `node tools/validate_cards_v2.js data/smart10/cards.et.json --max-warnings=0`
    - `node tools/validate_et_localization.js data/smart10/cards.et.json`
