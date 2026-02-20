@@ -204,18 +204,22 @@ function isRetryable(error) {
 
 export async function fetchNextCard({ topic, difficulty, sessionId, lang, retries = 2 }) {
   requireApiBase();
-  const params = buildNextCardQuery({ topic, difficulty, language: lang });
-  if (sessionId) params.set('sessionId', sessionId);
   if (USE_SAMPLE_MODE) {
     return normalizeCardPayload(sampleCard({
       topic,
-      difficulty: params.get('difficulty'),
-      language: params.get('language')
+      difficulty: normalizeDifficulty(difficulty),
+      language: normalizeLanguage(lang)
     }));
   }
 
   const gameId = sessionId || 'local-dev';
-  const url = `${API_BASE}/api/cards/nextRandom?language=${lang || 'en'}&gameId=${gameId}${topic ? `&topic=${topic}` : ''}`;
+  const params = new URLSearchParams();
+  params.set('language', normalizeLanguage(lang));
+  params.set('gameId', gameId);
+  if (topic) {
+    params.set('topic', String(topic));
+  }
+  const url = `${API_BASE}/api/cards/nextRandom?${params.toString()}`;
 
   let lastError = null;
   for (let attempt = 0; attempt <= retries; attempt += 1) {
@@ -235,28 +239,12 @@ export async function fetchNextCard({ topic, difficulty, sessionId, lang, retrie
 }
 
 export async function fetchNextRandomCard({ language, gameId, topic, retries = 2 }) {
-  const params = new URLSearchParams();
-  if (language) params.set('language', language);
-  if (gameId) params.set('gameId', gameId);
-  if (topic) params.set('topic', topic);
-
-  const url = `${API_BASE}/api/cards/nextRandom?${params.toString()}`;
-
-  let lastError = null;
-  for (let attempt = 0; attempt <= retries; attempt += 1) {
-    try {
-      const card = await fetchJson(url);
-      return normalizeCardPayload(card);
-    } catch (error) {
-      lastError = error;
-      if (!isRetryable(error) || attempt === retries) {
-        throw error;
-      }
-      await delay(250 * (attempt + 1));
-    }
-  }
-
-  throw lastError;
+  return fetchNextCard({
+    topic,
+    sessionId: gameId,
+    lang: language,
+    retries
+  });
 }
 
 export function resolveCardErrorMessage(error) {

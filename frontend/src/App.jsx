@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { API_BASE, fetchNextRandomCard, fetchTopics, resolveCardErrorMessage, resolveTopicsErrorState } from './api';
+import { API_BASE, fetchNextCard, fetchTopics, resolveCardErrorMessage, resolveTopicsErrorState } from './api';
 import GameBoard from './components/GameBoard';
 import RoundSummary from './components/RoundSummary';
 import { useGameEngine } from './state/useGameEngine';
@@ -336,10 +336,10 @@ export default function App() {
 
       try {
         setCardError('');
-        const card = await fetchNextRandomCard({
+        const card = await fetchNextCard({
           topic: config.topic || undefined,
-          language: config.lang,
-          gameId
+          lang: config.lang,
+          sessionId: gameId
         });
         cardLoaded(card);
       } catch (error) {
