@@ -11,10 +11,11 @@ function normalize(value) {
 }
 
 function runValidator(filePath) {
+  const validatorScript = path.resolve(__dirname, 'validate_cards_v2.js');
   const proc = spawnSync(
     process.execPath,
-    ['tools/validate_cards_v2.js', filePath, '--max-warnings=0'],
-    { stdio: 'inherit', cwd: process.cwd() }
+    [validatorScript, filePath, '--max-warnings=0'],
+    { stdio: 'inherit' }
   );
   return proc.status ?? 1;
 }
