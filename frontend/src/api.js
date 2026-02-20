@@ -272,6 +272,9 @@ export function resolveCardErrorMessage(error) {
 
   if (error?.status === 404) {
     if (typeof error?.detail === 'string' && error.detail.trim().length > 0) {
+      if (/^No cards available for language=/i.test(error.detail.trim())) {
+        return `No playable cards for this filter. ${error.detail}. Change topic/language or import cards.`;
+      }
       return `Not found. ${error.detail}`;
     }
     return 'Not found. Question bank is empty for this filter.';
