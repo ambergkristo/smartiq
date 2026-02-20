@@ -436,6 +436,22 @@ ORDER_WORD_MAP = {
 
 ORDER_OPTION_PHRASE_MAP_LOWER = {k.lower(): v for k, v in ORDER_OPTION_PHRASE_MAP.items()}
 
+CLEANUP_REPLACEMENTS = [
+    ("tõesed", "toesed"),
+    ("suumfooniaid", "symfooniaid"),
+    ("Kriketi t20 matsh", "Kriketi T20 mang"),
+    ("Testkriketi paev", "Testkriketi mangupaev"),
+    ("50km voistlus walk", "50 km kaimisvoistlus"),
+    ("Viimse ohtusooja", "Viimse ohtusooja"),
+]
+
+
+def cleanup_text(value: str) -> str:
+    text = str(value)
+    for source, target in CLEANUP_REPLACEMENTS:
+        text = text.replace(source, target)
+    return text
+
 
 def localize_order_option(value: str) -> str:
     text = str(value).strip()
@@ -462,6 +478,7 @@ def main() -> None:
             localize_question(card.get("question", "")),
             str(card.get("cardId") or card.get("id") or ""),
         )
+        card["question"] = cleanup_text(card["question"])
         category = str(card.get("category", "")).upper()
         options = card.get("options", [])
         if not isinstance(options, list):
@@ -475,6 +492,8 @@ def main() -> None:
             card["options"] = [clamp_option(STATEMENT_MAP.get(str(option), str(option))) for option in options]
         elif category == "ORDER":
             card["options"] = [clamp_option(localize_order_option(str(option))) for option in options]
+
+        card["options"] = [cleanup_text(str(option)) for option in card["options"]]
 
     INPUT_PATH.write_text(json.dumps(cards, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Localized {len(cards)} ET cards in {INPUT_PATH}")
