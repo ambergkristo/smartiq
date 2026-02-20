@@ -47,6 +47,22 @@ Checks:
 
 Hard violations exit non-zero and fail CI.
 
+## Quality Rubric Score
+
+Quality scoring script:
+
+- `node tools/score_cards_quality.js data/smart10/cards.en.json`
+
+This script is a warning gate (non-blocking by default) that reports:
+
+- question-stem diversity per category-topic group,
+- option-set diversity per category-topic group,
+- aggregate `overallScore` and weakest groups.
+
+Use strict mode locally when needed:
+
+- `node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.70`
+
 ## Runtime Source Guard
 
 `/api/cards/nextRandom` only serves cards from allowed sources:
