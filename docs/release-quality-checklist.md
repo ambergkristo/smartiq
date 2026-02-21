@@ -2,6 +2,10 @@
 
 This checklist is the final pre-merge gate for SmartIQ data/runtime quality milestones.
 
+Milestone snapshot reference:
+
+- `docs/stability-closure.md`
+
 ## 1) Dataset Validators (EN + ET)
 
 Run:
