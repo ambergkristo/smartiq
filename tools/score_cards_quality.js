@@ -31,8 +31,10 @@ function ratio(uniqueCount, totalCount) {
 }
 
 function main() {
-  const inputPath = process.argv[2] || 'data/smart10/cards.en.json';
-  const failThresholdArg = process.argv.find((arg) => arg.startsWith('--fail-threshold='));
+  const args = process.argv.slice(2);
+  const inputPathArg = args.find((arg) => !arg.startsWith('--'));
+  const inputPath = inputPathArg || 'data/smart10/cards.en.json';
+  const failThresholdArg = args.find((arg) => arg.startsWith('--fail-threshold='));
   const failThreshold = failThresholdArg ? Number.parseFloat(failThresholdArg.split('=')[1]) : null;
 
   const { abs, cards } = loadCards(inputPath);
