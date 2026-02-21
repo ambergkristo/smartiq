@@ -32,3 +32,7 @@ Required before RC cut:
 - Expand ET linguistic polish pass-by-pass (wording consistency and idiomatic phrasing).
 - Add broader script-level test coverage for pipeline edge branches.
 - Optional: make Vercel preview non-required in branch protection for faster stacked PR throughput.
+
+For formal RC decision snapshot, see:
+
+- `docs/rc-readiness-audit.md`
