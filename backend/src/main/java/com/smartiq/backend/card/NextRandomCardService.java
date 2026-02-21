@@ -22,6 +22,7 @@ public class NextRandomCardService {
     private static final Logger log = LoggerFactory.getLogger(NextRandomCardService.class);
 
     static final int LAST_K_DEFAULT = 20;
+    private static final String DEFAULT_FALLBACK_LANGUAGE = "en";
     private static final List<String> ALLOWED_SOURCES = List.of(
             "smartiq-v2",
             "smartiq-human",
@@ -42,13 +43,20 @@ public class NextRandomCardService {
     }
 
     public Card nextRandom(String language, String gameId, String topic) {
-        String normalizedLanguage = normalizeRequired(language, "language");
+        String normalizedLanguage = normalizeLanguage(language);
         String normalizedGameId = normalizeRequired(gameId, "gameId");
         String normalizedTopic = normalizeOptional(topic);
 
         maybeCleanup();
 
-        List<Card> pool = cardRepository.findDeckPool(normalizedLanguage, normalizedTopic, ALLOWED_SOURCES);
+        String effectiveLanguage = normalizedLanguage;
+        List<Card> pool = cardRepository.findDeckPool(effectiveLanguage, normalizedTopic, ALLOWED_SOURCES);
+        boolean languageRelaxed = false;
+        if (pool.isEmpty() && !DEFAULT_FALLBACK_LANGUAGE.equalsIgnoreCase(normalizedLanguage)) {
+            effectiveLanguage = DEFAULT_FALLBACK_LANGUAGE;
+            pool = cardRepository.findDeckPool(effectiveLanguage, normalizedTopic, ALLOWED_SOURCES);
+            languageRelaxed = !pool.isEmpty();
+        }
         if (pool.isEmpty()) {
             String topicPart = normalizedTopic == null ? "any" : normalizedTopic;
             throw new NoSuchElementException("No cards available for language=" + normalizedLanguage + ", topic=" + topicPart);
@@ -62,6 +70,9 @@ public class NextRandomCardService {
             DeckCardMeta last = history.isEmpty() ? null : history.get(history.size() - 1);
             Set<String> recentIds = recentCardIds(history);
             List<String> relaxed = new ArrayList<>();
+            if (languageRelaxed) {
+                relaxed.add("language");
+            }
 
             Card selected = pickWithRelaxation(pool, last, recentIds, relaxed);
             gameHistoryStore.append(
@@ -70,11 +81,12 @@ public class NextRandomCardService {
                     LAST_K_DEFAULT
             );
 
-            log.info("nextRandom gameId={} cardId={} category={} topic={} pool={} relaxed={}",
+            log.info("nextRandom gameId={} cardId={} category={} topic={} language={} pool={} relaxed={}",
                     normalizedGameId,
                     selected.getId(),
                     resolveCategory(selected),
                     selected.getTopic(),
+                    effectiveLanguage,
                     pool.size(),
                     relaxed);
 
@@ -207,6 +219,14 @@ public class NextRandomCardService {
             throw new IllegalArgumentException(fieldName + " is required");
         }
         return value.trim();
+    }
+
+    private static String normalizeLanguage(String value) {
+        String normalized = normalizeRequired(value, "language").toLowerCase(Locale.ROOT);
+        if (normalized.isBlank()) {
+            throw new IllegalArgumentException("language is required");
+        }
+        return normalized;
     }
 
     private static String normalizeOptional(String value) {
