@@ -1,92 +1,91 @@
 # Data Pipeline
 
-SmartIQ uses a two-stage card data flow:
+SmartIQ production card data is managed as locale packs under `data/smart10`.
 
-- `data/raw/*.json`: generated or imported raw question sets
-- `data/clean/*.json`: QA-approved card sets used by backend import
-- `data/review/*.json`: agent-review artifacts (`approved`, `flagged`, `report`)
-- `out/*.json`: high-volume factory output (topic/category blocks with nested cards)
+Primary datasets:
 
-Backend boot-time import sources are configurable via `SMARTIQ_IMPORT_PATH` (comma-separated).  
-Default order is:
-- `../data/clean`
-- `../out`
+- `data/smart10/cards.en.json`
+- `data/smart10/cards.et.json`
+- `data/smart10/et.localization.overrides.json`
 
-## Card Schema (MVP)
+## Canonical Card Contract (v2)
 
-Each card must provide:
+Each card must contain:
 
-- `id`
-- `topic`
-- `subtopic` (nullable)
-- `language`
-- `question`
-- `options` (array length must be 10)
-- `correctIndex` OR `correctFlags` (length 10 boolean array)
-- `difficulty`
-- `source`
-- `createdAt`
+- `cardId` (string)
+- `category` in `TRUE_FALSE|NUMBER|ORDER|CENTURY_DECADE|COLOR|OPEN`
+- `topic` in `History|Sports|Geography|Culture|Science|Varia`
+- `language` (`en` or `et`)
+- `question` (string)
+- `options` (exactly 10 strings)
+- `correct` payload by category:
+  - `TRUE_FALSE`: `correctIndexes[]`
+  - `NUMBER`: `correctIndex`
+  - `ORDER`: `rankByIndex[10]`
+  - `CENTURY_DECADE`: `correctIndex`
+  - `COLOR`: `correctIndex`
+  - `OPEN`: `correctIndexes[]`
+- `source` in allowed runtime set:
+  - `smartiq-v2`
+  - `smartiq-human`
+  - `smartiq-verified`
 
-Importer supports two JSON layouts:
+## Validation Gates
 
-1. Flat card array (current `data/clean/*.json`)
-2. Factory block array (`out/*.json`) where each block contains:
-   - `topic`
-   - `category`
-   - `cards[]` with nested `options[]` objects (`text`, `correct`)
-
-## Validation Command
-
-Run schema + duplicate checks:
+EN schema and quality gate:
 
 ```bash
-node tools/validate_cards_v2.js data/smart10/cards.en.json
+npm run validate:cards
 ```
 
-## Monthly Refresh Pipeline (Local Simulation)
-
-Generate -> Review -> Merge approved -> Validate:
+ET schema and quality gate:
 
 ```bash
-npm run pipeline:cards
+npm run validate:cards:et
 ```
 
-Target size can be scaled up to 1000 per `(topic,difficulty,language)` key:
+Locale-pack consistency gate (EN+ET presence and structure):
 
 ```bash
-TARGET_PER_KEY=1000 npm run pipeline:cards
+npm run validate:locale-packs
 ```
 
-Generation guardrails:
-
-- `MAX_GENERATION_PER_RUN` (default `10000`)
-- `MAX_DAILY_GENERATION` (default `10000`)
-
-If `OPENAI_API_KEY` is not configured, generation falls back to deterministic local output and does not crash runtime.
-
-`tools/review-cards.js` outputs:
-
-- `data/review/approved.<date>.json`
-- `data/review/flagged.<date>.json`
-- `data/review/duplicates.<date>.json`
-- `data/review/report.<date>.json`
-- `data/review/duplicates.latest.json`
-- `data/review/report.latest.json`
-
-Review artifact summary gate:
+ET localization pipeline gate:
 
 ```bash
-npm run review:summary
+npm run validate:cards:et:pipeline
 ```
 
-Golden dataset checks:
+JSON summary output mode:
 
 ```bash
-npm run test:golden
+npm run validate:cards:et:pipeline:json:quiet
 ```
 
-Sanity check malformed raw sample (expected to fail):
+Quality-score CI gates:
 
 ```bash
-node tools/validate_cards_v2.js data/smart10/cards.en.json
+npm run score:cards:quality:ci
+npm run score:cards:quality:ci:et
 ```
+
+## Generation and Review Utilities
+
+Generation and review scripts remain available for controlled expansion:
+
+- `npm run generate:cards`
+- `npm run review:cards`
+- `npm run review:summary`
+- `npm run pipeline:cards`
+
+Any generated output must pass v2 validators before import/use.
+
+## Runtime Verification
+
+Random deck runtime checks:
+
+```bash
+npm run verify:runtime:deck
+```
+
+This verifies anti-repeat behavior and source filtering on `/api/cards/nextRandom`.
