@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 
@@ -27,6 +28,8 @@ function main() {
   const verbose = args.includes('--verbose');
   const asJson = args.includes('--json');
   const quiet = args.includes('--quiet');
+  const outArg = args.find((arg) => arg.startsWith('--out='));
+  const outPath = outArg ? outArg.slice('--out='.length) : null;
   const dataDirArg = args.find((arg) => !arg.startsWith('--')) || DEFAULT_DATA_DIR;
   const dataDir = dataDirArg.replace(/\\/g, '/');
   const etCards = `${dataDir}/cards.et.json`;
@@ -42,6 +45,7 @@ function main() {
 
   const timings = [];
   const pipelineStartedAt = Date.now();
+  let summary = null;
   for (const check of checks) {
     const startedAt = Date.now();
     const result = check.run();
@@ -57,40 +61,40 @@ function main() {
       }
       console.error(`ET validation pipeline failed at step=${check.name} (exit=${status}).`);
       if (asJson) {
-        console.log(
-          JSON.stringify(
-            {
-              ok: false,
-              dataDir,
-              failedStep: check.name,
-              exitCode: status,
-              totalDurationMs: Date.now() - pipelineStartedAt,
-              steps: timings,
-            },
-            null,
-            2
-          )
-        );
+        summary = {
+          ok: false,
+          dataDir,
+          failedStep: check.name,
+          exitCode: status,
+          totalDurationMs: Date.now() - pipelineStartedAt,
+          steps: timings,
+        };
+        if (outPath) {
+          const absOut = path.resolve(process.cwd(), outPath);
+          fs.mkdirSync(path.dirname(absOut), { recursive: true });
+          fs.writeFileSync(absOut, `${JSON.stringify(summary, null, 2)}\n`, 'utf8');
+        }
+        console.log(JSON.stringify(summary, null, 2));
       }
       process.exit(status);
     }
   }
 
   if (asJson) {
-    console.log(
-      JSON.stringify(
-        {
-          ok: true,
-          dataDir,
-          failedStep: null,
-          exitCode: 0,
-          totalDurationMs: Date.now() - pipelineStartedAt,
-          steps: timings,
-        },
-        null,
-        2
-      )
-    );
+    summary = {
+      ok: true,
+      dataDir,
+      failedStep: null,
+      exitCode: 0,
+      totalDurationMs: Date.now() - pipelineStartedAt,
+      steps: timings,
+    };
+    if (outPath) {
+      const absOut = path.resolve(process.cwd(), outPath);
+      fs.mkdirSync(path.dirname(absOut), { recursive: true });
+      fs.writeFileSync(absOut, `${JSON.stringify(summary, null, 2)}\n`, 'utf8');
+    }
+    console.log(JSON.stringify(summary, null, 2));
   }
 
   if (verbose) {

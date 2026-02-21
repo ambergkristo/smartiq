@@ -23,6 +23,7 @@
     "validate:cards:et:pipeline:verbose": "node tools/validate_et_pipeline.js data/smart10 --verbose",
     "validate:cards:et:pipeline:json": "node tools/validate_et_pipeline.js data/smart10 --json",
     "validate:cards:et:pipeline:json:quiet": "node tools/validate_et_pipeline.js data/smart10 --json --quiet",
+    "validate:cards:et:pipeline:json:file": "node tools/validate_et_pipeline.js data/smart10 --json --quiet --out=artifacts/et-pipeline-summary.json",
     "validate:locale-packs": "node tools/validate_locale_packs.js data/smart10",
     "score:cards:quality": "node tools/score_cards_quality.js data/smart10/cards.en.json",
     "score:cards:quality:et": "node tools/score_cards_quality.js data/smart10/cards.et.json",
