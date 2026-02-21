@@ -4,36 +4,59 @@ const { spawnSync } = require('child_process');
 
 const DEFAULT_DATA_DIR = 'data/smart10';
 
-function runNodeScript(scriptName, args = []) {
+function runNodeScript(scriptName, args = [], verbose = false) {
   const scriptPath = path.resolve(__dirname, scriptName);
+  if (verbose) {
+    console.log(`[pipeline] node ${path.basename(scriptPath)} ${args.join(' ')}`.trim());
+  }
   const proc = spawnSync(process.execPath, [scriptPath, ...args], { stdio: 'inherit' });
   return proc.status ?? 1;
 }
 
-function runPythonCheck() {
+function runPythonCheck(verbose = false) {
   const scriptPath = path.resolve(__dirname, 'localize_et_dataset.py');
+  if (verbose) {
+    console.log(`[pipeline] python ${path.basename(scriptPath)} --check`);
+  }
   const proc = spawnSync('python', [scriptPath, '--check'], { stdio: 'inherit' });
   return proc.status ?? 1;
 }
 
 function main() {
-  const dataDirArg = process.argv[2] || DEFAULT_DATA_DIR;
+  const args = process.argv.slice(2);
+  const verbose = args.includes('--verbose');
+  const dataDirArg = args.find((arg) => !arg.startsWith('--')) || DEFAULT_DATA_DIR;
   const dataDir = dataDirArg.replace(/\\/g, '/');
   const etCards = `${dataDir}/cards.et.json`;
   const overrides = `${dataDir}/et.localization.overrides.json`;
 
   const checks = [
-    () => runNodeScript('validate_locale_packs.js', [dataDir]),
-    () => runNodeScript('validate_et_localization.js', [etCards]),
-    () => runNodeScript('validate_et_glossary.js', [etCards]),
-    () => runNodeScript('validate_et_overrides.js', [overrides]),
-    () => runPythonCheck(),
+    { name: 'locale-packs', run: () => runNodeScript('validate_locale_packs.js', [dataDir], verbose) },
+    { name: 'et-localization', run: () => runNodeScript('validate_et_localization.js', [etCards], verbose) },
+    { name: 'et-glossary', run: () => runNodeScript('validate_et_glossary.js', [etCards], verbose) },
+    { name: 'et-overrides', run: () => runNodeScript('validate_et_overrides.js', [overrides], verbose) },
+    { name: 'et-idempotence', run: () => runPythonCheck(verbose) },
   ];
 
+  const timings = [];
   for (const check of checks) {
-    const status = check();
+    const startedAt = Date.now();
+    const status = check.run();
+    const durationMs = Date.now() - startedAt;
+    timings.push({ name: check.name, status, durationMs });
+    if (verbose) {
+      console.log(`[pipeline] step=${check.name} status=${status} durationMs=${durationMs}`);
+    }
     if (status !== 0) {
+      console.error(`ET validation pipeline failed at step=${check.name} (exit=${status}).`);
       process.exit(status);
+    }
+  }
+
+  if (verbose) {
+    console.log('[pipeline] timings:');
+    for (const row of timings) {
+      console.log(`- ${row.name}: ${row.durationMs}ms`);
     }
   }
 
