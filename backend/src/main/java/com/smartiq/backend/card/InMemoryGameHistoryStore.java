@@ -1,14 +1,11 @@
 package com.smartiq.backend.card;
 
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Component
 public class InMemoryGameHistoryStore implements GameHistoryStore {
 
     private final ConcurrentHashMap<String, Deque<DeckCardMeta>> byGameId = new ConcurrentHashMap<>();

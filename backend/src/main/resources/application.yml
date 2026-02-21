@@ -46,6 +46,8 @@ smartiq:
     max-sessions: ${SMARTIQ_SESSION_MAX:50000}
   dataset:
     min-category-threshold: ${SMARTIQ_MIN_CATEGORY_THRESHOLD:100}
+  deck-history:
+    store: ${SMARTIQ_DECK_HISTORY_STORE:in-memory}
   bank:
     min-size: ${MIN_BANK_SIZE:1000}
     block-on-low-bank: ${SMARTIQ_BLOCK_ON_LOW_BANK:false}
