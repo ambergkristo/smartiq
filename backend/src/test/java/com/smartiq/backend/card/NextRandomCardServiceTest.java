@@ -13,7 +13,7 @@ class NextRandomCardServiceTest {
     @Test
     void avoidsSameCategoryTopicAndRecentCardWhenAlternativesExist() {
         Card lastCard = card("card-1", "History", "TRUE_FALSE");
-        NextRandomCardService.CardMeta lastMeta = new NextRandomCardService.CardMeta(
+        DeckCardMeta lastMeta = new DeckCardMeta(
                 lastCard.getId(),
                 NextRandomCardService.resolveCategory(lastCard),
                 lastCard.getTopic()
@@ -38,7 +38,7 @@ class NextRandomCardServiceTest {
     @Test
     void relaxesConstraintsInOrderWhenPoolIsTooSmall() {
         Card lastCard = card("card-a", "History", "TRUE_FALSE");
-        NextRandomCardService.CardMeta lastMeta = new NextRandomCardService.CardMeta(
+        DeckCardMeta lastMeta = new DeckCardMeta(
                 lastCard.getId(),
                 NextRandomCardService.resolveCategory(lastCard),
                 lastCard.getTopic()
