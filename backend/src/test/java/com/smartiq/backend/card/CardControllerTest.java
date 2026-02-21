@@ -216,12 +216,12 @@ class CardControllerTest {
     }
 
     @Test
-    void returnsNotFoundWhenNextRandomPoolIsEmptyForLanguage() throws Exception {
+    void fallsBackToEnglishWhenRequestedLanguagePoolIsEmpty() throws Exception {
         mockMvc.perform(get("/api/cards/nextRandom")
                         .param("language", "et")
                         .param("gameId", "game-empty"))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.error").value("No cards available for language=et, topic=any"));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.language").value("en"));
     }
 
     @Test

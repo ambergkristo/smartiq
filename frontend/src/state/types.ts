@@ -10,4 +10,4 @@ export const GamePhase = {
 };
 
 export const DEFAULT_PLAYERS = ['Player 1'];
-export const DEFAULT_LANGS = ['en', 'et', 'ru'];
+export const DEFAULT_LANGS = ['en', 'et'];
