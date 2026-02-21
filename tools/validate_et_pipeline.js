@@ -10,7 +10,7 @@ function runNodeScript(scriptName, args = [], verbose = false) {
     console.log(`[pipeline] node ${path.basename(scriptPath)} ${args.join(' ')}`.trim());
   }
   const proc = spawnSync(process.execPath, [scriptPath, ...args], { stdio: 'inherit' });
-  return proc.status ?? 1;
+  return { status: proc.status ?? 1, stdout: '', stderr: '', error: proc.error || null };
 }
 
 function runPythonCheck(verbose = false) {
@@ -19,13 +19,14 @@ function runPythonCheck(verbose = false) {
     console.log(`[pipeline] python ${path.basename(scriptPath)} --check`);
   }
   const proc = spawnSync('python', [scriptPath, '--check'], { stdio: 'inherit' });
-  return proc.status ?? 1;
+  return { status: proc.status ?? 1, stdout: '', stderr: '', error: proc.error || null };
 }
 
 function main() {
   const args = process.argv.slice(2);
   const verbose = args.includes('--verbose');
   const asJson = args.includes('--json');
+  const quiet = args.includes('--quiet');
   const dataDirArg = args.find((arg) => !arg.startsWith('--')) || DEFAULT_DATA_DIR;
   const dataDir = dataDirArg.replace(/\\/g, '/');
   const etCards = `${dataDir}/cards.et.json`;
@@ -43,13 +44,17 @@ function main() {
   const pipelineStartedAt = Date.now();
   for (const check of checks) {
     const startedAt = Date.now();
-    const status = check.run();
+    const result = check.run();
+    const status = result.status;
     const durationMs = Date.now() - startedAt;
     timings.push({ name: check.name, status, durationMs });
     if (verbose) {
       console.log(`[pipeline] step=${check.name} status=${status} durationMs=${durationMs}`);
     }
     if (status !== 0) {
+      if (result.error) {
+        console.error(`ET validation pipeline step=${check.name} spawn error: ${result.error.message}`);
+      }
       console.error(`ET validation pipeline failed at step=${check.name} (exit=${status}).`);
       if (asJson) {
         console.log(
@@ -95,7 +100,9 @@ function main() {
     }
   }
 
-  console.log('\nET validation pipeline passed.');
+  if (!quiet || !asJson) {
+    console.log('\nET validation pipeline passed.');
+  }
 }
 
 main();

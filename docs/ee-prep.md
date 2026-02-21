@@ -36,6 +36,7 @@ This document defines the technical baseline for Estonian (`et`) locale support 
   - `node tools/validate_et_pipeline.js data/smart10`
   - verbose diagnostics: `node tools/validate_et_pipeline.js data/smart10 --verbose`
   - JSON summary: `node tools/validate_et_pipeline.js data/smart10 --json`
+  - reduced pipeline chatter + JSON summary: `node tools/validate_et_pipeline.js data/smart10 --json --quiet`
 
 Locale-pack validator rules:
 
