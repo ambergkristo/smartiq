@@ -18,10 +18,14 @@ function runNodeScript(scriptName, args = [], verbose = false) {
 
 function runPythonCheck(verbose = false) {
   const scriptPath = path.resolve(__dirname, 'localize_et_dataset.py');
+  const repoRoot = path.resolve(__dirname, '..');
   if (verbose) {
     console.log(`[pipeline] python ${path.basename(scriptPath)} --check`);
   }
-  const proc = spawnSync('python', [scriptPath, '--check'], { stdio: 'inherit' });
+  const proc = spawnSync('python', [scriptPath, '--check'], {
+    stdio: 'inherit',
+    cwd: repoRoot,
+  });
   return { status: proc.status ?? 1, stdout: '', stderr: '', error: proc.error || null };
 }
 
@@ -49,6 +53,16 @@ function writeJsonAtomic(absPath, payload) {
   );
   fs.writeFileSync(tmpPath, json, 'utf8');
   fs.renameSync(tmpPath, absPath);
+}
+
+function writeSummaryIfRequested(outPath, payload) {
+  if (!outPath) return;
+  const absOut = path.resolve(process.cwd(), outPath);
+  try {
+    writeJsonAtomic(absOut, payload);
+  } catch (error) {
+    console.error(`Unable to write ET pipeline summary file (${absOut}): ${error.message}`);
+  }
 }
 
 function main() {
@@ -109,10 +123,7 @@ function main() {
           totalDurationMs: Date.now() - pipelineStartedAt,
           steps: timings,
         };
-        if (outPath) {
-          const absOut = path.resolve(process.cwd(), outPath);
-          writeJsonAtomic(absOut, summary);
-        }
+        writeSummaryIfRequested(outPath, summary);
         console.log(JSON.stringify(summary, null, 2));
       }
       process.exit(status);
@@ -130,10 +141,7 @@ function main() {
       totalDurationMs: Date.now() - pipelineStartedAt,
       steps: timings,
     };
-    if (outPath) {
-      const absOut = path.resolve(process.cwd(), outPath);
-      writeJsonAtomic(absOut, summary);
-    }
+    writeSummaryIfRequested(outPath, summary);
     console.log(JSON.stringify(summary, null, 2));
   }
 
