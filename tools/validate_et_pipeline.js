@@ -106,6 +106,8 @@ function main() {
     generatedAt: new Date().toISOString(),
     gitSha: gitValue(['rev-parse', 'HEAD']) || process.env.GITHUB_SHA || null,
     gitBranch: resolveGitBranch(),
+    runnerCwd: process.cwd(),
+    nodeVersion: process.version,
   };
 
   const checks = [
