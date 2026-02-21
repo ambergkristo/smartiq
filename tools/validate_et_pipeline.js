@@ -18,10 +18,14 @@ function runNodeScript(scriptName, args = [], verbose = false) {
 
 function runPythonCheck(verbose = false) {
   const scriptPath = path.resolve(__dirname, 'localize_et_dataset.py');
+  const repoRoot = path.resolve(__dirname, '..');
   if (verbose) {
     console.log(`[pipeline] python ${path.basename(scriptPath)} --check`);
   }
-  const proc = spawnSync('python', [scriptPath, '--check'], { stdio: 'inherit' });
+  const proc = spawnSync('python', [scriptPath, '--check'], {
+    stdio: 'inherit',
+    cwd: repoRoot,
+  });
   return { status: proc.status ?? 1, stdout: '', stderr: '', error: proc.error || null };
 }
 
@@ -37,6 +41,28 @@ function gitValue(args) {
   if ((proc.status ?? 1) !== 0) return null;
   const value = String(proc.stdout || '').trim();
   return value || null;
+}
+
+function writeJsonAtomic(absPath, payload) {
+  const json = `${JSON.stringify(payload, null, 2)}\n`;
+  const dir = path.dirname(absPath);
+  fs.mkdirSync(dir, { recursive: true });
+  const tmpPath = path.join(
+    dir,
+    `.${path.basename(absPath)}.${process.pid}.${Date.now()}.tmp`
+  );
+  fs.writeFileSync(tmpPath, json, 'utf8');
+  fs.renameSync(tmpPath, absPath);
+}
+
+function writeSummaryIfRequested(outPath, payload) {
+  if (!outPath) return;
+  const absOut = path.resolve(process.cwd(), outPath);
+  try {
+    writeJsonAtomic(absOut, payload);
+  } catch (error) {
+    console.error(`Unable to write ET pipeline summary file (${absOut}): ${error.message}`);
+  }
 }
 
 function main() {
@@ -97,11 +123,7 @@ function main() {
           totalDurationMs: Date.now() - pipelineStartedAt,
           steps: timings,
         };
-        if (outPath) {
-          const absOut = path.resolve(process.cwd(), outPath);
-          fs.mkdirSync(path.dirname(absOut), { recursive: true });
-          fs.writeFileSync(absOut, `${JSON.stringify(summary, null, 2)}\n`, 'utf8');
-        }
+        writeSummaryIfRequested(outPath, summary);
         console.log(JSON.stringify(summary, null, 2));
       }
       process.exit(status);
@@ -119,11 +141,7 @@ function main() {
       totalDurationMs: Date.now() - pipelineStartedAt,
       steps: timings,
     };
-    if (outPath) {
-      const absOut = path.resolve(process.cwd(), outPath);
-      fs.mkdirSync(path.dirname(absOut), { recursive: true });
-      fs.writeFileSync(absOut, `${JSON.stringify(summary, null, 2)}\n`, 'utf8');
-    }
+    writeSummaryIfRequested(outPath, summary);
     console.log(JSON.stringify(summary, null, 2));
   }
 
