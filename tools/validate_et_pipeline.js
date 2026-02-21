@@ -61,7 +61,16 @@ function writeJsonAtomic(absPath, payload) {
     `.${path.basename(absPath)}.${process.pid}.${Date.now()}.tmp`
   );
   fs.writeFileSync(tmpPath, json, 'utf8');
-  fs.renameSync(tmpPath, absPath);
+  try {
+    fs.renameSync(tmpPath, absPath);
+  } catch (error) {
+    if (error && error.code === 'EXDEV') {
+      fs.copyFileSync(tmpPath, absPath);
+      fs.unlinkSync(tmpPath);
+      return;
+    }
+    throw error;
+  }
 }
 
 function writeSummaryIfRequested(outPath, payload) {
