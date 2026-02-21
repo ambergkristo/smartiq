@@ -53,6 +53,7 @@ Backend CI runs:
 1. strict EN validation,
 2. ET validation pipeline (locale pack + localization residue + glossary + overrides + idempotence),
 3. quality score gates for EN and ET.
+4. uploads ET pipeline JSON summary artifact (`et-pipeline-summary`).
 
 ## ET Quality Checklist (Next Milestone)
 

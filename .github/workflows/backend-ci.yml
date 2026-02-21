@@ -30,7 +30,15 @@ jobs:
         run: node ../tools/validate_cards_v2.js ../data/smart10/cards.en.json --max-warnings=0
 
       - name: Validate ET pipeline (locale + gates + idempotence)
-        run: node ../tools/validate_et_pipeline.js ../data/smart10
+        run: node ../tools/validate_et_pipeline.js ../data/smart10 --json --quiet --out=../artifacts/et-pipeline-summary.json
+
+      - name: Upload ET pipeline summary artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: et-pipeline-summary
+          path: artifacts/et-pipeline-summary.json
+          if-no-files-found: warn
 
       - name: Score Smart10 dataset quality (threshold gate)
         run: node ../tools/score_cards_quality.js ../data/smart10/cards.en.json --fail-threshold=0.80
