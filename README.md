@@ -144,6 +144,12 @@ node tools/validate_cards_v2.js data/smart10/cards.et.json --max-warnings=0
 node tools/validate_locale_packs.js data/smart10
 ```
 
+Quick combined quality gate:
+
+```bash
+npm run qa:cards:quick
+```
+
 Dataset quality score (warning gate):
 
 ```bash
@@ -252,6 +258,8 @@ node scripts/verify_runtime_deck.js
 - You can override import sources with `SMARTIQ_IMPORT_PATH` (comma-separated paths).
 - Pipeline details: `docs/data-pipeline.md`
 - Dataset quality guardrails: `docs/dataset-quality.md`
+- Release quality checklist: `docs/release-quality-checklist.md`
+- Stability closure snapshot: `docs/stability-closure.md`
 
 ## CI
 
