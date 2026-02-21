@@ -18,6 +18,12 @@ Expected:
 - no hard schema violations
 - category/topic distributions remain complete
 
+Quick combined command:
+
+```bash
+npm run qa:cards:quick
+```
+
 ## 2) ET Localization Pipeline
 
 Run:
