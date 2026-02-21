@@ -74,15 +74,15 @@ function writeJsonAtomic(absPath, payload) {
 }
 
 function writeSummaryIfRequested(outPath, payload) {
-  if (!outPath) return null;
+  if (!outPath) return { outputPath: null, error: null };
   const absOut = path.resolve(process.cwd(), outPath);
   try {
     writeJsonAtomic(absOut, payload);
-    return null;
+    return { outputPath: absOut, error: null };
   } catch (error) {
     const message = `Unable to write ET pipeline summary file (${absOut}): ${error.message}`;
     console.error(message);
-    return message;
+    return { outputPath: absOut, error: message };
   }
 }
 
@@ -139,13 +139,16 @@ function main() {
           dataDir,
           meta,
           hashes,
+          summaryOutputPath: null,
           summaryWriteError: null,
           failedStep: check.name,
           exitCode: status,
           totalDurationMs: Date.now() - pipelineStartedAt,
           steps: timings,
         };
-        summary.summaryWriteError = writeSummaryIfRequested(outPath, summary);
+        const writeInfo = writeSummaryIfRequested(outPath, summary);
+        summary.summaryOutputPath = writeInfo.outputPath;
+        summary.summaryWriteError = writeInfo.error;
         console.log(JSON.stringify(summary, null, 2));
       }
       process.exit(status);
@@ -158,13 +161,16 @@ function main() {
       dataDir,
       meta,
       hashes,
+      summaryOutputPath: null,
       summaryWriteError: null,
       failedStep: null,
       exitCode: 0,
       totalDurationMs: Date.now() - pipelineStartedAt,
       steps: timings,
     };
-    summary.summaryWriteError = writeSummaryIfRequested(outPath, summary);
+    const writeInfo = writeSummaryIfRequested(outPath, summary);
+    summary.summaryOutputPath = writeInfo.outputPath;
+    summary.summaryWriteError = writeInfo.error;
     console.log(JSON.stringify(summary, null, 2));
   }
 
