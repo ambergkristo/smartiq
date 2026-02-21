@@ -25,6 +25,7 @@ function runPythonCheck(verbose = false) {
 function main() {
   const args = process.argv.slice(2);
   const verbose = args.includes('--verbose');
+  const asJson = args.includes('--json');
   const dataDirArg = args.find((arg) => !arg.startsWith('--')) || DEFAULT_DATA_DIR;
   const dataDir = dataDirArg.replace(/\\/g, '/');
   const etCards = `${dataDir}/cards.et.json`;
@@ -39,6 +40,7 @@ function main() {
   ];
 
   const timings = [];
+  const pipelineStartedAt = Date.now();
   for (const check of checks) {
     const startedAt = Date.now();
     const status = check.run();
@@ -49,8 +51,41 @@ function main() {
     }
     if (status !== 0) {
       console.error(`ET validation pipeline failed at step=${check.name} (exit=${status}).`);
+      if (asJson) {
+        console.log(
+          JSON.stringify(
+            {
+              ok: false,
+              dataDir,
+              failedStep: check.name,
+              exitCode: status,
+              totalDurationMs: Date.now() - pipelineStartedAt,
+              steps: timings,
+            },
+            null,
+            2
+          )
+        );
+      }
       process.exit(status);
     }
+  }
+
+  if (asJson) {
+    console.log(
+      JSON.stringify(
+        {
+          ok: true,
+          dataDir,
+          failedStep: null,
+          exitCode: 0,
+          totalDurationMs: Date.now() - pipelineStartedAt,
+          steps: timings,
+        },
+        null,
+        2
+      )
+    );
   }
 
   if (verbose) {
