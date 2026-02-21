@@ -121,6 +121,10 @@ Script asserts:
 - no immediate category repeat,
 - no immediate topic repeat.
 
+For full pre-merge run order, see:
+
+- `docs/release-quality-checklist.md`
+
 ## ET Pipeline JSON Summary
 
 Run ET pipeline with JSON output:
