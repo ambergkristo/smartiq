@@ -120,3 +120,31 @@ Script asserts:
 - no deprecated source is served,
 - no immediate category repeat,
 - no immediate topic repeat.
+
+## ET Pipeline JSON Summary
+
+Run ET pipeline with JSON output:
+
+- `node tools/validate_et_pipeline.js data/smart10 --json --quiet`
+- Optional file output: `--out=artifacts/et-pipeline-summary.json`
+
+Summary fields:
+
+- `ok`, `exitCode`, `failedStep`, `totalDurationMs`
+- `dataDir`
+- `meta`:
+  - `pipelineVersion`
+  - `generatedAt`
+  - `gitSha`
+  - `gitBranch`
+  - `runnerCwd`
+  - `nodeVersion`
+- `hashes`:
+  - `etCardsSha256`
+  - `overridesSha256`
+- `summaryOutputPath`:
+  - absolute target path resolved from `--out`,
+  - `null` when `--out` is not provided.
+- `summaryWriteError`:
+  - `null` when summary write succeeds or `--out` is omitted,
+  - error message when file write fails (pipeline result still reflects validation outcome).
