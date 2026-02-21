@@ -43,6 +43,15 @@ function gitValue(args) {
   return value || null;
 }
 
+function resolveGitBranch() {
+  const envBranch = process.env.GITHUB_REF_NAME || process.env.GITHUB_HEAD_REF || null;
+  const gitBranch = gitValue(['rev-parse', '--abbrev-ref', 'HEAD']);
+  if (!gitBranch || gitBranch === 'HEAD') {
+    return envBranch;
+  }
+  return gitBranch;
+}
+
 function writeJsonAtomic(absPath, payload) {
   const json = `${JSON.stringify(payload, null, 2)}\n`;
   const dir = path.dirname(absPath);
@@ -84,7 +93,7 @@ function main() {
     pipelineVersion: PIPELINE_VERSION,
     generatedAt: new Date().toISOString(),
     gitSha: gitValue(['rev-parse', 'HEAD']) || process.env.GITHUB_SHA || null,
-    gitBranch: gitValue(['rev-parse', '--abbrev-ref', 'HEAD']) || process.env.GITHUB_REF_NAME || null,
+    gitBranch: resolveGitBranch(),
   };
 
   const checks = [
