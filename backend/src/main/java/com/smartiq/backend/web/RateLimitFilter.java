@@ -62,7 +62,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
     }
 
     private int resolveLimit(String uri) {
-        if ("/api/cards/next".equals(uri)) {
+        if ("/api/cards/next".equals(uri) || "/api/cards/nextRandom".equals(uri)) {
             return properties.cardsNextPerMinute();
         }
         if ("/api/session/answer".equals(uri)) {
