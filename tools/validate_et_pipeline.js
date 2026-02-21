@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const { spawnSync } = require('child_process');
 
 const DEFAULT_DATA_DIR = 'data/smart10';
@@ -23,6 +24,13 @@ function runPythonCheck(verbose = false) {
   return { status: proc.status ?? 1, stdout: '', stderr: '', error: proc.error || null };
 }
 
+function sha256File(targetPath) {
+  const abs = path.resolve(process.cwd(), targetPath);
+  const hash = crypto.createHash('sha256');
+  hash.update(fs.readFileSync(abs));
+  return hash.digest('hex');
+}
+
 function main() {
   const args = process.argv.slice(2);
   const verbose = args.includes('--verbose');
@@ -34,6 +42,10 @@ function main() {
   const dataDir = dataDirArg.replace(/\\/g, '/');
   const etCards = `${dataDir}/cards.et.json`;
   const overrides = `${dataDir}/et.localization.overrides.json`;
+  const hashes = {
+    etCardsSha256: sha256File(etCards),
+    overridesSha256: sha256File(overrides),
+  };
 
   const checks = [
     { name: 'locale-packs', run: () => runNodeScript('validate_locale_packs.js', [dataDir], verbose) },
@@ -64,6 +76,7 @@ function main() {
         summary = {
           ok: false,
           dataDir,
+          hashes,
           failedStep: check.name,
           exitCode: status,
           totalDurationMs: Date.now() - pipelineStartedAt,
@@ -84,6 +97,7 @@ function main() {
     summary = {
       ok: true,
       dataDir,
+      hashes,
       failedStep: null,
       exitCode: 0,
       totalDurationMs: Date.now() - pipelineStartedAt,
