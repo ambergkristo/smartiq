@@ -39,6 +39,7 @@ This document defines the technical baseline for Estonian (`et`) locale support 
   - reduced pipeline chatter + JSON summary: `node tools/validate_et_pipeline.js data/smart10 --json --quiet`
   - write JSON summary file: `node tools/validate_et_pipeline.js data/smart10 --json --quiet --out=artifacts/et-pipeline-summary.json`
   - JSON includes `hashes.etCardsSha256` and `hashes.overridesSha256` for artifact traceability
+  - JSON includes `meta.pipelineVersion`, `meta.gitSha`, and `meta.gitBranch` for run provenance
 
 Locale-pack validator rules:
 

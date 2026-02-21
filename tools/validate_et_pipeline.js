@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const { spawnSync } = require('child_process');
 
 const DEFAULT_DATA_DIR = 'data/smart10';
+const PIPELINE_VERSION = '1.1.0';
 
 function runNodeScript(scriptName, args = [], verbose = false) {
   const scriptPath = path.resolve(__dirname, scriptName);
@@ -31,6 +32,13 @@ function sha256File(targetPath) {
   return hash.digest('hex');
 }
 
+function gitValue(args) {
+  const proc = spawnSync('git', ['-C', process.cwd(), ...args], { encoding: 'utf8' });
+  if ((proc.status ?? 1) !== 0) return null;
+  const value = String(proc.stdout || '').trim();
+  return value || null;
+}
+
 function main() {
   const args = process.argv.slice(2);
   const verbose = args.includes('--verbose');
@@ -45,6 +53,12 @@ function main() {
   const hashes = {
     etCardsSha256: sha256File(etCards),
     overridesSha256: sha256File(overrides),
+  };
+  const meta = {
+    pipelineVersion: PIPELINE_VERSION,
+    generatedAt: new Date().toISOString(),
+    gitSha: gitValue(['rev-parse', 'HEAD']) || process.env.GITHUB_SHA || null,
+    gitBranch: gitValue(['rev-parse', '--abbrev-ref', 'HEAD']) || process.env.GITHUB_REF_NAME || null,
   };
 
   const checks = [
@@ -76,6 +90,7 @@ function main() {
         summary = {
           ok: false,
           dataDir,
+          meta,
           hashes,
           failedStep: check.name,
           exitCode: status,
@@ -97,6 +112,7 @@ function main() {
     summary = {
       ok: true,
       dataDir,
+      meta,
       hashes,
       failedStep: null,
       exitCode: 0,
