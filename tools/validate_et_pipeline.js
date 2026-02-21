@@ -39,6 +39,18 @@ function gitValue(args) {
   return value || null;
 }
 
+function writeJsonAtomic(absPath, payload) {
+  const json = `${JSON.stringify(payload, null, 2)}\n`;
+  const dir = path.dirname(absPath);
+  fs.mkdirSync(dir, { recursive: true });
+  const tmpPath = path.join(
+    dir,
+    `.${path.basename(absPath)}.${process.pid}.${Date.now()}.tmp`
+  );
+  fs.writeFileSync(tmpPath, json, 'utf8');
+  fs.renameSync(tmpPath, absPath);
+}
+
 function main() {
   const args = process.argv.slice(2);
   const verbose = args.includes('--verbose');
@@ -99,8 +111,7 @@ function main() {
         };
         if (outPath) {
           const absOut = path.resolve(process.cwd(), outPath);
-          fs.mkdirSync(path.dirname(absOut), { recursive: true });
-          fs.writeFileSync(absOut, `${JSON.stringify(summary, null, 2)}\n`, 'utf8');
+          writeJsonAtomic(absOut, summary);
         }
         console.log(JSON.stringify(summary, null, 2));
       }
@@ -121,8 +132,7 @@ function main() {
     };
     if (outPath) {
       const absOut = path.resolve(process.cwd(), outPath);
-      fs.mkdirSync(path.dirname(absOut), { recursive: true });
-      fs.writeFileSync(absOut, `${JSON.stringify(summary, null, 2)}\n`, 'utf8');
+      writeJsonAtomic(absOut, summary);
     }
     console.log(JSON.stringify(summary, null, 2));
   }
