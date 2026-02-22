@@ -1,0 +1,25 @@
+{
+  "cardId": "deck-number",
+  "category": "NUMBER",
+  "topic": "Topic",
+  "language": "en",
+  "question": "Question for NUMBER",
+  "options": [
+    "Alpha",
+    "Bravo",
+    "Charlie",
+    "Delta",
+    "Echo",
+    "Foxtrot",
+    "Golf",
+    "Hotel",
+    "India",
+    "Juliet"
+  ],
+  "correct": {
+    "correctIndex": 1,
+    "answerType": "number"
+  },
+  "source": "smartiq-v2",
+  "explanation": null
+}

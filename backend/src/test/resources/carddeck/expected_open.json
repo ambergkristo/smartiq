@@ -1,0 +1,24 @@
+{
+  "cardId": "deck-open",
+  "category": "OPEN",
+  "topic": "Topic",
+  "language": "en",
+  "question": "Question for OPEN",
+  "options": [
+    "Alpha",
+    "Bravo",
+    "Charlie",
+    "Delta",
+    "Echo",
+    "Foxtrot",
+    "Golf",
+    "Hotel",
+    "India",
+    "Juliet"
+  ],
+  "correct": {
+    "correctIndexes": [0]
+  },
+  "source": "smartiq-v2",
+  "explanation": null
+}
