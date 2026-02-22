@@ -1,0 +1,24 @@
+{
+  "cardId": "deck-order",
+  "category": "ORDER",
+  "topic": "Topic",
+  "language": "en",
+  "question": "Question for ORDER",
+  "options": [
+    "Alpha",
+    "Bravo",
+    "Charlie",
+    "Delta",
+    "Echo",
+    "Foxtrot",
+    "Golf",
+    "Hotel",
+    "India",
+    "Juliet"
+  ],
+  "correct": {
+    "rankByIndex": [1, 0, 2, 3, 4, 5, 6, 7, 8, 9]
+  },
+  "source": "smartiq-v2",
+  "explanation": null
+}

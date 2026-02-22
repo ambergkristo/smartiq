@@ -1,0 +1,24 @@
+{
+  "cardId": "deck-century_decade",
+  "category": "CENTURY_DECADE",
+  "topic": "Topic",
+  "language": "en",
+  "question": "Question for CENTURY_DECADE",
+  "options": [
+    "Alpha",
+    "Bravo",
+    "Charlie",
+    "Delta",
+    "Echo",
+    "Foxtrot",
+    "Golf",
+    "Hotel",
+    "India",
+    "Juliet"
+  ],
+  "correct": {
+    "correctIndex": 7
+  },
+  "source": "smartiq-v2",
+  "explanation": null
+}

@@ -1,0 +1,24 @@
+{
+  "cardId": "deck-true_false",
+  "category": "TRUE_FALSE",
+  "topic": "Topic",
+  "language": "en",
+  "question": "Question for TRUE_FALSE",
+  "options": [
+    "Alpha",
+    "Bravo",
+    "Charlie",
+    "Delta",
+    "Echo",
+    "Foxtrot",
+    "Golf",
+    "Hotel",
+    "India",
+    "Juliet"
+  ],
+  "correct": {
+    "correctIndexes": [0, 3]
+  },
+  "source": "smartiq-v2",
+  "explanation": null
+}

@@ -1,0 +1,24 @@
+{
+  "cardId": "deck-color",
+  "category": "COLOR",
+  "topic": "Topic",
+  "language": "en",
+  "question": "Question for COLOR",
+  "options": [
+    "Alpha",
+    "Bravo",
+    "Charlie",
+    "Delta",
+    "Echo",
+    "Foxtrot",
+    "Golf",
+    "Hotel",
+    "India",
+    "Juliet"
+  ],
+  "correct": {
+    "correctIndex": 4
+  },
+  "source": "smartiq-v2",
+  "explanation": null
+}
