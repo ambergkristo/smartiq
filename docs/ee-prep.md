@@ -49,6 +49,10 @@ Additional non-blocking runtime profile:
 
 - Use `docs/et-quality-report-template.md` for each ET readiness pass.
 - Store final filled reports in PR description (or attach as QA note) before release promotion.
+- Auto-generate a report file:
+  - `npm run report:et:quality`
+  - Optional smoke in same report:
+    - `npm run report:et:quality -- --with-smoke`
 
 ## ET Quality Checklist (Next Milestone)
 
