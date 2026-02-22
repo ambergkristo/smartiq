@@ -64,7 +64,9 @@ async function getJsonWithRetry(url) {
 
 function validateCard(card) {
   assert(card && typeof card === 'object', 'Card payload must be an object');
-  const required = ['id', 'topic', 'language', 'question', 'options', 'difficulty', 'source', 'createdAt'];
+  const cardId = card.cardId ?? card.id;
+  assert(cardId !== undefined && cardId !== null, 'Card missing field: cardId');
+  const required = ['topic', 'language', 'question', 'options'];
   for (const key of required) {
     assert(card[key] !== undefined && card[key] !== null, `Card missing field: ${key}`);
   }
@@ -90,11 +92,11 @@ async function main() {
   assert(typeof topic === 'string' && topic.length > 0, 'Unable to resolve smoke-test topic');
 
   const cardUrl =
-    `${baseUrl}/api/cards/next` +
-    `?topic=${encodeURIComponent(topic)}` +
-    '&difficulty=2&sessionId=smoke&lang=en';
+    `${baseUrl}/api/cards/nextRandom` +
+    `?language=en&gameId=smoke` +
+    `&topic=${encodeURIComponent(topic)}`;
   const card = await getJsonWithRetry(cardUrl);
-  assert(card.status === 200, describeResponse('/api/cards/next expected 200', card));
+  assert(card.status === 200, describeResponse('/api/cards/nextRandom expected 200', card));
   validateCard(card.json);
 
   console.log(JSON.stringify({ ok: true, baseUrl, topic }, null, 2));
