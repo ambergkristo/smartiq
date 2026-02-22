@@ -153,6 +153,34 @@ class CardControllerTest {
         legacyFactory.setSource("smartiq-factory");
         legacyFactory.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
         cardRepository.save(legacyFactory);
+
+        Card mixedAllowed = new Card();
+        mixedAllowed.setId("legacy-mixed-allowed-1");
+        mixedAllowed.setTopic("LegacyMixed");
+        mixedAllowed.setSubtopic("OPEN");
+        mixedAllowed.setCategory("OPEN");
+        mixedAllowed.setLanguage("en");
+        mixedAllowed.setQuestion("Allowed source card in mixed pool");
+        mixedAllowed.setOptions(List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"));
+        mixedAllowed.setCorrectIndex(0);
+        mixedAllowed.setDifficulty("2");
+        mixedAllowed.setSource("smartiq-v2");
+        mixedAllowed.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
+        cardRepository.save(mixedAllowed);
+
+        Card mixedDeprecated = new Card();
+        mixedDeprecated.setId("legacy-mixed-deprecated-1");
+        mixedDeprecated.setTopic("LegacyMixed");
+        mixedDeprecated.setSubtopic("OPEN");
+        mixedDeprecated.setCategory("OPEN");
+        mixedDeprecated.setLanguage("en");
+        mixedDeprecated.setQuestion("Deprecated source card in mixed pool");
+        mixedDeprecated.setOptions(List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"));
+        mixedDeprecated.setCorrectIndex(0);
+        mixedDeprecated.setDifficulty("2");
+        mixedDeprecated.setSource("smartiq-factory");
+        mixedDeprecated.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
+        cardRepository.save(mixedDeprecated);
     }
 
     @Test
@@ -213,6 +241,17 @@ class CardControllerTest {
                         .param("topic", "LegacyOnly"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.error").value("No cards available for language=en, topic=LegacyOnly"));
+    }
+
+    @Test
+    void nextRandomExcludesDeprecatedSourcesWhenAllowedAlternativesExist() throws Exception {
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .param("language", "en")
+                        .param("gameId", "game-legacy-mixed")
+                        .param("topic", "LegacyMixed"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.cardId").value("legacy-mixed-allowed-1"))
+                .andExpect(jsonPath("$.source").value("smartiq-v2"));
     }
 
     @Test
