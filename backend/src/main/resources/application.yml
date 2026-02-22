@@ -42,8 +42,10 @@ smartiq:
     refill-target-per-key: ${POOL_TARGET:1200}
   session:
     enabled: ${SMARTIQ_SESSION_DEDUP_ENABLED:true}
+    store: ${SMARTIQ_SESSION_STORE:memory}
     ttl-minutes: ${SMARTIQ_SESSION_TTL_MINUTES:120}
     max-sessions: ${SMARTIQ_SESSION_MAX:50000}
+    redis-prefix: ${SMARTIQ_SESSION_REDIS_PREFIX:smartiq:game-history:}
   dataset:
     min-category-threshold: ${SMARTIQ_MIN_CATEGORY_THRESHOLD:100}
   language:

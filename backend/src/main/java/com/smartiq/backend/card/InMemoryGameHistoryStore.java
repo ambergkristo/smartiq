@@ -1,5 +1,6 @@
 package com.smartiq.backend.card;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayDeque;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
+@ConditionalOnProperty(name = "smartiq.session.store", havingValue = "memory", matchIfMissing = true)
 public class InMemoryGameHistoryStore implements GameHistoryStore {
 
     private final ConcurrentHashMap<String, Deque<DeckCardMeta>> byGameId = new ConcurrentHashMap<>();
