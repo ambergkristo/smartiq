@@ -35,7 +35,8 @@
     "release:check": "node tools/run_release_readiness_check.js",
     "validate:deploy-env": "node tools/validate-deploy-env.js",
     "stability:gate": "node tools/stability-gate.js",
-    "verify:runtime:deck": "node scripts/verify_runtime_deck.js"
+    "verify:runtime:deck": "node scripts/verify_runtime_deck.js",
+    "report:runtime:health": "node scripts/runtime_health_report.js"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

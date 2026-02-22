@@ -1,5 +1,7 @@
 package com.smartiq.backend.card;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -34,12 +36,16 @@ public class NextRandomCardService {
 
     private final CardRepository cardRepository;
     private final GameHistoryStore gameHistoryStore;
+    private final MeterRegistry meterRegistry;
     private final ConcurrentHashMap<String, GameState> gameStates = new ConcurrentHashMap<>();
     private volatile long lastCleanupAt = 0L;
 
-    public NextRandomCardService(CardRepository cardRepository, GameHistoryStore gameHistoryStore) {
+    public NextRandomCardService(CardRepository cardRepository,
+                                 GameHistoryStore gameHistoryStore,
+                                 MeterRegistry meterRegistry) {
         this.cardRepository = cardRepository;
         this.gameHistoryStore = gameHistoryStore;
+        this.meterRegistry = meterRegistry;
     }
 
     public Card nextRandom(String language, String gameId, String topic) {
@@ -85,6 +91,7 @@ public class NextRandomCardService {
                     LAST_K_DEFAULT
             );
             int historyAfter = Math.min(historyBefore + 1, LAST_K_DEFAULT);
+            recordMetrics(last, selected, relaxed, effectiveLanguage);
 
             log.info("nextRandom gameId={} draw={} newGame={} cardId={} category={} topic={} language={} pool={} historyBefore={} historyAfter={} historyTrimmed={} relaxed={}",
                     normalizedGameId,
@@ -102,6 +109,41 @@ public class NextRandomCardService {
 
             return selected;
         }
+    }
+
+    private void recordMetrics(DeckCardMeta last, Card selected, List<String> relaxed, String language) {
+        String category = resolveCategory(selected);
+        String topic = selected.getTopic() == null ? "unknown" : selected.getTopic();
+        String source = selected.getSource() == null ? "unknown" : selected.getSource();
+
+        counter("smartiq.next_random.draw.total", "language", language).increment();
+        counter("smartiq.next_random.source.total", "source", source).increment();
+
+        if (relaxed.isEmpty()) {
+            counter("smartiq.next_random.relax.total", "level", "none").increment();
+        } else {
+            for (String level : relaxed) {
+                counter("smartiq.next_random.relax.total", "level", level).increment();
+            }
+        }
+
+        if (last != null) {
+            if (category.equalsIgnoreCase(last.category())) {
+                counter("smartiq.next_random.immediate_repeat.total", "kind", "category").increment();
+            }
+            if (equalsIgnoreCase(topic, last.topic())) {
+                counter("smartiq.next_random.immediate_repeat.total", "kind", "topic").increment();
+            }
+            if (selected.getId() != null && selected.getId().equals(last.cardId())) {
+                counter("smartiq.next_random.immediate_repeat.total", "kind", "cardId").increment();
+            }
+        }
+    }
+
+    private Counter counter(String metricName, String tagKey, String tagValue) {
+        return Counter.builder(metricName)
+                .tag(tagKey, tagValue == null || tagValue.isBlank() ? "unknown" : tagValue)
+                .register(meterRegistry);
     }
 
     static Card pickWithRelaxation(List<Card> pool,
