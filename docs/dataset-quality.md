@@ -73,6 +73,41 @@ CI threshold gate:
 - Backend CI enforces `--fail-threshold=0.80` for both EN and ET locale packs.
 - Raise this threshold gradually as dataset diversity improves.
 
+## Semantic Quality Gate v1 (Warning First)
+
+Semantic scoring script:
+
+- `node tools/score_cards_semantic.js data/smart10/cards.en.json`
+- `node tools/score_cards_semantic.js data/smart10/cards.et.json`
+
+What it checks:
+
+- repeated stems inside `category|topic` groups,
+- suspiciously short questions,
+- low option uniqueness within a card,
+- placeholder-like phrasing.
+
+Current banned/flagged phrase patterns:
+
+- `sample question`
+- `option <number>`
+- `reference table`
+- `assigned index`
+- `placeholder`
+- `lorem ipsum`
+
+CI behavior (v1):
+
+- runs in Backend CI + Frontend CI as non-blocking warning (`continue-on-error: true`),
+- uses `--fail-threshold=0.65` to surface weak semantic groups without blocking merges yet.
+
+How to improve semantic score:
+
+1. Replace repeated question stems with varied phrasing.
+2. Replace placeholder-like wording with domain-specific wording.
+3. Ensure 10 options are distinct and plausible.
+4. Keep question prompts specific (avoid overly short generic prompts).
+
 ## Runtime Source Guard
 
 `/api/cards/nextRandom` only serves cards from allowed sources:
