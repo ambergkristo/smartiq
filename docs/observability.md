@@ -21,6 +21,7 @@ Prometheus metrics include:
 - `smartiq.pool.cache.misses`
 - `smartiq.pool.fallback.db.hits`
 - `smartiq.pool.refills`
+- `smartiq.pool.cache.hit.rate`
 - `smartiq.next_random.draw.total`
 - `smartiq.next_random.immediate_repeat.total` (tag `kind`: `category|topic|cardId`)
 - `smartiq.next_random.relax.total` (tag `level`: `none|language|cardId|topic|category`)
@@ -47,6 +48,41 @@ Prometheus metrics include:
 
 Use this log for low-noise deck progression tracing without enabling debug logging.
 
+## Deck Exhaustion Dashboard Seed
+
+Micrometer dot metrics are exported to Prometheus with underscores. Example mappings:
+
+- `smartiq.pool.size` -> `smartiq_pool_size`
+- `smartiq.pool.cache.hit.rate` -> `smartiq_pool_cache_hit_rate`
+- `smartiq.pool.cache.hits` -> `smartiq_pool_cache_hits_total`
+- `smartiq.pool.cache.misses` -> `smartiq_pool_cache_misses_total`
+- `smartiq.pool.fallback.db.hits` -> `smartiq_pool_fallback_db_hits_total`
+- `smartiq.pool.refills` -> `smartiq_pool_refills_total`
+- `smartiq.next_random.draw.total` -> `smartiq_next_random_draw_total`
+
+Suggested Grafana panels:
+
+- Table: lowest pool sizes by key (topic/difficulty/language).
+- Time series: pool size over time for a selected key.
+- Stat: fallback DB hit rate (overall).
+- Stat: average cache hit rate (overall).
+- Bar or time series: refill rate by key.
+
+PromQL examples:
+
+- Lowest pool sizes by key:
+  - `sort(min by (topic,difficulty,language) (smartiq_pool_size))`
+- Count of pools at or below watermark (example `20`):
+  - `sum(smartiq_pool_size <= 20)`
+- Fallback DB hit rate (overall):
+  - `sum(rate(smartiq_pool_fallback_db_hits_total[5m])) / sum(rate(smartiq_pool_cache_hits_total[5m]) + rate(smartiq_pool_cache_misses_total[5m]) + rate(smartiq_pool_fallback_db_hits_total[5m]))`
+- Average cache hit rate:
+  - `avg(smartiq_pool_cache_hit_rate)`
+- Refill rate by key:
+  - `sum by (topic,difficulty,language) (rate(smartiq_pool_refills_total[5m]))`
+- Pool size trend for a key:
+  - `smartiq_pool_size{topic="History",difficulty="1",language="en"}`
+
 ## Runtime Health Report
 
 Use one command to run 50-100 `nextRandom` draws and print runtime integrity metrics:
@@ -62,9 +98,11 @@ Optional environment overrides:
 - `TOPIC` (default `any`)
 - `REQUESTS` or `DRAWS` (default `80`)
 - `GAME_ID` (default generated UUID)
+- `POOL_LOW_WATERMARK` (default `20`)
 
 Report includes:
 
 - immediate repeat rates (`category`, `topic`, `cardId`)
 - source distribution from served cards
 - relax-level usage from Prometheus counters (if `/actuator/prometheus` is available)
+- deck exhaustion summary from `/internal/pool-stats` (low-watermark count, fallback rate, lowest pools)

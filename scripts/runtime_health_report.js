@@ -6,6 +6,7 @@ const LANGUAGE = process.env.LANGUAGE || 'en';
 const TOPIC = process.env.TOPIC || '';
 const DRAWS = Math.max(1, Math.min(200, Number.parseInt(process.env.REQUESTS || process.env.DRAWS || '80', 10)));
 const GAME_ID = process.env.GAME_ID || (globalThis.crypto?.randomUUID?.() || `runtime-health-${Date.now()}`);
+const POOL_LOW_WATERMARK = Math.max(1, Math.min(500, Number.parseInt(process.env.POOL_LOW_WATERMARK || '20', 10)));
 
 function parsePrometheusMetrics(text) {
   const lines = text.split('\n');
@@ -71,6 +72,14 @@ async function fetchPrometheusSnapshot() {
   return parsePrometheusMetrics(body);
 }
 
+async function fetchPoolStats() {
+  const response = await fetch(`${API_BASE}/internal/pool-stats`);
+  if (!response.ok) {
+    throw new Error(`pool_stats_http_${response.status}`);
+  }
+  return response.json();
+}
+
 async function drawCard() {
   const params = new URLSearchParams();
   params.set('language', LANGUAGE);
@@ -91,6 +100,7 @@ async function main() {
   let beforeMetrics = new Map();
   let afterMetrics = new Map();
   let prometheusAvailable = true;
+  let poolStatsAvailable = true;
 
   try {
     beforeMetrics = await fetchPrometheusSnapshot();
@@ -132,6 +142,15 @@ async function main() {
     }
   }
 
+  let poolStats = [];
+  if (poolStatsAvailable) {
+    try {
+      poolStats = await fetchPoolStats();
+    } catch {
+      poolStatsAvailable = false;
+    }
+  }
+
   const comparisons = Math.max(0, seen.length - 1);
   const repeatRates = {
     category: comparisons === 0 ? 0 : repeatCounts.category / comparisons,
@@ -150,6 +169,42 @@ async function main() {
     relaxLevelUsage = relaxCounts;
   }
 
+  const poolTotals = {
+    totalKeys: poolStats.length,
+    emptyKeys: poolStats.filter((stat) => stat.poolSize === 0).length,
+    lowKeys: poolStats.filter((stat) => stat.poolSize <= POOL_LOW_WATERMARK).length
+  };
+
+  const poolTraffic = poolStats.reduce(
+    (acc, stat) => {
+      acc.fallback += stat.fallbackDbHits || 0;
+      acc.hits += stat.cacheHits || 0;
+      acc.misses += stat.cacheMisses || 0;
+      acc.cacheHitRateSum += stat.cacheHitRate || 0;
+      return acc;
+    },
+    { fallback: 0, hits: 0, misses: 0, cacheHitRateSum: 0 }
+  );
+
+  const poolRequests = poolTraffic.fallback + poolTraffic.hits + poolTraffic.misses;
+  const fallbackDbHitRate = poolRequests === 0 ? 0 : poolTraffic.fallback / poolRequests;
+  const avgCacheHitRate = poolTotals.totalKeys === 0 ? 0 : poolTraffic.cacheHitRateSum / poolTotals.totalKeys;
+
+  const lowestPools = poolStats
+    .slice()
+    .sort((a, b) => a.poolSize - b.poolSize)
+    .slice(0, 5)
+    .map((stat) => ({
+      topic: stat.topic,
+      difficulty: stat.difficulty,
+      language: stat.language,
+      poolSize: stat.poolSize,
+      cacheHitRate: stat.cacheHitRate,
+      fallbackDbHits: stat.fallbackDbHits,
+      refillCount: stat.refillCount,
+      lastRefillAt: stat.lastRefillAt
+    }));
+
   const report = {
     apiBase: API_BASE,
     language: LANGUAGE,
@@ -160,7 +215,17 @@ async function main() {
     repeatRates,
     sourceDistribution: sourceCounts,
     relaxLevelUsage,
-    prometheusAvailable
+    prometheusAvailable,
+    deckExhaustion: {
+      poolStatsAvailable,
+      lowWatermark: POOL_LOW_WATERMARK,
+      totalKeys: poolTotals.totalKeys,
+      emptyKeys: poolTotals.emptyKeys,
+      lowKeys: poolTotals.lowKeys,
+      fallbackDbHitRate,
+      avgCacheHitRate,
+      lowestPools
+    }
   };
 
   console.log(JSON.stringify(report, null, 2));
