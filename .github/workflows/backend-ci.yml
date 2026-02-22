@@ -26,6 +26,9 @@ jobs:
         with:
           node-version: 'lts/*'
 
+      - name: Validate Flyway migration chain
+        run: node ../tools/validate_flyway_migrations.js src/main/resources/db/migration
+
       - name: Validate Smart10 dataset
         run: node ../tools/validate_cards_v2.js ../data/smart10/cards.en.json --max-warnings=0
 
