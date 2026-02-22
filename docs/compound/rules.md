@@ -53,3 +53,5 @@
 - For content ingestion, never gate boot import on total row count; keep import idempotent and support all approved dataset formats used in-repo.
 - For generated question banks, avoid schema constraints that require unique question text per topic/language; enforce identity uniqueness via stable card IDs.
 - For boot-time imports, validate each card independently and continue on invalid rows with structured warning logs (`id`, `sourceFile`, `reason`).
+- In PowerShell workflow, avoid `&&` command chaining; run sequential commands to prevent parser failures in constrained shells.
+- Do not run `git checkout` and `git pull` in parallel; branch/base synchronization must be sequential to avoid false overwrite conflicts.

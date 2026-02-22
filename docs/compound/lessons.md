@@ -272,3 +272,30 @@
 - Preventive rule:
   - Import pipelines must handle per-record validation failures as skip+log events and continue processing valid records.
 
+## 2026-02-22 - Loop 30 (PR223 Startup Constraint Hardening Merge)
+
+- Hard part:
+  - Legacy environments can carry constraint/index drift that is not visible in clean test databases.
+- What broke:
+  - Startup import failed in environments where unique question constraint artifacts still existed.
+- Preventive rule:
+  - Add idempotent Flyway hardening migrations for known legacy schema drift and assert them in normal test migration flow.
+
+## 2026-02-22 - Loop 31 (PR224 Read-Layer Import Resilience Merge)
+
+- Hard part:
+  - Validation failures can happen before persistence (mapping stage), not only on `save`.
+- What broke:
+  - Import could still abort if malformed cards failed during JSON-to-seed mapping.
+- Preventive rule:
+  - Treat read/mapping as per-card fault boundary: skip invalid cards with structured warning logs and continue import.
+
+## 2026-02-22 - Loop 32 (PR225 Factory Shape Normalization Merge)
+
+- Hard part:
+  - Factory exports may have non-standard option counts and missing correctness markers.
+- What broke:
+  - Strict `exactly 10 options + correctness required` validation dropped too many factory cards.
+- Preventive rule:
+  - Normalize factory input deterministically (trim/pad to 10 options, ensure at least one correct fallback, ORDER fallback metadata) before entity validation.
+
