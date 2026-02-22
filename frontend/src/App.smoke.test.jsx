@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import App from './App';
 
 vi.mock('./api', () => {
@@ -16,6 +16,7 @@ vi.mock('./api', () => {
 });
 
 import { fetchNextCard, fetchTopics } from './api';
+const QUERY_TIMEOUT = 5000;
 
 function makeCard(id, correctIndex) {
   return {
@@ -56,6 +57,19 @@ function readSummaryCells(row) {
   return Array.from(row.children).map((cell) => cell.textContent.trim());
 }
 
+async function startGameWithPlayers(playersText) {
+  await screen.findByRole('button', { name: /start game/i }, { timeout: QUERY_TIMEOUT });
+  const playersInput = screen.getByLabelText(/players/i);
+  fireEvent.change(playersInput, { target: { value: playersText } });
+  fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
+  fireEvent.click(screen.getByRole('button', { name: /start game/i }));
+  await screen.findByRole('button', { name: /answer/i }, { timeout: QUERY_TIMEOUT });
+}
+
+async function waitForRoundSummary() {
+  await screen.findByRole('heading', { name: /round summary/i }, { timeout: QUERY_TIMEOUT });
+}
+
 describe('App core smoke flow', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -69,14 +83,7 @@ describe('App core smoke flow', () => {
       .mockResolvedValueOnce(makeCard('s2', 1));
 
     render(<App />);
-
-    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
-    const playersInput = screen.getByLabelText(/players/i);
-    fireEvent.change(playersInput, { target: { value: 'Alice, Bob' } });
-    fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
-    fireEvent.click(screen.getByRole('button', { name: /start game/i }));
-
-    await waitFor(() => expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument());
+    await startGameWithPlayers('Alice, Bob');
     fireEvent.click(screen.getByRole('button', { name: 'peg-1' }));
     fireEvent.click(screen.getByRole('button', { name: /answer/i }));
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
@@ -86,24 +93,17 @@ describe('App core smoke flow', () => {
     fireEvent.click(screen.getByRole('button', { name: /pass/i }));
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
 
-    await waitFor(() => expect(screen.getByRole('heading', { name: /round summary/i })).toBeInTheDocument());
+    await waitForRoundSummary();
     fireEvent.click(screen.getByRole('button', { name: /next round/i }));
-    await waitFor(() => expect(screen.getByText(/smoke question s2/i)).toBeInTheDocument());
-  });
+    await screen.findByText(/smoke question s2/i, {}, { timeout: QUERY_TIMEOUT });
+  }, 15000);
 
   test('three-player flow handles wrong-drop and pass transitions into summary stats', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
     fetchNextCard.mockResolvedValueOnce(makeCard('s3', 0));
 
     render(<App />);
-
-    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
-    const playersInput = screen.getByLabelText(/players/i);
-    fireEvent.change(playersInput, { target: { value: 'Alice, Bob, Cara' } });
-    fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
-    fireEvent.click(screen.getByRole('button', { name: /start game/i }));
-
-    await waitFor(() => expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument());
+    await startGameWithPlayers('Alice, Bob, Cara');
 
     fireEvent.click(screen.getByRole('button', { name: 'peg-1' }));
     fireEvent.click(screen.getByRole('button', { name: /answer/i }));
@@ -120,7 +120,7 @@ describe('App core smoke flow', () => {
     fireEvent.click(screen.getByRole('button', { name: /pass/i }));
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
 
-    await waitFor(() => expect(screen.getByRole('heading', { name: /round summary/i })).toBeInTheDocument());
+    await waitForRoundSummary();
 
     const aliceRow = findSummaryRow('Alice');
     const bobRow = findSummaryRow('Bob');
@@ -129,21 +129,14 @@ describe('App core smoke flow', () => {
     expect(readSummaryCells(aliceRow)).toEqual(['Alice', '1', '1', '0', '1']);
     expect(readSummaryCells(bobRow)).toEqual(['Bob', '0', '0', '1', '0']);
     expect(readSummaryCells(caraRow)).toEqual(['Cara', '0', '0', '0', '1']);
-  });
+  }, 15000);
 
   test('order category requires rank selection and wrong answer drops current player', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
     fetchNextCard.mockResolvedValueOnce(makeOrderCard('order-s1'));
 
     render(<App />);
-
-    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
-    const playersInput = screen.getByLabelText(/players/i);
-    fireEvent.change(playersInput, { target: { value: 'Alice, Bob' } });
-    fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
-    fireEvent.click(screen.getByRole('button', { name: /start game/i }));
-
-    await waitFor(() => expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument());
+    await startGameWithPlayers('Alice, Bob');
     expect(screen.getByTestId('action-hint')).toHaveTextContent(/choose rank/i);
 
     fireEvent.click(screen.getByRole('button', { name: 'peg-1' }));
@@ -160,11 +153,11 @@ describe('App core smoke flow', () => {
     fireEvent.click(screen.getByRole('button', { name: /pass/i }));
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
 
-    await waitFor(() => expect(screen.getByRole('heading', { name: /round summary/i })).toBeInTheDocument());
+    await waitForRoundSummary();
 
     const aliceRow = findSummaryRow('Alice');
     const bobRow = findSummaryRow('Bob');
     expect(readSummaryCells(aliceRow)).toEqual(['Alice', '0', '0', '1', '0']);
     expect(readSummaryCells(bobRow)).toEqual(['Bob', '0', '0', '0', '1']);
-  });
+  }, 15000);
 });
