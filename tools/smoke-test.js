@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const baseUrl = (process.env.BACKEND_URL || '').trim();
+const requestedLanguage = (process.env.SMOKE_LANGUAGE || 'en').trim().toLowerCase();
 const RETRY_ATTEMPTS = 5;
 const RETRY_DELAY_MS = 1500;
 
@@ -78,6 +79,9 @@ async function main() {
   if (!baseUrl) {
     throw new Error('BACKEND_URL is required. Example: BACKEND_URL=https://smartiq-backend.onrender.com');
   }
+  if (!requestedLanguage) {
+    throw new Error('SMOKE_LANGUAGE must be a non-empty locale code (example: en, et)');
+  }
 
   const health = await getJsonWithRetry(`${baseUrl}/health`);
   assert(health.status === 200, describeResponse('/health expected 200', health));
@@ -93,13 +97,13 @@ async function main() {
 
   const cardUrl =
     `${baseUrl}/api/cards/nextRandom` +
-    `?language=en&gameId=smoke` +
+    `?language=${encodeURIComponent(requestedLanguage)}&gameId=smoke-${encodeURIComponent(requestedLanguage)}` +
     `&topic=${encodeURIComponent(topic)}`;
   const card = await getJsonWithRetry(cardUrl);
   assert(card.status === 200, describeResponse('/api/cards/nextRandom expected 200', card));
   validateCard(card.json);
 
-  console.log(JSON.stringify({ ok: true, baseUrl, topic }, null, 2));
+  console.log(JSON.stringify({ ok: true, baseUrl, topic, requestedLanguage, servedLanguage: card.json.language }, null, 2));
 }
 
 main().catch((err) => {

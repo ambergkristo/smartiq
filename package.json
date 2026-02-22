@@ -26,6 +26,7 @@
     "pipeline:cards": "node tools/build-content-pipeline.js",
     "load:test": "node tools/load-test.js",
     "smoke:test": "node tools/smoke-test.js",
+    "smoke:test:et": "node -e \"process.env.SMOKE_LANGUAGE='et'; require('./tools/smoke-test.js')\"",
     "gate:quick": "node tools/run_local_verification_gate.js",
     "gate:local": "node tools/run_local_verification_gate.js",
     "validate:deploy-env": "node tools/validate-deploy-env.js",
