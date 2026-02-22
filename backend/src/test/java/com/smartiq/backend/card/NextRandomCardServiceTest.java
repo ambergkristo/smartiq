@@ -56,6 +56,53 @@ class NextRandomCardServiceTest {
         assertThat(relaxed).containsExactly("cardId", "topic", "category");
     }
 
+    @Test
+    void relaxesOneConstraintAtATimeBeforeFallingBackFurther() {
+        Card lastCard = card("last", "History", "TRUE_FALSE");
+        DeckCardMeta lastMeta = new DeckCardMeta(
+                lastCard.getId(),
+                NextRandomCardService.resolveCategory(lastCard),
+                lastCard.getTopic()
+        );
+
+        List<String> relaxedCardIdOnly = new ArrayList<>();
+        Card cardIdRelaxedSelected = NextRandomCardService.pickWithRelaxation(
+                List.of(
+                        card("last", "History", "TRUE_FALSE"),
+                        card("new-1", "Sports", "NUMBER")
+                ),
+                lastMeta,
+                Set.of("new-1"),
+                relaxedCardIdOnly
+        );
+        assertThat(cardIdRelaxedSelected.getId()).isEqualTo("new-1");
+        assertThat(relaxedCardIdOnly).containsExactly("cardId");
+
+        List<String> relaxedCardIdAndTopic = new ArrayList<>();
+        Card topicRelaxedSelected = NextRandomCardService.pickWithRelaxation(
+                List.of(
+                        card("new-2", "History", "NUMBER")
+                ),
+                lastMeta,
+                Set.of("new-2"),
+                relaxedCardIdAndTopic
+        );
+        assertThat(topicRelaxedSelected.getId()).isEqualTo("new-2");
+        assertThat(relaxedCardIdAndTopic).containsExactly("cardId", "topic");
+
+        List<String> relaxedAll = new ArrayList<>();
+        Card categoryRelaxedSelected = NextRandomCardService.pickWithRelaxation(
+                List.of(
+                        card("new-3", "History", "TRUE_FALSE")
+                ),
+                lastMeta,
+                Set.of("new-3"),
+                relaxedAll
+        );
+        assertThat(categoryRelaxedSelected.getId()).isEqualTo("new-3");
+        assertThat(relaxedAll).containsExactly("cardId", "topic", "category");
+    }
+
     private static Card card(String id, String topic, String subtopic) {
         Card card = new Card();
         card.setId(id);
