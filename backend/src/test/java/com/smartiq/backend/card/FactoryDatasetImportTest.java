@@ -39,6 +39,7 @@ class FactoryDatasetImportTest {
         assertThat(second.getCorrectIndex()).isEqualTo(0);
 
         assertThat(cardRepository.existsById("art_number_001")).isFalse();
+        assertThat(cardRepository.existsById("science_invalid_category_001")).isFalse();
     }
 }
 
