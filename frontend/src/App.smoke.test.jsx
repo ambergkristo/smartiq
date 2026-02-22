@@ -15,7 +15,7 @@ vi.mock('./api', () => {
   };
 });
 
-import { fetchNextCard, fetchTopics } from './api';
+import { fetchNextCard, fetchTopics, resolveCardErrorMessage } from './api';
 const QUERY_TIMEOUT = 5000;
 
 function makeCard(id, correctIndex) {
@@ -208,4 +208,26 @@ describe('App core smoke flow', () => {
     await screen.findByRole('heading', { name: /game summary/i }, { timeout: QUERY_TIMEOUT });
     expect(screen.getByText(/alice reached 30 points\./i)).toBeInTheDocument();
   }, 60000);
+
+  test('deck exhausted shows unified recovery actions and allows returning to filters', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
+    resolveCardErrorMessage.mockReturnValue('No playable cards for this filter. No cards available for language=en, topic=History.');
+    fetchNextCard.mockRejectedValue(new Error('404'));
+
+    render(<App />);
+
+    await screen.findByRole('button', { name: /start game/i }, { timeout: QUERY_TIMEOUT });
+    const playersInput = screen.getByLabelText(/players/i);
+    fireEvent.change(playersInput, { target: { value: 'Alice' } });
+    fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
+    fireEvent.click(screen.getByRole('button', { name: /start game/i }));
+
+    await screen.findByText(/no playable cards for this filter\./i, {}, { timeout: QUERY_TIMEOUT });
+    expect(screen.getByRole('button', { name: /change filters/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /restart game/i })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: /change filters/i }));
+    await screen.findByRole('button', { name: /start game/i }, { timeout: QUERY_TIMEOUT });
+    expect(screen.getByTestId('active-filter')).toHaveTextContent(/any topic \| en/i);
+  }, 15000);
 });
