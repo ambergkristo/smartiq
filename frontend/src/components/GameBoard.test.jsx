@@ -84,4 +84,23 @@ describe('GameBoard layout', () => {
     rerender(<GameBoard {...props} card={orderCard} selectedIndexes={new Set([0])} selectedRank={3} />);
     expect(screen.getByRole('button', { name: 'ANSWER' })).toBeEnabled();
   });
+
+  test('shows clear player status chips for turn, passed and out', () => {
+    globalThis.__setResizeObserverWidth(1024);
+    const props = makeProps();
+    render(
+      <GameBoard
+        {...props}
+        currentPlayerIndex={1}
+        eliminatedPlayers={new Set(['Player 1'])}
+        passedPlayers={new Set()}
+      />
+    );
+
+    expect(screen.getByText('TURN')).toBeInTheDocument();
+    expect(screen.getByText('OUT')).toBeInTheDocument();
+    expect(screen.queryByText('WAITING')).not.toBeInTheDocument();
+    expect(screen.getByText('Active 1')).toBeInTheDocument();
+    expect(screen.getByText('Out 1')).toBeInTheDocument();
+  });
 });

@@ -316,6 +316,13 @@ button:disabled {
   margin-bottom: 8px;
 }
 
+.status-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
 .players-panel ul {
   list-style: none;
   padding: 0;
@@ -379,6 +386,11 @@ button:disabled {
 .passed-chip {
   background: rgba(156, 171, 196, 0.2);
   border: 1px solid rgba(178, 194, 221, 0.7);
+}
+
+.waiting-chip {
+  background: rgba(210, 178, 138, 0.2);
+  border: 1px solid rgba(227, 198, 162, 0.62);
 }
 
 .round-line {
