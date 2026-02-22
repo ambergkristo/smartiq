@@ -120,3 +120,15 @@ Script asserts:
 - no deprecated source is served,
 - no immediate category repeat,
 - no immediate topic repeat.
+
+Quick manual source-guard check (mixed pool):
+
+```powershell
+curl.exe -s "http://localhost:8081/api/cards/nextRandom?language=en&gameId=qa-source-guard&topic=LegacyMixed"
+```
+
+Expected:
+
+- response is `200`,
+- returned `source` is in `smartiq-v2|smartiq-human|smartiq-verified`,
+- returned `source` is never `smartiq-factory` even when mixed-topic data contains deprecated rows.
