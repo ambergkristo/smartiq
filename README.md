@@ -118,8 +118,13 @@ $env:VITE_API_BASE_URL="https://<your-backend-domain>"
 
 - `GET /api/topics`
 - `GET /api/cards/nextRandom?language=&gameId=&topic=` (preferred)
-- `GET /api/cards/next?topic=&difficulty=&sessionId=&lang=` (legacy/custom mode)
-- `GET /api/cards/random?topic=` (legacy/backward-compatible)
+- `GET /api/cards/next?topic=&difficulty=&sessionId=&lang=` (legacy/custom mode, deprecated in `prod`)
+- `GET /api/cards/random?topic=` (legacy/backward-compatible, deprecated in `prod`)
+
+In `prod` profile, legacy endpoints return deprecation headers:
+- `Deprecation: true`
+- `Sunset: Thu, 31 Dec 2026 23:59:59 GMT`
+- `Link: </api/cards/nextRandom>; rel="successor-version"`
 
 ## Game Flow v1
 
