@@ -2,6 +2,8 @@
 
 This document defines the production data-quality guardrails for SmartIQ.
 
+For operational editing/cleanup process, see `docs/dataset-curation.md`.
+
 ## Card Contract
 
 Each card in `data/smart10/cards.en.json` must contain:

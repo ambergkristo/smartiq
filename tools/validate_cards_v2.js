@@ -7,6 +7,24 @@ const CATEGORIES = ['TRUE_FALSE', 'NUMBER', 'ORDER', 'CENTURY_DECADE', 'COLOR', 
 const ALLOWED_SOURCES = new Set(['smartiq-v2', 'smartiq-human', 'smartiq-verified']);
 const MIN_PER_COMBO = 30;
 const SOFT_OPTION_MAX_LEN = 42;
+const BANNED_PHRASES = [
+  'reference table',
+  'assigned index',
+  'dataset row',
+  'factory output',
+  'generator v1',
+  'smartiq-factory',
+  'placeholder question',
+  'lorem ipsum'
+];
+const BANNED_STEM_PATTERNS = [
+  /^in the .*reference table/i,
+  /^from the .*reference table/i,
+  /^according to the .*reference table/i,
+  /assigned index/i,
+  /record\s+\d+\s+is/i,
+  /^sample question/i
+];
 
 function normalizeText(value) {
   return String(value ?? '').normalize('NFKC').trim().replace(/\s+/g, ' ');
@@ -36,6 +54,28 @@ function toOptionText(option) {
 function toIndexArray(value) {
   if (!Array.isArray(value)) return [];
   return value.filter((n) => Number.isInteger(n));
+}
+
+function hasBannedPhrase(text) {
+  const normalized = normalizeLoose(text);
+  if (!normalized) return null;
+  for (const phrase of BANNED_PHRASES) {
+    if (normalized.includes(normalizeLoose(phrase))) {
+      return phrase;
+    }
+  }
+  return null;
+}
+
+function hasBannedPattern(text) {
+  const normalized = normalizeText(text);
+  if (!normalized) return null;
+  for (const pattern of BANNED_STEM_PATTERNS) {
+    if (pattern.test(normalized)) {
+      return pattern.toString();
+    }
+  }
+  return null;
 }
 
 function inRangeZeroToNine(n) {
@@ -121,6 +161,15 @@ function main() {
     const source = normalizeText(card.source).toLowerCase();
     const question = normalizeText(card.question);
 
+    const bannedQuestionPhrase = hasBannedPhrase(question);
+    if (bannedQuestionPhrase) {
+      hardErrors.push(`${context}: question contains banned phrase '${bannedQuestionPhrase}'`);
+    }
+    const bannedQuestionPattern = hasBannedPattern(question);
+    if (bannedQuestionPattern) {
+      hardErrors.push(`${context}: question matches banned pattern '${bannedQuestionPattern}'`);
+    }
+
     if (!TOPICS.includes(topic)) {
       hardErrors.push(`${context}: invalid topic '${topic}'`);
     }
@@ -144,6 +193,12 @@ function main() {
       if (new Set(optionTexts.map((entry) => entry.toLowerCase())).size !== optionTexts.length) {
         hardErrors.push(`${context}: duplicate options within card`);
       }
+      optionTexts.forEach((entry, optionIndex) => {
+        const bannedOptionPhrase = hasBannedPhrase(entry);
+        if (bannedOptionPhrase) {
+          hardErrors.push(`${context}: option[${optionIndex}] contains banned phrase '${bannedOptionPhrase}'`);
+        }
+      });
       optionTexts.forEach((entry, optionIndex) => {
         if (entry.length > SOFT_OPTION_MAX_LEN) {
           warnings.push(`${context}: option[${optionIndex}] length=${entry.length} exceeds ${SOFT_OPTION_MAX_LEN}`);
