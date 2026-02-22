@@ -18,6 +18,10 @@ const STRINGS = {
   openHealth: 'Open health',
   passNote: 'Pass keeps points and skips your turn for this round.',
   cardErrorFallback: 'Could not load card from backend. Retry to continue.',
+  deckExhausted: 'No playable cards for this filter.',
+  deckExhaustedHint: 'Change filters or restart game to continue.',
+  changeFilters: 'Change filters',
+  restartGame: 'Restart game',
   playersPlaceholder: 'Type player names and press Enter (or comma)',
   addPlayerHint: 'At least one player is required.'
 };
@@ -256,6 +260,12 @@ function StartupStatePanel({ startup, onRetry }) {
   );
 }
 
+function isDeckExhaustedMessage(message) {
+  const normalized = String(message || '').toLowerCase();
+  return normalized.includes('no playable cards for this filter')
+    || normalized.includes('question bank is empty for this filter');
+}
+
 export default function App() {
   const storedConfig = loadStoredConfig();
   const [topics, setTopics] = useState([]);
@@ -390,10 +400,27 @@ export default function App() {
           ) : null}
           {cardError ? (
             <div className="error-panel">
-              <p className="error">{cardError}</p>
-              <button type="button" onClick={engine.beginCardLoad}>
-                {STRINGS.retry}
-              </button>
+              {isDeckExhaustedMessage(cardError) ? (
+                <>
+                  <p className="error">{STRINGS.deckExhausted}</p>
+                  <p>{STRINGS.deckExhaustedHint}</p>
+                  <div className="row-actions">
+                    <button type="button" onClick={handleRestart}>
+                      {STRINGS.changeFilters}
+                    </button>
+                    <button type="button" onClick={handlePlayAgain}>
+                      {STRINGS.restartGame}
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="error">{cardError}</p>
+                  <button type="button" onClick={engine.beginCardLoad}>
+                    {STRINGS.retry}
+                  </button>
+                </>
+              )}
             </div>
           ) : null}
           {engine.card ? (
