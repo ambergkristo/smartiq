@@ -71,6 +71,16 @@ Expected:
 - generated runtime report exists under `docs/reports/et-runtime-smoke-*.md`
 - report summary status is `PASS`
 
+ET launch gate (must all hold before enabling in production):
+
+- ET dataset coverage: `6 categories x 6 topics x minimum 30 cards` (>= 1080 cards total).
+- ET schema and locale-pack validation pass (`validate_cards_v2`, `validate_locale_packs`, `audit_locale_coverage`).
+- ET quality score gate passes (`score_cards_quality >= 0.80`).
+- Runtime smoke for `language=et` passes and returns ET cards.
+- Feature flags enabled explicitly:
+  - frontend: `VITE_ENABLE_ET=true`
+  - backend: `SMARTIQ_LANGUAGE_ET_ENABLED=true`
+
 ## 5. Public Deployment Gate
 
 - Frontend (Vercel) live and points to backend via `VITE_API_BASE_URL`.

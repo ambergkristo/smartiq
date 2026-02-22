@@ -80,6 +80,16 @@ If you use frontend against backend on `8081`, set:
 $env:VITE_API_BASE_URL="http://localhost:8081"
 ```
 
+ET language is feature-flagged:
+
+```powershell
+# frontend language selector (default false in production)
+$env:VITE_ENABLE_ET="true"
+
+# backend acceptance for /api/cards/nextRandom language=et
+$env:SMARTIQ_LANGUAGE_ET_ENABLED="true"
+```
+
 ## Local Dev Port and CORS Behavior
 
 - Vite prefers port `5173` but can move to another free localhost port when `5173` is busy.
@@ -240,6 +250,14 @@ Session de-duplication (per sessionId):
 SMARTIQ_SESSION_DEDUP_ENABLED=true
 SMARTIQ_SESSION_TTL_MINUTES=120
 SMARTIQ_SESSION_MAX=50000
+```
+
+Language feature flag:
+
+```bash
+# application.yml default: true (dev)
+# application-prod.yml default: false (EN-only unless explicitly enabled)
+SMARTIQ_LANGUAGE_ET_ENABLED=false
 ```
 
 Manual e2e checklist script:

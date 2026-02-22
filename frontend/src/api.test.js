@@ -47,11 +47,11 @@ describe('api error mapping', () => {
     })).toContain('Not found. Card id not found');
   });
 
-  test('builds cards/next query with backend contract params', () => {
+  test('builds cards/next query with backend contract params and EN fallback', () => {
     const params = buildNextCardQuery({ topic: 'Science', difficulty: 'hard', language: 'et' });
     expect(params.get('topic')).toBe('Science');
     expect(params.get('difficulty')).toBe('3');
-    expect(params.get('language')).toBe('et');
-    expect(params.get('lang')).toBe('et');
+    expect(params.get('language')).toBe('en');
+    expect(params.get('lang')).toBe('en');
   });
 });

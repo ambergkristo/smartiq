@@ -46,6 +46,8 @@ smartiq:
     max-sessions: ${SMARTIQ_SESSION_MAX:50000}
   dataset:
     min-category-threshold: ${SMARTIQ_MIN_CATEGORY_THRESHOLD:100}
+  language:
+    et-enabled: ${SMARTIQ_LANGUAGE_ET_ENABLED:true}
   bank:
     min-size: ${MIN_BANK_SIZE:1000}
     block-on-low-bank: ${SMARTIQ_BLOCK_ON_LOW_BANK:false}

@@ -122,8 +122,12 @@ function normalizeDifficulty(difficulty) {
 }
 
 function normalizeLanguage(lang) {
+  const etEnabled = String(import.meta.env.VITE_ENABLE_ET || '').toLowerCase() === 'true';
   const value = String(lang ?? '').trim().toLowerCase();
-  return value === 'et' ? 'et' : 'en';
+  if (value === 'et' && etEnabled) {
+    return 'et';
+  }
+  return 'en';
 }
 
 export function buildNextCardQuery({ topic, difficulty, language }) {

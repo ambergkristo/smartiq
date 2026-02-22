@@ -10,4 +10,6 @@ export const GamePhase = {
 };
 
 export const DEFAULT_PLAYERS = ['Player 1'];
-export const DEFAULT_LANGS = ['en', 'et'];
+const ET_ENABLED = String(import.meta.env.VITE_ENABLE_ET || '').toLowerCase() === 'true';
+
+export const DEFAULT_LANGS = ET_ENABLED ? ['en', 'et'] : ['en'];

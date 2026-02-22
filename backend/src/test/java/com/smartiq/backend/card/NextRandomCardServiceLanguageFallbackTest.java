@@ -31,7 +31,7 @@ class NextRandomCardServiceLanguageFallbackTest {
 
     @BeforeEach
     void setUp() {
-        service = new NextRandomCardService(cardRepository, gameHistoryStore, new SimpleMeterRegistry());
+        service = new NextRandomCardService(cardRepository, gameHistoryStore, new SimpleMeterRegistry(), true);
     }
 
     @Test
@@ -92,6 +92,20 @@ class NextRandomCardServiceLanguageFallbackTest {
         assertThat(selected.getId()).isEqualTo("en-math-1");
         verify(cardRepository).findDeckPool(eq("et"), eq("Math"), anyList());
         verify(cardRepository).findDeckPool(eq("en"), eq("Math"), anyList());
+    }
+
+    @Test
+    void rejectsEstonianWhenFeatureFlagIsDisabled() {
+        NextRandomCardService etDisabledService = new NextRandomCardService(
+                cardRepository,
+                gameHistoryStore,
+                new SimpleMeterRegistry(),
+                false
+        );
+
+        assertThatThrownBy(() -> etDisabledService.nextRandom("et", "game-et-disabled", null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("language et is disabled");
     }
 
     private static Card card(String id, String topic, String category) {
