@@ -45,6 +45,11 @@ Additional non-blocking runtime profile:
   - `topic` (optional)
 - The smoke step uses `continue-on-error`, so it never blocks merge gates.
 
+## ET Quality Reporting
+
+- Use `docs/et-quality-report-template.md` for each ET readiness pass.
+- Store final filled reports in PR description (or attach as QA note) before release promotion.
+
 ## ET Quality Checklist (Next Milestone)
 
 1. Keep ET card contract aligned with EN.
