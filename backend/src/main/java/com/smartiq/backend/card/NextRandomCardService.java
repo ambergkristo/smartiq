@@ -67,6 +67,10 @@ public class NextRandomCardService {
             state.lastAccessAt = System.currentTimeMillis();
 
             List<DeckCardMeta> history = gameHistoryStore.readRecent(normalizedGameId, LAST_K_DEFAULT);
+            int historyBefore = history.size();
+            boolean newGame = historyBefore == 0;
+            int drawNumber = historyBefore + 1;
+            boolean historyTrimmed = historyBefore >= LAST_K_DEFAULT;
             DeckCardMeta last = history.isEmpty() ? null : history.get(history.size() - 1);
             Set<String> recentIds = recentCardIds(history);
             List<String> relaxed = new ArrayList<>();
@@ -80,14 +84,20 @@ public class NextRandomCardService {
                     new DeckCardMeta(selected.getId(), resolveCategory(selected), selected.getTopic()),
                     LAST_K_DEFAULT
             );
+            int historyAfter = Math.min(historyBefore + 1, LAST_K_DEFAULT);
 
-            log.info("nextRandom gameId={} cardId={} category={} topic={} language={} pool={} relaxed={}",
+            log.info("nextRandom gameId={} draw={} newGame={} cardId={} category={} topic={} language={} pool={} historyBefore={} historyAfter={} historyTrimmed={} relaxed={}",
                     normalizedGameId,
+                    drawNumber,
+                    newGame,
                     selected.getId(),
                     resolveCategory(selected),
                     selected.getTopic(),
                     effectiveLanguage,
                     pool.size(),
+                    historyBefore,
+                    historyAfter,
+                    historyTrimmed,
                     relaxed);
 
             return selected;
