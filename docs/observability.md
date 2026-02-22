@@ -21,3 +21,24 @@ Prometheus metrics include:
 - `smartiq.pool.cache.misses`
 - `smartiq.pool.fallback.db.hits`
 - `smartiq.pool.refills`
+
+## Deck Event Logs
+
+`NextRandomCardService` logs one INFO line per served deck card:
+
+- message prefix: `nextRandom`
+- fields:
+  - `gameId`
+  - `draw` (draw index for that game history)
+  - `newGame` (`true` on first draw for gameId)
+  - `cardId`
+  - `category`
+  - `topic`
+  - `language`
+  - `pool`
+  - `historyBefore`
+  - `historyAfter`
+  - `historyTrimmed` (`true` when last-K window already full)
+  - `relaxed` (applied relaxation steps)
+
+Use this log for low-noise deck progression tracing without enabling debug logging.
