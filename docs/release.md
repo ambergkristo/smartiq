@@ -10,6 +10,12 @@ Run from repo root:
 npm run gate:local
 ```
 
+Quick alias (same checks):
+
+```bash
+npm run gate:quick
+```
+
 Equivalent explicit command list:
 
 ```bash
