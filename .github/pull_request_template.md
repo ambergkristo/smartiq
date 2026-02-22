@@ -22,6 +22,7 @@
 ## Notes
 
 - Additional reviewer context, risks, or follow-up work
+- Milestone PRs: include `docs/milestone-ready-checklist.md` sections in description
 
 ## Migration Steps (if applicable)
 
