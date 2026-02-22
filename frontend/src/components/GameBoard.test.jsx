@@ -1,4 +1,5 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, within, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import GameBoard from './GameBoard';
 
 function makeProps() {
@@ -120,5 +121,40 @@ describe('GameBoard layout', () => {
     expect(screen.getByRole('button', { name: /peg-3 unrevealed/i })).toBeInTheDocument();
     expect(screen.getAllByText('✓')).toHaveLength(1);
     expect(screen.getAllByText('✗')).toHaveLength(1);
+  });
+
+  test('supports keyboard flow for action buttons and announces state', async () => {
+    globalThis.__setResizeObserverWidth(1024);
+    const props = makeProps();
+    const user = userEvent.setup();
+    const { rerender } = render(<GameBoard {...props} />);
+
+    const liveRegion = screen.getByTestId('board-live-region');
+    expect(liveRegion).toHaveTextContent(/reveal one peg/i);
+    expect(liveRegion).toHaveTextContent(/pass keeps score/i);
+    expect(liveRegion).toHaveTextContent(/ready/i);
+
+    const passButton = screen.getByRole('button', { name: 'PASS' });
+    await waitFor(() => expect(passButton).toHaveFocus());
+    await user.keyboard('{Enter}');
+    expect(props.onPass).toHaveBeenCalledTimes(1);
+
+    rerender(<GameBoard {...props} selectedIndexes={new Set([0])} />);
+    const answerButton = screen.getByRole('button', { name: 'ANSWER' });
+    answerButton.focus();
+    await user.keyboard('{Enter}');
+    expect(props.onAnswer).toHaveBeenCalledTimes(1);
+
+    rerender(<GameBoard {...props} phase="CONFIRMING" />);
+    const lockInButton = screen.getByRole('button', { name: 'LOCK IN' });
+    await waitFor(() => expect(lockInButton).toHaveFocus());
+    await user.keyboard('{Enter}');
+    expect(props.onConfirm).toHaveBeenCalledTimes(1);
+
+    rerender(<GameBoard {...props} phase="RESOLVED" />);
+    const nextButton = screen.getByRole('button', { name: 'NEXT' });
+    await waitFor(() => expect(nextButton).toHaveFocus());
+    await user.keyboard('{Enter}');
+    expect(props.onNext).toHaveBeenCalledTimes(1);
   });
 });
