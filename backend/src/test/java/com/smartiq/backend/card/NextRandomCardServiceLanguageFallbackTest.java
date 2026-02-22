@@ -76,6 +76,23 @@ class NextRandomCardServiceLanguageFallbackTest {
         assertThat(selected.getSource()).isEqualTo("smartiq-v2");
     }
 
+    @Test
+    void fallbackPathUsesTrimmedTopicFilter() {
+        Card englishCard = card("en-math-1", "Math", "OPEN");
+        englishCard.setLanguage("en");
+        englishCard.setSource("smartiq-v2");
+
+        when(gameHistoryStore.readRecent(eq("game-4"), anyInt())).thenReturn(List.of());
+        when(cardRepository.findDeckPool(eq("et"), eq("Math"), anyList())).thenReturn(List.of());
+        when(cardRepository.findDeckPool(eq("en"), eq("Math"), anyList())).thenReturn(List.of(englishCard));
+
+        Card selected = service.nextRandom("et", "game-4", "  Math  ");
+
+        assertThat(selected.getId()).isEqualTo("en-math-1");
+        verify(cardRepository).findDeckPool(eq("et"), eq("Math"), anyList());
+        verify(cardRepository).findDeckPool(eq("en"), eq("Math"), anyList());
+    }
+
     private static Card card(String id, String topic, String category) {
         Card card = new Card();
         card.setId(id);
