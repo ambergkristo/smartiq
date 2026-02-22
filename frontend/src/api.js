@@ -1,5 +1,6 @@
 export const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').trim();
-export const USE_SAMPLE_MODE = String(import.meta.env.VITE_USE_SAMPLE || '').toLowerCase() === 'true';
+const SAMPLE_MODE_FLAG = String(import.meta.env.VITE_SAMPLE_MODE || import.meta.env.VITE_USE_SAMPLE || '').toLowerCase() === 'true';
+export const USE_SAMPLE_MODE = Boolean(import.meta.env.DEV) && SAMPLE_MODE_FLAG;
 
 class ApiError extends Error {
   constructor(message, status, code, detail = null) {
