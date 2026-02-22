@@ -53,6 +53,8 @@ Additional non-blocking runtime profile:
   - `npm run report:et:quality`
   - Optional smoke in same report:
     - `npm run report:et:quality -- --with-smoke`
+- Runtime smoke report artifact:
+  - `BACKEND_URL=http://localhost:8081 npm run report:et:runtime`
 
 ## ET Quality Checklist (Next Milestone)
 
