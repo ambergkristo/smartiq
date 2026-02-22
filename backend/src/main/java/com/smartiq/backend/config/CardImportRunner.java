@@ -324,8 +324,10 @@ public class CardImportRunner implements ApplicationRunner {
                         options.add(textOrNull(optionNode.get("text")));
                         correctFlags.add(optionNode.path("correct").asBoolean(false));
                     }
+                    normalizeFactoryOptions(options, correctFlags);
 
                     JsonNode correctNode = cardNode.get("correct");
+                    correctNode = normalizeFactoryCorrectness(correctNode, cardCategory, correctFlags);
                     String correctMeta = normalizeCorrectMeta(correctNode, cardCategory, correctFlags);
                     Integer correctIndex = resolveCorrectIndex(correctNode, cardCategory, correctFlags);
                     String correctFlagsRaw = resolveCorrectFlags(correctNode, cardCategory, correctFlags);
@@ -350,6 +352,53 @@ public class CardImportRunner implements ApplicationRunner {
             }
         }
         return new SeedReadResult(seeds, invalid);
+    }
+
+    private void normalizeFactoryOptions(List<String> options, List<Boolean> correctFlags) {
+        List<String> normalizedOptions = new ArrayList<>(10);
+        List<Boolean> normalizedFlags = new ArrayList<>(10);
+
+        int upperBound = Math.min(options.size(), 10);
+        for (int i = 0; i < upperBound; i++) {
+            String text = options.get(i);
+            if (!StringUtils.hasText(text)) {
+                text = "Option " + (i + 1);
+            }
+            normalizedOptions.add(text.trim());
+            normalizedFlags.add(i < correctFlags.size() && Boolean.TRUE.equals(correctFlags.get(i)));
+        }
+
+        while (normalizedOptions.size() < 10) {
+            int idx = normalizedOptions.size() + 1;
+            normalizedOptions.add("Option " + idx);
+            normalizedFlags.add(false);
+        }
+
+        options.clear();
+        options.addAll(normalizedOptions);
+        correctFlags.clear();
+        correctFlags.addAll(normalizedFlags);
+    }
+
+    private JsonNode normalizeFactoryCorrectness(JsonNode correctNode, String category, List<Boolean> correctFlags) {
+        if (correctNode != null && !correctNode.isNull()) {
+            return correctNode;
+        }
+
+        if ("ORDER".equals(category)) {
+            ObjectNode fallback = objectMapper.createObjectNode();
+            ArrayNode correctOrder = fallback.putArray("correctOrder");
+            for (int rank = 1; rank <= 10; rank++) {
+                correctOrder.add(rank);
+            }
+            return fallback;
+        }
+
+        boolean hasCorrect = correctFlags.stream().anyMatch(Boolean::booleanValue);
+        if (!hasCorrect && !correctFlags.isEmpty()) {
+            correctFlags.set(0, true);
+        }
+        return null;
     }
 
     private String normalizeDifficulty(JsonNode node) {
