@@ -10,20 +10,9 @@ Run from repo root:
 npm run gate:local
 ```
 
-Quick alias (same checks):
+Canonical local gate commands and aliases:
 
-```powershell
-npm run gate:quick
-```
-
-Equivalent explicit command list:
-
-```powershell
-npm.cmd --prefix frontend run lint
-npm.cmd --prefix frontend run test -- --run
-npm.cmd --prefix frontend run build
-mvn -q -f backend/pom.xml test
-```
+- `docs/local-gate.md`
 
 Expected:
 
