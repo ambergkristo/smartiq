@@ -46,4 +46,5 @@ Backend CI runs:
    - `node tools/audit_locale_coverage.js data/smart10 --required=en,et --min-per-combo=30`
 3. Validate runtime manually:
    - `curl \"http://localhost:8081/api/cards/nextRandom?language=et&gameId=smoke-et\"`
+   - or use smoke script: `BACKEND_URL=http://localhost:8081 npm run smoke:test:et`
 4. Add ET-specific quality rubric thresholds once ET wording is fully localized.
