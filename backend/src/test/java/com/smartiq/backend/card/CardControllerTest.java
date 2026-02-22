@@ -181,6 +181,34 @@ class CardControllerTest {
         mixedDeprecated.setSource("smartiq-factory");
         mixedDeprecated.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
         cardRepository.save(mixedDeprecated);
+
+        Card relaxOpen = new Card();
+        relaxOpen.setId("relax-open-1");
+        relaxOpen.setTopic("RelaxTopic");
+        relaxOpen.setSubtopic("OPEN");
+        relaxOpen.setCategory("OPEN");
+        relaxOpen.setLanguage("en");
+        relaxOpen.setQuestion("Relax topic open card");
+        relaxOpen.setOptions(List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"));
+        relaxOpen.setCorrectIndex(0);
+        relaxOpen.setDifficulty("2");
+        relaxOpen.setSource("smartiq-v2");
+        relaxOpen.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
+        cardRepository.save(relaxOpen);
+
+        Card relaxNumber = new Card();
+        relaxNumber.setId("relax-number-1");
+        relaxNumber.setTopic("RelaxTopic");
+        relaxNumber.setSubtopic("NUMBER");
+        relaxNumber.setCategory("NUMBER");
+        relaxNumber.setLanguage("en");
+        relaxNumber.setQuestion("Relax topic number card");
+        relaxNumber.setOptions(List.of("10", "11", "12", "13", "14", "15", "16", "17", "18", "19"));
+        relaxNumber.setCorrectIndex(0);
+        relaxNumber.setDifficulty("2");
+        relaxNumber.setSource("smartiq-v2");
+        relaxNumber.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
+        cardRepository.save(relaxNumber);
     }
 
     @Test
@@ -310,6 +338,29 @@ class CardControllerTest {
                         .param("topic", "Math"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.language").value("en"));
+    }
+
+    @Test
+    void nextRandomRelaxesTopicAfterCardIdForSmallFixedTopicPool() throws Exception {
+        MvcResult first = mockMvc.perform(get("/api/cards/nextRandom")
+                        .param("language", "en")
+                        .param("gameId", "game-relax-order")
+                        .param("topic", "RelaxTopic"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.topic").value("RelaxTopic"))
+                .andReturn();
+
+        String firstCardId = JsonPath.read(first.getResponse().getContentAsString(), "$.cardId");
+        String firstCategory = JsonPath.read(first.getResponse().getContentAsString(), "$.category");
+
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .param("language", "en")
+                        .param("gameId", "game-relax-order")
+                        .param("topic", "RelaxTopic"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.topic").value("RelaxTopic"))
+                .andExpect(jsonPath("$.cardId").value(org.hamcrest.Matchers.not(firstCardId)))
+                .andExpect(jsonPath("$.category").value(org.hamcrest.Matchers.not(firstCategory)));
     }
 
     @Test

@@ -207,6 +207,11 @@ describe('App core smoke flow', () => {
     await playPerfectOrderRound();
     await screen.findByRole('heading', { name: /game summary/i }, { timeout: QUERY_TIMEOUT });
     expect(screen.getByText(/alice reached 30 points\./i)).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: /change topic/i }));
+    await screen.findByRole('button', { name: /start game/i }, { timeout: QUERY_TIMEOUT });
+    expect(screen.queryByRole('heading', { name: /game summary/i })).not.toBeInTheDocument();
+    expect(screen.getByTestId('active-filter')).toHaveTextContent(/any topic \| en/i);
   }, 60000);
 
   test('deck exhausted shows unified recovery actions and allows returning to filters', async () => {
