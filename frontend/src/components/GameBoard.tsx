@@ -136,7 +136,6 @@ export default function GameBoard({
             </p>
             <p className="meta-line">Round {roundNumber}</p>
           </div>
-          <h2 className={`question-text${!questionExpanded ? ' clamped' : ''}`}>{card.question}</h2>
           {isLongQuestion ? (
             <button
               type="button"
@@ -188,8 +187,10 @@ export default function GameBoard({
             </div>
           ) : (
             <div className="wheel-board" data-testid="wheel-board" style={{ width: `${wheelSize}px`, height: `${wheelSize}px` }}>
-              <div className="wheel-hub" style={{ borderColor: CATEGORY_COLORS[category] || '#f59b1f' }}>
-                <span>{category}</span>
+              <div className="wheel-hub-ring" style={{ borderColor: CATEGORY_COLORS[category] || '#f59b1f' }}>
+                <div className="wheel-hub">
+                  <p className={`hub-question${!questionExpanded ? ' clamped' : ''}`}>{card.question}</p>
+                </div>
               </div>
               {card.options.map((option, index) => (
                 <div

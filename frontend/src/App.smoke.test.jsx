@@ -88,7 +88,7 @@ async function playPerfectOrderRound() {
   const rankSelector = await screen.findByRole('radiogroup', { name: /rank selector/i }, { timeout: QUERY_TIMEOUT });
   for (let index = 1; index <= 10; index += 1) {
     fireEvent.click(within(rankSelector).getByRole('button', { name: String(index) }));
-    fireEvent.click(screen.getByRole('button', { name: `peg-${index}` }));
+    fireEvent.click(screen.getByRole('button', { name: new RegExp(`^peg-${index}\\b`, 'i') }));
     fireEvent.click(screen.getByRole('button', { name: /answer/i }));
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
@@ -109,7 +109,7 @@ describe('App core smoke flow', () => {
 
     render(<App />);
     await startGameWithPlayers('Alice, Bob');
-    fireEvent.click(screen.getByRole('button', { name: 'peg-1' }));
+    fireEvent.click(screen.getByRole('button', { name: /^peg-1\b/i }));
     fireEvent.click(screen.getByRole('button', { name: /answer/i }));
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
@@ -130,12 +130,12 @@ describe('App core smoke flow', () => {
     render(<App />);
     await startGameWithPlayers('Alice, Bob, Cara');
 
-    fireEvent.click(screen.getByRole('button', { name: 'peg-1' }));
+    fireEvent.click(screen.getByRole('button', { name: /^peg-1\b/i }));
     fireEvent.click(screen.getByRole('button', { name: /answer/i }));
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
 
-    fireEvent.click(screen.getByRole('button', { name: 'peg-2' }));
+    fireEvent.click(screen.getByRole('button', { name: /^peg-2\b/i }));
     fireEvent.click(screen.getByRole('button', { name: /answer/i }));
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
@@ -164,7 +164,7 @@ describe('App core smoke flow', () => {
     await startGameWithPlayers('Alice, Bob');
     expect(screen.getByTestId('action-hint')).toHaveTextContent(/choose rank/i);
 
-    fireEvent.click(screen.getByRole('button', { name: 'peg-1' }));
+    fireEvent.click(screen.getByRole('button', { name: /^peg-1\b/i }));
     expect(screen.getByRole('button', { name: /answer/i })).toBeDisabled();
 
     const rankSelector = screen.getByRole('radiogroup', { name: /rank selector/i });

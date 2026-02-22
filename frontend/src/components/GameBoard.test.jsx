@@ -103,4 +103,22 @@ describe('GameBoard layout', () => {
     expect(screen.getByText('Active 1')).toBeInTheDocument();
     expect(screen.getByText('Out 1')).toBeInTheDocument();
   });
+
+  test('shows marker symbols and aria state labels for revealed pegs', () => {
+    globalThis.__setResizeObserverWidth(1024);
+    const props = makeProps();
+    render(
+      <GameBoard
+        {...props}
+        revealedIndexes={new Set([0])}
+        wrongIndexes={new Set([1])}
+      />
+    );
+
+    expect(screen.getByRole('button', { name: /peg-1 correct/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /peg-2 wrong/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /peg-3 unrevealed/i })).toBeInTheDocument();
+    expect(screen.getAllByText('✓')).toHaveLength(1);
+    expect(screen.getAllByText('✗')).toHaveLength(1);
+  });
 });
