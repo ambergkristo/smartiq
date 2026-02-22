@@ -243,6 +243,24 @@ class CardControllerTest {
     }
 
     @Test
+    void returnsBadRequestWhenNextRandomLanguageBlank() throws Exception {
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .param("language", "   ")
+                        .param("gameId", "game-blank-language"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("language is required"));
+    }
+
+    @Test
+    void returnsBadRequestWhenNextRandomGameIdBlank() throws Exception {
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .param("language", "en")
+                        .param("gameId", "   "))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("gameId is required"));
+    }
+
+    @Test
     void returnsNotFoundWhenOnlyDeprecatedSourcesMatchNextRandomPool() throws Exception {
         mockMvc.perform(get("/api/cards/nextRandom")
                         .param("language", "en")
