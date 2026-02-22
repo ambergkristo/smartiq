@@ -1,0 +1,39 @@
+name: Runtime Smoke ET (Non-blocking)
+
+on:
+  workflow_dispatch:
+    inputs:
+      backend_url:
+        description: "Backend base URL (example: https://smartiq-backend.onrender.com)"
+        required: true
+        type: string
+      topic:
+        description: "Optional topic override (example: History)"
+        required: false
+        default: ""
+        type: string
+
+jobs:
+  smoke-et:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+
+      - name: Run ET runtime smoke (non-blocking)
+        continue-on-error: true
+        env:
+          BACKEND_URL: ${{ inputs.backend_url }}
+          SMOKE_LANGUAGE: et
+          SMOKE_TOPIC: ${{ inputs.topic }}
+        run: node tools/smoke-test.js
+
+      - name: Summary
+        run: |
+          echo "ET runtime smoke profile is non-blocking by design."
+          echo "Check step logs above for smoke outcome."
