@@ -46,7 +46,7 @@ The smoke test must validate:
 
 - `GET /health` -> `200`
 - `GET /api/topics` -> `200` + non-empty array
-- `GET /api/cards/next?topic=<resolved>&difficulty=2&sessionId=smoke&lang=en` -> `200` + card schema
+- `GET /api/cards/nextRandom?language=en&gameId=smoke` -> `200` + card schema
 
 ## 4. Public Deployment Gate
 
@@ -57,7 +57,7 @@ The smoke test must validate:
 
 ## 5. Security Gate
 
-- `/health`, `/api/topics`, `/api/cards/next` are publicly accessible.
+- `/health`, `/api/topics`, `/api/cards/nextRandom` are publicly accessible.
 - `/internal/*` returns `401` without internal API key in `prod`.
 - `/api/admin/*` is disabled or protected in `prod`.
 - Prod actuator exposure is limited as documented in `docs/deploy.md`.

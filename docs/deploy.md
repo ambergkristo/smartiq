@@ -67,7 +67,7 @@ npm run validate:deploy-env
 
 1. `GET https://<backend-domain>/health` returns `{\"status\":\"UP\"}`.
 2. Frontend loads topics from backend.
-3. `/api/cards/next` works from deployed frontend domain without CORS errors.
+3. `/api/cards/nextRandom?language=en&gameId=smoke-deploy` works from deployed frontend domain without CORS errors.
 4. `/internal/pool-stats` returns `401` without API key and `200` with API key.
 
 Public smoke test command:
