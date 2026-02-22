@@ -47,4 +47,7 @@ Backend CI runs:
 3. Validate runtime manually:
    - `curl \"http://localhost:8081/api/cards/nextRandom?language=et&gameId=smoke-et\"`
    - or use smoke script: `BACKEND_URL=http://localhost:8081 npm run smoke:test:et`
+   - optional smoke overrides:
+     - `SMOKE_TOPIC=History` to force topic
+     - `SMOKE_GAME_ID=my-fixed-game` to reuse game history
 4. Add ET-specific quality rubric thresholds once ET wording is fully localized.

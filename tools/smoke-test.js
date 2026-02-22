@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 const baseUrl = (process.env.BACKEND_URL || '').trim();
 const requestedLanguage = (process.env.SMOKE_LANGUAGE || 'en').trim().toLowerCase();
+const requestedTopic = (process.env.SMOKE_TOPIC || '').trim();
+const requestedGameId = (process.env.SMOKE_GAME_ID || '').trim();
 const RETRY_ATTEMPTS = 5;
 const RETRY_DELAY_MS = 1500;
 
@@ -91,19 +93,22 @@ async function main() {
   assert(Array.isArray(topics.json), '/api/topics must return array');
   assert(topics.json.length > 0, '/api/topics returned empty list');
 
-  const preferredTopic = topics.json.find((entry) => entry?.topic === 'Math');
-  const topic = preferredTopic?.topic || topics.json[0]?.topic;
+  const preferredTopic = requestedTopic
+    ? topics.json.find((entry) => entry?.topic === requestedTopic)
+    : topics.json.find((entry) => entry?.topic === 'Math');
+  const topic = preferredTopic?.topic || requestedTopic || topics.json[0]?.topic;
   assert(typeof topic === 'string' && topic.length > 0, 'Unable to resolve smoke-test topic');
+  const gameId = requestedGameId || `smoke-${requestedLanguage}-${Date.now()}`;
 
   const cardUrl =
     `${baseUrl}/api/cards/nextRandom` +
-    `?language=${encodeURIComponent(requestedLanguage)}&gameId=smoke-${encodeURIComponent(requestedLanguage)}` +
+    `?language=${encodeURIComponent(requestedLanguage)}&gameId=${encodeURIComponent(gameId)}` +
     `&topic=${encodeURIComponent(topic)}`;
   const card = await getJsonWithRetry(cardUrl);
   assert(card.status === 200, describeResponse('/api/cards/nextRandom expected 200', card));
   validateCard(card.json);
 
-  console.log(JSON.stringify({ ok: true, baseUrl, topic, requestedLanguage, servedLanguage: card.json.language }, null, 2));
+  console.log(JSON.stringify({ ok: true, baseUrl, topic, gameId, requestedLanguage, servedLanguage: card.json.language }, null, 2));
 }
 
 main().catch((err) => {
