@@ -227,6 +227,17 @@ class CardControllerTest {
     }
 
     @Test
+    void trimsTopicFilterForNextRandom() throws Exception {
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .param("language", "en")
+                        .param("gameId", "game-trim-topic")
+                        .param("topic", "  Math  "))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.topic").value("Math"))
+                .andExpect(jsonPath("$.cardId").exists());
+    }
+
+    @Test
     void returnsBadRequestWhenNextRandomGameIdMissing() throws Exception {
         mockMvc.perform(get("/api/cards/nextRandom")
                         .param("language", "en"))
