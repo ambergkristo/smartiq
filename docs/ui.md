@@ -91,6 +91,22 @@ Defined in `frontend/src/state/types.ts`.
 6. Empty-pool check:
    - Request unavailable filter/language and verify user sees a meaningful `404` detail message, not generic fallback.
 
+## NextRandom Edge-Case QA
+
+Run these backend checks directly against API:
+
+1. Topic trim behavior:
+   - `curl.exe -s "http://localhost:8081/api/cards/nextRandom?language=en&gameId=qa-trim&topic=%20%20Math%20%20"`
+   - Expect `200` and response `topic` value equals `Math`.
+2. Language fallback behavior (`et` -> `en`):
+   - `curl.exe -s "http://localhost:8081/api/cards/nextRandom?language=et&gameId=qa-fallback&topic=Math"`
+   - Expect `200` with `language` set to `en` when ET pool is empty.
+3. Relax-order behavior on constrained pools:
+   - In test suite, verify relaxation sequence remains `cardId -> topic -> category` (never skipped).
+4. Empty-pool contract:
+   - `curl.exe -s -i "http://localhost:8081/api/cards/nextRandom?language=en&gameId=qa-empty&topic=Unknown"`
+   - Expect `404` and JSON body with `error` field (`No cards available for language=en, topic=Unknown`).
+
 ## Test Coverage
 
 - State machine transitions:
