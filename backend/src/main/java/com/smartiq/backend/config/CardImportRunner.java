@@ -161,10 +161,11 @@ public class CardImportRunner implements ApplicationRunner {
 
     private void importFile(Path path) {
         try {
-            List<CardSeed> seeds = readSeeds(path);
+            SeedReadResult readResult = readSeeds(path);
+            List<CardSeed> seeds = readResult.seeds();
             int inserted = 0;
             int duplicates = 0;
-            int invalid = 0;
+            int invalid = readResult.invalidCount();
 
             for (CardSeed seed : seeds) {
                 if (cardRepository.existsById(seed.id())) {
@@ -188,10 +189,10 @@ public class CardImportRunner implements ApplicationRunner {
         }
     }
 
-    private List<CardSeed> readSeeds(Path path) throws IOException {
+    private SeedReadResult readSeeds(Path path) throws IOException {
         JsonNode root = objectMapper.readTree(path.toFile());
         if (!root.isArray() || root.isEmpty()) {
-            return List.of();
+            return new SeedReadResult(List.of(), 0);
         }
 
         JsonNode first = root.get(0);
@@ -202,57 +203,64 @@ public class CardImportRunner implements ApplicationRunner {
         return readFlatCards(root);
     }
 
-    private List<CardSeed> readFlatCards(JsonNode root) {
+    private SeedReadResult readFlatCards(JsonNode root) {
         List<CardSeed> seeds = new ArrayList<>();
+        int invalid = 0;
         for (JsonNode cardNode : root) {
             String id = textOrNull(cardNode.get("id"));
-            String topic = textOrNull(cardNode.get("topic"));
-            String category = normalizeCategory(textOrNull(cardNode.get("category")));
-            String language = fallback(textOrNull(cardNode.get("language")), "en");
-            String question = textOrNull(cardNode.get("question"));
-            String difficulty = normalizeDifficulty(cardNode.get("difficulty"));
-            String source = fallback(textOrNull(cardNode.get("source")), "smartiq-import");
+            try {
+                String topic = textOrNull(cardNode.get("topic"));
+                String category = normalizeCategory(textOrNull(cardNode.get("category")));
+                String language = fallback(textOrNull(cardNode.get("language")), "en");
+                String question = textOrNull(cardNode.get("question"));
+                String difficulty = normalizeDifficulty(cardNode.get("difficulty"));
+                String source = fallback(textOrNull(cardNode.get("source")), "smartiq-import");
 
-            JsonNode optionsNode = cardNode.get("options");
-            if (optionsNode == null || !optionsNode.isArray()) {
-                continue;
-            }
-            List<String> options = new ArrayList<>();
-            List<Boolean> optionFlags = new ArrayList<>();
-            for (JsonNode optionNode : optionsNode) {
-                if (optionNode.isObject()) {
-                    options.add(textOrNull(optionNode.get("text")));
-                    optionFlags.add(optionNode.path("correct").asBoolean(false));
-                } else {
-                    options.add(textOrNull(optionNode));
-                    optionFlags.add(false);
+                JsonNode optionsNode = cardNode.get("options");
+                if (optionsNode == null || !optionsNode.isArray()) {
+                    throw new IllegalArgumentException("Card options must be an array");
                 }
-            }
 
-            JsonNode correctNode = cardNode.get("correct");
-            if (correctNode == null || correctNode.isNull()) {
-                correctNode = legacyCorrectNode(cardNode);
-            }
-            String correctMeta = normalizeCorrectMeta(correctNode, category, optionFlags);
-            Integer correctIndex = resolveCorrectIndex(correctNode, category, optionFlags);
-            String correctFlags = resolveCorrectFlags(correctNode, category, optionFlags);
+                List<String> options = new ArrayList<>();
+                List<Boolean> optionFlags = new ArrayList<>();
+                for (JsonNode optionNode : optionsNode) {
+                    if (optionNode.isObject()) {
+                        options.add(textOrNull(optionNode.get("text")));
+                        optionFlags.add(optionNode.path("correct").asBoolean(false));
+                    } else {
+                        options.add(textOrNull(optionNode));
+                        optionFlags.add(false);
+                    }
+                }
 
-            seeds.add(new CardSeed(
-                    id,
-                    topic,
-                    category,
-                    language,
-                    question,
-                    options,
-                    correctIndex,
-                    correctFlags,
-                    correctMeta,
-                    difficulty,
-                    source,
-                    Instant.now()
-            ));
+                JsonNode correctNode = cardNode.get("correct");
+                if (correctNode == null || correctNode.isNull()) {
+                    correctNode = legacyCorrectNode(cardNode);
+                }
+                String correctMeta = normalizeCorrectMeta(correctNode, category, optionFlags);
+                Integer correctIndex = resolveCorrectIndex(correctNode, category, optionFlags);
+                String correctFlags = resolveCorrectFlags(correctNode, category, optionFlags);
+
+                seeds.add(new CardSeed(
+                        id,
+                        topic,
+                        category,
+                        language,
+                        question,
+                        options,
+                        correctIndex,
+                        correctFlags,
+                        correctMeta,
+                        difficulty,
+                        source,
+                        Instant.now()
+                ));
+            } catch (RuntimeException ex) {
+                invalid++;
+                log.warn("Skipping invalid card during read id={} reason={}", id, ex.getMessage());
+            }
         }
-        return seeds;
+        return new SeedReadResult(seeds, invalid);
     }
 
     private JsonNode legacyCorrectNode(JsonNode cardNode) {
@@ -285,11 +293,11 @@ public class CardImportRunner implements ApplicationRunner {
         return hasAny ? node : null;
     }
 
-    private List<CardSeed> readFactoryBlocks(JsonNode root) {
+    private SeedReadResult readFactoryBlocks(JsonNode root) {
         List<CardSeed> seeds = new ArrayList<>();
+        int invalid = 0;
         for (JsonNode block : root) {
             String topic = textOrNull(block.get("topic"));
-            String category = normalizeCategory(textOrNull(block.get("category")));
             JsonNode cardsNode = block.get("cards");
             if (cardsNode == null || !cardsNode.isArray()) {
                 continue;
@@ -297,45 +305,51 @@ public class CardImportRunner implements ApplicationRunner {
 
             for (JsonNode cardNode : cardsNode) {
                 String id = textOrNull(cardNode.get("id"));
-                String question = textOrNull(cardNode.get("question"));
-                String language = fallback(textOrNull(cardNode.get("language")), "en");
-                String difficulty = normalizeDifficulty(cardNode.get("difficulty"));
-                String source = fallback(textOrNull(cardNode.get("source")), "smartiq-factory");
-                String cardCategory = normalizeCategory(fallback(textOrNull(cardNode.get("category")), category));
+                try {
+                    String category = normalizeCategory(textOrNull(block.get("category")));
+                    String question = textOrNull(cardNode.get("question"));
+                    String language = fallback(textOrNull(cardNode.get("language")), "en");
+                    String difficulty = normalizeDifficulty(cardNode.get("difficulty"));
+                    String source = fallback(textOrNull(cardNode.get("source")), "smartiq-factory");
+                    String cardCategory = normalizeCategory(fallback(textOrNull(cardNode.get("category")), category));
 
-                JsonNode optionsNode = cardNode.get("options");
-                if (optionsNode == null || !optionsNode.isArray()) {
-                    continue;
+                    JsonNode optionsNode = cardNode.get("options");
+                    if (optionsNode == null || !optionsNode.isArray()) {
+                        throw new IllegalArgumentException("Card options must be an array");
+                    }
+
+                    List<String> options = new ArrayList<>();
+                    List<Boolean> correctFlags = new ArrayList<>();
+                    for (JsonNode optionNode : optionsNode) {
+                        options.add(textOrNull(optionNode.get("text")));
+                        correctFlags.add(optionNode.path("correct").asBoolean(false));
+                    }
+
+                    JsonNode correctNode = cardNode.get("correct");
+                    String correctMeta = normalizeCorrectMeta(correctNode, cardCategory, correctFlags);
+                    Integer correctIndex = resolveCorrectIndex(correctNode, cardCategory, correctFlags);
+                    String correctFlagsRaw = resolveCorrectFlags(correctNode, cardCategory, correctFlags);
+                    seeds.add(new CardSeed(
+                            id,
+                            topic,
+                            cardCategory,
+                            language,
+                            question,
+                            options,
+                            correctIndex,
+                            correctFlagsRaw,
+                            correctMeta,
+                            difficulty,
+                            source,
+                            Instant.now()
+                    ));
+                } catch (RuntimeException ex) {
+                    invalid++;
+                    log.warn("Skipping invalid card during read id={} reason={}", id, ex.getMessage());
                 }
-
-                List<String> options = new ArrayList<>();
-                List<Boolean> correctFlags = new ArrayList<>();
-                for (JsonNode optionNode : optionsNode) {
-                    options.add(textOrNull(optionNode.get("text")));
-                    correctFlags.add(optionNode.path("correct").asBoolean(false));
-                }
-
-                JsonNode correctNode = cardNode.get("correct");
-                String correctMeta = normalizeCorrectMeta(correctNode, cardCategory, correctFlags);
-                Integer correctIndex = resolveCorrectIndex(correctNode, cardCategory, correctFlags);
-                String correctFlagsRaw = resolveCorrectFlags(correctNode, cardCategory, correctFlags);
-                seeds.add(new CardSeed(
-                        id,
-                        topic,
-                        cardCategory,
-                        language,
-                        question,
-                        options,
-                        correctIndex,
-                        correctFlagsRaw,
-                        correctMeta,
-                        difficulty,
-                        source,
-                        Instant.now()
-                ));
             }
         }
-        return seeds;
+        return new SeedReadResult(seeds, invalid);
     }
 
     private String normalizeDifficulty(JsonNode node) {
@@ -521,5 +535,11 @@ public class CardImportRunner implements ApplicationRunner {
             return options.stream().filter(Objects::nonNull).toList();
         }
 
+    }
+
+    private record SeedReadResult(
+            List<CardSeed> seeds,
+            int invalidCount
+    ) {
     }
 }
