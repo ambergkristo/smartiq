@@ -151,6 +151,12 @@ node tools/score_cards_quality.js data/smart10/cards.en.json
 node tools/score_cards_quality.js data/smart10/cards.et.json
 ```
 
+One-command local verification gate (same mandatory 5 checks):
+
+```bash
+npm run gate:local
+```
+
 Content refresh pipeline (generate -> review -> validate):
 
 ```bash

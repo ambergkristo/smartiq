@@ -26,6 +26,7 @@
     "pipeline:cards": "node tools/build-content-pipeline.js",
     "load:test": "node tools/load-test.js",
     "smoke:test": "node tools/smoke-test.js",
+    "gate:local": "node tools/run_local_verification_gate.js",
     "validate:deploy-env": "node tools/validate-deploy-env.js",
     "stability:gate": "node tools/stability-gate.js",
     "verify:runtime:deck": "node scripts/verify_runtime_deck.js"
