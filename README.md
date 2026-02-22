@@ -72,7 +72,7 @@ This starts:
 - Frontend: `http://localhost:5173`
 - Backend: `http://localhost:8081`
 - Health check: `http://localhost:8081/health`
-- Cards API: `http://localhost:8081/api/cards/next`
+- Cards API (default): `http://localhost:8081/api/cards/nextRandom?language=en&gameId=local-dev`
 
 If you use frontend against backend on `8081`, set:
 
@@ -114,7 +114,7 @@ $env:VITE_API_BASE_URL="https://<your-backend-domain>"
 ## Game Flow v1
 
 - Start screen allows selecting `topic`, `difficulty` (1-3), `language`, round length, and player names.
-- Game board fetches cards from `GET /api/cards/next` and renders 10 answer tiles.
+- Game board fetches cards from `GET /api/cards/nextRandom` and renders 10 answer tiles.
 - Players use `ANSWER -> LOCK IN` or `PASS`, then continue with `NEXT`.
 - Round rotates turns by player and shows a summary after the configured card count.
 - Full UI/state-machine reference: `docs/ui.md`.
