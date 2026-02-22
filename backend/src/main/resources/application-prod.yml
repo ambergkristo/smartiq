@@ -5,6 +5,8 @@ management:
         include: health,info,prometheus
 
 smartiq:
+  language:
+    et-enabled: ${SMARTIQ_LANGUAGE_ET_ENABLED:false}
   bank:
     block-on-low-bank: true
     trigger-pipeline-on-low-bank: false

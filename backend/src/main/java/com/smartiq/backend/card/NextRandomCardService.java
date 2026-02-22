@@ -4,6 +4,7 @@ import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -37,19 +38,22 @@ public class NextRandomCardService {
     private final CardRepository cardRepository;
     private final GameHistoryStore gameHistoryStore;
     private final MeterRegistry meterRegistry;
+    private final boolean etEnabled;
     private final ConcurrentHashMap<String, GameState> gameStates = new ConcurrentHashMap<>();
     private volatile long lastCleanupAt = 0L;
 
     public NextRandomCardService(CardRepository cardRepository,
                                  GameHistoryStore gameHistoryStore,
-                                 MeterRegistry meterRegistry) {
+                                 MeterRegistry meterRegistry,
+                                 @Value("${smartiq.language.et-enabled:true}") boolean etEnabled) {
         this.cardRepository = cardRepository;
         this.gameHistoryStore = gameHistoryStore;
         this.meterRegistry = meterRegistry;
+        this.etEnabled = etEnabled;
     }
 
     public Card nextRandom(String language, String gameId, String topic) {
-        String normalizedLanguage = normalizeLanguage(language);
+        String normalizedLanguage = normalizeLanguage(language, etEnabled);
         String normalizedGameId = normalizeRequired(gameId, "gameId");
         String normalizedTopic = normalizeOptional(topic);
 
@@ -273,10 +277,13 @@ public class NextRandomCardService {
         return value.trim();
     }
 
-    private static String normalizeLanguage(String value) {
+    static String normalizeLanguage(String value, boolean etEnabled) {
         String normalized = normalizeRequired(value, "language").toLowerCase(Locale.ROOT);
         if (normalized.isBlank()) {
             throw new IllegalArgumentException("language is required");
+        }
+        if ("et".equals(normalized) && !etEnabled) {
+            throw new IllegalArgumentException("language et is disabled");
         }
         return normalized;
     }
