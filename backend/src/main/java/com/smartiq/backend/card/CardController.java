@@ -1,7 +1,9 @@
 package com.smartiq.backend.card;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,10 +17,15 @@ import java.util.NoSuchElementException;
 @RequestMapping("/api")
 public class CardController {
 
-    private final CardService cardService;
+    private static final String DEPRECATION_LINK = "</api/cards/nextRandom>; rel=\"successor-version\"";
+    private static final String SUNSET_DATE = "Thu, 31 Dec 2026 23:59:59 GMT";
 
-    public CardController(CardService cardService) {
+    private final CardService cardService;
+    private final Environment environment;
+
+    public CardController(CardService cardService, Environment environment) {
         this.cardService = cardService;
+        this.environment = environment;
     }
 
     @GetMapping("/topics")
@@ -29,9 +36,9 @@ public class CardController {
     @GetMapping("/cards/random")
     public ResponseEntity<?> getRandomCard(@RequestParam(name = "topic", required = false) String topic) {
         try {
-            return ResponseEntity.ok(cardService.getRandomCard(topic));
+            return legacyResponse(HttpStatus.OK).body(cardService.getRandomCard(topic));
         } catch (NoSuchElementException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
+            return legacyResponse(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
         }
     }
 
@@ -46,18 +53,18 @@ public class CardController {
             String resolvedTopic = resolveTopic(topicId, topic);
             CardResponse card = cardService.getNextCard(resolvedTopic, difficulty, sessionId, language);
             if (version == 1) {
-                return ResponseEntity.ok(card);
+                return legacyResponse(HttpStatus.OK).body(card);
             }
             if (version == 2) {
-                return ResponseEntity.ok(CardResponseV2Mapper.toV2(card));
+                return legacyResponse(HttpStatus.OK).body(CardResponseV2Mapper.toV2(card));
             }
             throw new IllegalArgumentException("Unsupported API version: " + version);
         } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
+            return legacyResponse(HttpStatus.BAD_REQUEST).body(Map.of("error", ex.getMessage()));
         } catch (InvalidCardContractException ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", ex.getMessage()));
+            return legacyResponse(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", ex.getMessage()));
         } catch (NoSuchElementException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
+            return legacyResponse(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
         }
     }
 
@@ -84,5 +91,19 @@ public class CardController {
             return legacyTopic.trim();
         }
         throw new IllegalArgumentException("topicId is required");
+    }
+
+    private ResponseEntity.BodyBuilder legacyResponse(HttpStatus status) {
+        ResponseEntity.BodyBuilder builder = ResponseEntity.status(status);
+        if (isProdProfile()) {
+            builder.header("Deprecation", "true");
+            builder.header("Sunset", SUNSET_DATE);
+            builder.header(HttpHeaders.LINK, DEPRECATION_LINK);
+        }
+        return builder;
+    }
+
+    private boolean isProdProfile() {
+        return List.of(environment.getActiveProfiles()).contains("prod");
     }
 }
