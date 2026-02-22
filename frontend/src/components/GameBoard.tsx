@@ -69,6 +69,10 @@ export default function GameBoard({
   const canChoose = phase === 'CHOOSING' || phase === 'CONFIRMING';
   const phaseLabel = phase.replace('_', ' ').toLowerCase();
   const layoutRef = useRef(null);
+  const answerButtonRef = useRef(null);
+  const passButtonRef = useRef(null);
+  const confirmButtonRef = useRef(null);
+  const nextButtonRef = useRef(null);
   const [isFallbackLayout, setIsFallbackLayout] = useState(false);
   const [wheelSize, setWheelSize] = useState(560);
   const [questionExpanded, setQuestionExpanded] = useState(false);
@@ -95,6 +99,20 @@ export default function GameBoard({
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (phase === 'CHOOSING') {
+      passButtonRef.current?.focus();
+      return;
+    }
+    if (phase === 'CONFIRMING') {
+      confirmButtonRef.current?.focus();
+      return;
+    }
+    if (phase === 'RESOLVED' || phase === 'PASSED') {
+      nextButtonRef.current?.focus();
+    }
+  }, [phase]);
+
   const wheelPositions = useMemo(() => {
     const radius = wheelSize * 0.36;
     const step = 360 / Math.max(card.options.length, 1);
@@ -111,6 +129,13 @@ export default function GameBoard({
   const hasSelectedPeg = selectedIndexes.size > 0;
   const requiresRank = category === 'ORDER';
   const canAnswer = hasSelectedPeg && (!requiresRank || selectedRank != null);
+  const liveMessage = [
+    actionHint(phase, currentPlayer, category, selectedRank),
+    passNote,
+    lastAction
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
     <section className="game-board">
@@ -169,6 +194,9 @@ export default function GameBoard({
             {actionHint(phase, currentPlayer, category, selectedRank)}
           </p>
           <p className="pass-note">{passNote}</p>
+          <p className="sr-only" aria-live="polite" aria-atomic="true" data-testid="board-live-region">
+            {liveMessage}
+          </p>
         </header>
 
         <div className="answers-shell" data-layout={isFallbackLayout ? 'fallback' : 'wheel'} ref={layoutRef}>
@@ -214,17 +242,17 @@ export default function GameBoard({
         <footer className="action-bar">
           {phase === 'CHOOSING' ? (
             <>
-              <button onClick={onAnswer} type="button" disabled={!canAnswer}>
+              <button ref={answerButtonRef} onClick={onAnswer} type="button" disabled={!canAnswer}>
                 ANSWER
               </button>
-              <button onClick={onPass} type="button">
+              <button ref={passButtonRef} onClick={onPass} type="button">
                 PASS
               </button>
             </>
           ) : null}
           {phase === 'CONFIRMING' ? (
             <>
-              <button onClick={onConfirm} type="button">
+              <button ref={confirmButtonRef} onClick={onConfirm} type="button">
                 LOCK IN
               </button>
               <button onClick={onCancelConfirm} type="button">
@@ -233,7 +261,7 @@ export default function GameBoard({
             </>
           ) : null}
           {phase === 'RESOLVED' || phase === 'PASSED' ? (
-            <button onClick={onNext} type="button">
+            <button ref={nextButtonRef} onClick={onNext} type="button">
               NEXT
             </button>
           ) : null}
