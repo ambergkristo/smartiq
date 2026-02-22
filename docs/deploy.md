@@ -70,6 +70,12 @@ npm run validate:deploy-env
 3. `/api/cards/nextRandom?language=en&gameId=smoke-deploy` works from deployed frontend domain without CORS errors.
 4. `/internal/pool-stats` returns `401` without API key and `200` with API key.
 
+Post-deploy smoke command (required for Go/No-Go):
+
+```bash
+BACKEND_URL=https://<backend-domain> FRONTEND_URL=https://<frontend-domain> npm run smoke:postdeploy
+```
+
 Public smoke test command:
 
 ```bash

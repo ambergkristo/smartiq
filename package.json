@@ -27,6 +27,7 @@
     "pipeline:cards": "node tools/build-content-pipeline.js",
     "load:test": "node tools/load-test.js",
     "smoke:test": "node tools/smoke-test.js",
+    "smoke:postdeploy": "node tools/post-deploy-smoke.js",
     "smoke:test:et": "node -e \"process.env.SMOKE_LANGUAGE='et'; require('./tools/smoke-test.js')\"",
     "report:et:runtime": "node tools/generate_et_runtime_smoke_report.js",
     "gate:et:release": "node tools/run_et_release_gate.js",
