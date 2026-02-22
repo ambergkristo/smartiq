@@ -7,6 +7,12 @@ Use this checklist before calling the current build "playable now".
 Run from repo root:
 
 ```bash
+npm run gate:local
+```
+
+Equivalent explicit command list:
+
+```bash
 npm --prefix frontend run lint
 npm --prefix frontend run test -- --run
 npm --prefix frontend run build
