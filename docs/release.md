@@ -6,22 +6,22 @@ Use this checklist before calling the current build "playable now".
 
 Run from repo root:
 
-```bash
+```powershell
 npm run gate:local
 ```
 
 Quick alias (same checks):
 
-```bash
+```powershell
 npm run gate:quick
 ```
 
 Equivalent explicit command list:
 
-```bash
-npm --prefix frontend run lint
-npm --prefix frontend run test -- --run
-npm --prefix frontend run build
+```powershell
+npm.cmd --prefix frontend run lint
+npm.cmd --prefix frontend run test -- --run
+npm.cmd --prefix frontend run build
 mvn -q -f backend/pom.xml test
 ```
 
@@ -32,7 +32,7 @@ Expected:
 
 ## 2. Local Runtime Gate
 
-```bash
+```powershell
 docker compose up -d
 make dev
 ```
@@ -48,10 +48,10 @@ Verify manually:
 
 ## 3. Backend Smoke Gate (public or local)
 
-```bash
-BACKEND_URL=https://<backend-domain> npm run smoke:test
+```powershell
+$env:BACKEND_URL="https://<backend-domain>"; npm run smoke:test
 # local example
-# BACKEND_URL=http://localhost:8080 npm run smoke:test
+# $env:BACKEND_URL="http://localhost:8080"; npm run smoke:test
 ```
 
 The smoke test must validate:
