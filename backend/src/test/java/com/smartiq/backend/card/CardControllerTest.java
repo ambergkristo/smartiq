@@ -282,6 +282,16 @@ class CardControllerTest {
     }
 
     @Test
+    void returnsNotFoundWithErrorPayloadWhenNextRandomPoolIsEmptyForTopic() throws Exception {
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .param("language", "en")
+                        .param("gameId", "game-empty-topic")
+                        .param("topic", "Unknown"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.error").value("No cards available for language=en, topic=Unknown"));
+    }
+
+    @Test
     void nextRandomExcludesDeprecatedSourcesWhenAllowedAlternativesExist() throws Exception {
         mockMvc.perform(get("/api/cards/nextRandom")
                         .param("language", "en")
