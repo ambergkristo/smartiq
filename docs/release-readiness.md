@@ -14,8 +14,8 @@ The command executes:
 4. `npm --prefix frontend run build`
 5. `node tools/validate_cards_v2.js data/smart10/cards.en.json`
 6. `node tools/validate_cards_v2.js data/smart10/cards.et.json`
-7. `node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.60`
-8. `node tools/score_cards_quality.js data/smart10/cards.et.json --fail-threshold=0.60`
+7. `node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.80`
+8. `node tools/score_cards_quality.js data/smart10/cards.et.json --fail-threshold=0.80`
 
 ## CI Aggregation
 
