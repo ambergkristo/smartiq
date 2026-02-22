@@ -66,3 +66,17 @@ Additional non-blocking runtime profile:
    - optional GitHub run:
      - Actions -> `Runtime Smoke ET (Non-blocking)` -> Run workflow
 4. Add ET-specific quality rubric thresholds once ET wording is fully localized.
+
+## ET Quick Release Check (Copy/Paste)
+
+Use this block in PowerShell from repo root:
+
+```powershell
+node tools/validate_cards_v2.js data/smart10/cards.et.json --max-warnings=0
+node tools/validate_locale_packs.js data/smart10
+node tools/audit_locale_coverage.js data/smart10 --required=en,et --min-per-combo=30
+node tools/score_cards_quality.js data/smart10/cards.et.json --fail-threshold=0.80
+$env:BACKEND_URL="http://localhost:8081"
+$env:SMOKE_LANGUAGE="et"
+node tools/smoke-test.js
+```
