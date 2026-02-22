@@ -7,6 +7,14 @@
 - [ ] Tests added/updated
 - [ ] Existing tests pass
 
+## QA Commands (Windows PowerShell)
+
+- [ ] `mvn -q -f backend/pom.xml test`
+- [ ] `npm.cmd --prefix frontend run lint`
+- [ ] `npm.cmd --prefix frontend run test -- --run`
+- [ ] `node tools/validate_cards_v2.js`
+- [ ] `node tools/score_cards_quality.js --fail-threshold=0.60`
+
 ## UI Evidence (if applicable)
 
 - [ ] Screenshots attached for UI changes
