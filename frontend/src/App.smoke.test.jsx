@@ -31,6 +31,17 @@ function makeCard(id, correctIndex) {
   };
 }
 
+function findSummaryRow(player) {
+  const summaryRows = screen.getAllByRole('row').slice(1);
+  const row = summaryRows.find((entry) => within(entry).queryByText(player));
+  expect(row).toBeTruthy();
+  return row;
+}
+
+function readSummaryCells(row) {
+  return Array.from(row.children).map((cell) => cell.textContent.trim());
+}
+
 describe('App core smoke flow', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -97,17 +108,12 @@ describe('App core smoke flow', () => {
 
     await waitFor(() => expect(screen.getByRole('heading', { name: /round summary/i })).toBeInTheDocument());
 
-    const summaryRows = screen.getAllByRole('row').slice(1);
-    const aliceRow = summaryRows.find((row) => within(row).queryByText('Alice'));
-    const bobRow = summaryRows.find((row) => within(row).queryByText('Bob'));
-    const caraRow = summaryRows.find((row) => within(row).queryByText('Cara'));
+    const aliceRow = findSummaryRow('Alice');
+    const bobRow = findSummaryRow('Bob');
+    const caraRow = findSummaryRow('Cara');
 
-    expect(aliceRow).toBeTruthy();
-    expect(bobRow).toBeTruthy();
-    expect(caraRow).toBeTruthy();
-
-    expect(aliceRow).toHaveTextContent(/^Alice\s*1\s*1\s*0\s*1$/);
-    expect(bobRow).toHaveTextContent(/^Bob\s*0\s*0\s*1\s*0$/);
-    expect(caraRow).toHaveTextContent(/^Cara\s*0\s*0\s*0\s*1$/);
+    expect(readSummaryCells(aliceRow)).toEqual(['Alice', '1', '1', '0', '1']);
+    expect(readSummaryCells(bobRow)).toEqual(['Bob', '0', '0', '1', '0']);
+    expect(readSummaryCells(caraRow)).toEqual(['Cara', '0', '0', '0', '1']);
   });
 });
