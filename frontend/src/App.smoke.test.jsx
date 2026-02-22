@@ -1,0 +1,68 @@
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import App from './App';
+
+vi.mock('./api', () => {
+  return {
+    API_BASE: 'http://localhost:8080',
+    fetchTopics: vi.fn(),
+    fetchNextCard: vi.fn(),
+    resolveCardErrorMessage: vi.fn(() => 'Fallback mode'),
+    resolveTopicsErrorState: vi.fn(() => ({
+      title: 'Could not load topics.',
+      detail: 'Unexpected backend response.',
+      kind: 'backend-unreachable'
+    }))
+  };
+});
+
+import { fetchNextCard, fetchTopics } from './api';
+
+function makeCard(id, correctIndex) {
+  return {
+    id,
+    cardId: id,
+    topic: 'History',
+    category: 'OPEN',
+    difficulty: '2',
+    language: 'en',
+    question: `Smoke question ${id}`,
+    options: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
+    correct: { correctIndex }
+  };
+}
+
+describe('App core smoke flow', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    localStorage.clear();
+  });
+
+  test('start game -> answer -> pass -> next round', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
+    fetchNextCard
+      .mockResolvedValueOnce(makeCard('s1', 0))
+      .mockResolvedValueOnce(makeCard('s2', 1));
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
+    const playersInput = screen.getByLabelText(/players/i);
+    fireEvent.change(playersInput, { target: { value: 'Alice, Bob' } });
+    fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
+    fireEvent.click(screen.getByRole('button', { name: /start game/i }));
+
+    await waitFor(() => expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: 'peg-1' }));
+    fireEvent.click(screen.getByRole('button', { name: /answer/i }));
+    fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+    fireEvent.click(screen.getByRole('button', { name: /pass/i }));
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+    fireEvent.click(screen.getByRole('button', { name: /pass/i }));
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+
+    await waitFor(() => expect(screen.getByRole('heading', { name: /round summary/i })).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /next round/i }));
+    await waitFor(() => expect(screen.getByText(/smoke question s2/i)).toBeInTheDocument());
+  });
+});
