@@ -39,6 +39,14 @@ jobs:
       - name: Score Smart10 ET dataset quality (threshold gate)
         run: node ../tools/score_cards_quality.js ../data/smart10/cards.et.json --fail-threshold=0.80
 
+      - name: Semantic quality warning (EN, non-blocking)
+        continue-on-error: true
+        run: node ../tools/score_cards_semantic.js ../data/smart10/cards.en.json --fail-threshold=0.65
+
+      - name: Semantic quality warning (ET, non-blocking)
+        continue-on-error: true
+        run: node ../tools/score_cards_semantic.js ../data/smart10/cards.et.json --fail-threshold=0.65
+
       - name: Install
         run: npm ci
 
