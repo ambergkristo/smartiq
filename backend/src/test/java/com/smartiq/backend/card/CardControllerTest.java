@@ -234,6 +234,13 @@ class CardControllerTest {
     }
 
     @Test
+    void returnsBadRequestWhenNextRandomLanguageMissing() throws Exception {
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .param("gameId", "game-missing-language"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void returnsNotFoundWhenOnlyDeprecatedSourcesMatchNextRandomPool() throws Exception {
         mockMvc.perform(get("/api/cards/nextRandom")
                         .param("language", "en")
