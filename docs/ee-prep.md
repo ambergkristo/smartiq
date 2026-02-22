@@ -37,6 +37,14 @@ Backend CI runs:
 2. strict ET validation (via locale pack gate),
 3. quality score gates for EN and ET.
 
+Additional non-blocking runtime profile:
+
+- GitHub Actions workflow: `Runtime Smoke ET (Non-blocking)`
+- Trigger manually (`workflow_dispatch`) with:
+  - `backend_url` (required)
+  - `topic` (optional)
+- The smoke step uses `continue-on-error`, so it never blocks merge gates.
+
 ## ET Quality Checklist (Next Milestone)
 
 1. Keep ET card contract aligned with EN.
@@ -50,4 +58,6 @@ Backend CI runs:
    - optional smoke overrides:
      - `SMOKE_TOPIC=History` to force topic
      - `SMOKE_GAME_ID=my-fixed-game` to reuse game history
+   - optional GitHub run:
+     - Actions -> `Runtime Smoke ET (Non-blocking)` -> Run workflow
 4. Add ET-specific quality rubric thresholds once ET wording is fully localized.
