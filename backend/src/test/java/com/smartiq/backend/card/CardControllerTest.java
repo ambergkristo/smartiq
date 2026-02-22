@@ -230,14 +230,16 @@ class CardControllerTest {
     void returnsBadRequestWhenNextRandomGameIdMissing() throws Exception {
         mockMvc.perform(get("/api/cards/nextRandom")
                         .param("language", "en"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").exists());
     }
 
     @Test
     void returnsBadRequestWhenNextRandomLanguageMissing() throws Exception {
         mockMvc.perform(get("/api/cards/nextRandom")
                         .param("gameId", "game-missing-language"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").exists());
     }
 
     @Test
