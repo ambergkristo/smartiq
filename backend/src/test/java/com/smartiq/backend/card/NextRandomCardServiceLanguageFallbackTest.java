@@ -60,6 +60,22 @@ class NextRandomCardServiceLanguageFallbackTest {
                 .hasMessage("No cards available for language=et, topic=any");
     }
 
+    @Test
+    void fallbackPoolStillUsesAllowedSourcesOnly() {
+        Card allowedEnglishCard = card("en-allowed-1", "History", "OPEN");
+        allowedEnglishCard.setLanguage("en");
+        allowedEnglishCard.setSource("smartiq-v2");
+
+        when(gameHistoryStore.readRecent(eq("game-3"), anyInt())).thenReturn(List.of());
+        when(cardRepository.findDeckPool(eq("et"), eq((String) null), anyList())).thenReturn(List.of());
+        when(cardRepository.findDeckPool(eq("en"), eq((String) null), anyList())).thenReturn(List.of(allowedEnglishCard));
+
+        Card selected = service.nextRandom("et", "game-3", null);
+
+        assertThat(selected.getId()).isEqualTo("en-allowed-1");
+        assertThat(selected.getSource()).isEqualTo("smartiq-v2");
+    }
+
     private static Card card(String id, String topic, String category) {
         Card card = new Card();
         card.setId(id);
