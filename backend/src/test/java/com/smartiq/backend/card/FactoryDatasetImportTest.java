@@ -23,8 +23,8 @@ class FactoryDatasetImportTest {
     private CardRepository cardRepository;
 
     @Test
-    void importsFactoryDatasetBlocksOnStartupAndSkipsInvalidCards() {
-        assertThat(cardRepository.count()).isEqualTo(2);
+    void importsFactoryDatasetBlocksOnStartupNormalizesCardsAndSkipsInvalidCards() {
+        assertThat(cardRepository.count()).isEqualTo(4);
 
         Card first = cardRepository.findById("science_truefalse_001").orElseThrow();
         assertThat(first.getTopic()).isEqualTo("Science");
@@ -38,7 +38,13 @@ class FactoryDatasetImportTest {
         assertThat(second.getDifficulty()).isEqualTo("1");
         assertThat(second.getCorrectIndex()).isEqualTo(0);
 
-        assertThat(cardRepository.existsById("art_number_001")).isFalse();
+        Card normalized = cardRepository.findById("science_number_short_001").orElseThrow();
+        assertThat(normalized.getOptions()).hasSize(10);
+        assertThat(normalized.getCorrectIndex()).isEqualTo(0);
+
+        Card guaranteedCorrect = cardRepository.findById("art_number_001").orElseThrow();
+        assertThat(guaranteedCorrect.getCorrectIndex()).isEqualTo(0);
+
         assertThat(cardRepository.existsById("science_invalid_category_001")).isFalse();
     }
 }
