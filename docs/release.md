@@ -54,6 +54,10 @@ The smoke test must validate:
 Run from repo root:
 
 ```powershell
+## single-command gate
+$env:BACKEND_URL="http://localhost:8081"; npm run gate:et:release
+
+## equivalent explicit steps
 node tools/validate_cards_v2.js data/smart10/cards.et.json --max-warnings=0
 node tools/validate_locale_packs.js data/smart10
 node tools/audit_locale_coverage.js data/smart10 --required=en,et --min-per-combo=30
