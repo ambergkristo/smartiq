@@ -11,6 +11,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 class NextRandomCardServiceTest {
 
     @Test
+    void keepsAvoidingImmediateCategoryAndTopicRepeatsAcrossManyDrawsWhenAlternativesExist() {
+        List<Card> pool = List.of(
+                card("card-1", "History", "TRUE_FALSE"),
+                card("card-2", "Sports", "NUMBER"),
+                card("card-3", "Science", "ORDER"),
+                card("card-4", "Varia", "COLOR")
+        );
+
+        DeckCardMeta lastMeta = toMeta(card("seed", "Culture", "OPEN"));
+
+        for (int draw = 0; draw < 50; draw++) {
+            List<String> relaxed = new ArrayList<>();
+            Card selected = NextRandomCardService.pickWithRelaxation(pool, lastMeta, Set.of(), relaxed);
+
+            assertThat(NextRandomCardService.resolveCategory(selected)).isNotEqualTo(lastMeta.category());
+            assertThat(selected.getTopic()).isNotEqualTo(lastMeta.topic());
+            assertThat(relaxed).isEmpty();
+
+            lastMeta = toMeta(selected);
+        }
+    }
+
+    @Test
     void avoidsSameCategoryTopicAndRecentCardWhenAlternativesExist() {
         Card lastCard = card("card-1", "History", "TRUE_FALSE");
         DeckCardMeta lastMeta = new DeckCardMeta(
@@ -109,5 +132,13 @@ class NextRandomCardServiceTest {
         card.setTopic(topic);
         card.setSubtopic(subtopic);
         return card;
+    }
+
+    private static DeckCardMeta toMeta(Card card) {
+        return new DeckCardMeta(
+                card.getId(),
+                NextRandomCardService.resolveCategory(card),
+                card.getTopic()
+        );
     }
 }
