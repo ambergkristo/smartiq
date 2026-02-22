@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import App from './App';
 
 vi.mock('./api', () => {
@@ -64,5 +64,50 @@ describe('App core smoke flow', () => {
     await waitFor(() => expect(screen.getByRole('heading', { name: /round summary/i })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /next round/i }));
     await waitFor(() => expect(screen.getByText(/smoke question s2/i)).toBeInTheDocument());
+  });
+
+  test('three-player flow handles wrong-drop and pass transitions into summary stats', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
+    fetchNextCard.mockResolvedValueOnce(makeCard('s3', 0));
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
+    const playersInput = screen.getByLabelText(/players/i);
+    fireEvent.change(playersInput, { target: { value: 'Alice, Bob, Cara' } });
+    fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
+    fireEvent.click(screen.getByRole('button', { name: /start game/i }));
+
+    await waitFor(() => expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument());
+
+    fireEvent.click(screen.getByRole('button', { name: 'peg-1' }));
+    fireEvent.click(screen.getByRole('button', { name: /answer/i }));
+    fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+
+    fireEvent.click(screen.getByRole('button', { name: 'peg-2' }));
+    fireEvent.click(screen.getByRole('button', { name: /answer/i }));
+    fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+
+    fireEvent.click(screen.getByRole('button', { name: /pass/i }));
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+    fireEvent.click(screen.getByRole('button', { name: /pass/i }));
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+
+    await waitFor(() => expect(screen.getByRole('heading', { name: /round summary/i })).toBeInTheDocument());
+
+    const summaryRows = screen.getAllByRole('row').slice(1);
+    const aliceRow = summaryRows.find((row) => within(row).queryByText('Alice'));
+    const bobRow = summaryRows.find((row) => within(row).queryByText('Bob'));
+    const caraRow = summaryRows.find((row) => within(row).queryByText('Cara'));
+
+    expect(aliceRow).toBeTruthy();
+    expect(bobRow).toBeTruthy();
+    expect(caraRow).toBeTruthy();
+
+    expect(aliceRow).toHaveTextContent(/^Alice\s*1\s*1\s*0\s*1$/);
+    expect(bobRow).toHaveTextContent(/^Bob\s*0\s*0\s*1\s*0$/);
+    expect(caraRow).toHaveTextContent(/^Cara\s*0\s*0\s*0\s*1$/);
   });
 });
