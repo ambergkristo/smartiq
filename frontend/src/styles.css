@@ -130,6 +130,7 @@ h1 {
   padding: 32px;
   display: grid;
   gap: 16px;
+  animation: scene-in 220ms ease-out;
 }
 
 .setup-panel > p {
@@ -238,7 +239,18 @@ button:disabled {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  opacity: 0;
+  transform: translateY(4px);
+  animation: tile-in 220ms ease-out forwards;
 }
+
+.topic-grid .topic-tile:nth-child(1) { animation-delay: 20ms; }
+.topic-grid .topic-tile:nth-child(2) { animation-delay: 45ms; }
+.topic-grid .topic-tile:nth-child(3) { animation-delay: 70ms; }
+.topic-grid .topic-tile:nth-child(4) { animation-delay: 95ms; }
+.topic-grid .topic-tile:nth-child(5) { animation-delay: 120ms; }
+.topic-grid .topic-tile:nth-child(6) { animation-delay: 145ms; }
+.topic-grid .topic-tile:nth-child(7) { animation-delay: 170ms; }
 
 .topic-tile:hover {
   border-color: rgba(255, 194, 120, 0.48);
@@ -368,6 +380,7 @@ button:disabled {
 
 .players-panel {
   padding: 16px;
+  animation: scene-in 220ms ease-out;
 }
 
 .panel-title {
@@ -473,6 +486,7 @@ button:disabled {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
   min-height: 0;
+  animation: scene-in 240ms ease-out;
 }
 
 .card-header {
@@ -843,6 +857,28 @@ button:disabled {
   }
 }
 
+@keyframes scene-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tile-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes peg-reveal {
   from {
     transform: scale(0.96);
@@ -851,6 +887,25 @@ button:disabled {
   to {
     transform: scale(1);
     filter: brightness(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .setup-panel,
+  .players-panel,
+  .center-board,
+  .topic-tile,
+  .card-loading-panel,
+  .card-header,
+  .answer-tile.is-correct,
+  .answer-tile.is-wrong {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  button,
+  .answer-tile {
+    transition: none !important;
   }
 }
 
