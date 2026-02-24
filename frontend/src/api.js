@@ -71,12 +71,23 @@ async function delay(ms) {
   });
 }
 
-async function fetchJson(url, { timeoutMs = 8000 } = {}) {
+async function fetchJson(url, { timeoutMs = 8000, method = 'GET', body = null } = {}) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
-    const res = await fetch(url, { signal: controller.signal });
+    const options = {
+      method,
+      signal: controller.signal
+    };
+    if (body !== null) {
+      options.headers = {
+        'Content-Type': 'application/json'
+      };
+      options.body = JSON.stringify(body);
+    }
+
+    const res = await fetch(url, options);
     if (!res.ok) {
       let detail = null;
       try {
@@ -141,6 +152,54 @@ export function buildNextCardQuery({ topic, difficulty, language }) {
   params.set('language', normalizedLanguage);
   params.set('lang', normalizedLanguage);
   return params;
+}
+
+export function buildServerGamePayload({ players, language, topic, winCondition } = {}) {
+  const payload = {};
+
+  if (Array.isArray(players)) {
+    const normalizedPlayers = players
+      .map((player) => String(player || '').trim())
+      .filter(Boolean);
+    if (normalizedPlayers.length > 0) {
+      payload.players = normalizedPlayers;
+    }
+  }
+
+  payload.language = normalizeLanguage(language);
+
+  if (topic && String(topic).trim().length > 0) {
+    payload.topic = String(topic).trim();
+  }
+
+  if (Number.isInteger(winCondition) && winCondition > 0) {
+    payload.winCondition = winCondition;
+  }
+
+  return payload;
+}
+
+export function buildServerActionPayload({ type, tileIndex, rank } = {}) {
+  const actionType = String(type || '').trim().toUpperCase();
+  if (!actionType) {
+    throw new ApiError('Action type is required', 0, 'VALIDATION_ERROR');
+  }
+  if (actionType !== 'ANSWER' && actionType !== 'PASS') {
+    throw new ApiError(`Unsupported action type: ${actionType}`, 0, 'VALIDATION_ERROR');
+  }
+
+  const payload = { type: actionType };
+  if (actionType === 'ANSWER') {
+    if (!Number.isInteger(tileIndex)) {
+      throw new ApiError('tileIndex is required for ANSWER', 0, 'VALIDATION_ERROR');
+    }
+    payload.tileIndex = tileIndex;
+    if (Number.isInteger(rank)) {
+      payload.rank = rank;
+    }
+  }
+
+  return payload;
 }
 
 export async function fetchTopics() {
@@ -262,6 +321,45 @@ export async function fetchNextRandomCard({ language, gameId, topic, retries = 2
   });
 }
 
+function normalizeRequiredGameId(gameId) {
+  const normalized = String(gameId || '').trim();
+  if (!normalized) {
+    throw new ApiError('gameId is required', 0, 'VALIDATION_ERROR');
+  }
+  return normalized;
+}
+
+export async function createServerGameSession(input = {}) {
+  requireApiBase();
+  if (USE_SAMPLE_MODE) {
+    throw new ApiError('Server game session API is unavailable in sample mode', 0, 'SAMPLE_MODE_UNSUPPORTED');
+  }
+  const payload = buildServerGamePayload(input);
+  return fetchJson(`${API_BASE}/api/game`, { method: 'POST', body: payload });
+}
+
+export async function fetchServerGameSession(gameId) {
+  requireApiBase();
+  if (USE_SAMPLE_MODE) {
+    throw new ApiError('Server game session API is unavailable in sample mode', 0, 'SAMPLE_MODE_UNSUPPORTED');
+  }
+  const normalizedGameId = normalizeRequiredGameId(gameId);
+  return fetchJson(`${API_BASE}/api/game/${encodeURIComponent(normalizedGameId)}`);
+}
+
+export async function sendServerGameAction(gameId, action) {
+  requireApiBase();
+  if (USE_SAMPLE_MODE) {
+    throw new ApiError('Server game session API is unavailable in sample mode', 0, 'SAMPLE_MODE_UNSUPPORTED');
+  }
+  const normalizedGameId = normalizeRequiredGameId(gameId);
+  const payload = buildServerActionPayload(action);
+  return fetchJson(`${API_BASE}/api/game/${encodeURIComponent(normalizedGameId)}/action`, {
+    method: 'POST',
+    body: payload
+  });
+}
+
 export function resolveCardErrorMessage(error) {
   if (error?.code === 'CONFIG_ERROR') {
     return 'Frontend API is not configured. Set VITE_API_BASE_URL and retry.';
@@ -294,4 +392,35 @@ export function resolveCardErrorMessage(error) {
   }
 
   return 'Could not load card from backend. Retry to continue.';
+}
+
+export function resolveGameSessionErrorMessage(error) {
+  if (error?.code === 'CONFIG_ERROR') {
+    return 'Frontend API is not configured. Set VITE_API_BASE_URL and retry.';
+  }
+
+  if (error?.code === 'VALIDATION_ERROR') {
+    return error.message || 'Invalid game action payload.';
+  }
+
+  if (error?.code === 'TIMEOUT' || error?.code === 'NETWORK_ERROR') {
+    return 'Backend unreachable. Check API availability and retry.';
+  }
+
+  if (error?.status === 404) {
+    return 'Game session was not found. Start a new game.';
+  }
+
+  if (error?.status === 400) {
+    if (typeof error?.detail === 'string' && error.detail.trim().length > 0) {
+      return `Invalid game action. ${error.detail}`;
+    }
+    return 'Invalid game action payload.';
+  }
+
+  if (error?.status >= 500) {
+    return 'Server error while processing game action. Retry.';
+  }
+
+  return 'Could not process game action. Retry.';
 }

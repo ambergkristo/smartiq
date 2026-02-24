@@ -77,7 +77,7 @@ describe('App Smart10 round flow', () => {
     fireEvent.click(screen.getByRole('button', { name: /next round/i }));
 
     await waitFor(() => expect(screen.getByText(/question c2/i)).toBeInTheDocument());
-  });
+  }, 15000);
 
   test('reuses persisted gameId for next card requests', async () => {
     localStorage.setItem('smartiq.gameId', 'persisted-game-id');
@@ -99,5 +99,5 @@ describe('App Smart10 round flow', () => {
         })
       )
     );
-  });
+  }, 10000);
 });

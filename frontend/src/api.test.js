@@ -1,4 +1,11 @@
-import { buildNextCardQuery, resolveCardErrorMessage, resolveTopicsErrorState } from './api';
+import {
+  buildNextCardQuery,
+  buildServerActionPayload,
+  buildServerGamePayload,
+  resolveCardErrorMessage,
+  resolveGameSessionErrorMessage,
+  resolveTopicsErrorState
+} from './api';
 
 describe('api error mapping', () => {
   test('maps forbidden topics status without backend-unreachable message', () => {
@@ -53,5 +60,45 @@ describe('api error mapping', () => {
     expect(params.get('difficulty')).toBe('3');
     expect(params.get('language')).toBe('en');
     expect(params.get('lang')).toBe('en');
+  });
+
+  test('builds server game payload with normalized players and defaults', () => {
+    const payload = buildServerGamePayload({
+      players: [' Alice ', 'Bob', ''],
+      language: 'et',
+      topic: '  Science ',
+      winCondition: 30
+    });
+
+    expect(payload).toEqual({
+      players: ['Alice', 'Bob'],
+      language: 'en',
+      topic: 'Science',
+      winCondition: 30
+    });
+  });
+
+  test('builds PASS action payload', () => {
+    expect(buildServerActionPayload({ type: 'pass' })).toEqual({ type: 'PASS' });
+  });
+
+  test('builds ANSWER action payload with tile and optional rank', () => {
+    expect(buildServerActionPayload({ type: 'answer', tileIndex: 2, rank: 3 })).toEqual({
+      type: 'ANSWER',
+      tileIndex: 2,
+      rank: 3
+    });
+  });
+
+  test('rejects ANSWER payload without tile index', () => {
+    expect(() => buildServerActionPayload({ type: 'ANSWER' })).toThrow('tileIndex is required for ANSWER');
+  });
+
+  test('maps game session not found to restart guidance', () => {
+    expect(resolveGameSessionErrorMessage({ status: 404, code: 'HTTP_ERROR' }).toLowerCase()).toContain('not found');
+  });
+
+  test('maps game session validation payload errors', () => {
+    expect(resolveGameSessionErrorMessage({ code: 'VALIDATION_ERROR', message: 'bad payload' })).toBe('bad payload');
   });
 });
