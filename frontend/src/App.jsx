@@ -476,6 +476,7 @@ export default function App() {
   }
 
   const activeError = runtimeMode === 'server' ? serverEngine.errorMessage : cardError;
+  const controlsDisabled = runtimeMode === 'server' && !serverEngine.isLocalTurn;
 
   return (
     <main data-phase={engine.phase === GamePhase.SETUP ? 'setup' : 'game'}>
@@ -540,6 +541,7 @@ export default function App() {
               players={engine.players}
               scores={engine.scores}
               currentPlayerIndex={engine.currentPlayerIndex}
+              controlsDisabled={controlsDisabled}
               roundNumber={engine.roundNumber}
               passNote={STRINGS.passNote}
               lastAction={engine.lastAction}

@@ -226,6 +226,28 @@ describe('App server-authoritative mode', () => {
     await waitFor(() => expect(screen.getByRole('button', { name: /pass/i })).toBeInTheDocument());
   });
 
+  test('disables controls when active player is not local player', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
+    createServerGameSession.mockResolvedValue(
+      makeServerSnapshot({
+        gameId: 'game-spectator',
+        activePlayerIndex: 1,
+        lastAction: 'Bob turn'
+      })
+    );
+
+    render(<App />);
+    await startServerMultiplayer();
+
+    const passButton = screen.getByRole('button', { name: /pass/i });
+    expect(passButton).toBeDisabled();
+    expect(screen.getByRole('button', { name: /^peg-1\b/i })).toBeDisabled();
+    expect(screen.getByTestId('action-hint')).toHaveTextContent(/waiting for active player bob/i);
+
+    fireEvent.click(passButton);
+    expect(sendServerGameAction).not.toHaveBeenCalled();
+  });
+
   test('shows round summary and then advances to next round from server snapshot', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
     createServerGameSession.mockResolvedValue(makeServerSnapshot({ gameId: 'game-round' }));

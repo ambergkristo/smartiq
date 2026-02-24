@@ -192,6 +192,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   const [startRequest, setStartRequest] = useState(null);
   const [language, setLanguage] = useState('en');
   const [requestInFlight, setRequestInFlight] = useState(false);
+  const [controlledPlayer, setControlledPlayer] = useState(null);
 
   const currentPlayer = players[currentPlayerIndex] ?? players[0] ?? DEFAULT_PLAYERS[0];
 
@@ -242,6 +243,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setPhase(GamePhase.LOADING_CARD);
     setCard(null);
     setWinner(null);
+    setControlledPlayer(null);
     setLoadTicket((value) => value + 1);
     setQueuedSnapshot(null);
     setQueuedTransition('none');
@@ -250,6 +252,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       const snapshot = await createServerGameSession(request);
       const mapped = mapSnapshot(snapshot, request.language, targetScore);
       setStats(initialStats(mapped.players));
+      setControlledPlayer(normalizedPlayers[0] || mapped.players[0] || null);
       applyMappedSnapshot(snapshot, mapped, mapped.backendPhase === GamePhase.GAME_OVER ? GamePhase.GAME_OVER : GamePhase.CHOOSING);
       return mapped.players;
     } catch (error) {
@@ -285,6 +288,12 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     try {
       const snapshot = await fetchServerGameSession(activeSnapshot.gameId);
       const mapped = mapSnapshot(snapshot, language, targetScore);
+      setControlledPlayer((prev) => {
+        if (prev && mapped.players.includes(prev)) {
+          return prev;
+        }
+        return mapped.players[0] || null;
+      });
       applyMappedSnapshot(snapshot, mapped);
       setQueuedSnapshot(null);
       setQueuedTransition('none');
@@ -548,9 +557,11 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setQueuedTransition('none');
     setStartRequest(null);
     setRequestInFlight(false);
+    setControlledPlayer(null);
   }, [targetScore]);
 
   const roundPoints = useMemo(() => initialScores(players), [players]);
+  const isLocalTurn = !controlledPlayer || currentPlayer === controlledPlayer;
 
   return {
     phase,
@@ -570,6 +581,8 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     currentPlayerIndex,
     starterIndex,
     currentPlayer,
+    controlledPlayer,
+    isLocalTurn,
     lastAction,
     winner,
     targetScore: effectiveTargetScore,
