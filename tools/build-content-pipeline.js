@@ -31,12 +31,12 @@ function main() {
     throw new Error('No approved review file found.');
   }
 
-  const cleanTarget = path.resolve(process.cwd(), 'data/clean/generated.latest.clean.json');
-  fs.copyFileSync(latestApproved, cleanTarget);
-  console.log(`Updated clean dataset: ${path.relative(process.cwd(), cleanTarget)}`);
+  const runtimeTarget = path.resolve(process.cwd(), 'data/smart10/cards.en.json');
+  fs.copyFileSync(latestApproved, runtimeTarget);
+  console.log(`Updated runtime dataset: ${path.relative(process.cwd(), runtimeTarget)}`);
 
   run('node tools/review-summary.js');
-  run(`node tools/validate_cards_v2.js ${cleanTarget}`);
+  run(`node tools/validate_cards_v2.js ${runtimeTarget}`);
 }
 
 main();

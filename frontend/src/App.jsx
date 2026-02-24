@@ -36,11 +36,20 @@ const STARTUP_PHASE = {
   TOPICS_EMPTY: 'topics-empty',
   READY: 'ready'
 };
+const SHOW_BUILD_BADGE = import.meta.env.DEV
+  || String(import.meta.env.VITE_SHOW_BUILD_BADGE || '').toLowerCase() === 'true';
+const BUILD_SHA = String(import.meta.env.VITE_BUILD_SHA || '').trim();
 
 const DIFFICULTY_OPTIONS = [
   { value: '1', label: 'Easy' },
   { value: '2', label: 'Medium' },
   { value: '3', label: 'Hard' }
+];
+
+const THEME_OPTIONS = [
+  { value: 'classic', label: 'Classic' },
+  { value: 'ember', label: 'Ember' },
+  { value: 'ocean', label: 'Ocean' }
 ];
 
 function normalizePlayerName(name) {
@@ -75,6 +84,19 @@ function SetupSkeleton() {
   );
 }
 
+function BuildBadge() {
+  if (!SHOW_BUILD_BADGE) {
+    return null;
+  }
+
+  const badgeText = BUILD_SHA ? `DEV BUILD ${BUILD_SHA.slice(0, 7)}` : 'DEV BUILD';
+  return (
+    <p className="build-badge" data-testid="build-badge">
+      {badgeText}
+    </p>
+  );
+}
+
 function StartScreen({ topics, config, setConfig, onStart }) {
   const players = parsePlayers(config.playersText);
   const canStart = players.length > 0;
@@ -101,18 +123,34 @@ function StartScreen({ topics, config, setConfig, onStart }) {
       <p>{STRINGS.subtitle}</p>
 
       <div className="setup-toolbar">
-        <label htmlFor="lang">Language</label>
-        <select
-          id="lang"
-          value={config.lang}
-          onChange={(event) => setConfig((prev) => ({ ...prev, lang: event.target.value }))}
-        >
-          {DEFAULT_LANGS.map((lang) => (
-            <option key={lang} value={lang}>
-              {lang.toUpperCase()}
-            </option>
-          ))}
-        </select>
+        <div className="setup-toolbar-group">
+          <label htmlFor="theme">Theme</label>
+          <select
+            id="theme"
+            value={config.theme}
+            onChange={(event) => setConfig((prev) => ({ ...prev, theme: event.target.value }))}
+          >
+            {THEME_OPTIONS.map((theme) => (
+              <option key={theme.value} value={theme.value}>
+                {theme.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="setup-toolbar-group">
+          <label htmlFor="lang">Language</label>
+          <select
+            id="lang"
+            value={config.lang}
+            onChange={(event) => setConfig((prev) => ({ ...prev, lang: event.target.value }))}
+          >
+            {DEFAULT_LANGS.map((lang) => (
+              <option key={lang} value={lang}>
+                {lang.toUpperCase()}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <h2 className="section-title">Topic</h2>
@@ -209,6 +247,7 @@ function loadStoredConfig() {
       topic: typeof parsed.topic === 'string' ? parsed.topic : '',
       difficulty: ['1', '2', '3'].includes(String(parsed.difficulty)) ? String(parsed.difficulty) : '2',
       lang: DEFAULT_LANGS.includes(parsed.lang) ? parsed.lang : 'en',
+      theme: THEME_OPTIONS.some((entry) => entry.value === parsed.theme) ? parsed.theme : 'classic',
       playersText: typeof parsed.playersText === 'string' ? parsed.playersText : ''
     };
   } catch {
@@ -277,6 +316,7 @@ export default function App() {
     topic: storedConfig?.topic ?? '',
     difficulty: storedConfig?.difficulty ?? '2',
     lang: storedConfig?.lang ?? 'en',
+    theme: storedConfig?.theme ?? 'classic',
     playersText: storedConfig?.playersText ?? ''
   });
   const [gameId, setGameId] = useState('');
@@ -345,6 +385,10 @@ export default function App() {
   }, [config]);
 
   useEffect(() => {
+    document.documentElement.setAttribute('data-theme', config.theme);
+  }, [config.theme]);
+
+  useEffect(() => {
     async function loadCard() {
       if (phase !== GamePhase.LOADING_CARD) return;
       if (!gameId) return;
@@ -381,6 +425,7 @@ export default function App() {
 
   return (
     <main data-phase={engine.phase === GamePhase.SETUP ? 'setup' : 'game'}>
+      <BuildBadge />
       {engine.phase === GamePhase.SETUP ? (
         <>
           {startup.phase !== STARTUP_PHASE.READY ? <StartupStatePanel startup={startup} onRetry={loadTopics} /> : null}

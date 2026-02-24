@@ -18,6 +18,30 @@
     linear-gradient(180deg, #34170a, #170a05);
 }
 
+:root[data-theme='ember'] {
+  --bg0: #3a1306;
+  --bg1: #170805;
+  --card: rgba(73, 28, 11, 0.9);
+  --card2: rgba(102, 39, 15, 0.78);
+  --stroke: rgba(255, 178, 121, 0.3);
+  --text: #ffeede;
+  --muted: #f0c4a1;
+  --accent: #f57c1f;
+  --accent2: #ffbd5e;
+}
+
+:root[data-theme='ocean'] {
+  --bg0: #0e2a36;
+  --bg1: #071720;
+  --card: rgba(16, 55, 68, 0.9);
+  --card2: rgba(24, 83, 100, 0.78);
+  --stroke: rgba(151, 214, 231, 0.28);
+  --text: #e8f7fc;
+  --muted: #b9dce8;
+  --accent: #2db6d7;
+  --accent2: #7ad9ee;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -52,6 +76,23 @@ main[data-phase='game'] {
   display: grid;
   grid-template-rows: minmax(0, 1fr);
   overflow: hidden;
+}
+
+.build-badge {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 1000;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 200, 138, 0.45);
+  background: rgba(21, 10, 5, 0.8);
+  color: #ffd2a0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  pointer-events: none;
 }
 
 h1,
@@ -98,10 +139,23 @@ h1 {
 
 .setup-toolbar {
   margin-top: 8px;
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
   justify-self: end;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.setup-toolbar-group {
+  display: grid;
+  gap: 4px;
+}
+
+.setup-toolbar-group label {
+  margin: 0;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .startup-panel {
@@ -836,11 +890,18 @@ button:disabled {
     padding: 16px;
   }
 
+  .build-badge {
+    top: 8px;
+    right: 8px;
+  }
+
   .setup-panel {
     padding: 24px;
   }
 
   .setup-toolbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     justify-self: stretch;
   }
 
