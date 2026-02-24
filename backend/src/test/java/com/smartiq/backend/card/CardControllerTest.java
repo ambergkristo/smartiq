@@ -287,7 +287,10 @@ class CardControllerTest {
                         .param("language", "   ")
                         .param("gameId", "game-blank-language"))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.error").value("language is required"));
+                .andExpect(jsonPath("$.error").value("language is required"))
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.reason").value("Bad Request"))
+                .andExpect(jsonPath("$.path").value("/api/cards/nextRandom"));
     }
 
     @Test
@@ -475,7 +478,10 @@ class CardControllerTest {
                         .param("difficulty", "2")
                         .param("sessionId", "missing-topic"))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.error").value("topicId is required"));
+                .andExpect(jsonPath("$.error").value("topicId is required"))
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.reason").value("Bad Request"))
+                .andExpect(jsonPath("$.path").value("/api/cards/next"));
     }
 
     @Test
@@ -486,7 +492,10 @@ class CardControllerTest {
                         .param("sessionId", "missing-cards")
                         .param("lang", "en"))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.error").exists());
+                .andExpect(jsonPath("$.error").exists())
+                .andExpect(jsonPath("$.status").value(404))
+                .andExpect(jsonPath("$.reason").value("Not Found"))
+                .andExpect(jsonPath("$.path").value("/api/cards/next"));
     }
 
     @Test
