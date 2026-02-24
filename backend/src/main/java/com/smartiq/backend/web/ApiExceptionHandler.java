@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -17,9 +16,7 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler({
             IllegalArgumentException.class,
-            ConstraintViolationException.class,
-            MissingServletRequestParameterException.class,
-            MethodArgumentTypeMismatchException.class
+            ConstraintViolationException.class,            MethodArgumentTypeMismatchException.class
     })
     public ResponseEntity<ApiErrorResponse> handleBadRequest(Exception ex, HttpServletRequest request) {
         return build(HttpStatus.BAD_REQUEST, ex.getMessage(), request.getRequestURI());
