@@ -84,6 +84,10 @@ Optional but recommended:
 - reconnect success rate
 - room join failure rate
 
+Prometheus query reference for mandatory KPIs:
+
+- `docs/observability.md` -> `Party Beta KPI Queries`
+
 ## 8. Daily Ops During Beta
 
 1. Export previous 24h feedback.

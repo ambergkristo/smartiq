@@ -4,6 +4,7 @@ import com.smartiq.backend.card.CardDeckResponse;
 import com.smartiq.backend.card.CardService;
 import com.smartiq.backend.game.contract.GameSessionSnapshot;
 import com.smartiq.backend.game.contract.PlayerRoundStatus;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,11 +28,13 @@ class GameSessionServiceTest {
     @Mock
     private CardService cardService;
 
+    private SimpleMeterRegistry meterRegistry;
     private GameSessionService gameSessionService;
 
     @BeforeEach
     void setUp() {
-        gameSessionService = new GameSessionService(cardService);
+        meterRegistry = new SimpleMeterRegistry();
+        gameSessionService = new GameSessionService(cardService, meterRegistry);
     }
 
     @Test
@@ -208,6 +211,46 @@ class GameSessionServiceTest {
         assertThat(nextRound.roundState().phase()).isEqualTo("CHOOSING");
         assertThat(nextRound.statuses().get("p1")).isEqualTo(PlayerRoundStatus.ACTIVE);
         verify(cardService, times(2)).getNextRandomCard(eq("en"), anyString(), eq(null));
+    }
+
+    @Test
+    void recordsGameplayTelemetryForBetaMetrics() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(openCard("metric-1", 0, "Telemetry question"));
+
+        GameSessionSnapshot created = gameSessionService.createGame(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 1)
+        );
+
+        gameSessionService.applyAction(created.gameId(), new GameActionRequest("ANSWER", 0, null));
+        gameSessionService.applyAction(created.gameId(), new GameActionRequest("PASS", null, null));
+        gameSessionService.applyAction(created.gameId(), new GameActionRequest("PASS", null, null));
+
+        assertThat(counterValue("smartiq.game.session.started.total")).isEqualTo(1.0);
+        assertThat(counterValue("smartiq.game.session.completed.total")).isEqualTo(1.0);
+        assertThat(counterValue("smartiq.game.round.completed.total")).isEqualTo(1.0);
+        assertThat(counterValue("smartiq.game.action.total", "type", "answer")).isEqualTo(1.0);
+        assertThat(counterValue("smartiq.game.action.total", "type", "pass")).isEqualTo(2.0);
+        assertThat(counterValue("smartiq.game.answer.total", "outcome", "correct")).isEqualTo(1.0);
+        assertThat(counterValue("smartiq.game.answer.total", "outcome", "wrong")).isEqualTo(0.0);
+        assertThat(timerCount("smartiq.game.round.duration.seconds")).isEqualTo(1L);
+        assertThat(timerCount("smartiq.game.duration.seconds")).isEqualTo(1L);
+    }
+
+    private double counterValue(String name, String... tags) {
+        var counter = meterRegistry.find(name).tags(tags).tag("language", "en").counter();
+        if (counter == null) {
+            return 0.0;
+        }
+        return counter.count();
+    }
+
+    private long timerCount(String name) {
+        var timer = meterRegistry.find(name).tag("language", "en").timer();
+        if (timer == null) {
+            return 0L;
+        }
+        return timer.count();
     }
 
     private static CardDeckResponse openCard(String cardId, int correctIndex, String question) {
