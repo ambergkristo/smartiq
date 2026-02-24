@@ -3,7 +3,6 @@ const BASE_URL = process.env.LOAD_TEST_BASE_URL || 'http://localhost:8080';
 const TOTAL_SESSIONS = Number(process.env.LOAD_TEST_SESSIONS || 500);
 const TOTAL_REQUESTS = Number(process.env.LOAD_TEST_REQUESTS || 10000);
 const TOPIC = process.env.LOAD_TEST_TOPIC || 'Math';
-const DIFFICULTY = process.env.LOAD_TEST_DIFFICULTY || '2';
 const LANG = process.env.LOAD_TEST_LANG || 'en';
 const CONCURRENCY = Number(process.env.LOAD_TEST_CONCURRENCY || 50);
 
@@ -19,7 +18,11 @@ function randSession() {
 
 async function requestOne() {
   const sessionId = randSession();
-  const url = `${BASE_URL}/api/cards/next?topic=${encodeURIComponent(TOPIC)}&difficulty=${encodeURIComponent(DIFFICULTY)}&sessionId=${encodeURIComponent(sessionId)}&lang=${encodeURIComponent(LANG)}`;
+  const url =
+    `${BASE_URL}/api/cards/nextRandom` +
+    `?language=${encodeURIComponent(LANG)}` +
+    `&gameId=${encodeURIComponent(sessionId)}` +
+    `&topic=${encodeURIComponent(TOPIC)}`;
 
   try {
     const res = await fetch(url);
@@ -31,10 +34,15 @@ async function requestOne() {
 
     const body = await res.json();
     const set = seenBySession.get(sessionId) || new Set();
-    if (set.has(body.id)) {
+    const cardId = body.cardId ?? body.id;
+    if (!cardId) {
+      errorCount += 1;
+      return;
+    }
+    if (set.has(cardId)) {
       duplicateCount += 1;
     }
-    set.add(body.id);
+    set.add(cardId);
     seenBySession.set(sessionId, set);
   } catch (_err) {
     errorCount += 1;
