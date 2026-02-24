@@ -1,5 +1,6 @@
 import {
   buildNextCardQuery,
+  buildRoomRejoinPayload,
   buildServerActionPayload,
   buildServerGamePayload,
   resolveCardErrorMessage,
@@ -92,6 +93,21 @@ describe('api error mapping', () => {
 
   test('rejects ANSWER payload without tile index', () => {
     expect(() => buildServerActionPayload({ type: 'ANSWER' })).toThrow('tileIndex is required for ANSWER');
+  });
+
+  test('builds room rejoin payload with trimmed fields', () => {
+    expect(buildRoomRejoinPayload({ playerId: ' p1 ', authToken: ' rt_token ' })).toEqual({
+      playerId: 'p1',
+      authToken: 'rt_token'
+    });
+  });
+
+  test('rejects room rejoin payload without playerId', () => {
+    expect(() => buildRoomRejoinPayload({ authToken: 'rt_token' })).toThrow('playerId is required');
+  });
+
+  test('rejects room rejoin payload without authToken', () => {
+    expect(() => buildRoomRejoinPayload({ playerId: 'p1' })).toThrow('authToken is required');
   });
 
   test('maps game session not found to restart guidance', () => {

@@ -92,4 +92,26 @@ class RoomControllerTest {
                 .andExpect(jsonPath("$.status").value(404))
                 .andExpect(jsonPath("$.path").value("/api/rooms/MISSING/join"));
     }
+
+    @Test
+    void rejoinRoomReturnsResumePayload() throws Exception {
+        RoomSnapshot snapshot = new RoomSnapshot(
+                "ABC123",
+                List.of(
+                        new RoomPlayerSnapshot("p1", "Alice"),
+                        new RoomPlayerSnapshot("p2", "Bob")
+                )
+        );
+        when(roomService.rejoinRoom(eq("ABC123"), any()))
+                .thenReturn(new RoomResumeResponse("ABC123", "p1", "rt_host", snapshot));
+
+        mockMvc.perform(post("/api/rooms/ABC123/rejoin")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new RejoinRoomRequest("p1", "rt_host"))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.roomCode").value("ABC123"))
+                .andExpect(jsonPath("$.playerId").value("p1"))
+                .andExpect(jsonPath("$.authToken").value("rt_host"))
+                .andExpect(jsonPath("$.roomState.players[0].displayName").value("Alice"));
+    }
 }

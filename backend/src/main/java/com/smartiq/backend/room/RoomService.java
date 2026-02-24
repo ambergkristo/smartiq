@@ -56,6 +56,25 @@ public class RoomService {
         return toSnapshot(room);
     }
 
+    public synchronized RoomResumeResponse rejoinRoom(String roomCode, RejoinRoomRequest request) {
+        if (request == null) {
+            throw new IllegalArgumentException("rejoin payload is required");
+        }
+
+        RoomState room = requireRoom(roomCode);
+        String playerId = normalizePlayerId(request.playerId());
+        String authToken = normalizeAuthToken(request.authToken());
+        String expectedToken = room.playerTokens.get(playerId);
+        if (expectedToken == null) {
+            throw new NoSuchElementException("player not found: " + playerId);
+        }
+        if (!expectedToken.equals(authToken)) {
+            throw new IllegalArgumentException("invalid room token");
+        }
+
+        return new RoomResumeResponse(room.code, playerId, authToken, toSnapshot(room));
+    }
+
     private RoomState requireRoom(String roomCode) {
         String normalized = normalizeRoomCode(roomCode);
         RoomState room = rooms.get(normalized);
@@ -103,6 +122,20 @@ public class RoomService {
             return fallbackName;
         }
         return displayName.trim();
+    }
+
+    private static String normalizePlayerId(String playerId) {
+        if (playerId == null || playerId.isBlank()) {
+            throw new IllegalArgumentException("playerId is required");
+        }
+        return playerId.trim();
+    }
+
+    private static String normalizeAuthToken(String authToken) {
+        if (authToken == null || authToken.isBlank()) {
+            throw new IllegalArgumentException("authToken is required");
+        }
+        return authToken.trim();
     }
 
     private static String issueToken() {

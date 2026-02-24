@@ -1,6 +1,8 @@
 package com.smartiq.backend.room.ws;
 
+import com.smartiq.backend.room.RejoinRoomRequest;
 import com.smartiq.backend.room.RoomPlayerSnapshot;
+import com.smartiq.backend.room.RoomResumeResponse;
 import com.smartiq.backend.room.RoomService;
 import com.smartiq.backend.room.RoomSnapshot;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,8 +47,9 @@ class RoomWebSocketHandlerTest {
     @Test
     void connectionRegistersSessionAndPushesRoomState() throws Exception {
         RoomSnapshot snapshot = snapshot("ABC123");
-        when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/abc123"));
-        when(roomService.getRoomSnapshot(eq("ABC123"))).thenReturn(snapshot);
+        when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/abc123?playerId=p1&authToken=rt_host"));
+        when(roomService.rejoinRoom(eq("ABC123"), eq(new RejoinRoomRequest("p1", "rt_host"))))
+                .thenReturn(new RoomResumeResponse("ABC123", "p1", "rt_host", snapshot));
 
         roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
 
@@ -57,9 +60,9 @@ class RoomWebSocketHandlerTest {
 
     @Test
     void unknownRoomClosesConnectionWithNotAcceptable() throws Exception {
-        when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/missing"));
+        when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/missing?playerId=p1&authToken=rt_host"));
         when(webSocketSession.isOpen()).thenReturn(true);
-        when(roomService.getRoomSnapshot(eq("MISSING")))
+        when(roomService.rejoinRoom(eq("MISSING"), eq(new RejoinRoomRequest("p1", "rt_host"))))
                 .thenThrow(new NoSuchElementException("room not found: MISSING"));
 
         roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
@@ -67,6 +70,19 @@ class RoomWebSocketHandlerTest {
         ArgumentCaptor<CloseStatus> closeStatus = ArgumentCaptor.forClass(CloseStatus.class);
         verify(webSocketSession).close(closeStatus.capture());
         assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.NOT_ACCEPTABLE.getCode());
+    }
+
+    @Test
+    void missingTokenClosesConnectionWithNotAcceptable() throws Exception {
+        when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/abc123?playerId=p1"));
+        when(webSocketSession.isOpen()).thenReturn(true);
+
+        roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
+
+        ArgumentCaptor<CloseStatus> closeStatus = ArgumentCaptor.forClass(CloseStatus.class);
+        verify(webSocketSession).close(closeStatus.capture());
+        assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.NOT_ACCEPTABLE.getCode());
+        verify(roomWsGateway, never()).register(any(), any());
     }
 
     @Test

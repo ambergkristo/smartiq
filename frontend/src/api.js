@@ -329,6 +329,31 @@ function normalizeRequiredGameId(gameId) {
   return normalized;
 }
 
+function normalizeRequiredRoomCode(roomCode) {
+  const normalized = String(roomCode || '').trim().toUpperCase();
+  if (!normalized) {
+    throw new ApiError('roomCode is required', 0, 'VALIDATION_ERROR');
+  }
+  return normalized;
+}
+
+export function buildRoomRejoinPayload({ playerId, authToken } = {}) {
+  const normalizedPlayerId = String(playerId || '').trim();
+  if (!normalizedPlayerId) {
+    throw new ApiError('playerId is required', 0, 'VALIDATION_ERROR');
+  }
+
+  const normalizedAuthToken = String(authToken || '').trim();
+  if (!normalizedAuthToken) {
+    throw new ApiError('authToken is required', 0, 'VALIDATION_ERROR');
+  }
+
+  return {
+    playerId: normalizedPlayerId,
+    authToken: normalizedAuthToken
+  };
+}
+
 export async function createServerGameSession(input = {}) {
   requireApiBase();
   if (USE_SAMPLE_MODE) {
@@ -358,6 +383,59 @@ export async function sendServerGameAction(gameId, action) {
     method: 'POST',
     body: payload
   });
+}
+
+export async function createRoomSession({ displayName } = {}) {
+  requireApiBase();
+  if (USE_SAMPLE_MODE) {
+    throw new ApiError('Room API is unavailable in sample mode', 0, 'SAMPLE_MODE_UNSUPPORTED');
+  }
+
+  const normalizedDisplayName = String(displayName || '').trim();
+  const payload = normalizedDisplayName ? { displayName: normalizedDisplayName } : {};
+  return fetchJson(`${API_BASE}/api/rooms`, {
+    method: 'POST',
+    body: payload
+  });
+}
+
+export async function joinRoomSession(roomCode, { displayName } = {}) {
+  requireApiBase();
+  if (USE_SAMPLE_MODE) {
+    throw new ApiError('Room API is unavailable in sample mode', 0, 'SAMPLE_MODE_UNSUPPORTED');
+  }
+
+  const normalizedRoomCode = normalizeRequiredRoomCode(roomCode);
+  const normalizedDisplayName = String(displayName || '').trim();
+  const payload = normalizedDisplayName ? { displayName: normalizedDisplayName } : {};
+  return fetchJson(`${API_BASE}/api/rooms/${encodeURIComponent(normalizedRoomCode)}/join`, {
+    method: 'POST',
+    body: payload
+  });
+}
+
+export async function rejoinRoomSession(roomCode, input = {}) {
+  requireApiBase();
+  if (USE_SAMPLE_MODE) {
+    throw new ApiError('Room API is unavailable in sample mode', 0, 'SAMPLE_MODE_UNSUPPORTED');
+  }
+
+  const normalizedRoomCode = normalizeRequiredRoomCode(roomCode);
+  const payload = buildRoomRejoinPayload(input);
+  return fetchJson(`${API_BASE}/api/rooms/${encodeURIComponent(normalizedRoomCode)}/rejoin`, {
+    method: 'POST',
+    body: payload
+  });
+}
+
+export function buildRoomWebSocketUrl({ roomCode, playerId, authToken } = {}) {
+  requireApiBase();
+  const normalizedRoomCode = normalizeRequiredRoomCode(roomCode);
+  const payload = buildRoomRejoinPayload({ playerId, authToken });
+  const baseUrl = new URL(API_BASE);
+  const protocol = baseUrl.protocol === 'https:' ? 'wss:' : 'ws:';
+  return `${protocol}//${baseUrl.host}/ws/rooms/${encodeURIComponent(normalizedRoomCode)}`
+    + `?playerId=${encodeURIComponent(payload.playerId)}&authToken=${encodeURIComponent(payload.authToken)}`;
 }
 
 export function resolveCardErrorMessage(error) {
