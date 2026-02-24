@@ -14,7 +14,7 @@ This runbook defines how to execute the first closed Party Beta for SmartIQ.
 2. Local gate passes on release candidate commit:
    - `npm run release:check`
 3. Production/staging smoke passes:
-   - `BACKEND_URL=https://<backend-domain> npm run smoke:test`
+   - `$env:BACKEND_URL="https://<backend-domain>"; npm run smoke:test`
 4. Branch protection stays enforced on `main`.
 
 ## 3. Tester Cohort (Closed Beta Size)
@@ -34,7 +34,7 @@ This runbook defines how to execute the first closed Party Beta for SmartIQ.
    - Backend: `https://<backend-domain>`
    - Frontend: `https://<frontend-domain>`
 3. Run smoke:
-   - `BACKEND_URL=https://<backend-domain> npm run smoke:test`
+   - `$env:BACKEND_URL="https://<backend-domain>"; npm run smoke:test`
 4. Run quick manual check:
    - create room
    - join room with second client
@@ -111,8 +111,8 @@ At beta close, publish:
 
 1. `docs/reports/beta-summary-<date>.md`
    - Generate baseline from metrics:
-     - `BACKEND_URL=https://<backend-domain> npm run report:beta:summary`
+     - `$env:BACKEND_URL="https://<backend-domain>"; npm run report:beta:summary`
    - Optional strict gate (non-zero exit on NO-GO):
-     - `BACKEND_URL=https://<backend-domain> npm run report:beta:summary -- --min-started-games=20 --min-completed-games=15 --max-dropoff=0.35 --max-wrong-answer=0.45 --fail-on-no-go`
+     - `$env:BACKEND_URL="https://<backend-domain>"; npm run report:beta:summary -- --min-started-games=20 --min-completed-games=15 --max-dropoff=0.35 --max-wrong-answer=0.45 --fail-on-no-go`
 2. List of prioritized fixes (`fix/beta-findings-*` branches)
 3. Go/No-Go recommendation for broader rollout

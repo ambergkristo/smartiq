@@ -55,9 +55,9 @@ Additional non-blocking runtime profile:
   - Optional smoke in same report:
     - `npm run report:et:quality -- --with-smoke`
 - Runtime smoke report artifact:
-  - `BACKEND_URL=http://localhost:8081 npm run report:et:runtime`
+  - `$env:BACKEND_URL="http://localhost:8081"; npm run report:et:runtime`
 - Single-command ET release gate:
-  - `BACKEND_URL=http://localhost:8081 npm run gate:et:release`
+  - `$env:BACKEND_URL="http://localhost:8081"; npm run gate:et:release`
 
 ## ET Quality Checklist (Next Milestone)
 
@@ -68,7 +68,7 @@ Additional non-blocking runtime profile:
    - `node tools/audit_locale_coverage.js data/smart10 --required=en,et --min-per-combo=30`
 3. Validate runtime manually:
    - `curl \"http://localhost:8081/api/cards/nextRandom?language=et&gameId=smoke-et\"`
-   - or use smoke script: `BACKEND_URL=http://localhost:8081 npm run smoke:test:et`
+   - or use smoke script: `$env:BACKEND_URL="http://localhost:8081"; npm run smoke:test:et`
    - optional smoke overrides:
      - `SMOKE_TOPIC=History` to force topic
      - `SMOKE_GAME_ID=my-fixed-game` to reuse game history

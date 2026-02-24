@@ -72,14 +72,14 @@ npm run validate:deploy-env
 
 Post-deploy smoke command (required for Go/No-Go):
 
-```bash
-BACKEND_URL=https://<backend-domain> FRONTEND_URL=https://<frontend-domain> npm run smoke:postdeploy
+```powershell
+$env:BACKEND_URL="https://<backend-domain>"; $env:FRONTEND_URL="https://<frontend-domain>"; npm run smoke:postdeploy
 ```
 
 Public smoke test command:
 
-```bash
-BACKEND_URL=https://<backend-domain> npm run smoke:test
+```powershell
+$env:BACKEND_URL="https://<backend-domain>"; npm run smoke:test
 ```
 
 ## Key Rotation Runbook

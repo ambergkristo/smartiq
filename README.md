@@ -196,8 +196,8 @@ npm run test:golden
 
 Scale generation target for runtime planning:
 
-```bash
-TARGET_PER_KEY=1000 npm run pipeline:cards
+```powershell
+$env:TARGET_PER_KEY="1000"; npm run pipeline:cards
 ```
 
 Load test (500 sessions / 10k requests default):
@@ -208,10 +208,10 @@ npm run load:test
 
 Public/local smoke test:
 
-```bash
-BACKEND_URL=https://<backend-domain> npm run smoke:test
+```powershell
+$env:BACKEND_URL="https://<backend-domain>"; npm run smoke:test
 # local backend example:
-BACKEND_URL=http://localhost:8080 npm run smoke:test
+$env:BACKEND_URL="http://localhost:8080"; npm run smoke:test
 ```
 
 Stability gate (production readiness check):

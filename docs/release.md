@@ -88,7 +88,7 @@ ET launch gate (must all hold before enabling in production):
 - CORS allows only expected frontend origin(s).
 - `/version` returns commit SHA and build time.
 - Post-deploy smoke is mandatory:
-  - `BACKEND_URL=https://<backend-domain> FRONTEND_URL=https://<frontend-domain> npm run smoke:postdeploy`
+  - `$env:BACKEND_URL="https://<backend-domain>"; $env:FRONTEND_URL="https://<frontend-domain>"; npm run smoke:postdeploy`
   - Must return `ok: true`.
 
 ## 6. Security Gate
