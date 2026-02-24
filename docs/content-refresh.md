@@ -16,8 +16,8 @@ npm run pipeline:cards
 
 For production-scale rehearsal:
 
-```bash
-TARGET_PER_KEY=1000 npm run pipeline:cards
+```powershell
+$env:TARGET_PER_KEY="1000"; npm run pipeline:cards
 ```
 
 ## Scheduled Automation

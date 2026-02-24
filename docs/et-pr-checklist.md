@@ -14,7 +14,7 @@ Copy this block into ET-related PR descriptions.
 
 ### ET Runtime Smoke
 
-- [ ] `BACKEND_URL=http://localhost:8081 npm run report:et:runtime`
+- [ ] `$env:BACKEND_URL="http://localhost:8081"; npm run report:et:runtime`
 - [ ] Attach generated `docs/reports/et-runtime-smoke-*.md` summary to PR notes
 
 ### ET Status

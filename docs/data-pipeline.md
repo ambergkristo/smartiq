@@ -52,8 +52,8 @@ npm run pipeline:cards
 
 Target size can be scaled up to 1000 per `(topic,difficulty,language)` key:
 
-```bash
-TARGET_PER_KEY=1000 npm run pipeline:cards
+```powershell
+$env:TARGET_PER_KEY="1000"; npm run pipeline:cards
 ```
 
 Generation guardrails:
