@@ -5,6 +5,7 @@ import com.smartiq.backend.room.RoomPlayerSnapshot;
 import com.smartiq.backend.room.RoomResumeResponse;
 import com.smartiq.backend.room.RoomService;
 import com.smartiq.backend.room.RoomSnapshot;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,11 +38,13 @@ class RoomWebSocketHandlerTest {
     @Mock
     private WebSocketSession webSocketSession;
 
+    private SimpleMeterRegistry meterRegistry;
     private RoomWebSocketHandler roomWebSocketHandler;
 
     @BeforeEach
     void setUp() {
-        roomWebSocketHandler = new RoomWebSocketHandler(roomService, roomWsGateway);
+        meterRegistry = new SimpleMeterRegistry();
+        roomWebSocketHandler = new RoomWebSocketHandler(roomService, roomWsGateway, meterRegistry);
     }
 
     @Test
@@ -56,6 +59,7 @@ class RoomWebSocketHandlerTest {
         verify(roomWsGateway).register("ABC123", webSocketSession);
         verify(roomWsGateway).sendRoomStateToSession(webSocketSession, snapshot);
         verify(webSocketSession, never()).close(any(CloseStatus.class));
+        assertThat(counterValue("success", "none")).isEqualTo(1.0);
     }
 
     @Test
@@ -70,6 +74,7 @@ class RoomWebSocketHandlerTest {
         ArgumentCaptor<CloseStatus> closeStatus = ArgumentCaptor.forClass(CloseStatus.class);
         verify(webSocketSession).close(closeStatus.capture());
         assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.NOT_ACCEPTABLE.getCode());
+        assertThat(counterValue("failure", "room_not_found")).isEqualTo(1.0);
     }
 
     @Test
@@ -83,6 +88,7 @@ class RoomWebSocketHandlerTest {
         verify(webSocketSession).close(closeStatus.capture());
         assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.NOT_ACCEPTABLE.getCode());
         verify(roomWsGateway, never()).register(any(), any());
+        assertThat(counterValue("failure", "missing_auth_token")).isEqualTo(1.0);
     }
 
     @Test
@@ -99,5 +105,16 @@ class RoomWebSocketHandlerTest {
                         new RoomPlayerSnapshot("p2", "Bob")
                 )
         );
+    }
+
+    private double counterValue(String result, String reason) {
+        var counter = meterRegistry.find("smartiq.room.ws.connect.total")
+                .tag("result", result)
+                .tag("reason", reason)
+                .counter();
+        if (counter == null) {
+            return 0.0;
+        }
+        return counter.count();
     }
 }

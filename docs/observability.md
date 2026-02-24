@@ -33,6 +33,10 @@ Prometheus metrics include:
 - `smartiq.game.answer.total` (tags `outcome=correct|wrong`, `language`)
 - `smartiq.game.duration.seconds` (timer, tag `language`)
 - `smartiq.game.round.duration.seconds` (timer, tag `language`)
+- `smartiq.room.create.total` (tags `result`, `reason`)
+- `smartiq.room.join.total` (tags `result`, `reason`)
+- `smartiq.room.rejoin.total` (tags `result`, `reason`)
+- `smartiq.room.ws.connect.total` (tags `result`, `reason`)
 
 ## Party Beta KPI Queries
 
@@ -48,6 +52,15 @@ Use these PromQL queries to compute mandatory beta KPIs from server-authoritativ
   - `sum(rate(smartiq_game_answer_total{outcome="wrong"}[1d])) / clamp_min(sum(rate(smartiq_game_answer_total[1d])), 1e-9)`
 - Drop-off rate:
   - `(sum(rate(smartiq_game_session_started_total[1d])) - sum(rate(smartiq_game_session_completed_total[1d]))) / clamp_min(sum(rate(smartiq_game_session_started_total[1d])), 1e-9)`
+
+Optional beta ops metrics:
+
+- Reconnect success rate:
+  - `sum(rate(smartiq_room_rejoin_total{result="success"}[1d])) / clamp_min(sum(rate(smartiq_room_rejoin_total[1d])), 1e-9)`
+- Room join failure rate:
+  - `sum(rate(smartiq_room_join_total{result="failure"}[1d])) / clamp_min(sum(rate(smartiq_room_join_total[1d])), 1e-9)`
+- WebSocket connect failure rate:
+  - `sum(rate(smartiq_room_ws_connect_total{result="failure"}[1d])) / clamp_min(sum(rate(smartiq_room_ws_connect_total[1d])), 1e-9)`
 
 ## Deck Event Logs
 

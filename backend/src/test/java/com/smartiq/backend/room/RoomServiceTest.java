@@ -1,5 +1,6 @@
 package com.smartiq.backend.room;
 
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,11 +11,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RoomServiceTest {
 
+    private SimpleMeterRegistry meterRegistry;
     private RoomService roomService;
 
     @BeforeEach
     void setUp() {
-        roomService = new RoomService();
+        meterRegistry = new SimpleMeterRegistry();
+        roomService = new RoomService(meterRegistry);
     }
 
     @Test
@@ -99,5 +102,35 @@ class RoomServiceTest {
         assertThatThrownBy(() -> roomService.joinRoom(created.roomCode(), new JoinRoomRequest("Overflow")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("room is full");
+    }
+
+    @Test
+    void recordsJoinAndRejoinSuccessAndFailureMetrics() {
+        RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
+        roomService.joinRoom(created.roomCode(), new JoinRoomRequest("Bob"));
+
+        assertThatThrownBy(() -> roomService.joinRoom("MISSING", new JoinRoomRequest("Bob")))
+                .isInstanceOf(NoSuchElementException.class);
+
+        roomService.rejoinRoom(created.roomCode(), new RejoinRoomRequest(created.playerId(), created.authToken()));
+
+        assertThatThrownBy(() -> roomService.rejoinRoom(
+                created.roomCode(),
+                new RejoinRoomRequest(created.playerId(), "rt_invalid")
+        )).isInstanceOf(IllegalArgumentException.class);
+
+        assertThat(counterValue("smartiq.room.create.total", "result", "success")).isEqualTo(1.0);
+        assertThat(counterValue("smartiq.room.join.total", "result", "success")).isEqualTo(1.0);
+        assertThat(counterValue("smartiq.room.join.total", "result", "failure")).isEqualTo(1.0);
+        assertThat(counterValue("smartiq.room.rejoin.total", "result", "success")).isEqualTo(1.0);
+        assertThat(counterValue("smartiq.room.rejoin.total", "result", "failure")).isEqualTo(1.0);
+    }
+
+    private double counterValue(String name, String... tags) {
+        var counter = meterRegistry.find(name).tags(tags).counter();
+        if (counter == null) {
+            return 0.0;
+        }
+        return counter.count();
     }
 }
