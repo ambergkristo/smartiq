@@ -1,5 +1,7 @@
 # SmartIQ MVP Execution Plan
 
+> Legacy planning snapshot (historical). Canonical runtime dataset path is `data/smart10/`.
+
 Date: 2026-02-17  
 Owner: Agent 0 (Orchestrator)  
 Loop model: PLAN -> WORK -> ASSESS/REVIEW -> COMPOUND
@@ -13,7 +15,7 @@ Deliver a working Smart10-style trivia MVP with:
   - `GET /api/topics`
   - `GET /api/cards/random?topic=X`
   - `GET /api/cards/random`
-  - Import mechanism from repository data (`/data/clean/*.json`).
+  - Import mechanism from repository data (`/data/smart10/*.json`).
 - Frontend playable round:
   - Topic selection
   - Card fetch and display
@@ -32,8 +34,8 @@ Deliver a working Smart10-style trivia MVP with:
   - `frontend/` React + Vite.
 - Data pipeline:
   - Raw generated cards: `data/raw/*.json`
-  - QA-cleaned cards: `data/clean/*.json`
-  - Import reads only `data/clean`.
+  - QA-cleaned cards: `data/smart10/*.json`
+  - Import reads only `data/smart10`.
 - Validation tool:
   - `tools/validate-cards` (Node script) checks schema and duplicates.
 - DB:
@@ -61,7 +63,7 @@ Scope:
 - Migrations for cards table and indexes.
 - Repository + service for random card by topic and overall random.
 - REST controllers for required endpoints.
-- Import path (boot-time import from `data/clean` chosen for MVP).
+- Import path (boot-time import from `data/smart10` chosen for MVP).
 - Unit/integration tests for endpoints and import.
 
 Acceptance tests:
@@ -81,12 +83,12 @@ Scope:
   - options length = 10
   - valid answer encoding
   - duplicates by normalized question/topic/language
-- Produce cleaned datasets in `data/clean`.
+- Produce cleaned datasets in `data/smart10`.
 - Ensure at least 20 cards/topic in initial set.
 
 Acceptance tests:
 
-- `node tools/validate-cards.js data/clean`
+- `node tools/validate-cards.js data/smart10/cards.en.json`
 - Validation fails for malformed sample, passes for clean files.
 - Import uses only clean files.
 
@@ -182,7 +184,7 @@ cd ..
 Data validation:
 
 ```bash
-node tools/validate-cards.js data/clean
+node tools/validate-cards.js data/smart10/cards.en.json
 ```
 
 Full local runtime:

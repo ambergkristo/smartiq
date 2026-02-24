@@ -112,6 +112,7 @@ describe('GameBoard layout', () => {
     render(
       <GameBoard
         {...props}
+        selectedIndexes={new Set([2])}
         revealedIndexes={new Set([0])}
         wrongIndexes={new Set([1])}
       />
@@ -119,9 +120,10 @@ describe('GameBoard layout', () => {
 
     expect(screen.getByRole('button', { name: /peg-1 correct/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /peg-2 wrong/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /peg-3 unrevealed/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /peg-3 selected/i })).toBeInTheDocument();
     expect(screen.getAllByText('✓')).toHaveLength(1);
     expect(screen.getAllByText('✗')).toHaveLength(1);
+    expect(screen.getAllByText('◎')).toHaveLength(1);
   });
 
   test('supports keyboard flow for action buttons and announces state', async () => {
