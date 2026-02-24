@@ -109,10 +109,13 @@ async function playPerfectOrderRound() {
 describe('App core smoke flow', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    fetchTopics.mockReset();
+    fetchNextCard.mockReset();
+    resolveCardErrorMessage.mockReset().mockReturnValue('Fallback mode');
     localStorage.clear();
   });
 
-  test('start game -> answer -> pass -> next round', async () => {
+  test('start game -> answer -> round end -> next round', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
     fetchNextCard
       .mockResolvedValueOnce(makeCard('s1', 0))
@@ -120,12 +123,17 @@ describe('App core smoke flow', () => {
 
     render(<App />);
     await startGameWithPlayers('Alice, Bob');
+
     fireEvent.click(screen.getByRole('button', { name: /^peg-1\b/i }));
     fireEvent.click(screen.getByRole('button', { name: /answer/i }));
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
-    fireEvent.click(screen.getByRole('button', { name: /pass/i }));
+
+    fireEvent.click(screen.getByRole('button', { name: /^peg-2\b/i }));
+    fireEvent.click(screen.getByRole('button', { name: /answer/i }));
+    fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
+
     fireEvent.click(screen.getByRole('button', { name: /pass/i }));
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
 
@@ -134,7 +142,7 @@ describe('App core smoke flow', () => {
     await screen.findByText(/smoke question s2/i, {}, { timeout: QUERY_TIMEOUT });
   }, 15000);
 
-  test('three-player flow handles wrong-drop and pass transitions into summary stats', async () => {
+  test('three-player flow handles wrong-drop transitions into summary stats', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
     fetchNextCard.mockResolvedValueOnce(makeCard('s3', 0));
 
@@ -151,8 +159,11 @@ describe('App core smoke flow', () => {
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
 
-    fireEvent.click(screen.getByRole('button', { name: /pass/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^peg-3\b/i }));
+    fireEvent.click(screen.getByRole('button', { name: /answer/i }));
+    fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
+
     fireEvent.click(screen.getByRole('button', { name: /pass/i }));
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
 
@@ -164,7 +175,7 @@ describe('App core smoke flow', () => {
 
     expect(readSummaryCells(aliceRow)).toEqual(['Alice', '1', '1', '0', '1']);
     expect(readSummaryCells(bobRow)).toEqual(['Bob', '0', '0', '1', '0']);
-    expect(readSummaryCells(caraRow)).toEqual(['Cara', '0', '0', '0', '1']);
+    expect(readSummaryCells(caraRow)).toEqual(['Cara', '0', '0', '1', '0']);
   }, 15000);
 
   test('order category requires rank selection and wrong answer drops current player', async () => {
@@ -186,6 +197,12 @@ describe('App core smoke flow', () => {
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
 
+    fireEvent.click(within(rankSelector).getByRole('button', { name: '1' }));
+    fireEvent.click(screen.getByRole('button', { name: /^peg-2\b/i }));
+    fireEvent.click(screen.getByRole('button', { name: /answer/i }));
+    fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+
     fireEvent.click(screen.getByRole('button', { name: /pass/i }));
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
 
@@ -194,7 +211,7 @@ describe('App core smoke flow', () => {
     const aliceRow = findSummaryRow('Alice');
     const bobRow = findSummaryRow('Bob');
     expect(readSummaryCells(aliceRow)).toEqual(['Alice', '0', '0', '1', '0']);
-    expect(readSummaryCells(bobRow)).toEqual(['Bob', '0', '0', '0', '1']);
+    expect(readSummaryCells(bobRow)).toEqual(['Bob', '1', '1', '0', '1']);
   }, 15000);
 
   test('game ends at 30 points after three perfect ORDER rounds', async () => {

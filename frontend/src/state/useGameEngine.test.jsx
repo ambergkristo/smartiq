@@ -16,6 +16,20 @@ function sampleCard(correctIndex = 0, category = 'OPEN') {
   };
 }
 
+function sampleCardWithCorrectIndexes(correctIndexes = [0], category = 'OPEN') {
+  return {
+    id: `card-multi-${correctIndexes.join('-')}`,
+    cardId: `card-multi-${correctIndexes.join('-')}`,
+    topic: 'Math',
+    category,
+    difficulty: '2',
+    language: 'en',
+    question: 'Sample?',
+    options: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
+    correct: { correctIndexes }
+  };
+}
+
 describe('useGameEngine Smart10 round semantics', () => {
   test('starts in SETUP and enters LOADING_CARD on game start', () => {
     const { result } = renderHook(() => useGameEngine(30));
@@ -63,7 +77,31 @@ describe('useGameEngine Smart10 round semantics', () => {
       result.current.startRound('Alice,Bob');
     });
     act(() => {
-      result.current.cardLoaded(sampleCard(0));
+      result.current.cardLoaded(sampleCardWithCorrectIndexes([0, 1]));
+    });
+    act(() => {
+      result.current.toggleOption(0);
+    });
+    act(() => {
+      result.current.requestConfirm();
+    });
+    act(() => {
+      result.current.confirmAnswer();
+    });
+    act(() => {
+      result.current.nextStep();
+    });
+    act(() => {
+      result.current.toggleOption(1);
+    });
+    act(() => {
+      result.current.requestConfirm();
+    });
+    act(() => {
+      result.current.confirmAnswer();
+    });
+    act(() => {
+      result.current.nextStep();
     });
     act(() => {
       result.current.passTurn();
@@ -80,6 +118,24 @@ describe('useGameEngine Smart10 round semantics', () => {
     expect(result.current.currentPlayer).toBe('Bob');
   });
 
+  test('pass is blocked before player has a correct answer in the round', () => {
+    const { result } = renderHook(() => useGameEngine(30));
+    act(() => {
+      result.current.startRound('Alice,Bob');
+    });
+    act(() => {
+      result.current.cardLoaded(sampleCard(0));
+    });
+
+    act(() => {
+      result.current.passTurn();
+    });
+
+    expect(result.current.phase).toBe(GamePhase.CHOOSING);
+    expect(result.current.passedPlayers.has('Alice')).toBe(false);
+    expect(result.current.lastAction.toLowerCase()).toContain('must answer correctly before passing');
+  });
+
   test('round ends when all players passed or eliminated', () => {
     const { result } = renderHook(() => useGameEngine(30));
     act(() => {
@@ -89,7 +145,25 @@ describe('useGameEngine Smart10 round semantics', () => {
       result.current.cardLoaded(sampleCard(0));
     });
     act(() => {
-      result.current.passTurn();
+      result.current.toggleOption(0);
+    });
+    act(() => {
+      result.current.requestConfirm();
+    });
+    act(() => {
+      result.current.confirmAnswer();
+    });
+    act(() => {
+      result.current.nextStep();
+    });
+    act(() => {
+      result.current.toggleOption(1);
+    });
+    act(() => {
+      result.current.requestConfirm();
+    });
+    act(() => {
+      result.current.confirmAnswer();
     });
     act(() => {
       result.current.nextStep();
@@ -100,7 +174,6 @@ describe('useGameEngine Smart10 round semantics', () => {
     act(() => {
       result.current.nextStep();
     });
-
     expect(result.current.phase).toBe(GamePhase.ROUND_SUMMARY);
   });
 
@@ -165,7 +238,25 @@ describe('useGameEngine Smart10 round semantics', () => {
       result.current.cardLoaded(sampleCard(0));
     });
     act(() => {
-      result.current.passTurn();
+      result.current.toggleOption(0);
+    });
+    act(() => {
+      result.current.requestConfirm();
+    });
+    act(() => {
+      result.current.confirmAnswer();
+    });
+    act(() => {
+      result.current.nextStep();
+    });
+    act(() => {
+      result.current.toggleOption(1);
+    });
+    act(() => {
+      result.current.requestConfirm();
+    });
+    act(() => {
+      result.current.confirmAnswer();
     });
     act(() => {
       result.current.nextStep();

@@ -87,6 +87,18 @@ describe('GameBoard layout', () => {
     expect(screen.getByRole('button', { name: 'ANSWER' })).toBeEnabled();
   });
 
+  test('disables PASS until pass eligibility is true', () => {
+    globalThis.__setResizeObserverWidth(1024);
+    const props = makeProps();
+    const { rerender } = render(<GameBoard {...props} canPass={false} />);
+
+    expect(screen.getByRole('button', { name: 'PASS' })).toBeDisabled();
+    expect(screen.getByTestId('action-hint')).toHaveTextContent(/before pass is available/i);
+
+    rerender(<GameBoard {...props} canPass={true} />);
+    expect(screen.getByRole('button', { name: 'PASS' })).toBeEnabled();
+  });
+
   test('shows clear player status chips for turn, passed and out', () => {
     globalThis.__setResizeObserverWidth(1024);
     const props = makeProps();

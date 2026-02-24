@@ -132,6 +132,9 @@ public class GameSessionService {
     private void applyPass(SessionState state) {
         String playerId = state.currentPlayerId();
         requireActivePlayer(state, playerId);
+        if (state.roundScores.getOrDefault(playerId, 0) < 1) {
+            throw new IllegalArgumentException("pass requires at least one correct answer in current round");
+        }
         incrementCounter(METRIC_ACTION_TOTAL, "type", "pass", "language", state.language);
         state.statuses.put(playerId, PlayerRoundStatus.PASSED);
         state.lastAction = state.currentPlayerName() + " passed";
