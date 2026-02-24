@@ -80,7 +80,7 @@ Defined in `frontend/src/state/types.ts`.
    - `mvn -q -f backend/pom.xml test`
    - `npm --prefix frontend ci`
    - `npm --prefix frontend run dev`
-2. Open app, keep `Any Topic` selected, add at least 2 players, click `Start game`.
+2. Open app, keep `Any Topic` selected, add at least 1 player, click `Start game`.
 3. Play 10 rounds with PASS/ANSWER mix and verify:
    - No immediate same category in consecutive rounds (when alternatives exist).
    - No immediate same topic in consecutive rounds (when alternatives exist).

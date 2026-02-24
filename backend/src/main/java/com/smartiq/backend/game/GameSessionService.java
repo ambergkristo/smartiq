@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentMap;
 public class GameSessionService {
 
     private static final int DEFAULT_WIN_CONDITION = 30;
-    private static final int MIN_PLAYERS = 2;
+    private static final int MIN_PLAYERS = 1;
     private static final int MAX_PLAYERS = 8;
     private static final String DEFAULT_LANGUAGE = "en";
     private static final String PHASE_CHOOSING = "CHOOSING";

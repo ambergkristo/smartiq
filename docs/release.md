@@ -29,7 +29,7 @@ make dev
 Verify manually:
 
 1. Setup screen renders and topic list loads.
-2. Start a game with at least 2 players.
+2. Start a game with at least 1 player.
 3. Card loads with 10 answer tiles.
 4. `ANSWER -> LOCK IN` works.
 5. `PASS` works and turn advances.

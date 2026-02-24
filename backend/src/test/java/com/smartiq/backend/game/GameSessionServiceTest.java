@@ -181,6 +181,35 @@ class GameSessionServiceTest {
                 .hasMessage("tile already opened");
     }
 
+    @Test
+    void supportsSinglePlayerSessions() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(
+                        openCard("single-1", 0, "Solo question 1"),
+                        openCard("single-2", 0, "Solo question 2")
+                );
+
+        GameSessionSnapshot created = gameSessionService.createGame(
+                new CreateGameRequest(List.of("Alice"), "en", null, 30)
+        );
+
+        assertThat(created.players()).hasSize(1);
+        assertThat(created.players().get(0).displayName()).isEqualTo("Alice");
+        assertThat(created.roundState().currentPlayerId()).isEqualTo("p1");
+
+        GameSessionSnapshot nextRound = gameSessionService.applyAction(
+                created.gameId(),
+                new GameActionRequest("PASS", null, null)
+        );
+
+        assertThat(nextRound.roundState().roundNumber()).isEqualTo(2);
+        assertThat(nextRound.roundState().starterPlayerId()).isEqualTo("p1");
+        assertThat(nextRound.roundState().currentPlayerId()).isEqualTo("p1");
+        assertThat(nextRound.roundState().phase()).isEqualTo("CHOOSING");
+        assertThat(nextRound.statuses().get("p1")).isEqualTo(PlayerRoundStatus.ACTIVE);
+        verify(cardService, times(2)).getNextRandomCard(eq("en"), anyString(), eq(null));
+    }
+
     private static CardDeckResponse openCard(String cardId, int correctIndex, String question) {
         return new CardDeckResponse(
                 cardId,
