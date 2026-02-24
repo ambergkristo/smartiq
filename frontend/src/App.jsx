@@ -43,6 +43,12 @@ const DIFFICULTY_OPTIONS = [
   { value: '3', label: 'Hard' }
 ];
 
+const THEME_OPTIONS = [
+  { value: 'classic', label: 'Classic' },
+  { value: 'ember', label: 'Ember' },
+  { value: 'ocean', label: 'Ocean' }
+];
+
 function normalizePlayerName(name) {
   return name.replace(/\s+/g, ' ').trim();
 }
@@ -101,18 +107,34 @@ function StartScreen({ topics, config, setConfig, onStart }) {
       <p>{STRINGS.subtitle}</p>
 
       <div className="setup-toolbar">
-        <label htmlFor="lang">Language</label>
-        <select
-          id="lang"
-          value={config.lang}
-          onChange={(event) => setConfig((prev) => ({ ...prev, lang: event.target.value }))}
-        >
-          {DEFAULT_LANGS.map((lang) => (
-            <option key={lang} value={lang}>
-              {lang.toUpperCase()}
-            </option>
-          ))}
-        </select>
+        <div className="setup-toolbar-group">
+          <label htmlFor="theme">Theme</label>
+          <select
+            id="theme"
+            value={config.theme}
+            onChange={(event) => setConfig((prev) => ({ ...prev, theme: event.target.value }))}
+          >
+            {THEME_OPTIONS.map((theme) => (
+              <option key={theme.value} value={theme.value}>
+                {theme.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="setup-toolbar-group">
+          <label htmlFor="lang">Language</label>
+          <select
+            id="lang"
+            value={config.lang}
+            onChange={(event) => setConfig((prev) => ({ ...prev, lang: event.target.value }))}
+          >
+            {DEFAULT_LANGS.map((lang) => (
+              <option key={lang} value={lang}>
+                {lang.toUpperCase()}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <h2 className="section-title">Topic</h2>
@@ -209,6 +231,7 @@ function loadStoredConfig() {
       topic: typeof parsed.topic === 'string' ? parsed.topic : '',
       difficulty: ['1', '2', '3'].includes(String(parsed.difficulty)) ? String(parsed.difficulty) : '2',
       lang: DEFAULT_LANGS.includes(parsed.lang) ? parsed.lang : 'en',
+      theme: THEME_OPTIONS.some((entry) => entry.value === parsed.theme) ? parsed.theme : 'classic',
       playersText: typeof parsed.playersText === 'string' ? parsed.playersText : ''
     };
   } catch {
@@ -277,6 +300,7 @@ export default function App() {
     topic: storedConfig?.topic ?? '',
     difficulty: storedConfig?.difficulty ?? '2',
     lang: storedConfig?.lang ?? 'en',
+    theme: storedConfig?.theme ?? 'classic',
     playersText: storedConfig?.playersText ?? ''
   });
   const [gameId, setGameId] = useState('');
@@ -343,6 +367,10 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(config));
   }, [config]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', config.theme);
+  }, [config.theme]);
 
   useEffect(() => {
     async function loadCard() {

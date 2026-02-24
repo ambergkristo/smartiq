@@ -23,6 +23,7 @@ describe('App startup resilience', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     localStorage.clear();
+    document.documentElement.removeAttribute('data-theme');
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
   });
 
@@ -63,8 +64,20 @@ describe('App startup resilience', () => {
     render(<App />);
 
     await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
+    expect(screen.getByLabelText(/theme/i)).toBeInTheDocument();
     expect(screen.getByRole('radiogroup', { name: /topic options/i })).toBeInTheDocument();
     expect(screen.getByTestId('active-filter')).toHaveTextContent(/any topic \| en/i);
+  });
+
+  test('applies selected theme to document root', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
+    fireEvent.change(screen.getByLabelText(/theme/i), { target: { value: 'ocean' } });
+
+    expect(document.documentElement).toHaveAttribute('data-theme', 'ocean');
   });
 
   test('maps forbidden state with explicit message', async () => {
