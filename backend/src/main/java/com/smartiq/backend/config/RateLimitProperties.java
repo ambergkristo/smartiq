@@ -7,6 +7,8 @@ public record RateLimitProperties(
         boolean enabled,
         int windowSeconds,
         int cardsNextPerMinute,
-        int sessionAnswerPerMinute
+        int sessionAnswerPerMinute,
+        int gamePerMinute,
+        int roomsPerMinute
 ) {
 }
