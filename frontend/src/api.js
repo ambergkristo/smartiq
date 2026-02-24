@@ -18,13 +18,12 @@ const SAMPLE_TOPICS = [
   { topic: 'Math', count: 120 }
 ];
 
-function sampleCard({ topic, difficulty, language }) {
+function sampleCard({ topic, language }) {
   const normalizedTopic = topic || 'Science';
-  const normalizedDifficulty = normalizeDifficulty(difficulty);
   const normalizedLanguage = normalizeLanguage(language);
   return {
-    id: `sample-${normalizedTopic.toLowerCase()}-${normalizedDifficulty}`,
-    cardId: `sample-${normalizedTopic.toLowerCase()}-${normalizedDifficulty}`,
+    id: `sample-${normalizedTopic.toLowerCase()}`,
+    cardId: `sample-${normalizedTopic.toLowerCase()}`,
     topic: normalizedTopic,
     subtopic: 'SAMPLE',
     language: normalizedLanguage,
@@ -32,7 +31,7 @@ function sampleCard({ topic, difficulty, language }) {
     options: Array.from({ length: 10 }, (_, index) => `${normalizedTopic} option ${index + 1}`),
     category: 'OPEN',
     correct: { correctIndex: 0 },
-    difficulty: String(normalizedDifficulty),
+    difficulty: '1',
     source: 'sample-mode',
     createdAt: new Date().toISOString()
   };
@@ -124,15 +123,6 @@ function requireApiBase() {
   }
 }
 
-function normalizeDifficulty(difficulty) {
-  const value = String(difficulty ?? '').trim().toLowerCase();
-  if (value === 'easy') return 1;
-  if (value === 'medium') return 2;
-  if (value === 'hard') return 3;
-  if (value === '1' || value === '2' || value === '3') return Number(value);
-  return 1;
-}
-
 function normalizeLanguage(lang) {
   const etEnabled = String(import.meta.env.VITE_ENABLE_ET || '').toLowerCase() === 'true';
   const value = String(lang ?? '').trim().toLowerCase();
@@ -140,18 +130,6 @@ function normalizeLanguage(lang) {
     return 'et';
   }
   return 'en';
-}
-
-export function buildNextCardQuery({ topic, difficulty, language }) {
-  const params = new URLSearchParams();
-  if (topic) {
-    params.set('topic', String(topic));
-  }
-  params.set('difficulty', String(normalizeDifficulty(difficulty)));
-  const normalizedLanguage = normalizeLanguage(language);
-  params.set('language', normalizedLanguage);
-  params.set('lang', normalizedLanguage);
-  return params;
 }
 
 export function buildServerGamePayload({ players, language, topic, winCondition } = {}) {
@@ -276,20 +254,19 @@ function isRetryable(error) {
   return error.status >= 500;
 }
 
-export async function fetchNextCard({ topic, difficulty, sessionId, lang, retries = 2 }) {
+export async function fetchNextCard({ topic, gameId, language, retries = 2 }) {
   requireApiBase();
   if (USE_SAMPLE_MODE) {
     return normalizeCardPayload(sampleCard({
       topic,
-      difficulty: normalizeDifficulty(difficulty),
-      language: normalizeLanguage(lang)
+      language: normalizeLanguage(language)
     }));
   }
 
-  const gameId = sessionId || 'local-dev';
+  const resolvedGameId = String(gameId || '').trim() || 'local-dev';
   const params = new URLSearchParams();
-  params.set('language', normalizeLanguage(lang));
-  params.set('gameId', gameId);
+  params.set('language', normalizeLanguage(language));
+  params.set('gameId', resolvedGameId);
   if (topic) {
     params.set('topic', String(topic));
   }
@@ -310,15 +287,6 @@ export async function fetchNextCard({ topic, difficulty, sessionId, lang, retrie
   }
 
   throw lastError;
-}
-
-export async function fetchNextRandomCard({ language, gameId, topic, retries = 2 }) {
-  return fetchNextCard({
-    topic,
-    sessionId: gameId,
-    lang: language,
-    retries
-  });
 }
 
 function normalizeRequiredGameId(gameId) {

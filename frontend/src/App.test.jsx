@@ -58,8 +58,8 @@ describe('App Smart10 round flow', () => {
     await waitFor(() =>
       expect(fetchNextCard).toHaveBeenCalledWith(
         expect.objectContaining({
-          lang: 'en',
-          sessionId: expect.any(String)
+          language: 'en',
+          gameId: expect.any(String)
         })
       )
     );
@@ -95,7 +95,7 @@ describe('App Smart10 round flow', () => {
     await waitFor(() =>
       expect(fetchNextCard).toHaveBeenCalledWith(
         expect.objectContaining({
-          sessionId: 'persisted-game-id'
+          gameId: 'persisted-game-id'
         })
       )
     );
