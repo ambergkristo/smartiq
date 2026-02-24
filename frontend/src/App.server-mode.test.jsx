@@ -185,6 +185,19 @@ describe('App server-authoritative mode', () => {
     expect(createServerGameSession).not.toHaveBeenCalled();
   });
 
+  test('keeps multiplayer on server path in non-test runtime even with false toggle', async () => {
+    vi.stubEnv('MODE', 'production');
+    vi.stubEnv('VITE_USE_SERVER_GAME_ENGINE', 'false');
+    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({ gameId: 'game-prod' }));
+
+    render(<App />);
+    await startServerMultiplayer();
+
+    expect(createServerGameSession).toHaveBeenCalled();
+    expect(fetchNextCard).not.toHaveBeenCalled();
+  });
+
   test('sends PASS action through server action API', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
     createServerGameSession.mockResolvedValue(makeServerSnapshot({ gameId: 'game-pass' }));
