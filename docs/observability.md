@@ -56,6 +56,15 @@ Use these PromQL queries to compute mandatory beta KPIs from server-authoritativ
 Generate a markdown beta summary snapshot from live Prometheus export:
 
 - `BACKEND_URL=https://<backend-domain> npm run report:beta:summary`
+- Optional thresholds:
+  - `--min-started-games=<n>`
+  - `--min-completed-games=<n>`
+  - `--max-dropoff=<0..1>`
+  - `--max-wrong-answer=<0..1>`
+  - `--min-reconnect-success=<0..1>`
+  - `--max-join-failure=<0..1>`
+  - `--max-ws-failure=<0..1>`
+  - `--fail-on-no-go` (exit code `2` when recommendation is `NO-GO`)
 
 Optional beta ops metrics:
 

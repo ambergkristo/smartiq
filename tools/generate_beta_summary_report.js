@@ -18,6 +18,10 @@ function parseArg(args, prefix) {
   return hit ? hit.slice(prefix.length) : '';
 }
 
+function hasFlag(args, flag) {
+  return args.includes(flag);
+}
+
 function ensureDir(filePath) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
 }
@@ -27,6 +31,30 @@ function run(command, args) {
     cwd: process.cwd(),
     encoding: 'utf8'
   });
+}
+
+function parseNumberOption({
+  args,
+  prefix,
+  envKey,
+  defaultValue,
+  min = Number.NEGATIVE_INFINITY,
+  max = Number.POSITIVE_INFINITY
+}) {
+  const argValue = parseArg(args, prefix);
+  const raw = argValue !== '' ? argValue : (envKey ? (process.env[envKey] || '') : '');
+  if (raw === '') {
+    return defaultValue;
+  }
+
+  const parsed = Number.parseFloat(raw);
+  if (!Number.isFinite(parsed)) {
+    throw new Error(`Invalid numeric value for ${prefix}: ${raw}`);
+  }
+  if (parsed < min || parsed > max) {
+    throw new Error(`Value out of range for ${prefix}: ${raw} (expected ${min}..${max})`);
+  }
+  return parsed;
 }
 
 function parsePrometheus(text) {
@@ -78,12 +106,15 @@ function metricSum(rows, metricName, filters = {}) {
 
 function ratio(numerator, denominator) {
   if (!Number.isFinite(numerator) || !Number.isFinite(denominator) || denominator <= 0) {
-    return 0;
+    return null;
   }
   return numerator / denominator;
 }
 
 function pct(value) {
+  if (!Number.isFinite(value)) {
+    return 'n/a';
+  }
   return `${(value * 100).toFixed(2)}%`;
 }
 
@@ -102,13 +133,7 @@ async function fetchPrometheus(baseUrl) {
   return response.text();
 }
 
-function buildReport({
-  reportDate,
-  sourceText,
-  branch,
-  sha,
-  metrics
-}) {
+function computeKpis(metrics) {
   const startedGames = metricSum(metrics, 'smartiq_game_session_started_total');
   const completedGames = metricSum(metrics, 'smartiq_game_session_completed_total');
   const completedRounds = metricSum(metrics, 'smartiq_game_round_completed_total');
@@ -147,6 +172,130 @@ function buildReport({
   const joinFailureRate = ratio(joinFailure, joinTotal);
   const wsConnectFailureRate = ratio(wsConnectFailure, wsConnectTotal);
 
+  return {
+    startedGames,
+    completedGames,
+    completedRounds,
+    gameDurationCount,
+    gameDurationSum,
+    roundDurationCount,
+    roundDurationSum,
+    passActions,
+    answerActions,
+    totalTurnActions,
+    wrongAnswers,
+    correctAnswers,
+    totalAnswers,
+    rejoinSuccess,
+    rejoinFailure,
+    rejoinTotal,
+    joinSuccess,
+    joinFailure,
+    joinTotal,
+    wsConnectSuccess,
+    wsConnectFailure,
+    wsConnectTotal,
+    avgGameLength,
+    avgRoundLength,
+    passRate,
+    wrongAnswerRate,
+    dropOffRate,
+    reconnectSuccessRate,
+    joinFailureRate,
+    wsConnectFailureRate
+  };
+}
+
+function evaluateDecision(kpis, thresholds) {
+  const checks = [];
+
+  function addCheck({ label, actual, comparator, threshold, format = num }) {
+    const hasActual = Number.isFinite(actual);
+    const pass = hasActual
+      ? (comparator === '<=' ? actual <= threshold : actual >= threshold)
+      : false;
+    checks.push({
+      label,
+      pass,
+      actualText: hasActual ? format(actual) : 'n/a',
+      thresholdText: `${comparator} ${format(threshold)}`
+    });
+  }
+
+  addCheck({
+    label: 'Games started',
+    actual: kpis.startedGames,
+    comparator: '>=',
+    threshold: thresholds.minStartedGames,
+    format: (value) => num(value, 0)
+  });
+  addCheck({
+    label: 'Games completed',
+    actual: kpis.completedGames,
+    comparator: '>=',
+    threshold: thresholds.minCompletedGames,
+    format: (value) => num(value, 0)
+  });
+  addCheck({
+    label: 'Drop-off rate',
+    actual: kpis.dropOffRate,
+    comparator: '<=',
+    threshold: thresholds.maxDropOffRate,
+    format: pct
+  });
+  addCheck({
+    label: 'Wrong-answer rate',
+    actual: kpis.wrongAnswerRate,
+    comparator: '<=',
+    threshold: thresholds.maxWrongAnswerRate,
+    format: pct
+  });
+
+  if (thresholds.minReconnectSuccessRate != null) {
+    addCheck({
+      label: 'Reconnect success rate',
+      actual: kpis.reconnectSuccessRate,
+      comparator: '>=',
+      threshold: thresholds.minReconnectSuccessRate,
+      format: pct
+    });
+  }
+  if (thresholds.maxJoinFailureRate != null) {
+    addCheck({
+      label: 'Room join failure rate',
+      actual: kpis.joinFailureRate,
+      comparator: '<=',
+      threshold: thresholds.maxJoinFailureRate,
+      format: pct
+    });
+  }
+  if (thresholds.maxWsConnectFailureRate != null) {
+    addCheck({
+      label: 'WS connect failure rate',
+      actual: kpis.wsConnectFailureRate,
+      comparator: '<=',
+      threshold: thresholds.maxWsConnectFailureRate,
+      format: pct
+    });
+  }
+
+  const failed = checks.filter((check) => !check.pass);
+  return {
+    checks,
+    recommendation: failed.length === 0 ? 'GO' : 'NO-GO',
+    failedCount: failed.length
+  };
+}
+
+function buildReport({
+  reportDate,
+  sourceText,
+  branch,
+  sha,
+  kpis,
+  thresholds,
+  decision
+}) {
   return [
     '# Closed Beta Summary',
     '',
@@ -161,32 +310,51 @@ function buildReport({
     '',
     '| KPI | Value |',
     '| --- | --- |',
-    `| Average game length | ${num(avgGameLength)} s |`,
-    `| Average round length | ${num(avgRoundLength)} s |`,
-    `| Pass rate | ${pct(passRate)} |`,
-    `| Wrong-answer rate | ${pct(wrongAnswerRate)} |`,
-    `| Drop-off rate | ${pct(dropOffRate)} |`,
-    `| Reconnect success rate (optional) | ${pct(reconnectSuccessRate)} |`,
-    `| Room join failure rate (optional) | ${pct(joinFailureRate)} |`,
-    `| WebSocket connect failure rate (optional) | ${pct(wsConnectFailureRate)} |`,
+    `| Average game length | ${num(kpis.avgGameLength)} s |`,
+    `| Average round length | ${num(kpis.avgRoundLength)} s |`,
+    `| Pass rate | ${pct(kpis.passRate)} |`,
+    `| Wrong-answer rate | ${pct(kpis.wrongAnswerRate)} |`,
+    `| Drop-off rate | ${pct(kpis.dropOffRate)} |`,
+    `| Reconnect success rate (optional) | ${pct(kpis.reconnectSuccessRate)} |`,
+    `| Room join failure rate (optional) | ${pct(kpis.joinFailureRate)} |`,
+    `| WebSocket connect failure rate (optional) | ${pct(kpis.wsConnectFailureRate)} |`,
     '',
     '## Raw Totals',
     '',
     '| Metric | Total |',
     '| --- | ---: |',
-    `| Games started | ${num(startedGames, 0)} |`,
-    `| Games completed | ${num(completedGames, 0)} |`,
-    `| Rounds completed | ${num(completedRounds, 0)} |`,
-    `| Turn actions (pass) | ${num(passActions, 0)} |`,
-    `| Turn actions (answer) | ${num(answerActions, 0)} |`,
-    `| Answers (wrong) | ${num(wrongAnswers, 0)} |`,
-    `| Answers (correct) | ${num(correctAnswers, 0)} |`,
-    `| Rejoin (success) | ${num(rejoinSuccess, 0)} |`,
-    `| Rejoin (failure) | ${num(rejoinFailure, 0)} |`,
-    `| Join (success) | ${num(joinSuccess, 0)} |`,
-    `| Join (failure) | ${num(joinFailure, 0)} |`,
-    `| WS connect (success) | ${num(wsConnectSuccess, 0)} |`,
-    `| WS connect (failure) | ${num(wsConnectFailure, 0)} |`,
+    `| Games started | ${num(kpis.startedGames, 0)} |`,
+    `| Games completed | ${num(kpis.completedGames, 0)} |`,
+    `| Rounds completed | ${num(kpis.completedRounds, 0)} |`,
+    `| Turn actions (pass) | ${num(kpis.passActions, 0)} |`,
+    `| Turn actions (answer) | ${num(kpis.answerActions, 0)} |`,
+    `| Answers (wrong) | ${num(kpis.wrongAnswers, 0)} |`,
+    `| Answers (correct) | ${num(kpis.correctAnswers, 0)} |`,
+    `| Rejoin (success) | ${num(kpis.rejoinSuccess, 0)} |`,
+    `| Rejoin (failure) | ${num(kpis.rejoinFailure, 0)} |`,
+    `| Join (success) | ${num(kpis.joinSuccess, 0)} |`,
+    `| Join (failure) | ${num(kpis.joinFailure, 0)} |`,
+    `| WS connect (success) | ${num(kpis.wsConnectSuccess, 0)} |`,
+    `| WS connect (failure) | ${num(kpis.wsConnectFailure, 0)} |`,
+    '',
+    '## Decision Inputs',
+    '',
+    `- Min games started: ${num(thresholds.minStartedGames, 0)}`,
+    `- Min games completed: ${num(thresholds.minCompletedGames, 0)}`,
+    `- Max drop-off rate: ${pct(thresholds.maxDropOffRate)}`,
+    `- Max wrong-answer rate: ${pct(thresholds.maxWrongAnswerRate)}`,
+    `- Min reconnect success rate (optional): ${thresholds.minReconnectSuccessRate == null ? 'disabled' : pct(thresholds.minReconnectSuccessRate)}`,
+    `- Max room join failure rate (optional): ${thresholds.maxJoinFailureRate == null ? 'disabled' : pct(thresholds.maxJoinFailureRate)}`,
+    `- Max WS connect failure rate (optional): ${thresholds.maxWsConnectFailureRate == null ? 'disabled' : pct(thresholds.maxWsConnectFailureRate)}`,
+    '',
+    '## Decision',
+    '',
+    `- Recommendation: \`${decision.recommendation}\``,
+    `- Failed checks: ${decision.failedCount}`,
+    '',
+    '| Check | Result | Actual | Threshold |',
+    '| --- | --- | --- | --- |',
+    ...decision.checks.map((check) => `| ${check.label} | ${check.pass ? 'PASS' : 'FAIL'} | ${check.actualText} | ${check.thresholdText} |`),
     '',
     '## Findings',
     '',
@@ -194,9 +362,6 @@ function buildReport({
     '- Player confusion points:',
     '- Notable incident IDs:',
     '',
-    '## Decision',
-    '',
-    '- Recommendation: `GO` / `NO-GO`',
     '- Required follow-up tickets (`fix/beta-findings-*`):',
     ''
   ].join('\n');
@@ -207,6 +372,65 @@ async function main() {
   const backendArg = parseArg(args, '--backend-url=');
   const outArg = parseArg(args, '--out=');
   const metricsFileArg = parseArg(args, '--prometheus-file=');
+  const failOnNoGo = hasFlag(args, '--fail-on-no-go')
+    || String(process.env.BETA_FAIL_ON_NO_GO || '').toLowerCase() === 'true';
+
+  const thresholds = {
+    minStartedGames: Math.floor(parseNumberOption({
+      args,
+      prefix: '--min-started-games=',
+      envKey: 'BETA_MIN_STARTED_GAMES',
+      defaultValue: 1,
+      min: 0
+    })),
+    minCompletedGames: Math.floor(parseNumberOption({
+      args,
+      prefix: '--min-completed-games=',
+      envKey: 'BETA_MIN_COMPLETED_GAMES',
+      defaultValue: 1,
+      min: 0
+    })),
+    maxDropOffRate: parseNumberOption({
+      args,
+      prefix: '--max-dropoff=',
+      envKey: 'BETA_MAX_DROPOFF_RATE',
+      defaultValue: 0.40,
+      min: 0,
+      max: 1
+    }),
+    maxWrongAnswerRate: parseNumberOption({
+      args,
+      prefix: '--max-wrong-answer=',
+      envKey: 'BETA_MAX_WRONG_ANSWER_RATE',
+      defaultValue: 0.50,
+      min: 0,
+      max: 1
+    }),
+    minReconnectSuccessRate: parseNumberOption({
+      args,
+      prefix: '--min-reconnect-success=',
+      envKey: 'BETA_MIN_RECONNECT_SUCCESS_RATE',
+      defaultValue: null,
+      min: 0,
+      max: 1
+    }),
+    maxJoinFailureRate: parseNumberOption({
+      args,
+      prefix: '--max-join-failure=',
+      envKey: 'BETA_MAX_JOIN_FAILURE_RATE',
+      defaultValue: null,
+      min: 0,
+      max: 1
+    }),
+    maxWsConnectFailureRate: parseNumberOption({
+      args,
+      prefix: '--max-ws-failure=',
+      envKey: 'BETA_MAX_WS_CONNECT_FAILURE_RATE',
+      defaultValue: null,
+      min: 0,
+      max: 1
+    })
+  };
 
   const backendUrl = backendArg || (process.env.BACKEND_URL || '').trim();
   const outputPath = path.resolve(
@@ -230,19 +454,30 @@ async function main() {
   }
 
   const metrics = parsePrometheus(metricsText);
+  const kpis = computeKpis(metrics);
+  const decision = evaluateDecision(kpis, thresholds);
+
   const branch = run('git', ['branch', '--show-current']).stdout.trim() || 'unknown';
   const sha = run('git', ['rev-parse', '--short', 'HEAD']).stdout.trim() || 'unknown';
+
   const report = buildReport({
     reportDate: nowIso(),
     sourceText,
     branch,
     sha,
-    metrics
+    kpis,
+    thresholds,
+    decision
   });
 
   ensureDir(outputPath);
   fs.writeFileSync(outputPath, report, 'utf8');
   console.log(`Beta summary report written: ${outputPath}`);
+  console.log(`Recommendation: ${decision.recommendation} (failed checks: ${decision.failedCount})`);
+
+  if (failOnNoGo && decision.recommendation === 'NO-GO') {
+    process.exit(2);
+  }
 }
 
 main().catch((error) => {
