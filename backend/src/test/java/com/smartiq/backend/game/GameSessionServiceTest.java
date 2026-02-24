@@ -73,7 +73,7 @@ class GameSessionServiceTest {
 
         GameSessionSnapshot afterPass = gameSessionService.applyAction(
                 created.snapshot().gameId(),
-                new GameActionRequest("PASS", null, null, "p1", p1Token)
+                new GameActionRequest("PASS", null, null, "p1", p1Token, "req-pass-1")
         );
 
         assertThat(afterPass.statuses().get("p1")).isEqualTo(PlayerRoundStatus.PASSED);
@@ -93,7 +93,7 @@ class GameSessionServiceTest {
 
         GameSessionSnapshot afterAnswer = gameSessionService.applyAction(
                 created.snapshot().gameId(),
-                new GameActionRequest("ANSWER", 1, null, "p1", p1Token)
+                new GameActionRequest("ANSWER", 1, null, "p1", p1Token, "req-answer-1")
         );
 
         assertThat(afterAnswer.statuses().get("p1")).isEqualTo(PlayerRoundStatus.OUT);
@@ -116,10 +116,10 @@ class GameSessionServiceTest {
         String p1Token = created.actionTokens().get("p1");
         String p2Token = created.actionTokens().get("p2");
 
-        gameSessionService.applyAction(gameId, new GameActionRequest("PASS", null, null, "p1", p1Token));
+        gameSessionService.applyAction(gameId, new GameActionRequest("PASS", null, null, "p1", p1Token, "req-round-1"));
         GameSessionSnapshot nextRound = gameSessionService.applyAction(
                 gameId,
-                new GameActionRequest("ANSWER", 1, null, "p2", p2Token)
+                new GameActionRequest("ANSWER", 1, null, "p2", p2Token, "req-round-2")
         );
 
         assertThat(nextRound.roundState().roundNumber()).isEqualTo(2);
@@ -146,11 +146,11 @@ class GameSessionServiceTest {
         String p1Token = created.actionTokens().get("p1");
         String p2Token = created.actionTokens().get("p2");
 
-        gameSessionService.applyAction(gameId, new GameActionRequest("ANSWER", 0, null, "p1", p1Token));
-        gameSessionService.applyAction(gameId, new GameActionRequest("ANSWER", 1, null, "p2", p2Token));
+        gameSessionService.applyAction(gameId, new GameActionRequest("ANSWER", 0, null, "p1", p1Token, "req-win-1"));
+        gameSessionService.applyAction(gameId, new GameActionRequest("ANSWER", 1, null, "p2", p2Token, "req-win-2"));
         GameSessionSnapshot gameOver = gameSessionService.applyAction(
                 gameId,
-                new GameActionRequest("PASS", null, null, "p1", p1Token)
+                new GameActionRequest("PASS", null, null, "p1", p1Token, "req-win-3")
         );
 
         assertThat(gameOver.roundState().phase()).isEqualTo("GAME_OVER");
@@ -171,7 +171,7 @@ class GameSessionServiceTest {
 
         assertThatThrownBy(() -> gameSessionService.applyAction(
                 created.snapshot().gameId(),
-                new GameActionRequest("ANSWER", 0, null, "p1", p1Token)
+                new GameActionRequest("ANSWER", 0, null, "p1", p1Token, "req-order-1")
         ))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("rank is required for ORDER answers");
@@ -188,11 +188,11 @@ class GameSessionServiceTest {
         String gameId = created.snapshot().gameId();
         String p1Token = created.actionTokens().get("p1");
         String p2Token = created.actionTokens().get("p2");
-        gameSessionService.applyAction(gameId, new GameActionRequest("ANSWER", 0, null, "p1", p1Token));
+        gameSessionService.applyAction(gameId, new GameActionRequest("ANSWER", 0, null, "p1", p1Token, "req-opened-1"));
 
         assertThatThrownBy(() -> gameSessionService.applyAction(
                 gameId,
-                new GameActionRequest("ANSWER", 0, null, "p2", p2Token)
+                new GameActionRequest("ANSWER", 0, null, "p2", p2Token, "req-opened-2")
         ))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("tile already opened");
@@ -218,7 +218,7 @@ class GameSessionServiceTest {
 
         GameSessionSnapshot nextRound = gameSessionService.applyAction(
                 createdSnapshot.gameId(),
-                new GameActionRequest("PASS", null, null, "p1", p1Token)
+                new GameActionRequest("PASS", null, null, "p1", p1Token, "req-single-1")
         );
 
         assertThat(nextRound.roundState().roundNumber()).isEqualTo(2);
@@ -241,9 +241,9 @@ class GameSessionServiceTest {
         String p1Token = created.actionTokens().get("p1");
         String p2Token = created.actionTokens().get("p2");
 
-        gameSessionService.applyAction(gameId, new GameActionRequest("ANSWER", 0, null, "p1", p1Token));
-        gameSessionService.applyAction(gameId, new GameActionRequest("PASS", null, null, "p2", p2Token));
-        gameSessionService.applyAction(gameId, new GameActionRequest("PASS", null, null, "p1", p1Token));
+        gameSessionService.applyAction(gameId, new GameActionRequest("ANSWER", 0, null, "p1", p1Token, "req-metric-1"));
+        gameSessionService.applyAction(gameId, new GameActionRequest("PASS", null, null, "p2", p2Token, "req-metric-2"));
+        gameSessionService.applyAction(gameId, new GameActionRequest("PASS", null, null, "p1", p1Token, "req-metric-3"));
 
         assertThat(counterValue("smartiq.game.session.started.total")).isEqualTo(1.0);
         assertThat(counterValue("smartiq.game.session.completed.total")).isEqualTo(1.0);
@@ -267,7 +267,7 @@ class GameSessionServiceTest {
 
         assertThatThrownBy(() -> gameSessionService.applyAction(
                 created.snapshot().gameId(),
-                new GameActionRequest("PASS", null, null, "p1", "at_invalid")
+                new GameActionRequest("PASS", null, null, "p1", "at_invalid", "req-invalid-token")
         ))
                 .isInstanceOf(ForbiddenGameActionException.class)
                 .hasMessage("invalid action token");
@@ -285,10 +285,37 @@ class GameSessionServiceTest {
 
         assertThatThrownBy(() -> gameSessionService.applyAction(
                 created.snapshot().gameId(),
-                new GameActionRequest("PASS", null, null, "p2", p2Token)
+                new GameActionRequest("PASS", null, null, "p2", p2Token, "req-wrong-actor")
         ))
                 .isInstanceOf(ForbiddenGameActionException.class)
                 .hasMessage("actor is not active player");
+    }
+
+    @Test
+    void rejectsDuplicateActionRequestId() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(
+                        openCard("card-1", 0, "Question 1"),
+                        openCard("card-2", 0, "Question 2")
+                );
+
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice"), "en", null, 30)
+        );
+        String gameId = created.snapshot().gameId();
+        String p1Token = created.actionTokens().get("p1");
+
+        gameSessionService.applyAction(
+                gameId,
+                new GameActionRequest("PASS", null, null, "p1", p1Token, "req-dup-1")
+        );
+
+        assertThatThrownBy(() -> gameSessionService.applyAction(
+                gameId,
+                new GameActionRequest("PASS", null, null, "p1", p1Token, "req-dup-1")
+        ))
+                .isInstanceOf(DuplicateGameActionException.class)
+                .hasMessage("duplicate actionRequestId");
     }
 
     private double counterValue(String name, String... tags) {

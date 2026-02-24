@@ -71,10 +71,11 @@ describe('api error mapping', () => {
   });
 
   test('builds PASS action payload', () => {
-    expect(buildServerActionPayload({ type: 'pass', actorPlayerId: 'p1', actionToken: 'at_1' })).toEqual({
+    expect(buildServerActionPayload({ type: 'pass', actorPlayerId: 'p1', actionToken: 'at_1', actionRequestId: 'req-1' })).toEqual({
       type: 'PASS',
       actorPlayerId: 'p1',
-      actionToken: 'at_1'
+      actionToken: 'at_1',
+      actionRequestId: 'req-1'
     });
   });
 
@@ -84,11 +85,13 @@ describe('api error mapping', () => {
       tileIndex: 2,
       rank: 3,
       actorPlayerId: 'p1',
-      actionToken: 'at_1'
+      actionToken: 'at_1',
+      actionRequestId: 'req-2'
     })).toEqual({
       type: 'ANSWER',
       actorPlayerId: 'p1',
       actionToken: 'at_1',
+      actionRequestId: 'req-2',
       tileIndex: 2,
       rank: 3
     });
@@ -98,16 +101,21 @@ describe('api error mapping', () => {
     expect(() => buildServerActionPayload({
       type: 'ANSWER',
       actorPlayerId: 'p1',
-      actionToken: 'at_1'
+      actionToken: 'at_1',
+      actionRequestId: 'req-3'
     })).toThrow('tileIndex is required for ANSWER');
   });
 
   test('rejects action payload without actorPlayerId', () => {
-    expect(() => buildServerActionPayload({ type: 'PASS', actionToken: 'at_1' })).toThrow('actorPlayerId is required');
+    expect(() => buildServerActionPayload({ type: 'PASS', actionToken: 'at_1', actionRequestId: 'req-4' })).toThrow('actorPlayerId is required');
   });
 
   test('rejects action payload without actionToken', () => {
-    expect(() => buildServerActionPayload({ type: 'PASS', actorPlayerId: 'p1' })).toThrow('actionToken is required');
+    expect(() => buildServerActionPayload({ type: 'PASS', actorPlayerId: 'p1', actionRequestId: 'req-5' })).toThrow('actionToken is required');
+  });
+
+  test('rejects action payload without actionRequestId', () => {
+    expect(() => buildServerActionPayload({ type: 'PASS', actorPlayerId: 'p1', actionToken: 'at_1' })).toThrow('actionRequestId is required');
   });
 
   test('builds room rejoin payload with trimmed fields', () => {
@@ -131,5 +139,9 @@ describe('api error mapping', () => {
 
   test('maps game session validation payload errors', () => {
     expect(resolveGameSessionErrorMessage({ code: 'VALIDATION_ERROR', message: 'bad payload' })).toBe('bad payload');
+  });
+
+  test('maps game session duplicate action conflict', () => {
+    expect(resolveGameSessionErrorMessage({ status: 409, detail: 'duplicate actionRequestId' })).toContain('Duplicate game action');
   });
 });

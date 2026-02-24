@@ -132,9 +132,12 @@ Server-authoritative action payload contract:
   "tileIndex": 0,
   "rank": 1,
   "actorPlayerId": "p1",
-  "actionToken": "at_..."
+  "actionToken": "at_...",
+  "actionRequestId": "ga_..."
 }
 ```
+
+Duplicate action replays with the same `actionRequestId` are rejected with `409 Conflict`.
 
 Server game create response includes:
 

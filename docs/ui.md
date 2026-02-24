@@ -71,6 +71,8 @@ Defined in `frontend/src/state/types.ts`.
   - `type`, `tileIndex?`, `rank?`
   - `actorPlayerId` (required)
   - `actionToken` (required)
+  - `actionRequestId` (required; duplicate replay key)
+- Duplicate `actionRequestId` on same game session returns `409 Conflict`.
 - Frontend behavior:
   - Uses timeout + retry for transient/network errors.
   - Shows backend error details on `404` when available.
