@@ -42,11 +42,13 @@ function makeLocalCard(id) {
 
 function makeServerSnapshot({
   gameId = 'game-1',
+  winCondition = 30,
   roundNumber = 1,
   phase = 'CHOOSING',
   activePlayerIndex = 0,
   question = 'Server question',
   category = 'OPEN',
+  lastAction = 'Server action',
   statuses = { p1: 'ACTIVE', p2: 'ACTIVE' },
   totalScores = { p1: 0, p2: 0 },
   pegStateByIndex = {}
@@ -58,7 +60,7 @@ function makeServerSnapshot({
 
   return {
     gameId,
-    winCondition: 30,
+    winCondition,
     activePlayerIndex,
     players,
     roundState: {
@@ -66,7 +68,7 @@ function makeServerSnapshot({
       phase,
       starterPlayerId: 'p1',
       currentPlayerId: players[activePlayerIndex]?.playerId || 'p1',
-      lastAction: 'Server action'
+      lastAction
     },
     boardState: {
       question,
@@ -85,6 +87,15 @@ function makeServerSnapshot({
     roundScores: { p1: 0, p2: 0 },
     statuses
   };
+}
+
+async function startServerMultiplayer(players = 'Alice, Bob') {
+  await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
+  const playersInput = screen.getByLabelText(/players/i);
+  fireEvent.change(playersInput, { target: { value: players } });
+  fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
+  fireEvent.click(screen.getByRole('button', { name: /start game/i }));
+  await waitFor(() => expect(createServerGameSession).toHaveBeenCalled());
 }
 
 describe('App server-authoritative mode', () => {
@@ -172,5 +183,87 @@ describe('App server-authoritative mode', () => {
 
     await waitFor(() => expect(fetchNextCard).toHaveBeenCalled());
     expect(createServerGameSession).not.toHaveBeenCalled();
+  });
+
+  test('sends PASS action through server action API', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({ gameId: 'game-pass' }));
+    sendServerGameAction.mockResolvedValue(
+      makeServerSnapshot({
+        gameId: 'game-pass',
+        activePlayerIndex: 1,
+        statuses: { p1: 'PASSED', p2: 'ACTIVE' },
+        lastAction: 'Alice passed'
+      })
+    );
+
+    render(<App />);
+    await startServerMultiplayer();
+
+    fireEvent.click(screen.getByRole('button', { name: /pass/i }));
+    await waitFor(() =>
+      expect(sendServerGameAction).toHaveBeenCalledWith(
+        'game-pass',
+        expect.objectContaining({ type: 'PASS' })
+      )
+    );
+
+    expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /pass/i })).toBeInTheDocument());
+  });
+
+  test('shows round summary and then advances to next round from server snapshot', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({ gameId: 'game-round' }));
+    sendServerGameAction.mockResolvedValue(
+      makeServerSnapshot({
+        gameId: 'game-round',
+        roundNumber: 2,
+        question: 'Server round 2 question',
+        activePlayerIndex: 1,
+        totalScores: { p1: 1, p2: 0 },
+        statuses: { p1: 'ACTIVE', p2: 'ACTIVE' },
+        lastAction: 'Round 2 started'
+      })
+    );
+
+    render(<App />);
+    await startServerMultiplayer();
+
+    fireEvent.click(screen.getByRole('button', { name: /pass/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+
+    await waitFor(() => expect(screen.getByRole('heading', { name: /round summary/i })).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /next round/i }));
+
+    await waitFor(() => expect(screen.getByText(/server round 2 question/i)).toBeInTheDocument());
+    expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument();
+  });
+
+  test('shows game summary when server snapshot reports game over', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({ gameId: 'game-over' }));
+    sendServerGameAction.mockResolvedValue(
+      makeServerSnapshot({
+        gameId: 'game-over',
+        phase: 'GAME_OVER',
+        winCondition: 30,
+        totalScores: { p1: 30, p2: 12 },
+        statuses: { p1: 'ACTIVE', p2: 'OUT' },
+        lastAction: 'Alice reached 30 points'
+      })
+    );
+
+    render(<App />);
+    await startServerMultiplayer();
+
+    fireEvent.click(screen.getByRole('button', { name: /pass/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+
+    await waitFor(() => expect(screen.getByRole('heading', { name: /game summary/i })).toBeInTheDocument());
+    expect(screen.getByText(/alice reached 30 points\./i)).toBeInTheDocument();
   });
 });
