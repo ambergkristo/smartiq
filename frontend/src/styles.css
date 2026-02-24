@@ -18,6 +18,30 @@
     linear-gradient(180deg, #34170a, #170a05);
 }
 
+:root[data-theme='ember'] {
+  --bg0: #3a1306;
+  --bg1: #170805;
+  --card: rgba(73, 28, 11, 0.9);
+  --card2: rgba(102, 39, 15, 0.78);
+  --stroke: rgba(255, 178, 121, 0.3);
+  --text: #ffeede;
+  --muted: #f0c4a1;
+  --accent: #f57c1f;
+  --accent2: #ffbd5e;
+}
+
+:root[data-theme='ocean'] {
+  --bg0: #0e2a36;
+  --bg1: #071720;
+  --card: rgba(16, 55, 68, 0.9);
+  --card2: rgba(24, 83, 100, 0.78);
+  --stroke: rgba(151, 214, 231, 0.28);
+  --text: #e8f7fc;
+  --muted: #b9dce8;
+  --accent: #2db6d7;
+  --accent2: #7ad9ee;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -115,10 +139,23 @@ h1 {
 
 .setup-toolbar {
   margin-top: 8px;
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
   justify-self: end;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.setup-toolbar-group {
+  display: grid;
+  gap: 4px;
+}
+
+.setup-toolbar-group label {
+  margin: 0;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .startup-panel {
@@ -786,6 +823,8 @@ button:disabled {
   }
 
   .setup-toolbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     justify-self: stretch;
   }
 
