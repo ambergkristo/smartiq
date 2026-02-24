@@ -40,7 +40,17 @@ const STARTUP_PHASE = {
 const SHOW_BUILD_BADGE = import.meta.env.DEV
   || String(import.meta.env.VITE_SHOW_BUILD_BADGE || '').toLowerCase() === 'true';
 const BUILD_SHA = String(import.meta.env.VITE_BUILD_SHA || '').trim();
-const SERVER_ENGINE_OPT_IN = String(import.meta.env.VITE_USE_SERVER_GAME_ENGINE || '').toLowerCase() === 'true';
+
+function isServerEngineEnabled() {
+  const configured = String(import.meta.env.VITE_USE_SERVER_GAME_ENGINE || '').toLowerCase();
+  if (configured === 'true') {
+    return true;
+  }
+  if (configured === 'false') {
+    return false;
+  }
+  return String(import.meta.env.MODE || '').toLowerCase() !== 'test';
+}
 
 const DIFFICULTY_OPTIONS = [
   { value: '1', label: 'Easy' },
@@ -423,7 +433,7 @@ export default function App() {
 
   function handleStartRound() {
     const parsedPlayers = parsePlayers(config.playersText);
-    if (SERVER_ENGINE_OPT_IN && parsedPlayers.length >= 2) {
+    if (isServerEngineEnabled() && parsedPlayers.length >= 2) {
       setRuntimeMode('server');
       setCardError('');
       serverEngine.clearError();
