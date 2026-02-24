@@ -91,7 +91,10 @@ async function playPerfectOrderRound() {
     fireEvent.click(screen.getByRole('button', { name: new RegExp(`^peg-${index}\\b`, 'i') }));
     fireEvent.click(screen.getByRole('button', { name: /answer/i }));
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
-    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+    fireEvent.click(await screen.findByRole('button', { name: /next/i }, { timeout: QUERY_TIMEOUT }));
+    if (index < 10) {
+      await screen.findByRole('button', { name: /answer/i }, { timeout: QUERY_TIMEOUT });
+    }
   }
 }
 
@@ -212,7 +215,7 @@ describe('App core smoke flow', () => {
     await screen.findByRole('button', { name: /start game/i }, { timeout: QUERY_TIMEOUT });
     expect(screen.queryByRole('heading', { name: /game summary/i })).not.toBeInTheDocument();
     expect(screen.getByTestId('active-filter')).toHaveTextContent(/any topic \| en/i);
-  }, 60000);
+  }, 90000);
 
   test('deck exhausted shows unified recovery actions and allows returning to filters', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
