@@ -25,6 +25,13 @@ Recommended required check in GitHub branch protection:
 
 - `release-readiness / release-readiness`
 
+Current `main` enforcement target:
+
+- Require exactly `release-readiness / release-readiness` as the mandatory status check.
+- Keep `1` required approving review.
+- Keep required linear history enabled.
+- Keep preview deployments non-required (to avoid blocking merges on external preview noise).
+
 Legacy checks that can remain required during transition:
 
 - `Backend CI / build-and-test`
