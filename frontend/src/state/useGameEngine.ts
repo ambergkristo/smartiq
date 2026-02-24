@@ -81,6 +81,9 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   const [winner, setWinner] = useState(null);
 
   const currentPlayer = players[currentPlayerIndex] ?? 'Player 1';
+  const canPass = phase === GamePhase.CHOOSING
+    && isPlayerActive(currentPlayer, eliminatedPlayers, passedPlayers)
+    && (roundPoints[currentPlayer] ?? 0) > 0;
 
   const allSlotsResolved = useMemo(() => {
     if (!card?.options?.length) return false;
@@ -240,6 +243,10 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   const passTurn = useCallback(() => {
     if (phase !== GamePhase.CHOOSING) return;
     if (!isPlayerActive(currentPlayer, eliminatedPlayers, passedPlayers)) return;
+    if ((roundPoints[currentPlayer] ?? 0) < 1) {
+      setLastAction(`${currentPlayer} must answer correctly before passing`);
+      return;
+    }
 
     setPassedPlayers((prev) => new Set(prev).add(currentPlayer));
     setStats((prev) => ({
@@ -253,7 +260,7 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setSelectedRank(null);
     setPhase(GamePhase.PASSED);
     setLastAction(`${currentPlayer} passed (inactive this round)`);
-  }, [currentPlayer, eliminatedPlayers, passedPlayers, phase]);
+  }, [currentPlayer, eliminatedPlayers, passedPlayers, phase, roundPoints]);
 
   const commitRoundScores = useCallback(() => {
     const mergedScores = { ...scores };
@@ -368,6 +375,7 @@ export function useGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     currentPlayerIndex,
     starterIndex,
     currentPlayer,
+    canPass,
     lastAction,
     winner,
     targetScore,

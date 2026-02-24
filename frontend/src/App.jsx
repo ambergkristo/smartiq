@@ -18,7 +18,7 @@ const STRINGS = {
   retry: 'Retry',
   checkBackendUrl: 'Check backend URL:',
   openHealth: 'Open health',
-  passNote: 'Pass keeps points and skips your turn for this round.',
+  passNote: 'Pass keeps points and skips your turn for this round (after at least one correct answer).',
   cardErrorFallback: 'Could not load card from backend. Retry to continue.',
   deckExhausted: 'No playable cards for this filter.',
   deckExhaustedHint: 'Change filters or restart game to continue.',
@@ -618,6 +618,7 @@ export default function App() {
               onCancelConfirm={engine.cancelConfirm}
               onPass={engine.passTurn}
               onNext={engine.nextStep}
+              canPass={engine.canPass}
               players={engine.players}
               scores={engine.scores}
               currentPlayerIndex={engine.currentPlayerIndex}

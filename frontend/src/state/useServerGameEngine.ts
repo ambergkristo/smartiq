@@ -228,6 +228,11 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   const [actionTokensByPlayerId, setActionTokensByPlayerId] = useState({});
 
   const currentPlayer = players[currentPlayerIndex] ?? players[0] ?? DEFAULT_PLAYERS[0];
+  const currentActorPlayerId = String(activeSnapshot?.roundState?.currentPlayerId || '').trim();
+  const currentRoundScore = Number.isInteger(activeSnapshot?.roundScores?.[currentActorPlayerId])
+    ? activeSnapshot.roundScores[currentActorPlayerId]
+    : 0;
+  const canPass = phase === GamePhase.CHOOSING && currentRoundScore > 0;
 
   const applyMappedSnapshot = useCallback((snapshot, mapped, phaseOverride = null) => {
     setActiveSnapshot(snapshot);
@@ -519,6 +524,13 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     if (!activeSnapshot?.gameId || requestInFlight) {
       return;
     }
+    if (currentRoundScore < 1) {
+      const message = `${currentPlayer} must answer correctly before passing`;
+      setErrorMessage(message);
+      setLastAction(message);
+      setPhase(GamePhase.CHOOSING);
+      return;
+    }
 
     const actingPlayer = currentPlayer;
     const actorPlayerId = String(activeSnapshot?.roundState?.currentPlayerId || '').trim();
@@ -548,7 +560,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     } finally {
       setRequestInFlight(false);
     }
-  }, [activeSnapshot, actionTokensByPlayerId, currentPlayer, phase, queueOutcome, requestInFlight]);
+  }, [activeSnapshot, actionTokensByPlayerId, currentPlayer, currentRoundScore, phase, queueOutcome, requestInFlight]);
 
   const nextStep = useCallback(() => {
     if (phase === GamePhase.ROUND_SUMMARY) {
@@ -656,6 +668,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     currentPlayer,
     controlledPlayer,
     isLocalTurn,
+    canPass,
     lastAction,
     winner,
     targetScore: effectiveTargetScore,

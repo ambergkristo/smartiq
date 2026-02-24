@@ -51,6 +51,7 @@ function makeServerSnapshot({
   lastAction = 'Server action',
   statuses = { p1: 'ACTIVE', p2: 'ACTIVE' },
   totalScores = { p1: 0, p2: 0 },
+  roundScores = { p1: 0, p2: 0 },
   pegStateByIndex = {}
 } = {}) {
   const players = [
@@ -84,7 +85,7 @@ function makeServerSnapshot({
       })
     },
     totalScores,
-    roundScores: { p1: 0, p2: 0 },
+    roundScores,
     statuses
   };
 }
@@ -200,7 +201,10 @@ describe('App server-authoritative mode', () => {
 
   test('sends PASS action through server action API', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
-    createServerGameSession.mockResolvedValue(makeServerSnapshot({ gameId: 'game-pass' }));
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({
+      gameId: 'game-pass',
+      roundScores: { p1: 1, p2: 0 }
+    }));
     sendServerGameAction.mockResolvedValue(
       makeServerSnapshot({
         gameId: 'game-pass',
@@ -248,9 +252,30 @@ describe('App server-authoritative mode', () => {
     expect(sendServerGameAction).not.toHaveBeenCalled();
   });
 
+  test('keeps PASS disabled until active player has at least one correct answer', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({
+      gameId: 'game-pass-locked',
+      roundScores: { p1: 0, p2: 0 }
+    }));
+
+    render(<App />);
+    await startServerMultiplayer();
+
+    const passButton = screen.getByRole('button', { name: /pass/i });
+    expect(passButton).toBeDisabled();
+    expect(screen.getByTestId('action-hint')).toHaveTextContent(/before pass is available/i);
+
+    fireEvent.click(passButton);
+    expect(sendServerGameAction).not.toHaveBeenCalled();
+  });
+
   test('shows round summary and then advances to next round from server snapshot', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
-    createServerGameSession.mockResolvedValue(makeServerSnapshot({ gameId: 'game-round' }));
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({
+      gameId: 'game-round',
+      roundScores: { p1: 1, p2: 0 }
+    }));
     sendServerGameAction.mockResolvedValue(
       makeServerSnapshot({
         gameId: 'game-round',
@@ -279,7 +304,10 @@ describe('App server-authoritative mode', () => {
 
   test('shows game summary when server snapshot reports game over', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
-    createServerGameSession.mockResolvedValue(makeServerSnapshot({ gameId: 'game-over' }));
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({
+      gameId: 'game-over',
+      roundScores: { p1: 1, p2: 0 }
+    }));
     sendServerGameAction.mockResolvedValue(
       makeServerSnapshot({
         gameId: 'game-over',

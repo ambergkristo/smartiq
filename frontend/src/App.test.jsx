@@ -69,8 +69,10 @@ describe('App Smart10 round flow', () => {
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
 
-    await waitFor(() => expect(screen.getByRole('button', { name: /pass/i })).toBeInTheDocument());
-    fireEvent.click(screen.getByRole('button', { name: /pass/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /^peg-3\b/i }));
+    fireEvent.click(screen.getByRole('button', { name: /answer/i }));
+    fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
 
     await waitFor(() => expect(screen.getByRole('heading', { name: /round summary/i })).toBeInTheDocument());

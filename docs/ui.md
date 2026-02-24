@@ -50,7 +50,7 @@ Defined in `frontend/src/state/types.ts`.
 - One round = one card.
 - Players take turns on the same card.
 - Wrong answer eliminates that player for the current round only.
-- Pass skips turn and marks player as passed for the current round.
+- Pass is allowed after the current player has at least one correct answer in the round, then skips turn and marks player as passed for the current round.
 - Round ends when all players are passed/eliminated or all answer slots are resolved.
 - First player to 30 total points wins the game.
 

@@ -160,7 +160,7 @@ In `prod` profile, legacy endpoints return deprecation headers:
 
 - Start screen allows selecting `topic`, `difficulty` (1-3), `language`, round length, and player names.
 - Game board fetches cards from `GET /api/cards/nextRandom` and renders 10 answer tiles.
-- Players use `ANSWER -> LOCK IN` or `PASS`, then continue with `NEXT`.
+- Players use `ANSWER -> LOCK IN`; `PASS` is available after at least one correct answer in the current round, then continue with `NEXT`.
 - Round rotates turns by player and shows a summary after the configured card count.
 - Full UI/state-machine reference: `docs/ui.md`.
 

@@ -9,7 +9,7 @@ function getTileState(index, selectedIndexes, revealedIndexes, wrongIndexes) {
   return 'hidden';
 }
 
-function actionHint(phase, currentPlayer, category, selectedRank, controlsDisabled) {
+function actionHint(phase, currentPlayer, category, selectedRank, controlsDisabled, canPass) {
   if (controlsDisabled && (phase === 'CHOOSING' || phase === 'CONFIRMING' || phase === 'RESOLVED' || phase === 'PASSED')) {
     return `Waiting for active player ${currentPlayer}. Controls are disabled on this client.`;
   }
@@ -20,6 +20,9 @@ function actionHint(phase, currentPlayer, category, selectedRank, controlsDisabl
 
   switch (phase) {
     case 'CHOOSING':
+      if (!canPass) {
+        return `${currentPlayer}: reveal a correct peg before PASS is available.`;
+      }
       return `${currentPlayer}: reveal one peg, then ANSWER or PASS.`;
     case 'CONFIRMING':
       return `${currentPlayer}: LOCK IN or go BACK.`;
@@ -68,7 +71,8 @@ export default function GameBoard({
   eliminatedPlayers,
   passedPlayers,
   starterPlayer,
-  controlsDisabled = false
+  controlsDisabled = false,
+  canPass = true
 }) {
   const category = String(card?.category || card?.subtopic || 'OPEN').toUpperCase();
   const canChoose = (phase === 'CHOOSING' || phase === 'CONFIRMING') && !controlsDisabled;
@@ -135,7 +139,7 @@ export default function GameBoard({
   const requiresRank = category === 'ORDER';
   const canAnswer = hasSelectedPeg && (!requiresRank || selectedRank != null) && !controlsDisabled;
   const liveMessage = [
-    actionHint(phase, currentPlayer, category, selectedRank, controlsDisabled),
+    actionHint(phase, currentPlayer, category, selectedRank, controlsDisabled, canPass),
     passNote,
     lastAction
   ]
@@ -201,7 +205,7 @@ export default function GameBoard({
             </div>
           ) : null}
           <p className="action-hint" data-testid="action-hint">
-            {actionHint(phase, currentPlayer, category, selectedRank, controlsDisabled)}
+            {actionHint(phase, currentPlayer, category, selectedRank, controlsDisabled, canPass)}
           </p>
           <p className="pass-note">{passNote}</p>
           <p className="sr-only" aria-live="polite" aria-atomic="true" data-testid="board-live-region">
@@ -255,7 +259,7 @@ export default function GameBoard({
               <button ref={answerButtonRef} onClick={onAnswer} type="button" disabled={!canAnswer}>
                 ANSWER
               </button>
-              <button ref={passButtonRef} onClick={onPass} type="button" disabled={controlsDisabled}>
+              <button ref={passButtonRef} onClick={onPass} type="button" disabled={controlsDisabled || !canPass}>
                 PASS
               </button>
             </>
