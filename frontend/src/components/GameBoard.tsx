@@ -9,7 +9,11 @@ function getTileState(index, selectedIndexes, revealedIndexes, wrongIndexes) {
   return 'hidden';
 }
 
-function actionHint(phase, currentPlayer, category, selectedRank) {
+function actionHint(phase, currentPlayer, category, selectedRank, controlsDisabled) {
+  if (controlsDisabled && (phase === 'CHOOSING' || phase === 'CONFIRMING' || phase === 'RESOLVED' || phase === 'PASSED')) {
+    return `Waiting for active player ${currentPlayer}. Controls are disabled on this client.`;
+  }
+
   if (category === 'ORDER' && phase === 'CHOOSING') {
     return `${currentPlayer}: choose rank ${selectedRank ?? '(1-10)'} and a peg, then ANSWER.`;
   }
@@ -63,10 +67,11 @@ export default function GameBoard({
   targetScore,
   eliminatedPlayers,
   passedPlayers,
-  starterPlayer
+  starterPlayer,
+  controlsDisabled = false
 }) {
   const category = String(card?.category || card?.subtopic || 'OPEN').toUpperCase();
-  const canChoose = phase === 'CHOOSING' || phase === 'CONFIRMING';
+  const canChoose = (phase === 'CHOOSING' || phase === 'CONFIRMING') && !controlsDisabled;
   const phaseLabel = phase.replace('_', ' ').toLowerCase();
   const layoutRef = useRef(null);
   const answerButtonRef = useRef(null);
@@ -128,9 +133,9 @@ export default function GameBoard({
   const isLongQuestion = card.question.length > 180;
   const hasSelectedPeg = selectedIndexes.size > 0;
   const requiresRank = category === 'ORDER';
-  const canAnswer = hasSelectedPeg && (!requiresRank || selectedRank != null);
+  const canAnswer = hasSelectedPeg && (!requiresRank || selectedRank != null) && !controlsDisabled;
   const liveMessage = [
-    actionHint(phase, currentPlayer, category, selectedRank),
+    actionHint(phase, currentPlayer, category, selectedRank, controlsDisabled),
     passNote,
     lastAction
   ]
@@ -196,7 +201,7 @@ export default function GameBoard({
             </div>
           ) : null}
           <p className="action-hint" data-testid="action-hint">
-            {actionHint(phase, currentPlayer, category, selectedRank)}
+            {actionHint(phase, currentPlayer, category, selectedRank, controlsDisabled)}
           </p>
           <p className="pass-note">{passNote}</p>
           <p className="sr-only" aria-live="polite" aria-atomic="true" data-testid="board-live-region">
@@ -250,23 +255,23 @@ export default function GameBoard({
               <button ref={answerButtonRef} onClick={onAnswer} type="button" disabled={!canAnswer}>
                 ANSWER
               </button>
-              <button ref={passButtonRef} onClick={onPass} type="button">
+              <button ref={passButtonRef} onClick={onPass} type="button" disabled={controlsDisabled}>
                 PASS
               </button>
             </>
           ) : null}
           {phase === 'CONFIRMING' ? (
             <>
-              <button ref={confirmButtonRef} onClick={onConfirm} type="button">
+              <button ref={confirmButtonRef} onClick={onConfirm} type="button" disabled={controlsDisabled}>
                 LOCK IN
               </button>
-              <button onClick={onCancelConfirm} type="button">
+              <button onClick={onCancelConfirm} type="button" disabled={controlsDisabled}>
                 BACK
               </button>
             </>
           ) : null}
           {phase === 'RESOLVED' || phase === 'PASSED' ? (
-            <button ref={nextButtonRef} onClick={onNext} type="button">
+            <button ref={nextButtonRef} onClick={onNext} type="button" disabled={controlsDisabled}>
               NEXT
             </button>
           ) : null}
