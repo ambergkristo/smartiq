@@ -240,6 +240,8 @@ Legacy endpoint retirement plan: `docs/legacy-endpoint-retirement-plan.md`
 Legacy endpoint migration guide: `docs/legacy-cards-endpoint-migration.md`
 Branch governance and cleanup policy: `docs/branch-governance.md`
 Full branch consolidation audit: `docs/branch-consolidation-full-audit-2026-02-24.md`
+Latest branch consolidation snapshot (auto-generated): `docs/branch-consolidation-audit-latest.md`
+Generate latest branch consolidation snapshot: `npm run report:branches:consolidation`
 
 Observability reference: `docs/observability.md`
 
