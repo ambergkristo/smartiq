@@ -68,6 +68,8 @@ npm run report:branches:consolidation
 
 - Default output: `docs/branch-consolidation-audit-latest.md`
 - Scope default: top 30 most recently updated remote branches (excluding `main`/`HEAD`)
+- Routing heuristic includes commit subject references like `(#281)`:
+  if unique commits on a no-PR branch only reference merged PR numbers, route is `Skip` (superseded lineage).
 - Full scan variant:
 
 ```bash

@@ -70,6 +70,12 @@ function classifyRoute(row) {
   if (row.prState === 'MERGED') {
     return { route: 'Skip', reason: 'Already merged via PR (squash/rebase lineage allowed)' };
   }
+  if (row.prState === 'NONE' && row.referencedPrCount > 0 && row.allReferencedPrsMerged) {
+    return {
+      route: 'Skip',
+      reason: `Unique commits reference merged PR(s): ${row.referencedMergedPrs.join(', ')}`
+    };
+  }
   if (row.plusCount === 0) {
     return { route: 'Skip', reason: 'No unique patch left against base (git cherry + count = 0)' };
   }
@@ -141,8 +147,8 @@ function buildMarkdown({
   lines.push('');
   lines.push('## Branch Table');
   lines.push('');
-  lines.push(toTableRow(['Branch', 'Updated', 'Ahead', 'Behind', 'Plus', 'PR State', 'Route']));
-  lines.push(toTableRow(['---', '---', '---:', '---:', '---:', '---', '---']));
+  lines.push(toTableRow(['Branch', 'Updated', 'Ahead', 'Behind', 'Plus', 'PR State', 'Route', 'Reason']));
+  lines.push(toTableRow(['---', '---', '---:', '---:', '---:', '---', '---', '---']));
   for (const row of rows) {
     lines.push(toTableRow([
       `\`${row.branch}\``,
@@ -151,7 +157,8 @@ function buildMarkdown({
       String(row.behind),
       String(row.plusCount),
       row.prState,
-      row.route
+      row.route,
+      row.reason
     ]));
   }
   lines.push('');
@@ -202,6 +209,7 @@ function main() {
   const branches = maxBranches > 0 ? sortedBranches.slice(0, maxBranches) : sortedBranches;
 
   let prByHead = new Map();
+  let prStateByNumber = new Map();
   const prResult = run(
     `gh pr list --repo ${repo} --state all --limit ${prLimit} --json number,title,headRefName,state,url,mergedAt,closedAt`,
     true
@@ -210,6 +218,7 @@ function main() {
   if (prResult.ok && prResult.stdout) {
     const prList = JSON.parse(prResult.stdout);
     for (const pr of prList) {
+      prStateByNumber.set(String(pr.number), pr.state);
       const existing = prByHead.get(pr.headRefName);
       if (!existing || pr.number > existing.number) {
         prByHead.set(pr.headRefName, pr);
@@ -231,6 +240,28 @@ function main() {
       .map((line) => line.trim())
       .filter((line) => line.startsWith('+ '))
       .length;
+    const rightOnlySubjects = run(
+      `git log --right-only --cherry-pick --no-merges --format=%s ${base}...${branchRef}`,
+      true
+    );
+    const referencedPrNumbers = (rightOnlySubjects.stdout || '')
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .flatMap((subject) => {
+        const matches = subject.match(/\(#(\d+)\)/g);
+        if (!matches) {
+          return [];
+        }
+        return matches.map((token) => token.replace(/[^0-9]/g, ''));
+      });
+    const uniqueReferencedPrNumbers = Array.from(new Set(referencedPrNumbers));
+    const referencedMergedPrs = uniqueReferencedPrNumbers
+      .filter((number) => prStateByNumber.get(number) === 'MERGED')
+      .map((number) => `#${number}`);
+    const referencedPrCount = uniqueReferencedPrNumbers.length;
+    const allReferencedPrsMerged =
+      referencedPrCount > 0 && referencedMergedPrs.length === referencedPrCount;
 
     const pr = prByHead.get(entry.branch);
     const prState = pr ? pr.state : 'NONE';
@@ -244,6 +275,9 @@ function main() {
       behind,
       contained,
       plusCount,
+      referencedPrCount,
+      allReferencedPrsMerged,
+      referencedMergedPrs,
       prState,
       prNumber,
       prUrl
