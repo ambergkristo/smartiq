@@ -277,6 +277,7 @@ button:disabled {
   color: var(--text);
   background: rgba(255, 236, 208, 0.08);
   border-radius: 999px;
+  min-height: 44px;
 }
 
 .pill.selected {
@@ -298,6 +299,7 @@ button:disabled {
   align-items: center;
   gap: 8px;
   padding: 7px 10px;
+  min-height: 40px;
   border-radius: 999px;
   background: rgba(255, 233, 202, 0.12);
   color: var(--text);
@@ -547,6 +549,7 @@ button:disabled {
 
 .rank-chip {
   padding: 6px 0;
+  min-height: 38px;
   border-radius: 10px;
   background: rgba(255, 240, 224, 0.08);
   color: var(--text);
@@ -575,6 +578,7 @@ button:disabled {
   width: auto;
   justify-self: start;
   padding: 6px 10px;
+  min-height: 40px;
   border-radius: 999px;
   background: rgba(255, 230, 195, 0.12);
   color: var(--text);
@@ -809,7 +813,7 @@ button:disabled {
 }
 
 .action-bar button {
-  min-height: 46px;
+  min-height: 48px;
 }
 
 .center-board[data-phase='CHOOSING'] .phase-pill {
@@ -973,10 +977,17 @@ button:disabled {
     padding: 24px;
   }
 
+  select,
+  input,
+  button {
+    font-size: 16px;
+  }
+
   .setup-toolbar {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     justify-self: stretch;
+    gap: 8px;
   }
 
   .topic-grid,
@@ -984,8 +995,22 @@ button:disabled {
     grid-template-columns: 1fr;
   }
 
+  .topic-tile {
+    min-height: 108px;
+  }
+
+  .pill {
+    min-height: 48px;
+  }
+
+  .player-token {
+    min-height: 44px;
+    padding: 10px 12px;
+  }
+
   .start-cta {
     width: 100%;
+    min-height: 54px;
   }
 
   .wheel-slot {
@@ -1018,10 +1043,35 @@ button:disabled {
   .tile-grid,
   .action-bar {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .rank-selector {
     grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .rank-chip {
+    min-height: 44px;
+    font-size: 0.9rem;
+  }
+
+  .answer-tile {
+    min-height: 58px;
+    padding: 12px 14px;
+  }
+
+  .slot-index {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .action-bar button {
+    min-height: 56px;
+  }
+
+  .players-panel li {
+    min-height: 52px;
   }
 
   .summary-head,
