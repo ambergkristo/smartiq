@@ -8,6 +8,7 @@ import com.smartiq.backend.game.contract.PegSnapshot;
 import com.smartiq.backend.game.contract.PlayerRoundStatus;
 import com.smartiq.backend.game.contract.PlayerSnapshot;
 import com.smartiq.backend.game.contract.RoundStateSnapshot;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class GameSessionService {
@@ -33,12 +35,21 @@ public class GameSessionService {
     private static final String PEG_HIDDEN = "hidden";
     private static final String PEG_REVEALED = "revealed";
     private static final String PEG_WRONG = "wrong";
+    private static final String METRIC_GAME_STARTED = "smartiq.game.session.started.total";
+    private static final String METRIC_GAME_COMPLETED = "smartiq.game.session.completed.total";
+    private static final String METRIC_ROUND_COMPLETED = "smartiq.game.round.completed.total";
+    private static final String METRIC_ACTION_TOTAL = "smartiq.game.action.total";
+    private static final String METRIC_ANSWER_TOTAL = "smartiq.game.answer.total";
+    private static final String METRIC_GAME_DURATION = "smartiq.game.duration.seconds";
+    private static final String METRIC_ROUND_DURATION = "smartiq.game.round.duration.seconds";
 
     private final CardService cardService;
+    private final MeterRegistry meterRegistry;
     private final ConcurrentMap<String, SessionState> sessions = new ConcurrentHashMap<>();
 
-    public GameSessionService(CardService cardService) {
+    public GameSessionService(CardService cardService, MeterRegistry meterRegistry) {
         this.cardService = cardService;
+        this.meterRegistry = meterRegistry;
     }
 
     public synchronized GameSessionSnapshot createGame(CreateGameRequest request) {
@@ -66,6 +77,7 @@ public class GameSessionService {
                 card
         );
         sessions.put(gameId, state);
+        incrementCounter(METRIC_GAME_STARTED, "language", language);
 
         return toSnapshot(state);
     }
@@ -97,6 +109,7 @@ public class GameSessionService {
     private void applyPass(SessionState state) {
         String playerId = state.currentPlayerId();
         requireActivePlayer(state, playerId);
+        incrementCounter(METRIC_ACTION_TOTAL, "type", "pass", "language", state.language);
         state.statuses.put(playerId, PlayerRoundStatus.PASSED);
         state.lastAction = state.currentPlayerName() + " passed";
         advanceOrFinishRound(state);
@@ -112,6 +125,7 @@ public class GameSessionService {
 
         String playerId = state.currentPlayerId();
         requireActivePlayer(state, playerId);
+        incrementCounter(METRIC_ACTION_TOTAL, "type", "answer", "language", state.language);
 
         PegState peg = state.pegs.get(tileIndex);
         if (!PEG_HIDDEN.equals(peg.state())) {
@@ -120,10 +134,12 @@ public class GameSessionService {
 
         boolean correct = isCorrect(state.card, tileIndex, rank);
         if (correct) {
+            incrementCounter(METRIC_ANSWER_TOTAL, "outcome", "correct", "language", state.language);
             state.roundScores.put(playerId, (state.roundScores.getOrDefault(playerId, 0)) + 1);
             state.pegs.set(tileIndex, new PegState(tileIndex, PEG_REVEALED));
             state.lastAction = state.currentPlayerName() + " answered correctly (+1)";
         } else {
+            incrementCounter(METRIC_ANSWER_TOTAL, "outcome", "wrong", "language", state.language);
             state.statuses.put(playerId, PlayerRoundStatus.OUT);
             state.pegs.set(tileIndex, new PegState(tileIndex, PEG_WRONG));
             state.lastAction = state.currentPlayerName() + " answered wrong (dropped)";
@@ -149,11 +165,15 @@ public class GameSessionService {
     }
 
     private void finishRound(SessionState state) {
+        recordElapsed(METRIC_ROUND_DURATION, state.roundStartedAtMillis, "language", state.language);
+        incrementCounter(METRIC_ROUND_COMPLETED, "language", state.language);
         commitRoundScores(state);
         String winnerId = resolveWinner(state);
         if (winnerId != null) {
             state.phase = PHASE_GAME_OVER;
             state.lastAction = playerNameById(state, winnerId) + " reached " + state.winCondition + " points";
+            incrementCounter(METRIC_GAME_COMPLETED, "language", state.language);
+            recordElapsed(METRIC_GAME_DURATION, state.gameStartedAtMillis, "language", state.language);
             return;
         }
 
@@ -170,6 +190,7 @@ public class GameSessionService {
         state.pegs = hiddenPegs(state.card.options().size());
         state.phase = PHASE_CHOOSING;
         state.lastAction = "Round " + state.roundNumber + " started";
+        state.roundStartedAtMillis = System.currentTimeMillis();
     }
 
     private static void commitRoundScores(SessionState state) {
@@ -411,6 +432,16 @@ public class GameSessionService {
         return playerId;
     }
 
+    private void incrementCounter(String metricName, String... tags) {
+        meterRegistry.counter(metricName, tags).increment();
+    }
+
+    private void recordElapsed(String metricName, long startedAtMillis, String... tags) {
+        long now = System.currentTimeMillis();
+        long elapsedMillis = Math.max(0L, now - startedAtMillis);
+        meterRegistry.timer(metricName, tags).record(elapsedMillis, TimeUnit.MILLISECONDS);
+    }
+
     private static GameSessionSnapshot toSnapshot(SessionState state) {
         List<PlayerSnapshot> players = state.players.stream()
                 .map(player -> new PlayerSnapshot(player.playerId(), player.displayName()))
@@ -468,6 +499,8 @@ public class GameSessionService {
         private String lastAction;
         private CardDeckResponse card;
         private List<PegState> pegs;
+        private final long gameStartedAtMillis;
+        private long roundStartedAtMillis;
 
         private SessionState(String gameId,
                              String language,
@@ -493,6 +526,8 @@ public class GameSessionService {
             this.lastAction = "Game started";
             this.card = card;
             this.pegs = hiddenPegs(card.options().size());
+            this.gameStartedAtMillis = System.currentTimeMillis();
+            this.roundStartedAtMillis = this.gameStartedAtMillis;
         }
 
         private String currentPlayerId() {

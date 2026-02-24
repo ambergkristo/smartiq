@@ -26,6 +26,28 @@ Prometheus metrics include:
 - `smartiq.next_random.immediate_repeat.total` (tag `kind`: `category|topic|cardId`)
 - `smartiq.next_random.relax.total` (tag `level`: `none|language|cardId|topic|category`)
 - `smartiq.next_random.source.total` (tag `source`)
+- `smartiq.game.session.started.total` (tag `language`)
+- `smartiq.game.session.completed.total` (tag `language`)
+- `smartiq.game.round.completed.total` (tag `language`)
+- `smartiq.game.action.total` (tags `type=answer|pass`, `language`)
+- `smartiq.game.answer.total` (tags `outcome=correct|wrong`, `language`)
+- `smartiq.game.duration.seconds` (timer, tag `language`)
+- `smartiq.game.round.duration.seconds` (timer, tag `language`)
+
+## Party Beta KPI Queries
+
+Use these PromQL queries to compute mandatory beta KPIs from server-authoritative gameplay:
+
+- Average game length:
+  - `sum(rate(smartiq_game_duration_seconds_sum[1d])) / clamp_min(sum(rate(smartiq_game_duration_seconds_count[1d])), 1e-9)`
+- Average round length:
+  - `sum(rate(smartiq_game_round_duration_seconds_sum[1d])) / clamp_min(sum(rate(smartiq_game_round_duration_seconds_count[1d])), 1e-9)`
+- Pass rate:
+  - `sum(rate(smartiq_game_action_total{type="pass"}[1d])) / clamp_min(sum(rate(smartiq_game_action_total[1d])), 1e-9)`
+- Wrong-answer rate:
+  - `sum(rate(smartiq_game_answer_total{outcome="wrong"}[1d])) / clamp_min(sum(rate(smartiq_game_answer_total[1d])), 1e-9)`
+- Drop-off rate:
+  - `(sum(rate(smartiq_game_session_started_total[1d])) - sum(rate(smartiq_game_session_completed_total[1d]))) / clamp_min(sum(rate(smartiq_game_session_started_total[1d])), 1e-9)`
 
 ## Deck Event Logs
 
