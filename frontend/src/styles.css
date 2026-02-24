@@ -415,7 +415,7 @@ button:disabled {
 }
 
 .center-board {
-  padding: 16px;
+  padding: clamp(12px, 1.8vw, 18px);
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
   min-height: 0;
@@ -512,6 +512,7 @@ button:disabled {
   overflow: hidden;
   display: grid;
   place-items: center;
+  padding: clamp(6px, 1.4vw, 14px);
 }
 
 .tile-grid {
@@ -527,41 +528,86 @@ button:disabled {
   max-width: 100%;
   max-height: 100%;
   border-radius: 50%;
-  border: 1px solid rgba(255, 202, 145, 0.3);
-  background: radial-gradient(circle, rgba(255, 216, 166, 0.08) 0%, rgba(25, 10, 3, 0.08) 62%, transparent 64%);
+  border: 2px solid rgba(255, 202, 145, 0.42);
+  box-shadow: inset 0 0 0 2px rgba(255, 233, 207, 0.08), 0 24px 46px rgba(0, 0, 0, 0.36);
+  background:
+    radial-gradient(circle, rgba(255, 216, 166, 0.13) 0%, rgba(25, 10, 3, 0.18) 58%, rgba(16, 8, 4, 0.65) 76%),
+    conic-gradient(
+      from 0deg,
+      rgba(255, 193, 121, 0.08) 0deg 20deg,
+      transparent 20deg 40deg,
+      rgba(255, 193, 121, 0.08) 40deg 60deg,
+      transparent 60deg 80deg,
+      rgba(255, 193, 121, 0.08) 80deg 100deg,
+      transparent 100deg 120deg,
+      rgba(255, 193, 121, 0.08) 120deg 140deg,
+      transparent 140deg 160deg,
+      rgba(255, 193, 121, 0.08) 160deg 180deg,
+      transparent 180deg 200deg,
+      rgba(255, 193, 121, 0.08) 200deg 220deg,
+      transparent 220deg 240deg,
+      rgba(255, 193, 121, 0.08) 240deg 260deg,
+      transparent 260deg 280deg,
+      rgba(255, 193, 121, 0.08) 280deg 300deg,
+      transparent 300deg 320deg,
+      rgba(255, 193, 121, 0.08) 320deg 340deg,
+      transparent 340deg 360deg
+    );
+}
+
+.wheel-board::before {
+  content: '';
+  position: absolute;
+  inset: 8.5%;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 214, 176, 0.26);
+  pointer-events: none;
+}
+
+.wheel-board::after {
+  content: '';
+  position: absolute;
+  inset: 2.5%;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 220, 186, 0.22);
+  pointer-events: none;
 }
 
 .wheel-hub {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: #ffffff;
+  background: radial-gradient(circle at 35% 28%, #ffffff, #f2f2f2 70%, #e5e5e5 100%);
   display: grid;
   place-items: center;
   text-align: center;
-  padding: 14px;
+  padding: 16px;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.65), inset 0 -6px 10px rgba(0, 0, 0, 0.12);
 }
 
 .wheel-hub-ring {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 34%;
+  width: 36%;
   aspect-ratio: 1 / 1;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  border: 3px solid rgba(255, 210, 165, 0.85);
-  background: rgba(255, 210, 165, 0.12);
+  border: 5px solid rgba(255, 210, 165, 0.9);
+  background: rgba(255, 210, 165, 0.18);
   display: grid;
   place-items: center;
+  box-shadow: 0 0 0 2px rgba(255, 239, 215, 0.2), 0 8px 18px rgba(0, 0, 0, 0.2);
+  z-index: 2;
 }
 
 .hub-question {
   color: #111111;
   font-weight: 700;
-  font-size: clamp(0.78rem, 1.15vw, 0.96rem);
+  font-size: clamp(0.76rem, 1.1vw, 0.96rem);
   line-height: 1.2;
   margin: 0;
+  letter-spacing: 0.01em;
 }
 
 .hub-question.clamped {
@@ -575,36 +621,43 @@ button:disabled {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: clamp(160px, 22vw, 220px);
+  width: clamp(128px, 17vw, 164px);
+  z-index: 3;
 }
 
 .answer-tile {
-  text-align: left;
-  padding: 12px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 199, 148, 0.35);
-  background: rgba(255, 240, 224, 0.08);
+  text-align: center;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 202, 152, 0.44);
+  background: linear-gradient(180deg, rgba(80, 33, 14, 0.96), rgba(47, 20, 8, 0.96));
   color: var(--text);
   display: flex;
-  gap: 8px;
+  gap: 10px;
   align-items: center;
+  justify-content: center;
   transition: transform 150ms ease-out, box-shadow 150ms ease-out, background 150ms ease-out;
-  min-height: 52px;
+  min-height: 54px;
+  box-shadow: inset 0 1px 0 rgba(255, 233, 204, 0.2), 0 8px 14px rgba(0, 0, 0, 0.22);
 }
 
 .answer-tile:not(:disabled):hover {
   transform: translateY(-1px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 233, 204, 0.3), 0 12px 24px rgba(0, 0, 0, 0.28);
 }
 
 .slot-index {
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 1.8rem;
+  height: 1.8rem;
   border-radius: 50%;
   display: inline-grid;
   place-items: center;
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 227, 188, 0.22);
+  border: 1px solid rgba(255, 220, 176, 0.34);
+  color: #fff6ea;
   font-weight: 700;
+  font-size: 0.78rem;
+  flex-shrink: 0;
 }
 
 .slot-text {
@@ -612,16 +665,20 @@ button:disabled {
   min-width: 0;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  text-align: left;
+  font-size: 0.84rem;
 }
 
 .slot-marker {
   width: 1.25rem;
   text-align: center;
   font-weight: 800;
-  font-size: 1rem;
+  font-size: 1.08rem;
+  flex-shrink: 0;
 }
 
 .answer-tile.is-correct .slot-marker {
@@ -634,22 +691,31 @@ button:disabled {
 
 .answer-tile.is-selected {
   border-color: var(--accent2);
-  background: rgba(249, 172, 69, 0.24);
+  background: linear-gradient(180deg, rgba(249, 172, 69, 0.36), rgba(164, 90, 27, 0.46));
 }
 
 .answer-tile.is-hidden .slot-text {
-  color: rgba(255, 225, 189, 0.7);
-  font-style: italic;
+  color: rgba(255, 218, 174, 0.84);
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.7rem;
+}
+
+.answer-tile.is-hidden .slot-marker {
+  opacity: 0;
 }
 
 .answer-tile.is-correct {
   border-color: var(--success);
-  background: rgba(57, 150, 80, 0.5);
+  background: linear-gradient(180deg, rgba(69, 162, 89, 0.86), rgba(41, 106, 58, 0.86));
+  animation: peg-reveal 180ms ease-out;
 }
 
 .answer-tile.is-wrong {
   border-color: var(--danger);
-  background: rgba(167, 43, 43, 0.5);
+  background: linear-gradient(180deg, rgba(184, 63, 63, 0.86), rgba(122, 36, 36, 0.86));
+  animation: peg-reveal 180ms ease-out;
 }
 
 .answer-tile.is-revealed {
@@ -720,6 +786,17 @@ button:disabled {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes peg-reveal {
+  from {
+    transform: scale(0.96);
+    filter: brightness(1.08);
+  }
+  to {
+    transform: scale(1);
+    filter: brightness(1);
   }
 }
 
