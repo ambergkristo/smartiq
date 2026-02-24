@@ -73,7 +73,7 @@ CI threshold gate:
 - Backend CI enforces `--fail-threshold=0.80` for both EN and ET locale packs.
 - Raise this threshold gradually as dataset diversity improves.
 
-## Semantic Quality Gate v1 (Warning First)
+## Semantic Quality Gate v2
 
 Semantic scoring script:
 
@@ -97,10 +97,11 @@ Current banned/flagged phrase patterns:
 - `placeholder`
 - `lorem ipsum`
 
-CI behavior (v1):
+CI behavior:
 
-- runs in Backend CI + Frontend CI as non-blocking warning (`continue-on-error: true`),
-- uses `--fail-threshold=0.65` to surface weak semantic groups without blocking merges yet.
+- Backend CI + Frontend CI enforce semantic threshold gate:
+  - `node tools/score_cards_semantic.js <dataset> --fail-threshold=0.70`
+- release-readiness enforces the same semantic threshold for EN and ET.
 - release-readiness reports semantic warning budget (`<=80` per locale) via:
   - `node tools/report_semantic_warning_budget.js --max-warnings=80`
   - currently warning-only (non-blocking).
