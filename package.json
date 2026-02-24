@@ -27,6 +27,7 @@
     "score:cards:semantic:ci:et": "node tools/score_cards_semantic.js data/smart10/cards.et.json --fail-threshold=0.70",
     "report:cards:semantic:budget": "node tools/report_semantic_warning_budget.js --max-warnings=80",
     "report:cards:semantic:parity": "node tools/report_semantic_locale_parity.js --min-category-score=NUMBER:0.90,COLOR:0.95 --max-short-option-ratio=NUMBER:0.40,COLOR:0.10 --max-locale-score-gap=0.02 --max-locale-warning-gap=10",
+    "report:cards:semantic:parity:ci": "node tools/report_semantic_locale_parity.js --min-category-score=NUMBER:0.90,COLOR:0.95 --max-short-option-ratio=NUMBER:0.40,COLOR:0.10 --max-locale-score-gap=0.02 --max-locale-warning-gap=10 --fail-on-exceed",
     "report:et:quality": "node tools/generate_et_quality_report.js",
     "validate:cards:legacy": "node tools/validate-cards.js data/smart10/cards.en.json",
     "test:golden": "node tools/validate-cards.js data/smart10/golden/golden.dataset.json",

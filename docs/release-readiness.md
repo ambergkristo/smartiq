@@ -20,7 +20,7 @@ The command executes:
 10. `node tools/score_cards_semantic.js data/smart10/cards.en.json --fail-threshold=0.70`
 11. `node tools/score_cards_semantic.js data/smart10/cards.et.json --fail-threshold=0.70`
 12. `node tools/report_semantic_warning_budget.js --max-warnings=80` (warning-only metric)
-13. `node tools/report_semantic_locale_parity.js --min-category-score=NUMBER:0.90,COLOR:0.95 --max-short-option-ratio=NUMBER:0.40,COLOR:0.10 --max-locale-score-gap=0.02 --max-locale-warning-gap=10` (warning-only metric)
+13. `node tools/report_semantic_locale_parity.js --min-category-score=NUMBER:0.90,COLOR:0.95 --max-short-option-ratio=NUMBER:0.40,COLOR:0.10 --max-locale-score-gap=0.02 --max-locale-warning-gap=10 --fail-on-exceed` (blocking metric)
 
 ## CI Aggregation
 
