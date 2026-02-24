@@ -51,6 +51,7 @@ describe('GameBoard layout', () => {
     expect(wheel).toBeInTheDocument();
     expect(within(wheel).getAllByRole('button')).toHaveLength(10);
     expect(screen.getByTestId('action-hint')).toHaveTextContent(/reveal one peg/i);
+    expect(screen.getByTestId('phase-pill')).toHaveTextContent('CHOOSING');
   });
 
   test('falls back to grid on narrow container', () => {
@@ -148,6 +149,7 @@ describe('GameBoard layout', () => {
     expect(props.onAnswer).toHaveBeenCalledTimes(1);
 
     rerender(<GameBoard {...props} phase="CONFIRMING" />);
+    expect(screen.getByTestId('phase-pill')).toHaveTextContent('CONFIRMING');
     const lockInButton = screen.getByRole('button', { name: 'LOCK IN' });
     await waitFor(() => expect(lockInButton).toHaveFocus());
     await user.keyboard('{Enter}');
