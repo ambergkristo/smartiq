@@ -100,6 +100,9 @@ CI behavior (v1):
 
 - runs in Backend CI + Frontend CI as non-blocking warning (`continue-on-error: true`),
 - uses `--fail-threshold=0.65` to surface weak semantic groups without blocking merges yet.
+- release-readiness reports semantic warning budget (`<=80` per locale) via:
+  - `node tools/report_semantic_warning_budget.js --max-warnings=80`
+  - currently warning-only (non-blocking).
 
 How to improve semantic score:
 
