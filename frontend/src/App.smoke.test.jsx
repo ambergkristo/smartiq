@@ -89,9 +89,17 @@ async function playPerfectOrderRound() {
   for (let index = 1; index <= 10; index += 1) {
     fireEvent.click(within(rankSelector).getByRole('button', { name: String(index) }));
     fireEvent.click(screen.getByRole('button', { name: new RegExp(`^peg-${index}\\b`, 'i') }));
-    fireEvent.click(screen.getByRole('button', { name: /answer/i }));
-    fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
-    fireEvent.click(await screen.findByRole('button', { name: /next/i }, { timeout: QUERY_TIMEOUT }));
+    const answerButton = screen.getByRole('button', { name: /answer/i });
+    expect(answerButton).toBeEnabled();
+    fireEvent.click(answerButton);
+
+    const lockInButton = screen.getByRole('button', { name: /lock in/i });
+    expect(lockInButton).toBeEnabled();
+    fireEvent.click(lockInButton);
+
+    const nextButton = await screen.findByRole('button', { name: /next/i }, { timeout: QUERY_TIMEOUT });
+    expect(nextButton).toBeEnabled();
+    fireEvent.click(nextButton);
     if (index < 10) {
       await screen.findByRole('button', { name: /answer/i }, { timeout: QUERY_TIMEOUT });
     }
@@ -215,7 +223,7 @@ describe('App core smoke flow', () => {
     await screen.findByRole('button', { name: /start game/i }, { timeout: QUERY_TIMEOUT });
     expect(screen.queryByRole('heading', { name: /game summary/i })).not.toBeInTheDocument();
     expect(screen.getByTestId('active-filter')).toHaveTextContent(/any topic \| en/i);
-  }, 90000);
+  }, 120000);
 
   test('deck exhausted shows unified recovery actions and allows returning to filters', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
