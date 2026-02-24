@@ -235,6 +235,7 @@ Deployment target for MVP:
 
 Detailed steps: `docs/deploy.md`
 Release gate checklist: `docs/release.md`
+Closed beta operations: `docs/beta-runbook-v1.md`
 
 Observability reference: `docs/observability.md`
 
