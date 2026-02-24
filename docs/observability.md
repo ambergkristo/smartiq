@@ -53,6 +53,10 @@ Use these PromQL queries to compute mandatory beta KPIs from server-authoritativ
 - Drop-off rate:
   - `(sum(rate(smartiq_game_session_started_total[1d])) - sum(rate(smartiq_game_session_completed_total[1d]))) / clamp_min(sum(rate(smartiq_game_session_started_total[1d])), 1e-9)`
 
+Generate a markdown beta summary snapshot from live Prometheus export:
+
+- `BACKEND_URL=https://<backend-domain> npm run report:beta:summary`
+
 Optional beta ops metrics:
 
 - Reconnect success rate:
