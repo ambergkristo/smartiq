@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(properties = {
         "smartiq.import.enabled=true",
-        "smartiq.import.path=../data/clean/golden",
+        "smartiq.import.path=../data/smart10/golden",
         "smartiq.pool.enabled=false",
         "smartiq.session.enabled=false",
         "MIN_BANK_SIZE=1",
