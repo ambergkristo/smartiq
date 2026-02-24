@@ -5,6 +5,7 @@ const { execSync } = require('node:child_process');
 const npmBin = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 
 const commands = [
+  'node tools/validate_flyway_migrations.js',
   'mvn -q -f backend/pom.xml test',
   `${npmBin} --prefix frontend run lint`,
   `${npmBin} --prefix frontend run test -- --run`,

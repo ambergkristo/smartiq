@@ -8,14 +8,15 @@ npm run release:check
 
 The command executes:
 
-1. `mvn -q -f backend/pom.xml test`
-2. `npm --prefix frontend run lint`
-3. `npm --prefix frontend run test -- --run`
-4. `npm --prefix frontend run build`
-5. `node tools/validate_cards_v2.js data/smart10/cards.en.json`
-6. `node tools/validate_cards_v2.js data/smart10/cards.et.json`
-7. `node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.80`
-8. `node tools/score_cards_quality.js data/smart10/cards.et.json --fail-threshold=0.80`
+1. `node tools/validate_flyway_migrations.js`
+2. `mvn -q -f backend/pom.xml test`
+3. `npm --prefix frontend run lint`
+4. `npm --prefix frontend run test -- --run`
+5. `npm --prefix frontend run build`
+6. `node tools/validate_cards_v2.js data/smart10/cards.en.json`
+7. `node tools/validate_cards_v2.js data/smart10/cards.et.json`
+8. `node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.80`
+9. `node tools/score_cards_quality.js data/smart10/cards.et.json --fail-threshold=0.80`
 
 ## CI Aggregation
 
