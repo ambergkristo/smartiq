@@ -43,13 +43,11 @@ const BUILD_SHA = String(import.meta.env.VITE_BUILD_SHA || '').trim();
 
 function isServerEngineEnabled() {
   const configured = String(import.meta.env.VITE_USE_SERVER_GAME_ENGINE || '').toLowerCase();
-  if (configured === 'true') {
-    return true;
+  const mode = String(import.meta.env.MODE || '').toLowerCase();
+  if (mode === 'test') {
+    return configured === 'true';
   }
-  if (configured === 'false') {
-    return false;
-  }
-  return String(import.meta.env.MODE || '').toLowerCase() !== 'test';
+  return true;
 }
 
 const DIFFICULTY_OPTIONS = [
