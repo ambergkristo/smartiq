@@ -289,6 +289,7 @@ button:disabled {
   color: var(--text);
   background: rgba(255, 236, 208, 0.08);
   border-radius: 999px;
+  min-height: 44px;
 }
 
 .pill.selected {
@@ -310,6 +311,7 @@ button:disabled {
   align-items: center;
   gap: 8px;
   padding: 7px 10px;
+  min-height: 40px;
   border-radius: 999px;
   background: rgba(255, 233, 202, 0.12);
   color: var(--text);
@@ -499,7 +501,7 @@ button:disabled {
 .card-topline {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   margin-bottom: 8px;
 }
@@ -515,8 +517,29 @@ button:disabled {
 
 .meta-line {
   color: var(--muted);
-  margin-top: 6px;
-  margin-bottom: 8px;
+  margin: 0;
+}
+
+.meta-stack {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+}
+
+.phase-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.5rem;
+  padding: 0 9px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  border: 1px solid var(--stroke);
+  color: var(--muted);
+  background: rgba(255, 227, 190, 0.1);
+  transition: background 140ms ease-out, border-color 140ms ease-out, color 140ms ease-out;
 }
 
 .pass-note {
@@ -540,6 +563,7 @@ button:disabled {
 
 .rank-chip {
   padding: 6px 0;
+  min-height: 38px;
   border-radius: 10px;
   background: rgba(255, 240, 224, 0.08);
   color: var(--text);
@@ -568,6 +592,7 @@ button:disabled {
   width: auto;
   justify-self: start;
   padding: 6px 10px;
+  min-height: 40px;
   border-radius: 999px;
   background: rgba(255, 230, 195, 0.12);
   color: var(--text);
@@ -802,7 +827,48 @@ button:disabled {
 }
 
 .action-bar button {
-  min-height: 46px;
+  min-height: 48px;
+}
+
+.center-board[data-phase='CHOOSING'] .phase-pill {
+  border-color: rgba(255, 198, 134, 0.65);
+  background: rgba(248, 171, 63, 0.2);
+  color: #ffe4c2;
+}
+
+.center-board[data-phase='CONFIRMING'] .phase-pill {
+  border-color: rgba(255, 206, 145, 0.78);
+  background: rgba(255, 177, 66, 0.3);
+  color: #fff4e3;
+  animation: phase-glow 880ms ease-in-out infinite;
+}
+
+.center-board[data-phase='RESOLVED'] .phase-pill {
+  border-color: rgba(151, 225, 169, 0.76);
+  background: rgba(88, 176, 110, 0.3);
+  color: #e8ffee;
+}
+
+.center-board[data-phase='PASSED'] .phase-pill {
+  border-color: rgba(198, 212, 236, 0.7);
+  background: rgba(146, 166, 196, 0.3);
+  color: #f0f5ff;
+}
+
+.center-board[data-phase='LOADING_CARD'] .phase-pill {
+  border-color: rgba(255, 206, 145, 0.78);
+  background: rgba(255, 177, 66, 0.28);
+  color: #fff4e3;
+  animation: phase-glow 900ms ease-in-out infinite;
+}
+
+.center-board[data-phase='LOADING_CARD'] .answers-shell {
+  opacity: 0.66;
+  filter: saturate(0.86);
+}
+
+.center-board[data-phase='CONFIRMING'] .action-bar button:first-child {
+  animation: phase-glow 860ms ease-in-out infinite;
 }
 
 .round-summary {
@@ -876,6 +942,18 @@ button:disabled {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes phase-glow {
+  0% {
+    box-shadow: 0 0 0 rgba(255, 198, 134, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(255, 198, 134, 0.22);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(255, 198, 134, 0);
   }
 }
 
@@ -954,10 +1032,17 @@ button:disabled {
     padding: 24px;
   }
 
+  select,
+  input,
+  button {
+    font-size: 16px;
+  }
+
   .setup-toolbar {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     justify-self: stretch;
+    gap: 8px;
   }
 
   .topic-grid,
@@ -965,8 +1050,22 @@ button:disabled {
     grid-template-columns: 1fr;
   }
 
+  .topic-tile {
+    min-height: 108px;
+  }
+
+  .pill {
+    min-height: 48px;
+  }
+
+  .player-token {
+    min-height: 44px;
+    padding: 10px 12px;
+  }
+
   .start-cta {
     width: 100%;
+    min-height: 54px;
   }
 
   .wheel-slot {
@@ -999,10 +1098,35 @@ button:disabled {
   .tile-grid,
   .action-bar {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .rank-selector {
     grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .rank-chip {
+    min-height: 44px;
+    font-size: 0.9rem;
+  }
+
+  .answer-tile {
+    min-height: 58px;
+    padding: 12px 14px;
+  }
+
+  .slot-index {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .action-bar button {
+    min-height: 56px;
+  }
+
+  .players-panel li {
+    min-height: 52px;
   }
 
   .summary-head,
@@ -1015,3 +1139,4 @@ button:disabled {
     grid-template-columns: 1fr;
   }
 }
+

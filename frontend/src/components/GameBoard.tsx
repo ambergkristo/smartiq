@@ -153,13 +153,18 @@ export default function GameBoard({
         starterPlayer={starterPlayer}
       />
 
-      <div className="center-board board-surface">
+      <div className="center-board board-surface" data-phase={phase}>
         <header className="card-header" style={{ borderBottomColor: CATEGORY_COLORS[category] || '#f59b1f' }}>
           <div className="card-topline">
             <p className="topic-pill">
               {category} | {card.topic} | {card.language.toUpperCase()}
             </p>
-            <p className="meta-line">Round {roundNumber}</p>
+            <div className="meta-stack">
+              <p className="meta-line">Round {roundNumber}</p>
+              <p className="phase-pill" data-testid="phase-pill">
+                {phaseLabel.toUpperCase()}
+              </p>
+            </div>
           </div>
           {isLongQuestion ? (
             <button
@@ -239,7 +244,7 @@ export default function GameBoard({
           )}
         </div>
 
-        <footer className="action-bar">
+        <footer className="action-bar" data-phase={phase}>
           {phase === 'CHOOSING' ? (
             <>
               <button ref={answerButtonRef} onClick={onAnswer} type="button" disabled={!canAnswer}>

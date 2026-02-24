@@ -51,6 +51,7 @@ describe('GameBoard layout', () => {
     expect(wheel).toBeInTheDocument();
     expect(within(wheel).getAllByRole('button')).toHaveLength(10);
     expect(screen.getByTestId('action-hint')).toHaveTextContent(/reveal one peg/i);
+    expect(screen.getByTestId('phase-pill')).toHaveTextContent('CHOOSING');
   });
 
   test('falls back to grid on narrow container', () => {
@@ -111,6 +112,7 @@ describe('GameBoard layout', () => {
     render(
       <GameBoard
         {...props}
+        selectedIndexes={new Set([2])}
         revealedIndexes={new Set([0])}
         wrongIndexes={new Set([1])}
       />
@@ -118,9 +120,10 @@ describe('GameBoard layout', () => {
 
     expect(screen.getByRole('button', { name: /peg-1 correct/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /peg-2 wrong/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /peg-3 unrevealed/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /peg-3 selected/i })).toBeInTheDocument();
     expect(screen.getAllByText('✓')).toHaveLength(1);
     expect(screen.getAllByText('✗')).toHaveLength(1);
+    expect(screen.getAllByText('◎')).toHaveLength(1);
   });
 
   test('supports keyboard flow for action buttons and announces state', async () => {
@@ -146,6 +149,7 @@ describe('GameBoard layout', () => {
     expect(props.onAnswer).toHaveBeenCalledTimes(1);
 
     rerender(<GameBoard {...props} phase="CONFIRMING" />);
+    expect(screen.getByTestId('phase-pill')).toHaveTextContent('CONFIRMING');
     const lockInButton = screen.getByRole('button', { name: 'LOCK IN' });
     await waitFor(() => expect(lockInButton).toHaveFocus());
     await user.keyboard('{Enter}');

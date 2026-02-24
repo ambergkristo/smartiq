@@ -1,6 +1,13 @@
-﻿export default function AnswerTile({ index, option, state, onClick, disabled }) {
+const STATE_MARKERS = {
+  hidden: '',
+  selected: '\u25ce',
+  correct: '\u2713',
+  wrong: '\u2717'
+};
+
+export default function AnswerTile({ index, option, state, onClick, disabled }) {
   const className = ['answer-tile', `is-${state}`].join(' ');
-  const marker = state === 'correct' ? '✓' : state === 'wrong' ? '✗' : state === 'selected' ? '•' : '';
+  const marker = STATE_MARKERS[state] ?? '';
   const isHidden = state === 'hidden';
   const a11yState = state === 'hidden' ? 'unrevealed' : state;
 
@@ -20,4 +27,3 @@
     </button>
   );
 }
-
