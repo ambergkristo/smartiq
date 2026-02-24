@@ -1,18 +1,21 @@
 # Local Verification Gate
 
-Canonical local verification gate commands (run from repo root, Windows PowerShell):
+Canonical local verification gate commands (run from repo root):
 
-```powershell
+```bash
 mvn -q -f backend/pom.xml test
-npm.cmd --prefix frontend run lint
-npm.cmd --prefix frontend run test -- --run
-node tools/validate_cards_v2.js
-node tools/score_cards_quality.js --fail-threshold=0.80
+npm --prefix frontend run lint
+npm --prefix frontend run test -- --run
+npm --prefix frontend run build
+node tools/validate_cards_v2.js data/smart10/cards.en.json
+node tools/validate_cards_v2.js data/smart10/cards.et.json
+node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.80
+node tools/score_cards_quality.js data/smart10/cards.et.json --fail-threshold=0.80
 ```
 
-One-command aliases (same checks):
+One-command aliases (same checks as `release:check`):
 
-```powershell
+```bash
 npm run gate:local
 npm run gate:quick
 ```
