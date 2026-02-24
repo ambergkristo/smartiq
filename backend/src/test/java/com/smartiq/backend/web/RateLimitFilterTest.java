@@ -14,6 +14,7 @@ import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(properties = {
@@ -77,7 +78,11 @@ class RateLimitFilterTest {
                         .param("sessionId", "s3")
                         .param("lang", "en"))
                 .andExpect(status().isTooManyRequests())
-                .andExpect(header().exists("Retry-After"));
+                .andExpect(header().exists("Retry-After"))
+                .andExpect(jsonPath("$.status").value(429))
+                .andExpect(jsonPath("$.reason").value("Too Many Requests"))
+                .andExpect(jsonPath("$.path").value("/api/cards/next"))
+                .andExpect(jsonPath("$.error").value("Rate limit exceeded for /api/cards/next"));
     }
 
     @Test
@@ -96,6 +101,10 @@ class RateLimitFilterTest {
                         .param("language", "en")
                         .param("gameId", "g3"))
                 .andExpect(status().isTooManyRequests())
-                .andExpect(header().exists("Retry-After"));
+                .andExpect(header().exists("Retry-After"))
+                .andExpect(jsonPath("$.status").value(429))
+                .andExpect(jsonPath("$.reason").value("Too Many Requests"))
+                .andExpect(jsonPath("$.path").value("/api/cards/nextRandom"))
+                .andExpect(jsonPath("$.error").value("Rate limit exceeded for /api/cards/nextRandom"));
     }
 }

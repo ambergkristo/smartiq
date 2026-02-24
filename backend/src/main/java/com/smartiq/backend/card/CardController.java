@@ -13,8 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
 
 @Validated
 @RestController
@@ -42,11 +40,7 @@ public class CardController {
     @GetMapping("/cards/random")
     public ResponseEntity<?> getRandomCard(@RequestParam(name = "topic", required = false) String topic) {
         log.info("api_card_random topic={}", topic == null ? "any" : topic);
-        try {
-            return legacyResponse(HttpStatus.OK).body(cardService.getRandomCard(topic));
-        } catch (NoSuchElementException ex) {
-            return legacyResponse(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
-        }
+        return legacyResponse(HttpStatus.OK).body(cardService.getRandomCard(topic));
     }
 
     @GetMapping("/cards/next")
@@ -56,38 +50,22 @@ public class CardController {
                                          @RequestParam(name = "sessionId", required = false) String sessionId,
                                          @RequestParam(name = "lang", defaultValue = "en") String language,
                                          @RequestParam(name = "v", defaultValue = "1") int version) {
-        try {
-            String resolvedTopic = resolveTopic(topicId, topic);
-            CardResponse card = cardService.getNextCard(resolvedTopic, difficulty, sessionId, language);
-            if (version == 1) {
-                return legacyResponse(HttpStatus.OK).body(card);
-            }
-            if (version == 2) {
-                return legacyResponse(HttpStatus.OK).body(CardResponseV2Mapper.toV2(card));
-            }
-            throw new IllegalArgumentException("Unsupported API version: " + version);
-        } catch (IllegalArgumentException ex) {
-            return legacyResponse(HttpStatus.BAD_REQUEST).body(Map.of("error", ex.getMessage()));
-        } catch (InvalidCardContractException ex) {
-            return legacyResponse(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", ex.getMessage()));
-        } catch (NoSuchElementException ex) {
-            return legacyResponse(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
+        String resolvedTopic = resolveTopic(topicId, topic);
+        CardResponse card = cardService.getNextCard(resolvedTopic, difficulty, sessionId, language);
+        if (version == 1) {
+            return legacyResponse(HttpStatus.OK).body(card);
         }
+        if (version == 2) {
+            return legacyResponse(HttpStatus.OK).body(CardResponseV2Mapper.toV2(card));
+        }
+        throw new IllegalArgumentException("Unsupported API version: " + version);
     }
 
     @GetMapping("/cards/nextRandom")
     public ResponseEntity<?> getNextRandomCard(@RequestParam(name = "language") String language,
                                                @RequestParam(name = "gameId") String gameId,
                                                @RequestParam(name = "topic", required = false) String topic) {
-        try {
-            return ResponseEntity.ok(cardService.getNextRandomCard(language, gameId, topic));
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
-        } catch (InvalidCardContractException ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", ex.getMessage()));
-        } catch (NoSuchElementException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
-        }
+        return ResponseEntity.ok(cardService.getNextRandomCard(language, gameId, topic));
     }
 
     private static String resolveTopic(String topicId, String legacyTopic) {
