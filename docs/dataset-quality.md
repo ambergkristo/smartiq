@@ -104,6 +104,9 @@ CI behavior (v1):
 - release-readiness reports semantic warning budget (`<=80` per locale) via:
   - `node tools/report_semantic_warning_budget.js --max-warnings=80`
   - currently warning-only (non-blocking).
+- release-readiness also reports locale parity checks via:
+  - `node tools/report_semantic_locale_parity.js --min-category-score=NUMBER:0.90,COLOR:0.95 --max-short-option-ratio=NUMBER:0.40,COLOR:0.10 --max-locale-score-gap=0.02 --max-locale-warning-gap=10`
+  - currently warning-only (non-blocking).
 
 How to improve semantic score:
 
