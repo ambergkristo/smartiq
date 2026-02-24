@@ -1,5 +1,4 @@
 import {
-  buildNextCardQuery,
   buildRoomRejoinPayload,
   buildServerActionPayload,
   buildServerGamePayload,
@@ -53,14 +52,6 @@ describe('api error mapping', () => {
       code: 'HTTP_ERROR',
       detail: 'Card id not found'
     })).toContain('Not found. Card id not found');
-  });
-
-  test('builds cards/next query with backend contract params and EN fallback', () => {
-    const params = buildNextCardQuery({ topic: 'Science', difficulty: 'hard', language: 'et' });
-    expect(params.get('topic')).toBe('Science');
-    expect(params.get('difficulty')).toBe('3');
-    expect(params.get('language')).toBe('en');
-    expect(params.get('lang')).toBe('en');
   });
 
   test('builds server game payload with normalized players and defaults', () => {

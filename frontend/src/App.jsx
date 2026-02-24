@@ -416,8 +416,8 @@ export default function App() {
         setCardError('');
         const card = await fetchNextCard({
           topic: config.topic || undefined,
-          lang: config.lang,
-          sessionId: gameId
+          language: config.lang,
+          gameId
         });
         legacyCardLoaded(card);
       } catch (error) {
