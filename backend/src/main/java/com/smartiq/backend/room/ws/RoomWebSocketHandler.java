@@ -1,5 +1,7 @@
 package com.smartiq.backend.room.ws;
 
+import com.smartiq.backend.room.RejoinRoomRequest;
+import com.smartiq.backend.room.RoomResumeResponse;
 import com.smartiq.backend.room.RoomService;
 import com.smartiq.backend.room.RoomSnapshot;
 import org.springframework.stereotype.Component;
@@ -10,6 +12,8 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 
@@ -30,7 +34,10 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         try {
             String roomCode = resolveRoomCode(session);
-            RoomSnapshot snapshot = roomService.getRoomSnapshot(roomCode);
+            String playerId = resolveRequiredQueryParam(session, "playerId");
+            String authToken = resolveRequiredQueryParam(session, "authToken");
+            RoomResumeResponse resume = roomService.rejoinRoom(roomCode, new RejoinRoomRequest(playerId, authToken));
+            RoomSnapshot snapshot = resume.roomState();
             roomWsGateway.register(roomCode, session);
             roomWsGateway.sendRoomStateToSession(session, snapshot);
         } catch (IllegalArgumentException | NoSuchElementException ex) {
@@ -67,6 +74,33 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
         }
 
         return rawCode.trim().toUpperCase(Locale.ROOT);
+    }
+
+    private static String resolveRequiredQueryParam(WebSocketSession session, String key) {
+        URI uri = session.getUri();
+        if (uri == null || uri.getRawQuery() == null || uri.getRawQuery().isBlank()) {
+            throw new IllegalArgumentException(key + " is required");
+        }
+
+        String[] pairs = uri.getRawQuery().split("&");
+        for (String pair : pairs) {
+            if (pair == null || pair.isBlank()) {
+                continue;
+            }
+            String[] parts = pair.split("=", 2);
+            String rawKey = URLDecoder.decode(parts[0], StandardCharsets.UTF_8);
+            if (!key.equals(rawKey)) {
+                continue;
+            }
+            String rawValue = parts.length > 1 ? parts[1] : "";
+            String value = URLDecoder.decode(rawValue, StandardCharsets.UTF_8).trim();
+            if (value.isEmpty()) {
+                break;
+            }
+            return value;
+        }
+
+        throw new IllegalArgumentException(key + " is required");
     }
 
     private static String trimReason(String reason) {

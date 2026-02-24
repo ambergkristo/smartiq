@@ -33,4 +33,10 @@ public class RoomController {
         roomWsGateway.sendRoomState(participant.roomCode(), snapshot);
         return participant;
     }
+
+    @PostMapping("/{roomCode}/rejoin")
+    public RoomResumeResponse rejoinRoom(@PathVariable String roomCode,
+                                         @RequestBody(required = false) RejoinRoomRequest request) {
+        return roomService.rejoinRoom(roomCode, request);
+    }
 }

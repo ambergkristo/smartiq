@@ -54,6 +54,34 @@ class RoomServiceTest {
     }
 
     @Test
+    void rejoinWithValidTokenReturnsLatestRoomSnapshot() {
+        RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
+        roomService.joinRoom(created.roomCode(), new JoinRoomRequest("Bob"));
+
+        RoomResumeResponse resumed = roomService.rejoinRoom(
+                created.roomCode(),
+                new RejoinRoomRequest(created.playerId(), created.authToken())
+        );
+
+        assertThat(resumed.roomCode()).isEqualTo(created.roomCode());
+        assertThat(resumed.playerId()).isEqualTo("p1");
+        assertThat(resumed.authToken()).isEqualTo(created.authToken());
+        assertThat(resumed.roomState().players()).hasSize(2);
+    }
+
+    @Test
+    void rejoinRejectsInvalidToken() {
+        RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
+
+        assertThatThrownBy(() -> roomService.rejoinRoom(
+                created.roomCode(),
+                new RejoinRoomRequest(created.playerId(), "rt_invalid")
+        ))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("invalid room token");
+    }
+
+    @Test
     void joinUnknownRoomThrowsNotFound() {
         assertThatThrownBy(() -> roomService.joinRoom("MISSING", new JoinRoomRequest("Bob")))
                 .isInstanceOf(NoSuchElementException.class)
