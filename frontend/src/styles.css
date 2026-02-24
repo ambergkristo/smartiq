@@ -95,6 +95,41 @@ main[data-phase='game'] {
   pointer-events: none;
 }
 
+.audio-controls {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(21, 10, 5, 0.8);
+  border: 1px solid rgba(255, 200, 138, 0.32);
+}
+
+.audio-toggle {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.audio-volume-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.audio-volume-slider {
+  width: 86px;
+  padding: 0;
+  accent-color: var(--accent);
+}
+
 h1,
 h2,
 h3,
@@ -1026,6 +1061,21 @@ button:disabled {
   .build-badge {
     top: 8px;
     right: 8px;
+  }
+
+  .audio-controls {
+    top: 8px;
+    left: 8px;
+    gap: 6px;
+    padding: 6px 8px;
+  }
+
+  .audio-volume-label {
+    display: none;
+  }
+
+  .audio-volume-slider {
+    width: 72px;
   }
 
   .setup-panel {

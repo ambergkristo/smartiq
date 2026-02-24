@@ -77,6 +77,27 @@ describe('App startup resilience', () => {
     expect(screen.getByTestId('active-filter')).toHaveTextContent(/any topic \| en/i);
   });
 
+  test('persists audio controls state between renders', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+
+    const { unmount } = render(<App />);
+
+    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
+    const muteToggle = screen.getByRole('button', { name: /sound on/i });
+    const volumeSlider = screen.getByLabelText(/volume/i);
+
+    fireEvent.click(muteToggle);
+    fireEvent.change(volumeSlider, { target: { value: '30' } });
+    expect(screen.getByRole('button', { name: /muted/i })).toBeInTheDocument();
+
+    unmount();
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
+    expect(screen.getByRole('button', { name: /muted/i })).toBeInTheDocument();
+    expect(screen.getByLabelText(/volume/i)).toHaveValue('30');
+  });
+
   test('applies selected theme to document root', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
 

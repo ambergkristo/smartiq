@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { API_BASE, fetchNextCard, fetchTopics, resolveCardErrorMessage, resolveTopicsErrorState } from './api';
 import GameBoard from './components/GameBoard';
 import RoundSummary from './components/RoundSummary';
+import { useAudioFeedback } from './audio/useAudioFeedback';
 import { useGameEngine } from './state/useGameEngine';
 import { useServerGameEngine } from './state/useServerGameEngine';
 import { DEFAULT_LANGS, GamePhase } from './state/types';
@@ -104,6 +105,35 @@ function BuildBadge() {
     <p className="build-badge" data-testid="build-badge">
       {badgeText}
     </p>
+  );
+}
+
+function AudioControls({ muted, volume, onToggleMute, onVolumeChange }) {
+  return (
+    <section className="audio-controls board-surface" data-testid="audio-controls" aria-label="Audio controls">
+      <button
+        type="button"
+        className="audio-toggle"
+        onClick={onToggleMute}
+        aria-pressed={!muted}
+      >
+        {muted ? 'Muted' : 'Sound on'}
+      </button>
+      <label className="audio-volume-label" htmlFor="audio-volume-slider">
+        Volume
+      </label>
+      <input
+        id="audio-volume-slider"
+        className="audio-volume-slider"
+        type="range"
+        min="0"
+        max="100"
+        step="5"
+        value={Math.round(volume * 100)}
+        onChange={(event) => onVolumeChange(Number(event.target.value) / 100)}
+        aria-label="Volume"
+      />
+    </section>
   );
 }
 
@@ -343,6 +373,19 @@ export default function App() {
     cardLoadFailed: legacyCardLoadFailed
   } = legacyEngine;
 
+  const {
+    muted: audioMuted,
+    volume: audioVolume,
+    setVolume: setAudioVolume,
+    toggleMute: toggleAudioMute,
+    playRoundIntro,
+    playCorrect,
+    playWrong
+  } = useAudioFeedback();
+  const lastAudioCardRef = useRef('');
+  const lastRevealedCountRef = useRef(0);
+  const lastWrongCountRef = useRef(0);
+
   const loadTopics = useCallback(async () => {
     setStartup({
       phase: STARTUP_PHASE.LOADING,
@@ -429,6 +472,37 @@ export default function App() {
     loadCard();
   }, [runtimeMode, legacyLoadTicket, legacyCardLoaded, legacyCardLoadFailed, legacyPhase, gameId, config.topic, config.lang]);
 
+  useEffect(() => {
+    const cardId = engine.card?.cardId || engine.card?.id || '';
+    if (!cardId || engine.phase === GamePhase.SETUP) {
+      lastAudioCardRef.current = '';
+      lastRevealedCountRef.current = 0;
+      lastWrongCountRef.current = 0;
+      return;
+    }
+
+    if (cardId !== lastAudioCardRef.current) {
+      playRoundIntro();
+      lastAudioCardRef.current = cardId;
+      lastRevealedCountRef.current = engine.revealedIndexes.size;
+      lastWrongCountRef.current = engine.wrongIndexes.size;
+      return;
+    }
+
+    const revealedCount = engine.revealedIndexes.size;
+    const wrongCount = engine.wrongIndexes.size;
+
+    if (revealedCount > lastRevealedCountRef.current) {
+      playCorrect();
+    }
+    if (wrongCount > lastWrongCountRef.current) {
+      playWrong();
+    }
+
+    lastRevealedCountRef.current = revealedCount;
+    lastWrongCountRef.current = wrongCount;
+  }, [engine.card, engine.phase, engine.revealedIndexes, engine.wrongIndexes, playCorrect, playRoundIntro, playWrong]);
+
   function handleStartRound() {
     const parsedPlayers = parsePlayers(config.playersText);
     if (isServerEngineEnabled() && parsedPlayers.length >= 2) {
@@ -481,6 +555,12 @@ export default function App() {
   return (
     <main data-phase={engine.phase === GamePhase.SETUP ? 'setup' : 'game'}>
       <BuildBadge />
+      <AudioControls
+        muted={audioMuted}
+        volume={audioVolume}
+        onToggleMute={toggleAudioMute}
+        onVolumeChange={setAudioVolume}
+      />
       {engine.phase === GamePhase.SETUP ? (
         <>
           {startup.phase !== STARTUP_PHASE.READY ? <StartupStatePanel startup={startup} onRetry={loadTopics} /> : null}
