@@ -157,7 +157,7 @@ export function buildServerGamePayload({ players, language, topic, winCondition 
   return payload;
 }
 
-export function buildServerActionPayload({ type, tileIndex, rank, actorPlayerId, actionToken } = {}) {
+export function buildServerActionPayload({ type, tileIndex, rank, actorPlayerId, actionToken, actionRequestId } = {}) {
   const actionType = String(type || '').trim().toUpperCase();
   if (!actionType) {
     throw new ApiError('Action type is required', 0, 'VALIDATION_ERROR');
@@ -174,11 +174,16 @@ export function buildServerActionPayload({ type, tileIndex, rank, actorPlayerId,
   if (!normalizedActionToken) {
     throw new ApiError('actionToken is required', 0, 'VALIDATION_ERROR');
   }
+  const normalizedActionRequestId = String(actionRequestId || '').trim();
+  if (!normalizedActionRequestId) {
+    throw new ApiError('actionRequestId is required', 0, 'VALIDATION_ERROR');
+  }
 
   const payload = {
     type: actionType,
     actorPlayerId: normalizedActorPlayerId,
-    actionToken: normalizedActionToken
+    actionToken: normalizedActionToken,
+    actionRequestId: normalizedActionRequestId
   };
   if (actionType === 'ANSWER') {
     if (!Number.isInteger(tileIndex)) {
@@ -482,6 +487,13 @@ export function resolveGameSessionErrorMessage(error) {
       return `Forbidden game action. ${error.detail}`;
     }
     return 'Forbidden game action.';
+  }
+
+  if (error?.status === 409) {
+    if (typeof error?.detail === 'string' && error.detail.trim().length > 0) {
+      return `Duplicate game action. ${error.detail}`;
+    }
+    return 'Duplicate game action.';
   }
 
   if (error?.status >= 500) {

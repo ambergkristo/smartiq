@@ -1,6 +1,7 @@
 package com.smartiq.backend.web;
 
 import com.smartiq.backend.card.InvalidCardContractException;
+import com.smartiq.backend.game.DuplicateGameActionException;
 import com.smartiq.backend.game.ForbiddenGameActionException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
@@ -41,6 +42,11 @@ public class ApiExceptionHandler {
     @ExceptionHandler(ForbiddenGameActionException.class)
     public ResponseEntity<Object> handleForbiddenAction(ForbiddenGameActionException ex, HttpServletRequest request) {
         return build(HttpStatus.FORBIDDEN, ex.getMessage(), request.getRequestURI());
+    }
+
+    @ExceptionHandler(DuplicateGameActionException.class)
+    public ResponseEntity<Object> handleDuplicateAction(DuplicateGameActionException ex, HttpServletRequest request) {
+        return build(HttpStatus.CONFLICT, ex.getMessage(), request.getRequestURI());
     }
 
     @ExceptionHandler(InvalidCardContractException.class)

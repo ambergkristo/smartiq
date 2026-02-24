@@ -5,6 +5,7 @@ public record GameActionRequest(
         Integer tileIndex,
         Integer rank,
         String actorPlayerId,
-        String actionToken
+        String actionToken,
+        String actionRequestId
 ) {
 }

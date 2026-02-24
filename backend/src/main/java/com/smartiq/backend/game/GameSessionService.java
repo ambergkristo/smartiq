@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -43,6 +44,7 @@ public class GameSessionService {
     private static final String METRIC_ANSWER_TOTAL = "smartiq.game.answer.total";
     private static final String METRIC_GAME_DURATION = "smartiq.game.duration.seconds";
     private static final String METRIC_ROUND_DURATION = "smartiq.game.round.duration.seconds";
+    private static final int ACTION_REQUEST_HISTORY_LIMIT = 512;
 
     private final CardService cardService;
     private final MeterRegistry meterRegistry;
@@ -112,7 +114,9 @@ public class GameSessionService {
 
         String actorPlayerId = normalizeRequiredField(request.actorPlayerId(), "actorPlayerId");
         String actionToken = normalizeRequiredField(request.actionToken(), "actionToken");
+        String actionRequestId = normalizeRequiredField(request.actionRequestId(), "actionRequestId");
         requireActionActor(state, actorPlayerId, actionToken);
+        requireUniqueActionRequestId(state, actionRequestId);
 
         String actionType = normalizeActionType(request.type());
         switch (actionType) {
@@ -120,6 +124,7 @@ public class GameSessionService {
             case "ANSWER" -> applyAnswer(state, request.tileIndex(), request.rank());
             default -> throw new IllegalArgumentException("unsupported action type: " + actionType);
         }
+        rememberActionRequestId(state, actionRequestId);
 
         return toSnapshot(state);
     }
@@ -283,6 +288,20 @@ public class GameSessionService {
         }
         if (!actorPlayerId.equals(state.currentPlayerId())) {
             throw new ForbiddenGameActionException("actor is not active player");
+        }
+    }
+
+    private static void requireUniqueActionRequestId(SessionState state, String actionRequestId) {
+        if (state.processedActionRequestIds.contains(actionRequestId)) {
+            throw new DuplicateGameActionException("duplicate actionRequestId");
+        }
+    }
+
+    private static void rememberActionRequestId(SessionState state, String actionRequestId) {
+        state.processedActionRequestIds.add(actionRequestId);
+        while (state.processedActionRequestIds.size() > ACTION_REQUEST_HISTORY_LIMIT) {
+            String oldest = state.processedActionRequestIds.iterator().next();
+            state.processedActionRequestIds.remove(oldest);
         }
     }
 
@@ -539,6 +558,7 @@ public class GameSessionService {
         private final Map<String, Integer> roundScores;
         private final Map<String, PlayerRoundStatus> statuses;
         private final Map<String, String> actionTokens;
+        private final LinkedHashSet<String> processedActionRequestIds;
         private int roundNumber;
         private int starterPlayerIndex;
         private int activePlayerIndex;
@@ -568,6 +588,7 @@ public class GameSessionService {
             this.roundScores = roundScores;
             this.statuses = statuses;
             this.actionTokens = actionTokens;
+            this.processedActionRequestIds = new LinkedHashSet<>();
             this.roundNumber = 1;
             this.starterPlayerIndex = 0;
             this.activePlayerIndex = 0;

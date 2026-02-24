@@ -88,6 +88,13 @@ function safeNumber(value, fallback = 0) {
   return Number.isInteger(value) ? value : fallback;
 }
 
+function createActionRequestId() {
+  if (typeof globalThis !== 'undefined' && globalThis.crypto && typeof globalThis.crypto.randomUUID === 'function') {
+    return `ga_${globalThis.crypto.randomUUID()}`;
+  }
+  return `ga_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+}
+
 function mapSnapshot(snapshot, languageFallback, targetScoreFallback) {
   const players = Array.isArray(snapshot?.players) ? snapshot.players : [];
   const playerById = new Map();
@@ -472,6 +479,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       setLastAction(`${actingPlayer}: choose rank first`);
       return;
     }
+    const actionRequestId = createActionRequestId();
 
     setRequestInFlight(true);
     try {
@@ -480,7 +488,8 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
         tileIndex: selectedIndex,
         rank: Number.isInteger(selectedRank) ? selectedRank : undefined,
         actorPlayerId,
-        actionToken
+        actionToken,
+        actionRequestId
       });
       queueOutcome(responseSnapshot, 'ANSWER', actingPlayer, selectedIndex);
     } catch (error) {
@@ -521,12 +530,14 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       setPhase(GamePhase.CHOOSING);
       return;
     }
+    const actionRequestId = createActionRequestId();
     setRequestInFlight(true);
     try {
       const responseSnapshot = await sendServerGameAction(activeSnapshot.gameId, {
         type: 'PASS',
         actorPlayerId,
-        actionToken
+        actionToken,
+        actionRequestId
       });
       queueOutcome(responseSnapshot, 'PASS', actingPlayer, -1);
     } catch (error) {
