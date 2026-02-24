@@ -71,19 +71,43 @@ describe('api error mapping', () => {
   });
 
   test('builds PASS action payload', () => {
-    expect(buildServerActionPayload({ type: 'pass' })).toEqual({ type: 'PASS' });
+    expect(buildServerActionPayload({ type: 'pass', actorPlayerId: 'p1', actionToken: 'at_1' })).toEqual({
+      type: 'PASS',
+      actorPlayerId: 'p1',
+      actionToken: 'at_1'
+    });
   });
 
   test('builds ANSWER action payload with tile and optional rank', () => {
-    expect(buildServerActionPayload({ type: 'answer', tileIndex: 2, rank: 3 })).toEqual({
+    expect(buildServerActionPayload({
+      type: 'answer',
+      tileIndex: 2,
+      rank: 3,
+      actorPlayerId: 'p1',
+      actionToken: 'at_1'
+    })).toEqual({
       type: 'ANSWER',
+      actorPlayerId: 'p1',
+      actionToken: 'at_1',
       tileIndex: 2,
       rank: 3
     });
   });
 
   test('rejects ANSWER payload without tile index', () => {
-    expect(() => buildServerActionPayload({ type: 'ANSWER' })).toThrow('tileIndex is required for ANSWER');
+    expect(() => buildServerActionPayload({
+      type: 'ANSWER',
+      actorPlayerId: 'p1',
+      actionToken: 'at_1'
+    })).toThrow('tileIndex is required for ANSWER');
+  });
+
+  test('rejects action payload without actorPlayerId', () => {
+    expect(() => buildServerActionPayload({ type: 'PASS', actionToken: 'at_1' })).toThrow('actorPlayerId is required');
+  });
+
+  test('rejects action payload without actionToken', () => {
+    expect(() => buildServerActionPayload({ type: 'PASS', actorPlayerId: 'p1' })).toThrow('actionToken is required');
   });
 
   test('builds room rejoin payload with trimmed fields', () => {

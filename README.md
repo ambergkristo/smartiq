@@ -120,6 +120,33 @@ $env:VITE_API_BASE_URL="https://<your-backend-domain>"
 - `GET /api/cards/nextRandom?language=&gameId=&topic=` (preferred)
 - `GET /api/cards/next?topic=&difficulty=&sessionId=&lang=` (legacy/custom mode, deprecated in `prod`)
 - `GET /api/cards/random?topic=` (legacy/backward-compatible, deprecated in `prod`)
+- `POST /api/game`
+- `GET /api/game/{gameId}`
+- `POST /api/game/{gameId}/action`
+
+Server-authoritative action payload contract:
+
+```json
+{
+  "type": "ANSWER|PASS",
+  "tileIndex": 0,
+  "rank": 1,
+  "actorPlayerId": "p1",
+  "actionToken": "at_..."
+}
+```
+
+Server game create response includes:
+
+```json
+{
+  "snapshot": { "...": "GameSessionSnapshot" },
+  "actionTokens": {
+    "p1": "at_...",
+    "p2": "at_..."
+  }
+}
+```
 
 In `prod` profile, legacy endpoints return deprecation headers:
 - `Deprecation: true`
