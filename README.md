@@ -239,6 +239,7 @@ Closed beta operations: `docs/beta-runbook-v1.md`
 Legacy endpoint retirement plan: `docs/legacy-endpoint-retirement-plan.md`
 Legacy endpoint migration guide: `docs/legacy-cards-endpoint-migration.md`
 Branch governance and cleanup policy: `docs/branch-governance.md`
+Full branch consolidation audit: `docs/branch-consolidation-full-audit-2026-02-24.md`
 
 Observability reference: `docs/observability.md`
 
