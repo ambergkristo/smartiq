@@ -46,7 +46,7 @@ jobs:
         run: node ../tools/score_cards_semantic.js ../data/smart10/cards.et.json --fail-threshold=0.70
 
       - name: Semantic locale parity gate (blocking)
-        run: node ../tools/report_semantic_locale_parity.js --min-category-score=NUMBER:0.90,COLOR:0.95 --max-short-option-ratio=NUMBER:0.40,COLOR:0.10 --max-locale-score-gap=0.02 --max-locale-warning-gap=10 --fail-on-exceed
+        run: node ../tools/report_semantic_locale_parity.js ../data/smart10/cards.en.json ../data/smart10/cards.et.json --min-category-score=NUMBER:0.90,COLOR:0.95 --max-short-option-ratio=NUMBER:0.40,COLOR:0.10 --max-locale-score-gap=0.02 --max-locale-warning-gap=10 --fail-on-exceed
 
       - name: Install
         run: npm ci
