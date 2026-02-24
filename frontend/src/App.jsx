@@ -36,6 +36,9 @@ const STARTUP_PHASE = {
   TOPICS_EMPTY: 'topics-empty',
   READY: 'ready'
 };
+const SHOW_BUILD_BADGE = import.meta.env.DEV
+  || String(import.meta.env.VITE_SHOW_BUILD_BADGE || '').toLowerCase() === 'true';
+const BUILD_SHA = String(import.meta.env.VITE_BUILD_SHA || '').trim();
 
 const DIFFICULTY_OPTIONS = [
   { value: '1', label: 'Easy' },
@@ -78,6 +81,19 @@ function SetupSkeleton() {
         {STRINGS.startRound}
       </button>
     </section>
+  );
+}
+
+function BuildBadge() {
+  if (!SHOW_BUILD_BADGE) {
+    return null;
+  }
+
+  const badgeText = BUILD_SHA ? `DEV BUILD ${BUILD_SHA.slice(0, 7)}` : 'DEV BUILD';
+  return (
+    <p className="build-badge" data-testid="build-badge">
+      {badgeText}
+    </p>
   );
 }
 
@@ -409,6 +425,7 @@ export default function App() {
 
   return (
     <main data-phase={engine.phase === GamePhase.SETUP ? 'setup' : 'game'}>
+      <BuildBadge />
       {engine.phase === GamePhase.SETUP ? (
         <>
           {startup.phase !== STARTUP_PHASE.READY ? <StartupStatePanel startup={startup} onRetry={loadTopics} /> : null}

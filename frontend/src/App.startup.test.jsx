@@ -39,6 +39,14 @@ describe('App startup resilience', () => {
     expect(screen.getByTestId('setup-skeleton')).toBeInTheDocument();
   });
 
+  test('shows dev build badge marker', () => {
+    fetchTopics.mockImplementation(() => new Promise(() => {}));
+
+    render(<App />);
+
+    expect(screen.getByTestId('build-badge')).toHaveTextContent(/dev build/i);
+  });
+
   test('shows actionable backend error with retry', async () => {
     fetchTopics.mockRejectedValue(new Error('network'));
 
