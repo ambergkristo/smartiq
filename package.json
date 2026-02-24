@@ -23,6 +23,7 @@
     "score:cards:quality:ci:et": "node tools/score_cards_quality.js data/smart10/cards.et.json --fail-threshold=0.80",
     "score:cards:semantic": "node tools/score_cards_semantic.js data/smart10/cards.en.json",
     "score:cards:semantic:et": "node tools/score_cards_semantic.js data/smart10/cards.et.json",
+    "report:cards:semantic:budget": "node tools/report_semantic_warning_budget.js --max-warnings=80",
     "report:et:quality": "node tools/generate_et_quality_report.js",
     "validate:cards:legacy": "node tools/validate-cards.js data/smart10/cards.en.json",
     "test:golden": "node tools/validate-cards.js data/smart10/golden/golden.dataset.json",
