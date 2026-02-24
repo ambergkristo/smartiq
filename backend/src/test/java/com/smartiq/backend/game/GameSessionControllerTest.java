@@ -46,14 +46,20 @@ class GameSessionControllerTest {
 
     @Test
     void createGameReturnsSnapshot() throws Exception {
-        when(gameSessionService.createGame(any())).thenReturn(snapshot("game-1", "CHOOSING"));
+        when(gameSessionService.createGameWithControl(any())).thenReturn(
+                new GameSessionCreateResponse(
+                        snapshot("game-1", "CHOOSING"),
+                        Map.of("p1", "at_1", "p2", "at_2")
+                )
+        );
 
         mockMvc.perform(post("/api/game")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30))))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.gameId").value("game-1"))
-                .andExpect(jsonPath("$.roundState.phase").value("CHOOSING"));
+                .andExpect(jsonPath("$.snapshot.gameId").value("game-1"))
+                .andExpect(jsonPath("$.snapshot.roundState.phase").value("CHOOSING"))
+                .andExpect(jsonPath("$.actionTokens.p1").value("at_1"));
     }
 
     @Test
@@ -71,7 +77,7 @@ class GameSessionControllerTest {
 
         mockMvc.perform(post("/api/game/game-1/action")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new GameActionRequest("PASS", null, null))))
+                        .content(objectMapper.writeValueAsString(new GameActionRequest("PASS", null, null, "p1", "at_1"))))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.roundState.phase").value("GAME_OVER"));
     }
@@ -83,10 +89,24 @@ class GameSessionControllerTest {
 
         mockMvc.perform(post("/api/game/game-1/action")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new GameActionRequest(null, null, null))))
+                        .content(objectMapper.writeValueAsString(new GameActionRequest(null, null, null, "p1", "at_1"))))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.error").value("type is required"))
                 .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.path").value("/api/game/game-1/action"));
+    }
+
+    @Test
+    void forbiddenActionIsMappedToForbiddenErrorShape() throws Exception {
+        when(gameSessionService.applyAction(eq("game-1"), any()))
+                .thenThrow(new ForbiddenGameActionException("invalid action token"));
+
+        mockMvc.perform(post("/api/game/game-1/action")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new GameActionRequest("PASS", null, null, "p1", "bad_token"))))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.error").value("invalid action token"))
+                .andExpect(jsonPath("$.status").value(403))
                 .andExpect(jsonPath("$.path").value("/api/game/game-1/action"));
     }
 

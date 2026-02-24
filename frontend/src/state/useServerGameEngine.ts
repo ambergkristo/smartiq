@@ -59,6 +59,31 @@ function normalizePlayers(rawPlayers) {
     .filter(Boolean);
 }
 
+function normalizeActionTokens(rawTokens) {
+  if (!rawTokens || typeof rawTokens !== 'object' || Array.isArray(rawTokens)) {
+    return {};
+  }
+  return Object.entries(rawTokens).reduce((acc, [playerId, token]) => {
+    const normalizedPlayerId = String(playerId || '').trim();
+    const normalizedToken = String(token || '').trim();
+    if (normalizedPlayerId && normalizedToken) {
+      acc[normalizedPlayerId] = normalizedToken;
+    }
+    return acc;
+  }, {});
+}
+
+function fallbackActionTokens(snapshot) {
+  const players = Array.isArray(snapshot?.players) ? snapshot.players : [];
+  return players.reduce((acc, player) => {
+    const playerId = String(player?.playerId || '').trim();
+    if (playerId) {
+      acc[playerId] = `legacy-token-${playerId}`;
+    }
+    return acc;
+  }, {});
+}
+
 function safeNumber(value, fallback = 0) {
   return Number.isInteger(value) ? value : fallback;
 }
@@ -193,6 +218,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   const [language, setLanguage] = useState('en');
   const [requestInFlight, setRequestInFlight] = useState(false);
   const [controlledPlayer, setControlledPlayer] = useState(null);
+  const [actionTokensByPlayerId, setActionTokensByPlayerId] = useState({});
 
   const currentPlayer = players[currentPlayerIndex] ?? players[0] ?? DEFAULT_PLAYERS[0];
 
@@ -244,12 +270,21 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setCard(null);
     setWinner(null);
     setControlledPlayer(null);
+    setActionTokensByPlayerId({});
     setLoadTicket((value) => value + 1);
     setQueuedSnapshot(null);
     setQueuedTransition('none');
 
     try {
-      const snapshot = await createServerGameSession(request);
+      const response = await createServerGameSession(request);
+      const snapshot = response?.snapshot && typeof response.snapshot === 'object'
+        ? response.snapshot
+        : response;
+      const responseActionTokens = normalizeActionTokens(response?.actionTokens);
+      const resolvedActionTokens = Object.keys(responseActionTokens).length > 0
+        ? responseActionTokens
+        : fallbackActionTokens(snapshot);
+      setActionTokensByPlayerId(resolvedActionTokens);
       const mapped = mapSnapshot(snapshot, request.language, targetScore);
       setStats(initialStats(mapped.players));
       setControlledPlayer(normalizedPlayers[0] || mapped.players[0] || null);
@@ -261,6 +296,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       setLastAction(message);
       setPhase(GamePhase.LOADING_CARD);
       setCard(null);
+      setActionTokensByPlayerId({});
       return [];
     } finally {
       setRequestInFlight(false);
@@ -422,6 +458,15 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
 
     const selectedIndex = [...selectedIndexes][0];
     const actingPlayer = currentPlayer;
+    const actorPlayerId = String(activeSnapshot?.roundState?.currentPlayerId || '').trim();
+    const actionToken = String(actionTokensByPlayerId?.[actorPlayerId] || '').trim();
+    if (!actorPlayerId || !actionToken) {
+      const message = 'Missing control token for active player. Restart game.';
+      setErrorMessage(message);
+      setLastAction(message);
+      setPhase(GamePhase.CHOOSING);
+      return;
+    }
     const category = String(card?.category || '').toUpperCase();
     if (category === 'ORDER' && !Number.isInteger(selectedRank)) {
       setLastAction(`${actingPlayer}: choose rank first`);
@@ -433,7 +478,9 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       const responseSnapshot = await sendServerGameAction(activeSnapshot.gameId, {
         type: 'ANSWER',
         tileIndex: selectedIndex,
-        rank: Number.isInteger(selectedRank) ? selectedRank : undefined
+        rank: Number.isInteger(selectedRank) ? selectedRank : undefined,
+        actorPlayerId,
+        actionToken
       });
       queueOutcome(responseSnapshot, 'ANSWER', actingPlayer, selectedIndex);
     } catch (error) {
@@ -446,6 +493,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     }
   }, [
     activeSnapshot,
+    actionTokensByPlayerId,
     card?.category,
     currentPlayer,
     phase,
@@ -464,9 +512,22 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     }
 
     const actingPlayer = currentPlayer;
+    const actorPlayerId = String(activeSnapshot?.roundState?.currentPlayerId || '').trim();
+    const actionToken = String(actionTokensByPlayerId?.[actorPlayerId] || '').trim();
+    if (!actorPlayerId || !actionToken) {
+      const message = 'Missing control token for active player. Restart game.';
+      setErrorMessage(message);
+      setLastAction(message);
+      setPhase(GamePhase.CHOOSING);
+      return;
+    }
     setRequestInFlight(true);
     try {
-      const responseSnapshot = await sendServerGameAction(activeSnapshot.gameId, { type: 'PASS' });
+      const responseSnapshot = await sendServerGameAction(activeSnapshot.gameId, {
+        type: 'PASS',
+        actorPlayerId,
+        actionToken
+      });
       queueOutcome(responseSnapshot, 'PASS', actingPlayer, -1);
     } catch (error) {
       const message = resolveGameSessionErrorMessage(error);
@@ -476,7 +537,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     } finally {
       setRequestInFlight(false);
     }
-  }, [activeSnapshot, currentPlayer, phase, queueOutcome, requestInFlight]);
+  }, [activeSnapshot, actionTokensByPlayerId, currentPlayer, phase, queueOutcome, requestInFlight]);
 
   const nextStep = useCallback(() => {
     if (phase === GamePhase.ROUND_SUMMARY) {
@@ -558,6 +619,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setStartRequest(null);
     setRequestInFlight(false);
     setControlledPlayer(null);
+    setActionTokensByPlayerId({});
   }, [targetScore]);
 
   const roundPoints = useMemo(() => initialScores(players), [players]);

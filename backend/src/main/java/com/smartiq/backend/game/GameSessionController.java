@@ -19,8 +19,8 @@ public class GameSessionController {
     }
 
     @PostMapping
-    public GameSessionSnapshot createGame(@RequestBody(required = false) CreateGameRequest request) {
-        return gameSessionService.createGame(request);
+    public GameSessionCreateResponse createGame(@RequestBody(required = false) CreateGameRequest request) {
+        return gameSessionService.createGameWithControl(request);
     }
 
     @GetMapping("/{gameId}")

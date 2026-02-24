@@ -1,6 +1,7 @@
 package com.smartiq.backend.web;
 
 import com.smartiq.backend.card.InvalidCardContractException;
+import com.smartiq.backend.game.ForbiddenGameActionException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +36,11 @@ public class ApiExceptionHandler {
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<Object> handleNotFound(NoSuchElementException ex, HttpServletRequest request) {
         return build(HttpStatus.NOT_FOUND, ex.getMessage(), request.getRequestURI());
+    }
+
+    @ExceptionHandler(ForbiddenGameActionException.class)
+    public ResponseEntity<Object> handleForbiddenAction(ForbiddenGameActionException ex, HttpServletRequest request) {
+        return build(HttpStatus.FORBIDDEN, ex.getMessage(), request.getRequestURI());
     }
 
     @ExceptionHandler(InvalidCardContractException.class)

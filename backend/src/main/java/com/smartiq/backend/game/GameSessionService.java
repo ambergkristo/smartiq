@@ -12,6 +12,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -52,7 +53,19 @@ public class GameSessionService {
         this.meterRegistry = meterRegistry;
     }
 
+    public synchronized GameSessionCreateResponse createGameWithControl(CreateGameRequest request) {
+        SessionState state = createSession(request);
+        return new GameSessionCreateResponse(
+                toSnapshot(state),
+                Collections.unmodifiableMap(new LinkedHashMap<>(state.actionTokens))
+        );
+    }
+
     public synchronized GameSessionSnapshot createGame(CreateGameRequest request) {
+        return createGameWithControl(request).snapshot();
+    }
+
+    private SessionState createSession(CreateGameRequest request) {
         List<String> displayNames = normalizePlayers(request == null ? null : request.players());
         int winCondition = resolveWinCondition(request == null ? null : request.winCondition());
         String language = normalizeLanguage(request == null ? null : request.language());
@@ -63,6 +76,7 @@ public class GameSessionService {
         Map<String, Integer> totals = zeroScores(players);
         Map<String, Integer> roundScores = zeroScores(players);
         Map<String, PlayerRoundStatus> statuses = activeStatuses(players);
+        Map<String, String> actionTokens = issueActionTokens(players);
         CardDeckResponse card = cardService.getNextRandomCard(language, gameId, topic);
 
         SessionState state = new SessionState(
@@ -74,12 +88,12 @@ public class GameSessionService {
                 totals,
                 roundScores,
                 statuses,
+                actionTokens,
                 card
         );
         sessions.put(gameId, state);
         incrementCounter(METRIC_GAME_STARTED, "language", language);
-
-        return toSnapshot(state);
+        return state;
     }
 
     public synchronized GameSessionSnapshot getSnapshot(String gameId) {
@@ -95,6 +109,10 @@ public class GameSessionService {
         if (PHASE_GAME_OVER.equals(state.phase)) {
             throw new IllegalArgumentException("game already ended");
         }
+
+        String actorPlayerId = normalizeRequiredField(request.actorPlayerId(), "actorPlayerId");
+        String actionToken = normalizeRequiredField(request.actionToken(), "actionToken");
+        requireActionActor(state, actorPlayerId, actionToken);
 
         String actionType = normalizeActionType(request.type());
         switch (actionType) {
@@ -255,6 +273,19 @@ public class GameSessionService {
         }
     }
 
+    private static void requireActionActor(SessionState state, String actorPlayerId, String actionToken) {
+        String expectedToken = state.actionTokens.get(actorPlayerId);
+        if (expectedToken == null) {
+            throw new ForbiddenGameActionException("unknown action actor");
+        }
+        if (!expectedToken.equals(actionToken)) {
+            throw new ForbiddenGameActionException("invalid action token");
+        }
+        if (!actorPlayerId.equals(state.currentPlayerId())) {
+            throw new ForbiddenGameActionException("actor is not active player");
+        }
+    }
+
     private static boolean isCorrect(CardDeckResponse card, int tileIndex, Integer rank) {
         String category = normalizeCategory(card.category());
         Map<String, Object> correct = card.correct() == null ? Map.of() : card.correct();
@@ -349,6 +380,14 @@ public class GameSessionService {
         return statuses;
     }
 
+    private static Map<String, String> issueActionTokens(List<PlayerState> players) {
+        Map<String, String> tokens = new LinkedHashMap<>();
+        for (PlayerState player : players) {
+            tokens.put(player.playerId(), "at_" + UUID.randomUUID().toString().replace("-", ""));
+        }
+        return tokens;
+    }
+
     private static List<PegState> hiddenPegs(int count) {
         List<PegState> pegs = new ArrayList<>();
         for (int idx = 0; idx < count; idx += 1) {
@@ -410,6 +449,13 @@ public class GameSessionService {
             return null;
         }
         return topic.trim();
+    }
+
+    private static String normalizeRequiredField(String value, String fieldName) {
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException(fieldName + " is required");
+        }
+        return value.trim();
     }
 
     private SessionState requireSession(String gameId) {
@@ -492,6 +538,7 @@ public class GameSessionService {
         private final Map<String, Integer> totalScores;
         private final Map<String, Integer> roundScores;
         private final Map<String, PlayerRoundStatus> statuses;
+        private final Map<String, String> actionTokens;
         private int roundNumber;
         private int starterPlayerIndex;
         private int activePlayerIndex;
@@ -510,6 +557,7 @@ public class GameSessionService {
                              Map<String, Integer> totalScores,
                              Map<String, Integer> roundScores,
                              Map<String, PlayerRoundStatus> statuses,
+                             Map<String, String> actionTokens,
                              CardDeckResponse card) {
             this.gameId = gameId;
             this.language = language;
@@ -519,6 +567,7 @@ public class GameSessionService {
             this.totalScores = totalScores;
             this.roundScores = roundScores;
             this.statuses = statuses;
+            this.actionTokens = actionTokens;
             this.roundNumber = 1;
             this.starterPlayerIndex = 0;
             this.activePlayerIndex = 0;

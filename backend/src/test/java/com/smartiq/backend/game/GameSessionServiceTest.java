@@ -42,9 +42,10 @@ class GameSessionServiceTest {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
                 .thenReturn(openCard("card-1", 0, "Question 1"));
 
-        GameSessionSnapshot snapshot = gameSessionService.createGame(
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
                 new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
         );
+        GameSessionSnapshot snapshot = created.snapshot();
 
         assertThat(snapshot.gameId()).isNotBlank();
         assertThat(snapshot.winCondition()).isEqualTo(30);
@@ -57,6 +58,7 @@ class GameSessionServiceTest {
         assertThat(snapshot.boardState().pegs().get(0).state()).isEqualTo("hidden");
         assertThat(snapshot.statuses().get("p1")).isEqualTo(PlayerRoundStatus.ACTIVE);
         assertThat(snapshot.statuses().get("p2")).isEqualTo(PlayerRoundStatus.ACTIVE);
+        assertThat(created.actionTokens()).containsKeys("p1", "p2");
     }
 
     @Test
@@ -64,13 +66,14 @@ class GameSessionServiceTest {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
                 .thenReturn(openCard("card-1", 0, "Question 1"));
 
-        GameSessionSnapshot created = gameSessionService.createGame(
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
                 new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
         );
+        String p1Token = created.actionTokens().get("p1");
 
         GameSessionSnapshot afterPass = gameSessionService.applyAction(
-                created.gameId(),
-                new GameActionRequest("PASS", null, null)
+                created.snapshot().gameId(),
+                new GameActionRequest("PASS", null, null, "p1", p1Token)
         );
 
         assertThat(afterPass.statuses().get("p1")).isEqualTo(PlayerRoundStatus.PASSED);
@@ -83,13 +86,14 @@ class GameSessionServiceTest {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
                 .thenReturn(openCard("card-1", 0, "Question 1"));
 
-        GameSessionSnapshot created = gameSessionService.createGame(
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
                 new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
         );
+        String p1Token = created.actionTokens().get("p1");
 
         GameSessionSnapshot afterAnswer = gameSessionService.applyAction(
-                created.gameId(),
-                new GameActionRequest("ANSWER", 1, null)
+                created.snapshot().gameId(),
+                new GameActionRequest("ANSWER", 1, null, "p1", p1Token)
         );
 
         assertThat(afterAnswer.statuses().get("p1")).isEqualTo(PlayerRoundStatus.OUT);
@@ -105,14 +109,17 @@ class GameSessionServiceTest {
                         openCard("card-2", 0, "Question 2")
                 );
 
-        GameSessionSnapshot created = gameSessionService.createGame(
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
                 new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
         );
+        String gameId = created.snapshot().gameId();
+        String p1Token = created.actionTokens().get("p1");
+        String p2Token = created.actionTokens().get("p2");
 
-        gameSessionService.applyAction(created.gameId(), new GameActionRequest("PASS", null, null));
+        gameSessionService.applyAction(gameId, new GameActionRequest("PASS", null, null, "p1", p1Token));
         GameSessionSnapshot nextRound = gameSessionService.applyAction(
-                created.gameId(),
-                new GameActionRequest("ANSWER", 1, null)
+                gameId,
+                new GameActionRequest("ANSWER", 1, null, "p2", p2Token)
         );
 
         assertThat(nextRound.roundState().roundNumber()).isEqualTo(2);
@@ -132,15 +139,18 @@ class GameSessionServiceTest {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
                 .thenReturn(openCard("card-1", 0, "Question 1"));
 
-        GameSessionSnapshot created = gameSessionService.createGame(
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
                 new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 1)
         );
+        String gameId = created.snapshot().gameId();
+        String p1Token = created.actionTokens().get("p1");
+        String p2Token = created.actionTokens().get("p2");
 
-        gameSessionService.applyAction(created.gameId(), new GameActionRequest("ANSWER", 0, null));
-        gameSessionService.applyAction(created.gameId(), new GameActionRequest("ANSWER", 1, null));
+        gameSessionService.applyAction(gameId, new GameActionRequest("ANSWER", 0, null, "p1", p1Token));
+        gameSessionService.applyAction(gameId, new GameActionRequest("ANSWER", 1, null, "p2", p2Token));
         GameSessionSnapshot gameOver = gameSessionService.applyAction(
-                created.gameId(),
-                new GameActionRequest("PASS", null, null)
+                gameId,
+                new GameActionRequest("PASS", null, null, "p1", p1Token)
         );
 
         assertThat(gameOver.roundState().phase()).isEqualTo("GAME_OVER");
@@ -154,13 +164,14 @@ class GameSessionServiceTest {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
                 .thenReturn(orderCard("order-1"));
 
-        GameSessionSnapshot created = gameSessionService.createGame(
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
                 new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
         );
+        String p1Token = created.actionTokens().get("p1");
 
         assertThatThrownBy(() -> gameSessionService.applyAction(
-                created.gameId(),
-                new GameActionRequest("ANSWER", 0, null)
+                created.snapshot().gameId(),
+                new GameActionRequest("ANSWER", 0, null, "p1", p1Token)
         ))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("rank is required for ORDER answers");
@@ -171,14 +182,17 @@ class GameSessionServiceTest {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
                 .thenReturn(openCard("card-1", 0, "Question 1"));
 
-        GameSessionSnapshot created = gameSessionService.createGame(
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
                 new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
         );
-        gameSessionService.applyAction(created.gameId(), new GameActionRequest("ANSWER", 0, null));
+        String gameId = created.snapshot().gameId();
+        String p1Token = created.actionTokens().get("p1");
+        String p2Token = created.actionTokens().get("p2");
+        gameSessionService.applyAction(gameId, new GameActionRequest("ANSWER", 0, null, "p1", p1Token));
 
         assertThatThrownBy(() -> gameSessionService.applyAction(
-                created.gameId(),
-                new GameActionRequest("ANSWER", 0, null)
+                gameId,
+                new GameActionRequest("ANSWER", 0, null, "p2", p2Token)
         ))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("tile already opened");
@@ -192,17 +206,19 @@ class GameSessionServiceTest {
                         openCard("single-2", 0, "Solo question 2")
                 );
 
-        GameSessionSnapshot created = gameSessionService.createGame(
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
                 new CreateGameRequest(List.of("Alice"), "en", null, 30)
         );
+        GameSessionSnapshot createdSnapshot = created.snapshot();
+        String p1Token = created.actionTokens().get("p1");
 
-        assertThat(created.players()).hasSize(1);
-        assertThat(created.players().get(0).displayName()).isEqualTo("Alice");
-        assertThat(created.roundState().currentPlayerId()).isEqualTo("p1");
+        assertThat(createdSnapshot.players()).hasSize(1);
+        assertThat(createdSnapshot.players().get(0).displayName()).isEqualTo("Alice");
+        assertThat(createdSnapshot.roundState().currentPlayerId()).isEqualTo("p1");
 
         GameSessionSnapshot nextRound = gameSessionService.applyAction(
-                created.gameId(),
-                new GameActionRequest("PASS", null, null)
+                createdSnapshot.gameId(),
+                new GameActionRequest("PASS", null, null, "p1", p1Token)
         );
 
         assertThat(nextRound.roundState().roundNumber()).isEqualTo(2);
@@ -218,13 +234,16 @@ class GameSessionServiceTest {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
                 .thenReturn(openCard("metric-1", 0, "Telemetry question"));
 
-        GameSessionSnapshot created = gameSessionService.createGame(
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
                 new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 1)
         );
+        String gameId = created.snapshot().gameId();
+        String p1Token = created.actionTokens().get("p1");
+        String p2Token = created.actionTokens().get("p2");
 
-        gameSessionService.applyAction(created.gameId(), new GameActionRequest("ANSWER", 0, null));
-        gameSessionService.applyAction(created.gameId(), new GameActionRequest("PASS", null, null));
-        gameSessionService.applyAction(created.gameId(), new GameActionRequest("PASS", null, null));
+        gameSessionService.applyAction(gameId, new GameActionRequest("ANSWER", 0, null, "p1", p1Token));
+        gameSessionService.applyAction(gameId, new GameActionRequest("PASS", null, null, "p2", p2Token));
+        gameSessionService.applyAction(gameId, new GameActionRequest("PASS", null, null, "p1", p1Token));
 
         assertThat(counterValue("smartiq.game.session.started.total")).isEqualTo(1.0);
         assertThat(counterValue("smartiq.game.session.completed.total")).isEqualTo(1.0);
@@ -235,6 +254,41 @@ class GameSessionServiceTest {
         assertThat(counterValue("smartiq.game.answer.total", "outcome", "wrong")).isEqualTo(0.0);
         assertThat(timerCount("smartiq.game.round.duration.seconds")).isEqualTo(1L);
         assertThat(timerCount("smartiq.game.duration.seconds")).isEqualTo(1L);
+    }
+
+    @Test
+    void rejectsActionWithInvalidToken() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(openCard("card-1", 0, "Question 1"));
+
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
+        );
+
+        assertThatThrownBy(() -> gameSessionService.applyAction(
+                created.snapshot().gameId(),
+                new GameActionRequest("PASS", null, null, "p1", "at_invalid")
+        ))
+                .isInstanceOf(ForbiddenGameActionException.class)
+                .hasMessage("invalid action token");
+    }
+
+    @Test
+    void rejectsActionWhenActorIsNotActivePlayer() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(openCard("card-1", 0, "Question 1"));
+
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
+        );
+        String p2Token = created.actionTokens().get("p2");
+
+        assertThatThrownBy(() -> gameSessionService.applyAction(
+                created.snapshot().gameId(),
+                new GameActionRequest("PASS", null, null, "p2", p2Token)
+        ))
+                .isInstanceOf(ForbiddenGameActionException.class)
+                .hasMessage("actor is not active player");
     }
 
     private double counterValue(String name, String... tags) {

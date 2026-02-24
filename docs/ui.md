@@ -60,6 +60,17 @@ Defined in `frontend/src/state/types.ts`.
   - `GET /api/cards/nextRandom?language=&gameId=&topic=`
 - Topics endpoint:
   - `GET /api/topics`
+- Server-authoritative game endpoints:
+  - `POST /api/game`
+  - `GET /api/game/{gameId}`
+  - `POST /api/game/{gameId}/action`
+- `POST /api/game` returns:
+  - `snapshot` (`GameSessionSnapshot`)
+  - `actionTokens` (`playerId -> token`) used by frontend to authorize actions
+- `POST /api/game/{gameId}/action` request payload includes:
+  - `type`, `tileIndex?`, `rank?`
+  - `actorPlayerId` (required)
+  - `actionToken` (required)
 - Frontend behavior:
   - Uses timeout + retry for transient/network errors.
   - Shows backend error details on `404` when available.
