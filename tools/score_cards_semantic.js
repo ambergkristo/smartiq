@@ -68,19 +68,39 @@ function main() {
   ];
 
   const byGroup = new Map();
+  const byCategory = new Map();
+
+  function categoryStats(category) {
+    const key = normalizeText(category) || 'UNKNOWN';
+    if (!byCategory.has(key)) {
+      byCategory.set(key, {
+        cards: 0,
+        cardPenalty: 0,
+        cardPenaltyMax: 0,
+        groupPenalty: 0,
+        groupPenaltyMax: 0,
+        shortOptionCards: 0
+      });
+    }
+    return byCategory.get(key);
+  }
+
   let cardPenaltySum = 0;
   let cardPenaltyMax = 0;
 
   for (const card of cards) {
     const question = normalizeText(card?.question);
+    const category = normalizeText(card?.category);
     const stem = questionStem(question);
     const key = groupKey(card);
     const options = optionsNormalized(card);
     const optionUniqueRatio = options.length === 0 ? 0 : new Set(options).size / options.length;
+    const perCategory = categoryStats(category);
 
     const group = byGroup.get(key) || { stems: [] };
     group.stems.push(stem);
     byGroup.set(key, group);
+    perCategory.cards += 1;
 
     let penalty = 0;
     let maxPenalty = 0;
@@ -106,21 +126,26 @@ function main() {
     const averageOptionLength = options.length === 0
       ? 0
       : options.reduce((sum, option) => sum + option.length, 0) / options.length;
-    const terseOptionThreshold = terseOptionThresholdByCategory(normalizeText(card?.category));
+    const terseOptionThreshold = terseOptionThresholdByCategory(category);
     maxPenalty += 1;
     if (averageOptionLength < terseOptionThreshold) {
       penalty += 1;
+      perCategory.shortOptionCards += 1;
       warnings.push(`${key}: overly terse options (avg ${averageOptionLength.toFixed(1)} chars) card=${card?.cardId || card?.id}`);
     }
 
     cardPenaltySum += penalty;
     cardPenaltyMax += maxPenalty;
+    perCategory.cardPenalty += penalty;
+    perCategory.cardPenaltyMax += maxPenalty;
   }
 
   let groupPenalty = 0;
   let groupPenaltyMax = 0;
   const groupStats = [];
   for (const [key, value] of byGroup.entries()) {
+    const category = normalizeText(key.split('|')[0]);
+    const perCategory = categoryStats(category);
     const total = value.stems.length || 1;
     const uniqueRatio = new Set(value.stems).size / total;
     groupStats.push({
@@ -129,8 +154,10 @@ function main() {
       stemDiversity: Number(uniqueRatio.toFixed(3))
     });
     groupPenaltyMax += 1;
+    perCategory.groupPenaltyMax += 1;
     if (uniqueRatio < 0.75) {
       groupPenalty += 1;
+      perCategory.groupPenalty += 1;
       warnings.push(`${key}: repeated question stems (${uniqueRatio.toFixed(3)})`);
     }
   }
@@ -140,12 +167,28 @@ function main() {
   const combinedPenalty = cardPenaltySum + groupPenalty;
   const combinedMax = Math.max(1, cardPenaltyMax + groupPenaltyMax);
   const semanticScore = Number((1 - combinedPenalty / combinedMax).toFixed(3));
+  const categorySummary = {};
+  const sortedCategories = Array.from(byCategory.keys()).sort((a, b) => a.localeCompare(b));
+  for (const category of sortedCategories) {
+    const entry = byCategory.get(category);
+    const categoryPenalty = entry.cardPenalty + entry.groupPenalty;
+    const categoryPenaltyMax = Math.max(1, entry.cardPenaltyMax + entry.groupPenaltyMax);
+    const categoryScore = Number((1 - categoryPenalty / categoryPenaltyMax).toFixed(3));
+    const shortOptionRatio = entry.cards > 0 ? Number((entry.shortOptionCards / entry.cards).toFixed(3)) : 0;
+    categorySummary[category] = {
+      cards: entry.cards,
+      semanticScore: categoryScore,
+      shortOptionCards: entry.shortOptionCards,
+      shortOptionRatio
+    };
+  }
 
   const summary = {
     dataset: abs,
     cards: cards.length,
     groups: groupStats.length,
     semanticScore,
+    categoryStats: categorySummary,
     weakestGroups: groupStats.slice(0, 8),
     warningCount: warnings.length
   };
