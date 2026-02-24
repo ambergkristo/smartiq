@@ -86,6 +86,7 @@ What it checks:
 - suspiciously short questions,
 - low option uniqueness within a card,
 - placeholder-like phrasing.
+- category-aware terse option checks (NUMBER uses stricter compact-number tolerance).
 
 Current banned/flagged phrase patterns:
 

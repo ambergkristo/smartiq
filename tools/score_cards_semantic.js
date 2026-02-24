@@ -33,6 +33,14 @@ function groupKey(card) {
   return `${normalizeText(card?.category)}|${normalizeText(card?.topic)}`;
 }
 
+function terseOptionThresholdByCategory(category) {
+  if (category === 'NUMBER') {
+    // Numeric pegs are naturally compact; only flag extremely terse sets.
+    return 1.5;
+  }
+  return 4;
+}
+
 function questionStem(question) {
   const base = normalizeText(question).replace(/\(set\s+\d+\)\s*$/i, '');
   return normalizeLoose(base);
@@ -98,8 +106,9 @@ function main() {
     const averageOptionLength = options.length === 0
       ? 0
       : options.reduce((sum, option) => sum + option.length, 0) / options.length;
+    const terseOptionThreshold = terseOptionThresholdByCategory(normalizeText(card?.category));
     maxPenalty += 1;
-    if (averageOptionLength < 4) {
+    if (averageOptionLength < terseOptionThreshold) {
       penalty += 1;
       warnings.push(`${key}: overly terse options (avg ${averageOptionLength.toFixed(1)} chars) card=${card?.cardId || card?.id}`);
     }
