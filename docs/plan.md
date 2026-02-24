@@ -13,8 +13,8 @@ Deliver a working Smart10-style trivia MVP with:
 - `make dev` as single local entrypoint for backend + frontend.
 - Backend endpoints:
   - `GET /api/topics`
-  - `GET /api/cards/random?topic=X`
-  - `GET /api/cards/random`
+  - `GET /api/cards/nextRandom?language=&gameId=&topic=`
+  - Legacy endpoints remain non-canonical (`/api/cards/random`, `/api/cards/next`) until retirement.
   - Import mechanism from repository data (`/data/smart10/*.json`).
 - Frontend playable round:
   - Topic selection
@@ -62,7 +62,7 @@ Scope:
 - Card domain model and persistence.
 - Migrations for cards table and indexes.
 - Repository + service for random card by topic and overall random.
-- REST controllers for required endpoints.
+- REST controllers for required endpoints (with `/api/cards/nextRandom` as canonical runtime deck endpoint).
 - Import path (boot-time import from `data/smart10` chosen for MVP).
 - Unit/integration tests for endpoints and import.
 
@@ -70,8 +70,8 @@ Acceptance tests:
 
 - `cd backend && mvn -q test`
 - `GET /api/topics` returns topic counts.
-- `GET /api/cards/random?topic=...` returns topic-matching card.
-- `GET /api/cards/random` returns any card.
+- `GET /api/cards/nextRandom?language=en&gameId=test-smoke&topic=...` returns topic-filtered playable card.
+- `GET /api/cards/nextRandom?language=en&gameId=test-smoke` returns any-topic playable card.
 
 ### Milestone M2: Content QA + Pipeline (A2)
 
