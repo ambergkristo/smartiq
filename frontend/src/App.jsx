@@ -3,6 +3,7 @@ import { API_BASE, fetchNextCard, fetchTopics, resolveCardErrorMessage, resolveT
 import GameBoard from './components/GameBoard';
 import RoundSummary from './components/RoundSummary';
 import { useGameEngine } from './state/useGameEngine';
+import { useServerGameEngine } from './state/useServerGameEngine';
 import { DEFAULT_LANGS, GamePhase } from './state/types';
 
 const STRINGS = {
@@ -39,6 +40,7 @@ const STARTUP_PHASE = {
 const SHOW_BUILD_BADGE = import.meta.env.DEV
   || String(import.meta.env.VITE_SHOW_BUILD_BADGE || '').toLowerCase() === 'true';
 const BUILD_SHA = String(import.meta.env.VITE_BUILD_SHA || '').trim();
+const SERVER_ENGINE_OPT_IN = String(import.meta.env.VITE_USE_SERVER_GAME_ENGINE || '').toLowerCase() === 'true';
 
 const DIFFICULTY_OPTIONS = [
   { value: '1', label: 'Easy' },
@@ -321,9 +323,17 @@ export default function App() {
   });
   const [gameId, setGameId] = useState('');
   const [cardError, setCardError] = useState('');
+  const [runtimeMode, setRuntimeMode] = useState('local');
 
-  const engine = useGameEngine(30);
-  const { phase, loadTicket, cardLoaded, cardLoadFailed } = engine;
+  const legacyEngine = useGameEngine(30);
+  const serverEngine = useServerGameEngine(30);
+  const engine = runtimeMode === 'server' ? serverEngine : legacyEngine;
+  const {
+    phase: legacyPhase,
+    loadTicket: legacyLoadTicket,
+    cardLoaded: legacyCardLoaded,
+    cardLoadFailed: legacyCardLoadFailed
+  } = legacyEngine;
 
   const loadTopics = useCallback(async () => {
     setStartup({
@@ -390,7 +400,8 @@ export default function App() {
 
   useEffect(() => {
     async function loadCard() {
-      if (phase !== GamePhase.LOADING_CARD) return;
+      if (runtimeMode !== 'local') return;
+      if (legacyPhase !== GamePhase.LOADING_CARD) return;
       if (!gameId) return;
 
       try {
@@ -400,28 +411,63 @@ export default function App() {
           lang: config.lang,
           sessionId: gameId
         });
-        cardLoaded(card);
+        legacyCardLoaded(card);
       } catch (error) {
         setCardError(resolveCardErrorMessage(error) || STRINGS.cardErrorFallback);
-        cardLoadFailed();
+        legacyCardLoadFailed();
       }
     }
 
     loadCard();
-  }, [loadTicket, cardLoaded, cardLoadFailed, phase, gameId, config.topic, config.lang]);
+  }, [runtimeMode, legacyLoadTicket, legacyCardLoaded, legacyCardLoadFailed, legacyPhase, gameId, config.topic, config.lang]);
 
   function handleStartRound() {
-    engine.startRound(config.playersText);
+    const parsedPlayers = parsePlayers(config.playersText);
+    if (SERVER_ENGINE_OPT_IN && parsedPlayers.length >= 2) {
+      setRuntimeMode('server');
+      setCardError('');
+      serverEngine.clearError();
+      serverEngine.startRound({
+        players: parsedPlayers,
+        language: config.lang,
+        topic: config.topic || undefined,
+        winCondition: 30
+      });
+      return;
+    }
+
+    setRuntimeMode('local');
+    serverEngine.resetToSetup();
+    serverEngine.clearError();
+    legacyEngine.startRound(config.playersText);
   }
 
   function handlePlayAgain() {
-    engine.startRound(config.playersText);
+    const parsedPlayers = parsePlayers(config.playersText);
+    if (runtimeMode === 'server') {
+      setCardError('');
+      serverEngine.clearError();
+      serverEngine.startRound({
+        players: parsedPlayers,
+        language: config.lang,
+        topic: config.topic || undefined,
+        winCondition: 30
+      });
+      return;
+    }
+
+    legacyEngine.startRound(config.playersText);
   }
 
   function handleRestart() {
-    engine.resetToSetup();
+    legacyEngine.resetToSetup();
+    serverEngine.resetToSetup();
+    serverEngine.clearError();
+    setRuntimeMode('local');
     setCardError('');
   }
+
+  const activeError = runtimeMode === 'server' ? serverEngine.errorMessage : cardError;
 
   return (
     <main data-phase={engine.phase === GamePhase.SETUP ? 'setup' : 'game'}>
@@ -443,9 +489,9 @@ export default function App() {
               <div className="card-loading-skeleton" aria-hidden />
             </section>
           ) : null}
-          {cardError ? (
+          {activeError ? (
             <div className="error-panel">
-              {isDeckExhaustedMessage(cardError) ? (
+              {isDeckExhaustedMessage(activeError) ? (
                 <>
                   <p className="error">{STRINGS.deckExhausted}</p>
                   <p>{STRINGS.deckExhaustedHint}</p>
@@ -460,7 +506,7 @@ export default function App() {
                 </>
               ) : (
                 <>
-                  <p className="error">{cardError}</p>
+                  <p className="error">{activeError}</p>
                   <button type="button" onClick={engine.beginCardLoad}>
                     {STRINGS.retry}
                   </button>
