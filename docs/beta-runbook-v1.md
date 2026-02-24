@@ -112,5 +112,7 @@ At beta close, publish:
 1. `docs/reports/beta-summary-<date>.md`
    - Generate baseline from metrics:
      - `BACKEND_URL=https://<backend-domain> npm run report:beta:summary`
+   - Optional strict gate (non-zero exit on NO-GO):
+     - `BACKEND_URL=https://<backend-domain> npm run report:beta:summary -- --min-started-games=20 --min-completed-games=15 --max-dropoff=0.35 --max-wrong-answer=0.45 --fail-on-no-go`
 2. List of prioritized fixes (`fix/beta-findings-*` branches)
 3. Go/No-Go recommendation for broader rollout
