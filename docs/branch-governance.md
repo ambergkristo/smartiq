@@ -58,6 +58,22 @@ git merge-base --is-ancestor origin/<branch> origin/main
 git cherry origin/main origin/<branch>
 ```
 
+## Automated Audit Report
+
+Generate the latest consolidation report from current git/gh metadata:
+
+```bash
+npm run report:branches:consolidation
+```
+
+- Default output: `docs/branch-consolidation-audit-latest.md`
+- Scope default: top 30 most recently updated remote branches (excluding `main`/`HEAD`)
+- Full scan variant:
+
+```bash
+npm run report:branches:consolidation:full
+```
+
 ## Cleanup Policy
 
 - Default behavior: keep historical branches untouched.
@@ -67,4 +83,5 @@ git cherry origin/main origin/<branch>
 ## Current Baseline
 
 - Latest branch consolidation snapshot: `docs/branch-consolidation-audit-2026-02-24.md`.
+- Auto-generated current snapshot target: `docs/branch-consolidation-audit-latest.md`.
 - At that snapshot, no safe additional consolidation PR was required.
