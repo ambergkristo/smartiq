@@ -1,5 +1,6 @@
 package com.smartiq.backend.room;
 
+import com.smartiq.backend.room.ws.RoomWsGateway;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,9 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class RoomController {
 
     private final RoomService roomService;
+    private final RoomWsGateway roomWsGateway;
 
-    public RoomController(RoomService roomService) {
+    public RoomController(RoomService roomService, RoomWsGateway roomWsGateway) {
         this.roomService = roomService;
+        this.roomWsGateway = roomWsGateway;
     }
 
     @PostMapping
@@ -24,6 +27,10 @@ public class RoomController {
     @PostMapping("/{roomCode}/join")
     public RoomParticipantResponse joinRoom(@PathVariable String roomCode,
                                             @RequestBody(required = false) JoinRoomRequest request) {
-        return roomService.joinRoom(roomCode, request);
+        RoomParticipantResponse participant = roomService.joinRoom(roomCode, request);
+        RoomSnapshot snapshot = roomService.getRoomSnapshot(participant.roomCode());
+        roomWsGateway.sendPlayerJoined(participant.roomCode(), participant.playerId(), snapshot);
+        roomWsGateway.sendRoomState(participant.roomCode(), snapshot);
+        return participant;
     }
 }

@@ -51,6 +51,11 @@ public class RoomService {
         return new RoomParticipantResponse(room.code, playerId, authToken);
     }
 
+    public synchronized RoomSnapshot getRoomSnapshot(String roomCode) {
+        RoomState room = requireRoom(roomCode);
+        return toSnapshot(room);
+    }
+
     private RoomState requireRoom(String roomCode) {
         String normalized = normalizeRoomCode(roomCode);
         RoomState room = rooms.get(normalized);
@@ -102,6 +107,13 @@ public class RoomService {
 
     private static String issueToken() {
         return "rt_" + UUID.randomUUID().toString().replace("-", "");
+    }
+
+    private static RoomSnapshot toSnapshot(RoomState room) {
+        List<RoomPlayerSnapshot> players = room.players.stream()
+                .map(player -> new RoomPlayerSnapshot(player.playerId(), player.displayName()))
+                .toList();
+        return new RoomSnapshot(room.code, players);
     }
 
     private static final class RoomState {

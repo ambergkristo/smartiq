@@ -39,6 +39,21 @@ class RoomServiceTest {
     }
 
     @Test
+    void roomSnapshotContainsAllPlayersInJoinOrder() {
+        RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
+        roomService.joinRoom(created.roomCode(), new JoinRoomRequest("Bob"));
+
+        RoomSnapshot snapshot = roomService.getRoomSnapshot(created.roomCode());
+
+        assertThat(snapshot.roomCode()).isEqualTo(created.roomCode());
+        assertThat(snapshot.players()).hasSize(2);
+        assertThat(snapshot.players().get(0).playerId()).isEqualTo("p1");
+        assertThat(snapshot.players().get(0).displayName()).isEqualTo("Alice");
+        assertThat(snapshot.players().get(1).playerId()).isEqualTo("p2");
+        assertThat(snapshot.players().get(1).displayName()).isEqualTo("Bob");
+    }
+
+    @Test
     void joinUnknownRoomThrowsNotFound() {
         assertThatThrownBy(() -> roomService.joinRoom("MISSING", new JoinRoomRequest("Bob")))
                 .isInstanceOf(NoSuchElementException.class)
