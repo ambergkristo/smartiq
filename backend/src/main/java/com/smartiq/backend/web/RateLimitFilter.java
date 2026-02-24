@@ -6,13 +6,14 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.time.Instant;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
@@ -20,11 +21,17 @@ public class RateLimitFilter extends OncePerRequestFilter {
 
     private final RateLimitProperties properties;
     private final ObjectMapper objectMapper;
+    private final boolean legacyShapeEnabled;
     private final ConcurrentHashMap<String, CounterWindow> counters = new ConcurrentHashMap<>();
 
-    public RateLimitFilter(RateLimitProperties properties, ObjectMapper objectMapper) {
+    public RateLimitFilter(
+            RateLimitProperties properties,
+            ObjectMapper objectMapper,
+            @Value("${smartiq.api.errors.legacy-shape-enabled:false}") boolean legacyShapeEnabled
+    ) {
         this.properties = properties;
         this.objectMapper = objectMapper;
+        this.legacyShapeEnabled = legacyShapeEnabled;
     }
 
     @Override
@@ -50,11 +57,11 @@ public class RateLimitFilter extends OncePerRequestFilter {
             response.setStatus(429);
             response.setHeader("Retry-After", String.valueOf(Math.max(1, window.windowStart() + properties.windowSeconds() - nowSeconds)));
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            objectMapper.writeValue(response.getWriter(), Map.of(
-                    "status", 429,
-                    "error", "Too Many Requests",
-                    "message", "Rate limit exceeded for " + request.getRequestURI()
-            ));
+            String message = "Rate limit exceeded for " + request.getRequestURI();
+            Object body = legacyShapeEnabled
+                    ? ApiErrorResponse.legacy(message)
+                    : ApiErrorResponse.of(HttpStatus.TOO_MANY_REQUESTS, message, request.getRequestURI());
+            objectMapper.writeValue(response.getWriter(), body);
             return;
         }
 

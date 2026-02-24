@@ -8,7 +8,7 @@ Monorepo for SmartIQ services and tooling.
 - `frontend/`
 - `docs/`
 - `data/raw/`
-- `data/clean/`
+- `data/smart10/`
 - `tools/`
 
 ## Prerequisites
@@ -280,8 +280,8 @@ node scripts/verify_runtime_deck.js
 ## Data Pipeline
 
 - Raw card inputs live in `data/raw/`.
-- QA-approved card inputs live in `data/clean/`.
-- Backend boot import scans JSON files from `data/clean` and `out` by default.
+- Runtime-approved card inputs live in `data/smart10/`.
+- Backend boot import defaults to `data/smart10`.
 - You can override import sources with `SMARTIQ_IMPORT_PATH` (comma-separated paths).
 - Pipeline details: `docs/data-pipeline.md`
 - Dataset quality guardrails: `docs/dataset-quality.md`
