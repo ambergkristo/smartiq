@@ -53,6 +53,9 @@ smartiq:
   game:
     session-retention-minutes: ${SMARTIQ_GAME_SESSION_RETENTION_MINUTES:180}
     session-max: ${SMARTIQ_GAME_SESSION_MAX:50000}
+  room:
+    room-retention-minutes: ${SMARTIQ_ROOM_RETENTION_MINUTES:180}
+    room-max: ${SMARTIQ_ROOM_MAX:20000}
   bank:
     min-size: ${MIN_BANK_SIZE:1000}
     block-on-low-bank: ${SMARTIQ_BLOCK_ON_LOW_BANK:false}

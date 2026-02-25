@@ -1,9 +1,14 @@
 package com.smartiq.backend.room;
 
+import com.smartiq.backend.config.RoomProperties;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,11 +18,17 @@ class RoomServiceTest {
 
     private SimpleMeterRegistry meterRegistry;
     private RoomService roomService;
+    private MutableClock testClock;
 
     @BeforeEach
     void setUp() {
         meterRegistry = new SimpleMeterRegistry();
-        roomService = new RoomService(meterRegistry);
+        testClock = new MutableClock(Instant.parse("2026-02-25T00:00:00Z"), ZoneOffset.UTC);
+        roomService = new RoomService(
+                meterRegistry,
+                new RoomProperties(180, 20000),
+                testClock
+        );
     }
 
     @Test
@@ -133,11 +144,83 @@ class RoomServiceTest {
         assertThat(counterValue("smartiq.room.rejoin.total", "result", "failure")).isEqualTo(1.0);
     }
 
+    @Test
+    void evictsExpiredRoomsOnAccess() {
+        RoomService ttlService = new RoomService(
+                meterRegistry,
+                new RoomProperties(1, 20000),
+                testClock
+        );
+        RoomParticipantResponse created = ttlService.createRoom(new CreateRoomRequest("Alice"));
+
+        testClock.advanceSeconds(61);
+
+        assertThatThrownBy(() -> ttlService.getRoomSnapshot(created.roomCode()))
+                .isInstanceOf(NoSuchElementException.class)
+                .hasMessage("room not found: " + created.roomCode());
+        assertThat(evictedCounterValue("expired")).isEqualTo(1.0);
+    }
+
+    @Test
+    void evictsOldestRoomWhenCapacityReached() {
+        RoomService capService = new RoomService(
+                meterRegistry,
+                new RoomProperties(180, 1),
+                testClock
+        );
+        RoomParticipantResponse first = capService.createRoom(new CreateRoomRequest("Alice"));
+        testClock.advanceSeconds(1);
+        RoomParticipantResponse second = capService.createRoom(new CreateRoomRequest("Bob"));
+
+        assertThatThrownBy(() -> capService.getRoomSnapshot(first.roomCode()))
+                .isInstanceOf(NoSuchElementException.class)
+                .hasMessage("room not found: " + first.roomCode());
+        assertThat(capService.getRoomSnapshot(second.roomCode()).roomCode()).isEqualTo(second.roomCode());
+        assertThat(evictedCounterValue("capacity")).isEqualTo(1.0);
+    }
+
     private double counterValue(String name, String... tags) {
         var counter = meterRegistry.find(name).tags(tags).counter();
         if (counter == null) {
             return 0.0;
         }
         return counter.count();
+    }
+
+    private double evictedCounterValue(String reason) {
+        var counter = meterRegistry.find("smartiq.room.evicted.total").tag("reason", reason).counter();
+        if (counter == null) {
+            return 0.0;
+        }
+        return counter.count();
+    }
+
+    private static final class MutableClock extends Clock {
+        private Instant instant;
+        private final ZoneId zone;
+
+        private MutableClock(Instant instant, ZoneId zone) {
+            this.instant = instant;
+            this.zone = zone;
+        }
+
+        @Override
+        public ZoneId getZone() {
+            return zone;
+        }
+
+        @Override
+        public Clock withZone(ZoneId zone) {
+            return new MutableClock(instant, zone);
+        }
+
+        @Override
+        public Instant instant() {
+            return instant;
+        }
+
+        private void advanceSeconds(long seconds) {
+            instant = instant.plusSeconds(seconds);
+        }
     }
 }

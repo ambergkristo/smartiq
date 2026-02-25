@@ -1,10 +1,14 @@
 package com.smartiq.backend.room;
 
+import com.smartiq.backend.config.RoomProperties;
 import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -23,24 +27,56 @@ public class RoomService {
     private static final String METRIC_ROOM_CREATE = "smartiq.room.create.total";
     private static final String METRIC_ROOM_JOIN = "smartiq.room.join.total";
     private static final String METRIC_ROOM_REJOIN = "smartiq.room.rejoin.total";
+    private static final String METRIC_ROOM_EVICTED = "smartiq.room.evicted.total";
+    private static final int DEFAULT_ROOM_RETENTION_MINUTES = 180;
+    private static final int DEFAULT_ROOM_MAX = 20000;
 
     private final MeterRegistry meterRegistry;
+    private final Clock clock;
+    private final long roomRetentionMillis;
+    private final int roomMax;
     private final SecureRandom random = new SecureRandom();
     private final ConcurrentMap<String, RoomState> rooms = new ConcurrentHashMap<>();
 
-    public RoomService(MeterRegistry meterRegistry) {
+    @Autowired
+    public RoomService(MeterRegistry meterRegistry, RoomProperties roomProperties) {
+        this(meterRegistry, roomProperties, Clock.systemUTC());
+    }
+
+    RoomService(MeterRegistry meterRegistry, RoomProperties roomProperties, Clock clock) {
         this.meterRegistry = meterRegistry;
+        this.clock = clock;
+        int retentionMinutes = roomProperties == null
+                ? DEFAULT_ROOM_RETENTION_MINUTES
+                : roomProperties.roomRetentionMinutes();
+        this.roomRetentionMillis = Math.max(1, retentionMinutes) * 60_000L;
+        int configuredRoomMax = roomProperties == null
+                ? DEFAULT_ROOM_MAX
+                : roomProperties.roomMax();
+        this.roomMax = Math.max(1, configuredRoomMax);
+    }
+
+    RoomService(MeterRegistry meterRegistry) {
+        this(
+                meterRegistry,
+                new RoomProperties(DEFAULT_ROOM_RETENTION_MINUTES, DEFAULT_ROOM_MAX),
+                Clock.systemUTC()
+        );
     }
 
     public synchronized RoomParticipantResponse createRoom(CreateRoomRequest request) {
         try {
+            evictExpiredRooms();
+            evictOldestUntilCapacityAvailable();
             String displayName = normalizeDisplayName(request == null ? null : request.displayName(), DEFAULT_HOST_NAME);
             String roomCode = allocateUniqueRoomCode();
+            long nowMillis = nowMillis();
 
             RoomState room = new RoomState(roomCode);
             String playerId = room.addPlayer(displayName);
             String authToken = issueToken();
             room.playerTokens.put(playerId, authToken);
+            room.lastTouchedAtMillis = nowMillis;
             rooms.put(roomCode, room);
 
             incrementCounter(METRIC_ROOM_CREATE, "success", "none");
@@ -53,6 +89,7 @@ public class RoomService {
 
     public synchronized RoomParticipantResponse joinRoom(String roomCode, JoinRoomRequest request) {
         try {
+            evictExpiredRooms();
             RoomState room = requireRoom(roomCode);
             if (room.players.size() >= MAX_PLAYERS) {
                 throw new IllegalArgumentException("room is full");
@@ -63,6 +100,7 @@ public class RoomService {
             String playerId = room.addPlayer(displayName);
             String authToken = issueToken();
             room.playerTokens.put(playerId, authToken);
+            room.lastTouchedAtMillis = nowMillis();
 
             incrementCounter(METRIC_ROOM_JOIN, "success", "none");
             return new RoomParticipantResponse(room.code, playerId, authToken);
@@ -73,12 +111,15 @@ public class RoomService {
     }
 
     public synchronized RoomSnapshot getRoomSnapshot(String roomCode) {
+        evictExpiredRooms();
         RoomState room = requireRoom(roomCode);
+        room.lastTouchedAtMillis = nowMillis();
         return toSnapshot(room);
     }
 
     public synchronized RoomResumeResponse rejoinRoom(String roomCode, RejoinRoomRequest request) {
         try {
+            evictExpiredRooms();
             if (request == null) {
                 throw new IllegalArgumentException("rejoin payload is required");
             }
@@ -93,6 +134,7 @@ public class RoomService {
             if (!expectedToken.equals(authToken)) {
                 throw new IllegalArgumentException("invalid room token");
             }
+            room.lastTouchedAtMillis = nowMillis();
 
             incrementCounter(METRIC_ROOM_REJOIN, "success", "none");
             return new RoomResumeResponse(room.code, playerId, authToken, toSnapshot(room));
@@ -108,7 +150,48 @@ public class RoomService {
         if (room == null) {
             throw new NoSuchElementException("room not found: " + normalized);
         }
+        if (isExpired(room, nowMillis())) {
+            rooms.remove(normalized, room);
+            incrementEvictedCounter("expired");
+            throw new NoSuchElementException("room not found: " + normalized);
+        }
         return room;
+    }
+
+    private long nowMillis() {
+        return clock.millis();
+    }
+
+    private void evictExpiredRooms() {
+        long nowMillis = nowMillis();
+        for (Map.Entry<String, RoomState> entry : rooms.entrySet()) {
+            String roomCode = entry.getKey();
+            RoomState room = entry.getValue();
+            if (room == null || !isExpired(room, nowMillis)) {
+                continue;
+            }
+            if (rooms.remove(roomCode, room)) {
+                incrementEvictedCounter("expired");
+            }
+        }
+    }
+
+    private void evictOldestUntilCapacityAvailable() {
+        while (rooms.size() >= roomMax) {
+            Map.Entry<String, RoomState> oldest = rooms.entrySet().stream()
+                    .min(Comparator.comparingLong(entry -> entry.getValue().lastTouchedAtMillis))
+                    .orElse(null);
+            if (oldest == null) {
+                return;
+            }
+            if (rooms.remove(oldest.getKey(), oldest.getValue())) {
+                incrementEvictedCounter("capacity");
+            }
+        }
+    }
+
+    private boolean isExpired(RoomState room, long nowMillis) {
+        return nowMillis - room.lastTouchedAtMillis >= roomRetentionMillis;
     }
 
     private String allocateUniqueRoomCode() {
@@ -189,6 +272,10 @@ public class RoomService {
         meterRegistry.counter(metricName, "result", result, "reason", reason).increment();
     }
 
+    private void incrementEvictedCounter(String reason) {
+        meterRegistry.counter(METRIC_ROOM_EVICTED, "reason", reason).increment();
+    }
+
     private static String classifyJoinFailure(RuntimeException ex) {
         String message = normalizeMessage(ex);
         if (ex instanceof NoSuchElementException && message.contains("room not found")) {
@@ -261,9 +348,11 @@ public class RoomService {
         private final String code;
         private final List<PlayerState> players = new ArrayList<>();
         private final Map<String, String> playerTokens = new ConcurrentHashMap<>();
+        private long lastTouchedAtMillis;
 
         private RoomState(String code) {
             this.code = code;
+            this.lastTouchedAtMillis = System.currentTimeMillis();
         }
 
         private String addPlayer(String displayName) {

@@ -301,6 +301,13 @@ SMARTIQ_GAME_SESSION_RETENTION_MINUTES=180
 SMARTIQ_GAME_SESSION_MAX=50000
 ```
 
+Room state retention:
+
+```bash
+SMARTIQ_ROOM_RETENTION_MINUTES=180
+SMARTIQ_ROOM_MAX=20000
+```
+
 Rate limiting (forwarded header trust is opt-in):
 
 ```bash
