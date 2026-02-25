@@ -67,7 +67,7 @@ public class RoomWsGateway {
     }
 
     public void sendRoomStateToSession(WebSocketSession session, RoomSnapshot snapshot) {
-        send(session, "ROOM_STATE", snapshot);
+        send(session, serialize(new EventEnvelope("ROOM_STATE", snapshot)));
     }
 
     public void sendPlayerJoined(String roomCode, String playerId, RoomSnapshot snapshot) {
@@ -92,18 +92,17 @@ public class RoomWsGateway {
         if (sessions == null || sessions.isEmpty()) {
             return;
         }
+        String serialized = serialize(new EventEnvelope(type, payload));
         for (WebSocketSession session : sessions) {
-            send(session, type, payload);
+            send(session, serialized);
         }
     }
 
-    private void send(WebSocketSession session, String type, Object payload) {
+    private void send(WebSocketSession session, String serialized) {
         if (!session.isOpen()) {
             unregister(session);
             return;
         }
-
-        String serialized = serialize(new EventEnvelope(type, payload));
         try {
             synchronized (session) {
                 session.sendMessage(new TextMessage(serialized));
