@@ -29,6 +29,7 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
     private static final String GENERIC_HANDSHAKE_REJECT_REASON = "invalid websocket request";
     private static final int MAX_QUERY_LENGTH = 1024;
     private static final int MAX_QUERY_VALUE_LENGTH = 256;
+    private static final int MAX_QUERY_PARAM_COUNT = 16;
 
     private final RoomService roomService;
     private final RoomWsGateway roomWsGateway;
@@ -114,6 +115,9 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
         }
 
         String[] pairs = rawQuery.split("&");
+        if (pairs.length > MAX_QUERY_PARAM_COUNT) {
+            throw new IllegalArgumentException("query has too many parameters");
+        }
         for (String pair : pairs) {
             if (pair == null || pair.isBlank()) {
                 continue;
@@ -202,6 +206,9 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
         }
         if (message.contains("query is too long")) {
             return "query_too_long";
+        }
+        if (message.contains("query has too many parameters")) {
+            return "query_too_many_params";
         }
         return "invalid_request";
     }
