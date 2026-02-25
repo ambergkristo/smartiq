@@ -1,5 +1,6 @@
 package com.smartiq.backend.card;
 
+import com.smartiq.backend.web.ApiErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,12 @@ public class CardController {
 
     @GetMapping("/cards/random")
     public ResponseEntity<?> getRandomCard(@RequestParam(name = "topic", required = false) String topic) {
+        if (isProdProfile()) {
+            return legacyEndpointGone(
+                    "/api/cards/random",
+                    "Legacy endpoint /api/cards/random is retired; use /api/cards/nextRandom"
+            );
+        }
         log.info("api_card_random topic={}", topic == null ? "any" : topic);
         return legacyResponse(HttpStatus.OK).body(cardService.getRandomCard(topic));
     }
@@ -50,6 +57,12 @@ public class CardController {
                                          @RequestParam(name = "sessionId", required = false) String sessionId,
                                          @RequestParam(name = "lang", defaultValue = "en") String language,
                                          @RequestParam(name = "v", defaultValue = "1") int version) {
+        if (isProdProfile()) {
+            return legacyEndpointGone(
+                    "/api/cards/next",
+                    "Legacy endpoint /api/cards/next is retired; use /api/cards/nextRandom"
+            );
+        }
         String resolvedTopic = resolveTopic(topicId, topic);
         CardResponse card = cardService.getNextCard(resolvedTopic, difficulty, sessionId, language);
         if (version == 1) {
@@ -86,6 +99,10 @@ public class CardController {
             builder.header(HttpHeaders.LINK, DEPRECATION_LINK);
         }
         return builder;
+    }
+
+    private ResponseEntity<ApiErrorResponse> legacyEndpointGone(String path, String message) {
+        return legacyResponse(HttpStatus.GONE).body(ApiErrorResponse.of(HttpStatus.GONE, message, path));
     }
 
     private boolean isProdProfile() {

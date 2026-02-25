@@ -6,6 +6,10 @@ Move all consumers to:
 
 - `GET /api/cards/nextRandom?language=&gameId=&topic=`
 
+Production note:
+
+- Since `2026-02-25`, `/api/cards/next` and `/api/cards/random` return `410 Gone` in `prod`.
+
 ## Endpoint Mapping
 
 | Legacy endpoint | Canonical replacement | Notes |
@@ -21,7 +25,7 @@ Parameter mapping:
 
 ## Request Examples
 
-Legacy:
+Legacy (dev/local migration testing only):
 
 ```bash
 curl.exe -s "http://localhost:8081/api/cards/next?topicId=History&difficulty=1&sessionId=demo-1&lang=en&v=2"

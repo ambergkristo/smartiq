@@ -11,6 +11,7 @@ import java.time.Instant;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -55,18 +56,28 @@ class CardControllerDeprecationHeadersProdTest {
     }
 
     @Test
-    void legacyEndpointsIncludeDeprecationHeadersInProd() throws Exception {
+    void legacyEndpointsReturnGoneWithDeprecationHeadersInProd() throws Exception {
         mockMvc.perform(get("/api/cards/random").param("topic", "History"))
-                .andExpect(status().isOk())
+                .andExpect(status().isGone())
                 .andExpect(header().string("Deprecation", "true"))
                 .andExpect(header().string("Sunset", "Thu, 31 Dec 2026 23:59:59 GMT"))
-                .andExpect(header().string("Link", "</api/cards/nextRandom>; rel=\"successor-version\""));
+                .andExpect(header().string("Link", "</api/cards/nextRandom>; rel=\"successor-version\""))
+                .andExpect(jsonPath("$.error")
+                        .value("Legacy endpoint /api/cards/random is retired; use /api/cards/nextRandom"))
+                .andExpect(jsonPath("$.status").value(410))
+                .andExpect(jsonPath("$.reason").value("Gone"))
+                .andExpect(jsonPath("$.path").value("/api/cards/random"));
 
-        mockMvc.perform(get("/api/cards/next")
+                mockMvc.perform(get("/api/cards/next")
                         .param("topicId", "History")
                         .param("difficulty", "1")
                         .param("lang", "en"))
-                .andExpect(status().isOk())
+                .andExpect(status().isGone())
+                .andExpect(jsonPath("$.error")
+                        .value("Legacy endpoint /api/cards/next is retired; use /api/cards/nextRandom"))
+                .andExpect(jsonPath("$.status").value(410))
+                .andExpect(jsonPath("$.reason").value("Gone"))
+                .andExpect(jsonPath("$.path").value("/api/cards/next"))
                 .andExpect(header().string("Deprecation", "true"))
                 .andExpect(header().string("Sunset", "Thu, 31 Dec 2026 23:59:59 GMT"))
                 .andExpect(header().string("Link", "</api/cards/nextRandom>; rel=\"successor-version\""));
