@@ -30,9 +30,11 @@ public class CardService {
     public CardResponse getRandomCard(String topic) {
         Card card;
         if (topic == null || topic.isBlank()) {
-            card = cardRepository.findRandomOverall().orElseThrow(() -> new NoSuchElementException("No cards available"));
+            card = cardRepository.findRandomOverall(CardSourcePolicy.ALLOWED_SOURCES)
+                    .orElseThrow(() -> new NoSuchElementException("No cards available"));
         } else {
-            card = cardRepository.findRandomByTopic(topic).orElseThrow(() -> new NoSuchElementException("No cards available for topic: " + topic));
+            card = cardRepository.findRandomByTopic(topic, CardSourcePolicy.ALLOWED_SOURCES)
+                    .orElseThrow(() -> new NoSuchElementException("No cards available for topic: " + topic));
         }
         return CardResponse.fromEntity(card);
     }

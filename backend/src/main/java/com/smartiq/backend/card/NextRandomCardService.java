@@ -26,11 +26,6 @@ public class NextRandomCardService {
 
     static final int LAST_K_DEFAULT = 20;
     private static final String DEFAULT_FALLBACK_LANGUAGE = "en";
-    private static final List<String> ALLOWED_SOURCES = List.of(
-            "smartiq-v2",
-            "smartiq-human",
-            "smartiq-verified"
-    );
     private static final int MAX_TRACKED_GAMES = 10_000;
     private static final long TTL_MILLIS = Duration.ofHours(2).toMillis();
     private static final long CLEANUP_INTERVAL_MILLIS = Duration.ofMinutes(10).toMillis();
@@ -60,11 +55,11 @@ public class NextRandomCardService {
         maybeCleanup();
 
         String effectiveLanguage = normalizedLanguage;
-        List<Card> pool = cardRepository.findDeckPool(effectiveLanguage, normalizedTopic, ALLOWED_SOURCES);
+        List<Card> pool = cardRepository.findDeckPool(effectiveLanguage, normalizedTopic, CardSourcePolicy.ALLOWED_SOURCES);
         boolean languageRelaxed = false;
         if (pool.isEmpty() && !DEFAULT_FALLBACK_LANGUAGE.equalsIgnoreCase(normalizedLanguage)) {
             effectiveLanguage = DEFAULT_FALLBACK_LANGUAGE;
-            pool = cardRepository.findDeckPool(effectiveLanguage, normalizedTopic, ALLOWED_SOURCES);
+            pool = cardRepository.findDeckPool(effectiveLanguage, normalizedTopic, CardSourcePolicy.ALLOWED_SOURCES);
             languageRelaxed = !pool.isEmpty();
         }
         if (pool.isEmpty()) {

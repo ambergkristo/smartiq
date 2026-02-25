@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.smartiq.backend.card.Card;
+import com.smartiq.backend.card.CardSourcePolicy;
 import com.smartiq.backend.card.CardRepository;
 import com.smartiq.backend.card.LabelCountView;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -40,16 +42,6 @@ public class CardImportRunner implements ApplicationRunner {
             "CENTURY_DECADE",
             "COLOR",
             "OPEN"
-    );
-    private static final List<String> DEPRECATED_SOURCES = List.of(
-            "smartiq-factory",
-            "smartiq-generator-v1",
-            "smart10-generator-v1"
-    );
-    private static final List<String> ALLOWED_SOURCES = List.of(
-            "smartiq-v2",
-            "smartiq-human",
-            "smartiq-verified"
     );
 
     private final CardRepository cardRepository;
@@ -81,16 +73,16 @@ public class CardImportRunner implements ApplicationRunner {
     }
 
     private void cleanupDeprecatedSources() {
-        long removed = cardRepository.deleteBySourcesLower(DEPRECATED_SOURCES);
+        long removed = cardRepository.deleteBySourcesLower(CardSourcePolicy.DEPRECATED_SOURCES);
         if (removed > 0) {
-            log.info("Removed deprecated seeded cards count={} sources={}", removed, DEPRECATED_SOURCES);
+            log.info("Removed deprecated seeded cards count={} sources={}", removed, CardSourcePolicy.DEPRECATED_SOURCES);
         }
     }
 
     private void warnIfDeprecatedSourcesDetected() {
-        long deprecatedCount = cardRepository.countBySourcesLower(DEPRECATED_SOURCES);
+        long deprecatedCount = cardRepository.countBySourcesLower(CardSourcePolicy.DEPRECATED_SOURCES);
         if (deprecatedCount > 0) {
-            log.warn("Deprecated card sources detected in DB count={} sources={}", deprecatedCount, DEPRECATED_SOURCES);
+            log.warn("Deprecated card sources detected in DB count={} sources={}", deprecatedCount, CardSourcePolicy.DEPRECATED_SOURCES);
         }
     }
 
@@ -100,7 +92,7 @@ public class CardImportRunner implements ApplicationRunner {
         Map<String, Long> topics = cardRepository.findTopicCounts().stream()
                 .collect(LinkedHashMap::new, (map, item) -> map.put(item.getTopic(), item.getCount()), Map::putAll);
         Map<String, Long> languages = toCountMap(cardRepository.findLanguageCounts());
-        long allowedSourceCards = cardRepository.countBySourcesLower(ALLOWED_SOURCES);
+        long allowedSourceCards = cardRepository.countBySourcesLower(CardSourcePolicy.ALLOWED_SOURCES);
 
         log.info("Dataset summary total={} categories={} topics={} languages={} allowedSourceCards={}",
                 totalCards, categories, topics, languages, allowedSourceCards);
@@ -214,7 +206,7 @@ public class CardImportRunner implements ApplicationRunner {
                 String language = fallback(textOrNull(cardNode.get("language")), "en");
                 String question = textOrNull(cardNode.get("question"));
                 String difficulty = normalizeDifficulty(cardNode.get("difficulty"));
-                String source = fallback(textOrNull(cardNode.get("source")), "smartiq-import");
+                String source = normalizeAllowedSource(textOrNull(cardNode.get("source")));
 
                 JsonNode optionsNode = cardNode.get("options");
                 if (optionsNode == null || !optionsNode.isArray()) {
@@ -310,7 +302,7 @@ public class CardImportRunner implements ApplicationRunner {
                     String question = textOrNull(cardNode.get("question"));
                     String language = fallback(textOrNull(cardNode.get("language")), "en");
                     String difficulty = normalizeDifficulty(cardNode.get("difficulty"));
-                    String source = fallback(textOrNull(cardNode.get("source")), "smartiq-factory");
+                    String source = normalizeAllowedSource(textOrNull(cardNode.get("source")));
                     String cardCategory = normalizeCategory(fallback(textOrNull(cardNode.get("category")), category));
 
                     JsonNode optionsNode = cardNode.get("options");
@@ -522,6 +514,14 @@ public class CardImportRunner implements ApplicationRunner {
         return StringUtils.hasText(value) ? value : defaultValue;
     }
 
+    private String normalizeAllowedSource(String rawSource) {
+        String normalized = CardSourcePolicy.normalizeSource(rawSource).toLowerCase(Locale.ROOT);
+        if (!CardSourcePolicy.ALLOWED_SOURCES.contains(normalized)) {
+            throw new IllegalArgumentException("Unsupported card source: " + normalized);
+        }
+        return normalized;
+    }
+
     private void requireText(String value, String message) {
         if (!StringUtils.hasText(value)) {
             throw new IllegalArgumentException(message);
@@ -558,7 +558,7 @@ public class CardImportRunner implements ApplicationRunner {
         card.setCorrectFlags(seed.correctFlags());
         card.setCorrectMeta(seed.correctMeta());
         card.setDifficulty(seed.difficulty());
-        card.setSource(fallback(seed.source(), "smartiq-import"));
+        card.setSource(normalizeAllowedSource(seed.source()));
         card.setCreatedAt(seed.createdAt() == null ? Instant.now() : seed.createdAt());
         return card;
     }
