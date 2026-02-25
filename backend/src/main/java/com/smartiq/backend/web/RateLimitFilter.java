@@ -2,6 +2,7 @@ package com.smartiq.backend.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.config.RateLimitProperties;
+import io.micrometer.core.instrument.MeterRegistry;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,19 +24,23 @@ public class RateLimitFilter extends OncePerRequestFilter {
 
     private static final int MAX_CLIENT_KEY_LENGTH = 64;
     private static final String FALLBACK_CLIENT_KEY = "unknown";
+    private static final String METRIC_RATE_LIMIT_BLOCKED = "smartiq.rate.limit.blocked.total";
 
     private final RateLimitProperties properties;
     private final ObjectMapper objectMapper;
+    private final MeterRegistry meterRegistry;
     private final boolean legacyShapeEnabled;
     private final ConcurrentHashMap<String, CounterWindow> counters = new ConcurrentHashMap<>();
 
     public RateLimitFilter(
             RateLimitProperties properties,
             ObjectMapper objectMapper,
+            MeterRegistry meterRegistry,
             @Value("${smartiq.api.errors.legacy-shape-enabled:false}") boolean legacyShapeEnabled
     ) {
         this.properties = properties;
         this.objectMapper = objectMapper;
+        this.meterRegistry = meterRegistry;
         this.legacyShapeEnabled = legacyShapeEnabled;
     }
 
@@ -61,6 +66,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
         CounterWindow window = counters.compute(key, (ignored, current) -> refreshWindow(current, nowSeconds));
 
         if (window.count() > rule.limit()) {
+            meterRegistry.counter(METRIC_RATE_LIMIT_BLOCKED, "bucket", rule.bucket()).increment();
             response.setStatus(429);
             response.setHeader("Retry-After", String.valueOf(Math.max(1, window.windowStart() + properties.windowSeconds() - nowSeconds)));
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
