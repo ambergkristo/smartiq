@@ -50,6 +50,9 @@ public class GameSessionService {
     private static final String METRIC_ROUND_DURATION = "smartiq.game.round.duration.seconds";
     private static final String METRIC_SESSION_EVICTED = "smartiq.game.session.evicted.total";
     private static final int ACTION_REQUEST_HISTORY_LIMIT = 512;
+    private static final int MAX_PLAYER_ID_LENGTH = 64;
+    private static final int MAX_ACTION_TOKEN_LENGTH = 128;
+    private static final int MAX_ACTION_REQUEST_ID_LENGTH = 128;
     private static final int DEFAULT_SESSION_RETENTION_MINUTES = 180;
     private static final int DEFAULT_SESSION_MAX = 50000;
 
@@ -157,9 +160,9 @@ public class GameSessionService {
             throw new IllegalArgumentException("game already ended");
         }
 
-        String actorPlayerId = normalizeRequiredField(request.actorPlayerId(), "actorPlayerId");
-        String actionToken = normalizeRequiredField(request.actionToken(), "actionToken");
-        String actionRequestId = normalizeRequiredField(request.actionRequestId(), "actionRequestId");
+        String actorPlayerId = normalizeRequiredField(request.actorPlayerId(), "actorPlayerId", MAX_PLAYER_ID_LENGTH);
+        String actionToken = normalizeRequiredField(request.actionToken(), "actionToken", MAX_ACTION_TOKEN_LENGTH);
+        String actionRequestId = normalizeRequiredField(request.actionRequestId(), "actionRequestId", MAX_ACTION_REQUEST_ID_LENGTH);
         requireActionActor(state, actorPlayerId, actionToken);
         requireUniqueActionRequestId(state, actionRequestId);
 
@@ -519,11 +522,15 @@ public class GameSessionService {
         return topic.trim();
     }
 
-    private static String normalizeRequiredField(String value, String fieldName) {
+    private static String normalizeRequiredField(String value, String fieldName, int maxLength) {
         if (value == null || value.isBlank()) {
             throw new IllegalArgumentException(fieldName + " is required");
         }
-        return value.trim();
+        String normalized = value.trim();
+        if (normalized.length() > maxLength) {
+            throw new IllegalArgumentException(fieldName + " is too long");
+        }
+        return normalized;
     }
 
     private SessionState requireSession(String gameId) {
