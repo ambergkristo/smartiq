@@ -155,6 +155,9 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
         if (message.contains("room code is required")) {
             return "invalid_room_code";
         }
+        if (message.contains("room code format is invalid")) {
+            return "invalid_room_code";
+        }
         if (message.contains("invalid room token")) {
             return "invalid_room_token";
         }
