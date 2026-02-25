@@ -35,12 +35,17 @@ public class InternalAccessFilter extends OncePerRequestFilter {
 
         String expectedKey = properties.apiKey();
         String headerName = properties.apiKeyHeader();
-        String providedKey = request.getHeader(headerName);
 
         if (expectedKey == null || expectedKey.isBlank()) {
             writeError(response, HttpServletResponse.SC_SERVICE_UNAVAILABLE, "Internal access key not configured.");
             return;
         }
+        if (headerName == null || headerName.isBlank()) {
+            writeError(response, HttpServletResponse.SC_SERVICE_UNAVAILABLE, "Internal access header not configured.");
+            return;
+        }
+
+        String providedKey = request.getHeader(headerName.trim());
 
         if (!secureEquals(expectedKey, providedKey)) {
             writeError(response, HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized.");
