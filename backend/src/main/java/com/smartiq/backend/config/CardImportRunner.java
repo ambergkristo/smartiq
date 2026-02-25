@@ -48,6 +48,7 @@ public class CardImportRunner implements ApplicationRunner {
     private final ImportProperties importProperties;
     private final ObjectMapper objectMapper;
     private final int minimumCategoryThreshold;
+    private final boolean failOnThreshold;
 
     public CardImportRunner(CardRepository cardRepository,
                             ImportProperties importProperties,
@@ -57,6 +58,7 @@ public class CardImportRunner implements ApplicationRunner {
         this.importProperties = importProperties;
         this.objectMapper = objectMapper;
         this.minimumCategoryThreshold = minimumCategoryThreshold;
+        this.failOnThreshold = importProperties.failOnCategoryThreshold();
     }
 
     @Override
@@ -97,13 +99,27 @@ public class CardImportRunner implements ApplicationRunner {
         log.info("Dataset summary total={} categories={} topics={} languages={} allowedSourceCards={}",
                 totalCards, categories, topics, languages, allowedSourceCards);
 
+        List<String> belowThreshold = belowThresholdCategories(categories);
+        for (String category : belowThreshold) {
+            long count = categories.getOrDefault(category, 0L);
+            log.error("Dataset category below threshold category={} count={} minThreshold={}",
+                    category, count, minimumCategoryThreshold);
+        }
+
+        if (!belowThreshold.isEmpty() && failOnThreshold) {
+            throw new IllegalStateException("Dataset categories below threshold: " + belowThreshold);
+        }
+    }
+
+    private List<String> belowThresholdCategories(Map<String, Long> categories) {
+        List<String> below = new ArrayList<>();
         for (String category : VALID_CATEGORIES) {
             long count = categories.getOrDefault(category, 0L);
             if (count < minimumCategoryThreshold) {
-                log.error("Dataset category below threshold category={} count={} minThreshold={}",
-                        category, count, minimumCategoryThreshold);
+                below.add(category);
             }
         }
+        return below;
     }
 
     private static Map<String, Long> toCountMap(List<LabelCountView> counts) {
