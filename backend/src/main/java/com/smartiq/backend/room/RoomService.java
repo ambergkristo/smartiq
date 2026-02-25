@@ -275,7 +275,12 @@ public class RoomService {
         if (!PLAYER_ID_PATTERN.matcher(normalized).matches()) {
             throw new IllegalArgumentException("playerId format is invalid");
         }
-        int playerNumber = Integer.parseInt(normalized.substring(1));
+        int playerNumber;
+        try {
+            playerNumber = Integer.parseInt(normalized.substring(1));
+        } catch (NumberFormatException ex) {
+            throw new IllegalArgumentException("playerId format is invalid");
+        }
         if (playerNumber < 1 || playerNumber > MAX_PLAYERS) {
             throw new IllegalArgumentException("playerId format is invalid");
         }

@@ -320,6 +320,24 @@ class GameSessionServiceTest {
     }
 
     @Test
+    void rejectsActionWithOverflowActorPlayerIdFormat() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(openCard("card-1", 0, "Question 1"));
+
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
+        );
+
+        assertThatThrownBy(() -> gameSessionService.applyAction(
+                created.snapshot().gameId(),
+                new GameActionRequest("PASS", null, null, "p99999999999999999999", created.actionTokens().get("p1"), "req-overflow-actor")
+        ))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("actorPlayerId format is invalid");
+        assertThat(rejectedCounterValue("invalid_actor_player_id")).isEqualTo(1.0);
+    }
+
+    @Test
     void rejectsActionWhenActorIsNotActivePlayer() {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
                 .thenReturn(openCard("card-1", 0, "Question 1"));
