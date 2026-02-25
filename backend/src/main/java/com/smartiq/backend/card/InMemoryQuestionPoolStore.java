@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
@@ -22,40 +21,41 @@ public class InMemoryQuestionPoolStore implements QuestionPoolStore {
     private final Cache<QuestionPoolKey, ConcurrentLinkedQueue<CardResponse>> queueCache =
             Caffeine.newBuilder().expireAfterAccess(2, TimeUnit.HOURS).maximumSize(5000).build();
 
-    private final Map<QuestionPoolKey, KeyCounters> counters = new ConcurrentHashMap<>();
+    private final Cache<QuestionPoolKey, KeyCounters> counters =
+            Caffeine.newBuilder().expireAfterAccess(2, TimeUnit.HOURS).maximumSize(5000).build();
 
     @Override
     public ConcurrentLinkedQueue<CardResponse> queueForKey(QuestionPoolKey key) {
-        counters.computeIfAbsent(key, ignored -> new KeyCounters());
+        countersFor(key);
         return queueCache.get(key, ignored -> new ConcurrentLinkedQueue<>());
     }
 
     @Override
     public void recordCacheHit(QuestionPoolKey key) {
-        counters.computeIfAbsent(key, ignored -> new KeyCounters()).cacheHits.incrementAndGet();
+        countersFor(key).cacheHits.incrementAndGet();
     }
 
     @Override
     public void recordCacheMiss(QuestionPoolKey key) {
-        counters.computeIfAbsent(key, ignored -> new KeyCounters()).cacheMisses.incrementAndGet();
+        countersFor(key).cacheMisses.incrementAndGet();
     }
 
     @Override
     public void recordRefill(QuestionPoolKey key, int added) {
-        KeyCounters keyCounters = counters.computeIfAbsent(key, ignored -> new KeyCounters());
+        KeyCounters keyCounters = countersFor(key);
         keyCounters.refillCount.incrementAndGet();
         keyCounters.lastRefillAt = Instant.now();
     }
 
     @Override
     public void recordFallbackDbHit(QuestionPoolKey key) {
-        counters.computeIfAbsent(key, ignored -> new KeyCounters()).fallbackDbHits.incrementAndGet();
+        countersFor(key).fallbackDbHits.incrementAndGet();
     }
 
     @Override
     public List<PoolKeyStats> snapshot() {
         List<PoolKeyStats> stats = new ArrayList<>();
-        for (Map.Entry<QuestionPoolKey, KeyCounters> entry : counters.entrySet()) {
+        for (Map.Entry<QuestionPoolKey, KeyCounters> entry : counters.asMap().entrySet()) {
             QuestionPoolKey key = entry.getKey();
             KeyCounters value = entry.getValue();
             long hits = value.cacheHits.get();
@@ -80,6 +80,10 @@ public class InMemoryQuestionPoolStore implements QuestionPoolStore {
                 .thenComparing(PoolKeyStats::difficulty)
                 .thenComparing(PoolKeyStats::language));
         return stats;
+    }
+
+    private KeyCounters countersFor(QuestionPoolKey key) {
+        return counters.get(key, ignored -> new KeyCounters());
     }
 
     private static class KeyCounters {
