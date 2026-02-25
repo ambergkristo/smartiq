@@ -58,6 +58,7 @@ public class GameSessionService {
     private static final int MAX_PLAYER_ID_LENGTH = 64;
     private static final int MAX_ACTION_TOKEN_LENGTH = 128;
     private static final int MAX_ACTION_REQUEST_ID_LENGTH = 128;
+    private static final int MAX_TOPIC_LENGTH = 128;
     private static final Pattern ACTOR_PLAYER_ID_PATTERN = Pattern.compile("^p[1-9][0-9]*$");
     private static final Pattern ACTION_TOKEN_PATTERN = Pattern.compile("^at_[a-f0-9]{32}$");
     private static final Pattern ACTION_REQUEST_ID_PATTERN = Pattern.compile("^[A-Za-z0-9_-]+$");
@@ -551,7 +552,14 @@ public class GameSessionService {
         if (topic == null || topic.isBlank()) {
             return null;
         }
-        return topic.trim();
+        String normalized = topic.trim();
+        if (normalized.length() > MAX_TOPIC_LENGTH) {
+            throw new IllegalArgumentException("topic is too long");
+        }
+        if (containsControlChars(normalized)) {
+            throw new IllegalArgumentException("topic contains control characters");
+        }
+        return normalized;
     }
 
     private static String normalizeRequiredField(String value, String fieldName, int maxLength) {

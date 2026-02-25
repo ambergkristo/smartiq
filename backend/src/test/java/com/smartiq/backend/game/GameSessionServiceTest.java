@@ -512,6 +512,24 @@ class GameSessionServiceTest {
     }
 
     @Test
+    void createGameRejectsOversizedTopic() {
+        assertThatThrownBy(() -> gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", "T".repeat(129), 30)
+        ))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("topic is too long");
+    }
+
+    @Test
+    void createGameRejectsTopicWithControlCharacters() {
+        assertThatThrownBy(() -> gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", "Science\nMath", 30)
+        ))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("topic contains control characters");
+    }
+
+    @Test
     void createGameRejectsPlayerDisplayNameWithControlCharacters() {
         assertThatThrownBy(() -> gameSessionService.createGameWithControl(
                 new CreateGameRequest(List.of("Alice\nBob", "Carol"), "en", null, 30)
