@@ -137,7 +137,7 @@ class RoomWebSocketHandlerTest {
         assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.NOT_ACCEPTABLE.getCode());
         verify(roomService, never()).rejoinRoom(any(), any());
         verify(roomWsGateway, never()).register(any(), any(), any());
-        assertThat(counterValue("failure", "invalid_request")).isEqualTo(1.0);
+        assertThat(counterValue("failure", "authtoken_too_long")).isEqualTo(1.0);
     }
 
     @Test

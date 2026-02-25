@@ -176,8 +176,14 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
         if (message.contains("authtoken is required")) {
             return "missing_auth_token";
         }
+        if (message.contains("authtoken is too long")) {
+            return "authtoken_too_long";
+        }
         if (message.contains("playerid is required")) {
             return "missing_player_id";
+        }
+        if (message.contains("playerid is too long")) {
+            return "playerid_too_long";
         }
         if (message.contains("playerid format is invalid")) {
             return "invalid_player_id";
@@ -190,6 +196,9 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
         }
         if (message.contains("invalid room token")) {
             return "invalid_room_token";
+        }
+        if (message.contains("query is too long")) {
+            return "query_too_long";
         }
         return "invalid_request";
     }
