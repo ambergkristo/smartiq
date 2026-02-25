@@ -2,6 +2,7 @@ package com.smartiq.backend.game;
 
 import com.smartiq.backend.card.CardDeckResponse;
 import com.smartiq.backend.card.CardService;
+import com.smartiq.backend.config.GameSessionProperties;
 import com.smartiq.backend.game.contract.BoardStateSnapshot;
 import com.smartiq.backend.game.contract.GameSessionSnapshot;
 import com.smartiq.backend.game.contract.PegSnapshot;
@@ -9,10 +10,13 @@ import com.smartiq.backend.game.contract.PlayerRoundStatus;
 import com.smartiq.backend.game.contract.PlayerSnapshot;
 import com.smartiq.backend.game.contract.RoundStateSnapshot;
 import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -44,18 +48,54 @@ public class GameSessionService {
     private static final String METRIC_ANSWER_TOTAL = "smartiq.game.answer.total";
     private static final String METRIC_GAME_DURATION = "smartiq.game.duration.seconds";
     private static final String METRIC_ROUND_DURATION = "smartiq.game.round.duration.seconds";
+    private static final String METRIC_SESSION_EVICTED = "smartiq.game.session.evicted.total";
     private static final int ACTION_REQUEST_HISTORY_LIMIT = 512;
+    private static final int DEFAULT_SESSION_RETENTION_MINUTES = 180;
+    private static final int DEFAULT_SESSION_MAX = 50000;
 
     private final CardService cardService;
     private final MeterRegistry meterRegistry;
+    private final Clock clock;
+    private final long sessionRetentionMillis;
+    private final int sessionMax;
     private final ConcurrentMap<String, SessionState> sessions = new ConcurrentHashMap<>();
 
-    public GameSessionService(CardService cardService, MeterRegistry meterRegistry) {
+    @Autowired
+    public GameSessionService(CardService cardService,
+                              MeterRegistry meterRegistry,
+                              GameSessionProperties gameSessionProperties) {
+        this(cardService, meterRegistry, gameSessionProperties, Clock.systemUTC());
+    }
+
+    GameSessionService(CardService cardService,
+                       MeterRegistry meterRegistry,
+                       GameSessionProperties gameSessionProperties,
+                       Clock clock) {
         this.cardService = cardService;
         this.meterRegistry = meterRegistry;
+        this.clock = clock;
+        int retentionMinutes = gameSessionProperties == null
+                ? DEFAULT_SESSION_RETENTION_MINUTES
+                : gameSessionProperties.sessionRetentionMinutes();
+        this.sessionRetentionMillis = Math.max(1, retentionMinutes) * 60_000L;
+        int configuredSessionMax = gameSessionProperties == null
+                ? DEFAULT_SESSION_MAX
+                : gameSessionProperties.sessionMax();
+        this.sessionMax = Math.max(1, configuredSessionMax);
+    }
+
+    GameSessionService(CardService cardService, MeterRegistry meterRegistry) {
+        this(
+                cardService,
+                meterRegistry,
+                new GameSessionProperties(DEFAULT_SESSION_RETENTION_MINUTES, DEFAULT_SESSION_MAX),
+                Clock.systemUTC()
+        );
     }
 
     public synchronized GameSessionCreateResponse createGameWithControl(CreateGameRequest request) {
+        evictExpiredSessions();
+        evictOldestUntilCapacityAvailable();
         SessionState state = createSession(request);
         return new GameSessionCreateResponse(
                 toSnapshot(state),
@@ -72,6 +112,7 @@ public class GameSessionService {
         int winCondition = resolveWinCondition(request == null ? null : request.winCondition());
         String language = normalizeLanguage(request == null ? null : request.language());
         String topic = normalizeTopic(request == null ? null : request.topic());
+        long nowMillis = nowMillis();
 
         String gameId = UUID.randomUUID().toString();
         List<PlayerState> players = buildPlayers(displayNames);
@@ -91,7 +132,8 @@ public class GameSessionService {
                 roundScores,
                 statuses,
                 actionTokens,
-                card
+                card,
+                nowMillis
         );
         sessions.put(gameId, state);
         incrementCounter(METRIC_GAME_STARTED, "language", language);
@@ -99,11 +141,14 @@ public class GameSessionService {
     }
 
     public synchronized GameSessionSnapshot getSnapshot(String gameId) {
+        evictExpiredSessions();
         SessionState state = requireSession(gameId);
+        state.lastTouchedAtMillis = nowMillis();
         return toSnapshot(state);
     }
 
     public synchronized GameSessionSnapshot applyAction(String gameId, GameActionRequest request) {
+        evictExpiredSessions();
         SessionState state = requireSession(gameId);
         if (request == null) {
             throw new IllegalArgumentException("action payload is required");
@@ -125,6 +170,7 @@ public class GameSessionService {
             default -> throw new IllegalArgumentException("unsupported action type: " + actionType);
         }
         rememberActionRequestId(state, actionRequestId);
+        state.lastTouchedAtMillis = nowMillis();
 
         return toSnapshot(state);
     }
@@ -216,7 +262,7 @@ public class GameSessionService {
         state.pegs = hiddenPegs(state.card.options().size());
         state.phase = PHASE_CHOOSING;
         state.lastAction = "Round " + state.roundNumber + " started";
-        state.roundStartedAtMillis = System.currentTimeMillis();
+        state.roundStartedAtMillis = nowMillis();
     }
 
     private static void commitRoundScores(SessionState state) {
@@ -484,9 +530,15 @@ public class GameSessionService {
         if (gameId == null || gameId.isBlank()) {
             throw new IllegalArgumentException("gameId is required");
         }
-        SessionState state = sessions.get(gameId.trim());
+        String normalized = gameId.trim();
+        SessionState state = sessions.get(normalized);
         if (state == null) {
-            throw new NoSuchElementException("game not found: " + gameId.trim());
+            throw new NoSuchElementException("game not found: " + normalized);
+        }
+        if (isExpired(state, nowMillis())) {
+            sessions.remove(normalized, state);
+            incrementCounter(METRIC_SESSION_EVICTED, "reason", "expired");
+            throw new NoSuchElementException("game not found: " + normalized);
         }
         return state;
     }
@@ -505,9 +557,45 @@ public class GameSessionService {
     }
 
     private void recordElapsed(String metricName, long startedAtMillis, String... tags) {
-        long now = System.currentTimeMillis();
+        long now = nowMillis();
         long elapsedMillis = Math.max(0L, now - startedAtMillis);
         meterRegistry.timer(metricName, tags).record(elapsedMillis, TimeUnit.MILLISECONDS);
+    }
+
+    private long nowMillis() {
+        return clock.millis();
+    }
+
+    private void evictExpiredSessions() {
+        long nowMillis = nowMillis();
+        for (Map.Entry<String, SessionState> entry : sessions.entrySet()) {
+            String gameId = entry.getKey();
+            SessionState state = entry.getValue();
+            if (state == null || !isExpired(state, nowMillis)) {
+                continue;
+            }
+            if (sessions.remove(gameId, state)) {
+                incrementCounter(METRIC_SESSION_EVICTED, "reason", "expired");
+            }
+        }
+    }
+
+    private void evictOldestUntilCapacityAvailable() {
+        while (sessions.size() >= sessionMax) {
+            Map.Entry<String, SessionState> oldest = sessions.entrySet().stream()
+                    .min(Comparator.comparingLong(entry -> entry.getValue().lastTouchedAtMillis))
+                    .orElse(null);
+            if (oldest == null) {
+                return;
+            }
+            if (sessions.remove(oldest.getKey(), oldest.getValue())) {
+                incrementCounter(METRIC_SESSION_EVICTED, "reason", "capacity");
+            }
+        }
+    }
+
+    private boolean isExpired(SessionState state, long nowMillis) {
+        return nowMillis - state.lastTouchedAtMillis >= sessionRetentionMillis;
     }
 
     private static GameSessionSnapshot toSnapshot(SessionState state) {
@@ -571,6 +659,7 @@ public class GameSessionService {
         private List<PegState> pegs;
         private final long gameStartedAtMillis;
         private long roundStartedAtMillis;
+        private long lastTouchedAtMillis;
 
         private SessionState(String gameId,
                              String language,
@@ -581,7 +670,8 @@ public class GameSessionService {
                              Map<String, Integer> roundScores,
                              Map<String, PlayerRoundStatus> statuses,
                              Map<String, String> actionTokens,
-                             CardDeckResponse card) {
+                             CardDeckResponse card,
+                             long nowMillis) {
             this.gameId = gameId;
             this.language = language;
             this.topic = topic;
@@ -599,8 +689,9 @@ public class GameSessionService {
             this.lastAction = "Game started";
             this.card = card;
             this.pegs = hiddenPegs(card.options().size());
-            this.gameStartedAtMillis = System.currentTimeMillis();
-            this.roundStartedAtMillis = this.gameStartedAtMillis;
+            this.gameStartedAtMillis = nowMillis;
+            this.roundStartedAtMillis = nowMillis;
+            this.lastTouchedAtMillis = nowMillis;
         }
 
         private String currentPlayerId() {
