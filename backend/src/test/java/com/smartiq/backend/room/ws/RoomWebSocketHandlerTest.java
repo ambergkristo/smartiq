@@ -156,7 +156,7 @@ class RoomWebSocketHandlerTest {
         verify(roomWsGateway).unregister(webSocketSession);
         verify(webSocketSession).close(closeStatus.capture());
         assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.POLICY_VIOLATION.getCode());
-        assertThat(counterValue("failure", "unexpected_client_message")).isEqualTo(1.0);
+        assertThat(messageRejectedCounterValue("unsupported_client_message")).isEqualTo(1.0);
     }
 
     private static RoomSnapshot snapshot(String roomCode) {
@@ -172,6 +172,16 @@ class RoomWebSocketHandlerTest {
     private double counterValue(String result, String reason) {
         var counter = meterRegistry.find("smartiq.room.ws.connect.total")
                 .tag("result", result)
+                .tag("reason", reason)
+                .counter();
+        if (counter == null) {
+            return 0.0;
+        }
+        return counter.count();
+    }
+
+    private double messageRejectedCounterValue(String reason) {
+        var counter = meterRegistry.find("smartiq.room.ws.message.rejected.total")
                 .tag("reason", reason)
                 .counter();
         if (counter == null) {
