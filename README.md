@@ -96,7 +96,7 @@ $env:SMARTIQ_LANGUAGE_ET_ENABLED="true"
 - Backend dev CORS accepts localhost origins on any port:
   - `http://localhost:*`
   - `http://127.0.0.1:*`
-- Production CORS stays strict and must use explicit `APP_CORS_ALLOWED_ORIGINS` values.
+- Production CORS defaults to `SMARTIQ_CORS_ALLOWED_ORIGIN_PUBLIC` and can be overridden with explicit `APP_CORS_ALLOWED_ORIGINS` values.
 
 Optional Windows helpers to free common dev ports:
 

@@ -63,7 +63,6 @@ smartiq:
     pipeline-command: ${SMARTIQ_PIPELINE_COMMAND:npm run pipeline:cards}
   cors:
     allowed-origins:
-      - ${SMARTIQ_CORS_ALLOWED_ORIGIN_LOCAL:http://localhost:5173}
       - ${SMARTIQ_CORS_ALLOWED_ORIGIN_PUBLIC:https://smartiq.vercel.app}
   internal-access:
     enabled: ${SMARTIQ_INTERNAL_ACCESS_ENABLED:false}
