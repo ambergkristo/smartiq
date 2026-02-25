@@ -1,5 +1,7 @@
 package com.smartiq.backend.card;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import com.smartiq.backend.config.QuestionPoolProperties;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
@@ -18,11 +20,14 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class QuestionPoolService {
 
     private static final Logger log = LoggerFactory.getLogger(QuestionPoolService.class);
+    private static final QuestionPoolKey UNKNOWN_BANK_KEY =
+            new QuestionPoolKey("unknown_bank", "unknown_bank", "unknown_bank");
 
     private final CardRepository cardRepository;
     private final SessionCardTrackerService sessionCardTrackerService;
@@ -31,6 +36,14 @@ public class QuestionPoolService {
     private final MeterRegistry meterRegistry;
     private final Set<QuestionPoolKey> refillInFlight = ConcurrentHashMap.newKeySet();
     private final Set<QuestionPoolKey> registeredMeters = ConcurrentHashMap.newKeySet();
+    private final Cache<QuestionPoolKey, Boolean> populatedBankKeys = Caffeine.newBuilder()
+            .maximumSize(5000)
+            .expireAfterWrite(30, TimeUnit.MINUTES)
+            .build();
+    private final Cache<QuestionPoolKey, Boolean> emptyBankKeys = Caffeine.newBuilder()
+            .maximumSize(5000)
+            .expireAfterWrite(30, TimeUnit.MINUTES)
+            .build();
 
     public QuestionPoolService(CardRepository cardRepository,
                                SessionCardTrackerService sessionCardTrackerService,
@@ -53,6 +66,8 @@ public class QuestionPoolService {
 
         for (QuestionPoolKeyView keyView : cardRepository.findAllPoolKeys(CardSourcePolicy.ALLOWED_SOURCES)) {
             QuestionPoolKey key = QuestionPoolKey.from(keyView.getTopic(), keyView.getDifficulty(), keyView.getLanguage());
+            populatedBankKeys.put(key, Boolean.TRUE);
+            emptyBankKeys.invalidate(key);
             registerMetersIfNeeded(key);
             refillPool(key);
         }
@@ -61,11 +76,18 @@ public class QuestionPoolService {
     public CardResponse nextCard(String topic, String difficulty, String language, String sessionId) {
         Set<String> servedIds = sessionCardTrackerService.servedIdsForSession(sessionId);
         QuestionPoolKey key = QuestionPoolKey.from(topic, difficulty, language);
-        registerMetersIfNeeded(key);
 
         if (!properties.enabled() || isBlank(topic) || isBlank(difficulty)) {
             return fallbackWithReservation(topic, difficulty, language, sessionId, servedIds, key);
         }
+        if (Boolean.TRUE.equals(emptyBankKeys.getIfPresent(key))) {
+            return fallbackWithReservation(topic, difficulty, language, sessionId, servedIds, UNKNOWN_BANK_KEY);
+        }
+        if (!isKnownBankKey(key)) {
+            return fallbackWithReservation(topic, difficulty, language, sessionId, servedIds, UNKNOWN_BANK_KEY);
+        }
+
+        registerMetersIfNeeded(key);
 
         ConcurrentLinkedQueue<CardResponse> queue = poolStore.queueForKey(key);
         CardResponse fromPool = pullNonDuplicateAndReserve(queue, servedIds, sessionId, key);
@@ -189,6 +211,13 @@ public class QuestionPoolService {
                 key.language(),
                 CardSourcePolicy.ALLOWED_SOURCES
         );
+        if (bankSize <= 0) {
+            populatedBankKeys.invalidate(key);
+            emptyBankKeys.put(key, Boolean.TRUE);
+            return;
+        }
+        populatedBankKeys.put(key, Boolean.TRUE);
+        emptyBankKeys.invalidate(key);
 
         if (bankSize < properties.minimumPerKey()) {
             log.warn("bank_low topic={} difficulty={} language={} available={} required={}",
@@ -224,6 +253,26 @@ public class QuestionPoolService {
             poolStore.recordRefill(key, added);
             meterRegistry.counter("smartiq.pool.refills", metricTags(key)).increment();
         }
+    }
+
+    private boolean isKnownBankKey(QuestionPoolKey key) {
+        if (Boolean.TRUE.equals(populatedBankKeys.getIfPresent(key))) {
+            return true;
+        }
+        long bankSize = cardRepository.countByPoolKey(
+                key.topic(),
+                key.difficulty(),
+                key.language(),
+                CardSourcePolicy.ALLOWED_SOURCES
+        );
+        if (bankSize <= 0) {
+            populatedBankKeys.invalidate(key);
+            emptyBankKeys.put(key, Boolean.TRUE);
+            return false;
+        }
+        populatedBankKeys.put(key, Boolean.TRUE);
+        emptyBankKeys.invalidate(key);
+        return true;
     }
 
     private void registerMetersIfNeeded(QuestionPoolKey key) {
