@@ -64,6 +64,19 @@ class RoomWebSocketHandlerTest {
     }
 
     @Test
+    void connectionUsesAuthoritativeResumeIdentityForRegistration() throws Exception {
+        RoomSnapshot snapshot = snapshot("ABC234");
+        when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/abc234?playerId=p1&authToken=rt_host"));
+        when(roomService.rejoinRoom(eq("ABC234"), eq(new RejoinRoomRequest("p1", "rt_host"))))
+                .thenReturn(new RoomResumeResponse("ABC234", "p2", "rt_host", snapshot));
+
+        roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
+
+        verify(roomWsGateway).register("ABC234", "p2", webSocketSession);
+        verify(roomWsGateway).sendRoomStateToSession(webSocketSession, snapshot);
+    }
+
+    @Test
     void unknownRoomClosesConnectionWithNotAcceptable() throws Exception {
         when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/ZZZZZZ?playerId=p1&authToken=rt_host"));
         when(webSocketSession.isOpen()).thenReturn(true);
