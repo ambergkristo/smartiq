@@ -56,6 +56,7 @@ public class GameSessionService {
     private static final int MAX_PLAYER_ID_LENGTH = 64;
     private static final int MAX_ACTION_TOKEN_LENGTH = 128;
     private static final int MAX_ACTION_REQUEST_ID_LENGTH = 128;
+    private static final Pattern ACTOR_PLAYER_ID_PATTERN = Pattern.compile("^p[1-9][0-9]*$");
     private static final Pattern ACTION_TOKEN_PATTERN = Pattern.compile("^at_[a-f0-9]{32}$");
     private static final Pattern ACTION_REQUEST_ID_PATTERN = Pattern.compile("^[A-Za-z0-9_-]+$");
     private static final int MAX_PLAYER_DISPLAY_NAME_LENGTH = 64;
@@ -169,6 +170,7 @@ public class GameSessionService {
         String actorPlayerId = normalizeRequiredField(request.actorPlayerId(), "actorPlayerId", MAX_PLAYER_ID_LENGTH);
         String actionToken = normalizeRequiredField(request.actionToken(), "actionToken", MAX_ACTION_TOKEN_LENGTH);
         String actionRequestId = normalizeActionRequestId(request.actionRequestId());
+        requireActorPlayerIdFormat(actorPlayerId);
         requireActionTokenFormat(actionToken);
         requireActionActor(state, actorPlayerId, actionToken);
         requireUniqueActionRequestId(state, actionRequestId);
@@ -559,6 +561,16 @@ public class GameSessionService {
     private static void requireActionTokenFormat(String actionToken) {
         if (!ACTION_TOKEN_PATTERN.matcher(actionToken).matches()) {
             throw new ForbiddenGameActionException("invalid action token");
+        }
+    }
+
+    private static void requireActorPlayerIdFormat(String actorPlayerId) {
+        if (!ACTOR_PLAYER_ID_PATTERN.matcher(actorPlayerId).matches()) {
+            throw new IllegalArgumentException("actorPlayerId format is invalid");
+        }
+        int actorNumber = Integer.parseInt(actorPlayerId.substring(1));
+        if (actorNumber < 1 || actorNumber > MAX_PLAYERS) {
+            throw new IllegalArgumentException("actorPlayerId format is invalid");
         }
     }
 
