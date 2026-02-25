@@ -7,6 +7,7 @@ const DEFAULT_PORT = Number.parseInt(process.env.RUNTIME_DECK_BACKEND_PORT || '8
 const STARTUP_TIMEOUT_MS = Number.parseInt(process.env.RUNTIME_DECK_STARTUP_TIMEOUT_MS || '120000', 10);
 const HEALTH_POLL_MS = Number.parseInt(process.env.RUNTIME_DECK_HEALTH_POLL_MS || '1500', 10);
 const DATA_READY_TIMEOUT_MS = Number.parseInt(process.env.RUNTIME_DECK_DATA_READY_TIMEOUT_MS || '180000', 10);
+const MIN_READY_TOPIC_CARD_COUNT = Number.parseInt(process.env.RUNTIME_DECK_MIN_TOPIC_CARD_COUNT || '1000', 10);
 const MAVEN_BIN = process.platform === 'win32' ? 'mvn.cmd' : 'mvn';
 
 const explicitApiBase = process.env.API_BASE_URL || process.env.BACKEND_URL;
@@ -117,7 +118,10 @@ async function waitForDeckData(backendProcess) {
       const response = await fetch(`${apiBaseUrl}/api/topics`);
       if (response.ok) {
         const payload = await response.json();
-        if (Array.isArray(payload) && payload.length > 0) {
+        const totalCards = Array.isArray(payload)
+          ? payload.reduce((sum, item) => sum + Number(item?.count || 0), 0)
+          : 0;
+        if (totalCards >= MIN_READY_TOPIC_CARD_COUNT) {
           return;
         }
       }
