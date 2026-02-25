@@ -117,6 +117,13 @@ class RoomWsGatewayTest {
                 .hasMessage("playerId format is invalid");
     }
 
+    @Test
+    void registerRejectsPlayerIdOutOfAllowedRange() {
+        assertThatThrownBy(() -> roomWsGateway.register("ABC234", "p9", sessionOne))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("playerId format is invalid");
+    }
+
     private static RoomSnapshot snapshot(String roomCode) {
         return new RoomSnapshot(
                 roomCode,

@@ -19,6 +19,7 @@ public class RoomWsGateway {
 
     private static final int ROOM_CODE_LENGTH = 6;
     private static final String ROOM_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    private static final int MAX_PLAYERS = 8;
     private static final int MAX_PLAYER_ID_LENGTH = 64;
     private static final Pattern PLAYER_ID_PATTERN = Pattern.compile("^p[1-9][0-9]*$");
 
@@ -132,6 +133,15 @@ public class RoomWsGateway {
             throw new IllegalArgumentException("playerId is too long");
         }
         if (!PLAYER_ID_PATTERN.matcher(normalized).matches()) {
+            throw new IllegalArgumentException("playerId format is invalid");
+        }
+        int playerNumber;
+        try {
+            playerNumber = Integer.parseInt(normalized.substring(1));
+        } catch (NumberFormatException ex) {
+            throw new IllegalArgumentException("playerId format is invalid");
+        }
+        if (playerNumber < 1 || playerNumber > MAX_PLAYERS) {
             throw new IllegalArgumentException("playerId format is invalid");
         }
         return normalized;
