@@ -30,6 +30,9 @@ public final class CardSourcePolicy {
     }
 
     public static boolean isAllowed(String rawSource) {
+        if (rawSource == null || rawSource.isBlank()) {
+            return false;
+        }
         return ALLOWED_SOURCES.contains(normalizeSource(rawSource));
     }
 }

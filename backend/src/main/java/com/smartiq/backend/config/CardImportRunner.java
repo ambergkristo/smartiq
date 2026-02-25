@@ -515,6 +515,9 @@ public class CardImportRunner implements ApplicationRunner {
     }
 
     private String normalizeAllowedSource(String rawSource) {
+        if (!StringUtils.hasText(rawSource)) {
+            throw new IllegalArgumentException("Card source is required");
+        }
         String normalized = CardSourcePolicy.normalizeSource(rawSource).toLowerCase(Locale.ROOT);
         if (!CardSourcePolicy.ALLOWED_SOURCES.contains(normalized)) {
             throw new IllegalArgumentException("Unsupported card source: " + normalized);
