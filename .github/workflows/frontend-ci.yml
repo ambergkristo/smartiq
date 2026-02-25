@@ -24,6 +24,9 @@ jobs:
           cache-dependency-path: |
             frontend/package-lock.json
 
+      - name: Validate docs markdown encoding (no BOM)
+        run: node ../tools/validate_no_bom_docs.js ../docs
+
       - name: Validate Smart10 dataset
         run: node ../tools/validate_cards_v2.js ../data/smart10/cards.en.json --max-warnings=0
 
