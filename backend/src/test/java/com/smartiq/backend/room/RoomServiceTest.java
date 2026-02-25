@@ -24,7 +24,7 @@ class RoomServiceTest {
     void createRoomAllocatesHostPlayerAndToken() {
         RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
 
-        assertThat(created.roomCode()).matches("^[A-Z0-9]{6}$");
+        assertThat(created.roomCode()).matches("^[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{6}$");
         assertThat(created.playerId()).isEqualTo("p1");
         assertThat(created.authToken()).startsWith("rt_");
     }
@@ -86,9 +86,16 @@ class RoomServiceTest {
 
     @Test
     void joinUnknownRoomThrowsNotFound() {
-        assertThatThrownBy(() -> roomService.joinRoom("MISSING", new JoinRoomRequest("Bob")))
+        assertThatThrownBy(() -> roomService.joinRoom("ZZZZZZ", new JoinRoomRequest("Bob")))
                 .isInstanceOf(NoSuchElementException.class)
-                .hasMessage("room not found: MISSING");
+                .hasMessage("room not found: ZZZZZZ");
+    }
+
+    @Test
+    void joinRoomRejectsInvalidRoomCodeFormat() {
+        assertThatThrownBy(() -> roomService.joinRoom("MISSING", new JoinRoomRequest("Bob")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("room code format is invalid");
     }
 
     @Test
@@ -109,7 +116,7 @@ class RoomServiceTest {
         RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
         roomService.joinRoom(created.roomCode(), new JoinRoomRequest("Bob"));
 
-        assertThatThrownBy(() -> roomService.joinRoom("MISSING", new JoinRoomRequest("Bob")))
+        assertThatThrownBy(() -> roomService.joinRoom("ZZZZZZ", new JoinRoomRequest("Bob")))
                 .isInstanceOf(NoSuchElementException.class);
 
         roomService.rejoinRoom(created.roomCode(), new RejoinRoomRequest(created.playerId(), created.authToken()));

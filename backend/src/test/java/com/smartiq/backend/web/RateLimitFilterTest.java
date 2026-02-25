@@ -140,19 +140,19 @@ class RateLimitFilterTest {
 
     @Test
     void returns429WhenRoomsApiLimitExceededAcrossDynamicCodes() throws Exception {
-        mockMvc.perform(post("/api/rooms/MISS01/join")
+        mockMvc.perform(post("/api/rooms/ZZZZZ2/join")
                         .header("X-Forwarded-For", "10.0.0.13")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"displayName\":\"Alice\"}"))
                 .andExpect(status().isNotFound());
 
-        mockMvc.perform(post("/api/rooms/MISS02/join")
+        mockMvc.perform(post("/api/rooms/ZZZZZ3/join")
                         .header("X-Forwarded-For", "10.0.0.13")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"displayName\":\"Bob\"}"))
                 .andExpect(status().isNotFound());
 
-        mockMvc.perform(post("/api/rooms/MISS03/join")
+        mockMvc.perform(post("/api/rooms/ZZZZZ4/join")
                         .header("X-Forwarded-For", "10.0.0.13")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"displayName\":\"Carol\"}"))
@@ -160,7 +160,7 @@ class RateLimitFilterTest {
                 .andExpect(header().exists("Retry-After"))
                 .andExpect(jsonPath("$.status").value(429))
                 .andExpect(jsonPath("$.reason").value("Too Many Requests"))
-                .andExpect(jsonPath("$.path").value("/api/rooms/MISS03/join"))
-                .andExpect(jsonPath("$.error").value("Rate limit exceeded for /api/rooms/MISS03/join"));
+                .andExpect(jsonPath("$.path").value("/api/rooms/ZZZZZ4/join"))
+                .andExpect(jsonPath("$.error").value("Rate limit exceeded for /api/rooms/ZZZZZ4/join"));
     }
 }

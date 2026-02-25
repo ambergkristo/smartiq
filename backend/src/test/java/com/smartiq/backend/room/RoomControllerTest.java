@@ -81,15 +81,29 @@ class RoomControllerTest {
 
     @Test
     void joinMissingRoomMapsToNotFoundErrorShape() throws Exception {
+        when(roomService.joinRoom(eq("ZZZZZZ"), any()))
+                .thenThrow(new NoSuchElementException("room not found: ZZZZZZ"));
+
+        mockMvc.perform(post("/api/rooms/ZZZZZZ/join")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new JoinRoomRequest("Bob"))))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.error").value("room not found: ZZZZZZ"))
+                .andExpect(jsonPath("$.status").value(404))
+                .andExpect(jsonPath("$.path").value("/api/rooms/ZZZZZZ/join"));
+    }
+
+    @Test
+    void joinInvalidRoomCodeMapsToBadRequestErrorShape() throws Exception {
         when(roomService.joinRoom(eq("MISSING"), any()))
-                .thenThrow(new NoSuchElementException("room not found: MISSING"));
+                .thenThrow(new IllegalArgumentException("room code format is invalid"));
 
         mockMvc.perform(post("/api/rooms/MISSING/join")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new JoinRoomRequest("Bob"))))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.error").value("room not found: MISSING"))
-                .andExpect(jsonPath("$.status").value(404))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("room code format is invalid"))
+                .andExpect(jsonPath("$.status").value(400))
                 .andExpect(jsonPath("$.path").value("/api/rooms/MISSING/join"));
     }
 

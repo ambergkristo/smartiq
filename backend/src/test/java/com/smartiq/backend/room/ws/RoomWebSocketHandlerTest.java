@@ -64,10 +64,10 @@ class RoomWebSocketHandlerTest {
 
     @Test
     void unknownRoomClosesConnectionWithNotAcceptable() throws Exception {
-        when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/missing?playerId=p1&authToken=rt_host"));
+        when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/ZZZZZZ?playerId=p1&authToken=rt_host"));
         when(webSocketSession.isOpen()).thenReturn(true);
-        when(roomService.rejoinRoom(eq("MISSING"), eq(new RejoinRoomRequest("p1", "rt_host"))))
-                .thenThrow(new NoSuchElementException("room not found: MISSING"));
+        when(roomService.rejoinRoom(eq("ZZZZZZ"), eq(new RejoinRoomRequest("p1", "rt_host"))))
+                .thenThrow(new NoSuchElementException("room not found: ZZZZZZ"));
 
         roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
 
@@ -75,6 +75,21 @@ class RoomWebSocketHandlerTest {
         verify(webSocketSession).close(closeStatus.capture());
         assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.NOT_ACCEPTABLE.getCode());
         assertThat(counterValue("failure", "room_not_found")).isEqualTo(1.0);
+    }
+
+    @Test
+    void invalidRoomCodeFormatClosesConnectionWithNotAcceptable() throws Exception {
+        when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/missing?playerId=p1&authToken=rt_host"));
+        when(webSocketSession.isOpen()).thenReturn(true);
+        when(roomService.rejoinRoom(eq("MISSING"), eq(new RejoinRoomRequest("p1", "rt_host"))))
+                .thenThrow(new IllegalArgumentException("room code format is invalid"));
+
+        roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
+
+        ArgumentCaptor<CloseStatus> closeStatus = ArgumentCaptor.forClass(CloseStatus.class);
+        verify(webSocketSession).close(closeStatus.capture());
+        assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.NOT_ACCEPTABLE.getCode());
+        assertThat(counterValue("failure", "invalid_room_code")).isEqualTo(1.0);
     }
 
     @Test
