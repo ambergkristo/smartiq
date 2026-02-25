@@ -30,6 +30,7 @@ public class NextRandomCardService {
     private static final long TTL_MILLIS = Duration.ofHours(2).toMillis();
     private static final long CLEANUP_INTERVAL_MILLIS = Duration.ofMinutes(10).toMillis();
     private static final int MAX_GAME_ID_LENGTH = 128;
+    private static final int MAX_LANGUAGE_LENGTH = 32;
     private static final int MAX_TOPIC_LENGTH = 128;
 
     private final CardRepository cardRepository;
@@ -289,6 +290,12 @@ public class NextRandomCardService {
         String normalized = normalizeRequired(value, "language").toLowerCase(Locale.ROOT);
         if (normalized.isBlank()) {
             throw new IllegalArgumentException("language is required");
+        }
+        if (normalized.length() > MAX_LANGUAGE_LENGTH) {
+            throw new IllegalArgumentException("language is too long");
+        }
+        if (containsControlChars(normalized)) {
+            throw new IllegalArgumentException("language contains control characters");
         }
         if ("et".equals(normalized) && !etEnabled) {
             throw new IllegalArgumentException("language et is disabled");
