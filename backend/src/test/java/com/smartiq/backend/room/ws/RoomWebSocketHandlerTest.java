@@ -108,6 +108,21 @@ class RoomWebSocketHandlerTest {
     }
 
     @Test
+    void invalidPlayerIdFormatMapsToSpecificFailureReason() throws Exception {
+        when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/ABC234?playerId=player-1&authToken=rt_host"));
+        when(webSocketSession.isOpen()).thenReturn(true);
+        when(roomService.rejoinRoom(eq("ABC234"), eq(new RejoinRoomRequest("player-1", "rt_host"))))
+                .thenThrow(new IllegalArgumentException("playerId format is invalid"));
+
+        roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
+
+        ArgumentCaptor<CloseStatus> closeStatus = ArgumentCaptor.forClass(CloseStatus.class);
+        verify(webSocketSession).close(closeStatus.capture());
+        assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.NOT_ACCEPTABLE.getCode());
+        assertThat(counterValue("failure", "invalid_player_id")).isEqualTo(1.0);
+    }
+
+    @Test
     void oversizedAuthTokenInQueryClosesConnectionBeforeRejoinCall() throws Exception {
         String oversizedToken = "rt_" + "a".repeat(260);
         when(webSocketSession.getUri()).thenReturn(
