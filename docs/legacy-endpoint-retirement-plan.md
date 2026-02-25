@@ -6,10 +6,15 @@ Canonical runtime endpoint:
 
 - `GET /api/cards/nextRandom?language=&gameId=&topic=`
 
-Deprecated legacy endpoints (kept temporarily for backward compatibility):
+Deprecated legacy endpoints:
 
 - `GET /api/cards/next?topicId=&topic=&difficulty=&sessionId=&lang=&v=`
 - `GET /api/cards/random?topic=`
+
+Current behavior:
+
+- In `prod` profile, both legacy endpoints return `410 Gone` with deprecation headers and successor `Link`.
+- In non-prod environments, legacy endpoints remain available temporarily for migration testing.
 
 Code references:
 
@@ -19,6 +24,7 @@ Code references:
 ## Timeline
 
 - `2026-02-24`: retirement plan approved and migration tracking starts.
+- `2026-02-25`: prod switched to `410 Gone` for `/api/cards/next` and `/api/cards/random`.
 - `2026-06-30`: all first-party SmartIQ clients must be on `/api/cards/nextRandom`.
 - `2026-09-30`: external client outreach complete; legacy traffic must be under 1% of card traffic.
 - `2026-12-31 23:59:59 GMT`: deprecation sunset date already advertised in prod response headers.
@@ -67,7 +73,7 @@ Tracking checklist (owner: backend + frontend):
 
 - Update all first-party callers to `/api/cards/nextRandom`.
 - Remove legacy endpoint usage from smoke/load scripts.
-- Confirm production deprecation headers are visible on legacy responses.
+- Confirm production legacy responses return `410` with deprecation headers.
 - Publish migration note in release communication before removal PR.
 
 ## Removal PR Requirements
