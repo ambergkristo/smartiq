@@ -18,6 +18,7 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.regex.Pattern;
 
 @Service
 public class RoomService {
@@ -29,6 +30,7 @@ public class RoomService {
     private static final int MAX_DISPLAY_NAME_LENGTH = 64;
     private static final int MAX_PLAYER_ID_LENGTH = 64;
     private static final int MAX_AUTH_TOKEN_LENGTH = 128;
+    private static final Pattern ROOM_TOKEN_PATTERN = Pattern.compile("^rt_[a-f0-9]{32}$");
     private static final String METRIC_ROOM_CREATE = "smartiq.room.create.total";
     private static final String METRIC_ROOM_JOIN = "smartiq.room.join.total";
     private static final String METRIC_ROOM_REJOIN = "smartiq.room.rejoin.total";
@@ -276,6 +278,9 @@ public class RoomService {
         String normalized = authToken.trim();
         if (normalized.length() > MAX_AUTH_TOKEN_LENGTH) {
             throw new IllegalArgumentException("authToken is too long");
+        }
+        if (!ROOM_TOKEN_PATTERN.matcher(normalized).matches()) {
+            throw new IllegalArgumentException("invalid room token");
         }
         return normalized;
     }
