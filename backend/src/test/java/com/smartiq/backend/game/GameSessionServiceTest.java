@@ -471,6 +471,38 @@ class GameSessionServiceTest {
     }
 
     @Test
+    void rejectsOversizedGameIdOnSnapshotAccess() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(openCard("card-1", 0, "Question 1"));
+
+        gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
+        );
+
+        assertThatThrownBy(() -> gameSessionService.getSnapshot("g".repeat(129)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("gameId is too long");
+    }
+
+    @Test
+    void rejectsOversizedGameIdForActionSubmission() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(openCard("card-1", 0, "Question 1"));
+
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
+        );
+
+        assertThatThrownBy(() -> gameSessionService.applyAction(
+                "g".repeat(129),
+                new GameActionRequest("PASS", null, null, "p1", created.actionTokens().get("p1"), "req-oversized-game-id")
+        ))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("gameId is too long");
+        assertThat(rejectedCounterValue("invalid_request")).isEqualTo(1.0);
+    }
+
+    @Test
     void createGameRejectsOversizedPlayerDisplayName() {
         assertThatThrownBy(() -> gameSessionService.createGameWithControl(
                 new CreateGameRequest(List.of("A".repeat(65), "Bob"), "en", null, 30)
