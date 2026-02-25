@@ -17,8 +17,6 @@ public final class CardSourcePolicy {
             "smartiq-verified"
     );
 
-    public static final String DEFAULT_ALLOWED_SOURCE = "smartiq-v2";
-
     private CardSourcePolicy() {
     }
 
