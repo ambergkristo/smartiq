@@ -367,6 +367,9 @@ public class RoomService {
             if (message.contains("playerid format is invalid")) {
                 return "invalid_player_id";
             }
+            if (message.contains("playerid is too long")) {
+                return "invalid_player_id";
+            }
             if (message.contains("room code is required")) {
                 return "invalid_room_code";
             }

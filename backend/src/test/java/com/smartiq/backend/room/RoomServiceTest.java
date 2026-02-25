@@ -196,6 +196,20 @@ class RoomServiceTest {
     }
 
     @Test
+    void recordsOversizedPlayerIdAsInvalidPlayerIdReasonForRejoinFailureMetric() {
+        RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
+
+        assertThatThrownBy(() -> roomService.rejoinRoom(
+                created.roomCode(),
+                new RejoinRoomRequest("p" + "1".repeat(64), created.authToken())
+        )).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("playerId is too long");
+
+        assertThat(counterValue("smartiq.room.rejoin.total", "result", "failure", "reason", "invalid_player_id"))
+                .isEqualTo(1.0);
+    }
+
+    @Test
     void evictsExpiredRoomsOnAccess() {
         RoomService ttlService = new RoomService(
                 meterRegistry,
