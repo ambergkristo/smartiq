@@ -171,6 +171,19 @@ class RoomServiceTest {
     }
 
     @Test
+    void recordsInvalidPlayerIdReasonForRejoinFailureMetric() {
+        RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
+
+        assertThatThrownBy(() -> roomService.rejoinRoom(
+                created.roomCode(),
+                new RejoinRoomRequest("player-1", created.authToken())
+        )).isInstanceOf(IllegalArgumentException.class);
+
+        assertThat(counterValue("smartiq.room.rejoin.total", "result", "failure", "reason", "invalid_player_id"))
+                .isEqualTo(1.0);
+    }
+
+    @Test
     void evictsExpiredRoomsOnAccess() {
         RoomService ttlService = new RoomService(
                 meterRegistry,

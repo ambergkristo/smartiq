@@ -171,6 +171,9 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
         if (message.contains("playerid is required")) {
             return "missing_player_id";
         }
+        if (message.contains("playerid format is invalid")) {
+            return "invalid_player_id";
+        }
         if (message.contains("room code is required")) {
             return "invalid_room_code";
         }
