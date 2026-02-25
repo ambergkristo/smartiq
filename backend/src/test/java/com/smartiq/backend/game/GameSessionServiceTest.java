@@ -299,6 +299,7 @@ class GameSessionServiceTest {
         ))
                 .isInstanceOf(ForbiddenGameActionException.class)
                 .hasMessage("invalid action token");
+        assertThat(rejectedCounterValue("invalid_action_token")).isEqualTo(1.0);
     }
 
     @Test
@@ -512,6 +513,14 @@ class GameSessionServiceTest {
 
     private double evictedCounterValue(String reason) {
         var counter = meterRegistry.find("smartiq.game.session.evicted.total").tag("reason", reason).counter();
+        if (counter == null) {
+            return 0.0;
+        }
+        return counter.count();
+    }
+
+    private double rejectedCounterValue(String reason) {
+        var counter = meterRegistry.find("smartiq.game.action.rejected.total").tag("reason", reason).counter();
         if (counter == null) {
             return 0.0;
         }
