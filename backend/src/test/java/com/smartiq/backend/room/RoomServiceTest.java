@@ -108,6 +108,18 @@ class RoomServiceTest {
     }
 
     @Test
+    void rejoinRejectsOverflowPlayerIdFormat() {
+        RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
+
+        assertThatThrownBy(() -> roomService.rejoinRoom(
+                created.roomCode(),
+                new RejoinRoomRequest("p99999999999999999999", created.authToken())
+        ))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("playerId format is invalid");
+    }
+
+    @Test
     void joinUnknownRoomThrowsNotFound() {
         assertThatThrownBy(() -> roomService.joinRoom("ZZZZZZ", new JoinRoomRequest("Bob")))
                 .isInstanceOf(NoSuchElementException.class)

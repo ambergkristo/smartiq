@@ -577,7 +577,12 @@ public class GameSessionService {
         if (!ACTOR_PLAYER_ID_PATTERN.matcher(actorPlayerId).matches()) {
             throw new IllegalArgumentException("actorPlayerId format is invalid");
         }
-        int actorNumber = Integer.parseInt(actorPlayerId.substring(1));
+        int actorNumber;
+        try {
+            actorNumber = Integer.parseInt(actorPlayerId.substring(1));
+        } catch (NumberFormatException ex) {
+            throw new IllegalArgumentException("actorPlayerId format is invalid");
+        }
         if (actorNumber < 1 || actorNumber > MAX_PLAYERS) {
             throw new IllegalArgumentException("actorPlayerId format is invalid");
         }
