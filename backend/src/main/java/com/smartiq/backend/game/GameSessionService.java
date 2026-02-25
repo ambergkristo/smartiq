@@ -628,7 +628,7 @@ public class GameSessionService {
             if (message.contains("action payload is required")) {
                 return "invalid_payload";
             }
-            if (message.contains("actorplayerid format is invalid")) {
+            if (message.contains("actorplayerid")) {
                 return "invalid_actor_player_id";
             }
             if (message.contains("actionrequestid")) {
