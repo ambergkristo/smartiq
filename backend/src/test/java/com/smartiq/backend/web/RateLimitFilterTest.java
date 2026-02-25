@@ -2,6 +2,7 @@ package com.smartiq.backend.web;
 
 import com.smartiq.backend.card.Card;
 import com.smartiq.backend.card.CardRepository;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.Instant;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -43,6 +45,9 @@ class RateLimitFilterTest {
 
     @Autowired
     private CardRepository cardRepository;
+
+    @Autowired
+    private MeterRegistry meterRegistry;
 
     @BeforeEach
     void setUp() {
@@ -210,5 +215,40 @@ class RateLimitFilterTest {
                 .andExpect(jsonPath("$.reason").value("Too Many Requests"))
                 .andExpect(jsonPath("$.path").value("/ws/rooms/ABC123"))
                 .andExpect(jsonPath("$.error").value("Rate limit exceeded for /ws/rooms/ABC123"));
+    }
+
+    @Test
+    void incrementsBlockedRateLimitMetricWhenLimitIsExceeded() throws Exception {
+        double blockedBefore = blockedCounterValue("cards-next");
+
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .header("X-Forwarded-For", "10.0.0.21")
+                        .param("language", "en")
+                        .param("gameId", "metric-1"))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .header("X-Forwarded-For", "10.0.0.21")
+                        .param("language", "en")
+                        .param("gameId", "metric-2"))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .header("X-Forwarded-For", "10.0.0.21")
+                        .param("language", "en")
+                        .param("gameId", "metric-3"))
+                .andExpect(status().isTooManyRequests());
+
+        assertThat(blockedCounterValue("cards-next")).isEqualTo(blockedBefore + 1.0);
+    }
+
+    private double blockedCounterValue(String bucket) {
+        var counter = meterRegistry.find("smartiq.rate.limit.blocked.total")
+                .tag("bucket", bucket)
+                .counter();
+        if (counter == null) {
+            return 0.0;
+        }
+        return counter.count();
     }
 }
