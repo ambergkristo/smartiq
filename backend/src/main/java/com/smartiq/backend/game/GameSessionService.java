@@ -48,6 +48,7 @@ public class GameSessionService {
     private static final String METRIC_GAME_COMPLETED = "smartiq.game.session.completed.total";
     private static final String METRIC_ROUND_COMPLETED = "smartiq.game.round.completed.total";
     private static final String METRIC_ACTION_TOTAL = "smartiq.game.action.total";
+    private static final String METRIC_ACTION_REJECTED = "smartiq.game.action.rejected.total";
     private static final String METRIC_ANSWER_TOTAL = "smartiq.game.answer.total";
     private static final String METRIC_GAME_DURATION = "smartiq.game.duration.seconds";
     private static final String METRIC_ROUND_DURATION = "smartiq.game.round.duration.seconds";
@@ -158,33 +159,38 @@ public class GameSessionService {
     }
 
     public synchronized GameSessionSnapshot applyAction(String gameId, GameActionRequest request) {
-        evictExpiredSessions();
-        SessionState state = requireSession(gameId);
-        if (request == null) {
-            throw new IllegalArgumentException("action payload is required");
-        }
-        if (PHASE_GAME_OVER.equals(state.phase)) {
-            throw new IllegalArgumentException("game already ended");
-        }
+        try {
+            evictExpiredSessions();
+            SessionState state = requireSession(gameId);
+            if (request == null) {
+                throw new IllegalArgumentException("action payload is required");
+            }
+            if (PHASE_GAME_OVER.equals(state.phase)) {
+                throw new IllegalArgumentException("game already ended");
+            }
 
-        String actorPlayerId = normalizeRequiredField(request.actorPlayerId(), "actorPlayerId", MAX_PLAYER_ID_LENGTH);
-        String actionToken = normalizeRequiredField(request.actionToken(), "actionToken", MAX_ACTION_TOKEN_LENGTH);
-        String actionRequestId = normalizeActionRequestId(request.actionRequestId());
-        requireActorPlayerIdFormat(actorPlayerId);
-        requireActionTokenFormat(actionToken);
-        requireActionActor(state, actorPlayerId, actionToken);
-        requireUniqueActionRequestId(state, actionRequestId);
+            String actorPlayerId = normalizeRequiredField(request.actorPlayerId(), "actorPlayerId", MAX_PLAYER_ID_LENGTH);
+            String actionToken = normalizeRequiredField(request.actionToken(), "actionToken", MAX_ACTION_TOKEN_LENGTH);
+            String actionRequestId = normalizeActionRequestId(request.actionRequestId());
+            requireActorPlayerIdFormat(actorPlayerId);
+            requireActionTokenFormat(actionToken);
+            requireActionActor(state, actorPlayerId, actionToken);
+            requireUniqueActionRequestId(state, actionRequestId);
 
-        String actionType = normalizeActionType(request.type());
-        switch (actionType) {
-            case "PASS" -> applyPass(state);
-            case "ANSWER" -> applyAnswer(state, request.tileIndex(), request.rank());
-            default -> throw new IllegalArgumentException("unsupported action type: " + actionType);
+            String actionType = normalizeActionType(request.type());
+            switch (actionType) {
+                case "PASS" -> applyPass(state);
+                case "ANSWER" -> applyAnswer(state, request.tileIndex(), request.rank());
+                default -> throw new IllegalArgumentException("unsupported action type: " + actionType);
+            }
+            rememberActionRequestId(state, actionRequestId);
+            state.lastTouchedAtMillis = nowMillis();
+
+            return toSnapshot(state);
+        } catch (RuntimeException ex) {
+            incrementCounter(METRIC_ACTION_REJECTED, "reason", classifyActionFailure(ex));
+            throw ex;
         }
-        rememberActionRequestId(state, actionRequestId);
-        state.lastTouchedAtMillis = nowMillis();
-
-        return toSnapshot(state);
     }
 
     private void applyPass(SessionState state) {
@@ -586,6 +592,56 @@ public class GameSessionService {
 
     private static boolean containsControlChars(String value) {
         return value.chars().anyMatch(ch -> Character.isISOControl((char) ch));
+    }
+
+    private static String classifyActionFailure(RuntimeException ex) {
+        if (ex instanceof DuplicateGameActionException) {
+            return "duplicate_action_request";
+        }
+        if (ex instanceof ForbiddenGameActionException) {
+            String message = normalizeMessage(ex);
+            if (message.contains("invalid action token")) {
+                return "invalid_action_token";
+            }
+            if (message.contains("unknown action actor")) {
+                return "unknown_action_actor";
+            }
+            if (message.contains("actor is not active player")) {
+                return "actor_not_active";
+            }
+            return "forbidden_action";
+        }
+        if (ex instanceof NoSuchElementException) {
+            String message = normalizeMessage(ex);
+            if (message.contains("game not found")) {
+                return "game_not_found";
+            }
+            return "not_found";
+        }
+        if (ex instanceof IllegalArgumentException) {
+            String message = normalizeMessage(ex);
+            if (message.contains("action payload is required")) {
+                return "invalid_payload";
+            }
+            if (message.contains("actorplayerid format is invalid")) {
+                return "invalid_actor_player_id";
+            }
+            if (message.contains("actionrequestid")) {
+                return "invalid_action_request_id";
+            }
+            if (message.contains("actiontoken")) {
+                return "invalid_action_token";
+            }
+            return "invalid_request";
+        }
+        return "internal_error";
+    }
+
+    private static String normalizeMessage(RuntimeException ex) {
+        if (ex.getMessage() == null) {
+            return "";
+        }
+        return ex.getMessage().trim().toLowerCase(Locale.ROOT);
     }
 
     private SessionState requireSession(String gameId) {
