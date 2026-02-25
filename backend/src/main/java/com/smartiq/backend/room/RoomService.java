@@ -202,9 +202,8 @@ public class RoomService {
             }
         }
 
-        String fallback = UUID.randomUUID().toString().replace("-", "")
-                .substring(0, ROOM_CODE_LENGTH)
-                .toUpperCase(Locale.ROOT);
+        // Keep fallback constrained to the same allowed room-code alphabet.
+        String fallback = randomRoomCode();
         if (!rooms.containsKey(fallback)) {
             return fallback;
         }
