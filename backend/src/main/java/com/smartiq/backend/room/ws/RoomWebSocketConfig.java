@@ -41,10 +41,14 @@ public class RoomWebSocketConfig implements WebSocketConfigurer {
     }
 
     private List<String> resolveAllowedOrigins() {
-        if (corsProperties.allowedOrigins() == null || corsProperties.allowedOrigins().isEmpty()) {
-            return DEFAULT_DEV_ORIGINS;
+        List<String> resolved = corsProperties.allowedOrigins() == null || corsProperties.allowedOrigins().isEmpty()
+                ? DEFAULT_DEV_ORIGINS
+                : corsProperties.allowedOrigins();
+
+        if (isProdProfile() && resolved.stream().anyMatch("*"::equals)) {
+            throw new IllegalStateException("Wildcard CORS origin is not allowed in prod.");
         }
-        return corsProperties.allowedOrigins();
+        return resolved;
     }
 
     private boolean isProdProfile() {
