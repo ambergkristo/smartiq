@@ -459,6 +459,28 @@ class CardControllerTest {
     }
 
     @Test
+    void returnsBadRequestWhenLegacyNextSessionIdTooLong() throws Exception {
+        mockMvc.perform(get("/api/cards/next")
+                        .param("topicId", "Math")
+                        .param("difficulty", "2")
+                        .param("sessionId", "s".repeat(129))
+                        .param("lang", "en"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("sessionId is too long"));
+    }
+
+    @Test
+    void returnsBadRequestWhenLegacyNextSessionIdContainsControlChars() throws Exception {
+        mockMvc.perform(get("/api/cards/next")
+                        .param("topicId", "Math")
+                        .param("difficulty", "2")
+                        .param("sessionId", "session-\n1")
+                        .param("lang", "en"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("sessionId contains control characters"));
+    }
+
+    @Test
     void returnsNotFoundWhenOnlyDeprecatedSourcesMatchLegacyNextPool() throws Exception {
         mockMvc.perform(get("/api/cards/next")
                         .param("topicId", "LegacyOnly")
