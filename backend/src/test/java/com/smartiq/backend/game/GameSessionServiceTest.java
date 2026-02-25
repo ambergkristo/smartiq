@@ -387,6 +387,23 @@ class GameSessionServiceTest {
     }
 
     @Test
+    void rejectsActionRequestIdWithInvalidFormat() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(openCard("card-1", 0, "Question 1"));
+
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
+        );
+
+        assertThatThrownBy(() -> gameSessionService.applyAction(
+                created.snapshot().gameId(),
+                new GameActionRequest("PASS", null, null, "p1", created.actionTokens().get("p1"), "req bad")
+        ))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("actionRequestId format is invalid");
+    }
+
+    @Test
     void createGameRejectsOversizedPlayerDisplayName() {
         assertThatThrownBy(() -> gameSessionService.createGameWithControl(
                 new CreateGameRequest(List.of("A".repeat(65), "Bob"), "en", null, 30)

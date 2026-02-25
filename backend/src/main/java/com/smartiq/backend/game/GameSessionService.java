@@ -28,6 +28,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 @Service
 public class GameSessionService {
@@ -53,6 +54,7 @@ public class GameSessionService {
     private static final int MAX_PLAYER_ID_LENGTH = 64;
     private static final int MAX_ACTION_TOKEN_LENGTH = 128;
     private static final int MAX_ACTION_REQUEST_ID_LENGTH = 128;
+    private static final Pattern ACTION_REQUEST_ID_PATTERN = Pattern.compile("^[A-Za-z0-9_-]+$");
     private static final int MAX_PLAYER_DISPLAY_NAME_LENGTH = 64;
     private static final int DEFAULT_SESSION_RETENTION_MINUTES = 180;
     private static final int DEFAULT_SESSION_MAX = 50000;
@@ -163,7 +165,7 @@ public class GameSessionService {
 
         String actorPlayerId = normalizeRequiredField(request.actorPlayerId(), "actorPlayerId", MAX_PLAYER_ID_LENGTH);
         String actionToken = normalizeRequiredField(request.actionToken(), "actionToken", MAX_ACTION_TOKEN_LENGTH);
-        String actionRequestId = normalizeRequiredField(request.actionRequestId(), "actionRequestId", MAX_ACTION_REQUEST_ID_LENGTH);
+        String actionRequestId = normalizeActionRequestId(request.actionRequestId());
         requireActionActor(state, actorPlayerId, actionToken);
         requireUniqueActionRequestId(state, actionRequestId);
 
@@ -538,6 +540,14 @@ public class GameSessionService {
         String normalized = value.trim();
         if (normalized.length() > maxLength) {
             throw new IllegalArgumentException(fieldName + " is too long");
+        }
+        return normalized;
+    }
+
+    private static String normalizeActionRequestId(String value) {
+        String normalized = normalizeRequiredField(value, "actionRequestId", MAX_ACTION_REQUEST_ID_LENGTH);
+        if (!ACTION_REQUEST_ID_PATTERN.matcher(normalized).matches()) {
+            throw new IllegalArgumentException("actionRequestId format is invalid");
         }
         return normalized;
     }
