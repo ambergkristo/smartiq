@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -20,6 +21,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.doThrow;
 
 @ExtendWith(MockitoExtension.class)
 class RoomWsGatewayTest {
@@ -100,6 +103,20 @@ class RoomWsGatewayTest {
 
         verify(sessionOne, never()).sendMessage(any());
         verify(sessionTwo).sendMessage(any(TextMessage.class));
+        verify(sessionOne).close();
+    }
+
+    @Test
+    void sendFailureUnregistersAndClosesSession() throws Exception {
+        when(sessionOne.getId()).thenReturn("s1");
+        when(sessionOne.isOpen()).thenReturn(true);
+        doThrow(new IOException("write failed")).when(sessionOne).sendMessage(any(TextMessage.class));
+        roomWsGateway.register("ABC234", "p1", sessionOne);
+
+        roomWsGateway.sendRoomState("ABC234", snapshot("ABC234"));
+        roomWsGateway.sendRoomState("ABC234", snapshot("ABC234"));
+
+        verify(sessionOne, times(1)).sendMessage(any(TextMessage.class));
         verify(sessionOne).close();
     }
 

@@ -110,6 +110,7 @@ public class RoomWsGateway {
             }
         } catch (IOException | IllegalStateException ex) {
             unregister(session);
+            closeQuietly(session);
         }
     }
 
