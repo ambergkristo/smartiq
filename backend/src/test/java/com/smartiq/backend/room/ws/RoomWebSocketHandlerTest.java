@@ -75,6 +75,7 @@ class RoomWebSocketHandlerTest {
         ArgumentCaptor<CloseStatus> closeStatus = ArgumentCaptor.forClass(CloseStatus.class);
         verify(webSocketSession).close(closeStatus.capture());
         assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.NOT_ACCEPTABLE.getCode());
+        assertThat(closeStatus.getValue().getReason()).isEqualTo("invalid websocket request");
         assertThat(counterValue("failure", "room_not_found")).isEqualTo(1.0);
     }
 

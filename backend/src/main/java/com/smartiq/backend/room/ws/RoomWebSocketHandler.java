@@ -23,6 +23,7 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
 
     private static final String ROOMS_PATH_PREFIX = "/ws/rooms/";
     private static final String METRIC_WS_CONNECT = "smartiq.room.ws.connect.total";
+    private static final String GENERIC_HANDSHAKE_REJECT_REASON = "invalid websocket request";
 
     private final RoomService roomService;
     private final RoomWsGateway roomWsGateway;
@@ -49,7 +50,7 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
             incrementConnectCounter("success", "none");
         } catch (IllegalArgumentException | NoSuchElementException ex) {
             incrementConnectCounter("failure", classifyConnectFailure(ex));
-            closeQuietly(session, CloseStatus.NOT_ACCEPTABLE.withReason(trimReason(ex.getMessage())));
+            closeQuietly(session, CloseStatus.NOT_ACCEPTABLE.withReason(GENERIC_HANDSHAKE_REJECT_REASON));
         }
     }
 
@@ -111,17 +112,6 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
         }
 
         throw new IllegalArgumentException(key + " is required");
-    }
-
-    private static String trimReason(String reason) {
-        if (reason == null || reason.isBlank()) {
-            return "invalid websocket request";
-        }
-        String trimmed = reason.trim();
-        if (trimmed.length() <= 120) {
-            return trimmed;
-        }
-        return trimmed.substring(0, 120);
     }
 
     private static void closeQuietly(WebSocketSession session, CloseStatus status) {
