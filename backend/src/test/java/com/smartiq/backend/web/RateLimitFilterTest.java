@@ -26,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "smartiq.rate-limit.enabled=true",
         "smartiq.rate-limit.window-seconds=60",
         "smartiq.rate-limit.trust-forwarded-for=true",
+        "smartiq.rate-limit.ws-rooms-per-minute=2",
         "smartiq.rate-limit.cards-next-per-minute=2",
         "smartiq.rate-limit.session-answer-per-minute=2",
         "smartiq.rate-limit.game-per-minute=2",
@@ -163,5 +164,25 @@ class RateLimitFilterTest {
                 .andExpect(jsonPath("$.reason").value("Too Many Requests"))
                 .andExpect(jsonPath("$.path").value("/api/rooms/ZZZZZ4/join"))
                 .andExpect(jsonPath("$.error").value("Rate limit exceeded for /api/rooms/ZZZZZ4/join"));
+    }
+
+    @Test
+    void returns429WhenWebSocketRoomsHandshakeLimitExceeded() throws Exception {
+        mockMvc.perform(get("/ws/rooms/ABC123")
+                        .header("X-Forwarded-For", "10.0.0.14"))
+                .andExpect(status().isBadRequest());
+
+        mockMvc.perform(get("/ws/rooms/ABC123")
+                        .header("X-Forwarded-For", "10.0.0.14"))
+                .andExpect(status().isBadRequest());
+
+        mockMvc.perform(get("/ws/rooms/ABC123")
+                        .header("X-Forwarded-For", "10.0.0.14"))
+                .andExpect(status().isTooManyRequests())
+                .andExpect(header().exists("Retry-After"))
+                .andExpect(jsonPath("$.status").value(429))
+                .andExpect(jsonPath("$.reason").value("Too Many Requests"))
+                .andExpect(jsonPath("$.path").value("/ws/rooms/ABC123"))
+                .andExpect(jsonPath("$.error").value("Rate limit exceeded for /ws/rooms/ABC123"));
     }
 }

@@ -78,6 +78,7 @@ smartiq:
     enabled: ${SMARTIQ_RATE_LIMIT_ENABLED:true}
     window-seconds: ${SMARTIQ_RATE_LIMIT_WINDOW_SECONDS:60}
     trust-forwarded-for: ${SMARTIQ_RATE_LIMIT_TRUST_FORWARDED_FOR:false}
+    ws-rooms-per-minute: ${SMARTIQ_RATE_LIMIT_WS_ROOMS_PER_MINUTE:120}
     cards-next-per-minute: ${SMARTIQ_RATE_LIMIT_CARDS_NEXT_PER_MINUTE:120}
     session-answer-per-minute: ${SMARTIQ_RATE_LIMIT_SESSION_ANSWER_PER_MINUTE:180}
     game-per-minute: ${SMARTIQ_RATE_LIMIT_GAME_PER_MINUTE:240}

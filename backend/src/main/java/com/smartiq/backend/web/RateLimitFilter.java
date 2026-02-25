@@ -82,6 +82,9 @@ public class RateLimitFilter extends OncePerRequestFilter {
         if ("/api/rooms".equals(uri) || uri.startsWith("/api/rooms/")) {
             return new LimitRule("rooms-api", properties.roomsPerMinute());
         }
+        if (uri.startsWith("/ws/rooms/")) {
+            return new LimitRule("ws-rooms", properties.wsRoomsPerMinute());
+        }
         return null;
     }
 
