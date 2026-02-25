@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
         QuestionPoolProperties.class,
         SessionDedupProperties.class,
         GameSessionProperties.class,
+        RoomProperties.class,
         CorsProperties.class,
         BankEnforcerProperties.class,
         InternalAccessProperties.class,
