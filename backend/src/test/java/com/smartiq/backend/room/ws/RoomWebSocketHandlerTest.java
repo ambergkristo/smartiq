@@ -50,14 +50,14 @@ class RoomWebSocketHandlerTest {
 
     @Test
     void connectionRegistersSessionAndPushesRoomState() throws Exception {
-        RoomSnapshot snapshot = snapshot("ABC123");
-        when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/abc123?playerId=p1&authToken=rt_host"));
-        when(roomService.rejoinRoom(eq("ABC123"), eq(new RejoinRoomRequest("p1", "rt_host"))))
-                .thenReturn(new RoomResumeResponse("ABC123", "p1", "rt_host", snapshot));
+        RoomSnapshot snapshot = snapshot("ABC234");
+        when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/abc234?playerId=p1&authToken=rt_host"));
+        when(roomService.rejoinRoom(eq("ABC234"), eq(new RejoinRoomRequest("p1", "rt_host"))))
+                .thenReturn(new RoomResumeResponse("ABC234", "p1", "rt_host", snapshot));
 
         roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
 
-        verify(roomWsGateway).register("ABC123", "p1", webSocketSession);
+        verify(roomWsGateway).register("ABC234", "p1", webSocketSession);
         verify(roomWsGateway).sendRoomStateToSession(webSocketSession, snapshot);
         verify(webSocketSession, never()).close(any(CloseStatus.class));
         assertThat(counterValue("success", "none")).isEqualTo(1.0);
@@ -83,20 +83,19 @@ class RoomWebSocketHandlerTest {
     void invalidRoomCodeFormatClosesConnectionWithNotAcceptable() throws Exception {
         when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/missing?playerId=p1&authToken=rt_host"));
         when(webSocketSession.isOpen()).thenReturn(true);
-        when(roomService.rejoinRoom(eq("MISSING"), eq(new RejoinRoomRequest("p1", "rt_host"))))
-                .thenThrow(new IllegalArgumentException("room code format is invalid"));
 
         roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
 
         ArgumentCaptor<CloseStatus> closeStatus = ArgumentCaptor.forClass(CloseStatus.class);
         verify(webSocketSession).close(closeStatus.capture());
         assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.NOT_ACCEPTABLE.getCode());
+        verify(roomService, never()).rejoinRoom(any(), any());
         assertThat(counterValue("failure", "invalid_room_code")).isEqualTo(1.0);
     }
 
     @Test
     void missingTokenClosesConnectionWithNotAcceptable() throws Exception {
-        when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/abc123?playerId=p1"));
+        when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/abc234?playerId=p1"));
         when(webSocketSession.isOpen()).thenReturn(true);
 
         roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
@@ -112,7 +111,7 @@ class RoomWebSocketHandlerTest {
     void oversizedAuthTokenInQueryClosesConnectionBeforeRejoinCall() throws Exception {
         String oversizedToken = "rt_" + "a".repeat(260);
         when(webSocketSession.getUri()).thenReturn(
-                URI.create("ws://localhost/ws/rooms/abc123?playerId=p1&authToken=" + oversizedToken)
+                URI.create("ws://localhost/ws/rooms/abc234?playerId=p1&authToken=" + oversizedToken)
         );
         when(webSocketSession.isOpen()).thenReturn(true);
 

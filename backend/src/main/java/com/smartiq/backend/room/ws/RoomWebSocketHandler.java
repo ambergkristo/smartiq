@@ -22,6 +22,8 @@ import java.util.NoSuchElementException;
 public class RoomWebSocketHandler extends TextWebSocketHandler {
 
     private static final String ROOMS_PATH_PREFIX = "/ws/rooms/";
+    private static final int ROOM_CODE_LENGTH = 6;
+    private static final String ROOM_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     private static final String METRIC_WS_CONNECT = "smartiq.room.ws.connect.total";
     private static final String GENERIC_HANDSHAKE_REJECT_REASON = "invalid websocket request";
     private static final int MAX_QUERY_LENGTH = 1024;
@@ -86,7 +88,11 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
             throw new IllegalArgumentException("room code is required");
         }
 
-        return rawCode.trim().toUpperCase(Locale.ROOT);
+        String normalized = rawCode.trim().toUpperCase(Locale.ROOT);
+        if (!isValidRoomCode(normalized)) {
+            throw new IllegalArgumentException("room code format is invalid");
+        }
+        return normalized;
     }
 
     private static String resolveRequiredQueryParam(WebSocketSession session, String key) {
@@ -131,6 +137,18 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
         } catch (IOException ignored) {
             // Best-effort close.
         }
+    }
+
+    private static boolean isValidRoomCode(String roomCode) {
+        if (roomCode.length() != ROOM_CODE_LENGTH) {
+            return false;
+        }
+        for (int index = 0; index < roomCode.length(); index += 1) {
+            if (ROOM_CODE_ALPHABET.indexOf(roomCode.charAt(index)) < 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void incrementConnectCounter(String result, String reason) {
