@@ -17,6 +17,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -166,6 +167,31 @@ class RoomWebSocketHandlerTest {
         verify(roomService, never()).rejoinRoom(any(), any());
         verify(roomWsGateway, never()).register(any(), any(), any());
         assertThat(counterValue("failure", "authtoken_too_long")).isEqualTo(1.0);
+    }
+
+    @Test
+    void tooManyQueryParametersClosesConnectionBeforeRejoinCall() throws Exception {
+        List<String> queryParts = new ArrayList<>();
+        for (int index = 0; index < 17; index += 1) {
+            queryParts.add("k" + index + "=v" + index);
+        }
+        queryParts.add("playerId=p1");
+        queryParts.add("authToken=rt_host");
+        String query = String.join("&", queryParts);
+
+        when(webSocketSession.getUri()).thenReturn(
+                URI.create("ws://localhost/ws/rooms/abc234?" + query)
+        );
+        when(webSocketSession.isOpen()).thenReturn(true);
+
+        roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
+
+        ArgumentCaptor<CloseStatus> closeStatus = ArgumentCaptor.forClass(CloseStatus.class);
+        verify(webSocketSession).close(closeStatus.capture());
+        assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.NOT_ACCEPTABLE.getCode());
+        verify(roomService, never()).rejoinRoom(any(), any());
+        verify(roomWsGateway, never()).register(any(), any(), any());
+        assertThat(counterValue("failure", "query_too_many_params")).isEqualTo(1.0);
     }
 
     @Test
