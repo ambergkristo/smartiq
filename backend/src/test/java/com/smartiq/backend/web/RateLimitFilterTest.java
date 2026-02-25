@@ -25,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "smartiq.session.enabled=false",
         "smartiq.rate-limit.enabled=true",
         "smartiq.rate-limit.window-seconds=60",
+        "smartiq.rate-limit.trust-forwarded-for=true",
         "smartiq.rate-limit.cards-next-per-minute=2",
         "smartiq.rate-limit.session-answer-per-minute=2",
         "smartiq.rate-limit.game-per-minute=2",

@@ -92,10 +92,15 @@ public class RateLimitFilter extends OncePerRequestFilter {
         return new CounterWindow(current.windowStart(), current.count() + 1);
     }
 
-    private static String clientIp(HttpServletRequest request) {
-        String forwardedFor = request.getHeader("X-Forwarded-For");
-        if (forwardedFor != null && !forwardedFor.isBlank()) {
-            return forwardedFor.split(",")[0].trim();
+    private String clientIp(HttpServletRequest request) {
+        if (properties.trustForwardedFor()) {
+            String forwardedFor = request.getHeader("X-Forwarded-For");
+            if (forwardedFor != null && !forwardedFor.isBlank()) {
+                String candidate = forwardedFor.split(",")[0].trim();
+                if (!candidate.isBlank()) {
+                    return candidate;
+                }
+            }
         }
         return request.getRemoteAddr();
     }

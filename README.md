@@ -294,6 +294,16 @@ SMARTIQ_SESSION_TTL_MINUTES=120
 SMARTIQ_SESSION_MAX=50000
 ```
 
+Rate limiting (forwarded header trust is opt-in):
+
+```bash
+SMARTIQ_RATE_LIMIT_ENABLED=true
+SMARTIQ_RATE_LIMIT_WINDOW_SECONDS=60
+SMARTIQ_RATE_LIMIT_TRUST_FORWARDED_FOR=false
+```
+
+Set `SMARTIQ_RATE_LIMIT_TRUST_FORWARDED_FOR=true` only when the backend is exclusively behind a trusted proxy/load balancer that rewrites `X-Forwarded-For`.
+
 Language feature flag:
 
 ```bash
