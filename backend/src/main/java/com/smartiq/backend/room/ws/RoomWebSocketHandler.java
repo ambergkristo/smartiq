@@ -25,6 +25,7 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
     private static final int ROOM_CODE_LENGTH = 6;
     private static final String ROOM_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     private static final String METRIC_WS_CONNECT = "smartiq.room.ws.connect.total";
+    private static final String METRIC_WS_MESSAGE_REJECTED = "smartiq.room.ws.message.rejected.total";
     private static final String GENERIC_HANDSHAKE_REJECT_REASON = "invalid websocket request";
     private static final int MAX_QUERY_LENGTH = 1024;
     private static final int MAX_QUERY_VALUE_LENGTH = 256;
@@ -60,7 +61,7 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
-        incrementConnectCounter("failure", "unexpected_client_message");
+        meterRegistry.counter(METRIC_WS_MESSAGE_REJECTED, "reason", "unsupported_client_message").increment();
         roomWsGateway.unregister(session);
         closeQuietly(session, CloseStatus.POLICY_VIOLATION.withReason("client messages are not supported"));
     }
