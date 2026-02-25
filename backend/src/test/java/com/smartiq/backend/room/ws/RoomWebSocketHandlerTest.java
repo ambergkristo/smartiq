@@ -109,6 +109,24 @@ class RoomWebSocketHandlerTest {
     }
 
     @Test
+    void oversizedAuthTokenInQueryClosesConnectionBeforeRejoinCall() throws Exception {
+        String oversizedToken = "rt_" + "a".repeat(260);
+        when(webSocketSession.getUri()).thenReturn(
+                URI.create("ws://localhost/ws/rooms/abc123?playerId=p1&authToken=" + oversizedToken)
+        );
+        when(webSocketSession.isOpen()).thenReturn(true);
+
+        roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
+
+        ArgumentCaptor<CloseStatus> closeStatus = ArgumentCaptor.forClass(CloseStatus.class);
+        verify(webSocketSession).close(closeStatus.capture());
+        assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.NOT_ACCEPTABLE.getCode());
+        verify(roomService, never()).rejoinRoom(any(), any());
+        verify(roomWsGateway, never()).register(any(), any(), any());
+        assertThat(counterValue("failure", "invalid_request")).isEqualTo(1.0);
+    }
+
+    @Test
     void connectionClosedUnregistersSession() throws Exception {
         roomWebSocketHandler.afterConnectionClosed(webSocketSession, CloseStatus.NORMAL);
         verify(roomWsGateway).unregister(webSocketSession);
