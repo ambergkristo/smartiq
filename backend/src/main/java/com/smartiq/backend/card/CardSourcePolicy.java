@@ -24,7 +24,7 @@ public final class CardSourcePolicy {
 
     public static String normalizeSource(String rawSource) {
         if (rawSource == null || rawSource.isBlank()) {
-            return DEFAULT_ALLOWED_SOURCE;
+            throw new IllegalArgumentException("Card source is required");
         }
         return rawSource.trim().toLowerCase(Locale.ROOT);
     }
