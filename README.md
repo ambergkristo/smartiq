@@ -294,6 +294,13 @@ SMARTIQ_SESSION_TTL_MINUTES=120
 SMARTIQ_SESSION_MAX=50000
 ```
 
+Server-authoritative game session retention:
+
+```bash
+SMARTIQ_GAME_SESSION_RETENTION_MINUTES=180
+SMARTIQ_GAME_SESSION_MAX=50000
+```
+
 Rate limiting (forwarded header trust is opt-in):
 
 ```bash

@@ -2,6 +2,7 @@ package com.smartiq.backend.game;
 
 import com.smartiq.backend.card.CardDeckResponse;
 import com.smartiq.backend.card.CardService;
+import com.smartiq.backend.config.GameSessionProperties;
 import com.smartiq.backend.game.contract.GameSessionSnapshot;
 import com.smartiq.backend.game.contract.PlayerRoundStatus;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
@@ -11,8 +12,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -30,11 +36,18 @@ class GameSessionServiceTest {
 
     private SimpleMeterRegistry meterRegistry;
     private GameSessionService gameSessionService;
+    private MutableClock testClock;
 
     @BeforeEach
     void setUp() {
         meterRegistry = new SimpleMeterRegistry();
-        gameSessionService = new GameSessionService(cardService, meterRegistry);
+        testClock = new MutableClock(Instant.parse("2026-02-25T00:00:00Z"), ZoneOffset.UTC);
+        gameSessionService = new GameSessionService(
+                cardService,
+                meterRegistry,
+                new GameSessionProperties(180, 50000),
+                testClock
+        );
     }
 
     @Test
@@ -355,6 +368,62 @@ class GameSessionServiceTest {
                 .hasMessage("pass requires at least one correct answer in current round");
     }
 
+    @Test
+    void evictsExpiredSessionsOnAccess() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(openCard("ttl-card-1", 0, "TTL Question 1"));
+
+        GameSessionService ttlService = new GameSessionService(
+                cardService,
+                meterRegistry,
+                new GameSessionProperties(1, 50000),
+                testClock
+        );
+        GameSessionCreateResponse created = ttlService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
+        );
+        String gameId = created.snapshot().gameId();
+
+        testClock.advanceSeconds(61);
+
+        assertThatThrownBy(() -> ttlService.getSnapshot(gameId))
+                .isInstanceOf(NoSuchElementException.class)
+                .hasMessage("game not found: " + gameId);
+        assertThat(evictedCounterValue("expired")).isEqualTo(1.0);
+    }
+
+    @Test
+    void evictsOldestSessionWhenCapacityReached() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(
+                        openCard("cap-card-1", 0, "Capacity Question 1"),
+                        openCard("cap-card-2", 0, "Capacity Question 2")
+                );
+
+        GameSessionService capService = new GameSessionService(
+                cardService,
+                meterRegistry,
+                new GameSessionProperties(180, 1),
+                testClock
+        );
+        GameSessionCreateResponse first = capService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
+        );
+        String firstGameId = first.snapshot().gameId();
+
+        testClock.advanceSeconds(1);
+
+        GameSessionCreateResponse second = capService.createGameWithControl(
+                new CreateGameRequest(List.of("Carol", "Dave"), "en", null, 30)
+        );
+
+        assertThatThrownBy(() -> capService.getSnapshot(firstGameId))
+                .isInstanceOf(NoSuchElementException.class)
+                .hasMessage("game not found: " + firstGameId);
+        assertThat(capService.getSnapshot(second.snapshot().gameId()).gameId()).isEqualTo(second.snapshot().gameId());
+        assertThat(evictedCounterValue("capacity")).isEqualTo(1.0);
+    }
+
     private double counterValue(String name, String... tags) {
         var counter = meterRegistry.find(name).tags(tags).tag("language", "en").counter();
         if (counter == null) {
@@ -369,6 +438,14 @@ class GameSessionServiceTest {
             return 0L;
         }
         return timer.count();
+    }
+
+    private double evictedCounterValue(String reason) {
+        var counter = meterRegistry.find("smartiq.game.session.evicted.total").tag("reason", reason).counter();
+        if (counter == null) {
+            return 0.0;
+        }
+        return counter.count();
     }
 
     private static CardDeckResponse openCard(String cardId, int correctIndex, String question) {
@@ -415,5 +492,34 @@ class GameSessionServiceTest {
 
     private static List<String> options() {
         return List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
+    }
+
+    private static final class MutableClock extends Clock {
+        private Instant instant;
+        private final ZoneId zone;
+
+        private MutableClock(Instant instant, ZoneId zone) {
+            this.instant = instant;
+            this.zone = zone;
+        }
+
+        @Override
+        public ZoneId getZone() {
+            return zone;
+        }
+
+        @Override
+        public Clock withZone(ZoneId zone) {
+            return new MutableClock(instant, zone);
+        }
+
+        @Override
+        public Instant instant() {
+            return instant;
+        }
+
+        private void advanceSeconds(long seconds) {
+            instant = instant.plusSeconds(seconds);
+        }
     }
 }
