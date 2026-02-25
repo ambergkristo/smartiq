@@ -51,7 +51,7 @@ public class QuestionPoolService {
             return;
         }
 
-        for (QuestionPoolKeyView keyView : cardRepository.findAllPoolKeys()) {
+        for (QuestionPoolKeyView keyView : cardRepository.findAllPoolKeys(CardSourcePolicy.ALLOWED_SOURCES)) {
             QuestionPoolKey key = QuestionPoolKey.from(keyView.getTopic(), keyView.getDifficulty(), keyView.getLanguage());
             registerMetersIfNeeded(key);
             refillPool(key);
@@ -116,12 +116,14 @@ public class QuestionPoolService {
                 ? cardRepository.findRandomByFilters(
                 normalizeOptional(topic),
                 normalizeOptional(difficulty),
-                normalizeOptional(language)
+                normalizeOptional(language),
+                CardSourcePolicy.ALLOWED_SOURCES
         )
                 : cardRepository.findRandomByFiltersExcludingIds(
                 normalizeOptional(topic),
                 normalizeOptional(difficulty),
                 normalizeOptional(language),
+                CardSourcePolicy.ALLOWED_SOURCES,
                 servedIds
         );
 
@@ -181,7 +183,12 @@ public class QuestionPoolService {
 
     private void refillPool(QuestionPoolKey key) {
         ConcurrentLinkedQueue<CardResponse> queue = poolStore.queueForKey(key);
-        long bankSize = cardRepository.countByPoolKey(key.topic(), key.difficulty(), key.language());
+        long bankSize = cardRepository.countByPoolKey(
+                key.topic(),
+                key.difficulty(),
+                key.language(),
+                CardSourcePolicy.ALLOWED_SOURCES
+        );
 
         if (bankSize < properties.minimumPerKey()) {
             log.warn("bank_low topic={} difficulty={} language={} available={} required={}",
@@ -193,7 +200,12 @@ public class QuestionPoolService {
             return;
         }
 
-        List<Card> cards = new ArrayList<>(cardRepository.findAllByPoolKey(key.topic(), key.difficulty(), key.language()));
+        List<Card> cards = new ArrayList<>(cardRepository.findAllByPoolKey(
+                key.topic(),
+                key.difficulty(),
+                key.language(),
+                CardSourcePolicy.ALLOWED_SOURCES
+        ));
         if (cards.isEmpty()) {
             return;
         }

@@ -34,8 +34,13 @@ public class BankSizeEnforcer implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         List<String> lowBankKeys = new ArrayList<>();
 
-        for (QuestionPoolKeyView key : cardRepository.findAllPoolKeys()) {
-            long count = cardRepository.countByPoolKey(key.getTopic(), key.getDifficulty(), key.getLanguage());
+        for (QuestionPoolKeyView key : cardRepository.findAllPoolKeys(CardSourcePolicy.ALLOWED_SOURCES)) {
+            long count = cardRepository.countByPoolKey(
+                    key.getTopic(),
+                    key.getDifficulty(),
+                    key.getLanguage(),
+                    CardSourcePolicy.ALLOWED_SOURCES
+            );
             if (count < properties.minSize()) {
                 String keyText = String.format("%s|%s|%s", key.getTopic(), key.getDifficulty(), key.getLanguage());
                 lowBankKeys.add(keyText);

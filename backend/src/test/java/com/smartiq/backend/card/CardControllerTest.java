@@ -241,6 +241,29 @@ class CardControllerTest {
     }
 
     @Test
+    void randomEndpointExcludesDeprecatedOnlyPool() throws Exception {
+        cardRepository.deleteAll();
+
+        Card deprecatedOnly = new Card();
+        deprecatedOnly.setId("random-deprecated-only-1");
+        deprecatedOnly.setTopic("LegacyOnly");
+        deprecatedOnly.setSubtopic("OPEN");
+        deprecatedOnly.setCategory("OPEN");
+        deprecatedOnly.setLanguage("en");
+        deprecatedOnly.setQuestion("Deprecated source should not be served by random endpoint");
+        deprecatedOnly.setOptions(List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"));
+        deprecatedOnly.setCorrectIndex(0);
+        deprecatedOnly.setDifficulty("1");
+        deprecatedOnly.setSource("smartiq-factory");
+        deprecatedOnly.setCreatedAt(Instant.parse("2026-02-17T00:00:00Z"));
+        cardRepository.save(deprecatedOnly);
+
+        mockMvc.perform(get("/api/cards/random"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.error").exists());
+    }
+
+    @Test
     void returnsNextRandomCardForGameIdAndLanguage() throws Exception {
         mockMvc.perform(get("/api/cards/nextRandom")
                         .param("language", "en")
@@ -377,6 +400,29 @@ class CardControllerTest {
                 .andExpect(jsonPath("$.topic").value("Math"))
                 .andExpect(jsonPath("$.difficulty").value("2"))
                 .andExpect(jsonPath("$.cardId").exists());
+    }
+
+    @Test
+    void returnsNotFoundWhenOnlyDeprecatedSourcesMatchLegacyNextPool() throws Exception {
+        mockMvc.perform(get("/api/cards/next")
+                        .param("topicId", "LegacyOnly")
+                        .param("difficulty", "2")
+                        .param("sessionId", "legacy-next-only")
+                        .param("lang", "en"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.error").exists());
+    }
+
+    @Test
+    void legacyNextExcludesDeprecatedSourcesWhenAllowedAlternativesExist() throws Exception {
+        mockMvc.perform(get("/api/cards/next")
+                        .param("topicId", "LegacyMixed")
+                        .param("difficulty", "2")
+                        .param("sessionId", "legacy-next-mixed")
+                        .param("lang", "en"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value("legacy-mixed-allowed-1"))
+                .andExpect(jsonPath("$.source").value("smartiq-v2"));
     }
 
     @Test
