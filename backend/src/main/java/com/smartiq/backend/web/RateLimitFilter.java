@@ -33,6 +33,8 @@ public class RateLimitFilter extends OncePerRequestFilter {
     private final MeterRegistry meterRegistry;
     private final boolean legacyShapeEnabled;
     private final ConcurrentHashMap<String, CounterWindow> counters = new ConcurrentHashMap<>();
+    private final int windowSeconds;
+    private final int maxCounters;
 
     public RateLimitFilter(
             RateLimitProperties properties,
@@ -44,6 +46,8 @@ public class RateLimitFilter extends OncePerRequestFilter {
         this.objectMapper = objectMapper;
         this.meterRegistry = meterRegistry;
         this.legacyShapeEnabled = legacyShapeEnabled;
+        this.windowSeconds = Math.max(1, properties.windowSeconds());
+        this.maxCounters = Math.max(1, properties.counterMax());
     }
 
     @Override
@@ -103,14 +107,13 @@ public class RateLimitFilter extends OncePerRequestFilter {
     }
 
     private CounterWindow refreshWindow(CounterWindow current, long nowSeconds) {
-        if (current == null || nowSeconds - current.windowStart() >= properties.windowSeconds()) {
+        if (current == null || nowSeconds - current.windowStart() >= windowSeconds) {
             return new CounterWindow(nowSeconds, 1);
         }
         return new CounterWindow(current.windowStart(), current.count() + 1);
     }
 
     private void pruneCountersIfNeeded(long nowSeconds) {
-        int maxCounters = Math.max(1, properties.counterMax());
         if (counters.size() <= maxCounters) {
             return;
         }
