@@ -30,6 +30,7 @@ public class RoomService {
     private static final int MAX_DISPLAY_NAME_LENGTH = 64;
     private static final int MAX_PLAYER_ID_LENGTH = 64;
     private static final int MAX_AUTH_TOKEN_LENGTH = 128;
+    private static final Pattern PLAYER_ID_PATTERN = Pattern.compile("^p[1-9][0-9]*$");
     private static final Pattern ROOM_TOKEN_PATTERN = Pattern.compile("^rt_[a-f0-9]{32}$");
     private static final String METRIC_ROOM_CREATE = "smartiq.room.create.total";
     private static final String METRIC_ROOM_JOIN = "smartiq.room.join.total";
@@ -267,6 +268,13 @@ public class RoomService {
         String normalized = playerId.trim();
         if (normalized.length() > MAX_PLAYER_ID_LENGTH) {
             throw new IllegalArgumentException("playerId is too long");
+        }
+        if (!PLAYER_ID_PATTERN.matcher(normalized).matches()) {
+            throw new IllegalArgumentException("playerId format is invalid");
+        }
+        int playerNumber = Integer.parseInt(normalized.substring(1));
+        if (playerNumber < 1 || playerNumber > MAX_PLAYERS) {
+            throw new IllegalArgumentException("playerId format is invalid");
         }
         return normalized;
     }
