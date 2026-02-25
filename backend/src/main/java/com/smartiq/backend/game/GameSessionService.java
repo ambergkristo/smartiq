@@ -60,6 +60,7 @@ public class GameSessionService {
     private static final Pattern ACTOR_PLAYER_ID_PATTERN = Pattern.compile("^p[1-9][0-9]*$");
     private static final Pattern ACTION_TOKEN_PATTERN = Pattern.compile("^at_[a-f0-9]{32}$");
     private static final Pattern ACTION_REQUEST_ID_PATTERN = Pattern.compile("^[A-Za-z0-9_-]+$");
+    private static final Set<String> SUPPORTED_LANGUAGES = Set.of("en", "et");
     private static final int MAX_PLAYER_DISPLAY_NAME_LENGTH = 64;
     private static final int DEFAULT_SESSION_RETENTION_MINUTES = 180;
     private static final int DEFAULT_SESSION_MAX = 50000;
@@ -538,7 +539,11 @@ public class GameSessionService {
         if (language == null || language.isBlank()) {
             return DEFAULT_LANGUAGE;
         }
-        return language.trim().toLowerCase(Locale.ROOT);
+        String normalized = language.trim().toLowerCase(Locale.ROOT);
+        if (!SUPPORTED_LANGUAGES.contains(normalized)) {
+            return DEFAULT_LANGUAGE;
+        }
+        return normalized;
     }
 
     private static String normalizeTopic(String topic) {
