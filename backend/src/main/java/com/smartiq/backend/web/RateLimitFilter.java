@@ -18,12 +18,14 @@ import java.time.Instant;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Pattern;
 
 @Component
 public class RateLimitFilter extends OncePerRequestFilter {
 
     private static final int MAX_CLIENT_KEY_LENGTH = 64;
     private static final String FALLBACK_CLIENT_KEY = "unknown";
+    private static final Pattern CLIENT_KEY_PATTERN = Pattern.compile("^[A-Fa-f0-9:.%-]{1,64}$");
     private static final String METRIC_RATE_LIMIT_BLOCKED = "smartiq.rate.limit.blocked.total";
 
     private final RateLimitProperties properties;
@@ -145,7 +147,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
             return FALLBACK_CLIENT_KEY;
         }
         String normalized = remoteAddr.trim();
-        if (normalized.length() > MAX_CLIENT_KEY_LENGTH) {
+        if (!isValidClientKey(normalized)) {
             return FALLBACK_CLIENT_KEY;
         }
         return normalized;
@@ -156,10 +158,17 @@ public class RateLimitFilter extends OncePerRequestFilter {
             return null;
         }
         String candidate = forwardedFor.split(",")[0].trim();
-        if (candidate.isBlank() || candidate.length() > MAX_CLIENT_KEY_LENGTH) {
+        if (!isValidClientKey(candidate)) {
             return null;
         }
         return candidate;
+    }
+
+    private static boolean isValidClientKey(String value) {
+        return value != null
+                && !value.isBlank()
+                && value.length() <= MAX_CLIENT_KEY_LENGTH
+                && CLIENT_KEY_PATTERN.matcher(value).matches();
     }
 
     private record LimitRule(String bucket, int limit) {

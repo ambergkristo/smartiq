@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import java.time.Instant;
 import java.util.List;
@@ -152,6 +153,35 @@ class RateLimitFilterTest {
     }
 
     @Test
+    void ignoresMalformedForwardedClientIpAndFallsBackToRemoteAddress() throws Exception {
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .with(remoteAddress("10.10.0.99"))
+                        .header("X-Forwarded-For", "10.0.0.21;spoof")
+                        .param("language", "en")
+                        .param("gameId", "malformed-forwarded-1"))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .with(remoteAddress("10.10.0.99"))
+                        .header("X-Forwarded-For", "10.0.0.22;spoof")
+                        .param("language", "en")
+                        .param("gameId", "malformed-forwarded-2"))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .with(remoteAddress("10.10.0.99"))
+                        .header("X-Forwarded-For", "10.0.0.23;spoof")
+                        .param("language", "en")
+                        .param("gameId", "malformed-forwarded-3"))
+                .andExpect(status().isTooManyRequests())
+                .andExpect(header().exists("Retry-After"))
+                .andExpect(jsonPath("$.status").value(429))
+                .andExpect(jsonPath("$.reason").value("Too Many Requests"))
+                .andExpect(jsonPath("$.path").value("/api/cards/nextRandom"))
+                .andExpect(jsonPath("$.error").value("Rate limit exceeded for /api/cards/nextRandom"));
+    }
+
+    @Test
     void returns429WhenGameApiLimitExceededAcrossDynamicIds() throws Exception {
         mockMvc.perform(get("/api/game/game-a")
                         .header("X-Forwarded-For", "10.0.0.12"))
@@ -250,5 +280,12 @@ class RateLimitFilterTest {
             return 0.0;
         }
         return counter.count();
+    }
+
+    private static RequestPostProcessor remoteAddress(String remoteAddr) {
+        return request -> {
+            request.setRemoteAddr(remoteAddr);
+            return request;
+        };
     }
 }
