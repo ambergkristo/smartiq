@@ -7,6 +7,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +24,9 @@ import java.util.regex.Pattern;
 
 @Component
 public class RateLimitFilter extends OncePerRequestFilter {
+
+    private static final Logger log = LoggerFactory.getLogger(RateLimitFilter.class);
+    private static final int MIN_LIMIT = 1;
 
     private static final int MAX_CLIENT_KEY_LENGTH = 64;
     private static final String FALLBACK_CLIENT_KEY = "unknown";
@@ -74,7 +79,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
         if (window.count() > rule.limit()) {
             meterRegistry.counter(METRIC_RATE_LIMIT_BLOCKED, "bucket", rule.bucket()).increment();
             response.setStatus(429);
-            response.setHeader("Retry-After", String.valueOf(Math.max(1, window.windowStart() + properties.windowSeconds() - nowSeconds)));
+            response.setHeader("Retry-After", String.valueOf(Math.max(1, window.windowStart() + windowSeconds - nowSeconds)));
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             String message = "Rate limit exceeded for " + uri;
             Object body = legacyShapeEnabled
@@ -89,19 +94,19 @@ public class RateLimitFilter extends OncePerRequestFilter {
 
     private LimitRule resolveLimit(String uri) {
         if ("/api/cards/next".equals(uri) || "/api/cards/nextRandom".equals(uri)) {
-            return new LimitRule("cards-next", properties.cardsNextPerMinute());
+            return new LimitRule("cards-next", sanitizeLimit(properties.cardsNextPerMinute(), "cards-next"));
         }
         if ("/api/session/answer".equals(uri)) {
-            return new LimitRule("session-answer", properties.sessionAnswerPerMinute());
+            return new LimitRule("session-answer", sanitizeLimit(properties.sessionAnswerPerMinute(), "session-answer"));
         }
         if ("/api/game".equals(uri) || uri.startsWith("/api/game/")) {
-            return new LimitRule("game-api", properties.gamePerMinute());
+            return new LimitRule("game-api", sanitizeLimit(properties.gamePerMinute(), "game-api"));
         }
         if ("/api/rooms".equals(uri) || uri.startsWith("/api/rooms/")) {
-            return new LimitRule("rooms-api", properties.roomsPerMinute());
+            return new LimitRule("rooms-api", sanitizeLimit(properties.roomsPerMinute(), "rooms-api"));
         }
         if (uri.startsWith("/ws/rooms/")) {
-            return new LimitRule("ws-rooms", properties.wsRoomsPerMinute());
+            return new LimitRule("ws-rooms", sanitizeLimit(properties.wsRoomsPerMinute(), "ws-rooms"));
         }
         return null;
     }
@@ -118,7 +123,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
             return;
         }
 
-        long staleBefore = nowSeconds - properties.windowSeconds();
+        long staleBefore = nowSeconds - windowSeconds;
         counters.forEach((key, window) -> {
             if (window.windowStart() <= staleBefore) {
                 counters.remove(key, window);
@@ -172,6 +177,14 @@ public class RateLimitFilter extends OncePerRequestFilter {
                 && !value.isBlank()
                 && value.length() <= MAX_CLIENT_KEY_LENGTH
                 && CLIENT_KEY_PATTERN.matcher(value).matches();
+    }
+
+    private int sanitizeLimit(int configured, String bucket) {
+        if (configured < MIN_LIMIT) {
+            log.warn("Rate limit {} configured as {}; forcing minimum {}", bucket, configured, MIN_LIMIT);
+            return MIN_LIMIT;
+        }
+        return configured;
     }
 
     private record LimitRule(String bucket, int limit) {
