@@ -36,6 +36,7 @@ class RoomWebSocketConfigTest {
     @Test
     void rejectsWildcardOriginInProd() {
         when(environment.getActiveProfiles()).thenReturn(new String[]{"prod"});
+        when(environment.getProperty("APP_CORS_ALLOWED_ORIGINS", "")).thenReturn("");
 
         RoomWebSocketConfig config = new RoomWebSocketConfig(
                 roomWebSocketHandler,
@@ -51,6 +52,7 @@ class RoomWebSocketConfigTest {
     @Test
     void appliesConfiguredOriginsInProdWithoutDevPatterns() {
         when(environment.getActiveProfiles()).thenReturn(new String[]{"prod"});
+        when(environment.getProperty("APP_CORS_ALLOWED_ORIGINS", "")).thenReturn("");
         when(registry.addHandler(eq(roomWebSocketHandler), eq("/ws/rooms/*"))).thenReturn(registration);
         when(registration.setAllowedOrigins(any(String[].class))).thenReturn(registration);
 
@@ -63,6 +65,26 @@ class RoomWebSocketConfigTest {
         config.registerWebSocketHandlers(registry);
 
         verify(registration).setAllowedOrigins("https://smartiq.example");
+        verify(registration, never()).setAllowedOriginPatterns("http://localhost:*", "http://127.0.0.1:*");
+    }
+
+    @Test
+    void prefersAppCorsAllowedOriginsOverrideWhenProvided() {
+        when(environment.getActiveProfiles()).thenReturn(new String[]{"prod"});
+        when(environment.getProperty("APP_CORS_ALLOWED_ORIGINS", ""))
+                .thenReturn("https://env.smartiq.example,https://env2.smartiq.example");
+        when(registry.addHandler(eq(roomWebSocketHandler), eq("/ws/rooms/*"))).thenReturn(registration);
+        when(registration.setAllowedOrigins(any(String[].class))).thenReturn(registration);
+
+        RoomWebSocketConfig config = new RoomWebSocketConfig(
+                roomWebSocketHandler,
+                new CorsProperties(List.of("https://config.smartiq.example")),
+                environment
+        );
+
+        config.registerWebSocketHandlers(registry);
+
+        verify(registration).setAllowedOrigins("https://env.smartiq.example", "https://env2.smartiq.example");
         verify(registration, never()).setAllowedOriginPatterns("http://localhost:*", "http://127.0.0.1:*");
     }
 }

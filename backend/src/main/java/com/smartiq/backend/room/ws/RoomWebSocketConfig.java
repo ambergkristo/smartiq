@@ -3,12 +3,14 @@ package com.smartiq.backend.room.ws;
 import com.smartiq.backend.config.CorsProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.util.StringUtils;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Configuration
 @EnableWebSocket
@@ -41,9 +43,19 @@ public class RoomWebSocketConfig implements WebSocketConfigurer {
     }
 
     private List<String> resolveAllowedOrigins() {
-        List<String> resolved = corsProperties.allowedOrigins() == null || corsProperties.allowedOrigins().isEmpty()
+        String configuredCsv = environment.getProperty("APP_CORS_ALLOWED_ORIGINS", "");
+        if (configuredCsv == null) {
+            configuredCsv = "";
+        }
+        List<String> fromEnv = Arrays.stream(configuredCsv.split(","))
+                .map(String::trim)
+                .filter(StringUtils::hasText)
+                .collect(Collectors.toList());
+
+        List<String> fromConfig = corsProperties.allowedOrigins() == null || corsProperties.allowedOrigins().isEmpty()
                 ? DEFAULT_DEV_ORIGINS
                 : corsProperties.allowedOrigins();
+        List<String> resolved = fromEnv.isEmpty() ? fromConfig : fromEnv;
 
         if (isProdProfile() && resolved.stream().anyMatch("*"::equals)) {
             throw new IllegalStateException("Wildcard CORS origin is not allowed in prod.");
