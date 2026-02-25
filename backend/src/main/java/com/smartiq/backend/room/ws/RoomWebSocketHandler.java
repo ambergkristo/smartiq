@@ -55,7 +55,9 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
-        // Room gateway is currently server-push only.
+        incrementConnectCounter("failure", "unexpected_client_message");
+        roomWsGateway.unregister(session);
+        closeQuietly(session, CloseStatus.POLICY_VIOLATION.withReason("client messages are not supported"));
     }
 
     @Override

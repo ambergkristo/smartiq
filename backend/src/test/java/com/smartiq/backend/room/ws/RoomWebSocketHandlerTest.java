@@ -13,6 +13,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.net.URI;
@@ -110,6 +111,19 @@ class RoomWebSocketHandlerTest {
     void connectionClosedUnregistersSession() throws Exception {
         roomWebSocketHandler.afterConnectionClosed(webSocketSession, CloseStatus.NORMAL);
         verify(roomWsGateway).unregister(webSocketSession);
+    }
+
+    @Test
+    void clientMessageClosesSocketWithPolicyViolation() throws Exception {
+        when(webSocketSession.isOpen()).thenReturn(true);
+
+        roomWebSocketHandler.handleTextMessage(webSocketSession, new TextMessage("{\"type\":\"ping\"}"));
+
+        ArgumentCaptor<CloseStatus> closeStatus = ArgumentCaptor.forClass(CloseStatus.class);
+        verify(roomWsGateway).unregister(webSocketSession);
+        verify(webSocketSession).close(closeStatus.capture());
+        assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.POLICY_VIOLATION.getCode());
+        assertThat(counterValue("failure", "unexpected_client_message")).isEqualTo(1.0);
     }
 
     private static RoomSnapshot snapshot(String roomCode) {
