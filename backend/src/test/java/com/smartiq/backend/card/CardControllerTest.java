@@ -335,6 +335,15 @@ class CardControllerTest {
     }
 
     @Test
+    void returnsBadRequestWhenNextRandomGameIdContainsControlChars() throws Exception {
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .param("language", "en")
+                        .param("gameId", "game-\n1"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("gameId contains control characters"));
+    }
+
+    @Test
     void returnsBadRequestWhenNextRandomTopicTooLong() throws Exception {
         mockMvc.perform(get("/api/cards/nextRandom")
                         .param("language", "en")
@@ -342,6 +351,16 @@ class CardControllerTest {
                         .param("topic", "t".repeat(129)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.error").value("topic is too long"));
+    }
+
+    @Test
+    void returnsBadRequestWhenNextRandomTopicContainsControlChars() throws Exception {
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .param("language", "en")
+                        .param("gameId", "game-topic-control-char")
+                        .param("topic", "Math\nScience"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("topic contains control characters"));
     }
 
     @Test
