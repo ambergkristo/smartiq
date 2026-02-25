@@ -121,6 +121,32 @@ class RateLimitFilterTest {
     }
 
     @Test
+    void ignoresOversizedForwardedClientIpAndFallsBackToRemoteAddress() throws Exception {
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .header("X-Forwarded-For", "A".repeat(65))
+                        .param("language", "en")
+                        .param("gameId", "oversized-forwarded-1"))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .header("X-Forwarded-For", "B".repeat(65))
+                        .param("language", "en")
+                        .param("gameId", "oversized-forwarded-2"))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .header("X-Forwarded-For", "C".repeat(65))
+                        .param("language", "en")
+                        .param("gameId", "oversized-forwarded-3"))
+                .andExpect(status().isTooManyRequests())
+                .andExpect(header().exists("Retry-After"))
+                .andExpect(jsonPath("$.status").value(429))
+                .andExpect(jsonPath("$.reason").value("Too Many Requests"))
+                .andExpect(jsonPath("$.path").value("/api/cards/nextRandom"))
+                .andExpect(jsonPath("$.error").value("Rate limit exceeded for /api/cards/nextRandom"));
+    }
+
+    @Test
     void returns429WhenGameApiLimitExceededAcrossDynamicIds() throws Exception {
         mockMvc.perform(get("/api/game/game-a")
                         .header("X-Forwarded-For", "10.0.0.12"))

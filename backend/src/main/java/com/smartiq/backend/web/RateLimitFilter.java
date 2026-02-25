@@ -21,6 +21,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class RateLimitFilter extends OncePerRequestFilter {
 
+    private static final int MAX_CLIENT_KEY_LENGTH = 64;
+    private static final String FALLBACK_CLIENT_KEY = "unknown";
+
     private final RateLimitProperties properties;
     private final ObjectMapper objectMapper;
     private final boolean legacyShapeEnabled;
@@ -126,15 +129,31 @@ public class RateLimitFilter extends OncePerRequestFilter {
 
     private String clientIp(HttpServletRequest request) {
         if (properties.trustForwardedFor()) {
-            String forwardedFor = request.getHeader("X-Forwarded-For");
-            if (forwardedFor != null && !forwardedFor.isBlank()) {
-                String candidate = forwardedFor.split(",")[0].trim();
-                if (!candidate.isBlank()) {
-                    return candidate;
-                }
+            String candidate = forwardedClientIp(request.getHeader("X-Forwarded-For"));
+            if (candidate != null) {
+                return candidate;
             }
         }
-        return request.getRemoteAddr();
+        String remoteAddr = request.getRemoteAddr();
+        if (remoteAddr == null || remoteAddr.isBlank()) {
+            return FALLBACK_CLIENT_KEY;
+        }
+        String normalized = remoteAddr.trim();
+        if (normalized.length() > MAX_CLIENT_KEY_LENGTH) {
+            return FALLBACK_CLIENT_KEY;
+        }
+        return normalized;
+    }
+
+    private static String forwardedClientIp(String forwardedFor) {
+        if (forwardedFor == null || forwardedFor.isBlank()) {
+            return null;
+        }
+        String candidate = forwardedFor.split(",")[0].trim();
+        if (candidate.isBlank() || candidate.length() > MAX_CLIENT_KEY_LENGTH) {
+            return null;
+        }
+        return candidate;
     }
 
     private record LimitRule(String bucket, int limit) {
