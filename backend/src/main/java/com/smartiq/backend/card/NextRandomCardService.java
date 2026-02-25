@@ -29,6 +29,7 @@ public class NextRandomCardService {
     private static final int MAX_TRACKED_GAMES = 10_000;
     private static final long TTL_MILLIS = Duration.ofHours(2).toMillis();
     private static final long CLEANUP_INTERVAL_MILLIS = Duration.ofMinutes(10).toMillis();
+    private static final int MAX_GAME_ID_LENGTH = 128;
 
     private final CardRepository cardRepository;
     private final GameHistoryStore gameHistoryStore;
@@ -49,7 +50,7 @@ public class NextRandomCardService {
 
     public Card nextRandom(String language, String gameId, String topic) {
         String normalizedLanguage = normalizeLanguage(language, etEnabled);
-        String normalizedGameId = normalizeRequired(gameId, "gameId");
+        String normalizedGameId = normalizeGameId(gameId);
         String normalizedTopic = normalizeOptional(topic);
 
         maybeCleanup();
@@ -270,6 +271,14 @@ public class NextRandomCardService {
             throw new IllegalArgumentException(fieldName + " is required");
         }
         return value.trim();
+    }
+
+    private static String normalizeGameId(String value) {
+        String normalized = normalizeRequired(value, "gameId");
+        if (normalized.length() > MAX_GAME_ID_LENGTH) {
+            throw new IllegalArgumentException("gameId is too long");
+        }
+        return normalized;
     }
 
     static String normalizeLanguage(String value, boolean etEnabled) {
