@@ -53,6 +53,7 @@ public class GameSessionService {
     private static final int MAX_PLAYER_ID_LENGTH = 64;
     private static final int MAX_ACTION_TOKEN_LENGTH = 128;
     private static final int MAX_ACTION_REQUEST_ID_LENGTH = 128;
+    private static final int MAX_PLAYER_DISPLAY_NAME_LENGTH = 64;
     private static final int DEFAULT_SESSION_RETENTION_MINUTES = 180;
     private static final int DEFAULT_SESSION_MAX = 50000;
 
@@ -487,7 +488,7 @@ public class GameSessionService {
         }
 
         List<String> normalized = rawPlayers.stream()
-                .map(value -> value == null ? "" : value.trim())
+                .map(GameSessionService::normalizePlayerDisplayName)
                 .filter(value -> !value.isBlank())
                 .toList();
 
@@ -495,6 +496,14 @@ public class GameSessionService {
             throw new IllegalArgumentException("players must be between " + MIN_PLAYERS + " and " + MAX_PLAYERS);
         }
 
+        return normalized;
+    }
+
+    private static String normalizePlayerDisplayName(String rawName) {
+        String normalized = rawName == null ? "" : rawName.trim();
+        if (normalized.length() > MAX_PLAYER_DISPLAY_NAME_LENGTH) {
+            throw new IllegalArgumentException("player displayName is too long");
+        }
         return normalized;
     }
 

@@ -387,6 +387,15 @@ class GameSessionServiceTest {
     }
 
     @Test
+    void createGameRejectsOversizedPlayerDisplayName() {
+        assertThatThrownBy(() -> gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("A".repeat(65), "Bob"), "en", null, 30)
+        ))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("player displayName is too long");
+    }
+
+    @Test
     void evictsExpiredSessionsOnAccess() {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
                 .thenReturn(openCard("ttl-card-1", 0, "TTL Question 1"));
