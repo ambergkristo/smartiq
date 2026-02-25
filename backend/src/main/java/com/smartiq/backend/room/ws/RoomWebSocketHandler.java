@@ -44,7 +44,7 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
             String authToken = resolveRequiredQueryParam(session, "authToken");
             RoomResumeResponse resume = roomService.rejoinRoom(roomCode, new RejoinRoomRequest(playerId, authToken));
             RoomSnapshot snapshot = resume.roomState();
-            roomWsGateway.register(roomCode, session);
+            roomWsGateway.register(roomCode, playerId, session);
             roomWsGateway.sendRoomStateToSession(session, snapshot);
             incrementConnectCounter("success", "none");
         } catch (IllegalArgumentException | NoSuchElementException ex) {

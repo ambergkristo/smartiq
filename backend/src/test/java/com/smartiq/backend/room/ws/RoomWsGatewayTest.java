@@ -42,8 +42,8 @@ class RoomWsGatewayTest {
         when(sessionOne.isOpen()).thenReturn(true);
         when(sessionTwo.getId()).thenReturn("s2");
         when(sessionTwo.isOpen()).thenReturn(true);
-        roomWsGateway.register("ABC123", sessionOne);
-        roomWsGateway.register("ABC123", sessionTwo);
+        roomWsGateway.register("ABC123", "p1", sessionOne);
+        roomWsGateway.register("ABC123", "p2", sessionTwo);
 
         RoomSnapshot snapshot = snapshot("ABC123");
         roomWsGateway.sendRoomState("ABC123", snapshot);
@@ -61,7 +61,7 @@ class RoomWsGatewayTest {
     void sendPlayerJoinedUsesExpectedEventTypeAndPayload() throws Exception {
         when(sessionOne.getId()).thenReturn("s1");
         when(sessionOne.isOpen()).thenReturn(true);
-        roomWsGateway.register("ABC123", sessionOne);
+        roomWsGateway.register("ABC123", "p1", sessionOne);
 
         roomWsGateway.sendPlayerJoined("ABC123", "p2", snapshot("ABC123"));
 
@@ -76,14 +76,30 @@ class RoomWsGatewayTest {
         when(sessionOne.getId()).thenReturn("s1");
         when(sessionTwo.getId()).thenReturn("s2");
         when(sessionTwo.isOpen()).thenReturn(true);
-        roomWsGateway.register("ABC123", sessionOne);
-        roomWsGateway.register("ABC123", sessionTwo);
+        roomWsGateway.register("ABC123", "p1", sessionOne);
+        roomWsGateway.register("ABC123", "p2", sessionTwo);
         roomWsGateway.unregister(sessionOne);
 
         roomWsGateway.sendRoomState("ABC123", snapshot("ABC123"));
 
         verify(sessionOne, never()).sendMessage(any());
         verify(sessionTwo).sendMessage(any(TextMessage.class));
+    }
+
+    @Test
+    void newerConnectionForSamePlayerReplacesOldSession() throws Exception {
+        when(sessionOne.getId()).thenReturn("s1");
+        when(sessionOne.isOpen()).thenReturn(true);
+        when(sessionTwo.getId()).thenReturn("s2");
+        when(sessionTwo.isOpen()).thenReturn(true);
+
+        roomWsGateway.register("ABC123", "p1", sessionOne);
+        roomWsGateway.register("ABC123", "p1", sessionTwo);
+        roomWsGateway.sendRoomState("ABC123", snapshot("ABC123"));
+
+        verify(sessionOne, never()).sendMessage(any());
+        verify(sessionTwo).sendMessage(any(TextMessage.class));
+        verify(sessionOne).close();
     }
 
     private static RoomSnapshot snapshot(String roomCode) {
