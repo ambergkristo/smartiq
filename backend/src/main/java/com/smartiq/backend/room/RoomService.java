@@ -258,6 +258,9 @@ public class RoomService {
         if (normalized.length() > MAX_DISPLAY_NAME_LENGTH) {
             throw new IllegalArgumentException("displayName is too long");
         }
+        if (containsControlChars(normalized)) {
+            throw new IllegalArgumentException("displayName contains control characters");
+        }
         return normalized;
     }
 
@@ -302,6 +305,10 @@ public class RoomService {
                 expected.getBytes(StandardCharsets.UTF_8),
                 provided.getBytes(StandardCharsets.UTF_8)
         );
+    }
+
+    private static boolean containsControlChars(String value) {
+        return value.chars().anyMatch(ch -> Character.isISOControl((char) ch));
     }
 
     private void incrementCounter(String metricName, String result, String reason) {
