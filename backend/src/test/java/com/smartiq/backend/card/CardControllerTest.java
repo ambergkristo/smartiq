@@ -335,6 +335,16 @@ class CardControllerTest {
     }
 
     @Test
+    void returnsBadRequestWhenNextRandomTopicTooLong() throws Exception {
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .param("language", "en")
+                        .param("gameId", "game-topic-too-long")
+                        .param("topic", "t".repeat(129)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("topic is too long"));
+    }
+
+    @Test
     void returnsNotFoundWhenOnlyDeprecatedSourcesMatchNextRandomPool() throws Exception {
         mockMvc.perform(get("/api/cards/nextRandom")
                         .param("language", "en")

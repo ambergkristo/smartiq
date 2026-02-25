@@ -30,6 +30,7 @@ public class NextRandomCardService {
     private static final long TTL_MILLIS = Duration.ofHours(2).toMillis();
     private static final long CLEANUP_INTERVAL_MILLIS = Duration.ofMinutes(10).toMillis();
     private static final int MAX_GAME_ID_LENGTH = 128;
+    private static final int MAX_TOPIC_LENGTH = 128;
 
     private final CardRepository cardRepository;
     private final GameHistoryStore gameHistoryStore;
@@ -296,7 +297,11 @@ public class NextRandomCardService {
         if (value == null || value.isBlank()) {
             return null;
         }
-        return value.trim();
+        String normalized = value.trim();
+        if (normalized.length() > MAX_TOPIC_LENGTH) {
+            throw new IllegalArgumentException("topic is too long");
+        }
+        return normalized;
     }
 
     private static boolean equalsIgnoreCase(String a, String b) {
