@@ -485,6 +485,20 @@ class GameSessionServiceTest {
     }
 
     @Test
+    void rejectsGameIdWithControlCharactersOnSnapshotAccess() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(openCard("card-1", 0, "Question 1"));
+
+        gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
+        );
+
+        assertThatThrownBy(() -> gameSessionService.getSnapshot("game-\n1"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("gameId contains control characters");
+    }
+
+    @Test
     void rejectsOversizedGameIdForActionSubmission() {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
                 .thenReturn(openCard("card-1", 0, "Question 1"));
@@ -499,6 +513,24 @@ class GameSessionServiceTest {
         ))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("gameId is too long");
+        assertThat(rejectedCounterValue("invalid_request")).isEqualTo(1.0);
+    }
+
+    @Test
+    void rejectsGameIdWithControlCharactersForActionSubmission() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(openCard("card-1", 0, "Question 1"));
+
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
+        );
+
+        assertThatThrownBy(() -> gameSessionService.applyAction(
+                "game-\n1",
+                new GameActionRequest("PASS", null, null, "p1", created.actionTokens().get("p1"), "req-control-char-game-id")
+        ))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("gameId contains control characters");
         assertThat(rejectedCounterValue("invalid_request")).isEqualTo(1.0);
     }
 

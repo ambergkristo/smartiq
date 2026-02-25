@@ -671,6 +671,9 @@ public class GameSessionService {
         if (normalized.length() > MAX_GAME_ID_LENGTH) {
             throw new IllegalArgumentException("gameId is too long");
         }
+        if (containsControlChars(normalized)) {
+            throw new IllegalArgumentException("gameId contains control characters");
+        }
         SessionState state = sessions.get(normalized);
         if (state == null) {
             throw new NoSuchElementException("game not found: " + normalized);
