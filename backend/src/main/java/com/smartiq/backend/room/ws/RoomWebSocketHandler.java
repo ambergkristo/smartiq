@@ -53,7 +53,7 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
             roomWsGateway.register(roomCode, playerId, session);
             roomWsGateway.sendRoomStateToSession(session, snapshot);
             incrementConnectCounter("success", "none");
-        } catch (IllegalArgumentException | NoSuchElementException ex) {
+        } catch (RuntimeException ex) {
             incrementConnectCounter("failure", classifyConnectFailure(ex));
             closeQuietly(session, CloseStatus.NOT_ACCEPTABLE.withReason(GENERIC_HANDSHAKE_REJECT_REASON));
         }
@@ -172,6 +172,9 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
             if (message.contains("player not found")) {
                 return "player_not_found";
             }
+        }
+        if (!(ex instanceof IllegalArgumentException)) {
+            return "internal_error";
         }
         if (message.contains("authtoken is required")) {
             return "missing_auth_token";
