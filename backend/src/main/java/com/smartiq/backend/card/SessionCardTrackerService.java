@@ -13,6 +13,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class SessionCardTrackerService {
 
+    private static final int MAX_SESSION_ID_LENGTH = 128;
+
     private final SessionDedupProperties properties;
     private final Cache<String, Set<String>> sessionCardIds;
 
@@ -25,23 +27,53 @@ public class SessionCardTrackerService {
     }
 
     public Set<String> servedIdsForSession(String sessionId) {
-        if (!properties.enabled() || sessionId == null || sessionId.isBlank()) {
+        if (!properties.enabled()) {
             return Collections.emptySet();
         }
-        return sessionCardIds.get(sessionId.trim(), key -> ConcurrentHashMap.newKeySet());
+        String normalized = normalizeSessionId(sessionId);
+        if (normalized == null) {
+            return Collections.emptySet();
+        }
+        return sessionCardIds.get(normalized, key -> ConcurrentHashMap.newKeySet());
     }
 
     public void markServed(String sessionId, String cardId) {
-        if (!properties.enabled() || sessionId == null || sessionId.isBlank()) {
+        if (!properties.enabled()) {
             return;
         }
-        servedIdsForSession(sessionId).add(cardId);
+        String normalized = normalizeSessionId(sessionId);
+        if (normalized == null) {
+            return;
+        }
+        servedIdsForSession(normalized).add(cardId);
     }
 
     public boolean tryMarkServed(String sessionId, String cardId) {
-        if (!properties.enabled() || sessionId == null || sessionId.isBlank()) {
+        if (!properties.enabled()) {
             return true;
         }
-        return servedIdsForSession(sessionId).add(cardId);
+        String normalized = normalizeSessionId(sessionId);
+        if (normalized == null) {
+            return true;
+        }
+        return servedIdsForSession(normalized).add(cardId);
+    }
+
+    private static String normalizeSessionId(String sessionId) {
+        if (sessionId == null || sessionId.isBlank()) {
+            return null;
+        }
+        String normalized = sessionId.trim();
+        if (normalized.length() > MAX_SESSION_ID_LENGTH) {
+            throw new IllegalArgumentException("sessionId is too long");
+        }
+        if (containsControlChars(normalized)) {
+            throw new IllegalArgumentException("sessionId contains control characters");
+        }
+        return normalized;
+    }
+
+    private static boolean containsControlChars(String value) {
+        return value.chars().anyMatch(ch -> Character.isISOControl((char) ch));
     }
 }
