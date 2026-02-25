@@ -16,6 +16,9 @@ import java.util.concurrent.ConcurrentMap;
 @Service
 public class RoomWsGateway {
 
+    private static final int ROOM_CODE_LENGTH = 6;
+    private static final String ROOM_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
     private final ObjectMapper objectMapper;
     private final ConcurrentMap<String, Set<WebSocketSession>> roomSessions = new ConcurrentHashMap<>();
     private final ConcurrentMap<String, String> sessionRoomCodes = new ConcurrentHashMap<>();
@@ -110,7 +113,11 @@ public class RoomWsGateway {
         if (roomCode == null || roomCode.isBlank()) {
             throw new IllegalArgumentException("room code is required");
         }
-        return roomCode.trim().toUpperCase(Locale.ROOT);
+        String normalized = roomCode.trim().toUpperCase(Locale.ROOT);
+        if (!isValidRoomCode(normalized)) {
+            throw new IllegalArgumentException("room code format is invalid");
+        }
+        return normalized;
     }
 
     private static String normalizePlayerId(String playerId) {
@@ -122,6 +129,18 @@ public class RoomWsGateway {
 
     private static String playerKey(String roomCode, String playerId) {
         return roomCode + "|" + playerId;
+    }
+
+    private static boolean isValidRoomCode(String roomCode) {
+        if (roomCode.length() != ROOM_CODE_LENGTH) {
+            return false;
+        }
+        for (int index = 0; index < roomCode.length(); index += 1) {
+            if (ROOM_CODE_ALPHABET.indexOf(roomCode.charAt(index)) < 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void removeFromRoom(String roomCode, WebSocketSession session) {
