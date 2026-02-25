@@ -11,8 +11,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.List;
-import java.util.Objects;
 
 @Component
 @Profile("prod")
@@ -41,7 +42,7 @@ public class InternalAccessFilter extends OncePerRequestFilter {
             return;
         }
 
-        if (!Objects.equals(expectedKey, providedKey)) {
+        if (!secureEquals(expectedKey, providedKey)) {
             writeError(response, HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized.");
             return;
         }
@@ -73,5 +74,15 @@ public class InternalAccessFilter extends OncePerRequestFilter {
         response.setStatus(status);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.getWriter().write("{\"error\":\"" + message + "\"}");
+    }
+
+    private static boolean secureEquals(String expected, String provided) {
+        if (expected == null || provided == null) {
+            return false;
+        }
+        return MessageDigest.isEqual(
+                expected.getBytes(StandardCharsets.UTF_8),
+                provided.getBytes(StandardCharsets.UTF_8)
+        );
     }
 }
