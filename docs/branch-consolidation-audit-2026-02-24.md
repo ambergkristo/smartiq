@@ -1,4 +1,4 @@
-﻿# Branch Consolidation Audit - 2026-02-24
+# Branch Consolidation Audit - 2026-02-24
 
 Generated: 2026-02-24 22:19:35 +02:00
 
