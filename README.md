@@ -314,6 +314,7 @@ Rate limiting (forwarded header trust is opt-in):
 SMARTIQ_RATE_LIMIT_ENABLED=true
 SMARTIQ_RATE_LIMIT_WINDOW_SECONDS=60
 SMARTIQ_RATE_LIMIT_TRUST_FORWARDED_FOR=false
+SMARTIQ_RATE_LIMIT_WS_ROOMS_PER_MINUTE=120
 ```
 
 Set `SMARTIQ_RATE_LIMIT_TRUST_FORWARDED_FOR=true` only when the backend is exclusively behind a trusted proxy/load balancer that rewrites `X-Forwarded-For`.
