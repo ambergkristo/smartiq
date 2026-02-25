@@ -279,6 +279,9 @@ public class NextRandomCardService {
         if (normalized.length() > MAX_GAME_ID_LENGTH) {
             throw new IllegalArgumentException("gameId is too long");
         }
+        if (containsControlChars(normalized)) {
+            throw new IllegalArgumentException("gameId contains control characters");
+        }
         return normalized;
     }
 
@@ -301,6 +304,9 @@ public class NextRandomCardService {
         if (normalized.length() > MAX_TOPIC_LENGTH) {
             throw new IllegalArgumentException("topic is too long");
         }
+        if (containsControlChars(normalized)) {
+            throw new IllegalArgumentException("topic contains control characters");
+        }
         return normalized;
     }
 
@@ -309,6 +315,10 @@ public class NextRandomCardService {
             return false;
         }
         return a.equalsIgnoreCase(b);
+    }
+
+    private static boolean containsControlChars(String value) {
+        return value.chars().anyMatch(ch -> Character.isISOControl((char) ch));
     }
 
     private static final class GameState {
