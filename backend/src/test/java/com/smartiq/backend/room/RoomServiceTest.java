@@ -96,6 +96,18 @@ class RoomServiceTest {
     }
 
     @Test
+    void rejoinRejectsInvalidPlayerIdFormat() {
+        RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
+
+        assertThatThrownBy(() -> roomService.rejoinRoom(
+                created.roomCode(),
+                new RejoinRoomRequest("player-1", created.authToken())
+        ))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("playerId format is invalid");
+    }
+
+    @Test
     void joinUnknownRoomThrowsNotFound() {
         assertThatThrownBy(() -> roomService.joinRoom("ZZZZZZ", new JoinRoomRequest("Bob")))
                 .isInstanceOf(NoSuchElementException.class)
