@@ -50,6 +50,22 @@ class RoomWebSocketConfigTest {
     }
 
     @Test
+    void requiresExplicitOriginInProd() {
+        when(environment.getActiveProfiles()).thenReturn(new String[]{"prod"});
+        when(environment.getProperty("APP_CORS_ALLOWED_ORIGINS", "")).thenReturn("");
+
+        RoomWebSocketConfig config = new RoomWebSocketConfig(
+                roomWebSocketHandler,
+                new CorsProperties(List.of()),
+                environment
+        );
+
+        assertThatThrownBy(() -> config.registerWebSocketHandlers(registry))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("At least one explicit CORS origin is required in prod.");
+    }
+
+    @Test
     void appliesConfiguredOriginsInProdWithoutDevPatterns() {
         when(environment.getActiveProfiles()).thenReturn(new String[]{"prod"});
         when(environment.getProperty("APP_CORS_ALLOWED_ORIGINS", "")).thenReturn("");

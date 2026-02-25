@@ -57,6 +57,10 @@ public class RoomWebSocketConfig implements WebSocketConfigurer {
                 : corsProperties.allowedOrigins();
         List<String> resolved = fromEnv.isEmpty() ? fromConfig : fromEnv;
 
+        if (isProdProfile() && fromEnv.isEmpty()
+                && (corsProperties.allowedOrigins() == null || corsProperties.allowedOrigins().isEmpty())) {
+            throw new IllegalStateException("At least one explicit CORS origin is required in prod.");
+        }
         if (isProdProfile() && resolved.stream().anyMatch("*"::equals)) {
             throw new IllegalStateException("Wildcard CORS origin is not allowed in prod.");
         }
