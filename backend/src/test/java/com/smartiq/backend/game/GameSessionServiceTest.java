@@ -75,6 +75,19 @@ class GameSessionServiceTest {
     }
 
     @Test
+    void createGameFallsBackToDefaultLanguageForUnsupportedTag() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(openCard("card-1", 0, "Question 1"));
+
+        gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "de-DE", null, 30)
+        );
+
+        verify(cardService).getNextRandomCard(eq("en"), anyString(), eq(null));
+        assertThat(counterValue("smartiq.game.session.started.total")).isEqualTo(1.0);
+    }
+
+    @Test
     void passMarksPlayerAndMovesTurn() {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
                 .thenReturn(openCardWithCorrectIndexes("card-1", List.of(0, 1), "Question 1"));
