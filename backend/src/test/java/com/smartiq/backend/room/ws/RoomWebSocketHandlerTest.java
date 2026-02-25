@@ -56,7 +56,7 @@ class RoomWebSocketHandlerTest {
 
         roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
 
-        verify(roomWsGateway).register("ABC123", webSocketSession);
+        verify(roomWsGateway).register("ABC123", "p1", webSocketSession);
         verify(roomWsGateway).sendRoomStateToSession(webSocketSession, snapshot);
         verify(webSocketSession, never()).close(any(CloseStatus.class));
         assertThat(counterValue("success", "none")).isEqualTo(1.0);
@@ -102,7 +102,7 @@ class RoomWebSocketHandlerTest {
         ArgumentCaptor<CloseStatus> closeStatus = ArgumentCaptor.forClass(CloseStatus.class);
         verify(webSocketSession).close(closeStatus.capture());
         assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.NOT_ACCEPTABLE.getCode());
-        verify(roomWsGateway, never()).register(any(), any());
+        verify(roomWsGateway, never()).register(any(), any(), any());
         assertThat(counterValue("failure", "missing_auth_token")).isEqualTo(1.0);
     }
 

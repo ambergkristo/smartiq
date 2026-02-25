@@ -19,22 +19,37 @@ public class RoomWsGateway {
     private final ObjectMapper objectMapper;
     private final ConcurrentMap<String, Set<WebSocketSession>> roomSessions = new ConcurrentHashMap<>();
     private final ConcurrentMap<String, String> sessionRoomCodes = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, String> sessionPlayerKeys = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, WebSocketSession> playerSessions = new ConcurrentHashMap<>();
 
     public RoomWsGateway(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
-    public void register(String roomCode, WebSocketSession session) {
+    public void register(String roomCode, String playerId, WebSocketSession session) {
         String normalized = normalizeRoomCode(roomCode);
-        String previousRoom = sessionRoomCodes.put(session.getId(), normalized);
-        if (previousRoom != null && !previousRoom.equals(normalized)) {
-            removeFromRoom(previousRoom, session);
+        String normalizedPlayer = normalizePlayerId(playerId);
+
+        unregister(session);
+
+        String playerKey = playerKey(normalized, normalizedPlayer);
+        WebSocketSession previousPlayerSession = playerSessions.put(playerKey, session);
+        if (previousPlayerSession != null && !previousPlayerSession.getId().equals(session.getId())) {
+            unregister(previousPlayerSession);
+            closeQuietly(previousPlayerSession);
         }
+        sessionRoomCodes.put(session.getId(), normalized);
+        sessionPlayerKeys.put(session.getId(), playerKey);
         roomSessions.computeIfAbsent(normalized, key -> ConcurrentHashMap.newKeySet()).add(session);
     }
 
     public void unregister(WebSocketSession session) {
-        String roomCode = sessionRoomCodes.remove(session.getId());
+        String sessionId = session.getId();
+        String roomCode = sessionRoomCodes.remove(sessionId);
+        String playerKey = sessionPlayerKeys.remove(sessionId);
+        if (playerKey != null) {
+            playerSessions.remove(playerKey, session);
+        }
         if (roomCode != null) {
             removeFromRoom(roomCode, session);
         }
@@ -98,6 +113,17 @@ public class RoomWsGateway {
         return roomCode.trim().toUpperCase(Locale.ROOT);
     }
 
+    private static String normalizePlayerId(String playerId) {
+        if (playerId == null || playerId.isBlank()) {
+            throw new IllegalArgumentException("playerId is required");
+        }
+        return playerId.trim();
+    }
+
+    private static String playerKey(String roomCode, String playerId) {
+        return roomCode + "|" + playerId;
+    }
+
     private void removeFromRoom(String roomCode, WebSocketSession session) {
         Set<WebSocketSession> sessions = roomSessions.get(roomCode);
         if (sessions == null) {
@@ -114,6 +140,16 @@ public class RoomWsGateway {
             return objectMapper.writeValueAsString(value);
         } catch (JsonProcessingException ex) {
             throw new IllegalStateException("failed to serialize websocket event", ex);
+        }
+    }
+
+    private static void closeQuietly(WebSocketSession session) {
+        try {
+            if (session.isOpen()) {
+                session.close();
+            }
+        } catch (IOException ignored) {
+            // best-effort close
         }
     }
 
