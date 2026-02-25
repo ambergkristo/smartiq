@@ -512,6 +512,9 @@ public class GameSessionService {
         if (normalized.length() > MAX_PLAYER_DISPLAY_NAME_LENGTH) {
             throw new IllegalArgumentException("player displayName is too long");
         }
+        if (containsControlChars(normalized)) {
+            throw new IllegalArgumentException("player displayName contains control characters");
+        }
         return normalized;
     }
 
@@ -579,6 +582,10 @@ public class GameSessionService {
                 expected.getBytes(StandardCharsets.UTF_8),
                 provided.getBytes(StandardCharsets.UTF_8)
         );
+    }
+
+    private static boolean containsControlChars(String value) {
+        return value.chars().anyMatch(ch -> Character.isISOControl((char) ch));
     }
 
     private SessionState requireSession(String gameId) {

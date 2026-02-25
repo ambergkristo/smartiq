@@ -430,6 +430,15 @@ class GameSessionServiceTest {
     }
 
     @Test
+    void createGameRejectsPlayerDisplayNameWithControlCharacters() {
+        assertThatThrownBy(() -> gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice\nBob", "Carol"), "en", null, 30)
+        ))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("player displayName contains control characters");
+    }
+
+    @Test
     void evictsExpiredSessionsOnAccess() {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
                 .thenReturn(openCard("ttl-card-1", 0, "TTL Question 1"));

@@ -129,6 +129,13 @@ class RoomServiceTest {
     }
 
     @Test
+    void createRoomRejectsDisplayNameWithControlCharacters() {
+        assertThatThrownBy(() -> roomService.createRoom(new CreateRoomRequest("Alice\nBob")))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("displayName contains control characters");
+    }
+
+    @Test
     void joinRoomRejectsWhenRoomIsFull() {
         RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
 
