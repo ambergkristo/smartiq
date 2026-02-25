@@ -24,6 +24,9 @@ public class RoomService {
     private static final int ROOM_CODE_LENGTH = 6;
     private static final String ROOM_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     private static final String DEFAULT_HOST_NAME = "Host";
+    private static final int MAX_DISPLAY_NAME_LENGTH = 64;
+    private static final int MAX_PLAYER_ID_LENGTH = 64;
+    private static final int MAX_AUTH_TOKEN_LENGTH = 128;
     private static final String METRIC_ROOM_CREATE = "smartiq.room.create.total";
     private static final String METRIC_ROOM_JOIN = "smartiq.room.join.total";
     private static final String METRIC_ROOM_REJOIN = "smartiq.room.rejoin.total";
@@ -246,21 +249,33 @@ public class RoomService {
         if (displayName == null || displayName.isBlank()) {
             return fallbackName;
         }
-        return displayName.trim();
+        String normalized = displayName.trim();
+        if (normalized.length() > MAX_DISPLAY_NAME_LENGTH) {
+            throw new IllegalArgumentException("displayName is too long");
+        }
+        return normalized;
     }
 
     private static String normalizePlayerId(String playerId) {
         if (playerId == null || playerId.isBlank()) {
             throw new IllegalArgumentException("playerId is required");
         }
-        return playerId.trim();
+        String normalized = playerId.trim();
+        if (normalized.length() > MAX_PLAYER_ID_LENGTH) {
+            throw new IllegalArgumentException("playerId is too long");
+        }
+        return normalized;
     }
 
     private static String normalizeAuthToken(String authToken) {
         if (authToken == null || authToken.isBlank()) {
             throw new IllegalArgumentException("authToken is required");
         }
-        return authToken.trim();
+        String normalized = authToken.trim();
+        if (normalized.length() > MAX_AUTH_TOKEN_LENGTH) {
+            throw new IllegalArgumentException("authToken is too long");
+        }
+        return normalized;
     }
 
     private static String issueToken() {

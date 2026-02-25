@@ -110,6 +110,13 @@ class RoomServiceTest {
     }
 
     @Test
+    void createRoomRejectsOversizedDisplayName() {
+        assertThatThrownBy(() -> roomService.createRoom(new CreateRoomRequest("A".repeat(65))))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("displayName is too long");
+    }
+
+    @Test
     void joinRoomRejectsWhenRoomIsFull() {
         RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
 
