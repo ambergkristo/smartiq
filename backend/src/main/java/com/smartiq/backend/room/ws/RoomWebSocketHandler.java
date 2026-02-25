@@ -67,6 +67,13 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
     }
 
     @Override
+    public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+        meterRegistry.counter(METRIC_WS_MESSAGE_REJECTED, "reason", "transport_error").increment();
+        roomWsGateway.unregister(session);
+        closeQuietly(session, CloseStatus.SERVER_ERROR.withReason("transport error"));
+    }
+
+    @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
         roomWsGateway.unregister(session);
     }

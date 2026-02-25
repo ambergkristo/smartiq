@@ -159,6 +159,20 @@ class RoomWebSocketHandlerTest {
         assertThat(messageRejectedCounterValue("unsupported_client_message")).isEqualTo(1.0);
     }
 
+    @Test
+    void transportErrorUnregistersAndClosesSocket() throws Exception {
+        when(webSocketSession.isOpen()).thenReturn(true);
+
+        roomWebSocketHandler.handleTransportError(webSocketSession, new RuntimeException("boom"));
+
+        ArgumentCaptor<CloseStatus> closeStatus = ArgumentCaptor.forClass(CloseStatus.class);
+        verify(roomWsGateway).unregister(webSocketSession);
+        verify(webSocketSession).close(closeStatus.capture());
+        assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.SERVER_ERROR.getCode());
+        assertThat(closeStatus.getValue().getReason()).isEqualTo("transport error");
+        assertThat(messageRejectedCounterValue("transport_error")).isEqualTo(1.0);
+    }
+
     private static RoomSnapshot snapshot(String roomCode) {
         return new RoomSnapshot(
                 roomCode,
