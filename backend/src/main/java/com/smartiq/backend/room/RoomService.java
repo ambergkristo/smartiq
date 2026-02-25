@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -134,7 +136,7 @@ public class RoomService {
             if (expectedToken == null) {
                 throw new NoSuchElementException("player not found: " + playerId);
             }
-            if (!expectedToken.equals(authToken)) {
+            if (!secureEquals(expectedToken, authToken)) {
                 throw new IllegalArgumentException("invalid room token");
             }
             room.lastTouchedAtMillis = nowMillis();
@@ -280,6 +282,13 @@ public class RoomService {
 
     private static String issueToken() {
         return "rt_" + UUID.randomUUID().toString().replace("-", "");
+    }
+
+    private static boolean secureEquals(String expected, String provided) {
+        return MessageDigest.isEqual(
+                expected.getBytes(StandardCharsets.UTF_8),
+                provided.getBytes(StandardCharsets.UTF_8)
+        );
     }
 
     private void incrementCounter(String metricName, String result, String reason) {

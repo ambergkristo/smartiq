@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -338,7 +340,7 @@ public class GameSessionService {
         if (expectedToken == null) {
             throw new ForbiddenGameActionException("unknown action actor");
         }
-        if (!expectedToken.equals(actionToken)) {
+        if (!secureEquals(expectedToken, actionToken)) {
             throw new ForbiddenGameActionException("invalid action token");
         }
         if (!actorPlayerId.equals(state.currentPlayerId())) {
@@ -550,6 +552,13 @@ public class GameSessionService {
             throw new IllegalArgumentException("actionRequestId format is invalid");
         }
         return normalized;
+    }
+
+    private static boolean secureEquals(String expected, String provided) {
+        return MessageDigest.isEqual(
+                expected.getBytes(StandardCharsets.UTF_8),
+                provided.getBytes(StandardCharsets.UTF_8)
+        );
     }
 
     private SessionState requireSession(String gameId) {
