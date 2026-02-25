@@ -94,6 +94,21 @@ class RoomWebSocketHandlerTest {
     }
 
     @Test
+    void unexpectedRuntimeFailureClosesConnectionAndRecordsInternalError() throws Exception {
+        when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/ABC234?playerId=p1&authToken=rt_host"));
+        when(webSocketSession.isOpen()).thenReturn(true);
+        when(roomService.rejoinRoom(eq("ABC234"), eq(new RejoinRoomRequest("p1", "rt_host"))))
+                .thenThrow(new IllegalStateException("unexpected backend failure"));
+
+        roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
+
+        ArgumentCaptor<CloseStatus> closeStatus = ArgumentCaptor.forClass(CloseStatus.class);
+        verify(webSocketSession).close(closeStatus.capture());
+        assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.NOT_ACCEPTABLE.getCode());
+        assertThat(counterValue("failure", "internal_error")).isEqualTo(1.0);
+    }
+
+    @Test
     void missingTokenClosesConnectionWithNotAcceptable() throws Exception {
         when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/abc234?playerId=p1"));
         when(webSocketSession.isOpen()).thenReturn(true);
