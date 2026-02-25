@@ -24,6 +24,8 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
     private static final String ROOMS_PATH_PREFIX = "/ws/rooms/";
     private static final String METRIC_WS_CONNECT = "smartiq.room.ws.connect.total";
     private static final String GENERIC_HANDSHAKE_REJECT_REASON = "invalid websocket request";
+    private static final int MAX_QUERY_LENGTH = 1024;
+    private static final int MAX_QUERY_VALUE_LENGTH = 256;
 
     private final RoomService roomService;
     private final RoomWsGateway roomWsGateway;
@@ -92,8 +94,12 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
         if (uri == null || uri.getRawQuery() == null || uri.getRawQuery().isBlank()) {
             throw new IllegalArgumentException(key + " is required");
         }
+        String rawQuery = uri.getRawQuery();
+        if (rawQuery.length() > MAX_QUERY_LENGTH) {
+            throw new IllegalArgumentException("query is too long");
+        }
 
-        String[] pairs = uri.getRawQuery().split("&");
+        String[] pairs = rawQuery.split("&");
         for (String pair : pairs) {
             if (pair == null || pair.isBlank()) {
                 continue;
@@ -105,6 +111,9 @@ public class RoomWebSocketHandler extends TextWebSocketHandler {
             }
             String rawValue = parts.length > 1 ? parts[1] : "";
             String value = URLDecoder.decode(rawValue, StandardCharsets.UTF_8).trim();
+            if (value.length() > MAX_QUERY_VALUE_LENGTH) {
+                throw new IllegalArgumentException(key + " is too long");
+            }
             if (value.isEmpty()) {
                 break;
             }
