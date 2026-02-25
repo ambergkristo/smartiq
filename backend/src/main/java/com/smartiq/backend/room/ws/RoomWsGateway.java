@@ -12,12 +12,15 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.regex.Pattern;
 
 @Service
 public class RoomWsGateway {
 
     private static final int ROOM_CODE_LENGTH = 6;
     private static final String ROOM_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    private static final int MAX_PLAYER_ID_LENGTH = 64;
+    private static final Pattern PLAYER_ID_PATTERN = Pattern.compile("^p[1-9][0-9]*$");
 
     private final ObjectMapper objectMapper;
     private final ConcurrentMap<String, Set<WebSocketSession>> roomSessions = new ConcurrentHashMap<>();
@@ -124,7 +127,14 @@ public class RoomWsGateway {
         if (playerId == null || playerId.isBlank()) {
             throw new IllegalArgumentException("playerId is required");
         }
-        return playerId.trim();
+        String normalized = playerId.trim();
+        if (normalized.length() > MAX_PLAYER_ID_LENGTH) {
+            throw new IllegalArgumentException("playerId is too long");
+        }
+        if (!PLAYER_ID_PATTERN.matcher(normalized).matches()) {
+            throw new IllegalArgumentException("playerId format is invalid");
+        }
+        return normalized;
     }
 
     private static String playerKey(String roomCode, String playerId) {
