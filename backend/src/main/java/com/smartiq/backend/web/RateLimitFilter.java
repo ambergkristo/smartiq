@@ -14,6 +14,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.util.Comparator;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
@@ -50,8 +52,9 @@ public class RateLimitFilter extends OncePerRequestFilter {
             return;
         }
 
-        String key = rule.bucket() + "|" + clientIp(request);
         long nowSeconds = Instant.now().getEpochSecond();
+        pruneCountersIfNeeded(nowSeconds);
+        String key = rule.bucket() + "|" + clientIp(request);
         CounterWindow window = counters.compute(key, (ignored, current) -> refreshWindow(current, nowSeconds));
 
         if (window.count() > rule.limit()) {
@@ -93,6 +96,32 @@ public class RateLimitFilter extends OncePerRequestFilter {
             return new CounterWindow(nowSeconds, 1);
         }
         return new CounterWindow(current.windowStart(), current.count() + 1);
+    }
+
+    private void pruneCountersIfNeeded(long nowSeconds) {
+        int maxCounters = Math.max(1, properties.counterMax());
+        if (counters.size() <= maxCounters) {
+            return;
+        }
+
+        long staleBefore = nowSeconds - properties.windowSeconds();
+        counters.forEach((key, window) -> {
+            if (window.windowStart() <= staleBefore) {
+                counters.remove(key, window);
+            }
+        });
+
+        int remainingExcess = counters.size() - maxCounters;
+        if (remainingExcess <= 0) {
+            return;
+        }
+
+        counters.entrySet().stream()
+                .sorted(Comparator
+                        .comparingLong((Map.Entry<String, CounterWindow> entry) -> entry.getValue().windowStart())
+                        .thenComparing(Map.Entry::getKey))
+                .limit(remainingExcess)
+                .forEach(entry -> counters.remove(entry.getKey(), entry.getValue()));
     }
 
     private String clientIp(HttpServletRequest request) {

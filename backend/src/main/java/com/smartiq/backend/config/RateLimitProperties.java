@@ -7,6 +7,7 @@ public record RateLimitProperties(
         boolean enabled,
         int windowSeconds,
         boolean trustForwardedFor,
+        int counterMax,
         int wsRoomsPerMinute,
         int cardsNextPerMinute,
         int sessionAnswerPerMinute,
