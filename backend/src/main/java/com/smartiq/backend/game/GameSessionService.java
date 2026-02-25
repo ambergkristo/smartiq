@@ -54,6 +54,7 @@ public class GameSessionService {
     private static final String METRIC_ROUND_DURATION = "smartiq.game.round.duration.seconds";
     private static final String METRIC_SESSION_EVICTED = "smartiq.game.session.evicted.total";
     private static final int ACTION_REQUEST_HISTORY_LIMIT = 512;
+    private static final int MAX_GAME_ID_LENGTH = 128;
     private static final int MAX_PLAYER_ID_LENGTH = 64;
     private static final int MAX_ACTION_TOKEN_LENGTH = 128;
     private static final int MAX_ACTION_REQUEST_ID_LENGTH = 128;
@@ -659,6 +660,9 @@ public class GameSessionService {
             throw new IllegalArgumentException("gameId is required");
         }
         String normalized = gameId.trim();
+        if (normalized.length() > MAX_GAME_ID_LENGTH) {
+            throw new IllegalArgumentException("gameId is too long");
+        }
         SessionState state = sessions.get(normalized);
         if (state == null) {
             throw new NoSuchElementException("game not found: " + normalized);
