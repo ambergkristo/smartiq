@@ -10,7 +10,6 @@ public record RateLimitProperties(
         int counterMax,
         int wsRoomsPerMinute,
         int cardsNextPerMinute,
-        int sessionAnswerPerMinute,
         int gamePerMinute,
         int roomsPerMinute
 ) {

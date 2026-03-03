@@ -31,7 +31,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "smartiq.rate-limit.trust-forwarded-for=true",
         "smartiq.rate-limit.ws-rooms-per-minute=2",
         "smartiq.rate-limit.cards-next-per-minute=2",
-        "smartiq.rate-limit.session-answer-per-minute=2",
         "smartiq.rate-limit.game-per-minute=2",
         "smartiq.rate-limit.rooms-per-minute=2",
         "spring.datasource.url=jdbc:h2:mem:smartiq_rate_limit_test;MODE=PostgreSQL;DB_CLOSE_DELAY=-1",

@@ -505,7 +505,7 @@ export default function App() {
 
   function handleStartRound() {
     const parsedPlayers = parsePlayers(config.playersText);
-    if (isServerEngineEnabled() && parsedPlayers.length >= 2) {
+    if (isServerEngineEnabled()) {
       setRuntimeMode('server');
       setCardError('');
       serverEngine.clearError();

@@ -26,20 +26,6 @@ import {
   sendServerGameAction
 } from './api';
 
-function makeLocalCard(id) {
-  return {
-    id,
-    cardId: id,
-    topic: 'History',
-    category: 'OPEN',
-    difficulty: '2',
-    language: 'en',
-    question: `Question ${id}`,
-    options: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
-    correct: { correctIndex: 0 }
-  };
-}
-
 function makeServerSnapshot({
   gameId = 'game-1',
   winCondition = 30,
@@ -170,9 +156,15 @@ describe('App server-authoritative mode', () => {
     );
   });
 
-  test('falls back to local engine for single-player start', async () => {
+  test('uses server path for single-player start when server engine is enabled', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
-    fetchNextCard.mockResolvedValue(makeLocalCard('local-1'));
+    createServerGameSession.mockResolvedValue(
+      makeServerSnapshot({
+        gameId: 'game-single',
+        totalScores: { p1: 0, p2: 0 },
+        roundScores: { p1: 0, p2: 0 }
+      })
+    );
 
     render(<App />);
 
@@ -182,8 +174,8 @@ describe('App server-authoritative mode', () => {
     fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
     fireEvent.click(screen.getByRole('button', { name: /start game/i }));
 
-    await waitFor(() => expect(fetchNextCard).toHaveBeenCalled());
-    expect(createServerGameSession).not.toHaveBeenCalled();
+    await waitFor(() => expect(createServerGameSession).toHaveBeenCalled());
+    expect(fetchNextCard).not.toHaveBeenCalled();
   });
 
   test('keeps multiplayer on server path in non-test runtime even with false toggle', async () => {

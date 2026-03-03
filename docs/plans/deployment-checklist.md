@@ -57,7 +57,6 @@ Canonical production deployment checklist for SmartIQ operators. This file is th
 | rate limit | `smartiq.rate-limit.counter-max` | `SMARTIQ_RATE_LIMIT_COUNTER_MAX` | yes | Memory safety cap. |
 | rate limit | `smartiq.rate-limit.ws-rooms-per-minute` | `SMARTIQ_RATE_LIMIT_WS_ROOMS_PER_MINUTE` | yes | WebSocket handshake limit. |
 | rate limit | `smartiq.rate-limit.cards-next-per-minute` | `SMARTIQ_RATE_LIMIT_CARDS_NEXT_PER_MINUTE` | yes | Deck draw API limit. |
-| rate limit | `smartiq.rate-limit.session-answer-per-minute` | `SMARTIQ_RATE_LIMIT_SESSION_ANSWER_PER_MINUTE` | yes | Action API limit. |
 | rate limit | `smartiq.rate-limit.game-per-minute` | `SMARTIQ_RATE_LIMIT_GAME_PER_MINUTE` | yes | Game endpoint limit. |
 | rate limit | `smartiq.rate-limit.rooms-per-minute` | `SMARTIQ_RATE_LIMIT_ROOMS_PER_MINUTE` | yes | Room endpoint limit. |
 | API errors | `smartiq.api.errors.legacy-shape-enabled` | `SMARTIQ_API_ERRORS_LEGACY_SHAPE_ENABLED` | no | Keep `false` unless compatibility rollback is required. |

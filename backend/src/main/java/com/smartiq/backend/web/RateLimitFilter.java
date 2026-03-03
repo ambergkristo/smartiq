@@ -96,9 +96,6 @@ public class RateLimitFilter extends OncePerRequestFilter {
         if ("/api/cards/next".equals(uri) || "/api/cards/nextRandom".equals(uri)) {
             return new LimitRule("cards-next", sanitizeLimit(properties.cardsNextPerMinute(), "cards-next"));
         }
-        if ("/api/session/answer".equals(uri)) {
-            return new LimitRule("session-answer", sanitizeLimit(properties.sessionAnswerPerMinute(), "session-answer"));
-        }
         if ("/api/game".equals(uri) || uri.startsWith("/api/game/")) {
             return new LimitRule("game-api", sanitizeLimit(properties.gamePerMinute(), "game-api"));
         }

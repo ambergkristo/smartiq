@@ -23,7 +23,6 @@ class RateLimitFilterPropertiesTest {
                 1,
                 1,
                 1,
-                1,
                 1
         );
         MeterRegistry meterRegistry = Mockito.mock(MeterRegistry.class);
@@ -45,7 +44,6 @@ class RateLimitFilterPropertiesTest {
                 60,
                 true,
                 10,
-                0,
                 0,
                 0,
                 0,
