@@ -12,8 +12,8 @@
 - `docs/plans/deployment-checklist.md`
 - `docs/plans/migration-checklist.md`
 - `docs/plans/operational-runbook.md`
+- `docs/plans/game-session-api-contract-v1.md`
 
 ## Historical Plan Snapshot
 
 - `docs/plan.md` (historical; not canonical for new implementation prioritization)
-

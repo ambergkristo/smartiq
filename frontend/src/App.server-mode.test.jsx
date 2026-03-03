@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import App from './App';
+import gameSessionCreateResponseV1 from './fixtures/contracts/game-session-create-response-v1.json';
 
 vi.mock('./api', () => {
   return {
@@ -23,8 +24,13 @@ import {
   createServerGameSession,
   fetchNextCard,
   fetchTopics,
+  resolveGameSessionErrorMessage,
   sendServerGameAction
 } from './api';
+
+function cloneFixture(value) {
+  return JSON.parse(JSON.stringify(value));
+}
 
 function makeServerSnapshot({
   gameId = 'game-1',
@@ -320,5 +326,30 @@ describe('App server-authoritative mode', () => {
 
     await waitFor(() => expect(screen.getByRole('heading', { name: /game summary/i })).toBeInTheDocument());
     expect(screen.getByText(/alice reached 30 points\./i)).toBeInTheDocument();
+  });
+
+  test('accepts v1 create-session contract fixture', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
+    createServerGameSession.mockResolvedValue(cloneFixture(gameSessionCreateResponseV1));
+
+    render(<App />);
+    await startServerMultiplayer();
+
+    await waitFor(() => expect(screen.getByText(/contract fixture question\?/i)).toBeInTheDocument());
+    expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument();
+  });
+
+  test('shows contract mismatch error for unsupported snapshot version', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
+    resolveGameSessionErrorMessage.mockImplementationOnce((error) => error?.message || 'Contract mismatch');
+    const response = cloneFixture(gameSessionCreateResponseV1);
+    response.snapshot.apiVersion = '2';
+    createServerGameSession.mockResolvedValue(response);
+
+    render(<App />);
+    await startServerMultiplayer();
+
+    await waitFor(() => expect(screen.getByText(/unsupported game session api version: 2/i)).toBeInTheDocument());
+    expect(screen.getByRole('button', { name: /retry/i })).toBeInTheDocument();
   });
 });

@@ -1,0 +1,58 @@
+{
+  "snapshot": {
+    "apiVersion": "1",
+    "gameId": "contract-game-1",
+    "winCondition": 30,
+    "activePlayerIndex": 0,
+    "players": [
+      {
+        "playerId": "p1",
+        "displayName": "Alice"
+      },
+      {
+        "playerId": "p2",
+        "displayName": "Bob"
+      }
+    ],
+    "roundState": {
+      "roundNumber": 1,
+      "phase": "CHOOSING",
+      "starterPlayerId": "p1",
+      "currentPlayerId": "p1",
+      "lastAction": "Game started"
+    },
+    "boardState": {
+      "question": "Contract fixture question?",
+      "category": "OPEN",
+      "topic": "History",
+      "pegs": [
+        { "index": 0, "state": "hidden", "value": null },
+        { "index": 1, "state": "hidden", "value": null },
+        { "index": 2, "state": "hidden", "value": null },
+        { "index": 3, "state": "hidden", "value": null },
+        { "index": 4, "state": "hidden", "value": null },
+        { "index": 5, "state": "hidden", "value": null },
+        { "index": 6, "state": "hidden", "value": null },
+        { "index": 7, "state": "hidden", "value": null },
+        { "index": 8, "state": "hidden", "value": null },
+        { "index": 9, "state": "hidden", "value": null }
+      ]
+    },
+    "totalScores": {
+      "p1": 0,
+      "p2": 0
+    },
+    "roundScores": {
+      "p1": 0,
+      "p2": 0
+    },
+    "statuses": {
+      "p1": "ACTIVE",
+      "p2": "ACTIVE"
+    }
+  },
+  "actionTokens": {
+    "p1": "at_11111111111111111111111111111111",
+    "p2": "at_22222222222222222222222222222222"
+  }
+}

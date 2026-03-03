@@ -38,6 +38,8 @@ Last updated: 2026-03-03
   - Evidence: commits `4f2b8d7` and `82781a0`, `backend/src/main/java/com/smartiq/backend/web/ApiExceptionHandler.java`, `backend/src/main/java/com/smartiq/backend/web/ApiErrorResponse.java`, `frontend/src/api.js`.
 - [~] Phase 4 - Reconnect semantics hardened: HTTP rejoin rotates token; websocket resume uses non-rotating auth path.
   - Evidence: commit `6788f7d`, `backend/src/main/java/com/smartiq/backend/room/RoomService.java`, `backend/src/main/java/com/smartiq/backend/room/ws/RoomWebSocketHandler.java`, `backend/src/test/java/com/smartiq/backend/room/RoomServiceTest.java`.
+- [x] Phase 4 - Contract spec is published with explicit v1 schema and verification references.
+  - Evidence: `docs/plans/game-session-api-contract-v1.md`, `docs/plans/README.md`, `frontend/src/fixtures/contracts/game-session-create-response-v1.json`.
 
 Legend: `[x] done`, `[~] in progress`, `[ ] not started`.
 
