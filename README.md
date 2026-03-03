@@ -15,7 +15,7 @@ Monorepo for SmartIQ services and tooling.
 
 - JDK 21
 - Node.js LTS (with npm)
-- Docker (for PostgreSQL during local runtime)
+- Docker (only for PostgreSQL-backed local runtime)
 
 ## Local Setup
 
@@ -26,15 +26,16 @@ Trusted local path (from repo root):
    - `Copy-Item .env.example .env` (PowerShell)
 2. Install dependencies:
    - `npm ci`
-   - `npm --prefix frontend ci`
-3. Start local database:
-   - `docker compose up -d`
-4. Run the stack:
-   - `make dev`
+   - Root `npm ci` installs frontend dependencies via `postinstall`.
+   - Fallback (frontend-only install): `npm --prefix frontend ci`
+3. Run deterministic smoke dev (no Docker required):
+   - `npm run dev:smoke`
+
+`dev:smoke` uses backend `dev` profile with in-memory H2 + Flyway on `8081`, so it does not depend on external Postgres credentials.
 
 ## One-Command Dev Run
 
-Primary command (single source of truth):
+Postgres-backed local runtime:
 
 ```bash
 make dev
@@ -62,8 +63,6 @@ PowerShell commands from repo root:
 
 ```powershell
 npm ci
-npm --prefix frontend ci
-docker compose up -d
 npm run dev:smoke
 ```
 
@@ -72,9 +71,24 @@ This starts:
 - Frontend: `http://localhost:5173`
 - Backend: `http://localhost:8081`
 - Health check: `http://localhost:8081/health`
-- Cards API (default): `http://localhost:8081/api/cards/nextRandom?language=en&gameId=local-dev`
+- Cards API smoke URL: `http://localhost:8081/api/cards/nextRandom?language=en&gameId=local-dev`
 
-If you use frontend against backend on `8081`, set:
+Use PostgreSQL-backed runtime only when you need it:
+
+```powershell
+docker compose down -v
+docker compose up -d
+npm run dev:all
+```
+
+## API Base URL Contract
+
+- Canonical frontend backend pointer: `VITE_API_BASE_URL`.
+- Local smoke default: `http://localhost:8081`.
+- Local Postgres runtime default: `http://localhost:8080`.
+- Vercel build is blocked when `VITE_API_BASE_URL` is missing, invalid, or points to localhost.
+
+PowerShell examples:
 
 ```powershell
 $env:VITE_API_BASE_URL="http://localhost:8081"
@@ -96,7 +110,7 @@ $env:SMARTIQ_LANGUAGE_ET_ENABLED="true"
 - Backend dev CORS accepts localhost origins on any port:
   - `http://localhost:*`
   - `http://127.0.0.1:*`
-- Production CORS defaults to `SMARTIQ_CORS_ALLOWED_ORIGIN_PUBLIC` and can be overridden with explicit `APP_CORS_ALLOWED_ORIGINS` values.
+- Production CORS should be explicit with `APP_CORS_ALLOWED_ORIGINS` (preferred). `SMARTIQ_CORS_ALLOWED_ORIGIN_PUBLIC` is a compatibility fallback.
 
 Optional Windows helpers to free common dev ports:
 
@@ -108,9 +122,9 @@ taskkill /PID <PID> /F
 Frontend API base URL examples:
 
 ```powershell
-# local backend
-$env:VITE_API_BASE_URL="http://localhost:8080"
-# render backend
+# local smoke backend
+$env:VITE_API_BASE_URL="http://localhost:8081"
+# deployed backend
 $env:VITE_API_BASE_URL="https://<your-backend-domain>"
 ```
 
@@ -262,6 +276,16 @@ Deployment target for MVP:
 - Frontend: Vercel
 - Backend: Render
 - Database: Managed Postgres
+
+Deployment contract:
+
+- Vercel is frontend-only. Backend must be deployed separately and reachable publicly.
+- Required frontend env: `VITE_API_BASE_URL=https://<backend-domain>`.
+- Required backend env: `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, `SPRING_DATASOURCE_PASSWORD`.
+- Required backend CORS allowlist: `APP_CORS_ALLOWED_ORIGINS=https://<vercel-domain>` (preferred) or `SMARTIQ_CORS_ALLOWED_ORIGIN_PUBLIC`.
+- Verify backend health before wiring frontend:
+  - `curl https://<backend-domain>/health`
+  - Expected: HTTP `200` with `{"status":"UP"}`.
 
 Detailed steps: `docs/deploy.md`
 Release gate checklist: `docs/release.md`

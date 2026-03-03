@@ -18,10 +18,11 @@ Create a new Web Service from this repository:
 Set environment variables:
 
 - `SPRING_PROFILES_ACTIVE=prod`
-- `APP_CORS_ALLOWED_ORIGINS=https://<your-vercel-domain>`
 - `SPRING_DATASOURCE_URL`
 - `SPRING_DATASOURCE_USERNAME`
 - `SPRING_DATASOURCE_PASSWORD`
+- `APP_CORS_ALLOWED_ORIGINS=https://<your-vercel-domain>` (preferred explicit allowlist)
+- `SMARTIQ_CORS_ALLOWED_ORIGIN_PUBLIC=https://<your-vercel-domain>` (compatibility fallback)
 - `SMARTIQ_IMPORT_ENABLED=true`
 - `SMARTIQ_IMPORT_PATH=../data/smart10`
 - `SMARTIQ_POOL_ENABLED=true`
@@ -34,6 +35,10 @@ Set environment variables:
 - `SMARTIQ_INTERNAL_ACCESS_ENABLED=true`
 - `SMARTIQ_INTERNAL_API_KEY_HEADER=X-Internal-Api-Key`
 - `SMARTIQ_INTERNAL_API_KEY=<strong-random-value>`
+
+Boot preflight protection:
+
+- Backend startup fails fast with a clear error when `SPRING_DATASOURCE_URL` is PostgreSQL and `SPRING_DATASOURCE_PASSWORD` is missing.
 
 Health check endpoint:
 
@@ -56,6 +61,12 @@ Set frontend environment variable:
 - `VITE_API_BASE_URL=https://<your-backend-domain>`
 - Optional alias: `VITE_BACKEND_URL=https://<your-backend-domain>`
 - Team-facing var naming: `BACKEND_URL=https://<your-backend-domain>` (map to `VITE_*` in Vercel env)
+- Vercel build is blocked if `VITE_API_BASE_URL` is missing, invalid, or points to localhost.
+
+Vercel deployment contract:
+
+- Vercel deploys frontend only.
+- Backend must be up first (`/health` must return `200`) before pointing `VITE_API_BASE_URL` to it.
 
 Validate deployment env vars locally:
 
@@ -65,7 +76,7 @@ npm run validate:deploy-env
 
 ## 3. Post-deploy checks
 
-1. `GET https://<backend-domain>/health` returns `{\"status\":\"UP\"}`.
+1. `curl -i https://<backend-domain>/health` returns HTTP `200` and body `{\"status\":\"UP\"}`.
 2. Frontend loads topics from backend.
 3. `/api/cards/nextRandom?language=en&gameId=smoke-deploy` works from deployed frontend domain without CORS errors.
 4. `/internal/pool-stats` returns `401` without API key and `200` with API key.
