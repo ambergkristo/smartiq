@@ -50,6 +50,8 @@ Last updated: 2026-03-03
   - Evidence: `backend/src/main/java/com/smartiq/backend/room/RoomSessionStore.java`, `backend/src/main/java/com/smartiq/backend/room/RedisRoomSessionStore.java`, `backend/src/test/java/com/smartiq/backend/room/RoomServiceTest.java`.
 - [x] Phase 6 - Game session durability moved behind a store interface with Redis option and restart + idempotency recovery coverage.
   - Evidence: `backend/src/main/java/com/smartiq/backend/game/GameSessionStore.java`, `backend/src/main/java/com/smartiq/backend/game/RedisGameSessionStore.java`, `backend/src/test/java/com/smartiq/backend/game/GameSessionServiceTest.java`.
+- [x] Phase 6 - Session retention/capacity guardrail defaults are explicit in prod profile and CI-validated.
+  - Evidence: `backend/src/main/resources/application-prod.yml`, `tools/validate_session_capacity_guardrails.js`, `.github/workflows/backend-ci.yml`, `.github/workflows/release-readiness.yml`.
 - [x] Phase 7 - Beta KPI threshold alerts are codified as Prometheus rules and validated in CI/release gates.
   - Evidence: `ops/prometheus/smartiq-beta-kpi-alert-rules.yml`, `tools/validate_beta_alert_rules.js`, `.github/workflows/backend-ci.yml`, `.github/workflows/release-readiness.yml`.
 - [x] Phase 7 - Automated beta go/no-go workflow generates report artifacts and blocks on NO-GO.

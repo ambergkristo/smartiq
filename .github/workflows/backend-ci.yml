@@ -40,6 +40,9 @@ jobs:
       - name: Validate main branch protection policy
         run: node ../tools/validate_branch_protection_policy.js ../docs/policies/main-branch-protection-policy.json
 
+      - name: Validate session capacity guardrails
+        run: node ../tools/validate_session_capacity_guardrails.js ../backend/src/main/resources/application-prod.yml
+
       - name: Validate Smart10 dataset
         run: node ../tools/validate_cards_v2.js ../data/smart10/cards.en.json --max-warnings=0
 

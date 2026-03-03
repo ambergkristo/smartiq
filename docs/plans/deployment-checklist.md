@@ -17,6 +17,8 @@ Canonical production deployment checklist for SmartIQ operators. This file is th
    - `SPRING_DATASOURCE_PASSWORD`
    - `SMARTIQ_INTERNAL_API_KEY`
 5. Confirm `SMARTIQ_IMPORT_PATH` points to the intended dataset bundle.
+6. Validate prod session/room capacity guardrail defaults:
+   - `npm run validate:session:guardrails`
 
 2. Config matrix (prod)
 -----------------------
@@ -39,14 +41,14 @@ Canonical production deployment checklist for SmartIQ operators. This file is th
 | session dedup | `smartiq.session.max-sessions` | `SMARTIQ_SESSION_MAX` | yes | Capacity guardrail. |
 | session dedup | `smartiq.session.redis-prefix` | `SMARTIQ_SESSION_REDIS_PREFIX` | no | Needed only with Redis-backed store. |
 | language | `smartiq.language.et-enabled` | `SMARTIQ_LANGUAGE_ET_ENABLED` | yes | `true` unless ET rollout is intentionally paused. |
-| game | `smartiq.game.session-retention-minutes` | `SMARTIQ_GAME_SESSION_RETENTION_MINUTES` | yes | Session eviction retention. |
-| game | `smartiq.game.session-max` | `SMARTIQ_GAME_SESSION_MAX` | yes | Capacity limit for active game sessions. |
+| game | `smartiq.game.session-retention-minutes` | `SMARTIQ_GAME_SESSION_RETENTION_MINUTES` | yes | Session eviction retention (prod default `180`, do not set below `120` without incident sign-off). |
+| game | `smartiq.game.session-max` | `SMARTIQ_GAME_SESSION_MAX` | yes | Capacity limit for active game sessions (prod default `50000`). |
 | game session store | `smartiq.game.session-store` | `SMARTIQ_GAME_SESSION_STORE` | yes | `redis` in production; `memory` only for local/dev fallback. |
 | game session store | `smartiq.game.session-redis-prefix` | `SMARTIQ_GAME_SESSION_REDIS_PREFIX` | no | Needed only with Redis-backed game session store. |
 | room session store | `smartiq.room.session-store` | `SMARTIQ_ROOM_SESSION_STORE` | yes | `redis` in production; `memory` only for local/dev fallback. |
 | room session store | `smartiq.room.session-redis-prefix` | `SMARTIQ_ROOM_SESSION_REDIS_PREFIX` | no | Needed only with Redis-backed room session store. |
-| room | `smartiq.room.room-retention-minutes` | `SMARTIQ_ROOM_RETENTION_MINUTES` | yes | Room eviction retention. |
-| room | `smartiq.room.room-max` | `SMARTIQ_ROOM_MAX` | yes | Capacity limit for active rooms. |
+| room | `smartiq.room.room-retention-minutes` | `SMARTIQ_ROOM_RETENTION_MINUTES` | yes | Room eviction retention (prod default `180`, do not set below `120` without incident sign-off). |
+| room | `smartiq.room.room-max` | `SMARTIQ_ROOM_MAX` | yes | Capacity limit for active rooms (prod default `20000`). |
 | bank safety | `smartiq.bank.min-size` | `MIN_BANK_SIZE` | yes | Shared with pool minimum baseline. |
 | bank safety | `smartiq.bank.block-on-low-bank` | `SMARTIQ_BLOCK_ON_LOW_BANK` | no | Keep `false` unless policy requires hard block. |
 | bank safety | `smartiq.bank.trigger-pipeline-on-low-bank` | `SMARTIQ_TRIGGER_PIPELINE_ON_LOW_BANK` | no | Set `true` only with validated automation. |

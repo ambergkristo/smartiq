@@ -10,19 +10,22 @@ The command executes:
 
 1. `node tools/validate_no_bom_docs.js docs`
 2. `node tools/validate_flyway_migrations.js`
-3. `mvn -q -f backend/pom.xml test`
-4. `npm --prefix frontend run lint`
-5. `npm --prefix frontend run test -- --run`
-6. `npm --prefix frontend run build`
-7. `node tools/validate_cards_v2.js data/smart10/cards.en.json`
-8. `node tools/validate_cards_v2.js data/smart10/cards.et.json`
-9. `node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.85`
-10. `node tools/score_cards_quality.js data/smart10/cards.et.json --fail-threshold=0.85`
-11. `node tools/score_cards_semantic.js data/smart10/cards.en.json --fail-threshold=0.70`
-12. `node tools/score_cards_semantic.js data/smart10/cards.et.json --fail-threshold=0.70`
-13. `node tools/report_semantic_warning_budget.js --max-warnings=80` (warning-only metric)
-14. `node tools/report_semantic_locale_parity.js --min-category-score=NUMBER:0.90,COLOR:0.95 --max-short-option-ratio=NUMBER:0.20,COLOR:0.10 --max-locale-score-gap=0.02 --max-locale-warning-gap=10 --fail-on-exceed` (blocking metric)
-15. `node tools/verify_runtime_deck_gate.js` (blocking runtime check; boots local backend on `:8081` if `API_BASE_URL`/`BACKEND_URL` are not set)
+3. `node tools/validate_beta_alert_rules.js`
+4. `node tools/validate_branch_protection_policy.js`
+5. `node tools/validate_session_capacity_guardrails.js`
+6. `mvn -q -f backend/pom.xml test`
+7. `npm --prefix frontend run lint`
+8. `npm --prefix frontend run test -- --run`
+9. `npm --prefix frontend run build`
+10. `node tools/validate_cards_v2.js data/smart10/cards.en.json`
+11. `node tools/validate_cards_v2.js data/smart10/cards.et.json`
+12. `node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.85`
+13. `node tools/score_cards_quality.js data/smart10/cards.et.json --fail-threshold=0.85`
+14. `node tools/score_cards_semantic.js data/smart10/cards.en.json --fail-threshold=0.70`
+15. `node tools/score_cards_semantic.js data/smart10/cards.et.json --fail-threshold=0.70`
+16. `node tools/report_semantic_warning_budget.js --max-warnings=80` (warning-only metric)
+17. `node tools/report_semantic_locale_parity.js --min-category-score=NUMBER:0.90,COLOR:0.95 --max-short-option-ratio=NUMBER:0.20,COLOR:0.10 --max-locale-score-gap=0.02 --max-locale-warning-gap=10 --fail-on-exceed` (blocking metric)
+18. `node tools/verify_runtime_deck_gate.js` (blocking runtime check; boots local backend on `:8081` if `API_BASE_URL`/`BACKEND_URL` are not set)
 
 ## CI Aggregation
 

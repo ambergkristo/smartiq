@@ -45,10 +45,12 @@ sum by (reason) (rate(smartiq_game_session_evicted_total[5m]))
 Common reasons and actions:
 1. `reason="expired"`:
    - Verify `SMARTIQ_GAME_SESSION_RETENTION_MINUTES`.
+   - Baseline prod guardrail is `180` (minimum floor `120`).
    - Verify `SMARTIQ_GAME_SESSION_STORE` is `redis` in production.
    - If user sessions are expected to last longer, increase retention and redeploy.
 2. `reason="capacity"`:
    - Verify `SMARTIQ_GAME_SESSION_MAX`.
+   - Baseline prod guardrails: `SMARTIQ_GAME_SESSION_MAX=50000`, `SMARTIQ_ROOM_MAX=20000`.
    - Verify `SMARTIQ_GAME_SESSION_STORE` is `redis` in production.
    - Increase session capacity and redeploy.
    - Check traffic surge and rate-limit posture.
@@ -181,3 +183,4 @@ References
 - `.github/workflows/beta-go-no-go.yml`
 - `.github/workflows/phase7-beta-dry-run.yml`
 - `docs/plans/2026-03-03-phase7-beta-go-no-go-dry-run-checklist.md`
+- `tools/validate_session_capacity_guardrails.js`
