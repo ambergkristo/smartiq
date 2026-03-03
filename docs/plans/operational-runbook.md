@@ -125,8 +125,10 @@ Goal:
 5.1 Reconnect flow
 
 1. Ensure clients reconnect and call room rejoin endpoint.
-2. On websocket close/error, `RoomWebSocketHandler` triggers `RoomWsGateway.unregister(session)` automatically.
-3. Confirm reconnect metrics recover:
+2. `POST /api/rooms/{roomCode}/rejoin` now rotates `authToken` on success.
+   - Client must replace cached token with returned token before next reconnect attempt.
+3. On websocket close/error, `RoomWebSocketHandler` triggers `RoomWsGateway.unregister(session)` automatically.
+4. Confirm reconnect metrics recover:
    ```promql
    sum(rate(smartiq_room_rejoin_total{result="success"}[5m]))
    sum(rate(smartiq_room_ws_connect_total{result="success"}[5m]))

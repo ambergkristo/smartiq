@@ -36,6 +36,8 @@ Last updated: 2026-03-03
   - Evidence: commit `f8baab0`, `backend/src/main/java/com/smartiq/backend/game/contract/GameSessionSnapshot.java`, `frontend/src/state/useServerGameEngine.ts`.
 - [~] Phase 4 - Machine-readable API error taxonomy added and consumed in frontend error mapping.
   - Evidence: commit `4f2b8d7`, `backend/src/main/java/com/smartiq/backend/web/ApiExceptionHandler.java`, `backend/src/main/java/com/smartiq/backend/web/ApiErrorResponse.java`, `frontend/src/api.js`.
+- [~] Phase 4 - Reconnect semantics hardened: HTTP rejoin rotates token; websocket resume uses non-rotating auth path.
+  - Evidence: `backend/src/main/java/com/smartiq/backend/room/RoomService.java`, `backend/src/main/java/com/smartiq/backend/room/ws/RoomWebSocketHandler.java`, `backend/src/test/java/com/smartiq/backend/room/RoomServiceTest.java`.
 
 Legend: `[x] done`, `[~] in progress`, `[ ] not started`.
 

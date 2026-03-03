@@ -79,8 +79,44 @@ class RoomServiceTest {
 
         assertThat(resumed.roomCode()).isEqualTo(created.roomCode());
         assertThat(resumed.playerId()).isEqualTo("p1");
-        assertThat(resumed.authToken()).isEqualTo(created.authToken());
+        assertThat(resumed.authToken()).startsWith("rt_");
+        assertThat(resumed.authToken()).isNotEqualTo(created.authToken());
         assertThat(resumed.roomState().players()).hasSize(2);
+    }
+
+    @Test
+    void rejoinInvalidatesPreviousToken() {
+        RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
+
+        RoomResumeResponse firstResume = roomService.rejoinRoom(
+                created.roomCode(),
+                new RejoinRoomRequest(created.playerId(), created.authToken())
+        );
+
+        assertThatThrownBy(() -> roomService.rejoinRoom(
+                created.roomCode(),
+                new RejoinRoomRequest(created.playerId(), created.authToken())
+        ))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("invalid room token");
+
+        RoomResumeResponse secondResume = roomService.rejoinRoom(
+                created.roomCode(),
+                new RejoinRoomRequest(created.playerId(), firstResume.authToken())
+        );
+        assertThat(secondResume.authToken()).isNotEqualTo(firstResume.authToken());
+    }
+
+    @Test
+    void websocketResumeDoesNotRotateToken() {
+        RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
+
+        RoomResumeResponse resumed = roomService.resumeRoomSession(
+                created.roomCode(),
+                new RejoinRoomRequest(created.playerId(), created.authToken())
+        );
+
+        assertThat(resumed.authToken()).isEqualTo(created.authToken());
     }
 
     @Test

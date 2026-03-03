@@ -53,7 +53,7 @@ class RoomWebSocketHandlerTest {
     void connectionRegistersSessionAndPushesRoomState() throws Exception {
         RoomSnapshot snapshot = snapshot("ABC234");
         when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/abc234?playerId=p1&authToken=rt_host"));
-        when(roomService.rejoinRoom(eq("ABC234"), eq(new RejoinRoomRequest("p1", "rt_host"))))
+        when(roomService.resumeRoomSession(eq("ABC234"), eq(new RejoinRoomRequest("p1", "rt_host"))))
                 .thenReturn(new RoomResumeResponse("ABC234", "p1", "rt_host", snapshot));
 
         roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
@@ -68,7 +68,7 @@ class RoomWebSocketHandlerTest {
     void connectionUsesAuthoritativeResumeIdentityForRegistration() throws Exception {
         RoomSnapshot snapshot = snapshot("ABC234");
         when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/abc234?playerId=p1&authToken=rt_host"));
-        when(roomService.rejoinRoom(eq("ABC234"), eq(new RejoinRoomRequest("p1", "rt_host"))))
+        when(roomService.resumeRoomSession(eq("ABC234"), eq(new RejoinRoomRequest("p1", "rt_host"))))
                 .thenReturn(new RoomResumeResponse("ABC234", "p2", "rt_host", snapshot));
 
         roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
@@ -81,7 +81,7 @@ class RoomWebSocketHandlerTest {
     void unknownRoomClosesConnectionWithNotAcceptable() throws Exception {
         when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/ZZZZZZ?playerId=p1&authToken=rt_host"));
         when(webSocketSession.isOpen()).thenReturn(true);
-        when(roomService.rejoinRoom(eq("ZZZZZZ"), eq(new RejoinRoomRequest("p1", "rt_host"))))
+        when(roomService.resumeRoomSession(eq("ZZZZZZ"), eq(new RejoinRoomRequest("p1", "rt_host"))))
                 .thenThrow(new NoSuchElementException("room not found: ZZZZZZ"));
 
         roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
@@ -103,7 +103,7 @@ class RoomWebSocketHandlerTest {
         ArgumentCaptor<CloseStatus> closeStatus = ArgumentCaptor.forClass(CloseStatus.class);
         verify(webSocketSession).close(closeStatus.capture());
         assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.NOT_ACCEPTABLE.getCode());
-        verify(roomService, never()).rejoinRoom(any(), any());
+        verify(roomService, never()).resumeRoomSession(any(), any());
         assertThat(counterValue("failure", "invalid_room_code")).isEqualTo(1.0);
     }
 
@@ -111,7 +111,7 @@ class RoomWebSocketHandlerTest {
     void unexpectedRuntimeFailureClosesConnectionAndRecordsInternalError() throws Exception {
         when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/ABC234?playerId=p1&authToken=rt_host"));
         when(webSocketSession.isOpen()).thenReturn(true);
-        when(roomService.rejoinRoom(eq("ABC234"), eq(new RejoinRoomRequest("p1", "rt_host"))))
+        when(roomService.resumeRoomSession(eq("ABC234"), eq(new RejoinRoomRequest("p1", "rt_host"))))
                 .thenThrow(new IllegalStateException("unexpected backend failure"));
 
         roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
@@ -140,7 +140,7 @@ class RoomWebSocketHandlerTest {
     void invalidPlayerIdFormatMapsToSpecificFailureReason() throws Exception {
         when(webSocketSession.getUri()).thenReturn(URI.create("ws://localhost/ws/rooms/ABC234?playerId=player-1&authToken=rt_host"));
         when(webSocketSession.isOpen()).thenReturn(true);
-        when(roomService.rejoinRoom(eq("ABC234"), eq(new RejoinRoomRequest("player-1", "rt_host"))))
+        when(roomService.resumeRoomSession(eq("ABC234"), eq(new RejoinRoomRequest("player-1", "rt_host"))))
                 .thenThrow(new IllegalArgumentException("playerId format is invalid"));
 
         roomWebSocketHandler.afterConnectionEstablished(webSocketSession);
@@ -164,7 +164,7 @@ class RoomWebSocketHandlerTest {
         ArgumentCaptor<CloseStatus> closeStatus = ArgumentCaptor.forClass(CloseStatus.class);
         verify(webSocketSession).close(closeStatus.capture());
         assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.NOT_ACCEPTABLE.getCode());
-        verify(roomService, never()).rejoinRoom(any(), any());
+        verify(roomService, never()).resumeRoomSession(any(), any());
         verify(roomWsGateway, never()).register(any(), any(), any());
         assertThat(counterValue("failure", "authtoken_too_long")).isEqualTo(1.0);
     }
@@ -189,7 +189,7 @@ class RoomWebSocketHandlerTest {
         ArgumentCaptor<CloseStatus> closeStatus = ArgumentCaptor.forClass(CloseStatus.class);
         verify(webSocketSession).close(closeStatus.capture());
         assertThat(closeStatus.getValue().getCode()).isEqualTo(CloseStatus.NOT_ACCEPTABLE.getCode());
-        verify(roomService, never()).rejoinRoom(any(), any());
+        verify(roomService, never()).resumeRoomSession(any(), any());
         verify(roomWsGateway, never()).register(any(), any(), any());
         assertThat(counterValue("failure", "query_too_many_params")).isEqualTo(1.0);
     }

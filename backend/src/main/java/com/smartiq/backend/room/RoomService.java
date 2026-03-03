@@ -126,6 +126,14 @@ public class RoomService {
     }
 
     public synchronized RoomResumeResponse rejoinRoom(String roomCode, RejoinRoomRequest request) {
+        return resumeRoom(roomCode, request, true);
+    }
+
+    public synchronized RoomResumeResponse resumeRoomSession(String roomCode, RejoinRoomRequest request) {
+        return resumeRoom(roomCode, request, false);
+    }
+
+    private RoomResumeResponse resumeRoom(String roomCode, RejoinRoomRequest request, boolean rotateToken) {
         try {
             evictExpiredRooms();
             if (request == null) {
@@ -142,10 +150,15 @@ public class RoomService {
             if (!secureEquals(expectedToken, authToken)) {
                 throw new IllegalArgumentException("invalid room token");
             }
+            String effectiveToken = authToken;
+            if (rotateToken) {
+                effectiveToken = issueToken();
+                room.playerTokens.put(playerId, effectiveToken);
+            }
             room.lastTouchedAtMillis = nowMillis();
 
             incrementCounter(METRIC_ROOM_REJOIN, "success", "none");
-            return new RoomResumeResponse(room.code, playerId, authToken, toSnapshot(room));
+            return new RoomResumeResponse(room.code, playerId, effectiveToken, toSnapshot(room));
         } catch (RuntimeException ex) {
             incrementCounter(METRIC_ROOM_REJOIN, "failure", classifyRejoinFailure(ex));
             throw ex;
