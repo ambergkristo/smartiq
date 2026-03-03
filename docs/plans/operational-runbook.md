@@ -178,3 +178,4 @@ References
 - `docs/plans/migration-checklist.md`
 - `docs/observability.md`
 - `ops/prometheus/smartiq-beta-kpi-alert-rules.yml`
+- `.github/workflows/beta-go-no-go.yml`

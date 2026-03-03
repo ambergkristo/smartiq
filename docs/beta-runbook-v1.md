@@ -15,9 +15,12 @@ This runbook defines how to execute the first closed Party Beta for SmartIQ.
    - `npm run release:check`
 3. Alert rule gate passes on release candidate commit:
    - `npm run validate:beta:alerts`
-4. Production/staging smoke passes:
+4. Automated beta gate is configured:
+   - GitHub Actions workflow: `.github/workflows/beta-go-no-go.yml`
+   - `backend_url` input or secret `BETA_BACKEND_URL` is available
+5. Production/staging smoke passes:
    - `$env:BACKEND_URL="https://<backend-domain>"; npm run smoke:test`
-5. Branch protection stays enforced on `main`.
+6. Branch protection stays enforced on `main`.
 
 ## 3. Tester Cohort (Closed Beta Size)
 
@@ -116,5 +119,9 @@ At beta close, publish:
      - `$env:BACKEND_URL="https://<backend-domain>"; npm run report:beta:summary`
    - Optional strict gate (non-zero exit on NO-GO):
      - `$env:BACKEND_URL="https://<backend-domain>"; npm run report:beta:summary -- --min-started-games=20 --min-completed-games=15 --max-dropoff=0.35 --max-wrong-answer=0.45 --fail-on-no-go`
+   - Canonical strict gate shortcut:
+     - `$env:BACKEND_URL="https://<backend-domain>"; npm run gate:beta:go-no-go`
+   - CI workflow option:
+     - Run workflow `Beta Go/No-Go Gate` (uploads markdown report artifact, fails on `NO-GO`)
 2. List of prioritized fixes (`fix/beta-findings-*` branches)
 3. Go/No-Go recommendation for broader rollout

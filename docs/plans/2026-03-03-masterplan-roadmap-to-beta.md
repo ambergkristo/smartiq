@@ -52,6 +52,8 @@ Last updated: 2026-03-03
   - Evidence: `backend/src/main/java/com/smartiq/backend/game/GameSessionStore.java`, `backend/src/main/java/com/smartiq/backend/game/RedisGameSessionStore.java`, `backend/src/test/java/com/smartiq/backend/game/GameSessionServiceTest.java`.
 - [~] Phase 7 - Beta KPI threshold alerts are codified as Prometheus rules and validated in CI/release gates.
   - Evidence: `ops/prometheus/smartiq-beta-kpi-alert-rules.yml`, `tools/validate_beta_alert_rules.js`, `.github/workflows/backend-ci.yml`, `.github/workflows/release-readiness.yml`.
+- [~] Phase 7 - Automated beta go/no-go workflow generates report artifacts and blocks on NO-GO.
+  - Evidence: `.github/workflows/beta-go-no-go.yml`, `package.json` (`gate:beta:go-no-go`), `docs/beta-runbook-v1.md`.
 
 Legend: `[x] done`, `[~] in progress`, `[ ] not started`.
 

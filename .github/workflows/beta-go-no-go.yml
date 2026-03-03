@@ -1,0 +1,130 @@
+name: Beta Go/No-Go Gate
+
+on:
+  workflow_dispatch:
+    inputs:
+      backend_url:
+        description: "Backend base URL (https://...)"
+        required: false
+        type: string
+      min_started_games:
+        description: "Minimum started games"
+        required: false
+        default: "20"
+        type: string
+      min_completed_games:
+        description: "Minimum completed games"
+        required: false
+        default: "15"
+        type: string
+      max_dropoff:
+        description: "Maximum drop-off rate (0..1)"
+        required: false
+        default: "0.35"
+        type: string
+      max_wrong_answer:
+        description: "Maximum wrong-answer rate (0..1)"
+        required: false
+        default: "0.45"
+        type: string
+      min_reconnect_success:
+        description: "Minimum reconnect success rate (0..1)"
+        required: false
+        default: "0.90"
+        type: string
+      max_join_failure:
+        description: "Maximum room join failure rate (0..1)"
+        required: false
+        default: "0.15"
+        type: string
+      max_ws_failure:
+        description: "Maximum websocket connect failure rate (0..1)"
+        required: false
+        default: "0.10"
+        type: string
+
+jobs:
+  beta-go-no-go:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Resolve backend URL
+        env:
+          INPUT_BACKEND_URL: ${{ inputs.backend_url }}
+          SECRET_BACKEND_URL: ${{ secrets.BETA_BACKEND_URL }}
+        run: |
+          BACKEND_URL="$INPUT_BACKEND_URL"
+          if [ -z "$BACKEND_URL" ]; then
+            BACKEND_URL="$SECRET_BACKEND_URL"
+          fi
+          if [ -z "$BACKEND_URL" ]; then
+            echo "Missing backend URL. Provide workflow input 'backend_url' or set secret BETA_BACKEND_URL." >&2
+            exit 1
+          fi
+          echo "BACKEND_URL=$BACKEND_URL" >> "$GITHUB_ENV"
+
+      - name: Set report path
+        run: |
+          REPORT_PATH="docs/reports/beta-summary-${GITHUB_RUN_ID}.md"
+          echo "REPORT_PATH=$REPORT_PATH" >> "$GITHUB_ENV"
+
+      - name: Run beta go/no-go gate
+        id: gate
+        continue-on-error: true
+        run: |
+          set +e
+          npm run report:beta:summary -- \
+            --backend-url="$BACKEND_URL" \
+            --out="$REPORT_PATH" \
+            --min-started-games="${{ inputs.min_started_games }}" \
+            --min-completed-games="${{ inputs.min_completed_games }}" \
+            --max-dropoff="${{ inputs.max_dropoff }}" \
+            --max-wrong-answer="${{ inputs.max_wrong_answer }}" \
+            --min-reconnect-success="${{ inputs.min_reconnect_success }}" \
+            --max-join-failure="${{ inputs.max_join_failure }}" \
+            --max-ws-failure="${{ inputs.max_ws_failure }}" \
+            --fail-on-no-go
+          EXIT_CODE=$?
+          echo "exit_code=$EXIT_CODE" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Add report summary to workflow
+        if: always()
+        run: |
+          echo "## Beta Go/No-Go Report" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$REPORT_PATH" ]; then
+            cat "$REPORT_PATH" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Report file not produced: $REPORT_PATH" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: beta-summary-${{ github.run_id }}
+          path: ${{ env.REPORT_PATH }}
+          if-no-files-found: warn
+
+      - name: Enforce GO decision
+        if: ${{ steps.gate.outputs.exit_code != '0' }}
+        run: |
+          EXIT_CODE="${{ steps.gate.outputs.exit_code }}"
+          if [ "$EXIT_CODE" = "2" ]; then
+            echo "Beta go/no-go gate result: NO-GO"
+            exit 1
+          fi
+          echo "Beta go/no-go gate execution failed (exit code: $EXIT_CODE)"
+          exit 1
