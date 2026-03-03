@@ -41,6 +41,8 @@ Canonical production deployment checklist for SmartIQ operators. This file is th
 | language | `smartiq.language.et-enabled` | `SMARTIQ_LANGUAGE_ET_ENABLED` | yes | `true` unless ET rollout is intentionally paused. |
 | game | `smartiq.game.session-retention-minutes` | `SMARTIQ_GAME_SESSION_RETENTION_MINUTES` | yes | Session eviction retention. |
 | game | `smartiq.game.session-max` | `SMARTIQ_GAME_SESSION_MAX` | yes | Capacity limit for active game sessions. |
+| room session store | `smartiq.room.session-store` | `SMARTIQ_ROOM_SESSION_STORE` | yes | `redis` in production; `memory` only for local/dev fallback. |
+| room session store | `smartiq.room.session-redis-prefix` | `SMARTIQ_ROOM_SESSION_REDIS_PREFIX` | no | Needed only with Redis-backed room session store. |
 | room | `smartiq.room.room-retention-minutes` | `SMARTIQ_ROOM_RETENTION_MINUTES` | yes | Room eviction retention. |
 | room | `smartiq.room.room-max` | `SMARTIQ_ROOM_MAX` | yes | Capacity limit for active rooms. |
 | bank safety | `smartiq.bank.min-size` | `MIN_BANK_SIZE` | yes | Shared with pool minimum baseline. |

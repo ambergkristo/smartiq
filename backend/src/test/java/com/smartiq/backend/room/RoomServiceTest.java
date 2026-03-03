@@ -1,5 +1,6 @@
 package com.smartiq.backend.room;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.config.RoomProperties;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
@@ -278,6 +279,40 @@ class RoomServiceTest {
                 .hasMessage("room not found: " + first.roomCode());
         assertThat(capService.getRoomSnapshot(second.roomCode()).roomCode()).isEqualTo(second.roomCode());
         assertThat(evictedCounterValue("capacity")).isEqualTo(1.0);
+    }
+
+    @Test
+    void restoresRoomFromStoreAfterServiceRestart() {
+        InMemoryRoomSessionStore store = new InMemoryRoomSessionStore();
+        ObjectMapper objectMapper = new ObjectMapper();
+        RoomService firstInstance = new RoomService(
+                meterRegistry,
+                new RoomProperties(180, 20000),
+                store,
+                objectMapper,
+                testClock
+        );
+        RoomParticipantResponse created = firstInstance.createRoom(new CreateRoomRequest("Alice"));
+        firstInstance.joinRoom(created.roomCode(), new JoinRoomRequest("Bob"));
+
+        RoomService restartedInstance = new RoomService(
+                meterRegistry,
+                new RoomProperties(180, 20000),
+                store,
+                objectMapper,
+                testClock
+        );
+
+        RoomSnapshot restored = restartedInstance.getRoomSnapshot(created.roomCode());
+        assertThat(restored.players()).hasSize(2);
+        assertThat(restored.players().get(0).displayName()).isEqualTo("Alice");
+        assertThat(restored.players().get(1).displayName()).isEqualTo("Bob");
+
+        RoomResumeResponse resumed = restartedInstance.resumeRoomSession(
+                created.roomCode(),
+                new RejoinRoomRequest(created.playerId(), created.authToken())
+        );
+        assertThat(resumed.authToken()).isEqualTo(created.authToken());
     }
 
     private double counterValue(String name, String... tags) {

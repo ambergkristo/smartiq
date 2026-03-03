@@ -7,6 +7,8 @@ management:
 smartiq:
   import:
     fail-on-category-threshold: ${SMARTIQ_IMPORT_FAIL_ON_CATEGORY_THRESHOLD:true}
+  room:
+    session-store: ${SMARTIQ_ROOM_SESSION_STORE:redis}
   language:
     et-enabled: ${SMARTIQ_LANGUAGE_ET_ENABLED:false}
   api:

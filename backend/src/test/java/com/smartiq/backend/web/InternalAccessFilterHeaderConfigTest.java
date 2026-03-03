@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(properties = {
         "smartiq.import.enabled=false",
         "smartiq.import.fail-on-category-threshold=false",
+        "smartiq.room.session-store=memory",
         "smartiq.pool.enabled=false",
         "smartiq.session.enabled=false",
         "smartiq.bank.block-on-low-bank=false",

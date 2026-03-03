@@ -1,5 +1,6 @@
 package com.smartiq.backend.room;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.config.RoomProperties;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,17 +44,28 @@ public class RoomService {
     private final Clock clock;
     private final long roomRetentionMillis;
     private final int roomMax;
+    private final RoomSessionStore roomSessionStore;
+    private final ObjectMapper objectMapper;
     private final SecureRandom random = new SecureRandom();
     private final ConcurrentMap<String, RoomState> rooms = new ConcurrentHashMap<>();
 
     @Autowired
-    public RoomService(MeterRegistry meterRegistry, RoomProperties roomProperties) {
-        this(meterRegistry, roomProperties, Clock.systemUTC());
+    public RoomService(MeterRegistry meterRegistry,
+                       RoomProperties roomProperties,
+                       RoomSessionStore roomSessionStore,
+                       ObjectMapper objectMapper) {
+        this(meterRegistry, roomProperties, roomSessionStore, objectMapper, Clock.systemUTC());
     }
 
-    RoomService(MeterRegistry meterRegistry, RoomProperties roomProperties, Clock clock) {
+    RoomService(MeterRegistry meterRegistry,
+                RoomProperties roomProperties,
+                RoomSessionStore roomSessionStore,
+                ObjectMapper objectMapper,
+                Clock clock) {
         this.meterRegistry = meterRegistry;
         this.clock = clock;
+        this.roomSessionStore = roomSessionStore;
+        this.objectMapper = objectMapper;
         int retentionMinutes = roomProperties == null
                 ? DEFAULT_ROOM_RETENTION_MINUTES
                 : roomProperties.roomRetentionMinutes();
@@ -64,10 +76,22 @@ public class RoomService {
         this.roomMax = Math.max(1, configuredRoomMax);
     }
 
+    RoomService(MeterRegistry meterRegistry, RoomProperties roomProperties, Clock clock) {
+        this(
+                meterRegistry,
+                roomProperties,
+                new InMemoryRoomSessionStore(),
+                new ObjectMapper(),
+                clock
+        );
+    }
+
     RoomService(MeterRegistry meterRegistry) {
         this(
                 meterRegistry,
                 new RoomProperties(DEFAULT_ROOM_RETENTION_MINUTES, DEFAULT_ROOM_MAX),
+                new InMemoryRoomSessionStore(),
+                new ObjectMapper(),
                 Clock.systemUTC()
         );
     }
@@ -86,6 +110,7 @@ public class RoomService {
             room.playerTokens.put(playerId, authToken);
             room.lastTouchedAtMillis = nowMillis;
             rooms.put(roomCode, room);
+            persistRoom(room);
 
             incrementCounter(METRIC_ROOM_CREATE, "success", "none");
             return new RoomParticipantResponse(roomCode, playerId, authToken);
@@ -109,6 +134,7 @@ public class RoomService {
             String authToken = issueToken();
             room.playerTokens.put(playerId, authToken);
             room.lastTouchedAtMillis = nowMillis();
+            persistRoom(room);
 
             incrementCounter(METRIC_ROOM_JOIN, "success", "none");
             return new RoomParticipantResponse(room.code, playerId, authToken);
@@ -122,6 +148,7 @@ public class RoomService {
         evictExpiredRooms();
         RoomState room = requireRoom(roomCode);
         room.lastTouchedAtMillis = nowMillis();
+        persistRoom(room);
         return toSnapshot(room);
     }
 
@@ -156,6 +183,7 @@ public class RoomService {
                 room.playerTokens.put(playerId, effectiveToken);
             }
             room.lastTouchedAtMillis = nowMillis();
+            persistRoom(room);
 
             incrementCounter(METRIC_ROOM_REJOIN, "success", "none");
             return new RoomResumeResponse(room.code, playerId, effectiveToken, toSnapshot(room));
@@ -169,10 +197,18 @@ public class RoomService {
         String normalized = normalizeRoomCode(roomCode);
         RoomState room = rooms.get(normalized);
         if (room == null) {
+            RoomState storedRoom = loadPersistedRoom(normalized);
+            if (storedRoom != null) {
+                RoomState existing = rooms.putIfAbsent(normalized, storedRoom);
+                room = existing == null ? storedRoom : existing;
+            }
+        }
+        if (room == null) {
             throw new NoSuchElementException("room not found: " + normalized);
         }
         if (isExpired(room, nowMillis())) {
             rooms.remove(normalized, room);
+            roomSessionStore.delete(normalized);
             incrementEvictedCounter("expired");
             throw new NoSuchElementException("room not found: " + normalized);
         }
@@ -192,6 +228,7 @@ public class RoomService {
                 continue;
             }
             if (rooms.remove(roomCode, room)) {
+                roomSessionStore.delete(roomCode);
                 incrementEvictedCounter("expired");
             }
         }
@@ -206,6 +243,7 @@ public class RoomService {
                 return;
             }
             if (rooms.remove(oldest.getKey(), oldest.getValue())) {
+                roomSessionStore.delete(oldest.getKey());
                 incrementEvictedCounter("capacity");
             }
         }
@@ -218,17 +256,78 @@ public class RoomService {
     private String allocateUniqueRoomCode() {
         for (int attempt = 0; attempt < 50; attempt += 1) {
             String candidate = randomRoomCode();
-            if (!rooms.containsKey(candidate)) {
+            if (!rooms.containsKey(candidate) && roomSessionStore.read(candidate) == null) {
                 return candidate;
             }
         }
 
         // Keep fallback constrained to the same allowed room-code alphabet.
         String fallback = randomRoomCode();
-        if (!rooms.containsKey(fallback)) {
+        if (!rooms.containsKey(fallback) && roomSessionStore.read(fallback) == null) {
             return fallback;
         }
         throw new IllegalStateException("failed to allocate room code");
+    }
+
+    private void persistRoom(RoomState room) {
+        try {
+            roomSessionStore.write(room.code, objectMapper.writeValueAsString(toStoredRoomState(room)));
+        } catch (Exception ex) {
+            throw new IllegalStateException("failed to persist room state", ex);
+        }
+    }
+
+    private RoomState loadPersistedRoom(String roomCode) {
+        String payload = roomSessionStore.read(roomCode);
+        if (payload == null || payload.isBlank()) {
+            return null;
+        }
+        try {
+            StoredRoomState stored = objectMapper.readValue(payload, StoredRoomState.class);
+            return fromStoredRoomState(roomCode, stored);
+        } catch (Exception ignored) {
+            roomSessionStore.delete(roomCode);
+            return null;
+        }
+    }
+
+    private static StoredRoomState toStoredRoomState(RoomState room) {
+        List<StoredRoomPlayer> players = room.players.stream()
+                .map(player -> new StoredRoomPlayer(player.playerId(), player.displayName()))
+                .toList();
+        return new StoredRoomState(
+                room.code,
+                players,
+                Map.copyOf(room.playerTokens),
+                room.lastTouchedAtMillis
+        );
+    }
+
+    private static RoomState fromStoredRoomState(String roomCode, StoredRoomState stored) {
+        String resolvedCode = roomCode;
+        if (stored.code() != null) {
+            String candidate = stored.code().trim().toUpperCase(Locale.ROOT);
+            if (isValidRoomCode(candidate)) {
+                resolvedCode = candidate;
+            }
+        }
+        RoomState room = new RoomState(resolvedCode);
+        room.players.clear();
+        if (stored.players() != null) {
+            for (StoredRoomPlayer player : stored.players()) {
+                if (player == null || player.playerId() == null || player.playerId().isBlank()) {
+                    continue;
+                }
+                String displayName = player.displayName() == null ? "" : player.displayName();
+                room.players.add(new PlayerState(player.playerId(), displayName));
+            }
+        }
+        room.playerTokens.clear();
+        if (stored.playerTokens() != null) {
+            room.playerTokens.putAll(stored.playerTokens());
+        }
+        room.lastTouchedAtMillis = stored.lastTouchedAtMillis();
+        return room;
     }
 
     private String randomRoomCode() {
@@ -427,6 +526,17 @@ public class RoomService {
             players.add(new PlayerState(playerId, displayName));
             return playerId;
         }
+    }
+
+    private record StoredRoomState(
+            String code,
+            List<StoredRoomPlayer> players,
+            Map<String, String> playerTokens,
+            long lastTouchedAtMillis
+    ) {
+    }
+
+    private record StoredRoomPlayer(String playerId, String displayName) {
     }
 
     private record PlayerState(String playerId, String displayName) {
