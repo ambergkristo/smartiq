@@ -84,7 +84,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
             String message = "Rate limit exceeded for " + uri;
             Object body = legacyShapeEnabled
                     ? ApiErrorResponse.legacy(message)
-                    : ApiErrorResponse.of(HttpStatus.TOO_MANY_REQUESTS, message, uri);
+                    : ApiErrorResponse.of(HttpStatus.TOO_MANY_REQUESTS, "RATE_LIMITED", message, uri);
             objectMapper.writeValue(response.getWriter(), body);
             return;
         }

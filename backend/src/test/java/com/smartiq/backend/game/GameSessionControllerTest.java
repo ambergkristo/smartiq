@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -84,6 +85,17 @@ class GameSessionControllerTest {
     }
 
     @Test
+    void gameNotFoundIsMappedToMachineReadableCode() throws Exception {
+        when(gameSessionService.getSnapshot(eq("missing-game")))
+                .thenThrow(new NoSuchElementException("game not found: missing-game"));
+
+        mockMvc.perform(get("/api/game/missing-game"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.code").value("GAME_NOT_FOUND"))
+                .andExpect(jsonPath("$.error").value("game not found: missing-game"));
+    }
+
+    @Test
     void invalidActionIsMappedToBadRequestErrorShape() throws Exception {
         when(gameSessionService.applyAction(eq("game-1"), any()))
                 .thenThrow(new IllegalArgumentException("type is required"));
@@ -92,6 +104,7 @@ class GameSessionControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new GameActionRequest(null, null, null, "p1", "at_1", "req-2"))))
                 .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("INVALID_ACTION"))
                 .andExpect(jsonPath("$.error").value("type is required"))
                 .andExpect(jsonPath("$.status").value(400))
                 .andExpect(jsonPath("$.path").value("/api/game/game-1/action"));
@@ -106,6 +119,7 @@ class GameSessionControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new GameActionRequest("PASS", null, null, "p1", "bad_token", "req-3"))))
                 .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.code").value("FORBIDDEN_ACTOR"))
                 .andExpect(jsonPath("$.error").value("invalid action token"))
                 .andExpect(jsonPath("$.status").value(403))
                 .andExpect(jsonPath("$.path").value("/api/game/game-1/action"));
@@ -120,6 +134,7 @@ class GameSessionControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new GameActionRequest("PASS", null, null, "p1", "at_1", "req-4"))))
                 .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("DUPLICATE_ACTION"))
                 .andExpect(jsonPath("$.error").value("duplicate actionRequestId"))
                 .andExpect(jsonPath("$.status").value(409))
                 .andExpect(jsonPath("$.path").value("/api/game/game-1/action"));

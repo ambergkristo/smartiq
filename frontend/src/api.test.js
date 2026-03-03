@@ -151,4 +151,14 @@ describe('api error mapping', () => {
   test('maps game session duplicate action conflict', () => {
     expect(resolveGameSessionErrorMessage({ status: 409, detail: 'duplicate actionRequestId' })).toContain('Duplicate game action');
   });
+
+  test('maps game session machine-readable invalid action code', () => {
+    expect(resolveGameSessionErrorMessage({ code: 'INVALID_ACTION', detail: 'type is required' }))
+      .toBe('Invalid game action. type is required');
+  });
+
+  test('maps game session machine-readable game-not-found code', () => {
+    expect(resolveGameSessionErrorMessage({ code: 'GAME_NOT_FOUND' }))
+      .toBe('Game session was not found. Start a new game.');
+  });
 });

@@ -93,6 +93,7 @@ class RateLimitFilterTest {
                         .param("lang", "en"))
                 .andExpect(status().isTooManyRequests())
                 .andExpect(header().exists("Retry-After"))
+                .andExpect(jsonPath("$.code").value("RATE_LIMITED"))
                 .andExpect(jsonPath("$.status").value(429))
                 .andExpect(jsonPath("$.reason").value("Too Many Requests"))
                 .andExpect(jsonPath("$.path").value("/api/cards/next"))

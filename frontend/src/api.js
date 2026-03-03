@@ -89,15 +89,19 @@ async function fetchJson(url, { timeoutMs = 8000, method = 'GET', body = null } 
     const res = await fetch(url, options);
     if (!res.ok) {
       let detail = null;
+      let backendCode = null;
       try {
         const payload = await res.json();
         if (payload && typeof payload.error === 'string') {
           detail = payload.error;
         }
+        if (payload && typeof payload.code === 'string' && payload.code.trim().length > 0) {
+          backendCode = payload.code.trim();
+        }
       } catch {
         detail = null;
       }
-      throw new ApiError(`Request failed: ${res.status}`, res.status, 'HTTP_ERROR', detail);
+      throw new ApiError(`Request failed: ${res.status}`, res.status, backendCode || 'HTTP_ERROR', detail);
     }
     return res.json();
   } catch (error) {
@@ -465,6 +469,38 @@ export function resolveGameSessionErrorMessage(error) {
 
   if (error?.code === 'CONTRACT_MISMATCH') {
     return error.message || 'Game session contract mismatch. Refresh client and backend.';
+  }
+
+  if (error?.code === 'INVALID_ACTION') {
+    return typeof error?.detail === 'string' && error.detail.trim().length > 0
+      ? `Invalid game action. ${error.detail}`
+      : 'Invalid game action payload.';
+  }
+
+  if (error?.code === 'FORBIDDEN_ACTOR') {
+    return typeof error?.detail === 'string' && error.detail.trim().length > 0
+      ? `Forbidden game action. ${error.detail}`
+      : 'Forbidden game action.';
+  }
+
+  if (error?.code === 'DUPLICATE_ACTION') {
+    return typeof error?.detail === 'string' && error.detail.trim().length > 0
+      ? `Duplicate game action. ${error.detail}`
+      : 'Duplicate game action.';
+  }
+
+  if (error?.code === 'GAME_NOT_FOUND') {
+    return 'Game session was not found. Start a new game.';
+  }
+
+  if (error?.code === 'RATE_LIMITED') {
+    return typeof error?.detail === 'string' && error.detail.trim().length > 0
+      ? `Rate limited. ${error.detail}`
+      : 'Rate limited. Retry shortly.';
+  }
+
+  if (error?.code === 'INTERNAL_ERROR') {
+    return 'Server error while processing game action. Retry.';
   }
 
   if (error?.code === 'VALIDATION_ERROR') {

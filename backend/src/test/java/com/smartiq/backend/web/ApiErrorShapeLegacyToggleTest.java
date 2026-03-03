@@ -31,6 +31,7 @@ class ApiErrorShapeLegacyToggleTest {
                         .param("gameId", "legacy-shape-test"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.error").exists())
+                .andExpect(jsonPath("$.code").doesNotExist())
                 .andExpect(jsonPath("$.status").doesNotExist())
                 .andExpect(jsonPath("$.reason").doesNotExist())
                 .andExpect(jsonPath("$.path").doesNotExist());
