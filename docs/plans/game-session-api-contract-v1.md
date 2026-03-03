@@ -185,3 +185,9 @@ Frontend consumer:
 1. `frontend/src/App.server-mode.test.jsx`
 2. `frontend/src/api.test.js`
 3. `frontend/src/fixtures/contracts/game-session-create-response-v1.json`
+
+Quick verification command:
+
+```bash
+npm run test:contracts
+```
