@@ -57,7 +57,7 @@ Last updated: 2026-03-03
 - [x] Phase 7 - Main branch protection required-check policy is codified and validated against workflow contexts.
   - Evidence: `docs/policies/main-branch-protection-policy.json`, `tools/validate_branch_protection_policy.js`, `.github/workflows/release-readiness.yml`.
 - [~] Phase 7 - Go/No-Go dry-run execution checklist and evidence template are published; live dry-run sign-off pending.
-  - Evidence: `docs/plans/2026-03-03-phase7-beta-go-no-go-dry-run-checklist.md`.
+  - Evidence: `docs/plans/2026-03-03-phase7-beta-go-no-go-dry-run-checklist.md`, `.github/workflows/phase7-beta-dry-run.yml`, `tools/generate_phase7_dry_run_evidence.js`.
 
 Legend: `[x] done`, `[~] in progress`, `[ ] not started`.
 

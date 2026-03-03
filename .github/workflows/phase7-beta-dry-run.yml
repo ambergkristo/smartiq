@@ -1,0 +1,180 @@
+name: Phase7 Beta Dry-Run
+
+on:
+  workflow_dispatch:
+    inputs:
+      backend_url:
+        description: "Backend base URL (https://...)"
+        required: false
+        type: string
+      smoke_language:
+        description: "Smoke test language (en|et)"
+        required: false
+        default: "en"
+        type: string
+      min_started_games:
+        description: "Minimum started games"
+        required: false
+        default: "20"
+        type: string
+      min_completed_games:
+        description: "Minimum completed games"
+        required: false
+        default: "15"
+        type: string
+      max_dropoff:
+        description: "Maximum drop-off rate (0..1)"
+        required: false
+        default: "0.35"
+        type: string
+      max_wrong_answer:
+        description: "Maximum wrong-answer rate (0..1)"
+        required: false
+        default: "0.45"
+        type: string
+      min_reconnect_success:
+        description: "Minimum reconnect success rate (0..1)"
+        required: false
+        default: "0.90"
+        type: string
+      max_join_failure:
+        description: "Maximum room join failure rate (0..1)"
+        required: false
+        default: "0.15"
+        type: string
+      max_ws_failure:
+        description: "Maximum websocket connect failure rate (0..1)"
+        required: false
+        default: "0.10"
+        type: string
+
+jobs:
+  phase7-dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Resolve backend URL
+        env:
+          INPUT_BACKEND_URL: ${{ inputs.backend_url }}
+          SECRET_BACKEND_URL: ${{ secrets.BETA_BACKEND_URL }}
+        run: |
+          BACKEND_URL="$INPUT_BACKEND_URL"
+          if [ -z "$BACKEND_URL" ]; then
+            BACKEND_URL="$SECRET_BACKEND_URL"
+          fi
+          if [ -z "$BACKEND_URL" ]; then
+            echo "Missing backend URL. Provide workflow input 'backend_url' or set secret BETA_BACKEND_URL." >&2
+            exit 1
+          fi
+          echo "BACKEND_URL=$BACKEND_URL" >> "$GITHUB_ENV"
+
+      - name: Set artifact paths
+        run: |
+          REPORT_PATH="docs/reports/beta-summary-${GITHUB_RUN_ID}.md"
+          EVIDENCE_PATH="docs/reports/phase7-dry-run-evidence-${GITHUB_RUN_ID}.md"
+          echo "REPORT_PATH=$REPORT_PATH" >> "$GITHUB_ENV"
+          echo "EVIDENCE_PATH=$EVIDENCE_PATH" >> "$GITHUB_ENV"
+
+      - name: Run public smoke test
+        id: smoke
+        continue-on-error: true
+        env:
+          BACKEND_URL: ${{ env.BACKEND_URL }}
+          SMOKE_LANGUAGE: ${{ inputs.smoke_language }}
+        run: |
+          set +e
+          npm run smoke:test
+          EXIT_CODE=$?
+          echo "exit_code=$EXIT_CODE" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Run beta go/no-go gate
+        id: gate
+        continue-on-error: true
+        run: |
+          set +e
+          npm run report:beta:summary -- \
+            --backend-url="$BACKEND_URL" \
+            --out="$REPORT_PATH" \
+            --min-started-games="${{ inputs.min_started_games }}" \
+            --min-completed-games="${{ inputs.min_completed_games }}" \
+            --max-dropoff="${{ inputs.max_dropoff }}" \
+            --max-wrong-answer="${{ inputs.max_wrong_answer }}" \
+            --min-reconnect-success="${{ inputs.min_reconnect_success }}" \
+            --max-join-failure="${{ inputs.max_join_failure }}" \
+            --max-ws-failure="${{ inputs.max_ws_failure }}" \
+            --fail-on-no-go
+          EXIT_CODE=$?
+          echo "exit_code=$EXIT_CODE" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Generate phase 7 dry-run evidence
+        if: always()
+        run: |
+          node tools/generate_phase7_dry_run_evidence.js \
+            --out="$EVIDENCE_PATH" \
+            --backend-url="$BACKEND_URL" \
+            --candidate-sha="$GITHUB_SHA" \
+            --workflow-run-id="$GITHUB_RUN_ID" \
+            --workflow-run-url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+            --report-path="$REPORT_PATH" \
+            --smoke-exit-code="${{ steps.smoke.outputs.exit_code }}" \
+            --gate-exit-code="${{ steps.gate.outputs.exit_code }}" \
+            --min-started-games="${{ inputs.min_started_games }}" \
+            --min-completed-games="${{ inputs.min_completed_games }}" \
+            --max-dropoff="${{ inputs.max_dropoff }}" \
+            --max-wrong-answer="${{ inputs.max_wrong_answer }}" \
+            --min-reconnect-success="${{ inputs.min_reconnect_success }}" \
+            --max-join-failure="${{ inputs.max_join_failure }}" \
+            --max-ws-failure="${{ inputs.max_ws_failure }}"
+
+      - name: Add dry-run summary to workflow
+        if: always()
+        run: |
+          echo "## Phase7 Dry-Run Summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$EVIDENCE_PATH" ]; then
+            cat "$EVIDENCE_PATH" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Evidence file not produced: $EVIDENCE_PATH" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload dry-run artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase7-dry-run-${{ github.run_id }}
+          path: |
+            ${{ env.REPORT_PATH }}
+            ${{ env.EVIDENCE_PATH }}
+          if-no-files-found: warn
+
+      - name: Enforce synthetic dry-run pass
+        if: always()
+        run: |
+          SMOKE_EXIT="${{ steps.smoke.outputs.exit_code }}"
+          GATE_EXIT="${{ steps.gate.outputs.exit_code }}"
+          if [ "$SMOKE_EXIT" != "0" ]; then
+            echo "Phase7 dry-run failed: smoke test failed (exit code: $SMOKE_EXIT)"
+            exit 1
+          fi
+          if [ "$GATE_EXIT" = "2" ]; then
+            echo "Phase7 dry-run failed: beta gate returned NO-GO"
+            exit 1
+          fi
+          if [ "$GATE_EXIT" != "0" ]; then
+            echo "Phase7 dry-run failed: beta gate execution error (exit code: $GATE_EXIT)"
+            exit 1
+          fi
+          echo "Phase7 synthetic dry-run passed."

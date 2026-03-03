@@ -46,6 +46,7 @@
     "smoke:test:et": "node -e \"process.env.SMOKE_LANGUAGE='et'; require('./tools/smoke-test.js')\"",
     "report:et:runtime": "node tools/generate_et_runtime_smoke_report.js",
     "report:beta:summary": "node tools/generate_beta_summary_report.js",
+    "report:phase7:dry-run:evidence": "node tools/generate_phase7_dry_run_evidence.js",
     "gate:beta:go-no-go": "node tools/generate_beta_summary_report.js --min-started-games=20 --min-completed-games=15 --max-dropoff=0.35 --max-wrong-answer=0.45 --min-reconnect-success=0.90 --max-join-failure=0.15 --max-ws-failure=0.10 --fail-on-no-go",
     "gate:et:release": "node tools/run_et_release_gate.js",
     "gate:quick": "node tools/run_local_verification_gate.js",

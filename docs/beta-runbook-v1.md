@@ -19,6 +19,7 @@ This runbook defines how to execute the first closed Party Beta for SmartIQ.
 4. Automated beta gate is configured:
    - GitHub Actions workflow: `.github/workflows/beta-go-no-go.yml`
    - `backend_url` input or secret `BETA_BACKEND_URL` is available
+   - Synthetic dry-run workflow: `.github/workflows/phase7-beta-dry-run.yml`
 5. Production/staging smoke passes:
    - `$env:BACKEND_URL="https://<backend-domain>"; npm run smoke:test`
 6. Branch protection stays enforced on `main`.
@@ -124,6 +125,8 @@ At beta close, publish:
      - `$env:BACKEND_URL="https://<backend-domain>"; npm run gate:beta:go-no-go`
    - CI workflow option:
      - Run workflow `Beta Go/No-Go Gate` (uploads markdown report artifact, fails on `NO-GO`)
+   - Synthetic dry-run evidence workflow:
+     - Run workflow `Phase7 Beta Dry-Run` (uploads combined evidence artifact with smoke + gate outcomes)
 2. List of prioritized fixes (`fix/beta-findings-*` branches)
 3. Go/No-Go recommendation for broader rollout
 

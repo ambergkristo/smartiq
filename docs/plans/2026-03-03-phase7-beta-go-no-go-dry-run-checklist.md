@@ -20,6 +20,8 @@ Provide one canonical execution checklist and evidence template for the closed-b
   - Evidence: `.github/workflows/beta-go-no-go.yml`.
 - [x] Main branch protection policy codified and validated against workflow contexts.
   - Evidence: `docs/policies/main-branch-protection-policy.json`, `tools/validate_branch_protection_policy.js`.
+- [x] Synthetic dry-run workflow and evidence artifact generation are automated.
+  - Evidence: `.github/workflows/phase7-beta-dry-run.yml`, `tools/generate_phase7_dry_run_evidence.js`.
 
 ## Dry-Run Preconditions
 
@@ -36,16 +38,22 @@ Provide one canonical execution checklist and evidence template for the closed-b
    - UI: Actions -> `Beta Go/No-Go Gate` -> Run workflow
    - CLI (optional):
      - `gh workflow run "Beta Go/No-Go Gate" --repo ambergkristo/smartiq -f backend_url=https://<backend-domain>`
-3. Wait for run completion and capture run URL.
-4. Download artifact `beta-summary-<run_id>` and store it in release evidence.
-5. Confirm workflow result:
+3. Trigger workflow `Phase7 Beta Dry-Run` for synthetic execution evidence.
+   - UI: Actions -> `Phase7 Beta Dry-Run` -> Run workflow
+   - CLI (optional):
+     - `gh workflow run "Phase7 Beta Dry-Run" --repo ambergkristo/smartiq -f backend_url=https://<backend-domain>`
+4. Wait for run completion and capture run URL.
+5. Download artifacts:
+   - `beta-summary-<run_id>` (from `Beta Go/No-Go Gate`)
+   - `phase7-dry-run-<run_id>` (from `Phase7 Beta Dry-Run`)
+6. Confirm workflow results:
    - PASS => recommendation is `GO`
    - FAIL with `NO-GO` message => recommendation is `NO-GO`
-6. Run manual spot checks:
+7. Run manual spot checks:
    - `smoke:test` from public endpoint
    - room create/join/rejoin flow
    - one completed game session path
-7. Complete evidence table and sign-off section below.
+8. Complete evidence table and sign-off section below.
 
 ## Go/No-Go Decision Rules
 
