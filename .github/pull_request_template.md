@@ -2,6 +2,13 @@
 
 - What changed and why?
 
+## Masterplan Alignment
+
+- Canonical plan: `docs/plans/2026-03-03-masterplan-roadmap-to-beta.md`
+- Masterplan phase:
+- Masterplan item(s):
+- If deviating, justify and propose plan update:
+
 ## Validation
 
 - [ ] Tests added/updated

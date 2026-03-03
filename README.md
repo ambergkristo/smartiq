@@ -378,6 +378,14 @@ node scripts/verify_runtime_deck.js
 - Backend workflow: `mvn -q test` + package build.
 - Frontend workflow: `npm ci` + `npm run lint` + `npm run build`.
 
+## Canonical Development Priority
+
+- Active masterplan and roadmap source of truth:
+  - `docs/plans/2026-03-03-masterplan-roadmap-to-beta.md`
+- Historical plan snapshot:
+  - `docs/plan.md`
+- If planning or scope conflicts occur, the canonical masterplan takes priority.
+
 ## Contributing
 
 See `CONTRIBUTING.md` for branch, validation, and PR expectations.

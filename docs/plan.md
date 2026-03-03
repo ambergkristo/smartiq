@@ -1,5 +1,10 @@
 # SmartIQ MVP Execution Plan
 
+> Historical snapshot. Canonical active plan:
+> `docs/plans/2026-03-03-masterplan-roadmap-to-beta.md`
+>
+> Use the canonical plan above for all new SmartIQ implementation prioritization.
+
 > Legacy planning snapshot (historical). Canonical runtime dataset path is `data/smart10/`.
 
 Date: 2026-02-17  
