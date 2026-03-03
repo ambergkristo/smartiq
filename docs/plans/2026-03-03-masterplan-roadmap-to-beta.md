@@ -48,6 +48,8 @@ Last updated: 2026-03-03
   - Evidence: `tools/score_cards_semantic.js`, `.github/workflows/backend-ci.yml`, `.github/workflows/frontend-ci.yml`, `tools/run_release_readiness_check.js`.
 - [~] Phase 6 - Room session durability moved behind a store interface with Redis option and restart recovery coverage.
   - Evidence: `backend/src/main/java/com/smartiq/backend/room/RoomSessionStore.java`, `backend/src/main/java/com/smartiq/backend/room/RedisRoomSessionStore.java`, `backend/src/test/java/com/smartiq/backend/room/RoomServiceTest.java`.
+- [~] Phase 6 - Game session durability moved behind a store interface with Redis option and restart + idempotency recovery coverage.
+  - Evidence: `backend/src/main/java/com/smartiq/backend/game/GameSessionStore.java`, `backend/src/main/java/com/smartiq/backend/game/RedisGameSessionStore.java`, `backend/src/test/java/com/smartiq/backend/game/GameSessionServiceTest.java`.
 
 Legend: `[x] done`, `[~] in progress`, `[ ] not started`.
 

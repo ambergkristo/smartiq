@@ -1,5 +1,6 @@
 package com.smartiq.backend.game;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.card.CardDeckResponse;
 import com.smartiq.backend.card.CardService;
 import com.smartiq.backend.config.GameSessionProperties;
@@ -624,6 +625,55 @@ class GameSessionServiceTest {
                 .hasMessage("game not found: " + firstGameId);
         assertThat(capService.getSnapshot(second.snapshot().gameId()).gameId()).isEqualTo(second.snapshot().gameId());
         assertThat(evictedCounterValue("capacity")).isEqualTo(1.0);
+    }
+
+    @Test
+    void restoresPersistedSessionStateAfterServiceRestart() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(openCard("persist-1", 0, "Persist Question 1"));
+
+        InMemoryGameSessionStore store = new InMemoryGameSessionStore();
+        ObjectMapper objectMapper = new ObjectMapper();
+        GameSessionService firstInstance = new GameSessionService(
+                cardService,
+                meterRegistry,
+                new GameSessionProperties(180, 50000),
+                store,
+                objectMapper,
+                testClock
+        );
+        GameSessionCreateResponse created = firstInstance.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
+        );
+        String gameId = created.snapshot().gameId();
+        String p1Token = created.actionTokens().get("p1");
+        String p2Token = created.actionTokens().get("p2");
+
+        firstInstance.applyAction(
+                gameId,
+                new GameActionRequest("ANSWER", 0, null, "p1", p1Token, "req-restart-1")
+        );
+
+        GameSessionService restartedInstance = new GameSessionService(
+                cardService,
+                meterRegistry,
+                new GameSessionProperties(180, 50000),
+                store,
+                objectMapper,
+                testClock
+        );
+        GameSessionSnapshot restoredSnapshot = restartedInstance.getSnapshot(gameId);
+
+        assertThat(restoredSnapshot.roundState().currentPlayerId()).isEqualTo("p2");
+        assertThat(restoredSnapshot.roundScores().get("p1")).isEqualTo(1);
+        assertThat(restoredSnapshot.boardState().pegs().get(0).state()).isEqualTo("revealed");
+
+        assertThatThrownBy(() -> restartedInstance.applyAction(
+                gameId,
+                new GameActionRequest("ANSWER", 1, null, "p2", p2Token, "req-restart-1")
+        ))
+                .isInstanceOf(DuplicateGameActionException.class)
+                .hasMessage("duplicate actionRequestId");
     }
 
     private double counterValue(String name, String... tags) {

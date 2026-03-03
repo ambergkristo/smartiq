@@ -1,5 +1,6 @@
 package com.smartiq.backend.game;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.card.CardDeckResponse;
 import com.smartiq.backend.card.CardService;
 import com.smartiq.backend.config.GameSessionProperties;
@@ -69,6 +70,8 @@ public class GameSessionService {
 
     private final CardService cardService;
     private final MeterRegistry meterRegistry;
+    private final GameSessionStore gameSessionStore;
+    private final ObjectMapper objectMapper;
     private final Clock clock;
     private final long sessionRetentionMillis;
     private final int sessionMax;
@@ -77,16 +80,22 @@ public class GameSessionService {
     @Autowired
     public GameSessionService(CardService cardService,
                               MeterRegistry meterRegistry,
-                              GameSessionProperties gameSessionProperties) {
-        this(cardService, meterRegistry, gameSessionProperties, Clock.systemUTC());
+                              GameSessionProperties gameSessionProperties,
+                              GameSessionStore gameSessionStore,
+                              ObjectMapper objectMapper) {
+        this(cardService, meterRegistry, gameSessionProperties, gameSessionStore, objectMapper, Clock.systemUTC());
     }
 
     GameSessionService(CardService cardService,
                        MeterRegistry meterRegistry,
                        GameSessionProperties gameSessionProperties,
+                       GameSessionStore gameSessionStore,
+                       ObjectMapper objectMapper,
                        Clock clock) {
         this.cardService = cardService;
         this.meterRegistry = meterRegistry;
+        this.gameSessionStore = gameSessionStore;
+        this.objectMapper = objectMapper;
         this.clock = clock;
         int retentionMinutes = gameSessionProperties == null
                 ? DEFAULT_SESSION_RETENTION_MINUTES
@@ -98,11 +107,27 @@ public class GameSessionService {
         this.sessionMax = Math.max(1, configuredSessionMax);
     }
 
+    GameSessionService(CardService cardService,
+                       MeterRegistry meterRegistry,
+                       GameSessionProperties gameSessionProperties,
+                       Clock clock) {
+        this(
+                cardService,
+                meterRegistry,
+                gameSessionProperties,
+                new InMemoryGameSessionStore(),
+                new ObjectMapper(),
+                clock
+        );
+    }
+
     GameSessionService(CardService cardService, MeterRegistry meterRegistry) {
         this(
                 cardService,
                 meterRegistry,
                 new GameSessionProperties(DEFAULT_SESSION_RETENTION_MINUTES, DEFAULT_SESSION_MAX),
+                new InMemoryGameSessionStore(),
+                new ObjectMapper(),
                 Clock.systemUTC()
         );
     }
@@ -128,7 +153,7 @@ public class GameSessionService {
         String topic = normalizeTopic(request == null ? null : request.topic());
         long nowMillis = nowMillis();
 
-        String gameId = UUID.randomUUID().toString();
+        String gameId = allocateUniqueGameId();
         List<PlayerState> players = buildPlayers(displayNames);
         Map<String, Integer> totals = zeroScores(players);
         Map<String, Integer> roundScores = zeroScores(players);
@@ -150,6 +175,7 @@ public class GameSessionService {
                 nowMillis
         );
         sessions.put(gameId, state);
+        persistSession(state);
         incrementCounter(METRIC_GAME_STARTED, "language", language);
         return state;
     }
@@ -158,6 +184,7 @@ public class GameSessionService {
         evictExpiredSessions();
         SessionState state = requireSession(gameId);
         state.lastTouchedAtMillis = nowMillis();
+        persistSession(state);
         return toSnapshot(state);
     }
 
@@ -188,6 +215,7 @@ public class GameSessionService {
             }
             rememberActionRequestId(state, actionRequestId);
             state.lastTouchedAtMillis = nowMillis();
+            persistSession(state);
 
             return toSnapshot(state);
         } catch (RuntimeException ex) {
@@ -676,10 +704,18 @@ public class GameSessionService {
         }
         SessionState state = sessions.get(normalized);
         if (state == null) {
+            SessionState stored = loadPersistedSession(normalized);
+            if (stored != null) {
+                SessionState existing = sessions.putIfAbsent(normalized, stored);
+                state = existing == null ? stored : existing;
+            }
+        }
+        if (state == null) {
             throw new NoSuchElementException("game not found: " + normalized);
         }
         if (isExpired(state, nowMillis())) {
             sessions.remove(normalized, state);
+            gameSessionStore.delete(normalized);
             incrementCounter(METRIC_SESSION_EVICTED, "reason", "expired");
             throw new NoSuchElementException("game not found: " + normalized);
         }
@@ -709,6 +745,38 @@ public class GameSessionService {
         return clock.millis();
     }
 
+    private String allocateUniqueGameId() {
+        for (int attempt = 0; attempt < 10; attempt += 1) {
+            String candidate = UUID.randomUUID().toString();
+            if (!sessions.containsKey(candidate) && gameSessionStore.read(candidate) == null) {
+                return candidate;
+            }
+        }
+        throw new IllegalStateException("failed to allocate gameId");
+    }
+
+    private void persistSession(SessionState state) {
+        try {
+            gameSessionStore.write(state.gameId, objectMapper.writeValueAsString(toStoredSessionState(state)));
+        } catch (Exception ex) {
+            throw new IllegalStateException("failed to persist game session", ex);
+        }
+    }
+
+    private SessionState loadPersistedSession(String gameId) {
+        String payload = gameSessionStore.read(gameId);
+        if (payload == null || payload.isBlank()) {
+            return null;
+        }
+        try {
+            StoredGameSessionState stored = objectMapper.readValue(payload, StoredGameSessionState.class);
+            return fromStoredSessionState(gameId, stored, nowMillis());
+        } catch (Exception ignored) {
+            gameSessionStore.delete(gameId);
+            return null;
+        }
+    }
+
     private void evictExpiredSessions() {
         long nowMillis = nowMillis();
         for (Map.Entry<String, SessionState> entry : sessions.entrySet()) {
@@ -718,6 +786,7 @@ public class GameSessionService {
                 continue;
             }
             if (sessions.remove(gameId, state)) {
+                gameSessionStore.delete(gameId);
                 incrementCounter(METRIC_SESSION_EVICTED, "reason", "expired");
             }
         }
@@ -732,6 +801,7 @@ public class GameSessionService {
                 return;
             }
             if (sessions.remove(oldest.getKey(), oldest.getValue())) {
+                gameSessionStore.delete(oldest.getKey());
                 incrementCounter(METRIC_SESSION_EVICTED, "reason", "capacity");
             }
         }
@@ -739,6 +809,230 @@ public class GameSessionService {
 
     private boolean isExpired(SessionState state, long nowMillis) {
         return nowMillis - state.lastTouchedAtMillis >= sessionRetentionMillis;
+    }
+
+    private static StoredGameSessionState toStoredSessionState(SessionState state) {
+        List<StoredPlayerState> players = state.players.stream()
+                .map(player -> new StoredPlayerState(player.playerId(), player.displayName()))
+                .toList();
+        List<StoredPegState> pegs = state.pegs.stream()
+                .map(peg -> new StoredPegState(peg.index(), peg.state()))
+                .toList();
+        return new StoredGameSessionState(
+                state.gameId,
+                state.language,
+                state.topic,
+                state.winCondition,
+                players,
+                new LinkedHashMap<>(state.totalScores),
+                new LinkedHashMap<>(state.roundScores),
+                new LinkedHashMap<>(state.statuses),
+                new LinkedHashMap<>(state.actionTokens),
+                new ArrayList<>(state.processedActionRequestIds),
+                state.roundNumber,
+                state.starterPlayerIndex,
+                state.activePlayerIndex,
+                state.phase,
+                state.lastAction,
+                state.card,
+                pegs,
+                state.gameStartedAtMillis,
+                state.roundStartedAtMillis,
+                state.lastTouchedAtMillis
+        );
+    }
+
+    private static SessionState fromStoredSessionState(String gameId, StoredGameSessionState stored, long nowMillis) {
+        if (stored == null || stored.players() == null || stored.players().isEmpty()) {
+            throw new IllegalArgumentException("stored session is missing players");
+        }
+        if (stored.card() == null || stored.card().options() == null || stored.card().options().isEmpty()) {
+            throw new IllegalArgumentException("stored session is missing card data");
+        }
+
+        List<PlayerState> players = new ArrayList<>();
+        for (StoredPlayerState storedPlayer : stored.players()) {
+            if (storedPlayer == null || storedPlayer.playerId() == null || storedPlayer.playerId().isBlank()) {
+                continue;
+            }
+            String displayName = storedPlayer.displayName() == null ? "" : storedPlayer.displayName();
+            players.add(new PlayerState(storedPlayer.playerId(), displayName));
+        }
+        if (players.isEmpty()) {
+            throw new IllegalArgumentException("stored session has no valid players");
+        }
+
+        String language = normalizeLanguage(stored.language());
+        String topic = normalizeTopic(stored.topic());
+        int winCondition = stored.winCondition() == null || stored.winCondition() < 1
+                ? DEFAULT_WIN_CONDITION
+                : stored.winCondition();
+        Map<String, Integer> totalScores = normalizeStoredScores(stored.totalScores(), players);
+        Map<String, Integer> roundScores = normalizeStoredScores(stored.roundScores(), players);
+        Map<String, PlayerRoundStatus> statuses = normalizeStoredStatuses(stored.statuses(), players);
+        Map<String, String> actionTokens = normalizeStoredTokens(stored.actionTokens(), players);
+        LinkedHashSet<String> processedActionRequestIds = normalizeProcessedActionRequestIds(stored.processedActionRequestIds());
+        int roundNumber = stored.roundNumber() == null || stored.roundNumber() < 1 ? 1 : stored.roundNumber();
+        int starterPlayerIndex = normalizeStoredIndex(stored.starterPlayerIndex(), players.size(), 0);
+        int activePlayerIndex = normalizeStoredIndex(stored.activePlayerIndex(), players.size(), starterPlayerIndex);
+        String phase = normalizeStoredPhase(stored.phase());
+        String lastAction = normalizeStoredLastAction(stored.lastAction());
+        List<PegState> pegs = normalizeStoredPegs(stored.pegs(), stored.card().options().size());
+        long gameStartedAtMillis = normalizeStoredTimestamp(stored.gameStartedAtMillis(), nowMillis);
+        long roundStartedAtMillis = normalizeStoredTimestamp(stored.roundStartedAtMillis(), nowMillis);
+        long lastTouchedAtMillis = normalizeStoredTimestamp(stored.lastTouchedAtMillis(), nowMillis);
+
+        return new SessionState(
+                gameId,
+                language,
+                topic,
+                winCondition,
+                players,
+                totalScores,
+                roundScores,
+                statuses,
+                actionTokens,
+                processedActionRequestIds,
+                roundNumber,
+                starterPlayerIndex,
+                activePlayerIndex,
+                phase,
+                lastAction,
+                stored.card(),
+                pegs,
+                gameStartedAtMillis,
+                roundStartedAtMillis,
+                lastTouchedAtMillis
+        );
+    }
+
+    private static Map<String, Integer> normalizeStoredScores(Map<String, Integer> source, List<PlayerState> players) {
+        Map<String, Integer> scores = new LinkedHashMap<>();
+        for (PlayerState player : players) {
+            Integer score = source == null ? null : source.get(player.playerId());
+            scores.put(player.playerId(), score == null ? 0 : Math.max(0, score));
+        }
+        return scores;
+    }
+
+    private static Map<String, PlayerRoundStatus> normalizeStoredStatuses(Map<String, PlayerRoundStatus> source,
+                                                                           List<PlayerState> players) {
+        Map<String, PlayerRoundStatus> statuses = new LinkedHashMap<>();
+        for (PlayerState player : players) {
+            PlayerRoundStatus status = source == null ? null : source.get(player.playerId());
+            statuses.put(player.playerId(), status == null ? PlayerRoundStatus.ACTIVE : status);
+        }
+        return statuses;
+    }
+
+    private static Map<String, String> normalizeStoredTokens(Map<String, String> source, List<PlayerState> players) {
+        if (source == null) {
+            throw new IllegalArgumentException("stored session is missing action tokens");
+        }
+        Map<String, String> tokens = new LinkedHashMap<>();
+        for (PlayerState player : players) {
+            String token = source.get(player.playerId());
+            if (token == null || token.isBlank()) {
+                throw new IllegalArgumentException("stored session is missing action token");
+            }
+            if (!ACTION_TOKEN_PATTERN.matcher(token).matches()) {
+                throw new IllegalArgumentException("stored session has invalid action token");
+            }
+            tokens.put(player.playerId(), token);
+        }
+        return tokens;
+    }
+
+    private static LinkedHashSet<String> normalizeProcessedActionRequestIds(List<String> source) {
+        LinkedHashSet<String> actionRequestIds = new LinkedHashSet<>();
+        if (source == null) {
+            return actionRequestIds;
+        }
+        for (String candidate : source) {
+            if (candidate == null || candidate.isBlank()) {
+                continue;
+            }
+            String normalized = candidate.trim();
+            if (normalized.length() > MAX_ACTION_REQUEST_ID_LENGTH) {
+                continue;
+            }
+            if (!ACTION_REQUEST_ID_PATTERN.matcher(normalized).matches()) {
+                continue;
+            }
+            actionRequestIds.add(normalized);
+            while (actionRequestIds.size() > ACTION_REQUEST_HISTORY_LIMIT) {
+                String oldest = actionRequestIds.iterator().next();
+                actionRequestIds.remove(oldest);
+            }
+        }
+        return actionRequestIds;
+    }
+
+    private static List<PegState> normalizeStoredPegs(List<StoredPegState> source, int expectedCount) {
+        List<PegState> pegs = hiddenPegs(expectedCount);
+        if (source == null || source.isEmpty()) {
+            return pegs;
+        }
+        for (StoredPegState storedPeg : source) {
+            if (storedPeg == null || storedPeg.index() == null) {
+                continue;
+            }
+            int index = storedPeg.index();
+            if (index < 0 || index >= expectedCount) {
+                continue;
+            }
+            pegs.set(index, new PegState(index, normalizeStoredPegState(storedPeg.state())));
+        }
+        return pegs;
+    }
+
+    private static String normalizeStoredPegState(String state) {
+        if (state == null || state.isBlank()) {
+            return PEG_HIDDEN;
+        }
+        String normalized = state.trim().toLowerCase(Locale.ROOT);
+        if (PEG_REVEALED.equals(normalized)) {
+            return PEG_REVEALED;
+        }
+        if (PEG_WRONG.equals(normalized)) {
+            return PEG_WRONG;
+        }
+        return PEG_HIDDEN;
+    }
+
+    private static int normalizeStoredIndex(Integer candidate, int size, int fallback) {
+        if (candidate == null || size <= 0) {
+            return fallback;
+        }
+        if (candidate < 0 || candidate >= size) {
+            return fallback;
+        }
+        return candidate;
+    }
+
+    private static String normalizeStoredPhase(String phase) {
+        if (phase == null || phase.isBlank()) {
+            return PHASE_CHOOSING;
+        }
+        String normalized = phase.trim().toUpperCase(Locale.ROOT);
+        if (PHASE_GAME_OVER.equals(normalized)) {
+            return PHASE_GAME_OVER;
+        }
+        return PHASE_CHOOSING;
+    }
+
+    private static String normalizeStoredLastAction(String lastAction) {
+        if (lastAction == null || lastAction.isBlank()) {
+            return "Game resumed";
+        }
+        return lastAction;
+    }
+
+    private static long normalizeStoredTimestamp(Long candidate, long fallback) {
+        if (candidate == null || candidate <= 0L) {
+            return fallback;
+        }
+        return candidate;
     }
 
     private static GameSessionSnapshot toSnapshot(SessionState state) {
@@ -816,6 +1110,50 @@ public class GameSessionService {
                              Map<String, String> actionTokens,
                              CardDeckResponse card,
                              long nowMillis) {
+            this(
+                    gameId,
+                    language,
+                    topic,
+                    winCondition,
+                    players,
+                    totalScores,
+                    roundScores,
+                    statuses,
+                    actionTokens,
+                    new LinkedHashSet<>(),
+                    1,
+                    0,
+                    0,
+                    PHASE_CHOOSING,
+                    "Game started",
+                    card,
+                    hiddenPegs(card.options().size()),
+                    nowMillis,
+                    nowMillis,
+                    nowMillis
+            );
+        }
+
+        private SessionState(String gameId,
+                             String language,
+                             String topic,
+                             int winCondition,
+                             List<PlayerState> players,
+                             Map<String, Integer> totalScores,
+                             Map<String, Integer> roundScores,
+                             Map<String, PlayerRoundStatus> statuses,
+                             Map<String, String> actionTokens,
+                             LinkedHashSet<String> processedActionRequestIds,
+                             int roundNumber,
+                             int starterPlayerIndex,
+                             int activePlayerIndex,
+                             String phase,
+                             String lastAction,
+                             CardDeckResponse card,
+                             List<PegState> pegs,
+                             long gameStartedAtMillis,
+                             long roundStartedAtMillis,
+                             long lastTouchedAtMillis) {
             this.gameId = gameId;
             this.language = language;
             this.topic = topic;
@@ -825,17 +1163,17 @@ public class GameSessionService {
             this.roundScores = roundScores;
             this.statuses = statuses;
             this.actionTokens = actionTokens;
-            this.processedActionRequestIds = new LinkedHashSet<>();
-            this.roundNumber = 1;
-            this.starterPlayerIndex = 0;
-            this.activePlayerIndex = 0;
-            this.phase = PHASE_CHOOSING;
-            this.lastAction = "Game started";
+            this.processedActionRequestIds = processedActionRequestIds;
+            this.roundNumber = roundNumber;
+            this.starterPlayerIndex = starterPlayerIndex;
+            this.activePlayerIndex = activePlayerIndex;
+            this.phase = phase;
+            this.lastAction = lastAction;
             this.card = card;
-            this.pegs = hiddenPegs(card.options().size());
-            this.gameStartedAtMillis = nowMillis;
-            this.roundStartedAtMillis = nowMillis;
-            this.lastTouchedAtMillis = nowMillis;
+            this.pegs = pegs;
+            this.gameStartedAtMillis = gameStartedAtMillis;
+            this.roundStartedAtMillis = roundStartedAtMillis;
+            this.lastTouchedAtMillis = lastTouchedAtMillis;
         }
 
         private String currentPlayerId() {
@@ -851,5 +1189,35 @@ public class GameSessionService {
     }
 
     private record PegState(int index, String state) {
+    }
+
+    private record StoredGameSessionState(
+            String gameId,
+            String language,
+            String topic,
+            Integer winCondition,
+            List<StoredPlayerState> players,
+            Map<String, Integer> totalScores,
+            Map<String, Integer> roundScores,
+            Map<String, PlayerRoundStatus> statuses,
+            Map<String, String> actionTokens,
+            List<String> processedActionRequestIds,
+            Integer roundNumber,
+            Integer starterPlayerIndex,
+            Integer activePlayerIndex,
+            String phase,
+            String lastAction,
+            CardDeckResponse card,
+            List<StoredPegState> pegs,
+            Long gameStartedAtMillis,
+            Long roundStartedAtMillis,
+            Long lastTouchedAtMillis
+    ) {
+    }
+
+    private record StoredPlayerState(String playerId, String displayName) {
+    }
+
+    private record StoredPegState(Integer index, String state) {
     }
 }

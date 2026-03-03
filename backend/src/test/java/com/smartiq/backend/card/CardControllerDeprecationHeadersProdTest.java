@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "spring.profiles.active=prod",
         "smartiq.import.enabled=false",
         "smartiq.import.fail-on-category-threshold=false",
+        "smartiq.game.session-store=memory",
         "smartiq.room.session-store=memory",
         "smartiq.pool.enabled=true",
         "smartiq.pool.minimum-per-key=1",
