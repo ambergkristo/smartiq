@@ -53,6 +53,22 @@ function optionsNormalized(card) {
   return card.options.map((entry) => normalizeLoose(entry?.text ?? entry)).filter(Boolean);
 }
 
+function isNumericToken(token) {
+  return /^-?\d+(?:\.\d+)?$/.test(token);
+}
+
+function hasCompactNumericOptions(options) {
+  if (!Array.isArray(options) || options.length === 0) {
+    return false;
+  }
+  const numericTokens = options.filter(isNumericToken);
+  const minimumNumericTokens = Math.max(8, Math.ceil(options.length * 0.8));
+  if (numericTokens.length < minimumNumericTokens) {
+    return false;
+  }
+  return new Set(numericTokens).size >= 6;
+}
+
 function main() {
   const { inputPath, failThreshold, maxWarnings } = parseArgs(process.argv.slice(2));
   const { abs, cards } = loadCards(inputPath);
@@ -127,8 +143,9 @@ function main() {
       ? 0
       : options.reduce((sum, option) => sum + option.length, 0) / options.length;
     const terseOptionThreshold = terseOptionThresholdByCategory(category);
+    const compactNumericOptions = category === 'NUMBER' && hasCompactNumericOptions(options);
     maxPenalty += 1;
-    if (averageOptionLength < terseOptionThreshold) {
+    if (averageOptionLength < terseOptionThreshold && !compactNumericOptions) {
       penalty += 1;
       perCategory.shortOptionCards += 1;
       warnings.push(`${key}: overly terse options (avg ${averageOptionLength.toFixed(1)} chars) card=${card?.cardId || card?.id}`);

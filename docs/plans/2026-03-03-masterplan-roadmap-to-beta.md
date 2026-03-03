@@ -44,6 +44,8 @@ Last updated: 2026-03-03
   - Evidence: `.github/workflows/backend-ci.yml`, `.github/workflows/frontend-ci.yml`, `tools/run_release_readiness_check.js`.
 - [x] Phase 5 - Production profile defaults dataset threshold fail-fast to enabled.
   - Evidence: `backend/src/main/resources/application-prod.yml`, `backend/src/test/java/com/smartiq/backend/config/ApplicationProdImportGateConfigTest.java`.
+- [x] Phase 5 - NUMBER terse-option warnings are reduced with compact-numeric handling and parity cap tightened.
+  - Evidence: `tools/score_cards_semantic.js`, `.github/workflows/backend-ci.yml`, `.github/workflows/frontend-ci.yml`, `tools/run_release_readiness_check.js`.
 
 Legend: `[x] done`, `[~] in progress`, `[ ] not started`.
 
