@@ -50,12 +50,14 @@ Last updated: 2026-03-03
   - Evidence: `backend/src/main/java/com/smartiq/backend/room/RoomSessionStore.java`, `backend/src/main/java/com/smartiq/backend/room/RedisRoomSessionStore.java`, `backend/src/test/java/com/smartiq/backend/room/RoomServiceTest.java`.
 - [x] Phase 6 - Game session durability moved behind a store interface with Redis option and restart + idempotency recovery coverage.
   - Evidence: `backend/src/main/java/com/smartiq/backend/game/GameSessionStore.java`, `backend/src/main/java/com/smartiq/backend/game/RedisGameSessionStore.java`, `backend/src/test/java/com/smartiq/backend/game/GameSessionServiceTest.java`.
-- [~] Phase 7 - Beta KPI threshold alerts are codified as Prometheus rules and validated in CI/release gates.
+- [x] Phase 7 - Beta KPI threshold alerts are codified as Prometheus rules and validated in CI/release gates.
   - Evidence: `ops/prometheus/smartiq-beta-kpi-alert-rules.yml`, `tools/validate_beta_alert_rules.js`, `.github/workflows/backend-ci.yml`, `.github/workflows/release-readiness.yml`.
-- [~] Phase 7 - Automated beta go/no-go workflow generates report artifacts and blocks on NO-GO.
+- [x] Phase 7 - Automated beta go/no-go workflow generates report artifacts and blocks on NO-GO.
   - Evidence: `.github/workflows/beta-go-no-go.yml`, `package.json` (`gate:beta:go-no-go`), `docs/beta-runbook-v1.md`.
-- [~] Phase 7 - Main branch protection required-check policy is codified and validated against workflow contexts.
+- [x] Phase 7 - Main branch protection required-check policy is codified and validated against workflow contexts.
   - Evidence: `docs/policies/main-branch-protection-policy.json`, `tools/validate_branch_protection_policy.js`, `.github/workflows/release-readiness.yml`.
+- [~] Phase 7 - Go/No-Go dry-run execution checklist and evidence template are published; live dry-run sign-off pending.
+  - Evidence: `docs/plans/2026-03-03-phase7-beta-go-no-go-dry-run-checklist.md`.
 
 Legend: `[x] done`, `[~] in progress`, `[ ] not started`.
 

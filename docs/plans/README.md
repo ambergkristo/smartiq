@@ -13,6 +13,7 @@
 - `docs/plans/migration-checklist.md`
 - `docs/plans/operational-runbook.md`
 - `docs/plans/game-session-api-contract-v1.md`
+- `docs/plans/2026-03-03-phase7-beta-go-no-go-dry-run-checklist.md`
 
 ## Historical Plan Snapshot
 

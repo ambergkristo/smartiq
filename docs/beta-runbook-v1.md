@@ -126,3 +126,7 @@ At beta close, publish:
      - Run workflow `Beta Go/No-Go Gate` (uploads markdown report artifact, fails on `NO-GO`)
 2. List of prioritized fixes (`fix/beta-findings-*` branches)
 3. Go/No-Go recommendation for broader rollout
+
+Execution checklist and sign-off template:
+
+- `docs/plans/2026-03-03-phase7-beta-go-no-go-dry-run-checklist.md`
