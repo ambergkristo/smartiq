@@ -32,11 +32,11 @@ Last updated: 2026-03-03
   - Evidence: commit `440fc2f`, `backend/src/main/java/com/smartiq/backend/web/RateLimitFilter.java`, `backend/src/main/java/com/smartiq/backend/config/RateLimitProperties.java`, `docs/plans/deployment-checklist.md`.
 - [x] Phase 1 - Security moved to explicit allowlist + deny-by-default with dedicated regression test.
   - Evidence: commit `440fc2f`, `backend/src/main/java/com/smartiq/backend/config/SecurityConfig.java`, `backend/src/test/java/com/smartiq/backend/config/SecurityConfigTest.java`.
-- [~] Phase 4 - Contract versioning started with explicit `GameSessionSnapshot.apiVersion` (`1`) and client-side compatibility guard.
+- [x] Phase 4 - Contract versioning implemented with explicit `GameSessionSnapshot.apiVersion` (`1`) and client-side compatibility guard.
   - Evidence: commit `f8baab0`, `backend/src/main/java/com/smartiq/backend/game/contract/GameSessionSnapshot.java`, `frontend/src/state/useServerGameEngine.ts`.
-- [~] Phase 4 - Machine-readable API error taxonomy added and consumed in frontend error mapping.
+- [x] Phase 4 - Machine-readable API error taxonomy is active and consumed in frontend mappings.
   - Evidence: commits `4f2b8d7` and `82781a0`, `backend/src/main/java/com/smartiq/backend/web/ApiExceptionHandler.java`, `backend/src/main/java/com/smartiq/backend/web/ApiErrorResponse.java`, `frontend/src/api.js`.
-- [~] Phase 4 - Reconnect semantics hardened: HTTP rejoin rotates token; websocket resume uses non-rotating auth path.
+- [x] Phase 4 - Reconnect semantics hardened: HTTP rejoin rotates token; websocket resume uses non-rotating auth path.
   - Evidence: commit `6788f7d`, `backend/src/main/java/com/smartiq/backend/room/RoomService.java`, `backend/src/main/java/com/smartiq/backend/room/ws/RoomWebSocketHandler.java`, `backend/src/test/java/com/smartiq/backend/room/RoomServiceTest.java`.
 - [x] Phase 4 - Contract spec is published with explicit v1 schema and verification references.
   - Evidence: `docs/plans/game-session-api-contract-v1.md`, `docs/plans/README.md`, `frontend/src/fixtures/contracts/game-session-create-response-v1.json`.
