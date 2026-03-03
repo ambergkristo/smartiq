@@ -37,6 +37,9 @@ jobs:
       - name: Validate beta KPI alert rules
         run: node ../tools/validate_beta_alert_rules.js ../ops/prometheus/smartiq-beta-kpi-alert-rules.yml
 
+      - name: Validate main branch protection policy
+        run: node ../tools/validate_branch_protection_policy.js ../docs/policies/main-branch-protection-policy.json
+
       - name: Validate Smart10 dataset
         run: node ../tools/validate_cards_v2.js ../data/smart10/cards.en.json --max-warnings=0
 

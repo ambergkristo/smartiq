@@ -28,6 +28,14 @@ The command executes:
 
 The workflow `.github/workflows/release-readiness.yml` runs the same command as a single gate check.
 
+Canonical branch protection policy file:
+
+- `docs/policies/main-branch-protection-policy.json`
+
+Policy validator:
+
+- `npm run validate:branch-protection:policy`
+
 Recommended required check in GitHub branch protection:
 
 - `release-readiness / release-readiness`
@@ -43,6 +51,16 @@ Legacy checks that can remain required during transition:
 
 - `Backend CI / build-and-test`
 - `Frontend CI / lint-test-build`
+
+## Live Settings Verification (GitHub)
+
+The repository snapshot can validate policy shape and workflow contexts, but cannot prove current GitHub branch settings by itself.
+
+Use GitHub CLI against live settings:
+
+```bash
+gh api repos/ambergkristo/smartiq/branches/main/protection --jq '{required_status_checks: .required_status_checks.checks[].context, required_approving_review_count: .required_pull_request_reviews.required_approving_review_count, require_linear_history: .required_linear_history.enabled, allow_force_pushes: .allow_force_pushes.enabled, allow_deletions: .allow_deletions.enabled}'
+```
 
 ## Branch Protection Setup (GitHub UI)
 

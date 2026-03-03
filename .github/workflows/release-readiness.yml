@@ -19,6 +19,9 @@ jobs:
       - name: Validate beta KPI alert rules
         run: node tools/validate_beta_alert_rules.js
 
+      - name: Validate main branch protection policy
+        run: node tools/validate_branch_protection_policy.js
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:

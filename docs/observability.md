@@ -95,6 +95,11 @@ The alert rules are enforced in CI via:
 - `.github/workflows/backend-ci.yml`
 - `.github/workflows/release-readiness.yml`
 
+Related main branch protection policy validation:
+
+- `docs/policies/main-branch-protection-policy.json`
+- `npm run validate:branch-protection:policy`
+
 ## Deck Event Logs
 
 `NextRandomCardService` logs one INFO line per served deck card:

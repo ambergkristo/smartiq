@@ -8,6 +8,7 @@ const commands = [
   'node tools/validate_no_bom_docs.js docs',
   'node tools/validate_flyway_migrations.js',
   'node tools/validate_beta_alert_rules.js',
+  'node tools/validate_branch_protection_policy.js',
   'mvn -q -f backend/pom.xml test',
   `${npmBin} --prefix frontend run lint`,
   `${npmBin} --prefix frontend run test -- --run`,

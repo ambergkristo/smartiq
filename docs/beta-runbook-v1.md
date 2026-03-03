@@ -13,6 +13,7 @@ This runbook defines how to execute the first closed Party Beta for SmartIQ.
 1. `main` is green on required CI checks.
 2. Local gate passes on release candidate commit:
    - `npm run release:check`
+   - `npm run validate:branch-protection:policy`
 3. Alert rule gate passes on release candidate commit:
    - `npm run validate:beta:alerts`
 4. Automated beta gate is configured:
