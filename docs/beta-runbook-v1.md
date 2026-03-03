@@ -13,9 +13,11 @@ This runbook defines how to execute the first closed Party Beta for SmartIQ.
 1. `main` is green on required CI checks.
 2. Local gate passes on release candidate commit:
    - `npm run release:check`
-3. Production/staging smoke passes:
+3. Alert rule gate passes on release candidate commit:
+   - `npm run validate:beta:alerts`
+4. Production/staging smoke passes:
    - `$env:BACKEND_URL="https://<backend-domain>"; npm run smoke:test`
-4. Branch protection stays enforced on `main`.
+5. Branch protection stays enforced on `main`.
 
 ## 3. Tester Cohort (Closed Beta Size)
 

@@ -1,0 +1,130 @@
+groups:
+  - name: smartiq-beta-kpi-alerts
+    rules:
+      - alert: SmartIQHighDropOffRate
+        expr: |
+          (
+            sum(increase(smartiq_game_session_started_total[30m])) >= 10
+          )
+          and
+          (
+            (
+              sum(increase(smartiq_game_session_started_total[30m]))
+              - sum(increase(smartiq_game_session_completed_total[30m]))
+            )
+            / clamp_min(sum(increase(smartiq_game_session_started_total[30m])), 1)
+            > 0.45
+          )
+        for: 15m
+        labels:
+          severity: warning
+          component: gameplay
+        annotations:
+          summary: SmartIQ drop-off rate is above threshold
+          description: Drop-off stayed above 45% for 15m. Investigate gameplay blockers and reconnect path.
+
+      - alert: SmartIQHighWrongAnswerRate
+        expr: |
+          (
+            sum(increase(smartiq_game_answer_total[30m])) >= 50
+          )
+          and
+          (
+            sum(increase(smartiq_game_answer_total{outcome="wrong"}[30m]))
+            / clamp_min(sum(increase(smartiq_game_answer_total[30m])), 1)
+            > 0.55
+          )
+        for: 15m
+        labels:
+          severity: warning
+          component: gameplay
+        annotations:
+          summary: SmartIQ wrong-answer rate is above threshold
+          description: Wrong-answer rate stayed above 55% for 15m. Validate question quality and UX clarity.
+
+      - alert: SmartIQLowReconnectSuccessRate
+        expr: |
+          (
+            sum(increase(smartiq_room_rejoin_total[30m])) >= 10
+          )
+          and
+          (
+            sum(increase(smartiq_room_rejoin_total{result="success"}[30m]))
+            / clamp_min(sum(increase(smartiq_room_rejoin_total[30m])), 1)
+            < 0.90
+          )
+        for: 10m
+        labels:
+          severity: critical
+          component: reconnect
+        annotations:
+          summary: SmartIQ reconnect success rate is below threshold
+          description: Reconnect success stayed below 90% for 10m. Check token rotation and websocket resume flow.
+
+      - alert: SmartIQHighJoinFailureRate
+        expr: |
+          (
+            sum(increase(smartiq_room_join_total[30m])) >= 20
+          )
+          and
+          (
+            sum(increase(smartiq_room_join_total{result="failure"}[30m]))
+            / clamp_min(sum(increase(smartiq_room_join_total[30m])), 1)
+            > 0.15
+          )
+        for: 10m
+        labels:
+          severity: warning
+          component: room
+        annotations:
+          summary: SmartIQ room join failure rate is above threshold
+          description: Room join failure stayed above 15% for 10m. Inspect room capacity, validation and rate-limit posture.
+
+      - alert: SmartIQHighWsConnectFailureRate
+        expr: |
+          (
+            sum(increase(smartiq_room_ws_connect_total[30m])) >= 20
+          )
+          and
+          (
+            sum(increase(smartiq_room_ws_connect_total{result="failure"}[30m]))
+            / clamp_min(sum(increase(smartiq_room_ws_connect_total[30m])), 1)
+            > 0.10
+          )
+        for: 10m
+        labels:
+          severity: warning
+          component: websocket
+        annotations:
+          summary: SmartIQ websocket connect failure rate is above threshold
+          description: WS connect failure stayed above 10% for 10m. Check ws handshake path and edge networking.
+
+      - alert: SmartIQCapacityEvictionsSpike
+        expr: |
+          sum(rate(smartiq_game_session_evicted_total{reason="capacity"}[10m])) > 0.10
+        for: 10m
+        labels:
+          severity: critical
+          component: session
+        annotations:
+          summary: SmartIQ game session capacity evictions are spiking
+          description: Capacity evictions stayed elevated for 10m. Review SMARTIQ_GAME_SESSION_MAX and traffic pressure.
+
+      - alert: SmartIQHighActionRejectRate
+        expr: |
+          (
+            sum(increase(smartiq_game_action_total[10m])) >= 30
+          )
+          and
+          (
+            sum(rate(smartiq_game_action_rejected_total[10m]))
+            / clamp_min(sum(rate(smartiq_game_action_total[10m])), 0.000001)
+            > 0.20
+          )
+        for: 10m
+        labels:
+          severity: warning
+          component: gameplay
+        annotations:
+          summary: SmartIQ action reject rate is above threshold
+          description: Action rejects stayed above 20% for 10m. Inspect invalid token, duplicate request-id and game-not-found causes.

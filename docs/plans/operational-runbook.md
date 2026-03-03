@@ -177,3 +177,4 @@ References
 - `docs/plans/deployment-checklist.md`
 - `docs/plans/migration-checklist.md`
 - `docs/observability.md`
+- `ops/prometheus/smartiq-beta-kpi-alert-rules.yml`

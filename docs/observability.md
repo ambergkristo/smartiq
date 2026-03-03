@@ -78,6 +78,21 @@ Optional beta ops metrics:
 - WebSocket connect failure rate:
   - `sum(rate(smartiq_room_ws_connect_total{result="failure"}[1d])) / clamp_min(sum(rate(smartiq_room_ws_connect_total[1d])), 1e-9)`
 
+## Beta KPI Alert Rules
+
+Canonical alert rules for closed beta KPI thresholds are stored in:
+
+- `ops/prometheus/smartiq-beta-kpi-alert-rules.yml`
+
+Validate rule integrity locally:
+
+- `npm run validate:beta:alerts`
+
+The alert rules are enforced in CI via:
+
+- `.github/workflows/backend-ci.yml`
+- `.github/workflows/release-readiness.yml`
+
 ## Deck Event Logs
 
 `NextRandomCardService` logs one INFO line per served deck card:

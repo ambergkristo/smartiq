@@ -34,6 +34,9 @@ jobs:
       - name: Validate Flyway migration chain
         run: node ../tools/validate_flyway_migrations.js src/main/resources/db/migration
 
+      - name: Validate beta KPI alert rules
+        run: node ../tools/validate_beta_alert_rules.js ../ops/prometheus/smartiq-beta-kpi-alert-rules.yml
+
       - name: Validate Smart10 dataset
         run: node ../tools/validate_cards_v2.js ../data/smart10/cards.en.json --max-warnings=0
 
