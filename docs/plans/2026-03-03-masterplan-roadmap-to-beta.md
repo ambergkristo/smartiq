@@ -22,6 +22,25 @@ Locked decisions:
 
 ---
 
+## Execution Progress (Live)
+
+Last updated: 2026-03-03
+
+- [x] Phase 1 - Frontend runtime now starts server-authoritative engine for all player counts.
+  - Evidence: commit `440fc2f`, `frontend/src/App.jsx`, `frontend/src/App.server-mode.test.jsx`.
+- [x] Phase 1 - Stale rate-limit branch removed (`/api/session/answer`) and related config/docs cleaned up.
+  - Evidence: commit `440fc2f`, `backend/src/main/java/com/smartiq/backend/web/RateLimitFilter.java`, `backend/src/main/java/com/smartiq/backend/config/RateLimitProperties.java`, `docs/plans/deployment-checklist.md`.
+- [x] Phase 1 - Security moved to explicit allowlist + deny-by-default with dedicated regression test.
+  - Evidence: commit `440fc2f`, `backend/src/main/java/com/smartiq/backend/config/SecurityConfig.java`, `backend/src/test/java/com/smartiq/backend/config/SecurityConfigTest.java`.
+- [~] Phase 4 - Contract versioning started with explicit `GameSessionSnapshot.apiVersion` (`1`) and client-side compatibility guard.
+  - Evidence: commit `f8baab0`, `backend/src/main/java/com/smartiq/backend/game/contract/GameSessionSnapshot.java`, `frontend/src/state/useServerGameEngine.ts`.
+- [~] Phase 4 - Machine-readable API error taxonomy added and consumed in frontend error mapping.
+  - Evidence: commit `4f2b8d7`, `backend/src/main/java/com/smartiq/backend/web/ApiExceptionHandler.java`, `backend/src/main/java/com/smartiq/backend/web/ApiErrorResponse.java`, `frontend/src/api.js`.
+
+Legend: `[x] done`, `[~] in progress`, `[ ] not started`.
+
+---
+
 ## Scope and Completion Definition
 
 ### In Scope
@@ -328,4 +347,3 @@ Exit Criteria:
 4. UI/UX and question rendering rework are in roadmap scope.
 5. Existing release-readiness gate remains mandatory baseline.
 6. No additional major game-mode pivots during this roadmap.
-
