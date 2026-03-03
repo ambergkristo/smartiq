@@ -8,6 +8,7 @@ import com.smartiq.backend.card.Card;
 import com.smartiq.backend.card.CardSourcePolicy;
 import com.smartiq.backend.card.CardRepository;
 import com.smartiq.backend.card.LabelCountView;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
@@ -29,12 +30,14 @@ import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 @Component
 public class CardImportRunner implements ApplicationRunner {
 
     private static final Logger log = LoggerFactory.getLogger(CardImportRunner.class);
+    private static final String METRIC_DATASET_CATEGORY_BELOW_THRESHOLD = "smartiq.dataset.category.below.threshold";
     private static final Set<String> VALID_CATEGORIES = Set.of(
             "TRUE_FALSE",
             "NUMBER",
@@ -49,16 +52,22 @@ public class CardImportRunner implements ApplicationRunner {
     private final ObjectMapper objectMapper;
     private final int minimumCategoryThreshold;
     private final boolean failOnThreshold;
+    private final AtomicInteger belowThresholdCategoryCount;
 
     public CardImportRunner(CardRepository cardRepository,
                             ImportProperties importProperties,
                             ObjectMapper objectMapper,
+                            MeterRegistry meterRegistry,
                             @Value("${smartiq.dataset.min-category-threshold:100}") int minimumCategoryThreshold) {
         this.cardRepository = cardRepository;
         this.importProperties = importProperties;
         this.objectMapper = objectMapper;
         this.minimumCategoryThreshold = minimumCategoryThreshold;
         this.failOnThreshold = importProperties.failOnCategoryThreshold();
+        this.belowThresholdCategoryCount = meterRegistry.gauge(
+                METRIC_DATASET_CATEGORY_BELOW_THRESHOLD,
+                new AtomicInteger(0)
+        );
     }
 
     @Override
@@ -95,11 +104,19 @@ public class CardImportRunner implements ApplicationRunner {
                 .collect(LinkedHashMap::new, (map, item) -> map.put(item.getTopic(), item.getCount()), Map::putAll);
         Map<String, Long> languages = toCountMap(cardRepository.findLanguageCounts());
         long allowedSourceCards = cardRepository.countBySourcesLower(CardSourcePolicy.ALLOWED_SOURCES);
-
-        log.info("Dataset summary total={} categories={} topics={} languages={} allowedSourceCards={}",
-                totalCards, categories, topics, languages, allowedSourceCards);
-
         List<String> belowThreshold = belowThresholdCategories(categories);
+        belowThresholdCategoryCount.set(belowThreshold.size());
+
+        log.info("Dataset summary total={} categories={} topics={} languages={} allowedSourceCards={} minCategoryThreshold={} failOnThreshold={} belowThresholdCategoryCount={}",
+                totalCards,
+                categories,
+                topics,
+                languages,
+                allowedSourceCards,
+                minimumCategoryThreshold,
+                failOnThreshold,
+                belowThreshold.size());
+
         for (String category : belowThreshold) {
             long count = categories.getOrDefault(category, 0L);
             log.error("Dataset category below threshold category={} count={} minThreshold={}",

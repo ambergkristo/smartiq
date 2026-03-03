@@ -28,8 +28,10 @@ Prometheus metrics include:
 - `smartiq.next_random.source.total` (tag `source`)
 - `smartiq.game.session.started.total` (tag `language`)
 - `smartiq.game.session.completed.total` (tag `language`)
+- `smartiq.game.session.evicted.total` (tag `reason`)
 - `smartiq.game.round.completed.total` (tag `language`)
 - `smartiq.game.action.total` (tags `type=answer|pass`, `language`)
+- `smartiq.game.action.rejected.total` (tag `reason`)
 - `smartiq.game.answer.total` (tags `outcome=correct|wrong`, `language`)
 - `smartiq.game.duration.seconds` (timer, tag `language`)
 - `smartiq.game.round.duration.seconds` (timer, tag `language`)
@@ -37,6 +39,7 @@ Prometheus metrics include:
 - `smartiq.room.join.total` (tags `result`, `reason`)
 - `smartiq.room.rejoin.total` (tags `result`, `reason`)
 - `smartiq.room.ws.connect.total` (tags `result`, `reason`)
+- `smartiq.dataset.category.below.threshold` (gauge, count of categories currently below threshold)
 
 ## Party Beta KPI Queries
 
