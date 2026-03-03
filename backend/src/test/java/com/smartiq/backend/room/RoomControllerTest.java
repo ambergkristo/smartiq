@@ -88,6 +88,7 @@ class RoomControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new JoinRoomRequest("Bob"))))
                 .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.code").value("ROOM_NOT_FOUND"))
                 .andExpect(jsonPath("$.error").value("room not found: ZZZZZZ"))
                 .andExpect(jsonPath("$.status").value(404))
                 .andExpect(jsonPath("$.path").value("/api/rooms/ZZZZZZ/join"));
@@ -102,6 +103,7 @@ class RoomControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new JoinRoomRequest("Bob"))))
                 .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("INVALID_ROOM_REQUEST"))
                 .andExpect(jsonPath("$.error").value("room code format is invalid"))
                 .andExpect(jsonPath("$.status").value(400))
                 .andExpect(jsonPath("$.path").value("/api/rooms/MISSING/join"));
@@ -127,5 +129,33 @@ class RoomControllerTest {
                 .andExpect(jsonPath("$.playerId").value("p1"))
                 .andExpect(jsonPath("$.authToken").value("rt_host"))
                 .andExpect(jsonPath("$.roomState.players[0].displayName").value("Alice"));
+    }
+
+    @Test
+    void rejoinInvalidTokenMapsToInvalidRoomTokenCode() throws Exception {
+        when(roomService.rejoinRoom(eq("ABC123"), any()))
+                .thenThrow(new IllegalArgumentException("invalid room token"));
+
+        mockMvc.perform(post("/api/rooms/ABC123/rejoin")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new RejoinRoomRequest("p1", "rt_bad"))))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("INVALID_ROOM_TOKEN"))
+                .andExpect(jsonPath("$.error").value("invalid room token"))
+                .andExpect(jsonPath("$.path").value("/api/rooms/ABC123/rejoin"));
+    }
+
+    @Test
+    void rejoinMissingPlayerMapsToPlayerNotFoundCode() throws Exception {
+        when(roomService.rejoinRoom(eq("ABC123"), any()))
+                .thenThrow(new NoSuchElementException("player not found: p1"));
+
+        mockMvc.perform(post("/api/rooms/ABC123/rejoin")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new RejoinRoomRequest("p1", "rt_old"))))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.code").value("PLAYER_NOT_FOUND"))
+                .andExpect(jsonPath("$.error").value("player not found: p1"))
+                .andExpect(jsonPath("$.path").value("/api/rooms/ABC123/rejoin"));
     }
 }

@@ -19,7 +19,11 @@ import java.util.Objects;
 @RestControllerAdvice
 public class ApiExceptionHandler {
     private static final String CODE_INVALID_ACTION = "INVALID_ACTION";
+    private static final String CODE_INVALID_ROOM_REQUEST = "INVALID_ROOM_REQUEST";
+    private static final String CODE_INVALID_ROOM_TOKEN = "INVALID_ROOM_TOKEN";
     private static final String CODE_GAME_NOT_FOUND = "GAME_NOT_FOUND";
+    private static final String CODE_ROOM_NOT_FOUND = "ROOM_NOT_FOUND";
+    private static final String CODE_PLAYER_NOT_FOUND = "PLAYER_NOT_FOUND";
     private static final String CODE_FORBIDDEN_ACTOR = "FORBIDDEN_ACTOR";
     private static final String CODE_DUPLICATE_ACTION = "DUPLICATE_ACTION";
     private static final String CODE_INTERNAL_ERROR = "INTERNAL_ERROR";
@@ -38,13 +42,14 @@ public class ApiExceptionHandler {
             MissingServletRequestParameterException.class
     })
     public ResponseEntity<Object> handleBadRequest(Exception ex, HttpServletRequest request) {
-        return build(HttpStatus.BAD_REQUEST, CODE_INVALID_ACTION, ex.getMessage(), request.getRequestURI());
+        String path = request.getRequestURI();
+        return build(HttpStatus.BAD_REQUEST, resolveBadRequestCode(path, ex.getMessage()), ex.getMessage(), path);
     }
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<Object> handleNotFound(NoSuchElementException ex, HttpServletRequest request) {
         String path = request.getRequestURI();
-        String code = path != null && path.startsWith("/api/game/") ? CODE_GAME_NOT_FOUND : CODE_NOT_FOUND;
+        String code = resolveNotFoundCode(path, ex.getMessage());
         return build(HttpStatus.NOT_FOUND, code, ex.getMessage(), path);
     }
 
@@ -80,5 +85,32 @@ public class ApiExceptionHandler {
                 ? ApiErrorResponse.of(status, resolvedMessage, path)
                 : ApiErrorResponse.of(status, code, resolvedMessage, path);
         return ResponseEntity.status(status).body(body);
+    }
+
+    private static String resolveBadRequestCode(String path, String message) {
+        String normalizedPath = path == null ? "" : path;
+        String normalizedMessage = message == null ? "" : message.trim().toLowerCase();
+        if (!normalizedPath.startsWith("/api/rooms/")) {
+            return CODE_INVALID_ACTION;
+        }
+        if (normalizedMessage.contains("invalid room token")) {
+            return CODE_INVALID_ROOM_TOKEN;
+        }
+        return CODE_INVALID_ROOM_REQUEST;
+    }
+
+    private static String resolveNotFoundCode(String path, String message) {
+        String normalizedPath = path == null ? "" : path;
+        String normalizedMessage = message == null ? "" : message.trim().toLowerCase();
+        if (normalizedPath.startsWith("/api/game/")) {
+            return CODE_GAME_NOT_FOUND;
+        }
+        if (normalizedPath.startsWith("/api/rooms/")) {
+            if (normalizedMessage.contains("player not found")) {
+                return CODE_PLAYER_NOT_FOUND;
+            }
+            return CODE_ROOM_NOT_FOUND;
+        }
+        return CODE_NOT_FOUND;
     }
 }
