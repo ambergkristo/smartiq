@@ -24,7 +24,7 @@ Use this template in milestone PR descriptions.
 - [ ] `npm.cmd --prefix frontend run lint`
 - [ ] `npm.cmd --prefix frontend run test -- --run`
 - [ ] `node tools/validate_cards_v2.js`
-- [ ] `node tools/score_cards_quality.js --fail-threshold=0.80`
+- [ ] `node tools/score_cards_quality.js --fail-threshold=0.85`
 
 ## Manual QA
 

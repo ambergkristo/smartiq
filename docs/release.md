@@ -61,7 +61,7 @@ $env:BACKEND_URL="http://localhost:8081"; npm run gate:et:release
 node tools/validate_cards_v2.js data/smart10/cards.et.json --max-warnings=0
 node tools/validate_locale_packs.js data/smart10
 node tools/audit_locale_coverage.js data/smart10 --required=en,et --min-per-combo=30
-node tools/score_cards_quality.js data/smart10/cards.et.json --fail-threshold=0.80
+node tools/score_cards_quality.js data/smart10/cards.et.json --fail-threshold=0.85
 $env:BACKEND_URL="http://localhost:8081"; npm run report:et:runtime
 ```
 
@@ -75,7 +75,7 @@ ET launch gate (must all hold before enabling in production):
 
 - ET dataset coverage: `6 categories x 6 topics x minimum 30 cards` (>= 1080 cards total).
 - ET schema and locale-pack validation pass (`validate_cards_v2`, `validate_locale_packs`, `audit_locale_coverage`).
-- ET quality score gate passes (`score_cards_quality >= 0.80`).
+- ET quality score gate passes (`score_cards_quality >= 0.85`).
 - Runtime smoke for `language=et` passes and returns ET cards.
 - Feature flags enabled explicitly:
   - frontend: `VITE_ENABLE_ET=true`

@@ -20,7 +20,8 @@
 - [ ] `npm.cmd --prefix frontend run lint`
 - [ ] `npm.cmd --prefix frontend run test -- --run`
 - [ ] `node tools/validate_cards_v2.js`
-- [ ] `node tools/score_cards_quality.js --fail-threshold=0.60`
+- [ ] `node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.85`
+- [ ] `node tools/score_cards_quality.js data/smart10/cards.et.json --fail-threshold=0.85`
 
 ## UI Evidence (if applicable)
 

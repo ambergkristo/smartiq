@@ -5,6 +5,8 @@ management:
         include: health,info,prometheus
 
 smartiq:
+  import:
+    fail-on-category-threshold: ${SMARTIQ_IMPORT_FAIL_ON_CATEGORY_THRESHOLD:true}
   language:
     et-enabled: ${SMARTIQ_LANGUAGE_ET_ENABLED:false}
   api:

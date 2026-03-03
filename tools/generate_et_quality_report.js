@@ -60,7 +60,7 @@ function main() {
     runCommand('node', ['tools/validate_cards_v2.js', 'data/smart10/cards.et.json', '--max-warnings=0']),
     runCommand('node', ['tools/validate_locale_packs.js', 'data/smart10']),
     runCommand('node', ['tools/audit_locale_coverage.js', 'data/smart10', '--required=en,et', '--min-per-combo=30']),
-    runCommand('node', ['tools/score_cards_quality.js', 'data/smart10/cards.et.json', '--fail-threshold=0.80'])
+    runCommand('node', ['tools/score_cards_quality.js', 'data/smart10/cards.et.json', '--fail-threshold=0.85'])
   ];
 
   if (includeSmoke(args)) {

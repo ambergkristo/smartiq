@@ -16,8 +16,8 @@ The command executes:
 6. `npm --prefix frontend run build`
 7. `node tools/validate_cards_v2.js data/smart10/cards.en.json`
 8. `node tools/validate_cards_v2.js data/smart10/cards.et.json`
-9. `node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.80`
-10. `node tools/score_cards_quality.js data/smart10/cards.et.json --fail-threshold=0.80`
+9. `node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.85`
+10. `node tools/score_cards_quality.js data/smart10/cards.et.json --fail-threshold=0.85`
 11. `node tools/score_cards_semantic.js data/smart10/cards.en.json --fail-threshold=0.70`
 12. `node tools/score_cards_semantic.js data/smart10/cards.et.json --fail-threshold=0.70`
 13. `node tools/report_semantic_warning_budget.js --max-warnings=80` (warning-only metric)
