@@ -68,6 +68,7 @@ class GameSessionControllerTest {
 
         mockMvc.perform(get("/api/game/game-1"))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.apiVersion").value("1"))
                 .andExpect(jsonPath("$.gameId").value("game-1"));
     }
 
@@ -126,6 +127,7 @@ class GameSessionControllerTest {
 
     private static GameSessionSnapshot snapshot(String gameId, String phase) {
         return new GameSessionSnapshot(
+                GameSessionSnapshot.CURRENT_API_VERSION,
                 gameId,
                 30,
                 0,

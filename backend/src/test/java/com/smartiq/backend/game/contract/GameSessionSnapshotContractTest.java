@@ -16,6 +16,7 @@ class GameSessionSnapshotContractTest {
     @Test
     void serializesStableContractShape() throws Exception {
         GameSessionSnapshot snapshot = new GameSessionSnapshot(
+                GameSessionSnapshot.CURRENT_API_VERSION,
                 "game-1",
                 30,
                 0,
@@ -40,6 +41,7 @@ class GameSessionSnapshotContractTest {
 
         JsonNode node = objectMapper.readTree(objectMapper.writeValueAsString(snapshot));
 
+        assertThat(node.path("apiVersion").asText()).isEqualTo(GameSessionSnapshot.CURRENT_API_VERSION);
         assertThat(node.path("gameId").asText()).isEqualTo("game-1");
         assertThat(node.path("winCondition").asInt()).isEqualTo(30);
         assertThat(node.path("activePlayerIndex").asInt()).isEqualTo(0);

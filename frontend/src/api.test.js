@@ -141,6 +141,13 @@ describe('api error mapping', () => {
     expect(resolveGameSessionErrorMessage({ code: 'VALIDATION_ERROR', message: 'bad payload' })).toBe('bad payload');
   });
 
+  test('maps game session contract mismatch errors', () => {
+    expect(resolveGameSessionErrorMessage({
+      code: 'CONTRACT_MISMATCH',
+      message: 'Unsupported game session API version: 2'
+    })).toBe('Unsupported game session API version: 2');
+  });
+
   test('maps game session duplicate action conflict', () => {
     expect(resolveGameSessionErrorMessage({ status: 409, detail: 'duplicate actionRequestId' })).toContain('Duplicate game action');
   });

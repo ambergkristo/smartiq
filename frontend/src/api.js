@@ -463,6 +463,10 @@ export function resolveGameSessionErrorMessage(error) {
     return 'Frontend API is not configured. Set VITE_API_BASE_URL and retry.';
   }
 
+  if (error?.code === 'CONTRACT_MISMATCH') {
+    return error.message || 'Game session contract mismatch. Refresh client and backend.';
+  }
+
   if (error?.code === 'VALIDATION_ERROR') {
     return error.message || 'Invalid game action payload.';
   }

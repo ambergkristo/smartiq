@@ -759,6 +759,7 @@ public class GameSessionService {
         Map<String, PlayerRoundStatus> statuses = new LinkedHashMap<>(state.statuses);
 
         return new GameSessionSnapshot(
+                GameSessionSnapshot.CURRENT_API_VERSION,
                 state.gameId,
                 state.winCondition,
                 state.activePlayerIndex,

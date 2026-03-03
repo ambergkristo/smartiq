@@ -9,6 +9,7 @@ import { DEFAULT_PLAYERS, GamePhase } from './types';
 
 const TARGET_SCORE_DEFAULT = 30;
 const READY_LABEL = 'Ready';
+const SUPPORTED_GAME_SNAPSHOT_API_VERSION = '1';
 
 function initialScores(players) {
   return players.reduce((acc, player) => {
@@ -96,6 +97,13 @@ function createActionRequestId() {
 }
 
 function mapSnapshot(snapshot, languageFallback, targetScoreFallback) {
+  const snapshotApiVersion = String(snapshot?.apiVersion || SUPPORTED_GAME_SNAPSHOT_API_VERSION).trim();
+  if (snapshotApiVersion !== SUPPORTED_GAME_SNAPSHOT_API_VERSION) {
+    const error = new Error(`Unsupported game session API version: ${snapshotApiVersion}`);
+    error.code = 'CONTRACT_MISMATCH';
+    throw error;
+  }
+
   const players = Array.isArray(snapshot?.players) ? snapshot.players : [];
   const playerById = new Map();
   const names = players.map((player) => {
