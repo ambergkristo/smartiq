@@ -107,6 +107,42 @@ Done when:
 Done when:
 1. Final white-label go/no-go gate is documented with evidence links.
 
+## Sprint System (M-based until final completion)
+
+Cadence default:
+1. One sprint executes exactly one milestone (`M0` -> `M6`).
+2. Default sprint length is one week; compression is allowed only if all milestone exit criteria are still met.
+
+Sprint plan:
+1. Sprint S0 -> M0 (canonicalization and scope lock).
+2. Sprint S1 -> M1 (backend white-label foundation stabilization).
+3. Sprint S2 -> M2 (admin UI contract alignment).
+4. Sprint S3 -> M3 (tenant runtime branding/settings end-to-end).
+5. Sprint S4 -> M4 (billing and usage guardrails).
+6. Sprint S5 -> M5 (GTM and pilot readiness).
+7. Sprint S6 -> M6 (go/no-go gate and final evidence).
+
+## Codex Execution Contract (mandatory)
+
+Hard rule:
+1. Only one milestone may be `IN_PROGRESS` at any time.
+2. Starting work on `M(n+1)` is forbidden until `M(n)` is marked `DONE`.
+
+Promotion gate `M(n)` -> `M(n+1)`:
+1. All `M(n)` exit criteria are satisfied.
+2. All tests for touched scope are green.
+3. No unresolved Critical/High findings remain for `M(n)`.
+4. Milestone evidence is written to the current milestone section in this file or linked from it.
+
+Required green-test policy by milestone:
+1. M0: docs/link consistency checks and no broken references.
+2. M1: white-label backend slice tests green (`Tenant*` + security/auth context tests).
+3. M2: admin frontend unit tests green (branding/members/settings/subscription/usage tabs).
+4. M3: end-to-end tenant runtime verification green (`tenant create -> configure -> runtime reflects`).
+5. M4: usage/billing guardrail tests green, including limit breach behavior.
+6. M5: pilot/GTM artifact checks complete and validated against DoD.
+7. M6: final release gate checks green and go/no-go decision documented.
+
 ## Test and Acceptance Baseline
 
 1. Tenant A cannot access Tenant B data.

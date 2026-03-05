@@ -463,6 +463,7 @@ node scripts/verify_runtime_deck.js
 - Active masterplan and roadmap source of truth:
   - `docs/plans/2026-03-03-masterplan-roadmap-to-beta.md`
   - `docs/plans/2026-03-05-white-label-masterplan-v2-multi-agent-lean.md`
+  - White-label Codex execution contract is defined in the v2 masterplan (`one milestone at a time`, `tests green before next M`).
 - Historical plan snapshot:
   - `docs/plans/2026-03-03-white-label-program-v1.md`
   - `docs/plan.md`
