@@ -1,5 +1,5 @@
 ---
-title: SmartIQ white-label masterplan v3 (business-first lean)
+title: SmartIQ white-label masterplan v4 (product-first rebaseline)
 type: masterplan
 status: active
 date: 2026-03-05
@@ -10,19 +10,19 @@ milestones: docs/plans/2026-03-05-white-label-milestones-v3.md
 gates: docs/plans/2026-03-05-white-label-gates-v3.md
 ---
 
-# SmartIQ White-Label Masterplan v3 (Business-First Lean)
+# SmartIQ White-Label Masterplan v4 (Product-First Rebaseline)
 
 ## Summary
 
 This is the canonical white-label execution plan for SmartIQ.
 
 Primary objective:
-1. Convert SmartIQ from a technically strong prototype into a sellable white-label product with verified business signal.
+1. Deliver a production-ready white-label assessment and certification engine with stable APIs, tenant isolation, and operational reliability.
 
-Canonical business gate questions from assessment (must be answered before aggressive scaling):
-1. Who pays for this?
-2. Is IP risk solvable?
-3. Does content bring users back?
+Delivery mode lock:
+1. Product-first execution is active.
+2. Cold-call market research is not a blocking requirement for core engine delivery.
+3. Commercial validation remains a post-launch workstream.
 
 Canonical business baseline:
 1. `docs/plans/2026-03-05-business-end-goal-assessment-et.md`
@@ -46,13 +46,17 @@ Canonical business baseline:
 ## Completion Definition (100%)
 
 The program is considered complete only when all conditions are true:
-1. At least 2 paying pilot tenants are onboarded.
-2. IP risk is explicitly mitigated and documented.
-3. Tenant isolation, auth, and plan-limit guardrails are green.
-4. 7-day retention evidence exists for closed beta tenants.
-5. Launch readiness pack is complete (runbook, rollback, monitoring, ownership).
+1. Tenant isolation, auth, runtime branding, and billing guardrails are production-verified.
+2. API contracts are stable and validated through milestone gates.
+3. Release readiness is complete:
+   - migration safety,
+   - rollback drill,
+   - observability baseline,
+   - launch runbook ownership.
+4. Security and IP hygiene baselines are documented with explicit sign-off.
+5. GA handoff package is complete and auditable.
 
-## Public Interfaces (v3 baseline)
+## Public Interfaces (v4 baseline)
 
 Existing interfaces kept stable:
 1. Internal tenant admin APIs: `/internal/wl/*`
@@ -76,6 +80,10 @@ Error taxonomy to stay consistent across backend + frontend:
 2. `FORBIDDEN_TENANT`
 3. `PLAN_LIMIT_REACHED`
 4. `INVALID_BRANDING_ASSET`
+
+Commercial validation policy:
+1. M1 commercial proof is not a core blocking gate for engine completion.
+2. Commercial proof remains required for go-to-market scaling, but is tracked as post-launch evidence.
 
 ## Milestone and Gate Sources of Truth
 
