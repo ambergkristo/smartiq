@@ -1,13 +1,16 @@
 ---
 title: SmartIQ white-label masterplan v2 (multi-agent lean)
 type: masterplan
-status: active
+status: superseded
 date: 2026-03-05
 owner: Agent 0
 supersedes: docs/plans/2026-03-03-white-label-program-v1.md
+superseded_by: docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md
 ---
 
 # SmartIQ White-Label Masterplan v2 (Multi-Agent Lean)
+
+> Superseded by `docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md`.
 
 ## Summary
 

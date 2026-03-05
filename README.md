@@ -358,7 +358,9 @@ Branch governance and cleanup policy: `docs/branch-governance.md`
 Full branch consolidation audit: `docs/branch-consolidation-full-audit-2026-02-24.md`
 Latest branch consolidation snapshot (auto-generated): `docs/branch-consolidation-audit-latest.md`
 Generate latest branch consolidation snapshot: `npm run report:branches:consolidation`
-White-label canonical masterplan (multi-agent lean): `docs/plans/2026-03-05-white-label-masterplan-v2-multi-agent-lean.md`
+White-label canonical masterplan (business-first v3): `docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md`
+White-label sprint and milestone source of truth: `docs/plans/2026-03-05-white-label-milestones-v3.md`
+White-label promotion gates source of truth: `docs/plans/2026-03-05-white-label-gates-v3.md`
 Superseded white-label program snapshot: `docs/plans/2026-03-03-white-label-program-v1.md`
 Legacy dual-AI protocol (optional compatibility): `docs/plans/2026-03-03-dual-ai-delivery-protocol.md`
 Legacy dual-AI ownership policy (optional compatibility): `docs/policies/dual-ai-file-ownership.json`
@@ -462,9 +464,13 @@ node scripts/verify_runtime_deck.js
 
 - Active masterplan and roadmap source of truth:
   - `docs/plans/2026-03-03-masterplan-roadmap-to-beta.md`
-  - `docs/plans/2026-03-05-white-label-masterplan-v2-multi-agent-lean.md`
-  - White-label Codex execution contract is defined in the v2 masterplan (`one milestone at a time`, `tests green before next M`).
+  - `docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md`
+  - `docs/plans/2026-03-05-white-label-milestones-v3.md`
+  - `docs/plans/2026-03-05-white-label-gates-v3.md`
+  - Canonical business end-goal baseline (ET): `docs/plans/2026-03-05-business-end-goal-assessment-et.md`
+  - White-label Codex execution contract is defined in the v3 docs (`one milestone at a time`, `tests green before next M`).
 - Historical plan snapshot:
+  - `docs/plans/2026-03-05-white-label-masterplan-v2-multi-agent-lean.md`
   - `docs/plans/2026-03-03-white-label-program-v1.md`
   - `docs/plan.md`
 - If planning or scope conflicts occur, the canonical masterplan takes priority.

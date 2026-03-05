@@ -92,7 +92,7 @@ npm run report:branches:consolidation:full
 
 This section is optional compatibility guidance only.
 Canonical execution for current white-label work is defined in:
-- `docs/plans/2026-03-05-white-label-masterplan-v2-multi-agent-lean.md`
+- `docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md`
 
 If legacy dual-AI workflow is explicitly chosen, use:
 

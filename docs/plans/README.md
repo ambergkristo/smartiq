@@ -3,14 +3,17 @@
 ## Active Plan
 
 - `docs/plans/2026-03-03-masterplan-roadmap-to-beta.md`
-- `docs/plans/2026-03-05-white-label-masterplan-v2-multi-agent-lean.md`
+- `docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md`
+- `docs/plans/2026-03-05-white-label-milestones-v3.md`
+- `docs/plans/2026-03-05-white-label-gates-v3.md`
 
 ## Supporting Plans and Audits
 
+- `docs/plans/2026-03-05-business-end-goal-assessment-et.md`
 - `docs/plans/operational-readiness-masterplan.md`
 - `docs/plans/2026-03-03-feat-operational-readiness-completion-plan.md`
 - `docs/plans/2026-03-03-masterplan-alignment-audit.md`
-- `docs/plans/2026-03-03-dual-ai-delivery-protocol.md` (legacy compatibility; superseded by v2 white-label masterplan)
+- `docs/plans/2026-03-03-dual-ai-delivery-protocol.md` (legacy compatibility; superseded by v3 white-label masterplan)
 - `docs/plans/deployment-checklist.md`
 - `docs/plans/migration-checklist.md`
 - `docs/plans/operational-runbook.md`
@@ -19,5 +22,6 @@
 
 ## Historical Plan Snapshot
 
-- `docs/plans/2026-03-03-white-label-program-v1.md` (superseded by v2)
+- `docs/plans/2026-03-05-white-label-masterplan-v2-multi-agent-lean.md` (superseded by v3)
+- `docs/plans/2026-03-03-white-label-program-v1.md` (superseded by v3)
 - `docs/plan.md` (historical; not canonical for new implementation prioritization)

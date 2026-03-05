@@ -4,12 +4,12 @@ type: protocol
 status: legacy
 date: 2026-03-03
 owner: Agent 0
-superseded_by: docs/plans/2026-03-05-white-label-masterplan-v2-multi-agent-lean.md
+superseded_by: docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md
 ---
 
 # Dual-AI Delivery Protocol
 
-> Legacy compatibility protocol. Canonical execution model is now defined in `docs/plans/2026-03-05-white-label-masterplan-v2-multi-agent-lean.md`.
+> Legacy compatibility protocol. Canonical execution model is now defined in `docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md`.
 
 ## Purpose
 

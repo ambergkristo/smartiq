@@ -4,12 +4,12 @@ type: program
 status: superseded
 date: 2026-03-03
 owner: Agent 0
-superseded_by: docs/plans/2026-03-05-white-label-masterplan-v2-multi-agent-lean.md
+superseded_by: docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md
 ---
 
 # SmartIQ White-Label Program v1
 
-> Superseded by `docs/plans/2026-03-05-white-label-masterplan-v2-multi-agent-lean.md`.
+> Superseded by `docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md`.
 
 ## Goal
 
