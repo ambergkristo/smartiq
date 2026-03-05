@@ -40,6 +40,22 @@ Verification command:
 node tools/validate_m1_payment_signal_gate.js docs/plans/2026-03-05-m1-payment-signal-ledger.json
 ```
 
+CSV import command (merge by `id`):
+
+```bash
+node tools/import_m1_payment_signal_csv.js \
+  --ledger docs/plans/2026-03-05-m1-payment-signal-ledger.json \
+  --outreach docs/plans/2026-03-05-m1-outreach-template.csv \
+  --discovery docs/plans/2026-03-05-m1-discovery-template.csv \
+  --pilot docs/plans/2026-03-05-m1-pilot-intent-template.csv \
+  --mode merge
+```
+
+Template files:
+1. `docs/plans/2026-03-05-m1-outreach-template.csv`
+2. `docs/plans/2026-03-05-m1-discovery-template.csv`
+3. `docs/plans/2026-03-05-m1-pilot-intent-template.csv`
+
 ## Ledger Row Schema
 
 ### Outreach attempt row
