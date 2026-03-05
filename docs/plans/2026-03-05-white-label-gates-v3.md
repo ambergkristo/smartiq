@@ -88,7 +88,7 @@ Required checks:
 1. `npm run gate:local`
 
 Required evidence:
-1. Observability and reliability evidence pack with alert coverage.
+1. `docs/plans/2026-03-05-m7-production-reliability-report.md`
 
 ### M8 Gate - Launch Readiness
 

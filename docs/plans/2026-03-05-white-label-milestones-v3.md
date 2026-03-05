@@ -31,8 +31,8 @@ Cadence:
 | M4 | S4 | Runtime white-label behavior | tenant branding works without redeploy | DONE (gate pass, 2026-03-05) |
 | M5 | S5 | Admin operations readiness | admin flows and role safety stable | DONE (gate pass, 2026-03-05) |
 | M6 | S6 | Billing + usage guardrails | deterministic limits and usage reporting | DONE (gate pass, 2026-03-05) |
-| M7 | S7 | Production reliability | observability + reliability gates green | READY |
-| M8 | S8 | Launch readiness | release/rollback/runbook gates green | LOCKED |
+| M7 | S7 | Production reliability | observability + reliability gates green | DONE (gate pass, 2026-03-05) |
+| M8 | S8 | Launch readiness | release/rollback/runbook gates green | READY |
 | M9 | S9 | GA handoff (100%) | final production sign-off package complete | LOCKED |
 
 Current execution pointer:
@@ -43,7 +43,8 @@ Current execution pointer:
 5. `S4/M4` is complete.
 6. `S5/M5` is complete.
 7. `S6/M6` is complete.
-8. `S7/M7` is the next active milestone.
+8. `S7/M7` is complete.
+9. `S8/M8` is the next active milestone.
 
 ## Milestone DoD (decision complete)
 
