@@ -49,13 +49,20 @@ Required evidence:
 ### M2 Gate - IP Risk
 
 Required checks:
-1. rebrand copy delta review complete
-2. branding asset provenance complete
-3. legal/IP assessment note exists
+1. `npm run validate:m2:ip-risk-gate`
+2. rebrand copy delta review complete
+3. branding asset provenance complete
+4. legal/IP assessment note exists
 
 Required evidence:
-1. explicit statement: "no known blocking IP risk"
-2. owner sign-off with date
+1. copy-delta register:
+   - `docs/plans/2026-03-05-m2-copy-delta-register.csv`
+2. branding provenance register:
+   - `docs/plans/2026-03-05-m2-branding-asset-provenance.csv`
+3. legal/IP assessment note:
+   - `docs/plans/2026-03-05-m2-legal-ip-assessment.md`
+4. explicit statement: "no known blocking IP risk"
+5. owner sign-off with date
 
 ### M3 Gate - Auth and Tenant Isolation
 

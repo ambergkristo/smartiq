@@ -18,6 +18,7 @@
     "validate:cards:et": "node tools/validate_cards_v2.js data/smart10/cards.et.json --max-warnings=0",
     "validate:no-bom:docs": "node tools/validate_no_bom_docs.js docs",
     "validate:masterplan:refs": "node tools/validate_masterplan_reference.js",
+    "validate:m2:ip-risk-gate": "node tools/validate_m2_ip_risk_gate.js",
     "validate:flyway:migrations": "node tools/validate_flyway_migrations.js",
     "validate:beta:alerts": "node tools/validate_beta_alert_rules.js",
     "validate:branch-protection:policy": "node tools/validate_branch_protection_policy.js",

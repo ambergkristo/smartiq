@@ -1,0 +1,4 @@
+asset_id,asset_type,file_path,source_type,source_reference,license,review_status,owner,notes
+ba-001,logo,frontend/public/brand/logo.svg,original,internal-design,proprietary,pending,Agent 0,replace with approved final vector
+ba-002,font,frontend/public/brand/fonts/,licensed,license-record-tbd,commercial-license,pending,Agent 0,attach invoice or license ID
+ba-003,illustration,frontend/public/brand/hero-bg.png,original,internal-design,proprietary,pending,Agent 0,confirm no third-party derivative

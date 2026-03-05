@@ -15,6 +15,10 @@
 - `docs/plans/2026-03-05-m1-outreach-template.csv`
 - `docs/plans/2026-03-05-m1-discovery-template.csv`
 - `docs/plans/2026-03-05-m1-pilot-intent-template.csv`
+- `docs/plans/2026-03-05-m2-ip-risk-mitigation-pack.md`
+- `docs/plans/2026-03-05-m2-copy-delta-register.csv`
+- `docs/plans/2026-03-05-m2-branding-asset-provenance.csv`
+- `docs/plans/2026-03-05-m2-legal-ip-assessment.md`
 - `docs/plans/operational-readiness-masterplan.md`
 - `docs/plans/2026-03-03-feat-operational-readiness-completion-plan.md`
 - `docs/plans/2026-03-03-masterplan-alignment-audit.md`
