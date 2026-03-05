@@ -61,11 +61,10 @@ Required evidence:
 ### M4 Gate - Runtime White-Label
 
 Required checks:
-1. `npm --prefix frontend run test -- --run src/App.tenant-runtime.test.jsx src/admin/AdminConsole.test.jsx`
-2. `npm --prefix frontend run build`
+1. `npm run validate:m4:runtime-gate`
 
 Required evidence:
-1. Runtime branding proof for at least two tenant contexts.
+1. `docs/plans/2026-03-05-m4-runtime-white-label-report.md`
 
 ### M5 Gate - Admin Operations
 

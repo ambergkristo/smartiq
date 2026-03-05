@@ -28,8 +28,8 @@ Cadence:
 | M1 | S1 | Product direction lock | ICP + packaging + use-case lock complete | DONE (baseline) |
 | M2 | S2 | IP hygiene baseline | copy/provenance/legal baseline present | DONE (baseline) |
 | M3 | S3 | Auth + tenant isolation hardening | auth/isolation suite green | DONE (gate pass, 2026-03-05) |
-| M4 | S4 | Runtime white-label behavior | tenant branding works without redeploy | READY |
-| M5 | S5 | Admin operations readiness | admin flows and role safety stable | LOCKED |
+| M4 | S4 | Runtime white-label behavior | tenant branding works without redeploy | DONE (gate pass, 2026-03-05) |
+| M5 | S5 | Admin operations readiness | admin flows and role safety stable | READY |
 | M6 | S6 | Billing + usage guardrails | deterministic limits and usage reporting | LOCKED |
 | M7 | S7 | Production reliability | observability + reliability gates green | LOCKED |
 | M8 | S8 | Launch readiness | release/rollback/runbook gates green | LOCKED |
@@ -40,7 +40,8 @@ Current execution pointer:
 2. `S1/M1` baseline carry-forward is complete.
 3. `S2/M2` baseline carry-forward is complete.
 4. `S3/M3` is complete.
-5. `S4/M4` is the next active milestone.
+5. `S4/M4` is complete.
+6. `S5/M5` is the next active milestone.
 
 ## Milestone DoD (decision complete)
 

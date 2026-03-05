@@ -20,6 +20,7 @@
 - `docs/plans/2026-03-05-m2-branding-asset-provenance.csv`
 - `docs/plans/2026-03-05-m2-legal-ip-assessment.md`
 - `docs/plans/2026-03-05-m3-auth-tenant-isolation-report.md`
+- `docs/plans/2026-03-05-m4-runtime-white-label-report.md`
 - `docs/plans/operational-readiness-masterplan.md`
 - `docs/plans/2026-03-03-feat-operational-readiness-completion-plan.md`
 - `docs/plans/2026-03-03-masterplan-alignment-audit.md`
