@@ -87,3 +87,19 @@ npm run report:branches:consolidation:full
 - Latest branch consolidation snapshot: `docs/branch-consolidation-audit-2026-02-24.md`.
 - Auto-generated current snapshot target: `docs/branch-consolidation-audit-latest.md`.
 - At that snapshot, no safe additional consolidation PR was required.
+
+## Legacy Dual-AI Parallel Execution (Optional)
+
+This section is optional compatibility guidance only.
+Canonical execution for current white-label work is defined in:
+- `docs/plans/2026-03-05-white-label-masterplan-v2-multi-agent-lean.md`
+
+If legacy dual-AI workflow is explicitly chosen, use:
+
+1. Protocol: `docs/plans/2026-03-03-dual-ai-delivery-protocol.md`
+2. Ownership policy: `docs/policies/dual-ai-file-ownership.json`
+3. Worktree bootstrap: `npm run ops:worktrees:init`
+4. Ownership checks:
+   - `npm run validate:dual-ai:ownership -- --team=team-a --base=origin/main`
+   - `npm run validate:dual-ai:ownership -- --team=team-b --base=origin/main`
+   - For explicitly coordinated shared-file edits, add `--allow-shared-locked`.

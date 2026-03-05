@@ -107,6 +107,34 @@ Done when:
 Done when:
 1. Final white-label go/no-go gate is documented with evidence links.
 
+## Milestone Status (Live)
+
+Legend:
+- `DONE`: completed and evidence linked
+- `READY`: unlocked and ready to start
+- `LOCKED`: blocked by previous milestone gate
+
+Current status:
+1. `M0`: `DONE` (Sprint `S0`, completed 2026-03-05)
+2. `M1`: `READY`
+3. `M2`: `LOCKED`
+4. `M3`: `LOCKED`
+5. `M4`: `LOCKED`
+6. `M5`: `LOCKED`
+7. `M6`: `LOCKED`
+
+M0 evidence:
+1. Canonical white-label masterplan is active:
+   - `docs/plans/2026-03-05-white-label-masterplan-v2-multi-agent-lean.md`
+2. v1 white-label plan is marked superseded:
+   - `docs/plans/2026-03-03-white-label-program-v1.md`
+3. Canonical references updated:
+   - `README.md`
+   - `docs/plans/README.md`
+4. Active docs no longer require Team A/B split for normal execution:
+   - `docs/branch-governance.md` (legacy dual-AI section only)
+   - `docs/plans/2026-03-03-dual-ai-delivery-protocol.md` (legacy status)
+
 ## Sprint System (M-based until final completion)
 
 Cadence default:

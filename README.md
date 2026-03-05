@@ -360,8 +360,8 @@ Latest branch consolidation snapshot (auto-generated): `docs/branch-consolidatio
 Generate latest branch consolidation snapshot: `npm run report:branches:consolidation`
 White-label canonical masterplan (multi-agent lean): `docs/plans/2026-03-05-white-label-masterplan-v2-multi-agent-lean.md`
 Superseded white-label program snapshot: `docs/plans/2026-03-03-white-label-program-v1.md`
-Dual-AI execution protocol: `docs/plans/2026-03-03-dual-ai-delivery-protocol.md`
-Dual-AI file ownership policy: `docs/policies/dual-ai-file-ownership.json`
+Legacy dual-AI protocol (optional compatibility): `docs/plans/2026-03-03-dual-ai-delivery-protocol.md`
+Legacy dual-AI ownership policy (optional compatibility): `docs/policies/dual-ai-file-ownership.json`
 
 Legacy dual-AI helper commands (optional; not required in experimental multi-agent mode):
 

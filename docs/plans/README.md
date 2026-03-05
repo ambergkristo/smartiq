@@ -10,7 +10,7 @@
 - `docs/plans/operational-readiness-masterplan.md`
 - `docs/plans/2026-03-03-feat-operational-readiness-completion-plan.md`
 - `docs/plans/2026-03-03-masterplan-alignment-audit.md`
-- `docs/plans/2026-03-03-dual-ai-delivery-protocol.md`
+- `docs/plans/2026-03-03-dual-ai-delivery-protocol.md` (legacy compatibility; superseded by v2 white-label masterplan)
 - `docs/plans/deployment-checklist.md`
 - `docs/plans/migration-checklist.md`
 - `docs/plans/operational-runbook.md`
