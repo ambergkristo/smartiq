@@ -117,8 +117,8 @@ Legend:
 Current status:
 1. `M0`: `DONE` (Sprint `S0`, completed 2026-03-05)
 2. `M1`: `DONE` (Sprint `S1`, completed 2026-03-05)
-3. `M2`: `READY`
-4. `M3`: `LOCKED`
+3. `M2`: `DONE` (Sprint `S2`, completed 2026-03-05)
+4. `M3`: `READY`
 5. `M4`: `LOCKED`
 6. `M5`: `LOCKED`
 7. `M6`: `LOCKED`
@@ -148,6 +148,20 @@ M1 evidence:
    - `npm run validate:flyway:migrations`
 4. S1 backend white-label test slice is green:
    - `mvn -q -f backend/pom.xml "-Dtest=TenantAdminControllerTest,TenantMeControllerTest,TenantMeControllerProdAuthContextTest,SecurityConfigTest" test`
+
+M2 evidence:
+1. Admin white-label API contract client added for `/internal/wl/*`:
+   - `frontend/src/admin/api.js`
+   - `frontend/src/admin/api.test.js`
+2. Admin UI tabs aligned to backend contracts:
+   - `frontend/src/admin/AdminConsole.jsx`
+   - `frontend/src/styles.css` (admin section)
+3. App route split to keep game flow intact and expose admin via `/admin`:
+   - `frontend/src/App.jsx`
+4. M2 admin unit tests are green:
+   - `npm --prefix frontend run test -- --run src/admin/api.test.js src/admin/AdminConsole.test.jsx`
+5. Regression smoke for existing game app is green:
+   - `npm --prefix frontend run test -- --run src/App.test.jsx`
 
 ## Sprint System (M-based until final completion)
 

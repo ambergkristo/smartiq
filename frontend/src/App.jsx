@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { API_BASE, fetchNextCard, fetchTopics, resolveCardErrorMessage, resolveTopicsErrorState } from './api';
+import AdminConsole from './admin/AdminConsole';
 import GameBoard from './components/GameBoard';
 import RoundSummary from './components/RoundSummary';
 import { useAudioFeedback } from './audio/useAudioFeedback';
@@ -345,7 +346,16 @@ function isDeckExhaustedMessage(message) {
     || normalized.includes('question bank is empty for this filter');
 }
 
-export default function App() {
+function isAdminConsoleRoute() {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+  const pathname = window.location?.pathname || '';
+  const hash = window.location?.hash || '';
+  return pathname.startsWith('/admin') || hash.startsWith('#/admin');
+}
+
+function GameApp() {
   const storedConfig = loadStoredConfig();
   const [topics, setTopics] = useState([]);
   const [startup, setStartup] = useState({
@@ -650,5 +660,12 @@ export default function App() {
       ) : null}
     </main>
   );
+}
+
+export default function App() {
+  if (isAdminConsoleRoute()) {
+    return <AdminConsole />;
+  }
+  return <GameApp />;
 }
 
