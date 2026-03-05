@@ -10,6 +10,7 @@
 ## Supporting Plans and Audits
 
 - `docs/plans/2026-03-05-business-end-goal-assessment-et.md`
+- `docs/plans/2026-03-05-business-end-goal-audit-et-v2.md`
 - `docs/plans/2026-03-05-m1-payment-signal-validation.md`
 - `docs/plans/2026-03-05-m1-payment-signal-ledger.json`
 - `docs/plans/2026-03-05-m1-outreach-template.csv`
