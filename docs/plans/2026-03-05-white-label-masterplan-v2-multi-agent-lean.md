@@ -123,8 +123,8 @@ Current status:
 3. `M2`: `DONE` (Sprint `S2`, completed 2026-03-05)
 4. `M3`: `DONE` (Sprint `S3`, completed 2026-03-05)
 5. `M4`: `DONE` (Sprint `S4`, completed 2026-03-05)
-6. `M5`: `READY`
-7. `M6`: `LOCKED`
+6. `M5`: `DONE` (Sprint `S5`, completed 2026-03-05)
+7. `M6`: `DONE` (Sprint `S6`, completed 2026-03-05)
 
 M0 evidence:
 1. Canonical white-label masterplan is active:
@@ -190,6 +190,24 @@ M4 evidence:
    - `backend/src/test/java/com/smartiq/backend/tenant/TenantAdminControllerTest.java`
 4. M4 backend guardrail test suite is green:
    - `mvn -q -f backend/pom.xml "-Dtest=TenantAdminControllerTest,TenantMeControllerTest,TenantMeControllerProdAuthContextTest" test`
+
+M5 evidence:
+1. Canonical GTM and pilot artifact pack finalized:
+   - `docs/plans/2026-03-05-m5-gtm-pilot-readiness-pack.md`
+2. Pack includes pricing tiers (Starter/Growth/Enterprise), pilot onboarding flow, and KPI definitions.
+3. Docs integrity checks are green:
+   - `npm run validate:no-bom:docs`
+   - `npm run validate:masterplan:refs`
+
+M6 evidence:
+1. Final go/no-go decision report published:
+   - `docs/plans/2026-03-05-m6-go-no-go-report.md`
+2. Final backend validation checks are green:
+   - `npm run validate:flyway:migrations`
+   - `mvn -q -f backend/pom.xml "-Dtest=TenantAdminControllerTest,TenantMeControllerTest,TenantMeControllerProdAuthContextTest" test`
+3. Final frontend validation checks are green:
+   - `npm --prefix frontend run test -- --run src/admin/api.test.js src/admin/AdminConsole.test.jsx src/App.test.jsx src/App.startup.test.jsx src/App.server-mode.test.jsx src/App.tenant-runtime.test.jsx`
+   - `npm --prefix frontend run build`
 
 ## Sprint System (M-based until final completion)
 
