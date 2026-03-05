@@ -31,7 +31,12 @@ public class CorsConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedMethods(List.of("GET", "POST", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("Content-Type", "Authorization"));
+        configuration.setAllowedHeaders(List.of(
+                "Content-Type",
+                "Authorization",
+                "X-SmartIQ-User-Email",
+                "X-SmartIQ-Tenant-Id"
+        ));
         configuration.setAllowCredentials(false);
         configuration.setAllowedOrigins(resolveAllowedOrigins());
 

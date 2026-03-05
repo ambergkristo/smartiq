@@ -77,6 +77,17 @@ smartiq:
       - /actuator/env
       - /actuator/configprops
       - /actuator/beans
+  auth:
+    context:
+      header-fallback-enabled: ${SMARTIQ_AUTH_HEADER_FALLBACK_ENABLED:true}
+      user-email-header: ${SMARTIQ_AUTH_USER_EMAIL_HEADER:X-SmartIQ-User-Email}
+      tenant-id-header: ${SMARTIQ_AUTH_TENANT_ID_HEADER:X-SmartIQ-Tenant-Id}
+      email-claims:
+        - ${SMARTIQ_AUTH_EMAIL_CLAIM_PRIMARY:email}
+        - ${SMARTIQ_AUTH_EMAIL_CLAIM_SECONDARY:preferred_username}
+        - ${SMARTIQ_AUTH_EMAIL_CLAIM_TERTIARY:upn}
+        - ${SMARTIQ_AUTH_EMAIL_CLAIM_FALLBACK:sub}
+      tenant-id-claim: ${SMARTIQ_AUTH_TENANT_ID_CLAIM:tenant_id}
   rate-limit:
     enabled: ${SMARTIQ_RATE_LIMIT_ENABLED:true}
     window-seconds: ${SMARTIQ_RATE_LIMIT_WINDOW_SECONDS:60}

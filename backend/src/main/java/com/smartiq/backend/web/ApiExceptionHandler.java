@@ -3,6 +3,9 @@ package com.smartiq.backend.web;
 import com.smartiq.backend.card.InvalidCardContractException;
 import com.smartiq.backend.game.DuplicateGameActionException;
 import com.smartiq.backend.game.ForbiddenGameActionException;
+import com.smartiq.backend.tenant.DuplicateTenantMembershipException;
+import com.smartiq.backend.tenant.ForbiddenTenantAccessException;
+import com.smartiq.backend.tenant.LastOwnerProtectionException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,11 +24,19 @@ public class ApiExceptionHandler {
     private static final String CODE_INVALID_ACTION = "INVALID_ACTION";
     private static final String CODE_INVALID_ROOM_REQUEST = "INVALID_ROOM_REQUEST";
     private static final String CODE_INVALID_ROOM_TOKEN = "INVALID_ROOM_TOKEN";
+    private static final String CODE_INVALID_TENANT_REQUEST = "INVALID_TENANT_REQUEST";
+    private static final String CODE_INVALID_AUTH_CONTEXT = "INVALID_AUTH_CONTEXT";
     private static final String CODE_GAME_NOT_FOUND = "GAME_NOT_FOUND";
     private static final String CODE_ROOM_NOT_FOUND = "ROOM_NOT_FOUND";
     private static final String CODE_PLAYER_NOT_FOUND = "PLAYER_NOT_FOUND";
+    private static final String CODE_TENANT_NOT_FOUND = "TENANT_NOT_FOUND";
+    private static final String CODE_USER_NOT_FOUND = "USER_NOT_FOUND";
+    private static final String CODE_MEMBERSHIP_NOT_FOUND = "MEMBERSHIP_NOT_FOUND";
     private static final String CODE_FORBIDDEN_ACTOR = "FORBIDDEN_ACTOR";
+    private static final String CODE_FORBIDDEN_TENANT_ACCESS = "FORBIDDEN_TENANT_ACCESS";
     private static final String CODE_DUPLICATE_ACTION = "DUPLICATE_ACTION";
+    private static final String CODE_DUPLICATE_MEMBERSHIP = "DUPLICATE_MEMBERSHIP";
+    private static final String CODE_LAST_OWNER_PROTECTION = "LAST_OWNER_PROTECTION";
     private static final String CODE_INTERNAL_ERROR = "INTERNAL_ERROR";
     private static final String CODE_NOT_FOUND = "NOT_FOUND";
 
@@ -58,9 +69,24 @@ public class ApiExceptionHandler {
         return build(HttpStatus.FORBIDDEN, CODE_FORBIDDEN_ACTOR, ex.getMessage(), request.getRequestURI());
     }
 
+    @ExceptionHandler(ForbiddenTenantAccessException.class)
+    public ResponseEntity<Object> handleForbiddenTenantAccess(ForbiddenTenantAccessException ex, HttpServletRequest request) {
+        return build(HttpStatus.FORBIDDEN, CODE_FORBIDDEN_TENANT_ACCESS, ex.getMessage(), request.getRequestURI());
+    }
+
     @ExceptionHandler(DuplicateGameActionException.class)
     public ResponseEntity<Object> handleDuplicateAction(DuplicateGameActionException ex, HttpServletRequest request) {
         return build(HttpStatus.CONFLICT, CODE_DUPLICATE_ACTION, ex.getMessage(), request.getRequestURI());
+    }
+
+    @ExceptionHandler(DuplicateTenantMembershipException.class)
+    public ResponseEntity<Object> handleDuplicateMembership(DuplicateTenantMembershipException ex, HttpServletRequest request) {
+        return build(HttpStatus.CONFLICT, CODE_DUPLICATE_MEMBERSHIP, ex.getMessage(), request.getRequestURI());
+    }
+
+    @ExceptionHandler(LastOwnerProtectionException.class)
+    public ResponseEntity<Object> handleLastOwnerProtection(LastOwnerProtectionException ex, HttpServletRequest request) {
+        return build(HttpStatus.BAD_REQUEST, CODE_LAST_OWNER_PROTECTION, ex.getMessage(), request.getRequestURI());
     }
 
     @ExceptionHandler(InvalidCardContractException.class)
@@ -90,6 +116,12 @@ public class ApiExceptionHandler {
     private static String resolveBadRequestCode(String path, String message) {
         String normalizedPath = path == null ? "" : path;
         String normalizedMessage = message == null ? "" : message.trim().toLowerCase();
+        if (normalizedPath.startsWith("/internal/wl/")) {
+            return CODE_INVALID_TENANT_REQUEST;
+        }
+        if (normalizedPath.startsWith("/api/me")) {
+            return CODE_INVALID_AUTH_CONTEXT;
+        }
         if (!normalizedPath.startsWith("/api/rooms/")) {
             return CODE_INVALID_ACTION;
         }
@@ -110,6 +142,18 @@ public class ApiExceptionHandler {
                 return CODE_PLAYER_NOT_FOUND;
             }
             return CODE_ROOM_NOT_FOUND;
+        }
+        if (normalizedPath.startsWith("/internal/wl/")) {
+            return CODE_TENANT_NOT_FOUND;
+        }
+        if (normalizedPath.startsWith("/api/me")) {
+            if (normalizedMessage.contains("tenant not found")) {
+                return CODE_TENANT_NOT_FOUND;
+            }
+            if (normalizedMessage.contains("membership not found")) {
+                return CODE_MEMBERSHIP_NOT_FOUND;
+            }
+            return CODE_USER_NOT_FOUND;
         }
         return CODE_NOT_FOUND;
     }

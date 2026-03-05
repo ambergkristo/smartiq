@@ -25,3 +25,6 @@ smartiq:
     trigger-pipeline-on-low-bank: false
   internal-access:
     enabled: true
+  auth:
+    context:
+      header-fallback-enabled: false

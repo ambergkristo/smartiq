@@ -116,8 +116,8 @@ Legend:
 
 Current status:
 1. `M0`: `DONE` (Sprint `S0`, completed 2026-03-05)
-2. `M1`: `READY`
-3. `M2`: `LOCKED`
+2. `M1`: `DONE` (Sprint `S1`, completed 2026-03-05)
+3. `M2`: `READY`
 4. `M3`: `LOCKED`
 5. `M4`: `LOCKED`
 6. `M5`: `LOCKED`
@@ -134,6 +134,20 @@ M0 evidence:
 4. Active docs no longer require Team A/B split for normal execution:
    - `docs/branch-governance.md` (legacy dual-AI section only)
    - `docs/plans/2026-03-03-dual-ai-delivery-protocol.md` (legacy status)
+
+M1 evidence:
+1. White-label backend foundation added:
+   - `backend/src/main/resources/db/migration/V5__create_white_label_foundation.sql`
+   - `backend/src/main/java/com/smartiq/backend/tenant/*`
+2. Auth context and route guard stabilization:
+   - `backend/src/main/java/com/smartiq/backend/auth/*`
+   - `backend/src/main/java/com/smartiq/backend/config/AuthContextProperties.java`
+   - `backend/src/main/java/com/smartiq/backend/config/SecurityConfig.java`
+   - `backend/src/main/java/com/smartiq/backend/web/ApiExceptionHandler.java`
+3. S1 migration gate is green:
+   - `npm run validate:flyway:migrations`
+4. S1 backend white-label test slice is green:
+   - `mvn -q -f backend/pom.xml "-Dtest=TenantAdminControllerTest,TenantMeControllerTest,TenantMeControllerProdAuthContextTest,SecurityConfigTest" test`
 
 ## Sprint System (M-based until final completion)
 

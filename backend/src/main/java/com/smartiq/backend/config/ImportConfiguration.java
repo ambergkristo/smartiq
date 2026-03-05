@@ -13,7 +13,8 @@ import org.springframework.context.annotation.Configuration;
         CorsProperties.class,
         BankEnforcerProperties.class,
         InternalAccessProperties.class,
-        RateLimitProperties.class
+        RateLimitProperties.class,
+        AuthContextProperties.class
 })
 public class ImportConfiguration {
 }

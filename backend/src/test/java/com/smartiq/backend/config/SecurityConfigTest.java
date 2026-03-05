@@ -37,6 +37,30 @@ class SecurityConfigTest {
     }
 
     @Test
+    void keepsMeRouteAccessibleToAuthContextLayer() throws Exception {
+        mockMvc.perform(get("/api/me"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void keepsMeTenantSettingsRouteAccessibleToAuthContextLayer() throws Exception {
+        mockMvc.perform(get("/api/me/tenant-settings"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void keepsMeTenantBrandingRouteAccessibleToAuthContextLayer() throws Exception {
+        mockMvc.perform(get("/api/me/tenant-branding"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void keepsMeTenantSubscriptionRouteAccessibleToAuthContextLayer() throws Exception {
+        mockMvc.perform(get("/api/me/tenant-subscription"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void allowsWebsocketRouteToReachHandshakeLayer() throws Exception {
         mockMvc.perform(get("/ws/rooms/ABC123"))
                 .andExpect(status().isBadRequest());
