@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeParseException;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -40,6 +41,8 @@ public class TenantService {
     private static final Set<String> ALLOWED_FEATURE_SETTINGS_KEYS = Set.of("leaderboardEnabled", "teamsEnabled");
     private static final String STATUS_ACTIVE = "active";
     private static final String STATUS_SUSPENDED = "suspended";
+    private static final String SUBSCRIPTION_STATUS_TRIALING = "trialing";
+    private static final String SUBSCRIPTION_STATUS_ACTIVE = "active";
     private static final String ROLE_OWNER = "owner";
     private static final String AUTH_PROVIDER_MANUAL = "manual";
     private static final String AUDIT_ACTION_TENANT_CREATED = "TENANT_CREATED";
@@ -50,11 +53,13 @@ public class TenantService {
     private static final String AUDIT_ACTION_TENANT_MEMBER_REMOVED = "TENANT_MEMBER_REMOVED";
     private static final String AUDIT_ACTION_TENANT_SETTINGS_UPDATED = "TENANT_SETTINGS_UPDATED";
     private static final String AUDIT_ACTION_TENANT_SUBSCRIPTION_UPDATED = "TENANT_SUBSCRIPTION_UPDATED";
+    private static final String AUDIT_ACTION_TENANT_USAGE_LIMIT_REJECTED = "TENANT_USAGE_LIMIT_REJECTED";
     private static final String AUDIT_ENTITY_TENANT = "tenant";
     private static final String AUDIT_ENTITY_TENANT_BRANDING = "tenant_branding";
     private static final String AUDIT_ENTITY_TENANT_MEMBERSHIP = "tenant_membership";
     private static final String AUDIT_ENTITY_TENANT_SETTINGS = "tenant_settings";
     private static final String AUDIT_ENTITY_TENANT_SUBSCRIPTION = "tenant_subscription";
+    private static final String AUDIT_ENTITY_TENANT_USAGE_EVENT = "tenant_usage_event";
     private static final int SETTINGS_SCHEMA_VERSION = 1;
     private static final String DEFAULT_THEME = "classic";
     private static final int DEFAULT_MAX_PLAYERS = 10;
@@ -65,6 +70,9 @@ public class TenantService {
     private static final int MAX_AUDIT_LIMIT = 200;
     private static final int DEFAULT_USAGE_LIMIT = 100;
     private static final int MAX_USAGE_LIMIT = 500;
+    private static final long PLAN_LIMIT_STARTER = 1_000L;
+    private static final long PLAN_LIMIT_PILOT = 2_000L;
+    private static final long PLAN_LIMIT_GROWTH = 10_000L;
 
     private final TenantRepository tenantRepository;
     private final TenantBrandingRepository tenantBrandingRepository;
@@ -566,7 +574,7 @@ public class TenantService {
         return toSubscriptionResponse(subscription);
     }
 
-    @Transactional
+    @Transactional(noRollbackFor = IllegalArgumentException.class)
     public TenantUsageEventResponse createTenantUsageEvent(UUID tenantId, CreateTenantUsageEventRequest request) {
         if (!tenantRepository.existsById(tenantId)) {
             throw new NoSuchElementException("tenant not found");
@@ -577,6 +585,9 @@ public class TenantService {
         Instant now = Instant.now();
         Instant eventTime = request == null || request.eventTime() == null ? now : request.eventTime();
         JsonNode metadata = normalizeUsageMetadata(request == null ? null : request.metadata());
+
+        TenantSubscription subscription = tenantSubscriptionRepository.findByTenantId(tenantId).orElse(null);
+        enforceUsagePlanLimit(tenantId, subscription, eventType, eventValue, eventTime, now);
 
         TenantUsageEvent event = new TenantUsageEvent();
         event.setId(UUID.randomUUID());
@@ -1003,6 +1014,93 @@ public class TenantService {
         if (activeOwners <= 1) {
             throw new LastOwnerProtectionException("tenant must have at least one active owner");
         }
+    }
+
+    private void enforceUsagePlanLimit(UUID tenantId,
+                                       TenantSubscription subscription,
+                                       String eventType,
+                                       long eventValue,
+                                       Instant eventTime,
+                                       Instant now) {
+        if (subscription == null || subscription.getPlanCode() == null || subscription.getPlanCode().isBlank()) {
+            return;
+        }
+
+        String subscriptionStatus = normalizeSubscriptionStatus(subscription.getStatus());
+        if (!SUBSCRIPTION_STATUS_ACTIVE.equals(subscriptionStatus) && !SUBSCRIPTION_STATUS_TRIALING.equals(subscriptionStatus)) {
+            throw new IllegalArgumentException("subscription status does not allow usage ingestion");
+        }
+
+        long planLimit = resolvePlanLimit(subscription.getPlanCode());
+        if (planLimit <= 0L) {
+            return;
+        }
+
+        Instant periodStart = resolveUsagePeriodStart(subscription, eventTime);
+        Instant periodEnd = resolveUsagePeriodEnd(subscription, periodStart);
+        if (!eventTime.isBefore(periodEnd)) {
+            throw new IllegalArgumentException("eventTime must be within current subscription period");
+        }
+
+        long currentTotal = tenantUsageEventRepository.sumEventValueByTenantIdAndEventTimeRange(tenantId, periodStart, periodEnd);
+        long projectedTotal = currentTotal + eventValue;
+        if (projectedTotal <= planLimit) {
+            return;
+        }
+
+        ObjectNode metadata = objectMapper.createObjectNode();
+        metadata.put("eventType", eventType);
+        metadata.put("eventValue", eventValue);
+        metadata.put("periodStart", periodStart.toString());
+        metadata.put("periodEndExclusive", periodEnd.toString());
+        metadata.put("currentTotal", currentTotal);
+        metadata.put("projectedTotal", projectedTotal);
+        metadata.put("planLimit", planLimit);
+        metadata.put("planCode", subscription.getPlanCode());
+        recordAuditEvent(
+                tenantId,
+                AUDIT_ACTION_TENANT_USAGE_LIMIT_REJECTED,
+                AUDIT_ENTITY_TENANT_USAGE_EVENT,
+                null,
+                metadata,
+                now,
+                null
+        );
+        throw new IllegalArgumentException("plan limit reached for current period");
+    }
+
+    private static long resolvePlanLimit(String planCode) {
+        String normalized = normalizePlanCode(planCode);
+        if (normalized.contains("starter")) {
+            return PLAN_LIMIT_STARTER;
+        }
+        if (normalized.contains("pilot")) {
+            return PLAN_LIMIT_PILOT;
+        }
+        if (normalized.contains("growth")) {
+            return PLAN_LIMIT_GROWTH;
+        }
+        return 0L;
+    }
+
+    private static Instant resolveUsagePeriodStart(TenantSubscription subscription, Instant eventTime) {
+        if (subscription.getCurrentPeriodStartsAt() != null) {
+            return subscription.getCurrentPeriodStartsAt();
+        }
+        return eventTime.atZone(ZoneOffset.UTC)
+                .withDayOfMonth(1)
+                .toLocalDate()
+                .atStartOfDay(ZoneOffset.UTC)
+                .toInstant();
+    }
+
+    private static Instant resolveUsagePeriodEnd(TenantSubscription subscription, Instant periodStart) {
+        if (subscription.getCurrentPeriodEndsAt() != null && subscription.getCurrentPeriodEndsAt().isAfter(periodStart)) {
+            return subscription.getCurrentPeriodEndsAt();
+        }
+        return periodStart.atZone(ZoneOffset.UTC)
+                .plusMonths(1)
+                .toInstant();
     }
 
     private static String normalizePlanCode(String planCode) {

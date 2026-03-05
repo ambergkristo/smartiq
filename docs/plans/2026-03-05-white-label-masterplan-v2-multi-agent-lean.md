@@ -16,6 +16,9 @@ This is the canonical white-label execution plan for SmartIQ.
 Primary objective:
 - Reach a production-ready white-label track for corporate training with minimal operational and token overhead.
 
+Canonical business north-star (must stay visible in all Codex loops):
+- `docs/plans/2026-03-05-business-end-goal-assessment-et.md`
+
 Operating mode:
 - Experimental multi-agent mode with one orchestrator flow.
 - No separate Team A / Team B split is required for normal execution.
@@ -119,8 +122,8 @@ Current status:
 2. `M1`: `DONE` (Sprint `S1`, completed 2026-03-05)
 3. `M2`: `DONE` (Sprint `S2`, completed 2026-03-05)
 4. `M3`: `DONE` (Sprint `S3`, completed 2026-03-05)
-5. `M4`: `READY`
-6. `M5`: `LOCKED`
+5. `M4`: `DONE` (Sprint `S4`, completed 2026-03-05)
+6. `M5`: `READY`
 7. `M6`: `LOCKED`
 
 M0 evidence:
@@ -177,6 +180,16 @@ M3 evidence:
    - `mvn -q -f backend/pom.xml "-Dtest=TenantMeControllerTest,TenantMeControllerProdAuthContextTest" test`
 6. Frontend production build passes after runtime integration:
    - `npm --prefix frontend run build`
+
+M4 evidence:
+1. Usage guardrail query added for billing-period totals:
+   - `backend/src/main/java/com/smartiq/backend/tenant/TenantUsageEventRepository.java`
+2. Plan limit enforcement + limit-breach audit evidence added:
+   - `backend/src/main/java/com/smartiq/backend/tenant/TenantService.java`
+3. Limit breach scenario test (API error + audit evidence) added:
+   - `backend/src/test/java/com/smartiq/backend/tenant/TenantAdminControllerTest.java`
+4. M4 backend guardrail test suite is green:
+   - `mvn -q -f backend/pom.xml "-Dtest=TenantAdminControllerTest,TenantMeControllerTest,TenantMeControllerProdAuthContextTest" test`
 
 ## Sprint System (M-based until final completion)
 

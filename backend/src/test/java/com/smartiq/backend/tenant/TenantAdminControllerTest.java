@@ -592,4 +592,72 @@ class TenantAdminControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("INVALID_TENANT_REQUEST"));
     }
+
+    @Test
+    void rejectsUsageEventsWhenPlanLimitIsExceededAndWritesAuditEvidence() throws Exception {
+        String tenantResponse = mockMvc.perform(post("/internal/wl/tenants")
+                        .header("X-Internal-Api-Key", "test-internal-key")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "slug": "usage-limit-acme",
+                                  "name": "Usage Limit Acme"
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        String tenantId = objectMapper.readTree(tenantResponse).path("tenantId").asText();
+
+        mockMvc.perform(put("/internal/wl/tenants/{tenantId}/subscription", tenantId)
+                        .header("X-Internal-Api-Key", "test-internal-key")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "planCode": "starter-monthly",
+                                  "status": "active",
+                                  "billingCycle": "monthly",
+                                  "currentPeriodStartsAt": "2030-01-01T00:00:00Z",
+                                  "currentPeriodEndsAt": "2030-02-01T00:00:00Z"
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.planCode").value("starter-monthly"));
+
+        mockMvc.perform(post("/internal/wl/tenants/{tenantId}/usage-events", tenantId)
+                        .header("X-Internal-Api-Key", "test-internal-key")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "eventType": "game.round.completed",
+                                  "eventValue": 900,
+                                  "eventTime": "2030-01-10T00:00:00Z"
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.eventValue").value(900));
+
+        mockMvc.perform(post("/internal/wl/tenants/{tenantId}/usage-events", tenantId)
+                        .header("X-Internal-Api-Key", "test-internal-key")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "eventType": "game.round.completed",
+                                  "eventValue": 200,
+                                  "eventTime": "2030-01-11T00:00:00Z"
+                                }
+                                """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("INVALID_TENANT_REQUEST"))
+                .andExpect(jsonPath("$.error").value("plan limit reached for current period"));
+
+        mockMvc.perform(get("/internal/wl/tenants/{tenantId}/audit-events?limit=1", tenantId)
+                        .header("X-Internal-Api-Key", "test-internal-key"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].action").value("TENANT_USAGE_LIMIT_REJECTED"))
+                .andExpect(jsonPath("$[0].metadata.planCode").value("starter-monthly"))
+                .andExpect(jsonPath("$[0].metadata.planLimit").value(1000))
+                .andExpect(jsonPath("$[0].metadata.projectedTotal").value(1100));
+    }
 }

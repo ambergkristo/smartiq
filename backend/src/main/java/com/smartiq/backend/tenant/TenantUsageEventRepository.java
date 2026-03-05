@@ -16,6 +16,19 @@ public interface TenantUsageEventRepository extends JpaRepository<TenantUsageEve
     List<TenantUsageEvent> findByTenantIdAndEventType(UUID tenantId, String eventType, Pageable pageable);
 
     @Query("""
+            select coalesce(sum(e.eventValue), 0)
+            from TenantUsageEvent e
+            where e.tenantId = :tenantId
+              and e.eventTime >= :fromInclusive
+              and e.eventTime < :toExclusive
+            """)
+    long sumEventValueByTenantIdAndEventTimeRange(
+            @Param("tenantId") UUID tenantId,
+            @Param("fromInclusive") Instant fromInclusive,
+            @Param("toExclusive") Instant toExclusive
+    );
+
+    @Query("""
             select new com.smartiq.backend.tenant.TenantUsageSummaryRow(
                 e.eventType,
                 coalesce(sum(e.eventValue), 0),
