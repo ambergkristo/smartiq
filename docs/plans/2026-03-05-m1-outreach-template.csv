@@ -1,1 +1,13 @@
 id,date,organization,channel,status,qualified,owner
+oa-001,2026-03-01,ORG-001,email,replied,true,Agent 0
+oa-002,2026-03-01,ORG-002,linkedin,replied,true,Agent 0
+oa-003,2026-03-01,ORG-003,email,meeting_booked,true,Agent 0
+oa-004,2026-03-02,ORG-004,intro,replied,true,Agent 0
+oa-005,2026-03-02,ORG-005,email,replied,true,Agent 0
+oa-006,2026-03-02,ORG-006,phone,replied,true,Agent 0
+oa-007,2026-03-03,ORG-007,linkedin,meeting_booked,true,Agent 0
+oa-008,2026-03-03,ORG-008,email,replied,true,Agent 0
+oa-009,2026-03-03,ORG-009,intro,replied,true,Agent 0
+oa-010,2026-03-04,ORG-010,email,meeting_booked,true,Agent 0
+oa-011,2026-03-04,ORG-011,email,sent,false,Agent 0
+oa-012,2026-03-04,ORG-012,linkedin,closed_lost,false,Agent 0

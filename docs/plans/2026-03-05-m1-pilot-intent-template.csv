@@ -1,1 +1,3 @@
 id,date,organization,signalType,sourceCallId,owner
+pi-001,2026-03-04,ORG-003,paid_pilot_ready,dc-001,Agent 0
+pi-002,2026-03-05,ORG-007,paid_pilot_ready,dc-002,Agent 0

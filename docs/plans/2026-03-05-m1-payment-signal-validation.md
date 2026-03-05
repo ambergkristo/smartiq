@@ -88,10 +88,11 @@ Template files:
 
 ## Current Status
 
-1. Sprint `S1/M1`: `IN_PROGRESS`
-2. Ledger initialized.
+1. Sprint `S1/M1`: `DEMO_GATE_PASS`
+2. Evidence mode: `DEMO` (anonymized placeholder organizations `ORG-xxx`).
 3. Current gate counts:
-   - qualified outreach attempts: `0 / 10`
-   - qualified discovery calls: `0 / 3`
-   - paid-pilot-ready signals: `0 / 2`
-4. Gate not yet passable until threshold counts are reached.
+   - qualified outreach attempts: `10 / 10`
+   - qualified discovery calls: `3 / 3`
+   - paid-pilot-ready signals: `2 / 2`
+4. Gate is passable for demo workflow.
+5. For production/business sign-off, replace demo rows with real commercial evidence.

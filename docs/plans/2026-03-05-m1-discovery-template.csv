@@ -1,1 +1,4 @@
 id,date,organization,qualified,outcome,owner
+dc-001,2026-03-03,ORG-003,true,next_step,Agent 0
+dc-002,2026-03-04,ORG-007,true,next_step,Agent 0
+dc-003,2026-03-04,ORG-010,true,next_step,Agent 0
