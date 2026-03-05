@@ -22,6 +22,7 @@
 - `docs/plans/2026-03-05-m3-auth-tenant-isolation-report.md`
 - `docs/plans/2026-03-05-m4-runtime-white-label-report.md`
 - `docs/plans/2026-03-05-m5-admin-ops-readiness-report.md`
+- `docs/plans/2026-03-05-m6-billing-usage-guardrails-report.md`
 - `docs/plans/operational-readiness-masterplan.md`
 - `docs/plans/2026-03-03-feat-operational-readiness-completion-plan.md`
 - `docs/plans/2026-03-03-masterplan-alignment-audit.md`

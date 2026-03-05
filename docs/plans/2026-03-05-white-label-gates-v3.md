@@ -77,10 +77,10 @@ Required evidence:
 ### M6 Gate - Billing and Usage
 
 Required checks:
-1. `mvn -q -f backend/pom.xml "-Dtest=TenantAdminControllerTest,TenantMeControllerTest,TenantMeControllerProdAuthContextTest" test`
+1. `npm run validate:m6:billing-usage-gate`
 
 Required evidence:
-1. Limit-breach and usage-period evidence with stable error semantics.
+1. `docs/plans/2026-03-05-m6-billing-usage-guardrails-report.md`
 
 ### M7 Gate - Production Reliability
 

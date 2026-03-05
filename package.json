@@ -22,6 +22,7 @@
     "validate:m3:tenant-isolation-gate": "node tools/validate_m3_tenant_isolation_gate.js",
     "validate:m4:runtime-gate": "node tools/validate_m4_runtime_white_label_gate.js",
     "validate:m5:admin-ops-gate": "node tools/validate_m5_admin_ops_gate.js",
+    "validate:m6:billing-usage-gate": "node tools/validate_m6_billing_usage_gate.js",
     "validate:flyway:migrations": "node tools/validate_flyway_migrations.js",
     "validate:beta:alerts": "node tools/validate_beta_alert_rules.js",
     "validate:branch-protection:policy": "node tools/validate_branch_protection_policy.js",
