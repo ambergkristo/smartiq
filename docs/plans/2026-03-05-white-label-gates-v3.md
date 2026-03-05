@@ -93,13 +93,10 @@ Required evidence:
 ### M8 Gate - Launch Readiness
 
 Required checks:
-1. `npm run validate:flyway:migrations`
-2. `npm --prefix frontend run build`
+1. `npm run validate:m8:launch-readiness-gate`
 
 Required evidence:
-1. Release checklist completion.
-2. Rollback drill completion.
-3. Runbook ownership completion.
+1. `docs/plans/2026-03-05-m8-launch-readiness-report.md`
 
 ### M9 Gate - Final GA Sign-Off
 
