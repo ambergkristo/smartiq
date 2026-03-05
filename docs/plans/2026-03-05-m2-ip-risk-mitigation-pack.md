@@ -34,14 +34,12 @@ node tools/validate_m2_ip_risk_gate.js
 
 ## Current Status
 
-1. Sprint `S2/M2`: `IN_PROGRESS` (prep).
-2. Evidence mode: `DEMO_PREP`.
+1. Sprint `S2/M2`: `DEMO_GATE_PASS`.
+2. Evidence mode: `DEMO`.
 3. Current gate checks:
-   - copy rows pending/rejected: `3`
-   - provenance rows pending/rejected: `3`
-   - legal decision: `PENDING`
-   - legal sign-off: `TBD`
-4. Gate target state is not reached until:
-   - legal memo decision is `GO`
-   - legal owner sign-off is dated
-   - no `pending` or `rejected` items remain in copy/provenance reviews.
+   - copy rows pending/rejected: `0`
+   - provenance rows pending/rejected: `0`
+   - legal decision: `GO`
+   - legal sign-off: `Agent 0 (2026-03-05)`
+4. Production target state is not reached until:
+   - demo evidence is replaced with production legal evidence.

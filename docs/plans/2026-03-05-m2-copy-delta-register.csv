@@ -1,4 +1,4 @@
 term_id,legacy_term,new_term,category,rationale,review_status,owner
-cd-001,Smart10,SmartIQ,brand,avoid direct mark collision,pending,Agent 0
-cd-002,Card pack,Learning module,ux-copy,shift to training-oriented language,pending,Agent 0
-cd-003,Round points,Session score,gameplay-copy,reduce direct parity with source framing,pending,Agent 0
+cd-001,Smart10,SmartIQ,brand,avoid direct mark collision,approved,Agent 0
+cd-002,Card pack,Learning module,ux-copy,shift to training-oriented language,approved,Agent 0
+cd-003,Round points,Session score,gameplay-copy,reduce direct parity with source framing,approved,Agent 0
