@@ -131,12 +131,74 @@ $env:VITE_API_BASE_URL="https://<your-backend-domain>"
 ## API Endpoints
 
 - `GET /api/topics`
+- `GET /api/me` (white-label auth context via bearer JWT)
+- `GET /api/me/tenant-settings` (selected tenant runtime settings for authenticated member)
+- `GET /api/me/tenant-branding` (selected tenant branding for authenticated member)
+- `GET /api/me/tenant-subscription` (selected tenant subscription for authenticated member)
 - `GET /api/cards/nextRandom?language=&gameId=&topic=` (preferred)
 - `GET /api/cards/next?topic=&difficulty=&sessionId=&lang=` (legacy/custom mode, deprecated in `prod`)
 - `GET /api/cards/random?topic=` (legacy/backward-compatible, deprecated in `prod`)
 - `POST /api/game`
 - `GET /api/game/{gameId}`
 - `POST /api/game/{gameId}/action`
+
+Internal white-label admin endpoints (protected by internal API key in `prod`):
+
+- `POST /internal/wl/tenants`
+- `GET /internal/wl/tenants`
+- `GET /internal/wl/tenants/{tenantId}`
+- `POST /internal/wl/tenants/{tenantId}/members`
+- `PATCH /internal/wl/tenants/{tenantId}/members/{membershipId}`
+- `DELETE /internal/wl/tenants/{tenantId}/members/{membershipId}`
+- `GET /internal/wl/tenants/{tenantId}/members`
+- `GET /internal/wl/tenants/{tenantId}/audit-events?limit=` (optional `1..200`, default `50`)
+- `GET /internal/wl/tenants/{tenantId}/subscription`
+- `PUT /internal/wl/tenants/{tenantId}/subscription`
+- `POST /internal/wl/tenants/{tenantId}/usage-events`
+- `GET /internal/wl/tenants/{tenantId}/usage-events?eventType=&limit=` (optional `limit: 1..500`, default `100`)
+- `GET /internal/wl/tenants/{tenantId}/settings`
+- `PUT /internal/wl/tenants/{tenantId}/settings`
+- `PATCH /internal/wl/tenants/{tenantId}/branding`
+
+`GET /api/me` auth-context contract:
+
+- Primary: `Authorization: Bearer <jwt>`
+- Current adapter extracts claims from JWT payload and assumes upstream token verification.
+- Email claim priority: `email`, `preferred_username`, `upn`, `sub`
+- Optional tenant claim: `tenant_id` (UUID)
+- Dev fallback (disabled in `prod`): `X-SmartIQ-User-Email`, `X-SmartIQ-Tenant-Id`
+
+Tenant settings schema (`schemaVersion: 1`) for internal `PUT /internal/wl/tenants/{tenantId}/settings`:
+
+- `theme`: `classic|ember|ocean` (default: `classic`)
+- `game.maxPlayers`: integer `1..50` (default: `10`)
+- `game.roundsPerMatch`: integer `1..30` (default: `10`)
+- `features.leaderboardEnabled`: boolean (default: `false`)
+- `features.teamsEnabled`: boolean (default: `false`)
+
+Tenant member update schema for internal `PATCH /internal/wl/tenants/{tenantId}/members/{membershipId}`:
+
+- `role`: optional `owner|admin|editor|viewer`
+- `status`: optional `active|suspended`
+- At least one field (`role` or `status`) must be provided
+- Membership removal endpoint: `DELETE /internal/wl/tenants/{tenantId}/members/{membershipId}` (hard-delete membership)
+- Guardrail: cannot demote/suspend or remove the last `active owner`
+
+Tenant subscription schema for internal `PUT /internal/wl/tenants/{tenantId}/subscription`:
+
+- `planCode`: string, lowercase `[a-z0-9._-]{2,64}`
+- `status`: `trialing|active|past_due|canceled`
+- `billingCycle`: `monthly|annual`
+- `trialEndsAt`: optional ISO-8601 timestamp
+- `currentPeriodStartsAt`: optional ISO-8601 timestamp
+- `currentPeriodEndsAt`: optional ISO-8601 timestamp (must be after `currentPeriodStartsAt` when both are set)
+
+Tenant usage event schema for internal `POST /internal/wl/tenants/{tenantId}/usage-events`:
+
+- `eventType`: string, lowercase `[a-z0-9._-]{2,64}`
+- `eventValue`: integer `>= 0`
+- `eventTime`: optional ISO-8601 timestamp (default: server `now`)
+- `metadata`: optional JSON object
 
 Server-authoritative action payload contract:
 
@@ -296,6 +358,24 @@ Branch governance and cleanup policy: `docs/branch-governance.md`
 Full branch consolidation audit: `docs/branch-consolidation-full-audit-2026-02-24.md`
 Latest branch consolidation snapshot (auto-generated): `docs/branch-consolidation-audit-latest.md`
 Generate latest branch consolidation snapshot: `npm run report:branches:consolidation`
+White-label canonical masterplan (multi-agent lean): `docs/plans/2026-03-05-white-label-masterplan-v2-multi-agent-lean.md`
+Superseded white-label program snapshot: `docs/plans/2026-03-03-white-label-program-v1.md`
+Dual-AI execution protocol: `docs/plans/2026-03-03-dual-ai-delivery-protocol.md`
+Dual-AI file ownership policy: `docs/policies/dual-ai-file-ownership.json`
+
+Legacy dual-AI helper commands (optional; not required in experimental multi-agent mode):
+
+```powershell
+# initialize Team A + Team B worktrees
+npm run ops:worktrees:init
+
+# validate current branch file ownership for a team
+npm run validate:dual-ai:ownership -- --team=team-a --base=origin/main
+npm run validate:dual-ai:ownership -- --team=team-b --base=origin/main
+
+# if shared locked files are intentionally coordinated in this batch
+npm run validate:dual-ai:ownership -- --team=team-a --base=origin/main --allow-shared-locked
+```
 
 Observability reference: `docs/observability.md`
 
@@ -382,7 +462,9 @@ node scripts/verify_runtime_deck.js
 
 - Active masterplan and roadmap source of truth:
   - `docs/plans/2026-03-03-masterplan-roadmap-to-beta.md`
+  - `docs/plans/2026-03-05-white-label-masterplan-v2-multi-agent-lean.md`
 - Historical plan snapshot:
+  - `docs/plans/2026-03-03-white-label-program-v1.md`
   - `docs/plan.md`
 - If planning or scope conflicts occur, the canonical masterplan takes priority.
 
