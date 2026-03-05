@@ -101,11 +101,10 @@ Required evidence:
 ### M9 Gate - Final GA Sign-Off
 
 Required checks:
-1. All previous milestone gates are green.
-2. No unresolved Critical/High issues.
+1. `npm run validate:m9:ga-signoff-gate`
 
 Required evidence:
-1. Final GA handoff package for engineering and ops.
+1. `docs/plans/2026-03-05-m9-ga-handoff-package.md`
 
 ## Promotion Formula
 

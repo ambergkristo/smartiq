@@ -25,6 +25,7 @@
 - `docs/plans/2026-03-05-m6-billing-usage-guardrails-report.md`
 - `docs/plans/2026-03-05-m7-production-reliability-report.md`
 - `docs/plans/2026-03-05-m8-launch-readiness-report.md`
+- `docs/plans/2026-03-05-m9-ga-handoff-package.md`
 - `docs/plans/operational-readiness-masterplan.md`
 - `docs/plans/2026-03-03-feat-operational-readiness-completion-plan.md`
 - `docs/plans/2026-03-03-masterplan-alignment-audit.md`

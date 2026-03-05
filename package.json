@@ -24,6 +24,7 @@
     "validate:m5:admin-ops-gate": "node tools/validate_m5_admin_ops_gate.js",
     "validate:m6:billing-usage-gate": "node tools/validate_m6_billing_usage_gate.js",
     "validate:m8:launch-readiness-gate": "node tools/validate_m8_launch_readiness_gate.js",
+    "validate:m9:ga-signoff-gate": "node tools/validate_m9_ga_signoff_gate.js",
     "validate:flyway:migrations": "node tools/validate_flyway_migrations.js",
     "validate:beta:alerts": "node tools/validate_beta_alert_rules.js",
     "validate:branch-protection:policy": "node tools/validate_branch_protection_policy.js",
