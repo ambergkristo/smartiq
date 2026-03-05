@@ -70,7 +70,12 @@ async function delay(ms) {
   });
 }
 
-async function fetchJson(url, { timeoutMs = 8000, method = 'GET', body = null } = {}) {
+async function fetchJson(url, {
+  timeoutMs = 8000,
+  method = 'GET',
+  body = null,
+  headers = null
+} = {}) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -79,8 +84,12 @@ async function fetchJson(url, { timeoutMs = 8000, method = 'GET', body = null } 
       method,
       signal: controller.signal
     };
+    if (headers && typeof headers === 'object') {
+      options.headers = { ...headers };
+    }
     if (body !== null) {
       options.headers = {
+        ...(options.headers || {}),
         'Content-Type': 'application/json'
       };
       options.body = JSON.stringify(body);
@@ -125,6 +134,71 @@ function requireApiBase() {
       'CONFIG_ERROR'
     );
   }
+}
+
+function normalizeBearerHeader(rawToken) {
+  const token = String(rawToken || '').trim();
+  if (!token) {
+    return null;
+  }
+  if (/^bearer\s+/i.test(token)) {
+    return token;
+  }
+  return `Bearer ${token}`;
+}
+
+function resolveRuntimeAuthHeaders() {
+  const bearer = normalizeBearerHeader(
+    import.meta.env.VITE_RUNTIME_AUTH_BEARER_TOKEN
+    || import.meta.env.VITE_RUNTIME_AUTH_TOKEN
+    || import.meta.env.VITE_AUTH_BEARER_TOKEN
+  );
+  const userEmail = String(
+    import.meta.env.VITE_RUNTIME_USER_EMAIL
+    || import.meta.env.VITE_AUTH_USER_EMAIL
+    || ''
+  ).trim();
+  const tenantId = String(
+    import.meta.env.VITE_RUNTIME_TENANT_ID
+    || import.meta.env.VITE_AUTH_TENANT_ID
+    || ''
+  ).trim();
+
+  const headers = {};
+  if (bearer) {
+    headers.Authorization = bearer;
+  }
+  if (userEmail && tenantId) {
+    headers['X-SmartIQ-User-Email'] = userEmail;
+    headers['X-SmartIQ-Tenant-Id'] = tenantId;
+  }
+  return headers;
+}
+
+export function hasRuntimeAuthContext() {
+  return Object.keys(resolveRuntimeAuthHeaders()).length > 0;
+}
+
+export async function fetchTenantRuntimeSnapshot() {
+  requireApiBase();
+  const headers = resolveRuntimeAuthHeaders();
+  if (Object.keys(headers).length === 0) {
+    return null;
+  }
+
+  const me = await fetchJson(`${API_BASE}/api/me`, { headers });
+  const [settings, branding, subscription] = await Promise.all([
+    fetchJson(`${API_BASE}/api/me/tenant-settings`, { headers }),
+    fetchJson(`${API_BASE}/api/me/tenant-branding`, { headers }),
+    fetchJson(`${API_BASE}/api/me/tenant-subscription`, { headers })
+  ]);
+
+  return {
+    me,
+    settings,
+    branding,
+    subscription
+  };
 }
 
 function normalizeLanguage(lang) {

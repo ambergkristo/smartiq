@@ -1,5 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { API_BASE, fetchNextCard, fetchTopics, resolveCardErrorMessage, resolveTopicsErrorState } from './api';
+import {
+  API_BASE,
+  fetchNextCard,
+  fetchTenantRuntimeSnapshot,
+  fetchTopics,
+  hasRuntimeAuthContext,
+  resolveCardErrorMessage,
+  resolveTopicsErrorState
+} from './api';
 import AdminConsole from './admin/AdminConsole';
 import GameBoard from './components/GameBoard';
 import RoundSummary from './components/RoundSummary';
@@ -79,10 +87,14 @@ function parsePlayers(text) {
   );
 }
 
-function SetupSkeleton() {
+function isSupportedTheme(theme) {
+  return THEME_OPTIONS.some((entry) => entry.value === theme);
+}
+
+function SetupSkeleton({ appTitle }) {
   return (
     <section className="setup-panel board-surface" data-testid="setup-skeleton">
-      <h1>{STRINGS.title}</h1>
+      <h1>{appTitle}</h1>
       <p>{STRINGS.loadingTopics}</p>
       <div className="topic-grid topic-grid--skeleton" aria-hidden>
         {Array.from({ length: 6 }).map((_, index) => (
@@ -138,11 +150,13 @@ function AudioControls({ muted, volume, onToggleMute, onVolumeChange }) {
   );
 }
 
-function StartScreen({ topics, config, setConfig, onStart }) {
+function StartScreen({ topics, config, setConfig, onStart, appTitle, runtimeSnapshot, runtimeWarning }) {
   const players = parsePlayers(config.playersText);
   const canStart = players.length > 0;
   const activeTopic = config.topic || 'Any Topic';
   const activeLanguage = String(config.lang || 'en').toUpperCase();
+  const tenantId = runtimeSnapshot?.me?.selectedTenantId || '';
+  const planCode = runtimeSnapshot?.subscription?.planCode || '';
 
   function addPlayers(rawValue) {
     const incoming = parsePlayers(rawValue);
@@ -160,8 +174,16 @@ function StartScreen({ topics, config, setConfig, onStart }) {
 
   return (
     <section className="setup-panel board-surface">
-      <h1>{STRINGS.title}</h1>
+      <h1>{appTitle}</h1>
       <p>{STRINGS.subtitle}</p>
+      {tenantId ? (
+        <p className="field-hint tenant-runtime-hint" data-testid="tenant-runtime-hint">
+          Tenant runtime active: {tenantId}{planCode ? ` | plan ${planCode}` : ''}
+        </p>
+      ) : null}
+      {runtimeWarning ? (
+        <p className="field-hint runtime-warning" data-testid="tenant-runtime-warning">{runtimeWarning}</p>
+      ) : null}
 
       <div className="setup-toolbar">
         <div className="setup-toolbar-group">
@@ -296,19 +318,19 @@ function loadStoredConfig() {
   }
 }
 
-function StartupStatePanel({ startup, onRetry }) {
+function StartupStatePanel({ startup, onRetry, appTitle }) {
   if (startup.phase === STARTUP_PHASE.READY) {
     return null;
   }
 
   if (startup.phase === STARTUP_PHASE.LOADING) {
-    return <SetupSkeleton />;
+    return <SetupSkeleton appTitle={appTitle} />;
   }
 
   if (startup.phase === STARTUP_PHASE.TOPICS_EMPTY) {
     return (
       <section className="setup-panel board-surface startup-panel">
-        <h1>{STRINGS.title}</h1>
+        <h1>{appTitle}</h1>
         <p className="error">{STRINGS.noTopics}</p>
         <p>{STRINGS.noTopicsHint}</p>
         <button type="button" onClick={onRetry}>
@@ -320,7 +342,7 @@ function StartupStatePanel({ startup, onRetry }) {
 
   return (
     <section className="setup-panel board-surface startup-panel">
-      <h1>{STRINGS.title}</h1>
+      <h1>{appTitle}</h1>
       <div className="error-panel">
         <p className="error">{startup.error?.title ?? 'Could not load topics.'}</p>
         <p>{startup.error?.detail}</p>
@@ -372,6 +394,8 @@ function GameApp() {
   const [gameId, setGameId] = useState('');
   const [cardError, setCardError] = useState('');
   const [runtimeMode, setRuntimeMode] = useState('local');
+  const [runtimeSnapshot, setRuntimeSnapshot] = useState(null);
+  const [runtimeWarning, setRuntimeWarning] = useState('');
 
   const legacyEngine = useGameEngine(30);
   const serverEngine = useServerGameEngine(30);
@@ -458,6 +482,52 @@ function GameApp() {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', config.theme);
   }, [config.theme]);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function loadRuntimeSnapshot() {
+      if (typeof hasRuntimeAuthContext !== 'function' || !hasRuntimeAuthContext()) {
+        return;
+      }
+      if (typeof fetchTenantRuntimeSnapshot !== 'function') {
+        return;
+      }
+      try {
+        const snapshot = await fetchTenantRuntimeSnapshot();
+        if (cancelled || !snapshot) {
+          return;
+        }
+        setRuntimeSnapshot(snapshot);
+        const runtimeTheme = snapshot?.settings?.settings?.theme;
+        if (isSupportedTheme(runtimeTheme)) {
+          setConfig((prev) => ({ ...prev, theme: runtimeTheme }));
+        }
+        const primaryColor = snapshot?.branding?.branding?.primaryColor;
+        const secondaryColor = snapshot?.branding?.branding?.secondaryColor;
+        if (primaryColor) {
+          document.documentElement.style.setProperty('--accent', primaryColor);
+        }
+        if (secondaryColor) {
+          document.documentElement.style.setProperty('--accent2', secondaryColor);
+        }
+      } catch {
+        if (!cancelled) {
+          setRuntimeWarning('Tenant runtime context not available; using local defaults.');
+        }
+      }
+    }
+
+    loadRuntimeSnapshot();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const appTitle = String(runtimeSnapshot?.branding?.branding?.appName || STRINGS.title).trim() || STRINGS.title;
+
+  useEffect(() => {
+    document.title = appTitle;
+  }, [appTitle]);
 
   useEffect(() => {
     async function loadCard() {
@@ -573,9 +643,17 @@ function GameApp() {
       />
       {engine.phase === GamePhase.SETUP ? (
         <>
-          {startup.phase !== STARTUP_PHASE.READY ? <StartupStatePanel startup={startup} onRetry={loadTopics} /> : null}
+          {startup.phase !== STARTUP_PHASE.READY ? <StartupStatePanel startup={startup} onRetry={loadTopics} appTitle={appTitle} /> : null}
           {startup.phase === STARTUP_PHASE.READY && topics.length > 0 ? (
-            <StartScreen topics={topics} config={config} setConfig={setConfig} onStart={handleStartRound} />
+            <StartScreen
+              topics={topics}
+              config={config}
+              setConfig={setConfig}
+              onStart={handleStartRound}
+              appTitle={appTitle}
+              runtimeSnapshot={runtimeSnapshot}
+              runtimeWarning={runtimeWarning}
+            />
           ) : null}
         </>
       ) : null}

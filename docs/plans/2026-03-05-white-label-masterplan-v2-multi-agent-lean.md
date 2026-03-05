@@ -118,8 +118,8 @@ Current status:
 1. `M0`: `DONE` (Sprint `S0`, completed 2026-03-05)
 2. `M1`: `DONE` (Sprint `S1`, completed 2026-03-05)
 3. `M2`: `DONE` (Sprint `S2`, completed 2026-03-05)
-4. `M3`: `READY`
-5. `M4`: `LOCKED`
+4. `M3`: `DONE` (Sprint `S3`, completed 2026-03-05)
+5. `M4`: `READY`
 6. `M5`: `LOCKED`
 7. `M6`: `LOCKED`
 
@@ -162,6 +162,21 @@ M2 evidence:
    - `npm --prefix frontend run test -- --run src/admin/api.test.js src/admin/AdminConsole.test.jsx`
 5. Regression smoke for existing game app is green:
    - `npm --prefix frontend run test -- --run src/App.test.jsx`
+
+M3 evidence:
+1. Runtime tenant context fetch added to frontend using `/api/me*`:
+   - `frontend/src/api.js` (`fetchTenantRuntimeSnapshot`, runtime auth headers)
+2. Game setup now reflects tenant branding and settings:
+   - `frontend/src/App.jsx` (tenant app title, runtime theme apply, tenant runtime hint)
+   - `frontend/src/styles.css` (tenant runtime hint styles)
+3. Runtime frontend verification test is green:
+   - `npm --prefix frontend run test -- --run src/App.tenant-runtime.test.jsx`
+4. Runtime + app regression frontend suite is green:
+   - `npm --prefix frontend run test -- --run src/App.test.jsx src/App.startup.test.jsx src/App.server-mode.test.jsx src/App.tenant-runtime.test.jsx src/admin/api.test.js src/admin/AdminConsole.test.jsx`
+5. Backend runtime member-context verification is green:
+   - `mvn -q -f backend/pom.xml "-Dtest=TenantMeControllerTest,TenantMeControllerProdAuthContextTest" test`
+6. Frontend production build passes after runtime integration:
+   - `npm --prefix frontend run build`
 
 ## Sprint System (M-based until final completion)
 

@@ -6,6 +6,8 @@ vi.mock('./api', () => {
     API_BASE: 'http://localhost:8080',
     fetchTopics: vi.fn(),
     fetchNextCard: vi.fn(),
+    fetchTenantRuntimeSnapshot: vi.fn(),
+    hasRuntimeAuthContext: vi.fn(() => false),
     resolveCardErrorMessage: vi.fn(() => 'Fallback mode'),
     resolveTopicsErrorState: vi.fn(() => ({
       title: 'Could not load topics.',

@@ -7,6 +7,8 @@ vi.mock('./api', () => {
     API_BASE: 'http://localhost:8080',
     fetchTopics: vi.fn(),
     fetchNextCard: vi.fn(),
+    fetchTenantRuntimeSnapshot: vi.fn(),
+    hasRuntimeAuthContext: vi.fn(() => false),
     createServerGameSession: vi.fn(),
     fetchServerGameSession: vi.fn(),
     sendServerGameAction: vi.fn(),

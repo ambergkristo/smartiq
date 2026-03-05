@@ -357,6 +357,14 @@ button:disabled {
   font-size: 0.82rem;
 }
 
+.tenant-runtime-hint {
+  margin-top: -4px;
+}
+
+.runtime-warning {
+  color: #fcd1a0;
+}
+
 .active-filter {
   margin-top: -6px;
   margin-bottom: 2px;
