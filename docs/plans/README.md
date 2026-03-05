@@ -10,6 +10,8 @@
 ## Supporting Plans and Audits
 
 - `docs/plans/2026-03-05-business-end-goal-assessment-et.md`
+- `docs/plans/2026-03-05-m1-payment-signal-validation.md`
+- `docs/plans/2026-03-05-m1-payment-signal-ledger.json`
 - `docs/plans/operational-readiness-masterplan.md`
 - `docs/plans/2026-03-03-feat-operational-readiness-completion-plan.md`
 - `docs/plans/2026-03-03-masterplan-alignment-audit.md`

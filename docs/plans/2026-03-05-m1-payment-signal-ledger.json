@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "milestone": "M1",
+  "sprint": "S1",
+  "status": "in_progress",
+  "updatedAt": "2026-03-05",
+  "owner": "Agent 0",
+  "icp": {
+    "segment": "Corporate training teams in Estonia/Baltics",
+    "source": "docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md"
+  },
+  "pricing": {
+    "source": "docs/plans/2026-03-05-m5-gtm-pilot-readiness-pack.md",
+    "version": "v1"
+  },
+  "targets": {
+    "outreachAttemptsMin": 10,
+    "discoveryCallsMin": 3,
+    "paidPilotReadySignalsMin": 2
+  },
+  "outreachAttempts": [],
+  "discoveryCalls": [],
+  "pilotIntentSignals": [],
+  "notes": [
+    "This ledger is the canonical M1 payment-signal evidence source.",
+    "Promote M1 to DONE only when gate thresholds are satisfied."
+  ]
+}

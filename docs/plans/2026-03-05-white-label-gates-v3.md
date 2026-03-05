@@ -33,14 +33,18 @@ Required evidence:
 ### M1 Gate - Payment Signal
 
 Required checks:
-1. outreach log has >= 10 qualified contacts
-2. discovery log has >= 3 calls
-3. pilot intent log has >= 2 paid-pilot-ready signals
+1. `node tools/validate_m1_payment_signal_gate.js docs/plans/2026-03-05-m1-payment-signal-ledger.json`
+2. outreach log has >= 10 qualified contacts
+3. discovery log has >= 3 calls
+4. pilot intent log has >= 2 paid-pilot-ready signals
 
 Required evidence:
-1. dated outreach artifact
-2. dated call summaries
-3. dated pilot-intent table with contact status
+1. dated outreach artifact:
+   - `docs/plans/2026-03-05-m1-payment-signal-validation.md`
+2. dated machine-readable ledger:
+   - `docs/plans/2026-03-05-m1-payment-signal-ledger.json`
+3. dated call summaries
+4. dated pilot-intent table with contact status
 
 ### M2 Gate - IP Risk
 

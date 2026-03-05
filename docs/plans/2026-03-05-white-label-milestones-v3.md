@@ -25,7 +25,7 @@ Cadence:
 | Milestone | Sprint | Objective | Exit Gate (summary) | Status |
 | --- | --- | --- | --- | --- |
 | M0 | S0 | Baseline + gate system lock | v3 docs linked + docs checks green | DONE (2026-03-05) |
-| M1 | S1 | Payment signal validation | 2 pilot-ready buying signals documented | READY |
+| M1 | S1 | Payment signal validation | 2 pilot-ready buying signals documented | IN_PROGRESS (2026-03-05) |
 | M2 | S2 | IP risk mitigation lock | no known blocking IP risk | LOCKED |
 | M3 | S3 | Auth + tenant isolation hardening | auth/isolation suite green | LOCKED |
 | M4 | S4 | Runtime white-label behavior | per-tenant branding works without redeploy | LOCKED |
@@ -36,7 +36,7 @@ Cadence:
 
 Current execution pointer:
 1. `S0/M0` is complete.
-2. `S1/M1` is unlocked and ready as the next active sprint.
+2. `S1/M1` is active.
 
 ## Milestone DoD (decision complete)
 
