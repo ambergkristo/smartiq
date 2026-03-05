@@ -24,8 +24,8 @@ npm run validate:m3:tenant-isolation-gate
 
 ## Current Status
 
-1. Sprint `S3/M3`: `DEMO_GATE_PASS`.
-2. Evidence mode: `DEMO`.
+1. Sprint `S3/M3`: `GATE_PASS`.
+2. Evidence mode: `local-verification`.
 3. Gate run result: `PASS` (2026-03-05).
 
 ## Required Evidence
@@ -41,4 +41,4 @@ npm run validate:m3:tenant-isolation-gate
 
 1. Migration validation passed.
 2. Tenant/auth isolation test suite passed.
-3. M3 is complete for demo track and remains subject to production evidence replacement policy.
+3. M3 gate criteria are satisfied and the milestone is ready for promotion to M4.
