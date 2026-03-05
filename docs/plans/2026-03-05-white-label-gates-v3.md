@@ -69,11 +69,10 @@ Required evidence:
 ### M5 Gate - Admin Operations
 
 Required checks:
-1. `npm --prefix frontend run test -- --run src/admin/api.test.js src/admin/AdminConsole.test.jsx`
-2. `mvn -q -f backend/pom.xml "-Dtest=TenantAdminControllerTest" test`
+1. `npm run validate:m5:admin-ops-gate`
 
 Required evidence:
-1. Admin contract alignment report with zero blocking mismatches.
+1. `docs/plans/2026-03-05-m5-admin-ops-readiness-report.md`
 
 ### M6 Gate - Billing and Usage
 
