@@ -67,11 +67,13 @@ Required evidence:
 ### M3 Gate - Auth and Tenant Isolation
 
 Required checks:
-1. `npm run validate:flyway:migrations`
-2. `mvn -q -f backend/pom.xml "-Dtest=TenantAdminControllerTest,TenantMeControllerTest,TenantMeControllerProdAuthContextTest,SecurityConfigTest" test`
+1. `npm run validate:m3:tenant-isolation-gate`
+2. `npm run validate:flyway:migrations`
+3. `mvn -q -f backend/pom.xml "-Dtest=TenantAdminControllerTest,TenantMeControllerTest,TenantMeControllerProdAuthContextTest,SecurityConfigTest" test`
 
 Required evidence:
-1. tenant boundary test report
+1. tenant boundary and auth report:
+   - `docs/plans/2026-03-05-m3-auth-tenant-isolation-report.md`
 2. auth status code behavior report (401/403 mapping)
 
 ### M4 Gate - Runtime White-Label

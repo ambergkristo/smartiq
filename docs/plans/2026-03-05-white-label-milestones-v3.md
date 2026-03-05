@@ -27,7 +27,7 @@ Cadence:
 | M0 | S0 | Baseline + gate system lock | v3 docs linked + docs checks green | DONE (2026-03-05) |
 | M1 | S1 | Payment signal validation | 2 pilot-ready buying signals documented | DONE (DEMO, 2026-03-05) |
 | M2 | S2 | IP risk mitigation lock | no known blocking IP risk | DONE (DEMO, 2026-03-05) |
-| M3 | S3 | Auth + tenant isolation hardening | auth/isolation suite green | LOCKED |
+| M3 | S3 | Auth + tenant isolation hardening | auth/isolation suite green | DONE (DEMO, 2026-03-05) |
 | M4 | S4 | Runtime white-label behavior | per-tenant branding works without redeploy | LOCKED |
 | M5 | S5 | Billing + limits | deterministic limit enforcement verified | LOCKED |
 | M6 | S6 | Closed beta retention proof | 7-day retention evidence recorded | LOCKED |
@@ -38,7 +38,8 @@ Current execution pointer:
 1. `S0/M0` is complete.
 2. `S1/M1` demo gate pass is complete.
 3. `S2/M2` demo gate pass is complete.
-4. `S3/M3` remains locked for production path until demo evidence is replaced with real business/legal evidence.
+4. `S3/M3` demo gate pass is complete.
+5. `S4/M4` remains locked for production path until demo evidence is replaced with real business/legal evidence.
 
 ## Milestone DoD (decision complete)
 
