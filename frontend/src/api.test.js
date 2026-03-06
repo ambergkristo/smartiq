@@ -6,6 +6,7 @@ import {
   createRoomSession,
   createServerGameSession,
   fetchTenantRuntimeSnapshot,
+  updateRuntimeTenantBranding,
   getRuntimeAuthContext,
   hasRuntimeAuthContext,
   resolveCardErrorMessage,
@@ -260,6 +261,51 @@ describe('api error mapping', () => {
           Authorization: 'Bearer token-1',
           'X-SmartIQ-User-Email': 'owner@acme.test',
           'X-SmartIQ-Tenant-Id': 'tenant-1'
+        })
+      })
+    );
+  });
+
+  test('sends runtime auth headers with tenant branding updates', async () => {
+    global.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
+      tenantId: 'tenant-1',
+      branding: {
+        appName: 'Late Night Quiz',
+        logoUrl: null,
+        primaryColor: '#101820',
+        secondaryColor: '#FEE715'
+      }
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    }));
+    setRuntimeAuthContext({
+      userEmail: 'owner@acme.test',
+      tenantId: 'tenant-1',
+      bearerToken: 'token-1'
+    });
+
+    await updateRuntimeTenantBranding({
+      appName: 'Late Night Quiz',
+      logoUrl: '',
+      primaryColor: '#101820',
+      secondaryColor: '#FEE715'
+    });
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      expect.stringMatching(/\/api\/me\/tenant-branding$/),
+      expect.objectContaining({
+        method: 'PATCH',
+        headers: expect.objectContaining({
+          Authorization: 'Bearer token-1',
+          'X-SmartIQ-User-Email': 'owner@acme.test',
+          'X-SmartIQ-Tenant-Id': 'tenant-1'
+        }),
+        body: JSON.stringify({
+          appName: 'Late Night Quiz',
+          logoUrl: null,
+          primaryColor: '#101820',
+          secondaryColor: '#FEE715'
         })
       })
     );

@@ -24,6 +24,7 @@ vi.mock('./api', () => {
     rejoinRoomSession: vi.fn(),
     requestRuntimeAuthLink: vi.fn(),
     setRuntimeAuthContext: vi.fn(),
+    updateRuntimeTenantBranding: vi.fn(),
     resolveCardErrorMessage: vi.fn(() => 'Fallback mode'),
     resolveTopicsErrorState: vi.fn(() => ({
       title: 'Could not load topics.',

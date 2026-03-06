@@ -22,6 +22,7 @@
 - `docs/reports/2026-03-06-recurring-host-saas-m3-billing-host-surface-progress.md`
 - `docs/reports/2026-03-06-recurring-host-saas-m4-canonical-flow-evidence.md`
 - `docs/reports/2026-03-06-recurring-host-saas-m4-room-entry-progress.md`
+- `docs/reports/2026-03-06-recurring-host-saas-m5-entitlement-progress.md`
 - `docs/reports/2026-03-06-quiz-night-saas-milestone-evidence-m0-m9.md`
 - `docs/reports/2026-03-06-quiz-night-saas-m8-go-no-go-report.md`
 - `docs/reports/2026-03-06-quiz-night-saas-m9-post-launch-hardening-pack.md`

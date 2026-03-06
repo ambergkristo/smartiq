@@ -135,6 +135,70 @@ class TenantMeControllerTest {
     }
 
     @Test
+    void allowsProHostOwnerToUpdateBrandingFromRuntimeRoute() throws Exception {
+        String tenantId = createTenant("branding-pro", "Branding Pro");
+        addMember(tenantId, "branding-owner@acme.test", "Branding Owner", "owner");
+        updateSubscription(tenantId, """
+                {
+                  "planCode": "pro-host-monthly",
+                  "status": "active",
+                  "billingCycle": "monthly"
+                }
+                """);
+
+        mockMvc.perform(patch("/api/me/tenant-branding")
+                        .header("Authorization", bearerToken("branding-owner@acme.test", tenantId))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "appName": "After Dark Quiz",
+                                  "logoUrl": "https://cdn.example.com/after-dark.svg",
+                                  "primaryColor": "#101820",
+                                  "secondaryColor": "#FEE715"
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.tenantId").value(tenantId))
+                .andExpect(jsonPath("$.branding.appName").value("After Dark Quiz"))
+                .andExpect(jsonPath("$.branding.logoUrl").value("https://cdn.example.com/after-dark.svg"))
+                .andExpect(jsonPath("$.branding.primaryColor").value("#101820"))
+                .andExpect(jsonPath("$.branding.secondaryColor").value("#FEE715"));
+
+        mockMvc.perform(get("/api/me/tenant-branding")
+                        .header("Authorization", bearerToken("branding-owner@acme.test", tenantId)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.branding.appName").value("After Dark Quiz"))
+                .andExpect(jsonPath("$.branding.primaryColor").value("#101820"));
+    }
+
+    @Test
+    void blocksRuntimeBrandingUpdateWhenPlanDoesNotIncludeCustomBranding() throws Exception {
+        String tenantId = createTenant("branding-trial", "Branding Trial");
+        addMember(tenantId, "branding-trial@acme.test", "Branding Trial", "owner");
+        updateSubscription(tenantId, """
+                {
+                  "planCode": "pilot-monthly",
+                  "status": "trialing",
+                  "billingCycle": "monthly"
+                }
+                """);
+
+        mockMvc.perform(patch("/api/me/tenant-branding")
+                        .header("Authorization", bearerToken("branding-trial@acme.test", tenantId))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "appName": "Locked Quiz",
+                                  "primaryColor": "#223344",
+                                  "secondaryColor": "#556677"
+                                }
+                                """))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.code").value("FORBIDDEN_TENANT_ACCESS"))
+                .andExpect(jsonPath("$.error").value("current plan does not include custom branding"));
+    }
+
+    @Test
     void bootstrapsOnboardingWorkspaceAndRuntimeContext() throws Exception {
         String payload = """
                 {

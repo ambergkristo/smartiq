@@ -4,6 +4,8 @@ import com.smartiq.backend.auth.AuthContextResolver;
 import com.smartiq.backend.auth.ResolvedAuthContext;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +40,13 @@ public class TenantMeController {
     public TenantBrandingRuntimeResponse getTenantBranding(HttpServletRequest request) {
         ResolvedAuthContext context = authContextResolver.resolve(request);
         return tenantService.getTenantBrandingForMember(context.userEmail(), context.tenantId());
+    }
+
+    @PatchMapping("/tenant-branding")
+    public TenantBrandingRuntimeResponse updateTenantBranding(HttpServletRequest request,
+                                                              @RequestBody(required = false) UpdateTenantBrandingRequest updateRequest) {
+        ResolvedAuthContext context = authContextResolver.resolve(request);
+        return tenantService.updateBrandingForMember(context.userEmail(), context.tenantId(), updateRequest);
     }
 
     @GetMapping("/tenant-subscription")

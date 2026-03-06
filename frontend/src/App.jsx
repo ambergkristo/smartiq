@@ -21,6 +21,7 @@ import {
   rejoinRoomSession,
   requestRuntimeAuthLink,
   setRuntimeAuthContext,
+  updateRuntimeTenantBranding,
   resolveCardErrorMessage,
   resolveTopicsErrorState
 } from './api';
@@ -82,12 +83,27 @@ const STRINGS = {
   upgradeRecoverySubmit: 'Restore billing',
   upgradeRedirecting: 'Redirecting to checkout...',
   upgradeRecoveryHint: 'If checkout does not open automatically, continue with the billing link below.',
+  billingReturnRefreshing: 'Billing return detected. Refreshing workspace entitlements...',
+  billingReturnRestored: 'Billing restored. Paid capabilities are now active.',
+  billingReturnPending: 'Billing return detected. Entitlements are still syncing; refresh again in a moment.',
+  billingReturnCanceled: 'Checkout was canceled. Your current plan remains unchanged.',
   hostWorkspaceTitle: 'Host workspace',
   hostWorkspaceHint: 'Subscription state, recent host activity, and tenant usage live here.',
   hostWorkspaceLoading: 'Loading workspace insights...',
   hostWorkspaceNoActivity: 'No recent host activity yet.',
   hostWorkspaceNoUsage: 'No tracked tenant usage yet for this period.',
   hostWorkspaceAnalyticsLocked: 'Analytics and host history unlock on Pro Host. Upgrade to view recent activity and usage trends.',
+  brandingEditorTitle: 'Branding',
+  brandingEditorHint: 'Update the runtime app name, logo, and colors shown across host and player surfaces.',
+  brandingLockedHint: 'Custom branding unlocks on Pro Host. Upgrade to apply your own app identity.',
+  brandingRoleHint: 'Only owners and admins can update tenant branding.',
+  brandingAppNameLabel: 'Brand app name',
+  brandingLogoUrlLabel: 'Logo URL',
+  brandingPrimaryColorLabel: 'Primary color',
+  brandingSecondaryColorLabel: 'Secondary color',
+  brandingSaveSubmit: 'Save branding',
+  brandingSaving: 'Saving branding...',
+  brandingSaved: 'Branding updated.',
   hostedRuntimeBlocked: 'Hosted runtime is blocked until billing is restored. Upgrade or fix billing to launch sessions.',
   hostedRuntimePastDue: 'Billing is past due. Hosted launches are blocked until payment state is recovered.',
   hostedRuntimeCanceled: 'Subscription is canceled. Hosted launches are blocked until the tenant is upgraded again.',
@@ -379,6 +395,18 @@ function buildPlaceholderPlayers(playerCount) {
   return Array.from({ length: Math.min(playerCount, 10) }, (_, index) => `Player ${index + 1}`);
 }
 
+function buildBrandingDraft(brandingResponse) {
+  const branding = brandingResponse?.branding && typeof brandingResponse.branding === 'object'
+    ? brandingResponse.branding
+    : null;
+  return {
+    appName: String(branding?.appName || '').trim(),
+    logoUrl: String(branding?.logoUrl || '').trim(),
+    primaryColor: String(branding?.primaryColor || '#1E293B').trim() || '#1E293B',
+    secondaryColor: String(branding?.secondaryColor || '#0EA5E9').trim() || '#0EA5E9'
+  };
+}
+
 function resolvePlayerJoinRoute() {
   if (typeof window === 'undefined') {
     return null;
@@ -389,6 +417,25 @@ function resolvePlayerJoinRoute() {
     return null;
   }
   return normalizeRoomCodeInput(match[1]);
+}
+
+function resolveBillingReturnState() {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+  const pathname = String(window.location?.pathname || '').trim().toLowerCase();
+  if (pathname.endsWith('/billing/success')) {
+    return 'success';
+  }
+  if (pathname.endsWith('/billing/cancel')) {
+    return 'cancel';
+  }
+  const search = new URLSearchParams(String(window.location?.search || ''));
+  const queryState = String(search.get('smartiq_billing') || '').trim().toLowerCase();
+  if (queryState === 'success' || queryState === 'cancel') {
+    return queryState;
+  }
+  return null;
 }
 
 function buildPlayerJoinUrl(roomCode) {
@@ -482,6 +529,12 @@ function StartScreen({
   hostLaunchBlocked,
   hostLaunchMessage,
   workspaceMessage,
+  brandingDraft,
+  brandingPending,
+  brandingMessage,
+  brandingError,
+  onBrandingDraftChange,
+  onSaveBranding,
   reviewedHostedSession,
   activeHostedSession,
   hostedSessionFilter,
@@ -504,6 +557,10 @@ function StartScreen({
   const planLimit = resolvePlanLimit(planCode);
   const maxHostedPlayers = Number.isInteger(capabilities?.maxHostedPlayers) ? capabilities.maxHostedPlayers : null;
   const analyticsHistoryEnabled = capabilities?.analyticsHistoryEnabled === true;
+  const customBrandingEnabled = capabilities?.customBrandingEnabled === true;
+  const selectedRole = String(runtimeSnapshot?.me?.selectedRole || '').trim().toLowerCase();
+  const canManageBrandingRole = selectedRole === 'owner' || selectedRole === 'admin';
+  const canEditBranding = customBrandingEnabled && canManageBrandingRole;
   const mergedPlayerCount = Array.from(new Set([...players, ...draftPlayers])).length;
   const overHostedPlayerCap = maxHostedPlayers != null && mergedPlayerCount > maxHostedPlayers;
   const canStart = (players.length > 0 || draftPlayers.length > 0) && !overHostedPlayerCap;
@@ -590,6 +647,75 @@ function StartScreen({
               <p className="field-hint">
                 Round usage: {!analyticsHistoryEnabled ? STRINGS.hostWorkspaceAnalyticsLocked : usageRow ? `${usageRow.totalValue} across ${usageRow.eventCount} events` : STRINGS.hostWorkspaceNoUsage}
               </p>
+            </section>
+            <section className="host-workspace-card" data-testid="branding-editor-card">
+              <h3>{STRINGS.brandingEditorTitle}</h3>
+              <p className="field-hint">
+                {customBrandingEnabled ? STRINGS.brandingEditorHint : STRINGS.brandingLockedHint}
+              </p>
+              <div className="branding-preview">
+                <strong>{brandingDraft.appName || appTitle}</strong>
+                <div className="branding-swatch-row" aria-hidden>
+                  <span className="branding-swatch" style={{ backgroundColor: brandingDraft.primaryColor }} />
+                  <span className="branding-swatch" style={{ backgroundColor: brandingDraft.secondaryColor }} />
+                </div>
+              </div>
+              {!customBrandingEnabled ? (
+                <div className="branding-locked-state" data-testid="branding-locked">
+                  <p className="field-hint">{STRINGS.brandingLockedHint}</p>
+                  {canUpgrade ? (
+                    <button type="button" className="secondary-action" onClick={onUpgrade} disabled={upgradePending}>
+                      {upgradePending ? STRINGS.upgradeSubmitting : STRINGS.upgradeSubmit}
+                    </button>
+                  ) : null}
+                </div>
+              ) : !canManageBrandingRole ? (
+                <p className="field-hint" data-testid="branding-role-hint">{STRINGS.brandingRoleHint}</p>
+              ) : (
+                <>
+                  <div className="branding-form-grid">
+                    <label htmlFor="branding-app-name">{STRINGS.brandingAppNameLabel}</label>
+                    <input
+                      id="branding-app-name"
+                      type="text"
+                      value={brandingDraft.appName}
+                      onChange={(event) => onBrandingDraftChange('appName', event.target.value)}
+                      disabled={brandingPending}
+                    />
+                    <label htmlFor="branding-logo-url">{STRINGS.brandingLogoUrlLabel}</label>
+                    <input
+                      id="branding-logo-url"
+                      type="text"
+                      value={brandingDraft.logoUrl}
+                      onChange={(event) => onBrandingDraftChange('logoUrl', event.target.value)}
+                      disabled={brandingPending}
+                    />
+                    <label htmlFor="branding-primary-color">{STRINGS.brandingPrimaryColorLabel}</label>
+                    <input
+                      id="branding-primary-color"
+                      type="text"
+                      value={brandingDraft.primaryColor}
+                      onChange={(event) => onBrandingDraftChange('primaryColor', event.target.value)}
+                      disabled={brandingPending}
+                    />
+                    <label htmlFor="branding-secondary-color">{STRINGS.brandingSecondaryColorLabel}</label>
+                    <input
+                      id="branding-secondary-color"
+                      type="text"
+                      value={brandingDraft.secondaryColor}
+                      onChange={(event) => onBrandingDraftChange('secondaryColor', event.target.value)}
+                      disabled={brandingPending}
+                    />
+                  </div>
+                  <div className="host-session-actions">
+                    <button type="button" onClick={onSaveBranding} disabled={brandingPending}>
+                      {brandingPending ? STRINGS.brandingSaving : STRINGS.brandingSaveSubmit}
+                    </button>
+                  </div>
+                </>
+              )}
+              {brandingMessage ? <p className="field-hint" data-testid="branding-message">{brandingMessage}</p> : null}
+              {brandingError ? <p className="error" data-testid="branding-error">{brandingError}</p> : null}
             </section>
             <section className="host-workspace-card">
               <h3>Recent activity</h3>
@@ -1399,6 +1525,7 @@ function GameApp() {
   const storedConfig = loadStoredConfig();
   const storedRoomSession = loadStoredRoomSession();
   const [playerJoinRoute, setPlayerJoinRoute] = useState(resolvePlayerJoinRoute());
+  const billingReturnState = resolveBillingReturnState();
   const [playerRoutePreview, setPlayerRoutePreview] = useState(null);
   const [playerRoutePending, setPlayerRoutePending] = useState(false);
   const [playerRouteError, setPlayerRouteError] = useState('');
@@ -1439,6 +1566,10 @@ function GameApp() {
   const [checkoutPending, setCheckoutPending] = useState(false);
   const [checkoutMessage, setCheckoutMessage] = useState('');
   const [checkoutUrl, setCheckoutUrl] = useState('');
+  const [brandingDraft, setBrandingDraft] = useState(buildBrandingDraft(null));
+  const [brandingPending, setBrandingPending] = useState(false);
+  const [brandingMessage, setBrandingMessage] = useState('');
+  const [brandingError, setBrandingError] = useState('');
   const [workspaceInsights, setWorkspaceInsights] = useState({
     auditEvents: [],
     usageSummary: []
@@ -1480,6 +1611,7 @@ function GameApp() {
   const lastAudioCardRef = useRef('');
   const lastRevealedCountRef = useRef(0);
   const lastWrongCountRef = useRef(0);
+  const billingReturnHandledRef = useRef(false);
   const activePlayerRouteRoomCode = String(playerJoinRoute || '').trim();
   const playerRouteMatchesSavedPlayerSession = roomSession?.role === 'player'
     && normalizeRoomCodeInput(roomSession?.roomCode) === activePlayerRouteRoomCode;
@@ -1607,6 +1739,7 @@ function GameApp() {
       return;
     }
     setRuntimeSnapshot(snapshot);
+    setBrandingDraft(buildBrandingDraft(snapshot?.branding));
     const runtimeTheme = snapshot?.settings?.settings?.theme;
     if (isSupportedTheme(runtimeTheme)) {
       setConfig((prev) => ({ ...prev, theme: runtimeTheme }));
@@ -1626,6 +1759,10 @@ function GameApp() {
     setRuntimeSnapshot(null);
     setRuntimeWarning(message);
     setCheckoutMessage('');
+    setBrandingPending(false);
+    setBrandingMessage('');
+    setBrandingError('');
+    setBrandingDraft(buildBrandingDraft(null));
     setWorkspaceInsights({ auditEvents: [], usageSummary: [] });
     setWorkspacePending(false);
     setReviewedHostedSession(null);
@@ -1724,6 +1861,67 @@ function GameApp() {
     }
     refreshWorkspaceInsights();
   }, [refreshWorkspaceInsights, runtimeSnapshot]);
+
+  useEffect(() => {
+    if (billingReturnHandledRef.current || !billingReturnState) {
+      return undefined;
+    }
+    if (typeof hasRuntimeAuthContext !== 'function' || !hasRuntimeAuthContext()) {
+      return undefined;
+    }
+    billingReturnHandledRef.current = true;
+    let cancelled = false;
+
+    async function syncBillingReturn() {
+      if (billingReturnState === 'cancel') {
+        if (!cancelled) {
+          setCheckoutMessage(STRINGS.billingReturnCanceled);
+        }
+        return;
+      }
+      if (billingReturnState !== 'success' || typeof fetchTenantRuntimeSnapshot !== 'function') {
+        return;
+      }
+
+      if (!cancelled) {
+        setCheckoutMessage(STRINGS.billingReturnRefreshing);
+      }
+
+      for (let attempt = 0; attempt < 3; attempt += 1) {
+        const snapshot = await fetchTenantRuntimeSnapshot();
+        if (cancelled || !snapshot) {
+          return;
+        }
+        applyRuntimeSnapshot(snapshot);
+        const subscriptionStatus = String(snapshot?.subscription?.status || '').trim().toLowerCase();
+        const capabilities = snapshot?.capabilities || null;
+        const entitlementsActive = subscriptionStatus === 'active'
+          || capabilities?.analyticsHistoryEnabled === true
+          || capabilities?.customBrandingEnabled === true
+          || (Number.isInteger(capabilities?.maxHostedPlayers) && capabilities.maxHostedPlayers > 4);
+        if (entitlementsActive) {
+          if (!cancelled) {
+            setCheckoutMessage(STRINGS.billingReturnRestored);
+          }
+          return;
+        }
+        if (attempt < 2) {
+          await new Promise((resolve) => {
+            setTimeout(resolve, 350);
+          });
+        }
+      }
+
+      if (!cancelled) {
+        setCheckoutMessage(STRINGS.billingReturnPending);
+      }
+    }
+
+    syncBillingReturn();
+    return () => {
+      cancelled = true;
+    };
+  }, [applyRuntimeSnapshot, billingReturnState]);
 
   async function handleOnboardingBootstrap() {
     if (onboardingPending) {
@@ -1831,6 +2029,41 @@ function GameApp() {
       setCheckoutMessage(detail);
     } finally {
       setCheckoutPending(false);
+    }
+  }
+
+  function handleBrandingDraftChange(field, value) {
+    setBrandingDraft((prev) => ({
+      ...prev,
+      [field]: value
+    }));
+    setBrandingMessage('');
+    setBrandingError('');
+  }
+
+  async function handleSaveBranding() {
+    if (brandingPending || !runtimeSnapshot?.me?.selectedTenantId) {
+      return;
+    }
+    setBrandingPending(true);
+    setBrandingMessage('');
+    setBrandingError('');
+    try {
+      const branding = await updateRuntimeTenantBranding(brandingDraft);
+      if (runtimeSnapshot) {
+        applyRuntimeSnapshot({
+          ...runtimeSnapshot,
+          branding
+        });
+      }
+      setBrandingMessage(STRINGS.brandingSaved);
+    } catch (error) {
+      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+        ? error.detail
+        : error?.message || 'Could not update tenant branding.';
+      setBrandingError(detail);
+    } finally {
+      setBrandingPending(false);
     }
   }
 
@@ -2377,6 +2610,12 @@ function GameApp() {
                 hostLaunchBlocked={hostLaunchBlocked}
                 hostLaunchMessage={hostLaunchMessage}
                 workspaceMessage={workspaceMessage}
+                brandingDraft={brandingDraft}
+                brandingPending={brandingPending}
+                brandingMessage={brandingMessage}
+                brandingError={brandingError}
+                onBrandingDraftChange={handleBrandingDraftChange}
+                onSaveBranding={handleSaveBranding}
                 reviewedHostedSession={reviewedHostedSession}
                 activeHostedSession={activeHostedSession}
                 hostedSessionFilter={hostedSessionFilter}

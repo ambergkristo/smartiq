@@ -45,6 +45,7 @@ public class TenantService {
     private static final String SUBSCRIPTION_STATUS_TRIALING = "trialing";
     private static final String SUBSCRIPTION_STATUS_ACTIVE = "active";
     private static final String ROLE_OWNER = "owner";
+    private static final String ROLE_ADMIN = "admin";
     private static final String AUTH_PROVIDER_MANUAL = "manual";
     private static final String AUDIT_ACTION_TENANT_CREATED = "TENANT_CREATED";
     private static final String AUDIT_ACTION_TENANT_BRANDING_UPDATED = "TENANT_BRANDING_UPDATED";
@@ -791,6 +792,26 @@ public class TenantService {
                 ),
                 branding.getUpdatedAt() == null ? tenant.getUpdatedAt() : branding.getUpdatedAt()
         );
+    }
+
+    @Transactional
+    public TenantBrandingRuntimeResponse updateBrandingForMember(String userEmail,
+                                                                 UUID tenantId,
+                                                                 UpdateTenantBrandingRequest request) {
+        if (tenantId == null) {
+            throw new IllegalArgumentException("tenant context is required");
+        }
+        MeResponse me = requireRuntimeMemberContext(userEmail, tenantId);
+        String normalizedRole = normalizeOptional(me.selectedRole(), 32);
+        if (!ROLE_OWNER.equals(normalizedRole) && !ROLE_ADMIN.equals(normalizedRole)) {
+            throw new ForbiddenTenantAccessException("current role does not allow tenant branding updates");
+        }
+        TenantRuntimeCapabilitiesResponse capabilities = getTenantCapabilitiesForMember(userEmail, tenantId);
+        if (!capabilities.customBrandingEnabled()) {
+            throw new ForbiddenTenantAccessException("current plan does not include custom branding");
+        }
+        updateBranding(tenantId, request, me.userId());
+        return getTenantBrandingForMember(userEmail, tenantId);
     }
 
     @Transactional(readOnly = true)

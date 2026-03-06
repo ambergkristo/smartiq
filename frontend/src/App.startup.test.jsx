@@ -24,6 +24,7 @@ vi.mock('./api', () => {
     rejoinRoomSession: vi.fn(),
     requestRuntimeAuthLink: vi.fn(),
     setRuntimeAuthContext: vi.fn(),
+    updateRuntimeTenantBranding: vi.fn(),
     resolveCardErrorMessage: vi.fn(() => 'Fallback mode'),
     resolveTopicsErrorState: vi.fn(() => ({
       title: 'Backend is unreachable.',
@@ -49,7 +50,8 @@ import {
   rejoinRoomSession,
   requestRuntimeAuthLink,
   resolveTopicsErrorState,
-  setRuntimeAuthContext
+  setRuntimeAuthContext,
+  updateRuntimeTenantBranding
 } from './api';
 
 describe('App startup resilience', () => {
@@ -59,6 +61,7 @@ describe('App startup resilience', () => {
     vi.clearAllMocks();
     localStorage.clear();
     window.location.hash = '';
+    window.history.pushState({}, '', '/');
     document.documentElement.removeAttribute('data-theme');
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     fetchRoomPreview.mockResolvedValue({
@@ -75,6 +78,15 @@ describe('App startup resilience', () => {
     });
     fetchTenantAuditEvents.mockResolvedValue([]);
     fetchTenantUsageSummary.mockResolvedValue([]);
+    updateRuntimeTenantBranding.mockResolvedValue({
+      tenantId: 'tenant-branding',
+      branding: {
+        appName: 'Northwind Quiz',
+        logoUrl: 'https://cdn.example.com/northwind.svg',
+        primaryColor: '#223344',
+        secondaryColor: '#556677'
+      }
+    });
     createRoomSession.mockResolvedValue({
       roomCode: 'ABC123',
       playerId: 'p1',
@@ -100,6 +112,7 @@ describe('App startup resilience', () => {
 
   afterEach(() => {
     window.location.hash = '';
+    window.history.pushState({}, '', '/');
     consoleErrorSpy.mockRestore();
   });
 
@@ -406,6 +419,153 @@ describe('App startup resilience', () => {
     expect(screen.getByRole('button', { name: /start game/i })).toBeDisabled();
     expect(fetchTenantAuditEvents).not.toHaveBeenCalled();
     expect(fetchTenantUsageSummary).not.toHaveBeenCalled();
+  });
+
+  test('shows locked custom-branding boundary for trial hosts', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    hasRuntimeAuthContext.mockReturnValue(true);
+    fetchTenantRuntimeSnapshot.mockResolvedValue({
+      me: {
+        selectedTenantId: 'tenant-trial',
+        selectedRole: 'owner'
+      },
+      settings: { settings: { theme: 'classic' } },
+      branding: { branding: { appName: 'Trial Quiz', primaryColor: '#223344', secondaryColor: '#556677' } },
+      subscription: {
+        planCode: 'pilot-monthly',
+        status: 'trialing',
+        billingCycle: 'monthly'
+      },
+      capabilities: {
+        planTier: 'trial',
+        maxHostedPlayers: 4,
+        analyticsHistoryEnabled: false,
+        sessionTemplatesEnabled: false,
+        customBrandingEnabled: false
+      }
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('branding-locked')).toBeInTheDocument());
+    expect(screen.getByTestId('branding-editor-card')).toHaveTextContent(/custom branding unlocks on pro host/i);
+    expect(screen.queryByLabelText(/brand app name/i)).not.toBeInTheDocument();
+  });
+
+  test('saves tenant branding for pro host owners from host workspace', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    hasRuntimeAuthContext.mockReturnValue(true);
+    fetchTenantRuntimeSnapshot.mockResolvedValue({
+      me: {
+        selectedTenantId: 'tenant-pro',
+        selectedRole: 'owner'
+      },
+      settings: { settings: { theme: 'classic' } },
+      branding: {
+        branding: {
+          appName: 'Northwind Quiz',
+          logoUrl: 'https://cdn.example.com/northwind.svg',
+          primaryColor: '#223344',
+          secondaryColor: '#556677'
+        }
+      },
+      subscription: {
+        planCode: 'pro-host-monthly',
+        status: 'active',
+        billingCycle: 'monthly'
+      },
+      capabilities: {
+        planTier: 'pro_host',
+        maxHostedPlayers: 10,
+        analyticsHistoryEnabled: true,
+        sessionTemplatesEnabled: true,
+        customBrandingEnabled: true
+      }
+    });
+    updateRuntimeTenantBranding.mockResolvedValue({
+      tenantId: 'tenant-pro',
+      branding: {
+        appName: 'Late Night Quiz',
+        logoUrl: 'https://cdn.example.com/late-night.svg',
+        primaryColor: '#101820',
+        secondaryColor: '#FEE715'
+      }
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByLabelText(/brand app name/i)).toBeInTheDocument());
+    fireEvent.change(screen.getByLabelText(/brand app name/i), { target: { value: 'Late Night Quiz' } });
+    fireEvent.change(screen.getByLabelText(/logo url/i), { target: { value: 'https://cdn.example.com/late-night.svg' } });
+    fireEvent.change(screen.getByLabelText(/primary color/i), { target: { value: '#101820' } });
+    fireEvent.change(screen.getByLabelText(/secondary color/i), { target: { value: '#FEE715' } });
+    fireEvent.click(screen.getByRole('button', { name: /save branding/i }));
+
+    await waitFor(() => expect(updateRuntimeTenantBranding).toHaveBeenCalledWith({
+      appName: 'Late Night Quiz',
+      logoUrl: 'https://cdn.example.com/late-night.svg',
+      primaryColor: '#101820',
+      secondaryColor: '#FEE715'
+    }));
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Late Night Quiz' })).toBeInTheDocument());
+    expect(screen.getByTestId('branding-message')).toHaveTextContent(/branding updated/i);
+    expect(document.title).toBe('Late Night Quiz');
+    expect(document.documentElement.style.getPropertyValue('--accent')).toBe('#101820');
+    expect(document.documentElement.style.getPropertyValue('--accent2')).toBe('#FEE715');
+  });
+
+  test('refreshes paid entitlements after billing success return', async () => {
+    window.history.pushState({}, '', '/billing/success');
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    hasRuntimeAuthContext.mockReturnValue(true);
+    fetchTenantRuntimeSnapshot
+      .mockResolvedValueOnce({
+        me: {
+          selectedTenantId: 'tenant-upgrade',
+          selectedRole: 'owner'
+        },
+        settings: { settings: { theme: 'classic' } },
+        branding: { branding: { appName: 'Trial Quiz', primaryColor: '#223344', secondaryColor: '#556677' } },
+        subscription: {
+          planCode: 'pilot-monthly',
+          status: 'trialing',
+          billingCycle: 'monthly'
+        },
+        capabilities: {
+          planTier: 'trial',
+          maxHostedPlayers: 4,
+          analyticsHistoryEnabled: false,
+          sessionTemplatesEnabled: false,
+          customBrandingEnabled: false
+        }
+      })
+      .mockResolvedValueOnce({
+        me: {
+          selectedTenantId: 'tenant-upgrade',
+          selectedRole: 'owner'
+        },
+        settings: { settings: { theme: 'classic' } },
+        branding: { branding: { appName: 'Pro Quiz', primaryColor: '#101820', secondaryColor: '#FEE715' } },
+        subscription: {
+          planCode: 'pro-host-monthly',
+          status: 'active',
+          billingCycle: 'monthly'
+        },
+        capabilities: {
+          planTier: 'pro_host',
+          maxHostedPlayers: 10,
+          analyticsHistoryEnabled: true,
+          sessionTemplatesEnabled: true,
+          customBrandingEnabled: true
+        }
+      });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('upgrade-message')).toHaveTextContent(/billing restored/i));
+    expect(screen.getByLabelText(/brand app name/i)).toBeInTheDocument();
+    expect(screen.getByTestId('tenant-runtime-hint')).toHaveTextContent('pro-host-monthly');
+    expect(document.title).toBe('Pro Quiz');
   });
 
   test('creates a shareable room and shows saved room session state', async () => {

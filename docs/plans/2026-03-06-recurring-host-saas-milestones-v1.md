@@ -43,7 +43,7 @@ Current execution pointer:
 1. `M4` is complete.
 2. `M5` is now the active milestone.
 3. `M4` promotion is based on tenant-scoped room/session behavior, branded host and player surfaces, canonical host history review/resume/duplicate controls, and the dedicated public player join route.
-4. `M5` entitlement groundwork has already started in the runtime path, but milestone promotion remains blocked on broader paid-capability enforcement.
+4. `M5` now enforces hosted player cap, analytics/history, custom branding, and billing-return entitlement refresh in runtime, but milestone promotion remains blocked on broader paid-capability enforcement and template-grade paid workflow completion.
 
 ## Milestone Definitions
 

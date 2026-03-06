@@ -308,6 +308,25 @@ export async function fetchTenantRuntimeSnapshot() {
   };
 }
 
+export async function updateRuntimeTenantBranding({ appName, logoUrl, primaryColor, secondaryColor } = {}) {
+  requireApiBase();
+  const headers = resolveRuntimeAuthHeaders();
+  if (Object.keys(headers).length === 0) {
+    throw new ApiError('Runtime auth context is required for tenant branding updates.', 0, 'UNAUTHENTICATED');
+  }
+
+  return fetchJson(`${API_BASE}/api/me/tenant-branding`, {
+    method: 'PATCH',
+    headers,
+    body: {
+      appName: normalizeRequiredField(appName, 'appName'),
+      logoUrl: String(logoUrl || '').trim() || null,
+      primaryColor: normalizeRequiredField(primaryColor, 'primaryColor'),
+      secondaryColor: normalizeRequiredField(secondaryColor, 'secondaryColor')
+    }
+  });
+}
+
 export async function fetchTenantCapabilities() {
   requireApiBase();
   const headers = resolveRuntimeAuthHeaders();

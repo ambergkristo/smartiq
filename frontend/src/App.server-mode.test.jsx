@@ -24,6 +24,7 @@ vi.mock('./api', () => {
     resumeServerGameSession: vi.fn(),
     requestRuntimeAuthLink: vi.fn(),
     setRuntimeAuthContext: vi.fn(),
+    updateRuntimeTenantBranding: vi.fn(),
     createServerGameSession: vi.fn(),
     fetchServerGameSession: vi.fn(),
     sendServerGameAction: vi.fn(),
