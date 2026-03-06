@@ -136,7 +136,8 @@ Priority order:
 6. `M5` paid value and entitlement enforcement is complete.
 7. `M6` pilot conversion and retention proof is now the active milestone.
 8. `M6` now has real runtime pilot telemetry for bootstrap, auth completion, session launch/duplicate/resume/complete, and billing upgrade activation, plus a founder-facing pilot summary, support-case loop, canonical pilot-summary report generator, pilot evidence-pack generator, pilot capture command, and pilot-gate automation in admin ops/tooling.
-8. The locked next-sequence is:
+9. Live `M6` capture has now been executed successfully against `https://smartiq-63tk.onrender.com`, and the current result is still `NOT_YET` because the connected backend returned `0` tenant records across all statuses.
+10. The locked next-sequence is:
    - product stabilization,
    - auth/trust hardening,
    - billing/payment hardening,

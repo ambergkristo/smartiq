@@ -81,6 +81,15 @@ Observed result:
 2. one command can write summary markdown, summary JSON, evidence markdown, and gate JSON into a target output directory,
 3. live pilot artifact capture now has a canonical file-naming path for `docs/reports`.
 
+### Live pilot capture has now been executed against the deployed backend
+
+Observed result:
+
+1. GitHub Actions workflow `Recurring Host Pilot Capture` completed successfully on 2026-03-06 UTC with runs `22786841828` and `22786955543`,
+2. the first live run confirmed that the workflow, backend URL, and internal API key path are all working end-to-end,
+3. the second live run widened the capture from `status=active` to all tenant statuses and still returned `0` total tenants from `https://smartiq-63tk.onrender.com`,
+4. current blocker is no live recurring-host tenant volume in the connected backend, not missing telemetry or broken capture tooling.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -96,6 +105,6 @@ The following checks executed successfully after this progress slice:
 
 `M6 Pilot Conversion and Retention Proof` remains active and is not promotable done yet because:
 
-1. telemetry is now captured, but no recurring-host pilot summary artifact has been generated from live recurring-host usage yet,
+1. live recurring-host pilot artifacts now exist, but the latest live captures returned `0` tenants, `0` activated hosts, and `0` repeat hosts from the connected backend,
 2. support/feedback loop now exists internally, but it is not yet backed by actual recurring-host pilot volume,
-3. repeat-host and early paid-retention interpretation still needs a canonical report/evidence pack from real usage.
+3. repeat-host and early paid-retention interpretation still needs a canonical report/evidence pack from real usage above the `M6` threshold.

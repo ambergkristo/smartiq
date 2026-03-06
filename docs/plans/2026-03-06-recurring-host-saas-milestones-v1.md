@@ -45,6 +45,7 @@ Current execution pointer:
 3. `M5` promotion is based on hosted player-cap enforcement, analytics/history gating, custom-branding runtime enforcement, session-template paid workflow, and deterministic billing-return entitlement refresh.
 4. `M6` is now the active milestone.
 5. `M6` telemetry now captures bootstrap, auth completion, session launch/duplicate/resume/complete, and billing upgrade lifecycle events into tenant usage summary, with an internal pilot summary, support-case loop, canonical pilot-summary report generator, pilot evidence-pack generator, pilot capture command, and pilot-gate automation available in admin ops/tooling.
+6. Live `M6` capture was executed successfully on 2026-03-06 UTC against `https://smartiq-63tk.onrender.com`, and the connected backend returned `0` tenants across all statuses, so `M6` remains honestly blocked on real pilot volume rather than missing instrumentation.
 
 ## Milestone Definitions
 
