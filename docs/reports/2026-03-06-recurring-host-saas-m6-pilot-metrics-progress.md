@@ -64,6 +64,15 @@ Observed result:
 2. the gate runs touched-scope backend and admin frontend tests before generating the pilot summary,
 3. the gate can emit a machine-readable JSON summary and optionally fail when live pilot thresholds are still below target.
 
+### Canonical pilot evidence-pack generator now exists
+
+Observed result:
+
+1. repo now exposes `npm run report:recurring-host:pilot-evidence`,
+2. the evidence pack consumes the pilot summary JSON and writes a founder-readable M6 interpretation report,
+3. the report highlights activated hosts, repeat hosts, paid conversions, open blockers with owners, onboarding blockers, upgrade blockers, and recent fixes,
+4. the pilot gate now emits both the summary report and the evidence pack in one run.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -72,6 +81,7 @@ The following checks executed successfully after this progress slice:
 2. `npm --prefix frontend run test -- --run src/admin/api.test.js src/admin/AdminConsole.test.jsx`
 3. `node tools/generate_recurring_host_pilot_summary.js --snapshot=tools/fixtures/recurring_host_pilot_summary.sample.json --output=<temp>`
 4. `node tools/validate_recurring_host_pilot_gate.js --snapshot=tools/fixtures/recurring_host_pilot_summary.sample.json`
+5. `node tools/generate_recurring_host_pilot_evidence.js --summary-json=<temp-json> --output=<temp>`
 
 ## Honest Status
 

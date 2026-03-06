@@ -100,7 +100,8 @@ Required checks:
 1. `npm run report:recurring-host:pilot-summary` generates a production analytics summary from real telemetry,
 2. `npm run validate:m6:recurring-host:pilot-gate` passes in the live pilot environment,
 3. pilot metrics artifact published,
-4. touched-scope product tests remain green.
+4. pilot evidence pack is published with blocker owners and actions,
+5. touched-scope product tests remain green.
 
 Required evidence:
 1. activated-host count,

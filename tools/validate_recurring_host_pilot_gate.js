@@ -44,6 +44,7 @@ function main() {
   const snapshotPath = parseArg(args, '--snapshot=') || process.env.SMARTIQ_M6_PILOT_SNAPSHOT || '';
   const reportPath = parseArg(args, '--output=') || path.join(os.tmpdir(), 'smartiq-recurring-host-pilot-summary.md');
   const summaryPath = parseArg(args, '--json-output=') || path.join(os.tmpdir(), 'smartiq-recurring-host-pilot-summary.json');
+  const evidencePath = parseArg(args, '--evidence-output=') || path.join(os.tmpdir(), 'smartiq-recurring-host-pilot-evidence.md');
   const failOnBelowThreshold = hasFlag(args, '--fail-on-below-threshold');
 
   const steps = [
@@ -66,8 +67,12 @@ function main() {
   }
 
   steps.push(runStep('pilot_summary_report', generatorArgs.join(' ')));
+  steps.push(runStep(
+    'pilot_evidence_pack',
+    `node tools/generate_recurring_host_pilot_evidence.js --summary-json=${summaryPath} --output=${evidencePath}`
+  ));
 
-  const generatorStep = steps[steps.length - 1];
+  const generatorStep = steps.find((step) => step.name === 'pilot_summary_report');
   let summary = null;
   if (generatorStep.ok && fs.existsSync(summaryPath)) {
     summary = readSummary(summaryPath);
@@ -81,6 +86,7 @@ function main() {
     gate: 'M6_RECURRING_HOST_PILOT',
     reportPath,
     summaryPath,
+    evidencePath,
     thresholdStatus: summary ? summary.thresholdStatus : 'unknown',
     aggregate: summary ? summary.aggregate : null,
     steps: steps.map((step) => ({

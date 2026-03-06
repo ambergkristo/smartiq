@@ -299,13 +299,36 @@ async function main() {
     tenants: tenants.map((entry) => ({
       tenantId: entry.tenant.tenantId || '',
       tenantName: entry.tenant.name || '',
+      planCode: entry.pilotSummary?.planCode || '',
+      subscriptionStatus: entry.pilotSummary?.subscriptionStatus || '',
       riskStatus: entry.pilotSummary?.riskStatus || 'tracking',
+      recommendation: entry.pilotSummary?.recommendation || '',
+      topOpenSupportCategory: entry.pilotSummary?.topOpenSupportCategory || '',
       stage: formatStage(entry.pilotSummary),
       activated: Boolean(entry.pilotSummary?.activated),
       repeatHost: Boolean(entry.pilotSummary?.repeatHost),
       paidConverted: Boolean(entry.pilotSummary?.paidConverted),
+      workspaceBootstraps: entry.pilotSummary?.workspaceBootstraps ?? 0,
+      hostSignIns: entry.pilotSummary?.hostSignIns ?? 0,
+      sessionLaunches: entry.pilotSummary?.sessionLaunches ?? 0,
+      duplicateLaunches: entry.pilotSummary?.duplicateLaunches ?? 0,
+      resumeActions: entry.pilotSummary?.resumeActions ?? 0,
+      completedSessions: entry.pilotSummary?.completedSessions ?? 0,
+      upgradeAttempts: entry.pilotSummary?.upgradeAttempts ?? 0,
+      paidActivations: entry.pilotSummary?.paidActivations ?? 0,
       openSupportCases: entry.openSupportCases,
-      resolvedSupportCases: entry.resolvedSupportCases
+      resolvedSupportCases: entry.resolvedSupportCases,
+      supportCases: entry.supportCases.map((item) => ({
+        caseId: item.caseId || '',
+        title: item.title || '',
+        category: item.category || '',
+        priority: item.priority || '',
+        status: item.status || '',
+        owner: item.owner || '',
+        summary: item.summary || '',
+        nextStep: item.nextStep || '',
+        resolution: item.resolution || ''
+      }))
     }))
   };
   if (jsonOutputPath) {
