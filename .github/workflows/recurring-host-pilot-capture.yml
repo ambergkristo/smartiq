@@ -1,0 +1,117 @@
+name: Recurring Host Pilot Capture
+
+on:
+  workflow_dispatch:
+    inputs:
+      backend_url:
+        description: "Backend base URL (https://...)"
+        required: false
+        type: string
+      internal_api_key:
+        description: "Internal API key override (optional; defaults to repo secret)"
+        required: false
+        type: string
+      fail_on_below_threshold:
+        description: "Fail workflow if M6 thresholds are still below target"
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  recurring-host-pilot-capture:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Resolve live capture secrets
+        env:
+          INPUT_BACKEND_URL: ${{ inputs.backend_url }}
+          SECRET_BACKEND_URL: ${{ secrets.BETA_BACKEND_URL }}
+          INPUT_INTERNAL_API_KEY: ${{ inputs.internal_api_key }}
+          SECRET_INTERNAL_API_KEY: ${{ secrets.SMARTIQ_INTERNAL_API_KEY }}
+          LEGACY_INTERNAL_API_KEY: ${{ secrets.BETA_INTERNAL_API_KEY }}
+        run: |
+          BACKEND_URL="$INPUT_BACKEND_URL"
+          if [ -z "$BACKEND_URL" ]; then
+            BACKEND_URL="$SECRET_BACKEND_URL"
+          fi
+          if [ -z "$BACKEND_URL" ]; then
+            echo "Missing backend URL. Provide workflow input 'backend_url' or set secret BETA_BACKEND_URL." >&2
+            exit 1
+          fi
+
+          INTERNAL_API_KEY="$INPUT_INTERNAL_API_KEY"
+          if [ -z "$INTERNAL_API_KEY" ]; then
+            INTERNAL_API_KEY="$SECRET_INTERNAL_API_KEY"
+          fi
+          if [ -z "$INTERNAL_API_KEY" ]; then
+            INTERNAL_API_KEY="$LEGACY_INTERNAL_API_KEY"
+          fi
+          if [ -z "$INTERNAL_API_KEY" ]; then
+            echo "Missing internal API key. Provide workflow input 'internal_api_key' or set secret SMARTIQ_INTERNAL_API_KEY." >&2
+            exit 1
+          fi
+
+          echo "BACKEND_URL=$BACKEND_URL" >> "$GITHUB_ENV"
+          echo "SMARTIQ_INTERNAL_API_KEY=$INTERNAL_API_KEY" >> "$GITHUB_ENV"
+
+      - name: Set artifact paths
+        run: |
+          STAMP="$(date -u +%F)"
+          SUFFIX="${GITHUB_RUN_ID}"
+          OUTPUT_DIR="docs/reports"
+          BASE_NAME="${STAMP}-recurring-host-saas-m6-pilot-${SUFFIX}"
+          echo "STAMP=$STAMP" >> "$GITHUB_ENV"
+          echo "OUTPUT_DIR=$OUTPUT_DIR" >> "$GITHUB_ENV"
+          echo "SUMMARY_PATH=${OUTPUT_DIR}/${BASE_NAME}-summary.md" >> "$GITHUB_ENV"
+          echo "SUMMARY_JSON_PATH=${OUTPUT_DIR}/${BASE_NAME}-summary.json" >> "$GITHUB_ENV"
+          echo "EVIDENCE_PATH=${OUTPUT_DIR}/${BASE_NAME}-evidence.md" >> "$GITHUB_ENV"
+          echo "GATE_PATH=${OUTPUT_DIR}/${BASE_NAME}-gate.json" >> "$GITHUB_ENV"
+
+      - name: Run recurring-host pilot capture
+        env:
+          BACKEND_URL: ${{ env.BACKEND_URL }}
+          SMARTIQ_INTERNAL_API_KEY: ${{ env.SMARTIQ_INTERNAL_API_KEY }}
+        run: |
+          EXTRA_ARGS=""
+          if [ "${{ inputs.fail_on_below_threshold }}" = "true" ]; then
+            EXTRA_ARGS="--fail-on-below-threshold"
+          fi
+          npm run report:recurring-host:pilot-capture -- \
+            --output-dir="${OUTPUT_DIR}" \
+            --suffix="${GITHUB_RUN_ID}" \
+            --stamp="${STAMP}" \
+            $EXTRA_ARGS
+
+      - name: Add capture summary to workflow
+        if: always()
+        run: |
+          echo "## Recurring Host Pilot Capture" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$GATE_PATH" ]; then
+            cat "$GATE_PATH" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Gate file not produced: $GATE_PATH" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload recurring-host artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: recurring-host-pilot-${{ github.run_id }}
+          path: |
+            ${{ env.SUMMARY_PATH }}
+            ${{ env.SUMMARY_JSON_PATH }}
+            ${{ env.EVIDENCE_PATH }}
+            ${{ env.GATE_PATH }}
+          if-no-files-found: warn
