@@ -1,7 +1,7 @@
 # SmartIQ MVP Execution Plan
 
 > Historical snapshot. Canonical active plan:
-> `docs/plans/2026-03-03-masterplan-roadmap-to-beta.md`
+> `docs/plans/2026-03-06-recurring-host-saas-masterplan-v1.md`
 >
 > Use the canonical plan above for all new SmartIQ implementation prioritization.
 

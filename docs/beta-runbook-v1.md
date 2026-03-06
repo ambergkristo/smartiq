@@ -125,6 +125,8 @@ At beta close, publish:
      - `$env:BACKEND_URL="https://<backend-domain>"; npm run gate:beta:go-no-go`
    - CI workflow option:
      - Run workflow `Beta Go/No-Go Gate` (uploads markdown report artifact, fails on `NO-GO`)
+   - Local synthetic dry-run option:
+     - `$env:BACKEND_URL="https://<backend-domain>"; npm run gate:phase7:dry-run`
    - Synthetic dry-run evidence workflow:
      - Run workflow `Phase7 Beta Dry-Run` (uploads combined evidence artifact with smoke + gate outcomes)
 2. List of prioritized fixes (`fix/beta-findings-*` branches)

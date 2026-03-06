@@ -649,7 +649,7 @@ class TenantAdminControllerTest {
                                 }
                                 """))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.code").value("INVALID_TENANT_REQUEST"))
+                .andExpect(jsonPath("$.code").value("PLAN_LIMIT_REACHED"))
                 .andExpect(jsonPath("$.error").value("plan limit reached for current period"));
 
         mockMvc.perform(get("/internal/wl/tenants/{tenantId}/audit-events?limit=1", tenantId)

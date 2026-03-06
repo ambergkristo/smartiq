@@ -4,10 +4,26 @@ import App from './App';
 vi.mock('./api', () => {
   return {
     API_BASE: 'http://localhost:8080',
+    bootstrapOnboardingTenant: vi.fn(),
+    clearRuntimeAuthContext: vi.fn(),
+    completeRuntimeAuth: vi.fn(),
+    createRoomSession: vi.fn(),
+    duplicateServerGameSession: vi.fn(),
+    fetchRoomPreview: vi.fn(),
+    fetchTenantAuditEvents: vi.fn(),
     fetchTopics: vi.fn(),
     fetchNextCard: vi.fn(),
+    fetchServerGameSession: vi.fn(),
+    resumeServerGameSession: vi.fn(),
     fetchTenantRuntimeSnapshot: vi.fn(),
+    fetchTenantUsageSummary: vi.fn(),
     hasRuntimeAuthContext: vi.fn(() => false),
+    initiateCheckoutSession: vi.fn(),
+    joinRoomSession: vi.fn(),
+    logoutRuntimeAuth: vi.fn(),
+    rejoinRoomSession: vi.fn(),
+    requestRuntimeAuthLink: vi.fn(),
+    setRuntimeAuthContext: vi.fn(),
     resolveCardErrorMessage: vi.fn(() => 'Fallback mode'),
     resolveTopicsErrorState: vi.fn(() => ({
       title: 'Backend is unreachable.',
@@ -17,7 +33,24 @@ vi.mock('./api', () => {
   };
 });
 
-import { fetchTopics, resolveTopicsErrorState } from './api';
+import {
+  bootstrapOnboardingTenant,
+  clearRuntimeAuthContext,
+  completeRuntimeAuth,
+  createRoomSession,
+  fetchRoomPreview,
+  fetchTenantAuditEvents,
+  fetchTenantRuntimeSnapshot,
+  fetchTopics,
+  fetchTenantUsageSummary,
+  hasRuntimeAuthContext,
+  initiateCheckoutSession,
+  joinRoomSession,
+  rejoinRoomSession,
+  requestRuntimeAuthLink,
+  resolveTopicsErrorState,
+  setRuntimeAuthContext
+} from './api';
 
 describe('App startup resilience', () => {
   let consoleErrorSpy;
@@ -25,11 +58,48 @@ describe('App startup resilience', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     localStorage.clear();
+    window.location.hash = '';
     document.documentElement.removeAttribute('data-theme');
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    fetchRoomPreview.mockResolvedValue({
+      roomCode: 'QUIZ42',
+      branding: {
+        appName: 'Northwind Quiz',
+        primaryColor: '#223344',
+        secondaryColor: '#556677'
+      },
+      players: [
+        { playerId: 'p1', displayName: 'Host One' },
+        { playerId: 'p2', displayName: 'Alice' }
+      ]
+    });
+    fetchTenantAuditEvents.mockResolvedValue([]);
+    fetchTenantUsageSummary.mockResolvedValue([]);
+    createRoomSession.mockResolvedValue({
+      roomCode: 'ABC123',
+      playerId: 'p1',
+      authToken: 'rt_room_1'
+    });
+    joinRoomSession.mockResolvedValue({
+      roomCode: 'ABC123',
+      playerId: 'p2',
+      authToken: 'rt_room_2'
+    });
+    rejoinRoomSession.mockResolvedValue({
+      roomCode: 'ABC123',
+      playerId: 'p1',
+      authToken: 'rt_room_resumed',
+      roomState: {
+        roomCode: 'ABC123',
+        players: [
+          { playerId: 'p1', displayName: 'Host' }
+        ]
+      }
+    });
   });
 
   afterEach(() => {
+    window.location.hash = '';
     consoleErrorSpy.mockRestore();
   });
 
@@ -149,5 +219,386 @@ describe('App startup resilience', () => {
     fireEvent.click(screen.getByRole('button', { name: /retry/i }));
 
     await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
+  });
+
+  test('bootstraps onboarding workspace and applies tenant runtime snapshot', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    bootstrapOnboardingTenant.mockResolvedValue({
+      runtimeAuth: {
+        bearerToken: 'Bearer boot-token',
+        userEmail: 'owner@northwind.test',
+        tenantId: 'tenant-northwind'
+      }
+    });
+    fetchTenantRuntimeSnapshot.mockResolvedValue({
+      me: {
+        selectedTenantId: 'tenant-northwind'
+      },
+      settings: {
+        settings: {
+          theme: 'ocean'
+        }
+      },
+      branding: {
+        branding: {
+          appName: 'Northwind Quiz',
+          primaryColor: '#223344',
+          secondaryColor: '#556677'
+        }
+      },
+      subscription: {
+        planCode: 'pilot-monthly'
+      }
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
+    fireEvent.change(screen.getByLabelText(/workspace name/i), { target: { value: 'Northwind Quiz Night' } });
+    fireEvent.change(screen.getByLabelText(/owner email/i), { target: { value: 'owner@northwind.test' } });
+    fireEvent.change(screen.getByLabelText(/display name \(optional\)/i), { target: { value: 'Northwind Owner' } });
+    fireEvent.click(screen.getByRole('button', { name: /create workspace/i }));
+
+    await waitFor(() => expect(bootstrapOnboardingTenant).toHaveBeenCalledWith({
+      workspaceName: 'Northwind Quiz Night',
+      ownerEmail: 'owner@northwind.test',
+      ownerDisplayName: 'Northwind Owner'
+    }));
+    expect(setRuntimeAuthContext).toHaveBeenCalledWith({
+      bearerToken: 'Bearer boot-token',
+      userEmail: 'owner@northwind.test',
+      tenantId: 'tenant-northwind'
+    });
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Northwind Quiz' })).toBeInTheDocument());
+    expect(screen.getByTestId('tenant-runtime-hint')).toHaveTextContent('tenant-northwind');
+    expect(screen.queryByTestId('onboarding-panel')).not.toBeInTheDocument();
+  });
+
+  test('restores host session through sign-in flow', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    requestRuntimeAuthLink.mockResolvedValue({
+      challengeToken: 'ml_token_1'
+    });
+    completeRuntimeAuth.mockResolvedValue({
+      runtimeAuth: {
+        bearerToken: 'Bearer sign-in-token',
+        userEmail: 'owner@northwind.test',
+        tenantId: 'tenant-signin'
+      }
+    });
+    fetchTenantRuntimeSnapshot.mockResolvedValue({
+      me: {
+        selectedTenantId: 'tenant-signin'
+      },
+      settings: {
+        settings: {
+          theme: 'ember'
+        }
+      },
+      branding: {
+        branding: {
+          appName: 'Signin Quiz'
+        }
+      },
+      subscription: {
+        planCode: 'pilot-monthly'
+      }
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByRole('button', { name: /send sign-in link/i })).toBeInTheDocument());
+    fireEvent.change(screen.getByLabelText(/host email/i), { target: { value: 'owner@northwind.test' } });
+    fireEvent.change(screen.getByLabelText(/tenant id/i), { target: { value: 'tenant-signin' } });
+    fireEvent.click(screen.getByRole('button', { name: /send sign-in link/i }));
+
+    await waitFor(() => expect(requestRuntimeAuthLink).toHaveBeenCalledWith({
+      email: 'owner@northwind.test',
+      tenantId: 'tenant-signin'
+    }));
+    expect(completeRuntimeAuth).toHaveBeenCalledWith({ challengeToken: 'ml_token_1' });
+    expect(setRuntimeAuthContext).toHaveBeenCalledWith({
+      bearerToken: 'Bearer sign-in-token',
+      userEmail: 'owner@northwind.test',
+      tenantId: 'tenant-signin'
+    });
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Signin Quiz' })).toBeInTheDocument());
+  });
+
+  test('clears invalid stored session and shows recovery warning', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    hasRuntimeAuthContext.mockReturnValue(true);
+    const expiredError = new Error('expired');
+    expiredError.code = 'INVALID_AUTH_CONTEXT';
+    fetchTenantRuntimeSnapshot.mockRejectedValue(expiredError);
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByText(/host session expired or is invalid/i)).toBeInTheDocument());
+    expect(clearRuntimeAuthContext).toHaveBeenCalled();
+  });
+
+  test('blocks hosted launch when tenant subscription is past due', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    hasRuntimeAuthContext.mockReturnValue(true);
+    initiateCheckoutSession.mockResolvedValue({
+      checkoutSessionId: 'chk_restore_1',
+      checkoutUrl: 'https://billing.smartiq.test/checkout?session_id=chk_restore_1'
+    });
+    fetchTenantRuntimeSnapshot.mockResolvedValue({
+      me: {
+        selectedTenantId: 'tenant-past-due'
+      },
+      settings: { settings: { theme: 'classic' } },
+      branding: { branding: { appName: 'Past Due Quiz' } },
+      subscription: {
+        planCode: 'pilot-monthly',
+        status: 'past_due',
+        billingCycle: 'monthly'
+      },
+      capabilities: {
+        planTier: 'trial',
+        maxHostedPlayers: 4,
+        analyticsHistoryEnabled: false
+      }
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('host-launch-blocked')).toBeInTheDocument());
+    expect(screen.getByRole('button', { name: /start game/i })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: /restore billing/i }));
+    await waitFor(() => expect(initiateCheckoutSession).toHaveBeenCalledWith({
+      planCode: 'pilot-monthly',
+      billingCycle: 'monthly'
+    }));
+    expect(screen.getByTestId('checkout-link')).toHaveAttribute('href', 'https://billing.smartiq.test/checkout?session_id=chk_restore_1');
+  });
+
+  test('shows upgrade boundary when hosted player count exceeds plan cap', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    hasRuntimeAuthContext.mockReturnValue(true);
+    fetchTenantRuntimeSnapshot.mockResolvedValue({
+      me: {
+        selectedTenantId: 'tenant-trial'
+      },
+      settings: { settings: { theme: 'classic' } },
+      branding: { branding: { appName: 'Trial Quiz' } },
+      subscription: {
+        planCode: 'pilot-monthly',
+        status: 'trialing',
+        billingCycle: 'monthly'
+      },
+      capabilities: {
+        planTier: 'trial',
+        maxHostedPlayers: 4,
+        analyticsHistoryEnabled: false
+      }
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
+    fireEvent.change(screen.getByLabelText(/players/i), { target: { value: 'A, B, C, D, E' } });
+    fireEvent.blur(screen.getByLabelText(/players/i), { target: { value: 'A, B, C, D, E' } });
+
+    await waitFor(() => expect(screen.getByTestId('host-player-cap-warning')).toBeInTheDocument());
+    expect(screen.getByRole('button', { name: /start game/i })).toBeDisabled();
+    expect(fetchTenantAuditEvents).not.toHaveBeenCalled();
+    expect(fetchTenantUsageSummary).not.toHaveBeenCalled();
+  });
+
+  test('creates a shareable room and shows saved room session state', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    rejoinRoomSession.mockResolvedValue({
+      roomCode: 'QUIZ42',
+      playerId: 'p1',
+      authToken: 'rt_room_host_rotated',
+      roomState: {
+        roomCode: 'QUIZ42',
+        players: [
+          { playerId: 'p1', displayName: 'Host One' },
+          { playerId: 'p2', displayName: 'Alice' }
+        ]
+      }
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('room-panel')).toBeInTheDocument());
+    fireEvent.change(screen.getByLabelText(/room display name/i), { target: { value: 'Host One' } });
+    fireEvent.click(screen.getByRole('button', { name: /create room/i }));
+
+    await waitFor(() => expect(createRoomSession).toHaveBeenCalledWith({ displayName: 'Host One' }));
+    expect(rejoinRoomSession).toHaveBeenCalledWith('ABC123', {
+      playerId: 'p1',
+      authToken: 'rt_room_1'
+    });
+    await waitFor(() => expect(screen.getByTestId('room-session-card')).toBeInTheDocument());
+    expect(screen.getByText('QUIZ42')).toBeInTheDocument();
+    expect(screen.getByText(/room ready: QUIZ42/i)).toBeInTheDocument();
+    expect(screen.getAllByText('Host One').length).toBeGreaterThan(0);
+    fireEvent.click(screen.getByRole('button', { name: /use room players/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeEnabled());
+    expect(screen.getAllByText('Alice').length).toBeGreaterThan(0);
+  });
+
+  test('joins a room into a dedicated player lobby surface', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    joinRoomSession.mockResolvedValue({
+      roomCode: 'QUIZ42',
+      playerId: 'p2',
+      authToken: 'rt_room_player'
+    });
+    rejoinRoomSession.mockResolvedValue({
+      roomCode: 'QUIZ42',
+      playerId: 'p2',
+      authToken: 'rt_room_player_rotated',
+      roomState: {
+        roomCode: 'QUIZ42',
+        branding: {
+          appName: 'Northwind Quiz',
+          primaryColor: '#223344',
+          secondaryColor: '#556677'
+        },
+        players: [
+          { playerId: 'p1', displayName: 'Host One' },
+          { playerId: 'p2', displayName: 'Alice' }
+        ]
+      }
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('room-panel')).toBeInTheDocument());
+    fireEvent.change(screen.getByLabelText(/room display name/i), { target: { value: 'Alice' } });
+    fireEvent.change(screen.getByLabelText(/room code/i), { target: { value: 'quiz42' } });
+    fireEvent.click(screen.getByRole('button', { name: /join room/i }));
+
+    await waitFor(() => expect(joinRoomSession).toHaveBeenCalledWith('QUIZ42', { displayName: 'Alice' }));
+    await waitFor(() => expect(screen.getByTestId('player-lobby-panel')).toBeInTheDocument());
+    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('QUIZ42');
+    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('Alice');
+    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('Northwind Quiz');
+    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent(/waiting for the host/i);
+    expect(screen.queryByLabelText(/room display name/i)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(/room code/i)).not.toBeInTheDocument();
+  });
+
+  test('renders dedicated player join route and returns to host setup on back', async () => {
+    window.location.hash = '#/join/quiz42';
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('player-route-panel')).toBeInTheDocument());
+    await waitFor(() => expect(fetchRoomPreview).toHaveBeenCalledWith('QUIZ42'));
+    expect(screen.getByTestId('player-route-panel')).toHaveTextContent('Northwind Quiz');
+    expect(screen.getByTestId('player-route-panel')).toHaveTextContent('QUIZ42');
+    expect(screen.getByTestId('player-route-preview')).toHaveTextContent('Host One');
+    expect(screen.queryByTestId('room-panel')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /start game/i })).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: /back to smartiq/i }));
+
+    await waitFor(() => expect(screen.getByTestId('room-panel')).toBeInTheDocument());
+    expect(window.location.hash).toBe('');
+    expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument();
+  });
+
+  test('joins through dedicated player route and switches into branded player lobby', async () => {
+    window.location.hash = '#/join/quiz42';
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    joinRoomSession.mockResolvedValue({
+      roomCode: 'QUIZ42',
+      playerId: 'p2',
+      authToken: 'rt_room_player'
+    });
+    rejoinRoomSession.mockResolvedValue({
+      roomCode: 'QUIZ42',
+      playerId: 'p2',
+      authToken: 'rt_room_player_rotated',
+      roomState: {
+        roomCode: 'QUIZ42',
+        branding: {
+          appName: 'Northwind Quiz',
+          primaryColor: '#223344',
+          secondaryColor: '#556677'
+        },
+        players: [
+          { playerId: 'p1', displayName: 'Host One' },
+          { playerId: 'p2', displayName: 'Alice' }
+        ]
+      }
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('player-route-panel')).toBeInTheDocument());
+    fireEvent.change(screen.getByLabelText(/your display name/i), { target: { value: 'Alice' } });
+    fireEvent.click(screen.getByRole('button', { name: /^join room$/i }));
+
+    await waitFor(() => expect(joinRoomSession).toHaveBeenCalledWith('QUIZ42', { displayName: 'Alice' }));
+    expect(rejoinRoomSession).toHaveBeenCalledWith('QUIZ42', {
+      playerId: 'p2',
+      authToken: 'rt_room_player'
+    });
+    await waitFor(() => expect(screen.getByTestId('player-lobby-panel')).toBeInTheDocument());
+    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('Northwind Quiz');
+    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('Alice');
+    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent(/waiting for the host/i);
+    expect(screen.queryByTestId('player-route-panel')).not.toBeInTheDocument();
+  });
+
+  test('resumes a saved room session from local storage', async () => {
+    localStorage.setItem('smartiq.roomSession', JSON.stringify({
+      roomCode: 'SAVE42',
+      playerId: 'p3',
+      authToken: 'rt_saved',
+      displayName: 'Saved Player',
+      role: 'player',
+      roomState: {
+        roomCode: 'SAVE42',
+        branding: {
+          appName: 'Saved Quiz',
+          primaryColor: '#114455',
+          secondaryColor: '#22aacc'
+        },
+        players: [{ playerId: 'p3', displayName: 'Saved Player' }]
+      }
+    }));
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    rejoinRoomSession.mockResolvedValue({
+      roomCode: 'SAVE42',
+      playerId: 'p3',
+      authToken: 'rt_saved_rotated',
+      roomState: {
+        roomCode: 'SAVE42',
+        branding: {
+          appName: 'Saved Quiz',
+          primaryColor: '#114455',
+          secondaryColor: '#22aacc'
+        },
+        players: [
+          { playerId: 'p1', displayName: 'Host' },
+          { playerId: 'p3', displayName: 'Saved Player' }
+        ]
+      }
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByRole('button', { name: /resume room/i })).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /resume room/i }));
+
+    await waitFor(() => expect(rejoinRoomSession).toHaveBeenCalledWith('SAVE42', {
+      playerId: 'p3',
+      authToken: 'rt_saved'
+    }));
+    expect(screen.getByText(/resumed room: SAVE42/i)).toBeInTheDocument();
+    expect(screen.getByTestId('player-lobby-panel')).toBeInTheDocument();
+    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('Saved Quiz');
+    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent(/waiting for the host/i);
+    expect(screen.getAllByText('Saved Player').length).toBeGreaterThan(0);
   });
 });

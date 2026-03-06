@@ -24,7 +24,7 @@ Locked decisions:
 
 ## Execution Progress (Live)
 
-Last updated: 2026-03-03
+Last updated: 2026-03-06
 
 - [x] Phase 1 - Frontend runtime now starts server-authoritative engine for all player counts.
   - Evidence: commit `440fc2f`, `frontend/src/App.jsx`, `frontend/src/App.server-mode.test.jsx`.
@@ -58,8 +58,8 @@ Last updated: 2026-03-03
   - Evidence: `.github/workflows/beta-go-no-go.yml`, `package.json` (`gate:beta:go-no-go`), `docs/beta-runbook-v1.md`.
 - [x] Phase 7 - Main branch protection required-check policy is codified and validated against workflow contexts.
   - Evidence: `docs/policies/main-branch-protection-policy.json`, `tools/validate_branch_protection_policy.js`, `.github/workflows/release-readiness.yml`.
-- [~] Phase 7 - Go/No-Go dry-run execution checklist and evidence template are published; live dry-run sign-off pending.
-  - Evidence: `docs/plans/2026-03-03-phase7-beta-go-no-go-dry-run-checklist.md`, `.github/workflows/phase7-beta-dry-run.yml`, `tools/generate_phase7_dry_run_evidence.js`.
+- [x] Phase 7 - Go/No-Go dry-run execution checklist and evidence sign-off are complete.
+  - Evidence: `docs/plans/2026-03-03-phase7-beta-go-no-go-dry-run-checklist.md`, `docs/reports/phase7-dry-run-evidence-local-2026-03-06T00-21-58-796Z.md`, `.github/workflows/phase7-beta-dry-run.yml`, `tools/generate_phase7_dry_run_evidence.js`, `tools/run_phase7_dry_run.js`.
 
 Legend: `[x] done`, `[~] in progress`, `[ ] not started`.
 

@@ -361,6 +361,15 @@ Generate latest branch consolidation snapshot: `npm run report:branches:consolid
 White-label canonical masterplan (business-first v3): `docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md`
 White-label sprint and milestone source of truth: `docs/plans/2026-03-05-white-label-milestones-v3.md`
 White-label promotion gates source of truth: `docs/plans/2026-03-05-white-label-gates-v3.md`
+Recurring Host SaaS canonical masterplan v1: `docs/plans/2026-03-06-recurring-host-saas-masterplan-v1.md`
+Recurring Host SaaS sprint and milestone source of truth: `docs/plans/2026-03-06-recurring-host-saas-milestones-v1.md`
+Recurring Host SaaS promotion gates source of truth: `docs/plans/2026-03-06-recurring-host-saas-gates-v1.md`
+Quiz Night SaaS canonical masterplan v1: `docs/plans/2026-03-06-quiz-night-saas-masterplan-v1.md`
+Quiz Night SaaS sprint and milestone source of truth: `docs/plans/2026-03-06-quiz-night-saas-milestones-v1.md`
+Quiz Night SaaS promotion gates source of truth: `docs/plans/2026-03-06-quiz-night-saas-gates-v1.md`
+Quiz Night SaaS completion evidence (M0-M9): `docs/reports/2026-03-06-quiz-night-saas-milestone-evidence-m0-m9.md`
+Quiz Night SaaS launch decision (`GO`): `docs/reports/2026-03-06-quiz-night-saas-m8-go-no-go-report.md`
+Quiz Night SaaS post-launch hardening package (M9): `docs/reports/2026-03-06-quiz-night-saas-m9-post-launch-hardening-pack.md`
 Superseded white-label program snapshot: `docs/plans/2026-03-03-white-label-program-v1.md`
 Legacy dual-AI protocol (optional compatibility): `docs/plans/2026-03-03-dual-ai-delivery-protocol.md`
 Legacy dual-AI ownership policy (optional compatibility): `docs/policies/dual-ai-file-ownership.json`
@@ -463,6 +472,12 @@ node scripts/verify_runtime_deck.js
 ## Canonical Development Priority
 
 - Active masterplan and roadmap source of truth:
+  - `docs/plans/2026-03-06-recurring-host-saas-masterplan-v1.md`
+  - `docs/plans/2026-03-06-recurring-host-saas-milestones-v1.md`
+  - `docs/plans/2026-03-06-recurring-host-saas-gates-v1.md`
+  - `docs/plans/2026-03-06-quiz-night-saas-masterplan-v1.md`
+  - `docs/plans/2026-03-06-quiz-night-saas-milestones-v1.md`
+  - `docs/plans/2026-03-06-quiz-night-saas-gates-v1.md`
   - `docs/plans/2026-03-03-masterplan-roadmap-to-beta.md`
   - `docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md`
   - `docs/plans/2026-03-05-white-label-milestones-v3.md`

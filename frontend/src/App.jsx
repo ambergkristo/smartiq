@@ -1,10 +1,26 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   API_BASE,
+  bootstrapOnboardingTenant,
+  clearRuntimeAuthContext,
+  completeRuntimeAuth,
+  createRoomSession,
+  duplicateServerGameSession,
+  fetchRoomPreview,
+  fetchTenantAuditEvents,
   fetchNextCard,
+  resumeServerGameSession,
+  fetchServerGameSession,
   fetchTenantRuntimeSnapshot,
+  fetchTenantUsageSummary,
   fetchTopics,
   hasRuntimeAuthContext,
+  initiateCheckoutSession,
+  joinRoomSession,
+  logoutRuntimeAuth,
+  rejoinRoomSession,
+  requestRuntimeAuthLink,
+  setRuntimeAuthContext,
   resolveCardErrorMessage,
   resolveTopicsErrorState
 } from './api';
@@ -34,10 +50,121 @@ const STRINGS = {
   changeFilters: 'Change filters',
   restartGame: 'Restart game',
   playersPlaceholder: 'Type player names and press Enter (or comma)',
-  addPlayerHint: 'At least one player is required.'
+  addPlayerHint: 'At least one player is required.',
+  onboardingTitle: 'Set up your first quiz workspace',
+  onboardingHint: 'Create a tenant + owner account context for this browser session.',
+  onboardingWorkspaceLabel: 'Workspace name',
+  onboardingWorkspacePlaceholder: 'Example: Northwind Quiz Night',
+  onboardingEmailLabel: 'Owner email',
+  onboardingEmailPlaceholder: 'owner@example.com',
+  onboardingNameLabel: 'Display name (optional)',
+  onboardingNamePlaceholder: 'Host name',
+  onboardingSubmit: 'Create workspace',
+  onboardingSubmitting: 'Creating workspace...',
+  onboardingSuccess: 'Workspace ready. Tenant runtime context is now active.',
+  signInTitle: 'Sign in to an existing host workspace',
+  signInHint: 'Restore a host session without using internal headers.',
+  signInEmailLabel: 'Host email',
+  signInEmailPlaceholder: 'owner@example.com',
+  signInTenantLabel: 'Tenant ID (optional)',
+  signInTenantPlaceholder: 'Required only if your account belongs to multiple tenants',
+  signInSubmit: 'Send sign-in link',
+  signInSubmitting: 'Signing in...',
+  signInSuccess: 'Host session restored.',
+  signOutSubmit: 'Sign out',
+  signOutSuccess: 'Signed out. Sign in again to restore tenant runtime.',
+  sessionExpired: 'Host session expired or is invalid. Sign in again to restore tenant runtime.',
+  upgradeSubmit: 'Upgrade to Pro',
+  upgradeSubmitting: 'Starting checkout...',
+  upgradeSuccessPrefix: 'Checkout initiated:',
+  upgradeErrorFallback: 'Could not start checkout. Retry in a moment.',
+  upgradeContinueSubmit: 'Continue to checkout',
+  upgradeRecoverySubmit: 'Restore billing',
+  upgradeRedirecting: 'Redirecting to checkout...',
+  upgradeRecoveryHint: 'If checkout does not open automatically, continue with the billing link below.',
+  hostWorkspaceTitle: 'Host workspace',
+  hostWorkspaceHint: 'Subscription state, recent host activity, and tenant usage live here.',
+  hostWorkspaceLoading: 'Loading workspace insights...',
+  hostWorkspaceNoActivity: 'No recent host activity yet.',
+  hostWorkspaceNoUsage: 'No tracked tenant usage yet for this period.',
+  hostWorkspaceAnalyticsLocked: 'Analytics and host history unlock on Pro Host. Upgrade to view recent activity and usage trends.',
+  hostedRuntimeBlocked: 'Hosted runtime is blocked until billing is restored. Upgrade or fix billing to launch sessions.',
+  hostedRuntimePastDue: 'Billing is past due. Hosted launches are blocked until payment state is recovered.',
+  hostedRuntimeCanceled: 'Subscription is canceled. Hosted launches are blocked until the tenant is upgraded again.',
+  hostedPlayerCapPrefix: 'Hosted player cap:',
+  hostedPlayerCapUpgrade: 'This plan allows fewer hosted players. Upgrade to launch larger sessions.',
+  roomPanelTitle: 'Live room',
+  roomPanelHint: 'Create a shareable room code for players, or join an existing room and resume it later on this device.',
+  roomJoinLinkLabel: 'Player join link',
+  roomDisplayNameLabel: 'Room display name',
+  roomDisplayNamePlaceholder: 'Host or player name',
+  roomCodeLabel: 'Room code',
+  roomCodePlaceholder: 'ABC123',
+  roomCreateSubmit: 'Create room',
+  roomJoinSubmit: 'Join room',
+  roomResumeSubmit: 'Resume room',
+  roomClearSubmit: 'Clear saved room',
+  roomPending: 'Working on room session...',
+  roomCreatedPrefix: 'Room ready:',
+  roomJoinedPrefix: 'Joined room:',
+  roomResumedPrefix: 'Resumed room:',
+  roomPlayersTitle: 'Players in room',
+  roomNoPlayers: 'No players visible yet.',
+  roomSavedHint: 'This room session is saved locally on this browser.',
+  roomHostBadge: 'Host',
+  roomPlayerBadge: 'Player',
+  roomPlayerLobbyTitle: 'Player lobby',
+  roomPlayerLobbyHint: 'Your browser is attached to this live room. Rejoin to refresh the roster or leave to switch rooms.',
+  roomPlayerLobbyWaiting: 'Waiting for the host to launch or resume the live session.',
+  roomPlayerLobbyRosterTitle: 'Players in this room',
+  roomPlayerLobbySwitchHint: 'Leave this room before joining a different room code.',
+  playerRouteTitle: 'Join live room',
+  playerRouteHint: 'Enter your display name and join the host room from a dedicated player entry surface.',
+  playerRouteDisplayNameLabel: 'Your display name',
+  playerRouteJoinSubmit: 'Join room',
+  playerRouteBackSubmit: 'Back to SmartIQ',
+  playerRouteLoading: 'Loading room preview...',
+  playerRoutePreviewPlayersPrefix: 'Players waiting:',
+  playerRoutePreviewMissing: 'Room preview is not available yet. You can still try joining directly.',
+  playerRouteInvalid: 'Player join link is invalid.',
+  roomUsePlayersSubmit: 'Use room players',
+  roomStartLiveSubmit: 'Start with room',
+  roomUsePlayersMessage: 'Room players loaded into the live session setup.',
+  recentHostedSessionsTitle: 'Recent hosted sessions',
+  recentHostedSessionsEmpty: 'No hosted sessions launched yet.',
+  recentHostedSessionPlayers: 'players',
+  recentHostedSessionStatusLiveBadge: 'Live',
+  recentHostedSessionStatusCompletedBadge: 'Completed',
+  recentHostedSessionFilterAll: 'All',
+  recentHostedSessionFilterLive: 'Live',
+  recentHostedSessionFilterCompleted: 'Completed',
+  recentHostedSessionTopicFallback: 'Any topic',
+  recentHostedSessionApplySubmit: 'Duplicate setup',
+  recentHostedSessionReviewSubmit: 'Review session',
+  recentHostedSessionResumeSubmit: 'Resume live',
+  recentHostedSessionLaunchSubmit: 'Launch duplicate',
+  recentHostedSessionRefreshSubmit: 'Refresh review',
+  recentHostedSessionPreparedPrefix: 'Duplicate setup ready:',
+  recentHostedSessionReviewPrefix: 'Reviewing session:',
+  recentHostedSessionReviewReadyPrefix: 'Session review ready:',
+  recentHostedSessionResumePrefix: 'Resuming live session:',
+  recentHostedSessionLaunchPrefix: 'Launching duplicate session:',
+  recentHostedSessionUseRoomRoster: 'Using saved room roster for the duplicate launch.',
+  recentHostedSessionUsePlaceholderRoster: 'Using placeholder player slots from the previous hosted session.',
+  recentHostedSessionReviewTitle: 'Session review',
+  recentHostedSessionReviewEmpty: 'Pick a recent hosted session to review its latest saved state.',
+  recentHostedSessionReviewQuestionFallback: 'No saved round question is available for this session yet.',
+  recentHostedSessionReviewLastActionFallback: 'No saved host action yet.',
+  recentHostedSessionLeaderPrefix: 'Current leader:',
+  recentHostedSessionStatusPrefix: 'Status:',
+  recentHostedSessionStatusLive: 'Live',
+  recentHostedSessionStatusCompleted: 'Completed',
+  recentHostedSessionReviewError: 'Could not launch duplicate session from host history.',
+  recentHostedSessionReviewLoadError: 'Could not load session review from host history.'
 };
 const GAME_STORAGE_KEY = 'smartiq.gameId';
 const CONFIG_STORAGE_KEY = 'smartiq.roundConfig';
+const ROOM_SESSION_STORAGE_KEY = 'smartiq.roomSession';
 const STARTUP_PHASE = {
   LOADING: 'loading',
   BACKEND_UNREACHABLE: 'backend-unreachable',
@@ -76,6 +203,10 @@ function normalizePlayerName(name) {
   return name.replace(/\s+/g, ' ').trim();
 }
 
+function isTestMode() {
+  return String(import.meta.env.MODE || '').toLowerCase() === 'test';
+}
+
 function parsePlayers(text) {
   return Array.from(
     new Set(
@@ -89,6 +220,188 @@ function parsePlayers(text) {
 
 function isSupportedTheme(theme) {
   return THEME_OPTIONS.some((entry) => entry.value === theme);
+}
+
+function resolvePlanLimit(planCode) {
+  const normalized = String(planCode || '').trim().toLowerCase();
+  if (normalized.includes('starter')) return 1000;
+  if (normalized.includes('pilot')) return 2000;
+  if (normalized.includes('growth')) return 10000;
+  return null;
+}
+
+function formatSubscriptionStatus(status) {
+  const normalized = String(status || '').trim().toLowerCase();
+  if (!normalized) {
+    return 'Not configured';
+  }
+  return normalized.replace(/_/g, ' ');
+}
+
+function formatAuditAction(action) {
+  const normalized = String(action || '').trim();
+  if (!normalized) {
+    return 'Tenant event';
+  }
+  return normalized.toLowerCase().replace(/_/g, ' ');
+}
+
+function resolveHostedRuntimeBlockMessage(subscription) {
+  const normalizedStatus = String(subscription?.status || '').trim().toLowerCase();
+  if (normalizedStatus === 'past_due') {
+    return STRINGS.hostedRuntimePastDue;
+  }
+  if (normalizedStatus === 'canceled') {
+    return STRINGS.hostedRuntimeCanceled;
+  }
+  return '';
+}
+
+function getRoomPlayerNames(roomSession) {
+  const players = Array.isArray(roomSession?.roomState?.players) ? roomSession.roomState.players : [];
+  return Array.from(new Set(players
+    .map((player) => normalizePlayerName(player?.displayName || player?.playerId || ''))
+    .filter(Boolean)));
+}
+
+function deriveRecentHostedSessions(auditEvents) {
+  if (!Array.isArray(auditEvents)) {
+    return [];
+  }
+  const byGameId = new Map();
+  auditEvents.forEach((entry) => {
+    const action = String(entry?.action || '').trim().toUpperCase();
+    if (action !== 'HOST_GAME_SESSION_CREATED' && action !== 'HOST_GAME_SESSION_COMPLETED') {
+      return;
+    }
+    const metadata = entry?.metadata && typeof entry.metadata === 'object' ? entry.metadata : {};
+    const gameId = String(entry?.entityId || metadata.gameId || '').trim();
+    if (!gameId) {
+      return;
+    }
+    const existing = byGameId.get(gameId) || {
+      gameId,
+      topic: '',
+      language: '',
+      playerCount: null,
+      status: 'live',
+      createdAt: '',
+      completedAt: '',
+      winnerDisplayName: '',
+      winnerScore: null
+    };
+    if (action === 'HOST_GAME_SESSION_CREATED') {
+      existing.topic = String(metadata.topic || existing.topic || '').trim();
+      existing.language = String(metadata.language || existing.language || '').trim();
+      existing.playerCount = Number.isInteger(metadata.playerCount) ? metadata.playerCount : existing.playerCount;
+      existing.createdAt = String(entry?.eventTime || existing.createdAt || '').trim();
+    }
+    if (action === 'HOST_GAME_SESSION_COMPLETED') {
+      existing.status = 'completed';
+      existing.completedAt = String(entry?.eventTime || existing.completedAt || '').trim();
+      existing.topic = String(metadata.topic || existing.topic || '').trim();
+      existing.winnerDisplayName = String(metadata.winnerDisplayName || existing.winnerDisplayName || '').trim();
+      existing.winnerScore = Number.isInteger(metadata.winnerScore) ? metadata.winnerScore : existing.winnerScore;
+    }
+    byGameId.set(gameId, existing);
+  });
+
+  return Array.from(byGameId.values())
+    .sort((left, right) => {
+      const leftTime = Date.parse(left.completedAt || left.createdAt || '');
+      const rightTime = Date.parse(right.completedAt || right.createdAt || '');
+      return (Number.isNaN(rightTime) ? 0 : rightTime) - (Number.isNaN(leftTime) ? 0 : leftTime);
+    })
+    .slice(0, 6);
+}
+
+function formatRecentHostedSessionPhase(phase) {
+  const normalized = String(phase || '').trim().toLowerCase();
+  if (!normalized) {
+    return 'Unknown phase';
+  }
+  return normalized.replace(/_/g, ' ');
+}
+
+function buildRecentHostedSessionReview(snapshot, fallbackSession) {
+  const players = Array.isArray(snapshot?.players) ? snapshot.players : [];
+  const totalScores = snapshot?.totalScores && typeof snapshot.totalScores === 'object'
+    ? snapshot.totalScores
+    : {};
+  const scoreboard = players.map((player) => {
+    const playerId = String(player?.playerId || '').trim();
+    const displayName = String(player?.displayName || playerId || 'Player').trim() || 'Player';
+    return {
+      playerId,
+      displayName,
+      score: Number.isInteger(totalScores[playerId]) ? totalScores[playerId] : 0
+    };
+  });
+  const sortedScoreboard = [...scoreboard].sort((left, right) => right.score - left.score);
+  const leader = sortedScoreboard[0] || null;
+  const normalizedPhase = String(snapshot?.roundState?.phase || '').trim().toUpperCase();
+
+  return {
+    gameId: String(snapshot?.gameId || fallbackSession?.gameId || '').trim(),
+    topic: String(snapshot?.boardState?.topic || fallbackSession?.topic || '').trim(),
+    language: String(fallbackSession?.language || '').trim().toLowerCase(),
+    question: String(snapshot?.boardState?.question || '').trim(),
+    roundNumber: Number.isInteger(snapshot?.roundState?.roundNumber) ? snapshot.roundState.roundNumber : 1,
+    phase: formatRecentHostedSessionPhase(snapshot?.roundState?.phase),
+    lastAction: String(snapshot?.roundState?.lastAction || '').trim(),
+    scoreboard,
+    leaderDisplayName: leader?.displayName || '',
+    leaderScore: Number.isInteger(leader?.score) ? leader.score : 0,
+    playerCount: scoreboard.length,
+    isCompleted: normalizedPhase === 'GAME_OVER'
+  };
+}
+
+function resolveRecentHostedSessionConfig(session, fallbackConfig, roomSession) {
+  const roomPlayerNames = getRoomPlayerNames(roomSession);
+  const placeholderPlayers = buildPlaceholderPlayers(session?.playerCount);
+  const normalizedLanguage = String(session?.language || '').trim().toLowerCase();
+  return {
+    topic: String(session?.topic || '').trim(),
+    lang: DEFAULT_LANGS.includes(normalizedLanguage) ? normalizedLanguage : fallbackConfig.lang,
+    playersText: roomPlayerNames.length > 0
+      ? roomPlayerNames.join(', ')
+      : placeholderPlayers.length > 0
+        ? placeholderPlayers.join(', ')
+        : fallbackConfig.playersText
+  };
+}
+
+function buildPlaceholderPlayers(playerCount) {
+  if (!Number.isInteger(playerCount) || playerCount <= 0) {
+    return [];
+  }
+  return Array.from({ length: Math.min(playerCount, 10) }, (_, index) => `Player ${index + 1}`);
+}
+
+function resolvePlayerJoinRoute() {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+  const hash = String(window.location?.hash || '').trim();
+  const match = hash.match(/^#\/join\/([A-Za-z0-9-]+)$/i);
+  if (!match) {
+    return null;
+  }
+  return normalizeRoomCodeInput(match[1]);
+}
+
+function buildPlayerJoinUrl(roomCode) {
+  const normalizedRoomCode = normalizeRoomCodeInput(roomCode);
+  if (!normalizedRoomCode) {
+    return '';
+  }
+  if (typeof window === 'undefined') {
+    return `#/join/${normalizedRoomCode}`;
+  }
+  const url = new URL(window.location.href);
+  url.hash = `/join/${normalizedRoomCode}`;
+  return url.toString();
 }
 
 function SetupSkeleton({ appTitle }) {
@@ -150,26 +463,88 @@ function AudioControls({ muted, volume, onToggleMute, onVolumeChange }) {
   );
 }
 
-function StartScreen({ topics, config, setConfig, onStart, appTitle, runtimeSnapshot, runtimeWarning }) {
+function StartScreen({
+  topics,
+  config,
+  setConfig,
+  onStart,
+  appTitle,
+  runtimeSnapshot,
+  runtimeWarning,
+  onUpgrade,
+  onLogout,
+  upgradePending,
+  upgradeMessage,
+  checkoutUrl,
+  workspaceInsights,
+  workspacePending,
+  workspaceError,
+  hostLaunchBlocked,
+  hostLaunchMessage,
+  workspaceMessage,
+  reviewedHostedSession,
+  activeHostedSession,
+  hostedSessionFilter,
+  onHostedSessionFilterChange,
+  onUseRecentHostedSession,
+  onReviewRecentHostedSession,
+  onResumeRecentHostedSession,
+  onLaunchRecentHostedSession,
+  canLaunchRecentHostedSessions
+}) {
+  const [playerDraft, setPlayerDraft] = useState('');
   const players = parsePlayers(config.playersText);
-  const canStart = players.length > 0;
+  const draftPlayers = parsePlayers(playerDraft);
   const activeTopic = config.topic || 'Any Topic';
   const activeLanguage = String(config.lang || 'en').toUpperCase();
   const tenantId = runtimeSnapshot?.me?.selectedTenantId || '';
   const planCode = runtimeSnapshot?.subscription?.planCode || '';
+  const planStatus = runtimeSnapshot?.subscription?.status || '';
+  const capabilities = runtimeSnapshot?.capabilities || null;
+  const planLimit = resolvePlanLimit(planCode);
+  const maxHostedPlayers = Number.isInteger(capabilities?.maxHostedPlayers) ? capabilities.maxHostedPlayers : null;
+  const analyticsHistoryEnabled = capabilities?.analyticsHistoryEnabled === true;
+  const mergedPlayerCount = Array.from(new Set([...players, ...draftPlayers])).length;
+  const overHostedPlayerCap = maxHostedPlayers != null && mergedPlayerCount > maxHostedPlayers;
+  const canStart = (players.length > 0 || draftPlayers.length > 0) && !overHostedPlayerCap;
+  const usageRow = Array.isArray(workspaceInsights?.usageSummary)
+    ? workspaceInsights.usageSummary.find((entry) => String(entry?.eventType || '').toLowerCase() === 'game.round.completed')
+    : null;
+  const canUpgrade = Boolean(tenantId) && typeof onUpgrade === 'function';
+  const recentHostedSessions = deriveRecentHostedSessions(workspaceInsights?.auditEvents);
+  const visibleHostedSessions = recentHostedSessions.filter((entry) => {
+    if (hostedSessionFilter === 'completed') {
+      return entry.status === 'completed';
+    }
+    if (hostedSessionFilter === 'live') {
+      return entry.status !== 'completed';
+    }
+    return true;
+  });
 
   function addPlayers(rawValue) {
     const incoming = parsePlayers(rawValue);
     if (incoming.length === 0) {
-      return;
+      return players;
     }
     const merged = Array.from(new Set([...players, ...incoming]));
     setConfig((prev) => ({ ...prev, playersText: merged.join(', ') }));
+    return merged;
   }
 
   function removePlayer(player) {
     const next = players.filter((entry) => entry !== player);
     setConfig((prev) => ({ ...prev, playersText: next.join(', ') }));
+  }
+
+  function handleStartClick() {
+    const merged = draftPlayers.length > 0 ? addPlayers(playerDraft) : players;
+    const normalizedPlayers = Array.isArray(merged) ? merged : players;
+    if (normalizedPlayers.length === 0) {
+      return;
+    }
+    setPlayerDraft('');
+    onStart(normalizedPlayers.join(', '));
   }
 
   return (
@@ -183,6 +558,226 @@ function StartScreen({ topics, config, setConfig, onStart, appTitle, runtimeSnap
       ) : null}
       {runtimeWarning ? (
         <p className="field-hint runtime-warning" data-testid="tenant-runtime-warning">{runtimeWarning}</p>
+      ) : null}
+      {tenantId ? (
+        <section className="host-workspace board-surface" data-testid="host-workspace-panel">
+          <div className="host-workspace-header">
+            <div>
+              <h2>{STRINGS.hostWorkspaceTitle}</h2>
+              <p>{STRINGS.hostWorkspaceHint}</p>
+            </div>
+            <div className="host-plan-chip">
+              <span>{planCode || 'trial'}</span>
+              <strong>{formatSubscriptionStatus(planStatus)}</strong>
+            </div>
+          </div>
+          {workspacePending ? <p className="field-hint">{STRINGS.hostWorkspaceLoading}</p> : null}
+          {hostLaunchBlocked ? (
+            <p className="error" data-testid="host-launch-blocked">{hostLaunchMessage || STRINGS.hostedRuntimeBlocked}</p>
+          ) : null}
+          {workspaceError ? (
+            <p className="error" data-testid="workspace-error">{workspaceError}</p>
+          ) : null}
+          {workspaceMessage ? (
+            <p className="field-hint" data-testid="workspace-message">{workspaceMessage}</p>
+          ) : null}
+          <div className="host-workspace-grid">
+            <section className="host-workspace-card">
+              <h3>Plan</h3>
+              <p className="field-hint">Billing cycle: {runtimeSnapshot?.subscription?.billingCycle || 'not set'}</p>
+              <p className="field-hint">{STRINGS.hostedPlayerCapPrefix} {maxHostedPlayers == null ? 'not mapped yet' : maxHostedPlayers}</p>
+              <p className="field-hint">Usage cap: {planLimit == null ? 'unbounded / not mapped yet' : `${planLimit} tracked events / period`}</p>
+              <p className="field-hint">
+                Round usage: {!analyticsHistoryEnabled ? STRINGS.hostWorkspaceAnalyticsLocked : usageRow ? `${usageRow.totalValue} across ${usageRow.eventCount} events` : STRINGS.hostWorkspaceNoUsage}
+              </p>
+            </section>
+            <section className="host-workspace-card">
+              <h3>Recent activity</h3>
+              {!analyticsHistoryEnabled ? (
+                <p className="field-hint">{STRINGS.hostWorkspaceAnalyticsLocked}</p>
+              ) : Array.isArray(workspaceInsights?.auditEvents) && workspaceInsights.auditEvents.length > 0 ? (
+                <ul className="host-activity-list">
+                  {workspaceInsights.auditEvents.slice(0, 5).map((entry) => (
+                    <li key={entry.auditEventId || `${entry.action}-${entry.eventTime}`}>
+                      <strong>{formatAuditAction(entry.action)}</strong>
+                      <span>{entry.entityId || entry.metadata?.roomCode || entry.metadata?.gameId || 'tenant'}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                !workspacePending ? <p className="field-hint">{STRINGS.hostWorkspaceNoActivity}</p> : null
+              )}
+            </section>
+            <section className="host-workspace-card">
+              <h3>{STRINGS.recentHostedSessionsTitle}</h3>
+              <div className="host-session-filter-row" role="tablist" aria-label="Hosted session filter">
+                {[
+                  { value: 'all', label: STRINGS.recentHostedSessionFilterAll },
+                  { value: 'live', label: STRINGS.recentHostedSessionFilterLive },
+                  { value: 'completed', label: STRINGS.recentHostedSessionFilterCompleted }
+                ].map((entry) => (
+                  <button
+                    key={entry.value}
+                    type="button"
+                    className={`session-filter-chip${hostedSessionFilter === entry.value ? ' selected' : ''}`}
+                    aria-pressed={hostedSessionFilter === entry.value}
+                    onClick={() => onHostedSessionFilterChange(entry.value)}
+                  >
+                    {entry.label}
+                  </button>
+                ))}
+              </div>
+              {!analyticsHistoryEnabled ? (
+                <p className="field-hint">{STRINGS.hostWorkspaceAnalyticsLocked}</p>
+              ) : visibleHostedSessions.length > 0 ? (
+                <ul className="host-activity-list">
+                  {visibleHostedSessions.map((entry) => (
+                    <li
+                      key={entry.gameId}
+                      className={activeHostedSession?.gameId === entry.gameId ? 'selected' : ''}
+                    >
+                      <strong>
+                        {entry.topic || STRINGS.recentHostedSessionTopicFallback}
+                        <span className={`session-status-badge${entry.status === 'completed' ? ' is-completed' : ''}`}>
+                          {entry.status === 'completed'
+                            ? STRINGS.recentHostedSessionStatusCompletedBadge
+                            : STRINGS.recentHostedSessionStatusLiveBadge}
+                        </span>
+                      </strong>
+                      <span>
+                        {entry.gameId}
+                        {entry.language ? ` | ${entry.language.toUpperCase()}` : ''}
+                        {entry.playerCount != null ? ` | ${entry.playerCount} ${STRINGS.recentHostedSessionPlayers}` : ''}
+                        {entry.winnerDisplayName ? ` | winner ${entry.winnerDisplayName}` : ''}
+                      </span>
+                      {typeof onUseRecentHostedSession === 'function' ? (
+                        <div className="host-session-actions">
+                          <button type="button" onClick={() => onUseRecentHostedSession(entry)}>
+                            {STRINGS.recentHostedSessionApplySubmit}
+                          </button>
+                          <button
+                            type="button"
+                            className="secondary-action"
+                            onClick={() => onReviewRecentHostedSession(entry)}
+                            disabled={!entry.gameId}
+                          >
+                            {STRINGS.recentHostedSessionReviewSubmit}
+                          </button>
+                          <button
+                            type="button"
+                            className="secondary-action"
+                            onClick={() => onResumeRecentHostedSession(entry)}
+                            disabled={!entry.gameId || hostLaunchBlocked}
+                          >
+                            {STRINGS.recentHostedSessionResumeSubmit}
+                          </button>
+                          <button
+                            type="button"
+                            className="secondary-action"
+                            onClick={() => onLaunchRecentHostedSession(entry)}
+                            disabled={!canLaunchRecentHostedSessions(entry)}
+                          >
+                            {STRINGS.recentHostedSessionLaunchSubmit}
+                          </button>
+                        </div>
+                      ) : null}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                !workspacePending ? <p className="field-hint">{STRINGS.recentHostedSessionsEmpty}</p> : null
+              )}
+            </section>
+            <section className="host-workspace-card recent-hosted-session-review" data-testid="recent-hosted-session-review">
+              <h3>{STRINGS.recentHostedSessionReviewTitle}</h3>
+              {reviewedHostedSession ? (
+                <>
+                  <strong>{reviewedHostedSession.topic || STRINGS.recentHostedSessionTopicFallback}</strong>
+                  <p className="field-hint">
+                    {reviewedHostedSession.gameId}
+                    {reviewedHostedSession.language ? ` | ${reviewedHostedSession.language.toUpperCase()}` : ''}
+                    {` | round ${reviewedHostedSession.roundNumber}`}
+                    {` | ${reviewedHostedSession.phase}`}
+                  </p>
+                  <p className="recent-session-question">
+                    {reviewedHostedSession.question || STRINGS.recentHostedSessionReviewQuestionFallback}
+                  </p>
+                  <p className="field-hint">
+                    Last action: {reviewedHostedSession.lastAction || STRINGS.recentHostedSessionReviewLastActionFallback}
+                  </p>
+                  <div className="recent-session-meta-grid">
+                    <p className="field-hint">
+                      {STRINGS.recentHostedSessionStatusPrefix} {reviewedHostedSession.isCompleted ? STRINGS.recentHostedSessionStatusCompleted : STRINGS.recentHostedSessionStatusLive}
+                    </p>
+                    <p className="field-hint">
+                      {STRINGS.recentHostedSessionLeaderPrefix} {reviewedHostedSession.leaderDisplayName || 'n/a'}{reviewedHostedSession.leaderDisplayName ? ` (${reviewedHostedSession.leaderScore} pts)` : ''}
+                    </p>
+                  </div>
+                  {activeHostedSession ? (
+                    <div className="host-session-actions host-session-actions--detail">
+                      <button type="button" onClick={() => onUseRecentHostedSession(activeHostedSession)}>
+                        {STRINGS.recentHostedSessionApplySubmit}
+                      </button>
+                      <button
+                        type="button"
+                        className="secondary-action"
+                        onClick={() => onReviewRecentHostedSession(activeHostedSession)}
+                      >
+                        {STRINGS.recentHostedSessionRefreshSubmit}
+                      </button>
+                      <button
+                        type="button"
+                        className="secondary-action"
+                        onClick={() => onResumeRecentHostedSession(activeHostedSession)}
+                        disabled={hostLaunchBlocked}
+                      >
+                        {STRINGS.recentHostedSessionResumeSubmit}
+                      </button>
+                      <button
+                        type="button"
+                        className="secondary-action"
+                        onClick={() => onLaunchRecentHostedSession(activeHostedSession)}
+                        disabled={!canLaunchRecentHostedSessions(activeHostedSession)}
+                      >
+                        {STRINGS.recentHostedSessionLaunchSubmit}
+                      </button>
+                    </div>
+                  ) : null}
+                  <ul className="recent-session-scoreboard">
+                    {reviewedHostedSession.scoreboard.map((entry) => (
+                      <li key={entry.playerId || entry.displayName}>
+                        <strong>{entry.displayName}</strong>
+                        <span>{entry.score} pts</span>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <p className="field-hint">{STRINGS.recentHostedSessionReviewEmpty}</p>
+              )}
+            </section>
+          </div>
+        </section>
+      ) : null}
+      {tenantId && typeof onLogout === 'function' ? (
+        <div className="upgrade-row">
+          <button type="button" onClick={onLogout}>
+            {STRINGS.signOutSubmit}
+          </button>
+        </div>
+      ) : null}
+      {canUpgrade ? (
+        <div className="upgrade-row">
+          <button type="button" onClick={onUpgrade} disabled={upgradePending}>
+            {upgradePending ? STRINGS.upgradeSubmitting : hostLaunchBlocked ? STRINGS.upgradeRecoverySubmit : STRINGS.upgradeSubmit}
+          </button>
+          {upgradeMessage ? <p className="field-hint" data-testid="upgrade-message">{upgradeMessage}</p> : null}
+          {checkoutUrl ? (
+            <a className="inline-link" data-testid="checkout-link" href={checkoutUrl}>
+              {STRINGS.upgradeContinueSubmit}
+            </a>
+          ) : null}
+        </div>
       ) : null}
 
       <div className="setup-toolbar">
@@ -269,17 +864,18 @@ function StartScreen({ topics, config, setConfig, onStart, appTitle, runtimeSnap
       <input
         id="players"
         type="text"
-        defaultValue=""
+        value={playerDraft}
+        onChange={(event) => setPlayerDraft(event.target.value)}
         onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === ',') {
             event.preventDefault();
             addPlayers(event.currentTarget.value);
-            event.currentTarget.value = '';
+            setPlayerDraft('');
           }
         }}
         onBlur={(event) => {
           addPlayers(event.currentTarget.value);
-          event.currentTarget.value = '';
+          setPlayerDraft('');
         }}
         placeholder={STRINGS.playersPlaceholder}
       />
@@ -291,11 +887,383 @@ function StartScreen({ topics, config, setConfig, onStart, appTitle, runtimeSnap
           </button>
         ))}
       </div>
+      {overHostedPlayerCap ? (
+        <p className="field-hint runtime-warning" data-testid="host-player-cap-warning">
+          {STRINGS.hostedPlayerCapUpgrade} {STRINGS.hostedPlayerCapPrefix} {maxHostedPlayers}.
+        </p>
+      ) : null}
       {players.length === 0 ? <p className="field-hint">{STRINGS.addPlayerHint}</p> : null}
 
-      <button className="start-cta" onClick={onStart} disabled={!canStart} type="button">
+      <button className="start-cta" onClick={handleStartClick} disabled={!canStart || hostLaunchBlocked} type="button">
         {STRINGS.startRound}
       </button>
+    </section>
+  );
+}
+
+function OnboardingPanel({
+  draft,
+  pending,
+  success,
+  error,
+  onDraftChange,
+  onSubmit
+}) {
+  return (
+    <section className="setup-panel board-surface onboarding-panel" data-testid="onboarding-panel">
+      <h2>{STRINGS.onboardingTitle}</h2>
+      <p>{STRINGS.onboardingHint}</p>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          onSubmit();
+        }}
+      >
+        <label htmlFor="onboarding-workspace">{STRINGS.onboardingWorkspaceLabel}</label>
+        <input
+          id="onboarding-workspace"
+          type="text"
+          value={draft.workspaceName}
+          onChange={(event) => onDraftChange((prev) => ({ ...prev, workspaceName: event.target.value }))}
+          placeholder={STRINGS.onboardingWorkspacePlaceholder}
+          autoComplete="organization"
+          disabled={pending}
+        />
+
+        <label htmlFor="onboarding-email">{STRINGS.onboardingEmailLabel}</label>
+        <input
+          id="onboarding-email"
+          type="email"
+          value={draft.ownerEmail}
+          onChange={(event) => onDraftChange((prev) => ({ ...prev, ownerEmail: event.target.value }))}
+          placeholder={STRINGS.onboardingEmailPlaceholder}
+          autoComplete="email"
+          disabled={pending}
+        />
+
+        <label htmlFor="onboarding-display-name">{STRINGS.onboardingNameLabel}</label>
+        <input
+          id="onboarding-display-name"
+          type="text"
+          value={draft.ownerDisplayName}
+          onChange={(event) => onDraftChange((prev) => ({ ...prev, ownerDisplayName: event.target.value }))}
+          placeholder={STRINGS.onboardingNamePlaceholder}
+          autoComplete="name"
+          disabled={pending}
+        />
+
+        <button type="submit" disabled={pending}>
+          {pending ? STRINGS.onboardingSubmitting : STRINGS.onboardingSubmit}
+        </button>
+      </form>
+
+      {success ? <p className="field-hint" data-testid="onboarding-success">{STRINGS.onboardingSuccess}</p> : null}
+      {error ? <p className="error" data-testid="onboarding-error">{error}</p> : null}
+    </section>
+  );
+}
+
+function SignInPanel({
+  draft,
+  pending,
+  success,
+  error,
+  onDraftChange,
+  onSubmit
+}) {
+  return (
+    <section className="setup-panel board-surface onboarding-panel" data-testid="signin-panel">
+      <h2>{STRINGS.signInTitle}</h2>
+      <p>{STRINGS.signInHint}</p>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          onSubmit();
+        }}
+      >
+        <label htmlFor="signin-email">{STRINGS.signInEmailLabel}</label>
+        <input
+          id="signin-email"
+          type="email"
+          value={draft.email}
+          onChange={(event) => onDraftChange((prev) => ({ ...prev, email: event.target.value }))}
+          placeholder={STRINGS.signInEmailPlaceholder}
+          autoComplete="email"
+          disabled={pending}
+        />
+
+        <label htmlFor="signin-tenant-id">{STRINGS.signInTenantLabel}</label>
+        <input
+          id="signin-tenant-id"
+          type="text"
+          value={draft.tenantId}
+          onChange={(event) => onDraftChange((prev) => ({ ...prev, tenantId: event.target.value }))}
+          placeholder={STRINGS.signInTenantPlaceholder}
+          autoComplete="off"
+          disabled={pending}
+        />
+
+        <button type="submit" disabled={pending}>
+          {pending ? STRINGS.signInSubmitting : STRINGS.signInSubmit}
+        </button>
+      </form>
+
+      {success ? <p className="field-hint" data-testid="signin-success">{success}</p> : null}
+      {error ? <p className="error" data-testid="signin-error">{error}</p> : null}
+    </section>
+  );
+}
+
+function RoomPanel({
+  appTitle,
+  draft,
+  pending,
+  message,
+  error,
+  roomSession,
+  onDraftChange,
+  onCreateRoom,
+  onJoinRoom,
+  onResumeRoom,
+  onClearRoom,
+  onUseRoomPlayers,
+  onStartRoomSession
+}) {
+  const roomPlayers = Array.isArray(roomSession?.roomState?.players) ? roomSession.roomState.players : [];
+  const roomPlayerNames = getRoomPlayerNames(roomSession);
+  const canUseRoomPlayers = roomSession?.role === 'host' && roomPlayerNames.length > 0;
+  const isPlayerLobby = roomSession?.role === 'player';
+  const roomBranding = roomSession?.roomState?.branding && typeof roomSession.roomState.branding === 'object'
+    ? roomSession.roomState.branding
+    : null;
+  const playerLobbyAppTitle = String(roomBranding?.appName || appTitle || STRINGS.title).trim() || STRINGS.title;
+  const playerLobbyStyle = roomBranding?.primaryColor || roomBranding?.secondaryColor
+    ? {
+      '--player-lobby-accent': roomBranding?.primaryColor || undefined,
+      '--player-lobby-accent-2': roomBranding?.secondaryColor || roomBranding?.primaryColor || undefined
+    }
+    : undefined;
+  const playerJoinLink = roomSession?.roomCode ? buildPlayerJoinUrl(roomSession.roomCode) : '';
+
+  return (
+    <section className="setup-panel board-surface room-panel" data-testid="room-panel">
+      <h2>{STRINGS.roomPanelTitle}</h2>
+      <p>{isPlayerLobby ? STRINGS.roomPlayerLobbyHint : STRINGS.roomPanelHint}</p>
+
+      {pending ? <p className="field-hint">{STRINGS.roomPending}</p> : null}
+      {message ? <p className="field-hint" data-testid="room-message">{message}</p> : null}
+      {error ? <p className="error" data-testid="room-error">{error}</p> : null}
+
+      {isPlayerLobby ? (
+        <div className="player-lobby-card" data-testid="player-lobby-panel" style={playerLobbyStyle}>
+          <div className="player-lobby-hero">
+            <p className="player-lobby-brand">{playerLobbyAppTitle}</p>
+            <div>
+              <h3>{STRINGS.roomPlayerLobbyTitle}</h3>
+              <p>{STRINGS.roomPlayerLobbyWaiting}</p>
+            </div>
+            <span className="host-plan-chip room-role-chip">
+              <span>{STRINGS.roomPlayerBadge}</span>
+              <strong>{roomSession.displayName || roomSession.playerId}</strong>
+            </span>
+          </div>
+          <div className="player-lobby-meta">
+            <strong>{roomSession.roomCode}</strong>
+            <span>{STRINGS.roomSavedHint}</span>
+          </div>
+          <div className="room-actions">
+            <button type="button" onClick={onResumeRoom} disabled={pending}>
+              {STRINGS.roomResumeSubmit}
+            </button>
+            <button type="button" className="secondary-action" onClick={onClearRoom} disabled={pending}>
+              {STRINGS.roomClearSubmit}
+            </button>
+          </div>
+          <div className="room-player-list">
+            <h3>{STRINGS.roomPlayerLobbyRosterTitle}</h3>
+            {roomPlayers.length > 0 ? (
+              <ul>
+                {roomPlayers.map((player) => (
+                  <li key={player.playerId || player.displayName}>
+                    <strong>{player.displayName || player.playerId}</strong>
+                    <span>{player.playerId}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="field-hint">{STRINGS.roomNoPlayers}</p>
+            )}
+          </div>
+          <p className="field-hint">{STRINGS.roomPlayerLobbySwitchHint}</p>
+        </div>
+      ) : (
+        <>
+          <label htmlFor="room-display-name">{STRINGS.roomDisplayNameLabel}</label>
+          <input
+            id="room-display-name"
+            type="text"
+            value={draft.displayName}
+            onChange={(event) => onDraftChange((prev) => ({ ...prev, displayName: event.target.value }))}
+            placeholder={STRINGS.roomDisplayNamePlaceholder}
+            autoComplete="nickname"
+            disabled={pending}
+          />
+
+          <label htmlFor="room-code">{STRINGS.roomCodeLabel}</label>
+          <input
+            id="room-code"
+            type="text"
+            value={draft.roomCode}
+            onChange={(event) => onDraftChange((prev) => ({ ...prev, roomCode: normalizeRoomCodeInput(event.target.value) }))}
+            placeholder={STRINGS.roomCodePlaceholder}
+            autoComplete="off"
+            disabled={pending}
+          />
+
+          <div className="room-actions">
+            <button type="button" onClick={onCreateRoom} disabled={pending}>
+              {STRINGS.roomCreateSubmit}
+            </button>
+            <button type="button" onClick={onJoinRoom} disabled={pending}>
+              {STRINGS.roomJoinSubmit}
+            </button>
+            {roomSession ? (
+              <>
+                <button type="button" onClick={onResumeRoom} disabled={pending}>
+                  {STRINGS.roomResumeSubmit}
+                </button>
+                <button type="button" className="secondary-action" onClick={onClearRoom} disabled={pending}>
+                  {STRINGS.roomClearSubmit}
+                </button>
+              </>
+            ) : null}
+          </div>
+        </>
+      )}
+
+      {roomSession && !isPlayerLobby ? (
+        <div className="room-session-card" data-testid="room-session-card">
+          <div className="room-session-header">
+            <div>
+              <strong>{roomSession.roomCode}</strong>
+              <span className="field-hint">{STRINGS.roomSavedHint}</span>
+            </div>
+            <span className="host-plan-chip room-role-chip">
+              <span>{roomSession.role === 'host' ? STRINGS.roomHostBadge : STRINGS.roomPlayerBadge}</span>
+              <strong>{roomSession.displayName || roomSession.playerId}</strong>
+            </span>
+          </div>
+          <div className="room-player-list">
+            <h3>{STRINGS.roomPlayersTitle}</h3>
+            {roomSession?.role === 'host' && playerJoinLink ? (
+              <p className="field-hint">
+                {STRINGS.roomJoinLinkLabel}:{' '}
+                <a className="inline-link" href={playerJoinLink}>
+                  {playerJoinLink}
+                </a>
+              </p>
+            ) : null}
+            {canUseRoomPlayers ? (
+              <div className="room-actions">
+                <button type="button" onClick={onUseRoomPlayers} disabled={pending}>
+                  {STRINGS.roomUsePlayersSubmit}
+                </button>
+                <button type="button" onClick={onStartRoomSession} disabled={pending}>
+                  {STRINGS.roomStartLiveSubmit}
+                </button>
+              </div>
+            ) : null}
+            {roomPlayers.length > 0 ? (
+              <ul>
+                {roomPlayers.map((player) => (
+                  <li key={player.playerId || player.displayName}>
+                    <strong>{player.displayName || player.playerId}</strong>
+                    <span>{player.playerId}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="field-hint">{STRINGS.roomNoPlayers}</p>
+            )}
+          </div>
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
+function PlayerJoinRoutePanel({
+  roomCode,
+  appTitle,
+  preview,
+  pending,
+  message,
+  error,
+  displayName,
+  onDisplayNameChange,
+  onJoin,
+  onBack
+}) {
+  const previewBranding = preview?.branding && typeof preview.branding === 'object' ? preview.branding : null;
+  const previewPlayers = Array.isArray(preview?.players) ? preview.players : [];
+  const previewTitle = String(previewBranding?.appName || appTitle || STRINGS.title).trim() || STRINGS.title;
+  const previewStyle = previewBranding?.primaryColor || previewBranding?.secondaryColor
+    ? {
+      '--player-lobby-accent': previewBranding?.primaryColor || undefined,
+      '--player-lobby-accent-2': previewBranding?.secondaryColor || previewBranding?.primaryColor || undefined
+    }
+    : undefined;
+
+  return (
+    <section className="setup-panel board-surface player-route-panel" data-testid="player-route-panel" style={previewStyle}>
+      <p className="player-lobby-brand">{previewTitle}</p>
+      <h1>{STRINGS.playerRouteTitle}</h1>
+      <p>{STRINGS.playerRouteHint}</p>
+      <p className="field-hint">
+        {STRINGS.roomCodeLabel}: <strong>{roomCode}</strong>
+      </p>
+      {pending ? <p className="field-hint">{STRINGS.playerRouteLoading}</p> : null}
+      {message ? <p className="field-hint" data-testid="player-route-message">{message}</p> : null}
+      {error ? <p className="error" data-testid="player-route-error">{error}</p> : null}
+      <label htmlFor="player-route-display-name">{STRINGS.playerRouteDisplayNameLabel}</label>
+      <input
+        id="player-route-display-name"
+        type="text"
+        value={displayName}
+        onChange={(event) => onDisplayNameChange(event.target.value)}
+        placeholder={STRINGS.roomDisplayNamePlaceholder}
+        autoComplete="nickname"
+        disabled={pending}
+      />
+      <div className="room-actions">
+        <button type="button" onClick={onJoin} disabled={pending}>
+          {STRINGS.playerRouteJoinSubmit}
+        </button>
+        <button type="button" className="secondary-action" onClick={onBack} disabled={pending}>
+          {STRINGS.playerRouteBackSubmit}
+        </button>
+      </div>
+      {preview ? (
+        <div className="player-route-preview" data-testid="player-route-preview">
+          <p className="field-hint">
+            {STRINGS.playerRoutePreviewPlayersPrefix} {previewPlayers.length}
+          </p>
+          {previewPlayers.length > 0 ? (
+            <ul className="recent-session-scoreboard">
+              {previewPlayers.map((player) => (
+                <li key={player.playerId || player.displayName}>
+                  <strong>{player.displayName || player.playerId}</strong>
+                  <span>{player.playerId}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="field-hint">{STRINGS.playerRoutePreviewMissing}</p>
+          )}
+        </div>
+      ) : (
+        <p className="field-hint">{STRINGS.playerRoutePreviewMissing}</p>
+      )}
     </section>
   );
 }
@@ -368,6 +1336,56 @@ function isDeckExhaustedMessage(message) {
     || normalized.includes('question bank is empty for this filter');
 }
 
+function loadStoredRoomSession() {
+  try {
+    const raw = localStorage.getItem(ROOM_SESSION_STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object') return null;
+    const roomCode = String(parsed.roomCode || '').trim().toUpperCase();
+    const playerId = String(parsed.playerId || '').trim();
+    const authToken = String(parsed.authToken || '').trim();
+    if (!roomCode || !playerId || !authToken) {
+      return null;
+    }
+    return {
+      roomCode,
+      playerId,
+      authToken,
+      displayName: String(parsed.displayName || '').trim(),
+      role: String(parsed.role || '').trim().toLowerCase() === 'host' ? 'host' : 'player',
+      roomState: Array.isArray(parsed.roomState?.players)
+        ? {
+          roomCode,
+          branding: parsed.roomState?.branding && typeof parsed.roomState.branding === 'object'
+            ? {
+              appName: String(parsed.roomState.branding.appName || '').trim(),
+              logoUrl: String(parsed.roomState.branding.logoUrl || '').trim(),
+              primaryColor: String(parsed.roomState.branding.primaryColor || '').trim(),
+              secondaryColor: String(parsed.roomState.branding.secondaryColor || '').trim()
+            }
+            : null,
+          players: parsed.roomState.players
+        }
+        : null
+    };
+  } catch {
+    return null;
+  }
+}
+
+function persistRoomSession(session) {
+  if (!session) {
+    localStorage.removeItem(ROOM_SESSION_STORAGE_KEY);
+    return;
+  }
+  localStorage.setItem(ROOM_SESSION_STORAGE_KEY, JSON.stringify(session));
+}
+
+function normalizeRoomCodeInput(value) {
+  return String(value || '').trim().toUpperCase();
+}
+
 function isAdminConsoleRoute() {
   if (typeof window === 'undefined') {
     return false;
@@ -379,6 +1397,13 @@ function isAdminConsoleRoute() {
 
 function GameApp() {
   const storedConfig = loadStoredConfig();
+  const storedRoomSession = loadStoredRoomSession();
+  const [playerJoinRoute, setPlayerJoinRoute] = useState(resolvePlayerJoinRoute());
+  const [playerRoutePreview, setPlayerRoutePreview] = useState(null);
+  const [playerRoutePending, setPlayerRoutePending] = useState(false);
+  const [playerRouteError, setPlayerRouteError] = useState('');
+  const [playerRouteMessage, setPlayerRouteMessage] = useState('');
+  const [playerRouteDisplayName, setPlayerRouteDisplayName] = useState('');
   const [topics, setTopics] = useState([]);
   const [startup, setStartup] = useState({
     phase: STARTUP_PHASE.LOADING,
@@ -396,6 +1421,42 @@ function GameApp() {
   const [runtimeMode, setRuntimeMode] = useState('local');
   const [runtimeSnapshot, setRuntimeSnapshot] = useState(null);
   const [runtimeWarning, setRuntimeWarning] = useState('');
+  const [onboardingDraft, setOnboardingDraft] = useState({
+    workspaceName: '',
+    ownerEmail: '',
+    ownerDisplayName: ''
+  });
+  const [signInDraft, setSignInDraft] = useState({
+    email: '',
+    tenantId: ''
+  });
+  const [onboardingPending, setOnboardingPending] = useState(false);
+  const [onboardingError, setOnboardingError] = useState('');
+  const [onboardingSuccess, setOnboardingSuccess] = useState(false);
+  const [signInPending, setSignInPending] = useState(false);
+  const [signInError, setSignInError] = useState('');
+  const [signInSuccess, setSignInSuccess] = useState('');
+  const [checkoutPending, setCheckoutPending] = useState(false);
+  const [checkoutMessage, setCheckoutMessage] = useState('');
+  const [checkoutUrl, setCheckoutUrl] = useState('');
+  const [workspaceInsights, setWorkspaceInsights] = useState({
+    auditEvents: [],
+    usageSummary: []
+  });
+  const [workspacePending, setWorkspacePending] = useState(false);
+  const [workspaceMessage, setWorkspaceMessage] = useState('');
+  const [workspaceError, setWorkspaceError] = useState('');
+  const [reviewedHostedSession, setReviewedHostedSession] = useState(null);
+  const [activeHostedSession, setActiveHostedSession] = useState(null);
+  const [hostedSessionFilter, setHostedSessionFilter] = useState('all');
+  const [roomDraft, setRoomDraft] = useState({
+    displayName: storedRoomSession?.displayName || '',
+    roomCode: storedRoomSession?.roomCode || ''
+  });
+  const [roomPending, setRoomPending] = useState(false);
+  const [roomMessage, setRoomMessage] = useState('');
+  const [roomError, setRoomError] = useState('');
+  const [roomSession, setRoomSession] = useState(storedRoomSession);
 
   const legacyEngine = useGameEngine(30);
   const serverEngine = useServerGameEngine(30);
@@ -419,6 +1480,16 @@ function GameApp() {
   const lastAudioCardRef = useRef('');
   const lastRevealedCountRef = useRef(0);
   const lastWrongCountRef = useRef(0);
+  const activePlayerRouteRoomCode = String(playerJoinRoute || '').trim();
+  const playerRouteMatchesSavedPlayerSession = roomSession?.role === 'player'
+    && normalizeRoomCodeInput(roomSession?.roomCode) === activePlayerRouteRoomCode;
+  const canLaunchRecentHostedSessions = useCallback((session) => {
+    if (String(session?.gameId || '').trim()) {
+      return true;
+    }
+    const nextConfig = resolveRecentHostedSessionConfig(session, config, roomSession);
+    return parsePlayers(nextConfig.playersText).length > 0;
+  }, [config, roomSession]);
 
   const loadTopics = useCallback(async () => {
     setStartup({
@@ -462,6 +1533,17 @@ function GameApp() {
   }, []);
 
   useEffect(() => {
+    if (typeof window === 'undefined') {
+      return undefined;
+    }
+    function handleHashChange() {
+      setPlayerJoinRoute(resolvePlayerJoinRoute());
+    }
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  useEffect(() => {
     loadTopics();
 
     const savedGameId = localStorage.getItem(GAME_STORAGE_KEY);
@@ -476,12 +1558,96 @@ function GameApp() {
   }, [loadTopics]);
 
   useEffect(() => {
+    if (!activePlayerRouteRoomCode) {
+      setPlayerRoutePreview(null);
+      setPlayerRoutePending(false);
+      setPlayerRouteError('');
+      setPlayerRouteMessage('');
+      return;
+    }
+    let cancelled = false;
+    setPlayerRoutePending(true);
+    setPlayerRouteError('');
+    setPlayerRouteMessage('');
+    fetchRoomPreview(activePlayerRouteRoomCode)
+      .then((preview) => {
+        if (!cancelled) {
+          setPlayerRoutePreview(preview);
+        }
+      })
+      .catch((error) => {
+        if (!cancelled) {
+          const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+            ? error.detail
+            : error?.message || STRINGS.playerRouteInvalid;
+          setPlayerRouteError(detail);
+          setPlayerRoutePreview(null);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setPlayerRoutePending(false);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [activePlayerRouteRoomCode]);
+
+  useEffect(() => {
     localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(config));
   }, [config]);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', config.theme);
   }, [config.theme]);
+
+  const applyRuntimeSnapshot = useCallback((snapshot) => {
+    if (!snapshot) {
+      return;
+    }
+    setRuntimeSnapshot(snapshot);
+    const runtimeTheme = snapshot?.settings?.settings?.theme;
+    if (isSupportedTheme(runtimeTheme)) {
+      setConfig((prev) => ({ ...prev, theme: runtimeTheme }));
+    }
+    const primaryColor = snapshot?.branding?.branding?.primaryColor;
+    const secondaryColor = snapshot?.branding?.branding?.secondaryColor;
+    if (primaryColor) {
+      document.documentElement.style.setProperty('--accent', primaryColor);
+    }
+    if (secondaryColor) {
+      document.documentElement.style.setProperty('--accent2', secondaryColor);
+    }
+  }, []);
+
+  const clearRuntimeSession = useCallback((message = '') => {
+    clearRuntimeAuthContext();
+    setRuntimeSnapshot(null);
+    setRuntimeWarning(message);
+    setCheckoutMessage('');
+    setWorkspaceInsights({ auditEvents: [], usageSummary: [] });
+    setWorkspacePending(false);
+    setReviewedHostedSession(null);
+    setActiveHostedSession(null);
+    setHostedSessionFilter('all');
+    document.documentElement.style.removeProperty('--accent');
+    document.documentElement.style.removeProperty('--accent2');
+  }, []);
+
+  const applyRoomSession = useCallback((nextSession, message = '') => {
+    setRoomSession(nextSession);
+    persistRoomSession(nextSession);
+    setRoomMessage(message);
+    setRoomError('');
+    if (nextSession?.displayName || nextSession?.roomCode) {
+      setRoomDraft((prev) => ({
+        ...prev,
+        displayName: nextSession?.displayName || prev.displayName,
+        roomCode: nextSession?.roomCode || prev.roomCode
+      }));
+    }
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -497,22 +1663,14 @@ function GameApp() {
         if (cancelled || !snapshot) {
           return;
         }
-        setRuntimeSnapshot(snapshot);
-        const runtimeTheme = snapshot?.settings?.settings?.theme;
-        if (isSupportedTheme(runtimeTheme)) {
-          setConfig((prev) => ({ ...prev, theme: runtimeTheme }));
-        }
-        const primaryColor = snapshot?.branding?.branding?.primaryColor;
-        const secondaryColor = snapshot?.branding?.branding?.secondaryColor;
-        if (primaryColor) {
-          document.documentElement.style.setProperty('--accent', primaryColor);
-        }
-        if (secondaryColor) {
-          document.documentElement.style.setProperty('--accent2', secondaryColor);
-        }
-      } catch {
+        applyRuntimeSnapshot(snapshot);
+      } catch (error) {
         if (!cancelled) {
-          setRuntimeWarning('Tenant runtime context not available; using local defaults.');
+          if (error?.code === 'INVALID_AUTH_CONTEXT' || error?.code === 'UNAUTHENTICATED' || error?.status === 401) {
+            clearRuntimeSession(STRINGS.sessionExpired);
+          } else {
+            setRuntimeWarning('Tenant runtime context not available; using local defaults.');
+          }
         }
       }
     }
@@ -521,9 +1679,491 @@ function GameApp() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [applyRuntimeSnapshot, clearRuntimeSession]);
+
+  async function applyRuntimeAuthAndSnapshot(runtimeAuth) {
+    setRuntimeAuthContext(runtimeAuth || null);
+    const snapshot = await fetchTenantRuntimeSnapshot();
+    applyRuntimeSnapshot(snapshot);
+  }
+
+  const refreshWorkspaceInsights = useCallback(async () => {
+    if (!runtimeSnapshot?.me?.selectedTenantId) {
+      setWorkspaceInsights({ auditEvents: [], usageSummary: [] });
+      setWorkspacePending(false);
+      return;
+    }
+    if (runtimeSnapshot?.capabilities?.analyticsHistoryEnabled !== true) {
+      setWorkspaceInsights({ auditEvents: [], usageSummary: [] });
+      setWorkspacePending(false);
+      return;
+    }
+
+    setWorkspacePending(true);
+    try {
+      const [auditEvents, usageSummary] = await Promise.all([
+        fetchTenantAuditEvents({ limit: 8 }),
+        fetchTenantUsageSummary({ eventType: 'game.round.completed' })
+      ]);
+      setWorkspaceInsights({
+        auditEvents: Array.isArray(auditEvents) ? auditEvents : [],
+        usageSummary: Array.isArray(usageSummary) ? usageSummary : []
+      });
+    } catch {
+      setWorkspaceInsights({ auditEvents: [], usageSummary: [] });
+    } finally {
+      setWorkspacePending(false);
+    }
+  }, [runtimeSnapshot]);
+
+  useEffect(() => {
+    if (!runtimeSnapshot?.me?.selectedTenantId || runtimeSnapshot?.capabilities?.analyticsHistoryEnabled !== true) {
+      setWorkspaceInsights({ auditEvents: [], usageSummary: [] });
+      setWorkspacePending(false);
+      return;
+    }
+    refreshWorkspaceInsights();
+  }, [refreshWorkspaceInsights, runtimeSnapshot]);
+
+  async function handleOnboardingBootstrap() {
+    if (onboardingPending) {
+      return;
+    }
+    setOnboardingPending(true);
+    setOnboardingError('');
+    setOnboardingSuccess(false);
+    setRuntimeWarning('');
+
+    try {
+      const response = await bootstrapOnboardingTenant(onboardingDraft);
+      const runtimeAuth = response?.runtimeAuth;
+      await applyRuntimeAuthAndSnapshot(runtimeAuth);
+      setOnboardingSuccess(true);
+      setSignInSuccess('');
+      setOnboardingDraft({
+        workspaceName: '',
+        ownerEmail: '',
+        ownerDisplayName: ''
+      });
+    } catch (error) {
+      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+        ? error.detail
+        : error?.message || 'Could not bootstrap onboarding workspace.';
+      setOnboardingError(detail);
+    } finally {
+      setOnboardingPending(false);
+    }
+  }
+
+  async function handleSignIn() {
+    if (signInPending) {
+      return;
+    }
+    setSignInPending(true);
+    setSignInError('');
+    setSignInSuccess('');
+    setRuntimeWarning('');
+
+    try {
+      const requestResponse = await requestRuntimeAuthLink(signInDraft);
+      const challengeToken = String(requestResponse?.challengeToken || '').trim();
+      if (!challengeToken) {
+        throw new Error('Sign-in link delivery is not available in this environment.');
+      }
+      const completeResponse = await completeRuntimeAuth({ challengeToken });
+      await applyRuntimeAuthAndSnapshot(completeResponse?.runtimeAuth || null);
+      setSignInSuccess(STRINGS.signInSuccess);
+      setOnboardingSuccess(false);
+      setSignInDraft({ email: '', tenantId: '' });
+    } catch (error) {
+      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+        ? error.detail
+        : error?.message || 'Could not restore host session.';
+      setSignInError(detail);
+    } finally {
+      setSignInPending(false);
+    }
+  }
+
+  async function handleLogout() {
+    try {
+      if (typeof logoutRuntimeAuth === 'function') {
+        await logoutRuntimeAuth();
+      }
+    } catch {
+      // stateless runtime logout is best-effort
+    } finally {
+      clearRuntimeSession(STRINGS.signOutSuccess);
+      setSignInSuccess('');
+      setOnboardingSuccess(false);
+    }
+  }
+
+  async function handleUpgradeCheckout() {
+    if (checkoutPending) {
+      return;
+    }
+    setCheckoutPending(true);
+    setCheckoutMessage('');
+    setCheckoutUrl('');
+    try {
+      const response = await initiateCheckoutSession({
+        planCode: 'pilot-monthly',
+        billingCycle: 'monthly'
+      });
+      const sessionId = String(response?.checkoutSessionId || '').trim();
+      const nextCheckoutUrl = String(response?.checkoutUrl || '').trim();
+      setCheckoutUrl(nextCheckoutUrl);
+      if (nextCheckoutUrl && !isTestMode() && typeof window !== 'undefined' && window.location && typeof window.location.assign === 'function') {
+        setCheckoutMessage(STRINGS.upgradeRedirecting);
+        window.location.assign(nextCheckoutUrl);
+        return;
+      }
+      if (sessionId) {
+        setCheckoutMessage(`${STRINGS.upgradeSuccessPrefix} ${sessionId}${nextCheckoutUrl ? ` | ${STRINGS.upgradeRecoveryHint}` : ''}`);
+      } else {
+        setCheckoutMessage(STRINGS.upgradeSuccessPrefix);
+      }
+    } catch (error) {
+      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+        ? error.detail
+        : error?.message || STRINGS.upgradeErrorFallback;
+      setCheckoutMessage(detail);
+    } finally {
+      setCheckoutPending(false);
+    }
+  }
+
+  async function handleCreateRoom() {
+    if (roomPending) {
+      return;
+    }
+    setRoomPending(true);
+    setRoomError('');
+    setRoomMessage('');
+    try {
+      const fallbackDisplayName = runtimeSnapshot?.me?.displayName
+        || onboardingDraft.ownerDisplayName
+        || 'Host';
+      const displayName = String(roomDraft.displayName || fallbackDisplayName).trim();
+      const created = await createRoomSession({ displayName });
+      const resumed = await rejoinRoomSession(created.roomCode, {
+        playerId: created.playerId,
+        authToken: created.authToken
+      });
+      applyRoomSession({
+        roomCode: resumed.roomCode,
+        playerId: resumed.playerId,
+        authToken: resumed.authToken,
+        displayName,
+        role: 'host',
+        roomState: resumed.roomState
+      }, `${STRINGS.roomCreatedPrefix} ${resumed.roomCode}`);
+    } catch (error) {
+      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+        ? error.detail
+        : error?.message || 'Could not create room.';
+      setRoomError(detail);
+    } finally {
+      setRoomPending(false);
+    }
+  }
+
+  async function handleJoinRoom() {
+    if (roomPending) {
+      return;
+    }
+    setRoomPending(true);
+    setRoomError('');
+    setRoomMessage('');
+    try {
+      const roomCode = normalizeRoomCodeInput(roomDraft.roomCode);
+      const displayName = String(roomDraft.displayName || 'Player').trim() || 'Player';
+      const joined = await joinRoomSession(roomCode, { displayName });
+      const resumed = await rejoinRoomSession(joined.roomCode, {
+        playerId: joined.playerId,
+        authToken: joined.authToken
+      });
+      applyRoomSession({
+        roomCode: resumed.roomCode,
+        playerId: resumed.playerId,
+        authToken: resumed.authToken,
+        displayName,
+        role: 'player',
+        roomState: resumed.roomState
+      }, `${STRINGS.roomJoinedPrefix} ${resumed.roomCode}`);
+    } catch (error) {
+      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+        ? error.detail
+        : error?.message || 'Could not join room.';
+      setRoomError(detail);
+    } finally {
+      setRoomPending(false);
+    }
+  }
+
+  async function handlePlayerRouteJoin() {
+    if (!activePlayerRouteRoomCode || roomPending) {
+      return;
+    }
+    setRoomPending(true);
+    setPlayerRouteError('');
+    setPlayerRouteMessage('');
+    try {
+      const displayName = String(playerRouteDisplayName || roomDraft.displayName || 'Player').trim() || 'Player';
+      const joined = await joinRoomSession(activePlayerRouteRoomCode, { displayName });
+      const resumed = await rejoinRoomSession(joined.roomCode, {
+        playerId: joined.playerId,
+        authToken: joined.authToken
+      });
+      applyRoomSession({
+        roomCode: resumed.roomCode,
+        playerId: resumed.playerId,
+        authToken: resumed.authToken,
+        displayName,
+        role: 'player',
+        roomState: resumed.roomState
+      }, `${STRINGS.roomJoinedPrefix} ${resumed.roomCode}`);
+      setPlayerRouteMessage(`${STRINGS.roomJoinedPrefix} ${resumed.roomCode}`);
+      setPlayerRoutePreview(resumed.roomState || null);
+      setRoomDraft((prev) => ({ ...prev, roomCode: resumed.roomCode, displayName }));
+    } catch (error) {
+      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+        ? error.detail
+        : error?.message || 'Could not join room.';
+      setPlayerRouteError(detail);
+    } finally {
+      setRoomPending(false);
+    }
+  }
+
+  function handleExitPlayerRoute() {
+    if (typeof window !== 'undefined') {
+      window.location.hash = '';
+    }
+    setPlayerJoinRoute(null);
+    setPlayerRoutePreview(null);
+    setPlayerRouteError('');
+    setPlayerRouteMessage('');
+  }
+
+  async function handleResumeRoom() {
+    if (roomPending || !roomSession?.roomCode || !roomSession?.playerId || !roomSession?.authToken) {
+      return;
+    }
+    setRoomPending(true);
+    setRoomError('');
+    setRoomMessage('');
+    try {
+      const resumed = await rejoinRoomSession(roomSession.roomCode, {
+        playerId: roomSession.playerId,
+        authToken: roomSession.authToken
+      });
+      applyRoomSession({
+        ...roomSession,
+        roomCode: resumed.roomCode,
+        playerId: resumed.playerId,
+        authToken: resumed.authToken,
+        roomState: resumed.roomState
+      }, `${STRINGS.roomResumedPrefix} ${resumed.roomCode}`);
+    } catch (error) {
+      persistRoomSession(null);
+      setRoomSession(null);
+      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+        ? error.detail
+        : error?.message || 'Could not resume room.';
+      setRoomError(detail);
+    } finally {
+      setRoomPending(false);
+    }
+  }
+
+  function handleClearRoom() {
+    setRoomSession(null);
+    persistRoomSession(null);
+    setRoomMessage('');
+    setRoomError('');
+  }
+
+  function handleUseRoomPlayers() {
+    const roomPlayerNames = getRoomPlayerNames(roomSession);
+    if (roomPlayerNames.length === 0) {
+      return;
+    }
+    setConfig((prev) => ({
+      ...prev,
+      playersText: roomPlayerNames.join(', ')
+    }));
+    setRoomMessage(STRINGS.roomUsePlayersMessage);
+    setRoomError('');
+  }
+
+  function handleStartRoomSession() {
+    const roomPlayerNames = getRoomPlayerNames(roomSession);
+    if (roomPlayerNames.length === 0) {
+      return;
+    }
+    setConfig((prev) => ({
+      ...prev,
+      playersText: roomPlayerNames.join(', ')
+    }));
+    launchRound({
+      playersText: roomPlayerNames.join(', '),
+      topic: config.topic,
+      language: config.lang
+    });
+  }
+
+  function handleUseRecentHostedSession(session) {
+    setActiveHostedSession(session || null);
+    setWorkspaceError('');
+    const nextConfig = resolveRecentHostedSessionConfig(session, config, roomSession);
+    setConfig((prev) => ({
+      ...prev,
+      topic: nextConfig.topic,
+      lang: nextConfig.lang,
+      playersText: nextConfig.playersText
+    }));
+    const messageParts = [
+      `${STRINGS.recentHostedSessionPreparedPrefix} ${nextConfig.topic || STRINGS.recentHostedSessionTopicFallback}`,
+      nextConfig.lang ? nextConfig.lang.toUpperCase() : String(config.lang || 'en').toUpperCase()
+    ];
+    if (getRoomPlayerNames(roomSession).length > 0) {
+      messageParts.push(STRINGS.recentHostedSessionUseRoomRoster);
+    } else if (buildPlaceholderPlayers(session?.playerCount).length > 0) {
+      messageParts.push(STRINGS.recentHostedSessionUsePlaceholderRoster);
+    }
+    setWorkspaceMessage(messageParts.join(' | '));
+  }
+
+  async function handleReviewRecentHostedSession(session) {
+    const gameIdToReview = String(session?.gameId || '').trim();
+    if (!gameIdToReview) {
+      setWorkspaceError(STRINGS.recentHostedSessionReviewLoadError);
+      return;
+    }
+
+    setActiveHostedSession(session || null);
+    setWorkspaceError('');
+    setWorkspacePending(true);
+    setWorkspaceMessage(`${STRINGS.recentHostedSessionReviewPrefix} ${session?.topic || STRINGS.recentHostedSessionTopicFallback}`);
+    try {
+      const snapshot = await fetchServerGameSession(gameIdToReview);
+      setReviewedHostedSession(buildRecentHostedSessionReview(snapshot, session));
+      setWorkspaceMessage(`${STRINGS.recentHostedSessionReviewReadyPrefix} ${session?.topic || STRINGS.recentHostedSessionTopicFallback}`);
+    } catch (error) {
+      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+        ? error.detail
+        : error?.message || STRINGS.recentHostedSessionReviewLoadError;
+      setWorkspaceError(detail);
+    } finally {
+      setWorkspacePending(false);
+    }
+  }
+
+  async function handleResumeRecentHostedSession(session) {
+    const gameIdToResume = String(session?.gameId || '').trim();
+    if (!gameIdToResume) {
+      setWorkspaceError(STRINGS.recentHostedSessionReviewLoadError);
+      return;
+    }
+
+    setActiveHostedSession(session || null);
+    setWorkspaceError('');
+    setWorkspacePending(true);
+    setWorkspaceMessage(`${STRINGS.recentHostedSessionResumePrefix} ${session?.topic || STRINGS.recentHostedSessionTopicFallback}`);
+    try {
+      const response = await resumeServerGameSession(gameIdToResume);
+      const snapshot = response?.snapshot && typeof response.snapshot === 'object'
+        ? response.snapshot
+        : response;
+      const resumedPlayers = Array.isArray(snapshot?.players)
+        ? snapshot.players.map((player) => String(player?.displayName || '').trim()).filter(Boolean)
+        : [];
+      const resumedTopic = String(snapshot?.boardState?.topic || session?.topic || '').trim();
+      const resumedLanguage = String(session?.language || config.lang || 'en').trim().toLowerCase() || 'en';
+      setConfig((prev) => ({
+        ...prev,
+        topic: resumedTopic,
+        lang: resumedLanguage,
+        playersText: resumedPlayers.join(', ')
+      }));
+      setRuntimeMode('server');
+      setCardError('');
+      serverEngine.clearError();
+      serverEngine.adoptCreatedSession(response, {
+        players: resumedPlayers,
+        language: resumedLanguage,
+        topic: resumedTopic
+      });
+    } catch (error) {
+      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+        ? error.detail
+        : error?.message || STRINGS.recentHostedSessionReviewLoadError;
+      setWorkspaceError(detail);
+    } finally {
+      setWorkspacePending(false);
+    }
+  }
+
+  function handleLaunchRecentHostedSession(session) {
+    setActiveHostedSession(session || null);
+    setWorkspaceError('');
+    const nextConfig = resolveRecentHostedSessionConfig(session, config, roomSession);
+    if (!session?.gameId) {
+      setConfig((prev) => ({
+        ...prev,
+        topic: nextConfig.topic,
+        lang: nextConfig.lang,
+        playersText: nextConfig.playersText
+      }));
+      setWorkspaceMessage(`${STRINGS.recentHostedSessionLaunchPrefix} ${nextConfig.topic || STRINGS.recentHostedSessionTopicFallback}`);
+      launchRound({
+        playersText: nextConfig.playersText,
+        topic: nextConfig.topic,
+        language: nextConfig.lang
+      });
+      return;
+    }
+
+    setWorkspacePending(true);
+    setWorkspaceMessage(`${STRINGS.recentHostedSessionLaunchPrefix} ${nextConfig.topic || STRINGS.recentHostedSessionTopicFallback}`);
+    duplicateServerGameSession(session.gameId)
+      .then((response) => {
+        const snapshot = response?.snapshot && typeof response.snapshot === 'object'
+          ? response.snapshot
+          : response;
+        const duplicatedPlayers = Array.isArray(snapshot?.players)
+          ? snapshot.players.map((player) => String(player?.displayName || '').trim()).filter(Boolean)
+          : parsePlayers(nextConfig.playersText);
+        const duplicatedTopic = String(snapshot?.boardState?.topic || nextConfig.topic || '').trim();
+        setConfig((prev) => ({
+          ...prev,
+          topic: duplicatedTopic,
+          lang: nextConfig.lang,
+          playersText: duplicatedPlayers.join(', ')
+        }));
+        setRuntimeMode('server');
+        setCardError('');
+        serverEngine.clearError();
+        serverEngine.adoptCreatedSession(response, {
+          language: nextConfig.lang
+        });
+      })
+      .catch((error) => {
+        const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+          ? error.detail
+          : error?.message || STRINGS.recentHostedSessionReviewError;
+        setWorkspaceError(detail);
+      })
+      .finally(() => {
+        setWorkspacePending(false);
+      });
+  }
 
   const appTitle = String(runtimeSnapshot?.branding?.branding?.appName || STRINGS.title).trim() || STRINGS.title;
+  const hostLaunchMessage = resolveHostedRuntimeBlockMessage(runtimeSnapshot?.subscription);
+  const hostLaunchBlocked = Boolean(runtimeSnapshot?.me?.selectedTenantId) && Boolean(hostLaunchMessage);
 
   useEffect(() => {
     document.title = appTitle;
@@ -583,16 +2223,20 @@ function GameApp() {
     lastWrongCountRef.current = wrongCount;
   }, [engine.card, engine.phase, engine.revealedIndexes, engine.wrongIndexes, playCorrect, playRoundIntro, playWrong]);
 
-  function handleStartRound() {
-    const parsedPlayers = parsePlayers(config.playersText);
+  function launchRound({ playersText = config.playersText, topic = config.topic, language = config.lang } = {}) {
+    if (hostLaunchBlocked) {
+      setRuntimeWarning(hostLaunchMessage || STRINGS.hostedRuntimeBlocked);
+      return;
+    }
+    const parsedPlayers = parsePlayers(playersText);
     if (isServerEngineEnabled()) {
       setRuntimeMode('server');
       setCardError('');
       serverEngine.clearError();
       serverEngine.startRound({
         players: parsedPlayers,
-        language: config.lang,
-        topic: config.topic || undefined,
+        language,
+        topic: topic || undefined,
         winCondition: 30
       });
       return;
@@ -601,24 +2245,23 @@ function GameApp() {
     setRuntimeMode('local');
     serverEngine.resetToSetup();
     serverEngine.clearError();
-    legacyEngine.startRound(config.playersText);
+    legacyEngine.startRound(playersText);
+  }
+
+  function handleStartRound(playersTextOverride = null) {
+    launchRound({
+      playersText: playersTextOverride ?? config.playersText,
+      topic: config.topic,
+      language: config.lang
+    });
   }
 
   function handlePlayAgain() {
-    const parsedPlayers = parsePlayers(config.playersText);
-    if (runtimeMode === 'server') {
-      setCardError('');
-      serverEngine.clearError();
-      serverEngine.startRound({
-        players: parsedPlayers,
-        language: config.lang,
-        topic: config.topic || undefined,
-        winCondition: 30
-      });
-      return;
-    }
-
-    legacyEngine.startRound(config.playersText);
+    launchRound({
+      playersText: config.playersText,
+      topic: config.topic,
+      language: config.lang
+    });
   }
 
   function handleRestart() {
@@ -627,6 +2270,9 @@ function GameApp() {
     serverEngine.clearError();
     setRuntimeMode('local');
     setCardError('');
+    if (runtimeSnapshot?.me?.selectedTenantId) {
+      refreshWorkspaceInsights();
+    }
   }
 
   const activeError = runtimeMode === 'server' ? serverEngine.errorMessage : cardError;
@@ -643,17 +2289,105 @@ function GameApp() {
       />
       {engine.phase === GamePhase.SETUP ? (
         <>
-          {startup.phase !== STARTUP_PHASE.READY ? <StartupStatePanel startup={startup} onRetry={loadTopics} appTitle={appTitle} /> : null}
-          {startup.phase === STARTUP_PHASE.READY && topics.length > 0 ? (
-            <StartScreen
-              topics={topics}
-              config={config}
-              setConfig={setConfig}
-              onStart={handleStartRound}
-              appTitle={appTitle}
-              runtimeSnapshot={runtimeSnapshot}
-              runtimeWarning={runtimeWarning}
-            />
+          {activePlayerRouteRoomCode ? (
+            playerRouteMatchesSavedPlayerSession ? (
+              <RoomPanel
+                appTitle={String(playerRoutePreview?.branding?.appName || appTitle).trim() || appTitle}
+                draft={roomDraft}
+                pending={roomPending}
+                message={roomMessage}
+                error={roomError}
+                roomSession={roomSession}
+                onDraftChange={setRoomDraft}
+                onCreateRoom={handleCreateRoom}
+                onJoinRoom={handleJoinRoom}
+                onResumeRoom={handleResumeRoom}
+                onClearRoom={handleClearRoom}
+                onUseRoomPlayers={handleUseRoomPlayers}
+                onStartRoomSession={handleStartRoomSession}
+              />
+            ) : (
+              <PlayerJoinRoutePanel
+                roomCode={activePlayerRouteRoomCode}
+                appTitle={appTitle}
+                preview={playerRoutePreview}
+                pending={playerRoutePending || roomPending}
+                message={playerRouteMessage}
+                error={playerRouteError}
+                displayName={playerRouteDisplayName}
+                onDisplayNameChange={setPlayerRouteDisplayName}
+                onJoin={handlePlayerRouteJoin}
+                onBack={handleExitPlayerRoute}
+              />
+            )
+          ) : startup.phase !== STARTUP_PHASE.READY ? <StartupStatePanel startup={startup} onRetry={loadTopics} appTitle={appTitle} /> : null}
+          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 ? (
+            <>
+              {!runtimeSnapshot ? (
+                <>
+                  <OnboardingPanel
+                    draft={onboardingDraft}
+                    pending={onboardingPending}
+                    success={onboardingSuccess}
+                    error={onboardingError}
+                    onDraftChange={setOnboardingDraft}
+                    onSubmit={handleOnboardingBootstrap}
+                  />
+                  <SignInPanel
+                    draft={signInDraft}
+                    pending={signInPending}
+                    success={signInSuccess}
+                    error={signInError}
+                    onDraftChange={setSignInDraft}
+                    onSubmit={handleSignIn}
+                  />
+                </>
+              ) : null}
+              <RoomPanel
+                appTitle={appTitle}
+                draft={roomDraft}
+                pending={roomPending}
+                message={roomMessage}
+                error={roomError}
+                roomSession={roomSession}
+                onDraftChange={setRoomDraft}
+                onCreateRoom={handleCreateRoom}
+                onJoinRoom={handleJoinRoom}
+                onResumeRoom={handleResumeRoom}
+                onClearRoom={handleClearRoom}
+                onUseRoomPlayers={handleUseRoomPlayers}
+                onStartRoomSession={handleStartRoomSession}
+              />
+              <StartScreen
+                topics={topics}
+                config={config}
+                setConfig={setConfig}
+                onStart={handleStartRound}
+                appTitle={appTitle}
+                runtimeSnapshot={runtimeSnapshot}
+                runtimeWarning={runtimeWarning}
+                onUpgrade={handleUpgradeCheckout}
+                onLogout={handleLogout}
+                upgradePending={checkoutPending}
+                upgradeMessage={checkoutMessage}
+                checkoutUrl={checkoutUrl}
+                workspaceInsights={workspaceInsights}
+                workspacePending={workspacePending}
+                workspaceError={workspaceError}
+                hostLaunchBlocked={hostLaunchBlocked}
+                hostLaunchMessage={hostLaunchMessage}
+                workspaceMessage={workspaceMessage}
+                reviewedHostedSession={reviewedHostedSession}
+                activeHostedSession={activeHostedSession}
+                hostedSessionFilter={hostedSessionFilter}
+                onHostedSessionFilterChange={setHostedSessionFilter}
+                onUseRecentHostedSession={handleUseRecentHostedSession}
+                onReviewRecentHostedSession={handleReviewRecentHostedSession}
+                onResumeRecentHostedSession={handleResumeRecentHostedSession}
+                onLaunchRecentHostedSession={handleLaunchRecentHostedSession}
+                canLaunchRecentHostedSessions={canLaunchRecentHostedSessions}
+              />
+            </>
           ) : null}
         </>
       ) : null}

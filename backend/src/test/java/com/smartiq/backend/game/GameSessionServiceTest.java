@@ -20,6 +20,7 @@ import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -86,6 +87,102 @@ class GameSessionServiceTest {
 
         verify(cardService).getNextRandomCard(eq("en"), anyString(), eq(null));
         assertThat(counterValue("smartiq.game.session.started.total")).isEqualTo(1.0);
+    }
+
+    @Test
+    void tenantBoundSessionRejectsCrossTenantAccess() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(openCard("card-1", 0, "Question 1"));
+
+        UUID tenantA = UUID.randomUUID();
+        UUID tenantB = UUID.randomUUID();
+
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30),
+                tenantA,
+                "owner@acme.test"
+        );
+
+        assertThat(gameSessionService.getSnapshot(created.snapshot().gameId(), tenantA).gameId())
+                .isEqualTo(created.snapshot().gameId());
+        assertThatThrownBy(() -> gameSessionService.getSnapshot(created.snapshot().gameId(), tenantB))
+                .isInstanceOf(com.smartiq.backend.tenant.ForbiddenTenantAccessException.class)
+                .hasMessageContaining("tenant does not have access to game session");
+    }
+
+    @Test
+    void duplicateGameCreatesNewSessionFromExistingGame() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq("Science")))
+                .thenReturn(
+                        openCard("card-1", 0, "Question 1"),
+                        openCard("card-2", 0, "Question 2")
+                );
+
+        UUID tenantId = UUID.randomUUID();
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", "Science", 30),
+                tenantId,
+                "owner@acme.test"
+        );
+
+        GameSessionCreateResponse duplicate = gameSessionService.duplicateGameWithControl(
+                created.snapshot().gameId(),
+                tenantId,
+                "owner@acme.test"
+        );
+
+        assertThat(duplicate.snapshot().gameId()).isNotEqualTo(created.snapshot().gameId());
+        assertThat(duplicate.snapshot().players()).extracting(player -> player.displayName())
+                .containsExactly("Alice", "Bob");
+        assertThat(duplicate.snapshot().boardState().topic()).isEqualTo("Science");
+        assertThat(duplicate.snapshot().winCondition()).isEqualTo(30);
+        assertThat(duplicate.actionTokens()).containsKeys("p1", "p2");
+        verify(cardService, times(2)).getNextRandomCard(eq("en"), anyString(), eq("Science"));
+    }
+
+    @Test
+    void duplicateTenantBoundSessionRejectsCrossTenantAccess() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq("Science")))
+                .thenReturn(openCard("card-1", 0, "Question 1"));
+
+        UUID tenantA = UUID.randomUUID();
+        UUID tenantB = UUID.randomUUID();
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", "Science", 30),
+                tenantA,
+                "owner@acme.test"
+        );
+
+        assertThatThrownBy(() -> gameSessionService.duplicateGameWithControl(
+                created.snapshot().gameId(),
+                tenantB,
+                "owner@other.test"
+        ))
+                .isInstanceOf(com.smartiq.backend.tenant.ForbiddenTenantAccessException.class)
+                .hasMessageContaining("tenant does not have access to game session");
+        verify(cardService, times(1)).getNextRandomCard(eq("en"), anyString(), eq("Science"));
+    }
+
+    @Test
+    void getGameWithControlReturnsExistingActionTokensForTenantSession() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq("Science")))
+                .thenReturn(openCard("card-1", 0, "Question 1"));
+
+        UUID tenantId = UUID.randomUUID();
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", "Science", 30),
+                tenantId,
+                "owner@acme.test"
+        );
+
+        GameSessionCreateResponse resumed = gameSessionService.getGameWithControl(
+                created.snapshot().gameId(),
+                tenantId
+        );
+
+        assertThat(resumed.snapshot().gameId()).isEqualTo(created.snapshot().gameId());
+        assertThat(resumed.actionTokens()).isEqualTo(created.actionTokens());
+        verify(cardService, times(1)).getNextRandomCard(eq("en"), anyString(), eq("Science"));
     }
 
     @Test

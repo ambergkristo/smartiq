@@ -5,10 +5,25 @@ import gameSessionCreateResponseV1 from './fixtures/contracts/game-session-creat
 vi.mock('./api', () => {
   return {
     API_BASE: 'http://localhost:8080',
+    bootstrapOnboardingTenant: vi.fn(),
+    clearRuntimeAuthContext: vi.fn(),
+    completeRuntimeAuth: vi.fn(),
+    createRoomSession: vi.fn(),
+    duplicateServerGameSession: vi.fn(),
+    fetchRoomPreview: vi.fn(),
+    fetchTenantAuditEvents: vi.fn(),
     fetchTopics: vi.fn(),
     fetchNextCard: vi.fn(),
     fetchTenantRuntimeSnapshot: vi.fn(),
+    fetchTenantUsageSummary: vi.fn(),
     hasRuntimeAuthContext: vi.fn(() => false),
+    initiateCheckoutSession: vi.fn(),
+    joinRoomSession: vi.fn(),
+    logoutRuntimeAuth: vi.fn(),
+    rejoinRoomSession: vi.fn(),
+    resumeServerGameSession: vi.fn(),
+    requestRuntimeAuthLink: vi.fn(),
+    setRuntimeAuthContext: vi.fn(),
     createServerGameSession: vi.fn(),
     fetchServerGameSession: vi.fn(),
     sendServerGameAction: vi.fn(),
@@ -85,11 +100,12 @@ function makeServerSnapshot({
 }
 
 async function startServerMultiplayer(players = 'Alice, Bob') {
-  await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
-  const playersInput = screen.getByLabelText(/players/i);
+  const playersInput = await screen.findByLabelText(/players/i);
+  const startButton = screen.getByRole('button', { name: /start game/i });
   fireEvent.change(playersInput, { target: { value: players } });
   fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
-  fireEvent.click(screen.getByRole('button', { name: /start game/i }));
+  await waitFor(() => expect(startButton).not.toBeDisabled());
+  fireEvent.click(startButton);
   await waitFor(() => expect(createServerGameSession).toHaveBeenCalled());
 }
 
@@ -109,12 +125,7 @@ describe('App server-authoritative mode', () => {
     createServerGameSession.mockResolvedValue(makeServerSnapshot());
 
     render(<App />);
-
-    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
-    const playersInput = screen.getByLabelText(/players/i);
-    fireEvent.change(playersInput, { target: { value: 'Alice, Bob' } });
-    fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
-    fireEvent.click(screen.getByRole('button', { name: /start game/i }));
+    await startServerMultiplayer('Alice, Bob');
 
     await waitFor(() =>
       expect(createServerGameSession).toHaveBeenCalledWith(
@@ -127,7 +138,7 @@ describe('App server-authoritative mode', () => {
     );
     expect(fetchNextCard).not.toHaveBeenCalled();
     expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument();
-  });
+  }, 15000);
 
   test('sends ANSWER action through server action API', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);

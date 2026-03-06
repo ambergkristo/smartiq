@@ -33,3 +33,6 @@ Thumbs.db
 
 # Pipeline runtime state
 data/review/generation-budget.json
+
+# Local parallel-worktree orchestration
+worktrees/

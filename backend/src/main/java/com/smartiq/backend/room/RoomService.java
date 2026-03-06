@@ -2,6 +2,7 @@ package com.smartiq.backend.room;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.config.RoomProperties;
+import com.smartiq.backend.tenant.ForbiddenTenantAccessException;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,6 +98,10 @@ public class RoomService {
     }
 
     public synchronized RoomParticipantResponse createRoom(CreateRoomRequest request) {
+        return createRoom(request, null, null);
+    }
+
+    public synchronized RoomParticipantResponse createRoom(CreateRoomRequest request, UUID tenantId, String hostUserEmail) {
         try {
             evictExpiredRooms();
             evictOldestUntilCapacityAvailable();
@@ -104,7 +109,7 @@ public class RoomService {
             String roomCode = allocateUniqueRoomCode();
             long nowMillis = nowMillis();
 
-            RoomState room = new RoomState(roomCode);
+            RoomState room = new RoomState(roomCode, tenantId, normalizeOptionalHostUserEmail(hostUserEmail));
             String playerId = room.addPlayer(displayName);
             String authToken = issueToken();
             room.playerTokens.put(playerId, authToken);
@@ -121,9 +126,13 @@ public class RoomService {
     }
 
     public synchronized RoomParticipantResponse joinRoom(String roomCode, JoinRoomRequest request) {
+        return joinRoom(roomCode, request, null);
+    }
+
+    public synchronized RoomParticipantResponse joinRoom(String roomCode, JoinRoomRequest request, UUID tenantIdContext) {
         try {
             evictExpiredRooms();
-            RoomState room = requireRoom(roomCode);
+            RoomState room = requireRoom(roomCode, tenantIdContext);
             if (room.players.size() >= MAX_PLAYERS) {
                 throw new IllegalArgumentException("room is full");
             }
@@ -145,29 +154,41 @@ public class RoomService {
     }
 
     public synchronized RoomSnapshot getRoomSnapshot(String roomCode) {
+        return getRoomSnapshot(roomCode, null);
+    }
+
+    public synchronized RoomSnapshot getRoomSnapshot(String roomCode, UUID tenantIdContext) {
         evictExpiredRooms();
-        RoomState room = requireRoom(roomCode);
+        RoomState room = requireRoom(roomCode, tenantIdContext);
         room.lastTouchedAtMillis = nowMillis();
         persistRoom(room);
         return toSnapshot(room);
     }
 
     public synchronized RoomResumeResponse rejoinRoom(String roomCode, RejoinRoomRequest request) {
-        return resumeRoom(roomCode, request, true);
+        return rejoinRoom(roomCode, request, null);
+    }
+
+    public synchronized RoomResumeResponse rejoinRoom(String roomCode, RejoinRoomRequest request, UUID tenantIdContext) {
+        return resumeRoom(roomCode, request, tenantIdContext, true);
     }
 
     public synchronized RoomResumeResponse resumeRoomSession(String roomCode, RejoinRoomRequest request) {
-        return resumeRoom(roomCode, request, false);
+        return resumeRoomSession(roomCode, request, null);
     }
 
-    private RoomResumeResponse resumeRoom(String roomCode, RejoinRoomRequest request, boolean rotateToken) {
+    public synchronized RoomResumeResponse resumeRoomSession(String roomCode, RejoinRoomRequest request, UUID tenantIdContext) {
+        return resumeRoom(roomCode, request, tenantIdContext, false);
+    }
+
+    private RoomResumeResponse resumeRoom(String roomCode, RejoinRoomRequest request, UUID tenantIdContext, boolean rotateToken) {
         try {
             evictExpiredRooms();
             if (request == null) {
                 throw new IllegalArgumentException("rejoin payload is required");
             }
 
-            RoomState room = requireRoom(roomCode);
+            RoomState room = requireRoom(roomCode, tenantIdContext);
             String playerId = normalizePlayerId(request.playerId());
             String authToken = normalizeAuthToken(request.authToken());
             String expectedToken = room.playerTokens.get(playerId);
@@ -193,7 +214,7 @@ public class RoomService {
         }
     }
 
-    private RoomState requireRoom(String roomCode) {
+    private RoomState requireRoom(String roomCode, UUID tenantIdContext) {
         String normalized = normalizeRoomCode(roomCode);
         RoomState room = rooms.get(normalized);
         if (room == null) {
@@ -206,6 +227,7 @@ public class RoomService {
         if (room == null) {
             throw new NoSuchElementException("room not found: " + normalized);
         }
+        assertTenantAccess(room, tenantIdContext);
         if (isExpired(room, nowMillis())) {
             rooms.remove(normalized, room);
             roomSessionStore.delete(normalized);
@@ -297,6 +319,8 @@ public class RoomService {
                 .toList();
         return new StoredRoomState(
                 room.code,
+                room.tenantId,
+                room.hostUserEmail,
                 players,
                 Map.copyOf(room.playerTokens),
                 room.lastTouchedAtMillis
@@ -312,6 +336,8 @@ public class RoomService {
             }
         }
         RoomState room = new RoomState(resolvedCode);
+        room.tenantId = stored.tenantId();
+        room.hostUserEmail = normalizeOptionalHostUserEmail(stored.hostUserEmail());
         room.players.clear();
         if (stored.players() != null) {
             for (StoredRoomPlayer player : stored.players()) {
@@ -428,6 +454,23 @@ public class RoomService {
         return value.chars().anyMatch(ch -> Character.isISOControl((char) ch));
     }
 
+    private static String normalizeOptionalHostUserEmail(String hostUserEmail) {
+        if (hostUserEmail == null) {
+            return null;
+        }
+        String normalized = hostUserEmail.trim().toLowerCase(Locale.ROOT);
+        return normalized.isEmpty() ? null : normalized;
+    }
+
+    private static void assertTenantAccess(RoomState room, UUID tenantIdContext) {
+        if (tenantIdContext == null || room.tenantId == null) {
+            return;
+        }
+        if (!tenantIdContext.equals(room.tenantId)) {
+            throw new ForbiddenTenantAccessException("tenant does not have access to room");
+        }
+    }
+
     private void incrementCounter(String metricName, String result, String reason) {
         meterRegistry.counter(metricName, "result", result, "reason", reason).increment();
     }
@@ -507,17 +550,25 @@ public class RoomService {
         List<RoomPlayerSnapshot> players = room.players.stream()
                 .map(player -> new RoomPlayerSnapshot(player.playerId(), player.displayName()))
                 .toList();
-        return new RoomSnapshot(room.code, players);
+        return new RoomSnapshot(room.code, room.tenantId, null, players);
     }
 
     private static final class RoomState {
         private final String code;
+        private UUID tenantId;
+        private String hostUserEmail;
         private final List<PlayerState> players = new ArrayList<>();
         private final Map<String, String> playerTokens = new ConcurrentHashMap<>();
         private long lastTouchedAtMillis;
 
         private RoomState(String code) {
+            this(code, null, null);
+        }
+
+        private RoomState(String code, UUID tenantId, String hostUserEmail) {
             this.code = code;
+            this.tenantId = tenantId;
+            this.hostUserEmail = hostUserEmail;
             this.lastTouchedAtMillis = System.currentTimeMillis();
         }
 
@@ -530,6 +581,8 @@ public class RoomService {
 
     private record StoredRoomState(
             String code,
+            UUID tenantId,
+            String hostUserEmail,
             List<StoredRoomPlayer> players,
             Map<String, String> playerTokens,
             long lastTouchedAtMillis

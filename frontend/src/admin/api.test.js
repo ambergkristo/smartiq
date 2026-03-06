@@ -14,7 +14,7 @@ vi.mock('../api', () => ({
 }));
 
 function mockJsonResponse({ status = 200, body = {} } = {}) {
-  global.fetch = vi.fn().mockResolvedValue({
+  globalThis.fetch = vi.fn().mockResolvedValue({
     ok: status >= 200 && status < 300,
     status,
     json: vi.fn().mockResolvedValue(body)
@@ -34,7 +34,7 @@ describe('admin api contract', () => {
     const response = await listTenants({ status: 'ACTIVE', q: 'alpha' });
 
     expect(response).toHaveLength(1);
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(globalThis.fetch).toHaveBeenCalledWith(
       'http://localhost:8081/internal/wl/tenants?status=ACTIVE&q=alpha',
       expect.objectContaining({ method: 'GET' })
     );
@@ -57,7 +57,7 @@ describe('admin api contract', () => {
       secondaryColor: '#abcdef'
     });
 
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(globalThis.fetch).toHaveBeenCalledWith(
       'http://localhost:8081/internal/wl/tenants/tenant-1/branding',
       expect.objectContaining({
         method: 'PATCH',
@@ -80,7 +80,7 @@ describe('admin api contract', () => {
       }
     });
 
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(globalThis.fetch).toHaveBeenCalledWith(
       'http://localhost:8081/internal/wl/tenants/tenant-1/settings',
       expect.objectContaining({
         method: 'PUT',
@@ -94,7 +94,7 @@ describe('admin api contract', () => {
 
     await removeMember('tenant-1', 'member-1');
 
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(globalThis.fetch).toHaveBeenCalledWith(
       'http://localhost:8081/internal/wl/tenants/tenant-1/members/member-1',
       expect.objectContaining({ method: 'DELETE' })
     );

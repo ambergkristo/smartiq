@@ -183,4 +183,5 @@ References
 - `.github/workflows/beta-go-no-go.yml`
 - `.github/workflows/phase7-beta-dry-run.yml`
 - `docs/plans/2026-03-03-phase7-beta-go-no-go-dry-run-checklist.md`
+- `tools/run_phase7_dry_run.js`
 - `tools/validate_session_capacity_guardrails.js`

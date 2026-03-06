@@ -4,9 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(properties = {
@@ -57,6 +59,48 @@ class SecurityConfigTest {
     @Test
     void keepsMeTenantSubscriptionRouteAccessibleToAuthContextLayer() throws Exception {
         mockMvc.perform(get("/api/me/tenant-subscription"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void keepsMeTenantCapabilitiesRouteAccessibleToAuthContextLayer() throws Exception {
+        mockMvc.perform(get("/api/me/tenant-capabilities"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void keepsMeTenantAuditEventsRouteAccessibleToAuthContextLayer() throws Exception {
+        mockMvc.perform(get("/api/me/tenant-audit-events"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void keepsMeTenantUsageSummaryRouteAccessibleToAuthContextLayer() throws Exception {
+        mockMvc.perform(get("/api/me/tenant-usage-summary"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void keepsOnboardingBootstrapRouteAccessible() throws Exception {
+        mockMvc.perform(post("/api/onboarding/bootstrap")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void keepsAuthRequestLinkRouteAccessible() throws Exception {
+        mockMvc.perform(post("/api/auth/request-link")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void keepsBillingWebhookRouteAccessible() throws Exception {
+        mockMvc.perform(post("/api/billing/webhook")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}"))
                 .andExpect(status().isBadRequest());
     }
 

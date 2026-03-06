@@ -26,6 +26,8 @@ public class ApiExceptionHandler {
     private static final String CODE_INVALID_ROOM_TOKEN = "INVALID_ROOM_TOKEN";
     private static final String CODE_INVALID_TENANT_REQUEST = "INVALID_TENANT_REQUEST";
     private static final String CODE_INVALID_AUTH_CONTEXT = "INVALID_AUTH_CONTEXT";
+    private static final String CODE_INVALID_BILLING_EVENT = "INVALID_BILLING_EVENT";
+    private static final String CODE_PLAN_LIMIT_REACHED = "PLAN_LIMIT_REACHED";
     private static final String CODE_GAME_NOT_FOUND = "GAME_NOT_FOUND";
     private static final String CODE_ROOM_NOT_FOUND = "ROOM_NOT_FOUND";
     private static final String CODE_PLAYER_NOT_FOUND = "PLAYER_NOT_FOUND";
@@ -116,11 +118,17 @@ public class ApiExceptionHandler {
     private static String resolveBadRequestCode(String path, String message) {
         String normalizedPath = path == null ? "" : path;
         String normalizedMessage = message == null ? "" : message.trim().toLowerCase();
+        if (normalizedMessage.contains("plan limit reached")) {
+            return CODE_PLAN_LIMIT_REACHED;
+        }
         if (normalizedPath.startsWith("/internal/wl/")) {
             return CODE_INVALID_TENANT_REQUEST;
         }
-        if (normalizedPath.startsWith("/api/me")) {
+        if (normalizedPath.startsWith("/api/me") || normalizedPath.startsWith("/api/auth")) {
             return CODE_INVALID_AUTH_CONTEXT;
+        }
+        if (normalizedPath.startsWith("/api/billing")) {
+            return CODE_INVALID_BILLING_EVENT;
         }
         if (!normalizedPath.startsWith("/api/rooms/")) {
             return CODE_INVALID_ACTION;
@@ -146,7 +154,7 @@ public class ApiExceptionHandler {
         if (normalizedPath.startsWith("/internal/wl/")) {
             return CODE_TENANT_NOT_FOUND;
         }
-        if (normalizedPath.startsWith("/api/me")) {
+        if (normalizedPath.startsWith("/api/me") || normalizedPath.startsWith("/api/auth")) {
             if (normalizedMessage.contains("tenant not found")) {
                 return CODE_TENANT_NOT_FOUND;
             }

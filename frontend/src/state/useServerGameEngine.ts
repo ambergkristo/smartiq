@@ -269,6 +269,29 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setPhase(mapped.backendPhase === GamePhase.GAME_OVER ? GamePhase.GAME_OVER : GamePhase.CHOOSING);
   }, []);
 
+  const adoptCreatedSession = useCallback((response, request = {}) => {
+    const snapshot = response?.snapshot && typeof response.snapshot === 'object'
+      ? response.snapshot
+      : response;
+    const responseActionTokens = normalizeActionTokens(response?.actionTokens);
+    const resolvedActionTokens = Object.keys(responseActionTokens).length > 0
+      ? responseActionTokens
+      : fallbackActionTokens(snapshot);
+    setActionTokensByPlayerId(resolvedActionTokens);
+    const mapped = mapSnapshot(snapshot, request.language, targetScore);
+    setStats(initialStats(mapped.players));
+    const normalizedPlayers = normalizePlayers(request.players);
+    setControlledPlayer(normalizedPlayers[0] || mapped.players[0] || null);
+    setStartRequest({
+      players: mapped.players,
+      language: request.language || mapped.card.language,
+      topic: mapped.card.topic || undefined,
+      winCondition: mapped.targetScore
+    });
+    applyMappedSnapshot(snapshot, mapped, mapped.backendPhase === GamePhase.GAME_OVER ? GamePhase.GAME_OVER : GamePhase.CHOOSING);
+    return mapped.players;
+  }, [applyMappedSnapshot, targetScore]);
+
   const startRound = useCallback(async (input = {}) => {
     if (requestInFlight) {
       return players;
@@ -297,19 +320,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
 
     try {
       const response = await createServerGameSession(request);
-      const snapshot = response?.snapshot && typeof response.snapshot === 'object'
-        ? response.snapshot
-        : response;
-      const responseActionTokens = normalizeActionTokens(response?.actionTokens);
-      const resolvedActionTokens = Object.keys(responseActionTokens).length > 0
-        ? responseActionTokens
-        : fallbackActionTokens(snapshot);
-      setActionTokensByPlayerId(resolvedActionTokens);
-      const mapped = mapSnapshot(snapshot, request.language, targetScore);
-      setStats(initialStats(mapped.players));
-      setControlledPlayer(normalizedPlayers[0] || mapped.players[0] || null);
-      applyMappedSnapshot(snapshot, mapped, mapped.backendPhase === GamePhase.GAME_OVER ? GamePhase.GAME_OVER : GamePhase.CHOOSING);
-      return mapped.players;
+      return adoptCreatedSession(response, request);
     } catch (error) {
       const message = resolveGameSessionErrorMessage(error);
       setErrorMessage(message);
@@ -321,7 +332,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     } finally {
       setRequestInFlight(false);
     }
-  }, [applyMappedSnapshot, players, requestInFlight, targetScore]);
+  }, [adoptCreatedSession, players, requestInFlight, targetScore]);
 
   const beginCardLoad = useCallback(async () => {
     if (requestInFlight) {
@@ -683,6 +694,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     errorMessage,
     clearError,
     startRound,
+    adoptCreatedSession,
     beginCardLoad,
     cardLoaded: () => {},
     cardLoadFailed: () => {},

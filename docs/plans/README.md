@@ -2,6 +2,12 @@
 
 ## Active Plan
 
+- `docs/plans/2026-03-06-recurring-host-saas-masterplan-v1.md`
+- `docs/plans/2026-03-06-recurring-host-saas-milestones-v1.md`
+- `docs/plans/2026-03-06-recurring-host-saas-gates-v1.md`
+- `docs/plans/2026-03-06-quiz-night-saas-masterplan-v1.md`
+- `docs/plans/2026-03-06-quiz-night-saas-milestones-v1.md`
+- `docs/plans/2026-03-06-quiz-night-saas-gates-v1.md`
 - `docs/plans/2026-03-03-masterplan-roadmap-to-beta.md`
 - `docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md`
 - `docs/plans/2026-03-05-white-label-milestones-v3.md`
@@ -9,6 +15,16 @@
 
 ## Supporting Plans and Audits
 
+- `docs/plans/2026-03-06-feat-recurring-host-saas-bridge-from-quiz-night-plan.md`
+- `docs/reports/2026-03-06-recurring-host-saas-m1-stabilization-evidence.md`
+- `docs/reports/2026-03-06-recurring-host-saas-m2-auth-hardening-evidence.md`
+- `docs/reports/2026-03-06-recurring-host-saas-m3-billing-hardening-evidence.md`
+- `docs/reports/2026-03-06-recurring-host-saas-m3-billing-host-surface-progress.md`
+- `docs/reports/2026-03-06-recurring-host-saas-m4-canonical-flow-evidence.md`
+- `docs/reports/2026-03-06-recurring-host-saas-m4-room-entry-progress.md`
+- `docs/reports/2026-03-06-quiz-night-saas-milestone-evidence-m0-m9.md`
+- `docs/reports/2026-03-06-quiz-night-saas-m8-go-no-go-report.md`
+- `docs/reports/2026-03-06-quiz-night-saas-m9-post-launch-hardening-pack.md`
 - `docs/plans/2026-03-05-business-end-goal-assessment-et.md`
 - `docs/plans/2026-03-05-m1-payment-signal-validation.md`
 - `docs/plans/2026-03-05-m1-payment-signal-ledger.json`

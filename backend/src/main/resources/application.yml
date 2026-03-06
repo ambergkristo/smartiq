@@ -88,6 +88,20 @@ smartiq:
         - ${SMARTIQ_AUTH_EMAIL_CLAIM_TERTIARY:upn}
         - ${SMARTIQ_AUTH_EMAIL_CLAIM_FALLBACK:sub}
       tenant-id-claim: ${SMARTIQ_AUTH_TENANT_ID_CLAIM:tenant_id}
+      jwt-secret: ${SMARTIQ_AUTH_JWT_SECRET:smartiq-dev-runtime-secret-change-me}
+      issuer: ${SMARTIQ_AUTH_JWT_ISSUER:smartiq-runtime}
+      audience: ${SMARTIQ_AUTH_JWT_AUDIENCE:smartiq-runtime}
+      clock-skew-seconds: ${SMARTIQ_AUTH_CLOCK_SKEW_SECONDS:30}
+      bootstrap-token-ttl-seconds: ${SMARTIQ_AUTH_BOOTSTRAP_TOKEN_TTL_SECONDS:3600}
+      magic-link-echo-enabled: ${SMARTIQ_AUTH_MAGIC_LINK_ECHO_ENABLED:true}
+      login-challenge-ttl-seconds: ${SMARTIQ_AUTH_LOGIN_CHALLENGE_TTL_SECONDS:900}
+  billing:
+    provider: ${SMARTIQ_BILLING_PROVIDER:}
+    checkout-base-url: ${SMARTIQ_BILLING_CHECKOUT_BASE_URL:}
+    success-return-url: ${SMARTIQ_BILLING_SUCCESS_RETURN_URL:}
+    cancel-return-url: ${SMARTIQ_BILLING_CANCEL_RETURN_URL:}
+    webhook-signing-secret: ${SMARTIQ_BILLING_WEBHOOK_SIGNING_SECRET:smartiq-dev-billing-secret-change-me}
+    webhook-signature-header: ${SMARTIQ_BILLING_WEBHOOK_SIGNATURE_HEADER:X-SmartIQ-Billing-Signature}
   rate-limit:
     enabled: ${SMARTIQ_RATE_LIMIT_ENABLED:true}
     window-seconds: ${SMARTIQ_RATE_LIMIT_WINDOW_SECONDS:60}

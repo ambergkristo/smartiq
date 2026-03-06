@@ -4,10 +4,11 @@
 
 ## Masterplan Alignment
 
-- Canonical plan: `docs/plans/2026-03-03-masterplan-roadmap-to-beta.md`
+- Canonical plan: `docs/plans/2026-03-06-recurring-host-saas-masterplan-v1.md`
 - Masterplan phase:
 - Masterplan item(s):
 - If deviating, justify and propose plan update:
+- If this PR closes `M4`, confirm it updates `main` for `SmartIQ`:
 
 ## Validation
 
@@ -31,6 +32,7 @@
 
 - Additional reviewer context, risks, or follow-up work
 - Milestone PRs: include `docs/milestone-ready-checklist.md` sections in description
+- `SmartIQ` uses GitHub as the source-of-truth repo for this project; do not add Gitea mirroring here
 
 ## Migration Steps (if applicable)
 
