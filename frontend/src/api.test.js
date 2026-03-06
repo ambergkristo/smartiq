@@ -5,7 +5,9 @@ import {
   buildServerGamePayload,
   createRoomSession,
   createServerGameSession,
+  deleteRuntimeSessionTemplate,
   fetchTenantRuntimeSnapshot,
+  upsertRuntimeSessionTemplate,
   updateRuntimeTenantBranding,
   getRuntimeAuthContext,
   hasRuntimeAuthContext,
@@ -306,6 +308,77 @@ describe('api error mapping', () => {
           logoUrl: null,
           primaryColor: '#101820',
           secondaryColor: '#FEE715'
+        })
+      })
+    );
+  });
+
+  test('sends runtime auth headers with session template upserts', async () => {
+    global.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
+      tenantId: 'tenant-1',
+      templates: []
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    }));
+    setRuntimeAuthContext({
+      userEmail: 'owner@acme.test',
+      tenantId: 'tenant-1',
+      bearerToken: 'token-1'
+    });
+
+    await upsertRuntimeSessionTemplate('tpl-1', {
+      name: 'Friday default',
+      topic: 'Science',
+      language: 'en',
+      theme: 'ember',
+      players: ['Alice', 'Bob']
+    });
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      expect.stringMatching(/\/api\/me\/session-templates\/tpl-1$/),
+      expect.objectContaining({
+        method: 'PUT',
+        headers: expect.objectContaining({
+          Authorization: 'Bearer token-1',
+          'X-SmartIQ-User-Email': 'owner@acme.test',
+          'X-SmartIQ-Tenant-Id': 'tenant-1'
+        }),
+        body: JSON.stringify({
+          name: 'Friday default',
+          topic: 'Science',
+          language: 'en',
+          theme: 'ember',
+          players: ['Alice', 'Bob']
+        })
+      })
+    );
+  });
+
+  test('sends runtime auth headers with session template deletes', async () => {
+    global.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
+      tenantId: 'tenant-1',
+      templates: []
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    }));
+    setRuntimeAuthContext({
+      userEmail: 'owner@acme.test',
+      tenantId: 'tenant-1',
+      bearerToken: 'token-1'
+    });
+
+    await deleteRuntimeSessionTemplate('tpl-1');
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      expect.stringMatching(/\/api\/me\/session-templates\/tpl-1$/),
+      expect.objectContaining({
+        method: 'DELETE',
+        headers: expect.objectContaining({
+          Authorization: 'Bearer token-1',
+          'X-SmartIQ-User-Email': 'owner@acme.test',
+          'X-SmartIQ-Tenant-Id': 'tenant-1'
         })
       })
     );

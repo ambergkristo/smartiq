@@ -608,6 +608,12 @@ button:disabled {
   font-size: 0.82rem;
 }
 
+.session-template-list .session-template-players {
+  color: var(--text);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
 .host-session-actions {
   display: flex;
   flex-wrap: wrap;

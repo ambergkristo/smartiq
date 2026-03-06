@@ -8,6 +8,7 @@ vi.mock('./api', () => {
     clearRuntimeAuthContext: vi.fn(),
     completeRuntimeAuth: vi.fn(),
     createRoomSession: vi.fn(),
+    deleteRuntimeSessionTemplate: vi.fn(),
     duplicateServerGameSession: vi.fn(),
     fetchRoomPreview: vi.fn(),
     fetchTenantAuditEvents: vi.fn(),
@@ -24,6 +25,7 @@ vi.mock('./api', () => {
     rejoinRoomSession: vi.fn(),
     requestRuntimeAuthLink: vi.fn(),
     setRuntimeAuthContext: vi.fn(),
+    upsertRuntimeSessionTemplate: vi.fn(),
     updateRuntimeTenantBranding: vi.fn(),
     resolveCardErrorMessage: vi.fn(() => 'Fallback mode'),
     resolveTopicsErrorState: vi.fn(() => ({
@@ -39,6 +41,7 @@ import {
   clearRuntimeAuthContext,
   completeRuntimeAuth,
   createRoomSession,
+  deleteRuntimeSessionTemplate,
   fetchRoomPreview,
   fetchTenantAuditEvents,
   fetchTenantRuntimeSnapshot,
@@ -51,6 +54,7 @@ import {
   requestRuntimeAuthLink,
   resolveTopicsErrorState,
   setRuntimeAuthContext,
+  upsertRuntimeSessionTemplate,
   updateRuntimeTenantBranding
 } from './api';
 
@@ -86,6 +90,14 @@ describe('App startup resilience', () => {
         primaryColor: '#223344',
         secondaryColor: '#556677'
       }
+    });
+    upsertRuntimeSessionTemplate.mockResolvedValue({
+      tenantId: 'tenant-template',
+      templates: []
+    });
+    deleteRuntimeSessionTemplate.mockResolvedValue({
+      tenantId: 'tenant-template',
+      templates: []
     });
     createRoomSession.mockResolvedValue({
       roomCode: 'ABC123',
@@ -512,6 +524,183 @@ describe('App startup resilience', () => {
     expect(document.title).toBe('Late Night Quiz');
     expect(document.documentElement.style.getPropertyValue('--accent')).toBe('#101820');
     expect(document.documentElement.style.getPropertyValue('--accent2')).toBe('#FEE715');
+  });
+
+  test('shows locked session-template boundary for trial hosts', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    hasRuntimeAuthContext.mockReturnValue(true);
+    fetchTenantRuntimeSnapshot.mockResolvedValue({
+      me: {
+        selectedTenantId: 'tenant-trial',
+        selectedRole: 'owner'
+      },
+      settings: { settings: { schemaVersion: 1, theme: 'classic', host: { sessionTemplates: [] } } },
+      branding: { branding: { appName: 'Trial Quiz', primaryColor: '#223344', secondaryColor: '#556677' } },
+      subscription: {
+        planCode: 'pilot-monthly',
+        status: 'trialing',
+        billingCycle: 'monthly'
+      },
+      capabilities: {
+        planTier: 'trial',
+        maxHostedPlayers: 4,
+        analyticsHistoryEnabled: false,
+        sessionTemplatesEnabled: false,
+        customBrandingEnabled: false
+      }
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('session-templates-locked')).toBeInTheDocument());
+    expect(screen.getByTestId('session-templates-card')).toHaveTextContent(/session templates unlock on pro host/i);
+    expect(screen.queryByLabelText(/template name/i)).not.toBeInTheDocument();
+  });
+
+  test('saves current host setup as a paid session template', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    hasRuntimeAuthContext.mockReturnValue(true);
+    fetchTenantRuntimeSnapshot.mockResolvedValue({
+      me: {
+        selectedTenantId: 'tenant-pro',
+        selectedRole: 'owner'
+      },
+      settings: {
+        settings: {
+          schemaVersion: 1,
+          theme: 'ember',
+          host: {
+            sessionTemplates: []
+          }
+        }
+      },
+      branding: {
+        branding: {
+          appName: 'Northwind Quiz',
+          logoUrl: 'https://cdn.example.com/northwind.svg',
+          primaryColor: '#223344',
+          secondaryColor: '#556677'
+        }
+      },
+      subscription: {
+        planCode: 'pro-host-monthly',
+        status: 'active',
+        billingCycle: 'monthly'
+      },
+      capabilities: {
+        planTier: 'pro_host',
+        maxHostedPlayers: 10,
+        analyticsHistoryEnabled: true,
+        sessionTemplatesEnabled: true,
+        customBrandingEnabled: true
+      }
+    });
+    upsertRuntimeSessionTemplate.mockResolvedValue({
+      tenantId: 'tenant-pro',
+      templates: [
+        {
+          templateId: 'tpl-friday',
+          name: 'Friday default',
+          topic: 'Math',
+          language: 'en',
+          theme: 'ember',
+          players: ['Alice', 'Bob'],
+          updatedAt: '2026-03-06T12:00:00Z'
+        }
+      ]
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByLabelText(/template name/i)).toBeInTheDocument());
+    fireEvent.change(screen.getByLabelText(/players/i), { target: { value: 'Alice, Bob' } });
+    fireEvent.blur(screen.getByLabelText(/players/i), { target: { value: 'Alice, Bob' } });
+    fireEvent.change(screen.getByLabelText(/template name/i), { target: { value: 'Friday default' } });
+    fireEvent.click(screen.getByRole('button', { name: /save current setup/i }));
+
+    await waitFor(() => expect(upsertRuntimeSessionTemplate).toHaveBeenCalledWith(
+      expect.any(String),
+      {
+        name: 'Friday default',
+        topic: '',
+        language: 'en',
+        theme: 'ember',
+        players: ['Alice', 'Bob']
+      }
+    ));
+    expect(screen.getByTestId('session-template-message')).toHaveTextContent(/session template saved/i);
+    expect(screen.getByText('Friday default')).toBeInTheDocument();
+  });
+
+  test('applies and deletes a saved session template from host workspace', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    hasRuntimeAuthContext.mockReturnValue(true);
+    fetchTenantRuntimeSnapshot.mockResolvedValue({
+      me: {
+        selectedTenantId: 'tenant-pro',
+        selectedRole: 'owner'
+      },
+      settings: {
+        settings: {
+          schemaVersion: 1,
+          theme: 'classic',
+          host: {
+            sessionTemplates: [
+              {
+                templateId: 'tpl-ocean',
+                name: 'Ocean science',
+                topic: 'Science',
+                language: 'en',
+                theme: 'ocean',
+                players: ['Host One', 'Alice', 'Bob'],
+                updatedAt: '2026-03-06T12:00:00Z'
+              }
+            ]
+          }
+        }
+      },
+      branding: {
+        branding: {
+          appName: 'Northwind Quiz',
+          primaryColor: '#223344',
+          secondaryColor: '#556677'
+        }
+      },
+      subscription: {
+        planCode: 'pro-host-monthly',
+        status: 'active',
+        billingCycle: 'monthly'
+      },
+      capabilities: {
+        planTier: 'pro_host',
+        maxHostedPlayers: 10,
+        analyticsHistoryEnabled: true,
+        sessionTemplatesEnabled: true,
+        customBrandingEnabled: true
+      }
+    });
+    deleteRuntimeSessionTemplate.mockResolvedValue({
+      tenantId: 'tenant-pro',
+      templates: []
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByText('Ocean science')).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /apply template/i }));
+
+    await waitFor(() => expect(screen.getByTestId('session-template-message')).toHaveTextContent(/template applied/i));
+    expect(screen.getByTestId('active-filter')).toHaveTextContent(/science \| en/i);
+    expect(document.documentElement).toHaveAttribute('data-theme', 'ocean');
+    expect(screen.getByText('Host One')).toBeInTheDocument();
+    expect(screen.getByText('Alice')).toBeInTheDocument();
+    expect(screen.getByText('Bob')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: /delete template/i }));
+
+    await waitFor(() => expect(deleteRuntimeSessionTemplate).toHaveBeenCalledWith('tpl-ocean'));
+    expect(screen.getByTestId('session-template-message')).toHaveTextContent(/session template deleted/i);
+    expect(screen.queryByText('Ocean science')).not.toBeInTheDocument();
   });
 
   test('refreshes paid entitlements after billing success return', async () => {

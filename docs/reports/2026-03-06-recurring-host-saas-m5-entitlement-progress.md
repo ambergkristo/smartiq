@@ -54,8 +54,8 @@ The following checks executed successfully after this progress slice:
 
 ## Honest Status
 
-`M5 Paid Value and Entitlement Enforcement` remains active and is not promotable done yet because:
+This document captures an earlier `M5` progress slice.
 
-1. session template/preset capability is still declared in runtime capabilities but not yet a complete host-facing paid workflow,
-2. upgrade friction points are stronger now, but broader paid-boundary coverage is still partial,
-3. the milestone still needs a fuller evidence set tying capability enforcement to deterministic upgrade activation across the remaining host surfaces.
+Canonical completion evidence now lives in:
+
+1. `docs/reports/2026-03-06-recurring-host-saas-m5-entitlement-evidence.md`

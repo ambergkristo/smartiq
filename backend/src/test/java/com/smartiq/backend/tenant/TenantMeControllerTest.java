@@ -199,6 +199,87 @@ class TenantMeControllerTest {
     }
 
     @Test
+    void allowsProHostRuntimeSessionTemplateSaveAndDelete() throws Exception {
+        String tenantId = createTenant("templates-pro", "Templates Pro");
+        addMember(tenantId, "templates-owner@acme.test", "Templates Owner", "owner");
+        updateSubscription(tenantId, """
+                {
+                  "planCode": "pro-host-monthly",
+                  "status": "active",
+                  "billingCycle": "monthly"
+                }
+                """);
+
+        mockMvc.perform(put("/api/me/session-templates/{templateId}", "tpl_friday_default")
+                        .header("Authorization", bearerToken("templates-owner@acme.test", tenantId))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "name": "Friday default",
+                                  "topic": "Science",
+                                  "language": "en",
+                                  "theme": "ember",
+                                  "players": ["Alice", "Bob"]
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.tenantId").value(tenantId))
+                .andExpect(jsonPath("$.templates.length()").value(1))
+                .andExpect(jsonPath("$.templates[0].templateId").value("tpl_friday_default"))
+                .andExpect(jsonPath("$.templates[0].name").value("Friday default"))
+                .andExpect(jsonPath("$.templates[0].theme").value("ember"))
+                .andExpect(jsonPath("$.templates[0].players[0]").value("Alice"))
+                .andExpect(jsonPath("$.templates[0].players[1]").value("Bob"));
+
+        mockMvc.perform(get("/api/me/tenant-settings")
+                        .header("Authorization", bearerToken("templates-owner@acme.test", tenantId)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.settings.host.sessionTemplates.length()").value(1))
+                .andExpect(jsonPath("$.settings.host.sessionTemplates[0].templateId").value("tpl_friday_default"))
+                .andExpect(jsonPath("$.settings.host.sessionTemplates[0].name").value("Friday default"));
+
+        mockMvc.perform(delete("/api/me/session-templates/{templateId}", "tpl_friday_default")
+                        .header("Authorization", bearerToken("templates-owner@acme.test", tenantId)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.tenantId").value(tenantId))
+                .andExpect(jsonPath("$.templates.length()").value(0));
+
+        mockMvc.perform(get("/api/me/tenant-settings")
+                        .header("Authorization", bearerToken("templates-owner@acme.test", tenantId)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.settings.host.sessionTemplates.length()").value(0));
+    }
+
+    @Test
+    void blocksRuntimeSessionTemplateSaveWhenPlanDoesNotIncludeTemplates() throws Exception {
+        String tenantId = createTenant("templates-trial", "Templates Trial");
+        addMember(tenantId, "templates-trial@acme.test", "Templates Trial", "owner");
+        updateSubscription(tenantId, """
+                {
+                  "planCode": "pilot-monthly",
+                  "status": "trialing",
+                  "billingCycle": "monthly"
+                }
+                """);
+
+        mockMvc.perform(put("/api/me/session-templates/{templateId}", "tpl_locked")
+                        .header("Authorization", bearerToken("templates-trial@acme.test", tenantId))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "name": "Locked default",
+                                  "topic": "Science",
+                                  "language": "en",
+                                  "theme": "classic",
+                                  "players": ["Alice"]
+                                }
+                                """))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.code").value("FORBIDDEN_TENANT_ACCESS"))
+                .andExpect(jsonPath("$.error").value("current plan does not include session templates"));
+    }
+
+    @Test
     void bootstrapsOnboardingWorkspaceAndRuntimeContext() throws Exception {
         String payload = """
                 {

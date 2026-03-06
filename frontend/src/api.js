@@ -327,6 +327,46 @@ export async function updateRuntimeTenantBranding({ appName, logoUrl, primaryCol
   });
 }
 
+export async function upsertRuntimeSessionTemplate(templateId, { name, topic, language, theme, players } = {}) {
+  requireApiBase();
+  const headers = resolveRuntimeAuthHeaders();
+  if (Object.keys(headers).length === 0) {
+    throw new ApiError('Runtime auth context is required for session templates.', 0, 'UNAUTHENTICATED');
+  }
+  const normalizedTemplateId = normalizeRequiredField(templateId, 'templateId');
+  const normalizedPlayers = Array.isArray(players)
+    ? players.map((player) => String(player || '').trim()).filter(Boolean)
+    : [];
+  if (normalizedPlayers.length === 0) {
+    throw new ApiError('players is required', 0, 'VALIDATION_ERROR');
+  }
+
+  return fetchJson(`${API_BASE}/api/me/session-templates/${encodeURIComponent(normalizedTemplateId)}`, {
+    method: 'PUT',
+    headers,
+    body: {
+      name: normalizeRequiredField(name, 'name'),
+      topic: String(topic || '').trim() || null,
+      language: normalizeRequiredField(language, 'language').toLowerCase(),
+      theme: normalizeRequiredField(theme, 'theme').toLowerCase(),
+      players: normalizedPlayers
+    }
+  });
+}
+
+export async function deleteRuntimeSessionTemplate(templateId) {
+  requireApiBase();
+  const headers = resolveRuntimeAuthHeaders();
+  if (Object.keys(headers).length === 0) {
+    throw new ApiError('Runtime auth context is required for session templates.', 0, 'UNAUTHENTICATED');
+  }
+  const normalizedTemplateId = normalizeRequiredField(templateId, 'templateId');
+  return fetchJson(`${API_BASE}/api/me/session-templates/${encodeURIComponent(normalizedTemplateId)}`, {
+    method: 'DELETE',
+    headers
+  });
+}
+
 export async function fetchTenantCapabilities() {
   requireApiBase();
   const headers = resolveRuntimeAuthHeaders();

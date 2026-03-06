@@ -133,8 +133,8 @@ Priority order:
 3. `M2` real auth and trust hardening is complete.
 4. `M3` billing and payment hardening is complete.
 5. `M4` full host/join/replay canonical flow is complete.
-6. `M5` paid value and entitlement enforcement is now the active milestone.
-7. `M5` runtime rails now enforce hosted player cap, analytics/history, and custom branding, with billing-return entitlement refresh landed, but the milestone is still not promotable.
+6. `M5` paid value and entitlement enforcement is complete.
+7. `M6` pilot conversion and retention proof is now the active milestone.
 8. The locked next-sequence is:
    - product stabilization,
    - auth/trust hardening,

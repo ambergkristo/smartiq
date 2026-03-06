@@ -30,8 +30,8 @@ Execution governance:
 | M2 | S2 | Real auth and trust hardening | DONE (2026-03-06) |
 | M3 | S3 | Billing and payment hardening | DONE (2026-03-06) |
 | M4 | S4 | Full host/join/replay canonical flow | DONE (2026-03-06) |
-| M5 | S5 | Paid value and entitlement enforcement | IN_PROGRESS (2026-03-06) |
-| M6 | S6 | Pilot conversion and retention proof | TODO |
+| M5 | S5 | Paid value and entitlement enforcement | DONE (2026-03-06) |
+| M6 | S6 | Pilot conversion and retention proof | IN_PROGRESS (2026-03-06) |
 | M7 | S7 | Narrow launch readiness | TODO |
 | M8 | S8 | Sellable niche SaaS validation | TODO |
 | M9 | S9 | Host product depth | TODO |
@@ -41,9 +41,9 @@ Execution governance:
 
 Current execution pointer:
 1. `M4` is complete.
-2. `M5` is now the active milestone.
-3. `M4` promotion is based on tenant-scoped room/session behavior, branded host and player surfaces, canonical host history review/resume/duplicate controls, and the dedicated public player join route.
-4. `M5` now enforces hosted player cap, analytics/history, custom branding, and billing-return entitlement refresh in runtime, but milestone promotion remains blocked on broader paid-capability enforcement and template-grade paid workflow completion.
+2. `M5` is complete.
+3. `M5` promotion is based on hosted player-cap enforcement, analytics/history gating, custom-branding runtime enforcement, session-template paid workflow, and deterministic billing-return entitlement refresh.
+4. `M6` is now the active milestone.
 
 ## Milestone Definitions
 

@@ -3,8 +3,11 @@ package com.smartiq.backend.tenant;
 import com.smartiq.backend.auth.AuthContextResolver;
 import com.smartiq.backend.auth.ResolvedAuthContext;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +50,21 @@ public class TenantMeController {
                                                               @RequestBody(required = false) UpdateTenantBrandingRequest updateRequest) {
         ResolvedAuthContext context = authContextResolver.resolve(request);
         return tenantService.updateBrandingForMember(context.userEmail(), context.tenantId(), updateRequest);
+    }
+
+    @PutMapping("/session-templates/{templateId}")
+    public TenantRuntimeSessionTemplatesResponse upsertSessionTemplate(HttpServletRequest request,
+                                                                      @PathVariable String templateId,
+                                                                      @RequestBody(required = false) RuntimeSessionTemplateUpsertRequest upsertRequest) {
+        ResolvedAuthContext context = authContextResolver.resolve(request);
+        return tenantService.upsertSessionTemplateForMember(context.userEmail(), context.tenantId(), templateId, upsertRequest);
+    }
+
+    @DeleteMapping("/session-templates/{templateId}")
+    public TenantRuntimeSessionTemplatesResponse deleteSessionTemplate(HttpServletRequest request,
+                                                                      @PathVariable String templateId) {
+        ResolvedAuthContext context = authContextResolver.resolve(request);
+        return tenantService.deleteSessionTemplateForMember(context.userEmail(), context.tenantId(), templateId);
     }
 
     @GetMapping("/tenant-subscription")

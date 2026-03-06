@@ -7,6 +7,7 @@ vi.mock('./api', () => ({
   clearRuntimeAuthContext: vi.fn(),
   completeRuntimeAuth: vi.fn(),
   createRoomSession: vi.fn(),
+  deleteRuntimeSessionTemplate: vi.fn(),
   duplicateServerGameSession: vi.fn(),
   fetchRoomPreview: vi.fn(),
   fetchTenantAuditEvents: vi.fn(),
@@ -23,6 +24,7 @@ vi.mock('./api', () => ({
   rejoinRoomSession: vi.fn(),
   requestRuntimeAuthLink: vi.fn(),
   setRuntimeAuthContext: vi.fn(),
+  upsertRuntimeSessionTemplate: vi.fn(),
   updateRuntimeTenantBranding: vi.fn(),
   resolveCardErrorMessage: vi.fn(() => 'Fallback mode'),
   resolveTopicsErrorState: vi.fn(() => ({

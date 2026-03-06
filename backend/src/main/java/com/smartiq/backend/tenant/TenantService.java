@@ -3,6 +3,7 @@ package com.smartiq.backend.tenant;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.smartiq.backend.auth.RuntimeAuthTokenService;
 import org.springframework.data.domain.PageRequest;
@@ -31,15 +32,18 @@ public class TenantService {
     private static final Pattern SLUG_PATTERN = Pattern.compile("^[a-z0-9-]{3,63}$");
     private static final Pattern HEX_COLOR_PATTERN = Pattern.compile("^#[0-9A-Fa-f]{6}$");
     private static final Pattern PLAN_CODE_PATTERN = Pattern.compile("^[a-z0-9._-]{2,64}$");
+    private static final Pattern TEMPLATE_ID_PATTERN = Pattern.compile("^[A-Za-z0-9_-]{4,80}$");
     private static final Set<String> ALLOWED_TENANT_STATUSES = Set.of("active", "suspended");
     private static final Set<String> ALLOWED_MEMBERSHIP_ROLES = Set.of("owner", "admin", "editor", "viewer");
     private static final Set<String> ALLOWED_MEMBERSHIP_STATUSES = Set.of("active", "suspended");
     private static final Set<String> ALLOWED_SUBSCRIPTION_STATUSES = Set.of("trialing", "active", "past_due", "canceled");
     private static final Set<String> ALLOWED_BILLING_CYCLES = Set.of("monthly", "annual");
     private static final Set<String> ALLOWED_THEMES = Set.of("classic", "ember", "ocean");
-    private static final Set<String> ALLOWED_SETTINGS_KEYS = Set.of("schemaVersion", "theme", "game", "features");
+    private static final Set<String> ALLOWED_TEMPLATE_LANGUAGES = Set.of("en", "et");
+    private static final Set<String> ALLOWED_SETTINGS_KEYS = Set.of("schemaVersion", "theme", "game", "features", "host");
     private static final Set<String> ALLOWED_GAME_SETTINGS_KEYS = Set.of("maxPlayers", "roundsPerMatch");
     private static final Set<String> ALLOWED_FEATURE_SETTINGS_KEYS = Set.of("leaderboardEnabled", "teamsEnabled");
+    private static final Set<String> ALLOWED_HOST_SETTINGS_KEYS = Set.of("sessionTemplates");
     private static final String STATUS_ACTIVE = "active";
     private static final String STATUS_SUSPENDED = "suspended";
     private static final String SUBSCRIPTION_STATUS_TRIALING = "trialing";
@@ -59,6 +63,8 @@ public class TenantService {
     private static final String AUDIT_ACTION_HOST_GAME_SESSION_CREATED = "HOST_GAME_SESSION_CREATED";
     private static final String AUDIT_ACTION_HOST_GAME_SESSION_COMPLETED = "HOST_GAME_SESSION_COMPLETED";
     private static final String AUDIT_ACTION_HOST_ROOM_CREATED = "HOST_ROOM_CREATED";
+    private static final String AUDIT_ACTION_HOST_SESSION_TEMPLATE_UPSERTED = "HOST_SESSION_TEMPLATE_UPSERTED";
+    private static final String AUDIT_ACTION_HOST_SESSION_TEMPLATE_DELETED = "HOST_SESSION_TEMPLATE_DELETED";
     private static final String AUDIT_ENTITY_TENANT = "tenant";
     private static final String AUDIT_ENTITY_TENANT_BRANDING = "tenant_branding";
     private static final String AUDIT_ENTITY_TENANT_MEMBERSHIP = "tenant_membership";
@@ -67,6 +73,7 @@ public class TenantService {
     private static final String AUDIT_ENTITY_TENANT_USAGE_EVENT = "tenant_usage_event";
     private static final String AUDIT_ENTITY_HOST_GAME_SESSION = "host_game_session";
     private static final String AUDIT_ENTITY_HOST_ROOM = "host_room";
+    private static final String AUDIT_ENTITY_HOST_SESSION_TEMPLATE = "host_session_template";
     private static final int SETTINGS_SCHEMA_VERSION = 1;
     private static final String DEFAULT_THEME = "classic";
     private static final int DEFAULT_MAX_PLAYERS = 10;
@@ -77,6 +84,8 @@ public class TenantService {
     private static final int MAX_AUDIT_LIMIT = 200;
     private static final int DEFAULT_USAGE_LIMIT = 100;
     private static final int MAX_USAGE_LIMIT = 500;
+    private static final int MAX_SESSION_TEMPLATE_COUNT = 12;
+    private static final int MAX_TEMPLATE_PLAYERS = 10;
     private static final long PLAN_LIMIT_STARTER = 1_000L;
     private static final long PLAN_LIMIT_PILOT = 2_000L;
     private static final long PLAN_LIMIT_GROWTH = 10_000L;
@@ -814,6 +823,125 @@ public class TenantService {
         return getTenantBrandingForMember(userEmail, tenantId);
     }
 
+    @Transactional
+    public TenantRuntimeSessionTemplatesResponse upsertSessionTemplateForMember(String userEmail,
+                                                                                UUID tenantId,
+                                                                                String templateId,
+                                                                                RuntimeSessionTemplateUpsertRequest request) {
+        MeResponse me = assertSessionTemplateAccess(userEmail, tenantId);
+        String normalizedTemplateId = normalizeTemplateId(templateId);
+        Instant now = Instant.now();
+
+        JsonNode currentSettingsNode = getTenantSettings(tenantId).settings();
+        if (!(currentSettingsNode instanceof ObjectNode currentSettingsObject)) {
+            throw new IllegalStateException("stored tenant settings are invalid");
+        }
+        ObjectNode nextSettings = currentSettingsObject.deepCopy();
+        ObjectNode host = nextSettings.with("host");
+        ArrayNode sessionTemplates = objectMapper.createArrayNode();
+        ObjectNode normalizedTemplate = createSessionTemplateNode(normalizedTemplateId, request, now);
+        boolean replaced = false;
+
+        for (RuntimeSessionTemplateResponse existing : readSessionTemplates(nextSettings)) {
+            if (normalizedTemplateId.equals(existing.templateId())) {
+                sessionTemplates.add(normalizedTemplate);
+                replaced = true;
+                continue;
+            }
+            sessionTemplates.add(toSessionTemplateNode(existing));
+        }
+        if (!replaced) {
+            sessionTemplates.insert(0, normalizedTemplate);
+        }
+        if (sessionTemplates.size() > MAX_SESSION_TEMPLATE_COUNT) {
+            throw new IllegalArgumentException("sessionTemplates must contain at most " + MAX_SESSION_TEMPLATE_COUNT + " templates");
+        }
+        host.set("sessionTemplates", sessionTemplates);
+
+        TenantSettingsResponse updatedSettings = updateTenantSettings(
+                tenantId,
+                new UpdateTenantSettingsRequest(nextSettings),
+                me.userId()
+        );
+
+        ObjectNode metadata = objectMapper.createObjectNode();
+        metadata.put("templateId", normalizedTemplateId);
+        metadata.put("name", normalizedTemplate.path("name").asText());
+        metadata.put("language", normalizedTemplate.path("language").asText("en"));
+        metadata.put("topic", normalizedTemplate.path("topic").asText(""));
+        metadata.put("playerCount", normalizedTemplate.path("players").size());
+        recordAuditEvent(
+                tenantId,
+                AUDIT_ACTION_HOST_SESSION_TEMPLATE_UPSERTED,
+                AUDIT_ENTITY_HOST_SESSION_TEMPLATE,
+                normalizedTemplateId,
+                metadata,
+                now,
+                me.userId()
+        );
+
+        return new TenantRuntimeSessionTemplatesResponse(
+                tenantId,
+                readSessionTemplates(updatedSettings.settings()),
+                updatedSettings.updatedAt()
+        );
+    }
+
+    @Transactional
+    public TenantRuntimeSessionTemplatesResponse deleteSessionTemplateForMember(String userEmail,
+                                                                                UUID tenantId,
+                                                                                String templateId) {
+        MeResponse me = assertSessionTemplateAccess(userEmail, tenantId);
+        String normalizedTemplateId = normalizeTemplateId(templateId);
+        Instant now = Instant.now();
+
+        JsonNode currentSettingsNode = getTenantSettings(tenantId).settings();
+        if (!(currentSettingsNode instanceof ObjectNode currentSettingsObject)) {
+            throw new IllegalStateException("stored tenant settings are invalid");
+        }
+        ObjectNode currentSettings = currentSettingsObject.deepCopy();
+        ObjectNode host = currentSettings.with("host");
+        ArrayNode sessionTemplates = objectMapper.createArrayNode();
+        RuntimeSessionTemplateResponse deletedTemplate = null;
+
+        for (RuntimeSessionTemplateResponse existing : readSessionTemplates(currentSettings)) {
+            if (normalizedTemplateId.equals(existing.templateId())) {
+                deletedTemplate = existing;
+                continue;
+            }
+            sessionTemplates.add(toSessionTemplateNode(existing));
+        }
+        if (deletedTemplate == null) {
+            throw new NoSuchElementException("session template not found");
+        }
+        host.set("sessionTemplates", sessionTemplates);
+
+        TenantSettingsResponse updatedSettings = updateTenantSettings(
+                tenantId,
+                new UpdateTenantSettingsRequest(currentSettings),
+                me.userId()
+        );
+
+        ObjectNode metadata = objectMapper.createObjectNode();
+        metadata.put("templateId", normalizedTemplateId);
+        metadata.put("name", deletedTemplate.name());
+        recordAuditEvent(
+                tenantId,
+                AUDIT_ACTION_HOST_SESSION_TEMPLATE_DELETED,
+                AUDIT_ENTITY_HOST_SESSION_TEMPLATE,
+                normalizedTemplateId,
+                metadata,
+                now,
+                me.userId()
+        );
+
+        return new TenantRuntimeSessionTemplatesResponse(
+                tenantId,
+                readSessionTemplates(updatedSettings.settings()),
+                updatedSettings.updatedAt()
+        );
+    }
+
     @Transactional(readOnly = true)
     public TenantBrandingRuntimeResponse getTenantBrandingForRuntimeTenant(UUID tenantId) {
         if (tenantId == null) {
@@ -1050,6 +1178,15 @@ public class TenantService {
             throw new IllegalArgumentException("tenant context is required");
         }
         return getMe(userEmail, tenantId);
+    }
+
+    private MeResponse assertSessionTemplateAccess(String userEmail, UUID tenantId) {
+        MeResponse me = requireRuntimeMemberContext(userEmail, tenantId);
+        TenantRuntimeCapabilitiesResponse capabilities = getTenantCapabilitiesForMember(userEmail, tenantId);
+        if (!capabilities.sessionTemplatesEnabled()) {
+            throw new ForbiddenTenantAccessException("current plan does not include session templates");
+        }
+        return me;
     }
 
     private TenantRuntimeCapabilitiesResponse resolveRuntimeCapabilities(UUID tenantId,
@@ -1439,6 +1576,93 @@ public class TenantService {
         return normalized.toUpperCase(Locale.ROOT);
     }
 
+    private static String normalizeTemplateId(String templateId) {
+        String normalized = normalizeRequired(templateId, "templateId", 80);
+        if (!TEMPLATE_ID_PATTERN.matcher(normalized).matches()) {
+            throw new IllegalArgumentException("templateId must match [A-Za-z0-9_-]{4,80}");
+        }
+        return normalized;
+    }
+
+    private static String normalizeTemplateLanguage(String language) {
+        String normalized = normalizeOptional(language, 16);
+        if (normalized == null) {
+            return "en";
+        }
+        normalized = normalized.toLowerCase(Locale.ROOT);
+        if (!ALLOWED_TEMPLATE_LANGUAGES.contains(normalized)) {
+            throw new IllegalArgumentException("language must be one of: en, et");
+        }
+        return normalized;
+    }
+
+    private static String normalizeTemplateTheme(String theme) {
+        String normalized = normalizeOptional(theme, 32);
+        if (normalized == null) {
+            return DEFAULT_THEME;
+        }
+        normalized = normalized.toLowerCase(Locale.ROOT);
+        if (!ALLOWED_THEMES.contains(normalized)) {
+            throw new IllegalArgumentException("theme must be one of: classic, ember, ocean");
+        }
+        return normalized;
+    }
+
+    private static String normalizeTemplateUpdatedAt(String value) {
+        String normalized = normalizeRequired(value, "updatedAt", 64);
+        try {
+            return Instant.parse(normalized).toString();
+        } catch (DateTimeParseException ex) {
+            throw new IllegalArgumentException("updatedAt must be an ISO-8601 timestamp", ex);
+        }
+    }
+
+    private static List<String> normalizeTemplatePlayers(JsonNode playersNode) {
+        if (playersNode == null || playersNode.isNull()) {
+            throw new IllegalArgumentException("players is required");
+        }
+        if (!(playersNode instanceof ArrayNode arrayNode)) {
+            throw new IllegalArgumentException("players must be a JSON array");
+        }
+        if (arrayNode.isEmpty()) {
+            throw new IllegalArgumentException("players must contain at least 1 player");
+        }
+        if (arrayNode.size() > MAX_TEMPLATE_PLAYERS) {
+            throw new IllegalArgumentException("players must contain at most " + MAX_TEMPLATE_PLAYERS + " players");
+        }
+        LinkedHashSet<String> normalizedPlayers = new LinkedHashSet<>();
+        for (JsonNode playerNode : arrayNode) {
+            if (playerNode == null || playerNode.isNull() || !playerNode.isTextual()) {
+                throw new IllegalArgumentException("players entries must be strings");
+            }
+            normalizedPlayers.add(normalizeRequired(playerNode.asText(), "player", 160));
+        }
+        if (normalizedPlayers.isEmpty()) {
+            throw new IllegalArgumentException("players must contain at least 1 player");
+        }
+        return List.copyOf(normalizedPlayers);
+    }
+
+    private static List<String> normalizeTemplatePlayers(List<String> players) {
+        if (players == null) {
+            throw new IllegalArgumentException("players is required");
+        }
+        if (players.isEmpty()) {
+            throw new IllegalArgumentException("players must contain at least 1 player");
+        }
+        if (players.size() > MAX_TEMPLATE_PLAYERS) {
+            throw new IllegalArgumentException("players must contain at most " + MAX_TEMPLATE_PLAYERS + " players");
+        }
+        LinkedHashSet<String> normalizedPlayers = new LinkedHashSet<>();
+        for (String player : players) {
+            normalizedPlayers.add(normalizeRequired(player, "player", 160));
+        }
+        if (normalizedPlayers.isEmpty()) {
+            throw new IllegalArgumentException("players must contain at least 1 player");
+        }
+        return List.copyOf(normalizedPlayers);
+    }
+
     private String generateUniqueOnboardingSlug(String workspaceName) {
         String baseSlug = normalizeSlug(null, workspaceName);
         if (!tenantRepository.existsBySlug(baseSlug)) {
@@ -1577,11 +1801,15 @@ public class TenantService {
         features.put("leaderboardEnabled", DEFAULT_LEADERBOARD_ENABLED);
         features.put("teamsEnabled", DEFAULT_TEAMS_ENABLED);
 
+        ObjectNode host = objectMapper.createObjectNode();
+        host.set("sessionTemplates", objectMapper.createArrayNode());
+
         ObjectNode root = objectMapper.createObjectNode();
         root.put("schemaVersion", SETTINGS_SCHEMA_VERSION);
         root.put("theme", DEFAULT_THEME);
         root.set("game", game);
         root.set("features", features);
+        root.set("host", host);
         return root;
     }
 
@@ -1613,6 +1841,12 @@ public class TenantService {
         boolean leaderboardEnabled = readOptionalBoolean(featuresSource, "leaderboardEnabled", DEFAULT_LEADERBOARD_ENABLED);
         boolean teamsEnabled = readOptionalBoolean(featuresSource, "teamsEnabled", DEFAULT_TEAMS_ENABLED);
 
+        ObjectNode hostSource = readOptionalObject(root, "host");
+        if (hostSource != null) {
+            ensureNoUnknownKeys(hostSource, ALLOWED_HOST_SETTINGS_KEYS, "settings.host");
+        }
+        ArrayNode normalizedSessionTemplates = normalizeSessionTemplates(hostSource == null ? null : hostSource.get("sessionTemplates"));
+
         ObjectNode normalizedGame = objectMapper.createObjectNode();
         normalizedGame.put("maxPlayers", maxPlayers);
         normalizedGame.put("roundsPerMatch", roundsPerMatch);
@@ -1621,12 +1855,132 @@ public class TenantService {
         normalizedFeatures.put("leaderboardEnabled", leaderboardEnabled);
         normalizedFeatures.put("teamsEnabled", teamsEnabled);
 
+        ObjectNode normalizedHost = objectMapper.createObjectNode();
+        normalizedHost.set("sessionTemplates", normalizedSessionTemplates);
+
         ObjectNode normalizedRoot = objectMapper.createObjectNode();
         normalizedRoot.put("schemaVersion", SETTINGS_SCHEMA_VERSION);
         normalizedRoot.put("theme", theme);
         normalizedRoot.set("game", normalizedGame);
         normalizedRoot.set("features", normalizedFeatures);
+        normalizedRoot.set("host", normalizedHost);
         return normalizedRoot;
+    }
+
+    private ArrayNode normalizeSessionTemplates(JsonNode sessionTemplatesNode) {
+        ArrayNode normalizedTemplates = objectMapper.createArrayNode();
+        if (sessionTemplatesNode == null || sessionTemplatesNode.isNull()) {
+            return normalizedTemplates;
+        }
+        if (!(sessionTemplatesNode instanceof ArrayNode templateArray)) {
+            throw new IllegalArgumentException("settings.host.sessionTemplates must be a JSON array");
+        }
+        if (templateArray.size() > MAX_SESSION_TEMPLATE_COUNT) {
+            throw new IllegalArgumentException("sessionTemplates must contain at most " + MAX_SESSION_TEMPLATE_COUNT + " templates");
+        }
+        for (JsonNode templateNode : templateArray) {
+            normalizedTemplates.add(normalizeSessionTemplateNode(templateNode));
+        }
+        return normalizedTemplates;
+    }
+
+    private ObjectNode normalizeSessionTemplateNode(JsonNode templateNode) {
+        if (!(templateNode instanceof ObjectNode templateObject)) {
+            throw new IllegalArgumentException("sessionTemplates entries must be JSON objects");
+        }
+
+        String templateId = normalizeTemplateId(readRequiredText(templateObject, "templateId"));
+        String name = normalizeRequired(readRequiredText(templateObject, "name"), "name", 80);
+        String topic = normalizeOptional(readOptionalText(templateObject, "topic"), 128);
+        String language = normalizeTemplateLanguage(readOptionalText(templateObject, "language"));
+        String theme = normalizeTemplateTheme(readOptionalText(templateObject, "theme"));
+        List<String> players = normalizeTemplatePlayers(templateObject.get("players"));
+        String updatedAt = normalizeTemplateUpdatedAt(readOptionalText(templateObject, "updatedAt"));
+
+        ObjectNode normalizedTemplate = objectMapper.createObjectNode();
+        normalizedTemplate.put("templateId", templateId);
+        normalizedTemplate.put("name", name);
+        if (topic == null) {
+            normalizedTemplate.putNull("topic");
+        } else {
+            normalizedTemplate.put("topic", topic);
+        }
+        normalizedTemplate.put("language", language);
+        normalizedTemplate.put("theme", theme);
+        ArrayNode normalizedPlayers = objectMapper.createArrayNode();
+        players.forEach(normalizedPlayers::add);
+        normalizedTemplate.set("players", normalizedPlayers);
+        normalizedTemplate.put("updatedAt", updatedAt);
+        return normalizedTemplate;
+    }
+
+    private ObjectNode createSessionTemplateNode(String templateId,
+                                                 RuntimeSessionTemplateUpsertRequest request,
+                                                 Instant updatedAt) {
+        ObjectNode template = objectMapper.createObjectNode();
+        template.put("templateId", normalizeTemplateId(templateId));
+        template.put("name", normalizeRequired(request == null ? null : request.name(), "name", 80));
+        String topic = normalizeOptional(request == null ? null : request.topic(), 128);
+        if (topic == null) {
+            template.putNull("topic");
+        } else {
+            template.put("topic", topic);
+        }
+        template.put("language", normalizeTemplateLanguage(request == null ? null : request.language()));
+        template.put("theme", normalizeTemplateTheme(request == null ? null : request.theme()));
+        ArrayNode players = objectMapper.createArrayNode();
+        normalizeTemplatePlayers(request == null ? null : request.players()).forEach(players::add);
+        template.set("players", players);
+        template.put("updatedAt", updatedAt.toString());
+        return normalizeSessionTemplateNode(template);
+    }
+
+    private List<RuntimeSessionTemplateResponse> readSessionTemplates(JsonNode settingsNode) {
+        JsonNode templateNodes = settingsNode == null
+                ? null
+                : settingsNode.path("host").path("sessionTemplates");
+        if (templateNodes == null || templateNodes.isMissingNode() || templateNodes.isNull()) {
+            return List.of();
+        }
+        if (!(templateNodes instanceof ArrayNode templateArray)) {
+            throw new IllegalStateException("stored host.sessionTemplates is invalid");
+        }
+        ArrayNode normalizedTemplates = normalizeSessionTemplates(templateArray);
+        List<RuntimeSessionTemplateResponse> templates = new java.util.ArrayList<>(normalizedTemplates.size());
+        for (JsonNode templateNode : normalizedTemplates) {
+            templates.add(toSessionTemplateResponse(templateNode));
+        }
+        return List.copyOf(templates);
+    }
+
+    private RuntimeSessionTemplateResponse toSessionTemplateResponse(JsonNode templateNode) {
+        return new RuntimeSessionTemplateResponse(
+                templateNode.path("templateId").asText(),
+                templateNode.path("name").asText(),
+                normalizeOptional(templateNode.path("topic").isNull() ? null : templateNode.path("topic").asText(), 128),
+                templateNode.path("language").asText("en"),
+                templateNode.path("theme").asText(DEFAULT_THEME),
+                normalizeTemplatePlayers(templateNode.get("players")),
+                normalizeTemplateUpdatedAt(templateNode.path("updatedAt").asText())
+        );
+    }
+
+    private ObjectNode toSessionTemplateNode(RuntimeSessionTemplateResponse template) {
+        ObjectNode node = objectMapper.createObjectNode();
+        node.put("templateId", normalizeTemplateId(template.templateId()));
+        node.put("name", normalizeRequired(template.name(), "name", 80));
+        if (template.topic() == null || template.topic().isBlank()) {
+            node.putNull("topic");
+        } else {
+            node.put("topic", normalizeOptional(template.topic(), 128));
+        }
+        node.put("language", normalizeTemplateLanguage(template.language()));
+        node.put("theme", normalizeTemplateTheme(template.theme()));
+        ArrayNode players = objectMapper.createArrayNode();
+        normalizeTemplatePlayers(template.players()).forEach(players::add);
+        node.set("players", players);
+        node.put("updatedAt", normalizeTemplateUpdatedAt(template.updatedAt()));
+        return node;
     }
 
     private static void ensureNoUnknownKeys(ObjectNode objectNode, Set<String> allowedKeys, String fieldName) {
@@ -1658,6 +2012,28 @@ public class TenantService {
             throw new IllegalArgumentException(fieldName + " must be a JSON object");
         }
         return nestedObject;
+    }
+
+    private static String readRequiredText(ObjectNode objectNode, String fieldName) {
+        JsonNode valueNode = objectNode.get(fieldName);
+        if (valueNode == null || valueNode.isNull()) {
+            throw new IllegalArgumentException(fieldName + " is required");
+        }
+        if (!valueNode.isTextual()) {
+            throw new IllegalArgumentException(fieldName + " must be a string");
+        }
+        return valueNode.asText();
+    }
+
+    private static String readOptionalText(ObjectNode objectNode, String fieldName) {
+        JsonNode valueNode = objectNode.get(fieldName);
+        if (valueNode == null || valueNode.isNull()) {
+            return null;
+        }
+        if (!valueNode.isTextual()) {
+            throw new IllegalArgumentException(fieldName + " must be a string");
+        }
+        return valueNode.asText();
     }
 
     private static int readOptionalInt(ObjectNode objectNode, String fieldName, int defaultValue, int min, int max) {

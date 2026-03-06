@@ -6,6 +6,7 @@ import {
   completeRuntimeAuth,
   createRoomSession,
   duplicateServerGameSession,
+  deleteRuntimeSessionTemplate,
   fetchRoomPreview,
   fetchTenantAuditEvents,
   fetchNextCard,
@@ -21,6 +22,7 @@ import {
   rejoinRoomSession,
   requestRuntimeAuthLink,
   setRuntimeAuthContext,
+  upsertRuntimeSessionTemplate,
   updateRuntimeTenantBranding,
   resolveCardErrorMessage,
   resolveTopicsErrorState
@@ -104,6 +106,19 @@ const STRINGS = {
   brandingSaveSubmit: 'Save branding',
   brandingSaving: 'Saving branding...',
   brandingSaved: 'Branding updated.',
+  sessionTemplatesTitle: 'Session templates',
+  sessionTemplatesHint: 'Save reusable host presets for recurring quiz events and relaunch them in one step.',
+  sessionTemplatesLockedHint: 'Session templates unlock on Pro Host. Upgrade to save reusable event presets.',
+  sessionTemplatesNameLabel: 'Template name',
+  sessionTemplatesNamePlaceholder: 'Friday trivia default',
+  sessionTemplatesSaveSubmit: 'Save current setup',
+  sessionTemplatesSaving: 'Saving template...',
+  sessionTemplatesSaved: 'Session template saved.',
+  sessionTemplatesAppliedPrefix: 'Template applied:',
+  sessionTemplatesDeleted: 'Session template deleted.',
+  sessionTemplatesEmpty: 'No saved templates yet.',
+  sessionTemplatesApplySubmit: 'Apply template',
+  sessionTemplatesDeleteSubmit: 'Delete template',
   hostedRuntimeBlocked: 'Hosted runtime is blocked until billing is restored. Upgrade or fix billing to launch sessions.',
   hostedRuntimePastDue: 'Billing is past due. Hosted launches are blocked until payment state is recovered.',
   hostedRuntimeCanceled: 'Subscription is canceled. Hosted launches are blocked until the tenant is upgraded again.',
@@ -407,6 +422,32 @@ function buildBrandingDraft(brandingResponse) {
   };
 }
 
+function buildSessionTemplateDraft() {
+  return {
+    name: ''
+  };
+}
+
+function readRuntimeSessionTemplates(settingsResponse) {
+  const templates = settingsResponse?.settings?.host?.sessionTemplates;
+  if (!Array.isArray(templates)) {
+    return [];
+  }
+  return templates
+    .map((entry) => ({
+      templateId: String(entry?.templateId || '').trim(),
+      name: String(entry?.name || '').trim(),
+      topic: String(entry?.topic || '').trim(),
+      language: String(entry?.language || '').trim().toLowerCase() || 'en',
+      theme: isSupportedTheme(entry?.theme) ? entry.theme : 'classic',
+      players: Array.isArray(entry?.players)
+        ? Array.from(new Set(entry.players.map((player) => normalizePlayerName(String(player || ''))).filter(Boolean)))
+        : [],
+      updatedAt: String(entry?.updatedAt || '').trim()
+    }))
+    .filter((entry) => entry.templateId && entry.name && entry.players.length > 0);
+}
+
 function resolvePlayerJoinRoute() {
   if (typeof window === 'undefined') {
     return null;
@@ -533,8 +574,17 @@ function StartScreen({
   brandingPending,
   brandingMessage,
   brandingError,
+  sessionTemplates,
+  sessionTemplateDraft,
+  sessionTemplatePending,
+  sessionTemplateMessage,
+  sessionTemplateError,
   onBrandingDraftChange,
   onSaveBranding,
+  onSessionTemplateDraftChange,
+  onSaveSessionTemplate,
+  onApplySessionTemplate,
+  onDeleteSessionTemplate,
   reviewedHostedSession,
   activeHostedSession,
   hostedSessionFilter,
@@ -557,6 +607,7 @@ function StartScreen({
   const planLimit = resolvePlanLimit(planCode);
   const maxHostedPlayers = Number.isInteger(capabilities?.maxHostedPlayers) ? capabilities.maxHostedPlayers : null;
   const analyticsHistoryEnabled = capabilities?.analyticsHistoryEnabled === true;
+  const sessionTemplatesEnabled = capabilities?.sessionTemplatesEnabled === true;
   const customBrandingEnabled = capabilities?.customBrandingEnabled === true;
   const selectedRole = String(runtimeSnapshot?.me?.selectedRole || '').trim().toLowerCase();
   const canManageBrandingRole = selectedRole === 'owner' || selectedRole === 'admin';
@@ -602,6 +653,25 @@ function StartScreen({
     }
     setPlayerDraft('');
     onStart(normalizedPlayers.join(', '));
+  }
+
+  function handleSaveTemplateClick() {
+    if (typeof onSaveSessionTemplate !== 'function') {
+      return;
+    }
+    const merged = draftPlayers.length > 0 ? addPlayers(playerDraft) : players;
+    const normalizedPlayers = Array.isArray(merged) ? merged : players;
+    if (normalizedPlayers.length === 0) {
+      return;
+    }
+    setPlayerDraft('');
+    onSaveSessionTemplate({
+      name: sessionTemplateDraft.name,
+      topic: config.topic,
+      language: config.lang,
+      theme: config.theme,
+      players: normalizedPlayers
+    });
   }
 
   return (
@@ -716,6 +786,78 @@ function StartScreen({
               )}
               {brandingMessage ? <p className="field-hint" data-testid="branding-message">{brandingMessage}</p> : null}
               {brandingError ? <p className="error" data-testid="branding-error">{brandingError}</p> : null}
+            </section>
+            <section className="host-workspace-card" data-testid="session-templates-card">
+              <h3>{STRINGS.sessionTemplatesTitle}</h3>
+              <p className="field-hint">
+                {sessionTemplatesEnabled ? STRINGS.sessionTemplatesHint : STRINGS.sessionTemplatesLockedHint}
+              </p>
+              {!sessionTemplatesEnabled ? (
+                <div className="branding-locked-state" data-testid="session-templates-locked">
+                  <p className="field-hint">{STRINGS.sessionTemplatesLockedHint}</p>
+                  {canUpgrade ? (
+                    <button type="button" className="secondary-action" onClick={onUpgrade} disabled={upgradePending}>
+                      {upgradePending ? STRINGS.upgradeSubmitting : STRINGS.upgradeSubmit}
+                    </button>
+                  ) : null}
+                </div>
+              ) : (
+                <>
+                  <div className="branding-form-grid">
+                    <label htmlFor="session-template-name">{STRINGS.sessionTemplatesNameLabel}</label>
+                    <input
+                      id="session-template-name"
+                      type="text"
+                      placeholder={STRINGS.sessionTemplatesNamePlaceholder}
+                      value={sessionTemplateDraft.name}
+                      onChange={(event) => onSessionTemplateDraftChange(event.target.value)}
+                      disabled={sessionTemplatePending}
+                    />
+                  </div>
+                  <div className="host-session-actions">
+                    <button
+                      type="button"
+                      onClick={handleSaveTemplateClick}
+                      disabled={sessionTemplatePending || !sessionTemplateDraft.name.trim() || (players.length === 0 && draftPlayers.length === 0)}
+                    >
+                      {sessionTemplatePending ? STRINGS.sessionTemplatesSaving : STRINGS.sessionTemplatesSaveSubmit}
+                    </button>
+                  </div>
+                  {sessionTemplates.length > 0 ? (
+                    <ul className="host-activity-list session-template-list">
+                      {sessionTemplates.map((template) => (
+                        <li key={template.templateId}>
+                          <strong>{template.name}</strong>
+                          <span>
+                            {(template.topic || STRINGS.recentHostedSessionTopicFallback)}
+                            {template.language ? ` | ${template.language.toUpperCase()}` : ''}
+                            {template.theme ? ` | ${template.theme}` : ''}
+                            {template.players.length > 0 ? ` | ${template.players.length} ${STRINGS.recentHostedSessionPlayers}` : ''}
+                          </span>
+                          <span className="session-template-players">{template.players.join(', ')}</span>
+                          <div className="host-session-actions">
+                            <button type="button" onClick={() => onApplySessionTemplate(template)}>
+                              {STRINGS.sessionTemplatesApplySubmit}
+                            </button>
+                            <button
+                              type="button"
+                              className="secondary-action"
+                              onClick={() => onDeleteSessionTemplate(template)}
+                              disabled={sessionTemplatePending}
+                            >
+                              {STRINGS.sessionTemplatesDeleteSubmit}
+                            </button>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="field-hint">{STRINGS.sessionTemplatesEmpty}</p>
+                  )}
+                </>
+              )}
+              {sessionTemplateMessage ? <p className="field-hint" data-testid="session-template-message">{sessionTemplateMessage}</p> : null}
+              {sessionTemplateError ? <p className="error" data-testid="session-template-error">{sessionTemplateError}</p> : null}
             </section>
             <section className="host-workspace-card">
               <h3>Recent activity</h3>
@@ -1570,6 +1712,11 @@ function GameApp() {
   const [brandingPending, setBrandingPending] = useState(false);
   const [brandingMessage, setBrandingMessage] = useState('');
   const [brandingError, setBrandingError] = useState('');
+  const [sessionTemplates, setSessionTemplates] = useState([]);
+  const [sessionTemplateDraft, setSessionTemplateDraft] = useState(buildSessionTemplateDraft());
+  const [sessionTemplatePending, setSessionTemplatePending] = useState(false);
+  const [sessionTemplateMessage, setSessionTemplateMessage] = useState('');
+  const [sessionTemplateError, setSessionTemplateError] = useState('');
   const [workspaceInsights, setWorkspaceInsights] = useState({
     auditEvents: [],
     usageSummary: []
@@ -1740,6 +1887,7 @@ function GameApp() {
     }
     setRuntimeSnapshot(snapshot);
     setBrandingDraft(buildBrandingDraft(snapshot?.branding));
+    setSessionTemplates(readRuntimeSessionTemplates(snapshot?.settings));
     const runtimeTheme = snapshot?.settings?.settings?.theme;
     if (isSupportedTheme(runtimeTheme)) {
       setConfig((prev) => ({ ...prev, theme: runtimeTheme }));
@@ -1763,6 +1911,11 @@ function GameApp() {
     setBrandingMessage('');
     setBrandingError('');
     setBrandingDraft(buildBrandingDraft(null));
+    setSessionTemplates([]);
+    setSessionTemplateDraft(buildSessionTemplateDraft());
+    setSessionTemplatePending(false);
+    setSessionTemplateMessage('');
+    setSessionTemplateError('');
     setWorkspaceInsights({ auditEvents: [], usageSummary: [] });
     setWorkspacePending(false);
     setReviewedHostedSession(null);
@@ -2064,6 +2217,73 @@ function GameApp() {
       setBrandingError(detail);
     } finally {
       setBrandingPending(false);
+    }
+  }
+
+  function handleSessionTemplateDraftChange(value) {
+    setSessionTemplateDraft({ name: value });
+    setSessionTemplateMessage('');
+    setSessionTemplateError('');
+  }
+
+  async function handleSaveSessionTemplate(templateInput) {
+    if (sessionTemplatePending || !runtimeSnapshot?.me?.selectedTenantId) {
+      return;
+    }
+    setSessionTemplatePending(true);
+    setSessionTemplateMessage('');
+    setSessionTemplateError('');
+    try {
+      const response = await upsertRuntimeSessionTemplate(
+        globalThis.crypto?.randomUUID?.() || `template-${Date.now()}`,
+        templateInput
+      );
+      setSessionTemplates(Array.isArray(response?.templates) ? response.templates : []);
+      setSessionTemplateDraft(buildSessionTemplateDraft());
+      setSessionTemplateMessage(STRINGS.sessionTemplatesSaved);
+    } catch (error) {
+      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+        ? error.detail
+        : error?.message || 'Could not save session template.';
+      setSessionTemplateError(detail);
+    } finally {
+      setSessionTemplatePending(false);
+    }
+  }
+
+  function handleApplySessionTemplate(template) {
+    setConfig((prev) => ({
+      ...prev,
+      topic: template?.topic || '',
+      lang: DEFAULT_LANGS.includes(String(template?.language || '').trim().toLowerCase())
+        ? String(template.language).trim().toLowerCase()
+        : prev.lang,
+      theme: isSupportedTheme(template?.theme) ? template.theme : prev.theme,
+      playersText: Array.isArray(template?.players) ? template.players.join(', ') : prev.playersText
+    }));
+    setSessionTemplateMessage(`${STRINGS.sessionTemplatesAppliedPrefix} ${template?.name || ''}`.trim());
+    setSessionTemplateError('');
+  }
+
+  async function handleDeleteSessionTemplate(template) {
+    const templateId = String(template?.templateId || '').trim();
+    if (sessionTemplatePending || !templateId || !runtimeSnapshot?.me?.selectedTenantId) {
+      return;
+    }
+    setSessionTemplatePending(true);
+    setSessionTemplateMessage('');
+    setSessionTemplateError('');
+    try {
+      const response = await deleteRuntimeSessionTemplate(templateId);
+      setSessionTemplates(Array.isArray(response?.templates) ? response.templates : []);
+      setSessionTemplateMessage(STRINGS.sessionTemplatesDeleted);
+    } catch (error) {
+      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+        ? error.detail
+        : error?.message || 'Could not delete session template.';
+      setSessionTemplateError(detail);
+    } finally {
+      setSessionTemplatePending(false);
     }
   }
 
@@ -2614,8 +2834,17 @@ function GameApp() {
                 brandingPending={brandingPending}
                 brandingMessage={brandingMessage}
                 brandingError={brandingError}
+                sessionTemplates={sessionTemplates}
+                sessionTemplateDraft={sessionTemplateDraft}
+                sessionTemplatePending={sessionTemplatePending}
+                sessionTemplateMessage={sessionTemplateMessage}
+                sessionTemplateError={sessionTemplateError}
                 onBrandingDraftChange={handleBrandingDraftChange}
                 onSaveBranding={handleSaveBranding}
+                onSessionTemplateDraftChange={handleSessionTemplateDraftChange}
+                onSaveSessionTemplate={handleSaveSessionTemplate}
+                onApplySessionTemplate={handleApplySessionTemplate}
+                onDeleteSessionTemplate={handleDeleteSessionTemplate}
                 reviewedHostedSession={reviewedHostedSession}
                 activeHostedSession={activeHostedSession}
                 hostedSessionFilter={hostedSessionFilter}
