@@ -14,7 +14,8 @@ import org.springframework.context.annotation.Configuration;
         BankEnforcerProperties.class,
         InternalAccessProperties.class,
         RateLimitProperties.class,
-        AuthContextProperties.class
+        AuthContextProperties.class,
+        BillingProperties.class
 })
 public class ImportConfiguration {
 }

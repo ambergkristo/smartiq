@@ -1,13 +1,25 @@
 import {
+  clearRuntimeAuthContext,
   buildRoomRejoinPayload,
   buildServerActionPayload,
   buildServerGamePayload,
+  createRoomSession,
+  createServerGameSession,
+  fetchTenantRuntimeSnapshot,
+  getRuntimeAuthContext,
+  hasRuntimeAuthContext,
   resolveCardErrorMessage,
   resolveGameSessionErrorMessage,
-  resolveTopicsErrorState
+  resolveTopicsErrorState,
+  setRuntimeAuthContext
 } from './api';
 
 describe('api error mapping', () => {
+  beforeEach(() => {
+    localStorage.clear();
+    global.fetch = vi.fn();
+  });
+
   test('maps forbidden topics status without backend-unreachable message', () => {
     const state = resolveTopicsErrorState({ status: 403, code: 'HTTP_ERROR' });
     expect(state.kind).toBe('forbidden');
@@ -160,5 +172,146 @@ describe('api error mapping', () => {
   test('maps game session machine-readable game-not-found code', () => {
     expect(resolveGameSessionErrorMessage({ code: 'GAME_NOT_FOUND' }))
       .toBe('Game session was not found. Start a new game.');
+  });
+
+  test('maps tenant access block for hosted runtime', () => {
+    expect(resolveGameSessionErrorMessage({
+      code: 'FORBIDDEN_TENANT_ACCESS',
+      detail: 'subscription status does not allow hosted runtime'
+    })).toBe('Hosted runtime unavailable. subscription status does not allow hosted runtime');
+  });
+
+  test('stores and reads runtime auth context from localStorage', () => {
+    const stored = setRuntimeAuthContext({
+      userEmail: ' owner@acme.test ',
+      tenantId: 'tenant-1',
+      bearerToken: 'token-1'
+    });
+
+    expect(stored).toEqual({
+      userEmail: 'owner@acme.test',
+      tenantId: 'tenant-1',
+      bearerToken: 'Bearer token-1'
+    });
+    expect(getRuntimeAuthContext()).toEqual(stored);
+    expect(hasRuntimeAuthContext()).toBe(true);
+  });
+
+  test('clears runtime auth context', () => {
+    setRuntimeAuthContext({
+      userEmail: 'owner@acme.test',
+      tenantId: 'tenant-1',
+      bearerToken: 'token-1'
+    });
+    clearRuntimeAuthContext();
+    expect(getRuntimeAuthContext()).toBeNull();
+    expect(hasRuntimeAuthContext()).toBe(false);
+  });
+
+  test('sends runtime auth headers with server game session create', async () => {
+    global.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
+      snapshot: { gameId: 'game-1' },
+      actionTokens: {}
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    }));
+    setRuntimeAuthContext({
+      userEmail: 'owner@acme.test',
+      tenantId: 'tenant-1',
+      bearerToken: 'token-1'
+    });
+
+    await createServerGameSession({ players: ['Alice'], language: 'en', winCondition: 30 });
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      expect.stringMatching(/\/api\/game$/),
+      expect.objectContaining({
+        headers: expect.objectContaining({
+          Authorization: 'Bearer token-1',
+          'X-SmartIQ-User-Email': 'owner@acme.test',
+          'X-SmartIQ-Tenant-Id': 'tenant-1'
+        })
+      })
+    );
+  });
+
+  test('sends runtime auth headers with room creation', async () => {
+    global.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
+      roomCode: 'ABC123',
+      playerId: 'p1',
+      authToken: 'rt_123'
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    }));
+    setRuntimeAuthContext({
+      userEmail: 'owner@acme.test',
+      tenantId: 'tenant-1',
+      bearerToken: 'token-1'
+    });
+
+    await createRoomSession({ displayName: 'Alice' });
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      expect.stringMatching(/\/api\/rooms$/),
+      expect.objectContaining({
+        headers: expect.objectContaining({
+          Authorization: 'Bearer token-1',
+          'X-SmartIQ-User-Email': 'owner@acme.test',
+          'X-SmartIQ-Tenant-Id': 'tenant-1'
+        })
+      })
+    );
+  });
+
+  test('loads tenant runtime snapshot with capabilities', async () => {
+    global.fetch
+      .mockResolvedValueOnce(new Response(JSON.stringify({
+        selectedTenantId: 'tenant-1'
+      }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      }))
+      .mockResolvedValueOnce(new Response(JSON.stringify({
+        settings: { theme: 'classic' }
+      }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      }))
+      .mockResolvedValueOnce(new Response(JSON.stringify({
+        branding: { appName: 'Acme Quiz' }
+      }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      }))
+      .mockResolvedValueOnce(new Response(JSON.stringify({
+        planCode: 'pilot-monthly',
+        status: 'active'
+      }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      }))
+      .mockResolvedValueOnce(new Response(JSON.stringify({
+        planTier: 'pro_host',
+        maxHostedPlayers: 10,
+        analyticsHistoryEnabled: true
+      }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      }));
+    setRuntimeAuthContext({
+      userEmail: 'owner@acme.test',
+      tenantId: 'tenant-1',
+      bearerToken: 'token-1'
+    });
+
+    const snapshot = await fetchTenantRuntimeSnapshot();
+
+    expect(snapshot?.me?.selectedTenantId).toBe('tenant-1');
+    expect(snapshot?.subscription?.planCode).toBe('pilot-monthly');
+    expect(snapshot?.capabilities?.planTier).toBe('pro_host');
+    expect(snapshot?.capabilities?.maxHostedPlayers).toBe(10);
+    expect(snapshot?.capabilities?.analyticsHistoryEnabled).toBe(true);
   });
 });

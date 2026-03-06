@@ -61,6 +61,8 @@ class RoomServiceTest {
         RoomSnapshot snapshot = roomService.getRoomSnapshot(created.roomCode());
 
         assertThat(snapshot.roomCode()).isEqualTo(created.roomCode());
+        assertThat(snapshot.tenantId()).isNull();
+        assertThat(snapshot.branding()).isNull();
         assertThat(snapshot.players()).hasSize(2);
         assertThat(snapshot.players().get(0).playerId()).isEqualTo("p1");
         assertThat(snapshot.players().get(0).displayName()).isEqualTo("Alice");

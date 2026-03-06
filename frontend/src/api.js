@@ -1,6 +1,7 @@
 export const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').trim();
 const SAMPLE_MODE_FLAG = String(import.meta.env.VITE_SAMPLE_MODE || import.meta.env.VITE_USE_SAMPLE || '').toLowerCase() === 'true';
 export const USE_SAMPLE_MODE = Boolean(import.meta.env.DEV) && SAMPLE_MODE_FLAG;
+const RUNTIME_AUTH_STORAGE_KEY = 'smartiq.runtimeAuth';
 
 class ApiError extends Error {
   constructor(message, status, code, detail = null) {
@@ -147,22 +148,126 @@ function normalizeBearerHeader(rawToken) {
   return `Bearer ${token}`;
 }
 
+function readStoredRuntimeAuthContext() {
+  if (typeof localStorage === 'undefined') {
+    return null;
+  }
+  try {
+    const raw = localStorage.getItem(RUNTIME_AUTH_STORAGE_KEY);
+    if (!raw) {
+      return null;
+    }
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object') {
+      return null;
+    }
+    const userEmail = String(parsed.userEmail || '').trim();
+    const tenantId = String(parsed.tenantId || '').trim();
+    const bearerToken = normalizeBearerHeader(parsed.bearerToken);
+    if (!userEmail || !tenantId) {
+      return null;
+    }
+    return {
+      userEmail,
+      tenantId,
+      bearerToken
+    };
+  } catch {
+    return null;
+  }
+}
+
+function normalizeRuntimeAuthContext(input) {
+  if (!input || typeof input !== 'object') {
+    return null;
+  }
+  const userEmail = String(input.userEmail || '').trim();
+  const tenantId = String(input.tenantId || '').trim();
+  const bearerToken = normalizeBearerHeader(input.bearerToken);
+  if (!userEmail || !tenantId) {
+    return null;
+  }
+  return {
+    userEmail,
+    tenantId,
+    bearerToken
+  };
+}
+
+export function getRuntimeAuthContext() {
+  return readStoredRuntimeAuthContext();
+}
+
+export function setRuntimeAuthContext(input) {
+  if (typeof localStorage === 'undefined') {
+    return null;
+  }
+  const normalized = normalizeRuntimeAuthContext(input);
+  if (!normalized) {
+    localStorage.removeItem(RUNTIME_AUTH_STORAGE_KEY);
+    return null;
+  }
+  localStorage.setItem(RUNTIME_AUTH_STORAGE_KEY, JSON.stringify(normalized));
+  return normalized;
+}
+
+export function clearRuntimeAuthContext() {
+  if (typeof localStorage === 'undefined') {
+    return;
+  }
+  localStorage.removeItem(RUNTIME_AUTH_STORAGE_KEY);
+}
+
+export async function requestRuntimeAuthLink({ email, tenantId } = {}) {
+  requireApiBase();
+  const normalizedEmail = normalizeRequiredField(email, 'email').toLowerCase();
+  const payload = { email: normalizedEmail };
+  const normalizedTenantId = String(tenantId || '').trim();
+  if (normalizedTenantId) {
+    payload.tenantId = normalizedTenantId;
+  }
+  return fetchJson(`${API_BASE}/api/auth/request-link`, {
+    method: 'POST',
+    body: payload
+  });
+}
+
+export async function completeRuntimeAuth({ challengeToken } = {}) {
+  requireApiBase();
+  const normalizedChallengeToken = normalizeRequiredField(challengeToken, 'challengeToken');
+  return fetchJson(`${API_BASE}/api/auth/complete`, {
+    method: 'POST',
+    body: { challengeToken: normalizedChallengeToken }
+  });
+}
+
+export async function logoutRuntimeAuth() {
+  requireApiBase();
+  return fetchJson(`${API_BASE}/api/auth/logout`, {
+    method: 'POST'
+  });
+}
+
 function resolveRuntimeAuthHeaders() {
-  const bearer = normalizeBearerHeader(
+  const envBearer = normalizeBearerHeader(
     import.meta.env.VITE_RUNTIME_AUTH_BEARER_TOKEN
     || import.meta.env.VITE_RUNTIME_AUTH_TOKEN
     || import.meta.env.VITE_AUTH_BEARER_TOKEN
   );
-  const userEmail = String(
+  const envUserEmail = String(
     import.meta.env.VITE_RUNTIME_USER_EMAIL
     || import.meta.env.VITE_AUTH_USER_EMAIL
     || ''
   ).trim();
-  const tenantId = String(
+  const envTenantId = String(
     import.meta.env.VITE_RUNTIME_TENANT_ID
     || import.meta.env.VITE_AUTH_TENANT_ID
     || ''
   ).trim();
+  const storedContext = readStoredRuntimeAuthContext();
+  const bearer = envBearer || storedContext?.bearerToken || null;
+  const userEmail = envUserEmail || storedContext?.userEmail || '';
+  const tenantId = envTenantId || storedContext?.tenantId || '';
 
   const headers = {};
   if (bearer) {
@@ -187,18 +292,113 @@ export async function fetchTenantRuntimeSnapshot() {
   }
 
   const me = await fetchJson(`${API_BASE}/api/me`, { headers });
-  const [settings, branding, subscription] = await Promise.all([
+  const [settings, branding, subscription, capabilities] = await Promise.all([
     fetchJson(`${API_BASE}/api/me/tenant-settings`, { headers }),
     fetchJson(`${API_BASE}/api/me/tenant-branding`, { headers }),
-    fetchJson(`${API_BASE}/api/me/tenant-subscription`, { headers })
+    fetchJson(`${API_BASE}/api/me/tenant-subscription`, { headers }),
+    fetchJson(`${API_BASE}/api/me/tenant-capabilities`, { headers })
   ]);
 
   return {
     me,
     settings,
     branding,
-    subscription
+    subscription,
+    capabilities
   };
+}
+
+export async function fetchTenantCapabilities() {
+  requireApiBase();
+  const headers = resolveRuntimeAuthHeaders();
+  if (Object.keys(headers).length === 0) {
+    throw new ApiError('Runtime auth context is required for tenant capabilities.', 0, 'UNAUTHENTICATED');
+  }
+  return fetchJson(`${API_BASE}/api/me/tenant-capabilities`, { headers });
+}
+
+export async function fetchTenantAuditEvents({ limit } = {}) {
+  requireApiBase();
+  const headers = resolveRuntimeAuthHeaders();
+  if (Object.keys(headers).length === 0) {
+    throw new ApiError('Runtime auth context is required for tenant audit events.', 0, 'UNAUTHENTICATED');
+  }
+
+  const url = new URL(`${API_BASE}/api/me/tenant-audit-events`);
+  if (Number.isInteger(limit) && limit > 0) {
+    url.searchParams.set('limit', String(limit));
+  }
+  return fetchJson(url.toString(), { headers });
+}
+
+export async function fetchTenantUsageSummary({ eventType, from, to } = {}) {
+  requireApiBase();
+  const headers = resolveRuntimeAuthHeaders();
+  if (Object.keys(headers).length === 0) {
+    throw new ApiError('Runtime auth context is required for tenant usage summary.', 0, 'UNAUTHENTICATED');
+  }
+
+  const url = new URL(`${API_BASE}/api/me/tenant-usage-summary`);
+  if (String(eventType || '').trim()) {
+    url.searchParams.set('eventType', String(eventType).trim());
+  }
+  if (String(from || '').trim()) {
+    url.searchParams.set('from', String(from).trim());
+  }
+  if (String(to || '').trim()) {
+    url.searchParams.set('to', String(to).trim());
+  }
+  return fetchJson(url.toString(), { headers });
+}
+
+function normalizeRequiredField(value, fieldName) {
+  const normalized = String(value || '').trim();
+  if (!normalized) {
+    throw new ApiError(`${fieldName} is required`, 0, 'VALIDATION_ERROR');
+  }
+  return normalized;
+}
+
+export async function bootstrapOnboardingTenant({ workspaceName, ownerEmail, ownerDisplayName } = {}) {
+  requireApiBase();
+  const normalizedWorkspaceName = normalizeRequiredField(workspaceName, 'workspaceName');
+  const normalizedOwnerEmail = normalizeRequiredField(ownerEmail, 'ownerEmail').toLowerCase();
+  if (!normalizedOwnerEmail.includes('@') || normalizedOwnerEmail.startsWith('@') || normalizedOwnerEmail.endsWith('@')) {
+    throw new ApiError('ownerEmail must be a valid address', 0, 'VALIDATION_ERROR');
+  }
+  const normalizedOwnerDisplayName = String(ownerDisplayName || '').trim();
+
+  const payload = {
+    workspaceName: normalizedWorkspaceName,
+    ownerEmail: normalizedOwnerEmail
+  };
+  if (normalizedOwnerDisplayName) {
+    payload.ownerDisplayName = normalizedOwnerDisplayName;
+  }
+
+  return fetchJson(`${API_BASE}/api/onboarding/bootstrap`, {
+    method: 'POST',
+    body: payload
+  });
+}
+
+export async function initiateCheckoutSession({ planCode, billingCycle } = {}) {
+  requireApiBase();
+  const headers = resolveRuntimeAuthHeaders();
+  if (Object.keys(headers).length === 0) {
+    throw new ApiError('Runtime auth context is required for checkout.', 0, 'UNAUTHENTICATED');
+  }
+  const normalizedPlanCode = normalizeRequiredField(planCode, 'planCode').toLowerCase();
+  const normalizedBillingCycle = normalizeRequiredField(billingCycle, 'billingCycle').toLowerCase();
+
+  return fetchJson(`${API_BASE}/api/billing/checkout`, {
+    method: 'POST',
+    headers,
+    body: {
+      planCode: normalizedPlanCode,
+      billingCycle: normalizedBillingCycle
+    }
+  });
 }
 
 function normalizeLanguage(lang) {
@@ -424,7 +624,8 @@ export async function createServerGameSession(input = {}) {
     throw new ApiError('Server game session API is unavailable in sample mode', 0, 'SAMPLE_MODE_UNSUPPORTED');
   }
   const payload = buildServerGamePayload(input);
-  return fetchJson(`${API_BASE}/api/game`, { method: 'POST', body: payload });
+  const headers = resolveRuntimeAuthHeaders();
+  return fetchJson(`${API_BASE}/api/game`, { method: 'POST', headers, body: payload });
 }
 
 export async function fetchServerGameSession(gameId) {
@@ -433,7 +634,35 @@ export async function fetchServerGameSession(gameId) {
     throw new ApiError('Server game session API is unavailable in sample mode', 0, 'SAMPLE_MODE_UNSUPPORTED');
   }
   const normalizedGameId = normalizeRequiredGameId(gameId);
-  return fetchJson(`${API_BASE}/api/game/${encodeURIComponent(normalizedGameId)}`);
+  return fetchJson(`${API_BASE}/api/game/${encodeURIComponent(normalizedGameId)}`, {
+    headers: resolveRuntimeAuthHeaders()
+  });
+}
+
+export async function duplicateServerGameSession(gameId) {
+  requireApiBase();
+  if (USE_SAMPLE_MODE) {
+    throw new ApiError('Server game session API is unavailable in sample mode', 0, 'SAMPLE_MODE_UNSUPPORTED');
+  }
+  const normalizedGameId = normalizeRequiredGameId(gameId);
+  const headers = resolveRuntimeAuthHeaders();
+  return fetchJson(`${API_BASE}/api/game/${encodeURIComponent(normalizedGameId)}/duplicate`, {
+    method: 'POST',
+    headers
+  });
+}
+
+export async function resumeServerGameSession(gameId) {
+  requireApiBase();
+  if (USE_SAMPLE_MODE) {
+    throw new ApiError('Server game session API is unavailable in sample mode', 0, 'SAMPLE_MODE_UNSUPPORTED');
+  }
+  const normalizedGameId = normalizeRequiredGameId(gameId);
+  const headers = resolveRuntimeAuthHeaders();
+  return fetchJson(`${API_BASE}/api/game/${encodeURIComponent(normalizedGameId)}/resume`, {
+    method: 'POST',
+    headers
+  });
 }
 
 export async function sendServerGameAction(gameId, action) {
@@ -443,8 +672,10 @@ export async function sendServerGameAction(gameId, action) {
   }
   const normalizedGameId = normalizeRequiredGameId(gameId);
   const payload = buildServerActionPayload(action);
+  const headers = resolveRuntimeAuthHeaders();
   return fetchJson(`${API_BASE}/api/game/${encodeURIComponent(normalizedGameId)}/action`, {
     method: 'POST',
+    headers,
     body: payload
   });
 }
@@ -457,10 +688,22 @@ export async function createRoomSession({ displayName } = {}) {
 
   const normalizedDisplayName = String(displayName || '').trim();
   const payload = normalizedDisplayName ? { displayName: normalizedDisplayName } : {};
+  const headers = resolveRuntimeAuthHeaders();
   return fetchJson(`${API_BASE}/api/rooms`, {
     method: 'POST',
+    headers,
     body: payload
   });
+}
+
+export async function fetchRoomPreview(roomCode) {
+  requireApiBase();
+  if (USE_SAMPLE_MODE) {
+    throw new ApiError('Room API is unavailable in sample mode', 0, 'SAMPLE_MODE_UNSUPPORTED');
+  }
+
+  const normalizedRoomCode = normalizeRequiredRoomCode(roomCode);
+  return fetchJson(`${API_BASE}/api/rooms/${encodeURIComponent(normalizedRoomCode)}`);
 }
 
 export async function joinRoomSession(roomCode, { displayName } = {}) {
@@ -555,6 +798,12 @@ export function resolveGameSessionErrorMessage(error) {
     return typeof error?.detail === 'string' && error.detail.trim().length > 0
       ? `Forbidden game action. ${error.detail}`
       : 'Forbidden game action.';
+  }
+
+  if (error?.code === 'FORBIDDEN_TENANT_ACCESS') {
+    return typeof error?.detail === 'string' && error.detail.trim().length > 0
+      ? `Hosted runtime unavailable. ${error.detail}`
+      : 'Hosted runtime is unavailable for this tenant.';
   }
 
   if (error?.code === 'DUPLICATE_ACTION') {

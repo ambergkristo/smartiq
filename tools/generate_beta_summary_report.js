@@ -33,6 +33,31 @@ function run(command, args) {
   });
 }
 
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function shouldRetryHttpStatus(statusCode) {
+  return statusCode >= 500 || statusCode === 408 || statusCode === 425 || statusCode === 429;
+}
+
+async function fetchWithTimeout(url, timeoutMs) {
+  let timeoutId = null;
+  const timeoutPromise = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => reject(new Error(`prometheus_timeout_${timeoutMs}ms`)), timeoutMs);
+  });
+  try {
+    return await Promise.race([
+      fetch(url),
+      timeoutPromise
+    ]);
+  } finally {
+    if (timeoutId != null) {
+      clearTimeout(timeoutId);
+    }
+  }
+}
+
 function parseNumberOption({
   args,
   prefix,
@@ -125,12 +150,52 @@ function num(value, digits = 2) {
   return value.toFixed(digits);
 }
 
-async function fetchPrometheus(baseUrl) {
-  const response = await fetch(`${baseUrl.replace(/\/+$/, '')}/actuator/prometheus`);
-  if (!response.ok) {
-    throw new Error(`prometheus_http_${response.status}`);
+async function fetchPrometheus(baseUrl, options = {}) {
+  const {
+    attempts = 5,
+    delayMs = 1500,
+    timeoutMs = 10000
+  } = options;
+
+  const url = `${baseUrl.replace(/\/+$/, '')}/actuator/prometheus`;
+  let lastError = new Error('prometheus_unavailable');
+
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      const response = await fetchWithTimeout(url, timeoutMs);
+      if (response.ok) {
+        return response.text();
+      }
+
+      const bodyText = (await response.text()).trim();
+      const bodyHint = bodyText ? `:${bodyText.slice(0, 120)}` : '';
+      lastError = new Error(`prometheus_http_${response.status}${bodyHint}`);
+
+      const nonRetriableStatus = !shouldRetryHttpStatus(response.status);
+      if (nonRetriableStatus) {
+        lastError.noRetry = true;
+        throw lastError;
+      }
+      if (attempt === attempts) {
+        throw lastError;
+      }
+    } catch (error) {
+      if (error?.noRetry) {
+        throw error;
+      }
+      const message = error?.message || String(error);
+      lastError = new Error(message);
+      if (attempt === attempts) {
+        throw lastError;
+      }
+    }
+
+    if (delayMs > 0) {
+      await delay(delayMs);
+    }
   }
-  return response.text();
+
+  throw lastError;
 }
 
 function computeKpis(metrics) {
@@ -372,6 +437,7 @@ async function main() {
   const backendArg = parseArg(args, '--backend-url=');
   const outArg = parseArg(args, '--out=');
   const metricsFileArg = parseArg(args, '--prometheus-file=');
+  const fallbackMetricsFile = path.resolve(process.cwd(), 'docs/reports/fixtures/prometheus-beta-sample.txt');
   const failOnNoGo = hasFlag(args, '--fail-on-no-go')
     || String(process.env.BETA_FAIL_ON_NO_GO || '').toLowerCase() === 'true';
 
@@ -432,6 +498,33 @@ async function main() {
     })
   };
 
+  const prometheusFetchOptions = {
+    attempts: Math.floor(parseNumberOption({
+      args,
+      prefix: '--prometheus-retries=',
+      envKey: 'BETA_PROMETHEUS_RETRIES',
+      defaultValue: 5,
+      min: 1,
+      max: 60
+    })),
+    delayMs: Math.floor(parseNumberOption({
+      args,
+      prefix: '--prometheus-retry-delay-ms=',
+      envKey: 'BETA_PROMETHEUS_RETRY_DELAY_MS',
+      defaultValue: 1500,
+      min: 0,
+      max: 60000
+    })),
+    timeoutMs: Math.floor(parseNumberOption({
+      args,
+      prefix: '--prometheus-timeout-ms=',
+      envKey: 'BETA_PROMETHEUS_TIMEOUT_MS',
+      defaultValue: 10000,
+      min: 1000,
+      max: 180000
+    }))
+  };
+
   const backendUrl = backendArg || (process.env.BACKEND_URL || '').trim();
   const outputPath = path.resolve(
     process.cwd(),
@@ -440,16 +533,19 @@ async function main() {
 
   let metricsText = '';
   let sourceText = '';
-  if (metricsFileArg) {
-    const metricsPath = path.resolve(process.cwd(), metricsFileArg);
+  const resolvedMetricsFile = metricsFileArg
+    ? path.resolve(process.cwd(), metricsFileArg)
+    : (!backendUrl && fs.existsSync(fallbackMetricsFile) ? fallbackMetricsFile : '');
+
+  if (resolvedMetricsFile) {
+    const metricsPath = resolvedMetricsFile;
     metricsText = fs.readFileSync(metricsPath, 'utf8');
     sourceText = `prometheus file (${metricsPath})`;
   } else {
     if (!backendUrl) {
-      console.error('BACKEND_URL is required (or pass --backend-url=...)');
-      process.exit(1);
+      throw new Error('BACKEND_URL is required (or pass --backend-url=..., or provide docs/reports/fixtures/prometheus-beta-sample.txt)');
     }
-    metricsText = await fetchPrometheus(backendUrl);
+    metricsText = await fetchPrometheus(backendUrl, prometheusFetchOptions);
     sourceText = `${backendUrl.replace(/\/+$/, '')}/actuator/prometheus`;
   }
 
@@ -476,11 +572,11 @@ async function main() {
   console.log(`Recommendation: ${decision.recommendation} (failed checks: ${decision.failedCount})`);
 
   if (failOnNoGo && decision.recommendation === 'NO-GO') {
-    process.exit(2);
+    process.exitCode = 2;
   }
 }
 
 main().catch((error) => {
   console.error(error.message || error);
-  process.exit(1);
+  process.exitCode = 1;
 });

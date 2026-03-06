@@ -3,8 +3,9 @@ const baseUrl = (process.env.BACKEND_URL || '').trim();
 const requestedLanguage = (process.env.SMOKE_LANGUAGE || 'en').trim().toLowerCase();
 const requestedTopic = (process.env.SMOKE_TOPIC || '').trim();
 const requestedGameId = (process.env.SMOKE_GAME_ID || '').trim();
-const RETRY_ATTEMPTS = 5;
-const RETRY_DELAY_MS = 1500;
+const RETRY_ATTEMPTS = parseIntEnv('SMOKE_RETRY_ATTEMPTS', 5, 1, 120);
+const RETRY_DELAY_MS = parseIntEnv('SMOKE_RETRY_DELAY_MS', 1500, 0, 60000);
+const REQUEST_TIMEOUT_MS = parseIntEnv('SMOKE_REQUEST_TIMEOUT_MS', 8000, 1000, 120000);
 
 function assert(condition, message) {
   if (!condition) {
@@ -12,15 +13,46 @@ function assert(condition, message) {
   }
 }
 
+function parseIntEnv(name, fallback, min, max) {
+  const raw = (process.env[name] || '').trim();
+  if (!raw) {
+    return fallback;
+  }
+  const parsed = Number.parseInt(raw, 10);
+  if (!Number.isFinite(parsed) || parsed < min || parsed > max) {
+    return fallback;
+  }
+  return parsed;
+}
+
 async function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function getJson(url, timeoutMs = 8000) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+function shouldRetryStatus(statusCode) {
+  return statusCode >= 500 || statusCode === 408 || statusCode === 425 || statusCode === 429;
+}
+
+async function fetchWithTimeout(url, timeoutMs) {
+  let timeoutId = null;
+  const timeoutPromise = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => reject(new Error(`Timeout while requesting ${url}`)), timeoutMs);
+  });
   try {
-    const res = await fetch(url, { signal: controller.signal });
+    return await Promise.race([
+      fetch(url),
+      timeoutPromise
+    ]);
+  } finally {
+    if (timeoutId != null) {
+      clearTimeout(timeoutId);
+    }
+  }
+}
+
+async function getJson(url, timeoutMs = REQUEST_TIMEOUT_MS) {
+  try {
+    const res = await fetchWithTimeout(url, timeoutMs);
     const text = await res.text();
     let json = null;
     try {
@@ -30,12 +62,10 @@ async function getJson(url, timeoutMs = 8000) {
     }
     return { status: res.status, json, text };
   } catch (error) {
-    if (error?.name === 'AbortError') {
-      throw new Error(`Timeout while requesting ${url}`);
+    if ((error?.message || '').startsWith('Timeout while requesting')) {
+      throw error;
     }
     throw new Error(`Request failed for ${url}: ${error.message}`);
-  } finally {
-    clearTimeout(timeout);
   }
 }
 
@@ -49,7 +79,7 @@ async function getJsonWithRetry(url) {
   for (let attempt = 1; attempt <= RETRY_ATTEMPTS; attempt += 1) {
     try {
       const response = await getJson(url);
-      if (response.status >= 500 && attempt < RETRY_ATTEMPTS) {
+      if (shouldRetryStatus(response.status) && attempt < RETRY_ATTEMPTS) {
         await delay(RETRY_DELAY_MS);
         lastResponse = response;
         continue;
@@ -113,5 +143,5 @@ async function main() {
 
 main().catch((err) => {
   console.error(err.message);
-  process.exit(1);
+  process.exitCode = 1;
 });

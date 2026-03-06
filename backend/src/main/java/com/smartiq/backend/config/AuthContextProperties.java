@@ -10,6 +10,13 @@ public record AuthContextProperties(
         String userEmailHeader,
         String tenantIdHeader,
         List<String> emailClaims,
-        String tenantIdClaim
+        String tenantIdClaim,
+        String jwtSecret,
+        String issuer,
+        String audience,
+        long clockSkewSeconds,
+        long bootstrapTokenTtlSeconds,
+        boolean magicLinkEchoEnabled,
+        long loginChallengeTtlSeconds
 ) {
 }

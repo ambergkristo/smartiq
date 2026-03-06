@@ -1,16 +1,12 @@
 package com.smartiq.backend.auth;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.config.AuthContextProperties;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -21,51 +17,51 @@ public class AuthContextResolver {
     private static final String BEARER_PREFIX = "bearer ";
 
     private final AuthContextProperties properties;
-    private final ObjectMapper objectMapper;
+    private final RuntimeAuthTokenService runtimeAuthTokenService;
 
-    public AuthContextResolver(AuthContextProperties properties, ObjectMapper objectMapper) {
+    public AuthContextResolver(AuthContextProperties properties, RuntimeAuthTokenService runtimeAuthTokenService) {
         this.properties = properties;
-        this.objectMapper = objectMapper;
+        this.runtimeAuthTokenService = runtimeAuthTokenService;
     }
 
     public ResolvedAuthContext resolve(HttpServletRequest request) {
+        ResolvedAuthContext resolved = resolveOptional(request);
+        if (resolved != null) {
+            return resolved;
+        }
+
+        if (!properties.headerFallbackEnabled()) {
+            throw new IllegalArgumentException("Authorization bearer token is required");
+        }
+        throw new IllegalArgumentException("auth email is required");
+    }
+
+    public ResolvedAuthContext resolveOptional(HttpServletRequest request) {
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (hasBearerToken(authorizationHeader)) {
             return resolveFromBearerToken(extractBearerToken(authorizationHeader));
         }
 
         if (!properties.headerFallbackEnabled()) {
-            throw new IllegalArgumentException("Authorization bearer token is required");
+            return null;
         }
 
-        String email = normalizeRequired(request.getHeader(properties.userEmailHeader()), "auth email is required");
+        String emailHeader = request.getHeader(properties.userEmailHeader());
+        String tenantHeader = request.getHeader(properties.tenantIdHeader());
+        if (!StringUtils.hasText(emailHeader) && !StringUtils.hasText(tenantHeader)) {
+            return null;
+        }
+
+        String email = normalizeRequired(emailHeader, "auth email is required");
         UUID tenantId = parseOptionalUuid(request.getHeader(properties.tenantIdHeader()), "tenant header must be a UUID");
         return new ResolvedAuthContext(email, tenantId);
     }
 
     private ResolvedAuthContext resolveFromBearerToken(String token) {
-        String[] parts = token.split("\\.", -1);
-        if (parts.length != 3) {
-            throw new IllegalArgumentException("bearer token must be JWT formatted");
-        }
-
-        JsonNode payload = decodePayload(parts[1]);
+        JsonNode payload = runtimeAuthTokenService.verifyAndDecodePayload(token);
         String email = extractEmail(payload);
         UUID tenantId = extractTenantId(payload);
         return new ResolvedAuthContext(email, tenantId);
-    }
-
-    private JsonNode decodePayload(String encodedPayload) {
-        if (!StringUtils.hasText(encodedPayload)) {
-            throw new IllegalArgumentException("bearer token payload is missing");
-        }
-        try {
-            // This adapter only extracts claims. Token signature verification must be enforced upstream.
-            byte[] decoded = Base64.getUrlDecoder().decode(encodedPayload);
-            return objectMapper.readTree(new String(decoded, StandardCharsets.UTF_8));
-        } catch (IllegalArgumentException | IOException ex) {
-            throw new IllegalArgumentException("bearer token payload is invalid", ex);
-        }
     }
 
     private String extractEmail(JsonNode payload) {

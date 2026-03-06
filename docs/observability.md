@@ -60,6 +60,7 @@ Generate a markdown beta summary snapshot from live Prometheus export:
 
 - `$env:BACKEND_URL="https://<backend-domain>"; npm run report:beta:summary`
 - strict gate (fails on `NO-GO`): `$env:BACKEND_URL="https://<backend-domain>"; npm run gate:beta:go-no-go`
+- local synthetic dry-run (smoke + gate + evidence): `$env:BACKEND_URL="https://<backend-domain>"; npm run gate:phase7:dry-run`
 - GitHub Actions workflow (artifact + gate): `.github/workflows/beta-go-no-go.yml`
 - Synthetic dry-run evidence generator: `npm run report:phase7:dry-run:evidence`
 - Synthetic dry-run workflow (smoke + gate + evidence artifact): `.github/workflows/phase7-beta-dry-run.yml`

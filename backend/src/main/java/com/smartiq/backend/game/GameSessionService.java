@@ -10,6 +10,7 @@ import com.smartiq.backend.game.contract.PegSnapshot;
 import com.smartiq.backend.game.contract.PlayerRoundStatus;
 import com.smartiq.backend.game.contract.PlayerSnapshot;
 import com.smartiq.backend.game.contract.RoundStateSnapshot;
+import com.smartiq.backend.tenant.ForbiddenTenantAccessException;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -133,9 +134,15 @@ public class GameSessionService {
     }
 
     public synchronized GameSessionCreateResponse createGameWithControl(CreateGameRequest request) {
+        return createGameWithControl(request, null, null);
+    }
+
+    public synchronized GameSessionCreateResponse createGameWithControl(CreateGameRequest request,
+                                                                        UUID tenantId,
+                                                                        String hostUserEmail) {
         evictExpiredSessions();
         evictOldestUntilCapacityAvailable();
-        SessionState state = createSession(request);
+        SessionState state = createSession(request, tenantId, hostUserEmail);
         return new GameSessionCreateResponse(
                 toSnapshot(state),
                 Collections.unmodifiableMap(new LinkedHashMap<>(state.actionTokens))
@@ -146,7 +153,34 @@ public class GameSessionService {
         return createGameWithControl(request).snapshot();
     }
 
-    private SessionState createSession(CreateGameRequest request) {
+    public synchronized CreateGameRequest buildDuplicateRequest(String gameId, UUID tenantIdContext) {
+        evictExpiredSessions();
+        SessionState state = requireSession(gameId, tenantIdContext);
+        List<String> players = state.players.stream()
+                .map(PlayerState::displayName)
+                .toList();
+        return new CreateGameRequest(players, state.language, state.topic, state.winCondition);
+    }
+
+    public synchronized GameSessionCreateResponse duplicateGameWithControl(String gameId,
+                                                                           UUID tenantIdContext,
+                                                                           String hostUserEmail) {
+        CreateGameRequest request = buildDuplicateRequest(gameId, tenantIdContext);
+        return createGameWithControl(request, tenantIdContext, hostUserEmail);
+    }
+
+    public synchronized GameSessionCreateResponse getGameWithControl(String gameId, UUID tenantIdContext) {
+        evictExpiredSessions();
+        SessionState state = requireSession(gameId, tenantIdContext);
+        state.lastTouchedAtMillis = nowMillis();
+        persistSession(state);
+        return new GameSessionCreateResponse(
+                toSnapshot(state),
+                Collections.unmodifiableMap(new LinkedHashMap<>(state.actionTokens))
+        );
+    }
+
+    private SessionState createSession(CreateGameRequest request, UUID tenantId, String hostUserEmail) {
         List<String> displayNames = normalizePlayers(request == null ? null : request.players());
         int winCondition = resolveWinCondition(request == null ? null : request.winCondition());
         String language = normalizeLanguage(request == null ? null : request.language());
@@ -163,6 +197,8 @@ public class GameSessionService {
 
         SessionState state = new SessionState(
                 gameId,
+                tenantId,
+                normalizeOptionalHostUserEmail(hostUserEmail),
                 language,
                 topic,
                 winCondition,
@@ -181,17 +217,25 @@ public class GameSessionService {
     }
 
     public synchronized GameSessionSnapshot getSnapshot(String gameId) {
+        return getSnapshot(gameId, null);
+    }
+
+    public synchronized GameSessionSnapshot getSnapshot(String gameId, UUID tenantIdContext) {
         evictExpiredSessions();
-        SessionState state = requireSession(gameId);
+        SessionState state = requireSession(gameId, tenantIdContext);
         state.lastTouchedAtMillis = nowMillis();
         persistSession(state);
         return toSnapshot(state);
     }
 
     public synchronized GameSessionSnapshot applyAction(String gameId, GameActionRequest request) {
+        return applyAction(gameId, request, null);
+    }
+
+    public synchronized GameSessionSnapshot applyAction(String gameId, GameActionRequest request, UUID tenantIdContext) {
         try {
             evictExpiredSessions();
-            SessionState state = requireSession(gameId);
+            SessionState state = requireSession(gameId, tenantIdContext);
             if (request == null) {
                 throw new IllegalArgumentException("action payload is required");
             }
@@ -691,7 +735,7 @@ public class GameSessionService {
         return ex.getMessage().trim().toLowerCase(Locale.ROOT);
     }
 
-    private SessionState requireSession(String gameId) {
+    private SessionState requireSession(String gameId, UUID tenantIdContext) {
         if (gameId == null || gameId.isBlank()) {
             throw new IllegalArgumentException("gameId is required");
         }
@@ -713,6 +757,7 @@ public class GameSessionService {
         if (state == null) {
             throw new NoSuchElementException("game not found: " + normalized);
         }
+        assertTenantAccess(state, tenantIdContext);
         if (isExpired(state, nowMillis())) {
             sessions.remove(normalized, state);
             gameSessionStore.delete(normalized);
@@ -720,6 +765,15 @@ public class GameSessionService {
             throw new NoSuchElementException("game not found: " + normalized);
         }
         return state;
+    }
+
+    private static void assertTenantAccess(SessionState state, UUID tenantIdContext) {
+        if (tenantIdContext == null || state.tenantId == null) {
+            return;
+        }
+        if (!tenantIdContext.equals(state.tenantId)) {
+            throw new ForbiddenTenantAccessException("tenant does not have access to game session");
+        }
     }
 
     private static String playerNameById(SessionState state, String playerId) {
@@ -820,6 +874,8 @@ public class GameSessionService {
                 .toList();
         return new StoredGameSessionState(
                 state.gameId,
+                state.tenantId,
+                state.hostUserEmail,
                 state.language,
                 state.topic,
                 state.winCondition,
@@ -884,6 +940,8 @@ public class GameSessionService {
 
         return new SessionState(
                 gameId,
+                stored.tenantId(),
+                normalizeOptionalHostUserEmail(stored.hostUserEmail()),
                 language,
                 topic,
                 winCondition,
@@ -1035,6 +1093,14 @@ public class GameSessionService {
         return candidate;
     }
 
+    private static String normalizeOptionalHostUserEmail(String hostUserEmail) {
+        if (hostUserEmail == null) {
+            return null;
+        }
+        String normalized = hostUserEmail.trim().toLowerCase(Locale.ROOT);
+        return normalized.isEmpty() ? null : normalized;
+    }
+
     private static GameSessionSnapshot toSnapshot(SessionState state) {
         List<PlayerSnapshot> players = state.players.stream()
                 .map(player -> new PlayerSnapshot(player.playerId(), player.displayName()))
@@ -1079,6 +1145,8 @@ public class GameSessionService {
 
     private static final class SessionState {
         private final String gameId;
+        private final UUID tenantId;
+        private final String hostUserEmail;
         private final String language;
         private final String topic;
         private final int winCondition;
@@ -1100,6 +1168,8 @@ public class GameSessionService {
         private long lastTouchedAtMillis;
 
         private SessionState(String gameId,
+                             UUID tenantId,
+                             String hostUserEmail,
                              String language,
                              String topic,
                              int winCondition,
@@ -1112,6 +1182,8 @@ public class GameSessionService {
                              long nowMillis) {
             this(
                     gameId,
+                    tenantId,
+                    hostUserEmail,
                     language,
                     topic,
                     winCondition,
@@ -1135,6 +1207,8 @@ public class GameSessionService {
         }
 
         private SessionState(String gameId,
+                             UUID tenantId,
+                             String hostUserEmail,
                              String language,
                              String topic,
                              int winCondition,
@@ -1155,6 +1229,8 @@ public class GameSessionService {
                              long roundStartedAtMillis,
                              long lastTouchedAtMillis) {
             this.gameId = gameId;
+            this.tenantId = tenantId;
+            this.hostUserEmail = hostUserEmail;
             this.language = language;
             this.topic = topic;
             this.winCondition = winCondition;
@@ -1193,6 +1269,8 @@ public class GameSessionService {
 
     private record StoredGameSessionState(
             String gameId,
+            UUID tenantId,
+            String hostUserEmail,
             String language,
             String topic,
             Integer winCondition,

@@ -365,6 +365,313 @@ button:disabled {
   color: #fcd1a0;
 }
 
+.host-workspace {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 20px;
+  background: rgba(255, 236, 208, 0.06);
+}
+
+.room-panel {
+  max-width: 1060px;
+}
+
+.room-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.secondary-action {
+  color: var(--text);
+  background: rgba(255, 233, 202, 0.1);
+}
+
+.room-session-card {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.room-session-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.room-session-header strong {
+  display: block;
+  font-size: 1.6rem;
+  letter-spacing: 0.1em;
+}
+
+.room-role-chip {
+  min-width: 150px;
+}
+
+.room-player-list {
+  display: grid;
+  gap: 10px;
+}
+
+.room-player-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.room-player-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 228, 196, 0.09);
+}
+
+.room-player-list li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.room-player-list li span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.player-lobby-card {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+  border-radius: 22px;
+  border: 1px solid color-mix(in srgb, var(--player-lobby-accent, var(--accent)) 35%, rgba(255, 228, 196, 0.16));
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.08), transparent 38%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--player-lobby-accent, var(--accent)) 18%, rgba(255, 255, 255, 0.03)),
+      color-mix(in srgb, var(--player-lobby-accent-2, var(--accent2)) 10%, rgba(255, 255, 255, 0.03))
+    );
+}
+
+.player-lobby-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, auto);
+  gap: 16px;
+  align-items: start;
+}
+
+.player-lobby-brand {
+  grid-column: 1 / -1;
+  font-size: 0.76rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--player-lobby-accent-2, var(--accent2));
+}
+
+.player-lobby-hero h3 {
+  margin-bottom: 6px;
+}
+
+.player-lobby-hero p {
+  color: var(--muted);
+}
+
+.player-lobby-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  align-items: baseline;
+}
+
+.player-lobby-meta strong {
+  font-size: 1.6rem;
+  letter-spacing: 0.1em;
+}
+
+.host-workspace-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.host-workspace-header h2,
+.host-workspace-card h3 {
+  margin: 0;
+}
+
+.host-plan-chip {
+  min-width: 170px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--stroke);
+  background: rgba(255, 222, 180, 0.08);
+  display: grid;
+  gap: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.76rem;
+}
+
+.host-plan-chip strong {
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.host-workspace-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.host-workspace-card {
+  border-radius: 18px;
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.host-activity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.host-activity-list li {
+  display: grid;
+  gap: 2px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 228, 196, 0.09);
+}
+
+.host-activity-list li.selected {
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 214, 168, 0.18);
+  background: rgba(255, 233, 202, 0.08);
+}
+
+.host-activity-list li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.host-activity-list strong {
+  text-transform: capitalize;
+  font-size: 0.92rem;
+}
+
+.host-activity-list span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.host-session-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.host-session-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.session-filter-chip {
+  width: auto;
+  min-height: 38px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 233, 202, 0.08);
+  color: var(--muted);
+}
+
+.session-filter-chip.selected {
+  color: var(--text);
+  border-color: rgba(255, 214, 168, 0.32);
+  background: rgba(255, 233, 202, 0.16);
+}
+
+.session-status-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(123, 214, 145, 0.32);
+  color: #aee6ba;
+  background: rgba(123, 214, 145, 0.12);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.session-status-badge.is-completed {
+  border-color: rgba(255, 214, 168, 0.28);
+  color: #ffd7a9;
+  background: rgba(255, 214, 168, 0.12);
+}
+
+.recent-hosted-session-review {
+  align-content: start;
+}
+
+.recent-session-question {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.45;
+}
+
+.recent-session-meta-grid {
+  display: grid;
+  gap: 4px;
+}
+
+.host-session-actions--detail {
+  margin-top: 0;
+}
+
+.recent-session-scoreboard {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.recent-session-scoreboard li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 236, 211, 0.06);
+  border: 1px solid rgba(255, 228, 196, 0.09);
+}
+
+.recent-session-scoreboard strong {
+  font-size: 0.92rem;
+}
+
+.recent-session-scoreboard span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
 .active-filter {
   margin-top: -6px;
   margin-bottom: 2px;
@@ -1119,6 +1426,21 @@ button:disabled {
   .player-token {
     min-height: 44px;
     padding: 10px 12px;
+  }
+
+  .host-workspace-header,
+  .host-workspace-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .player-lobby-hero,
+  .room-session-header,
+  .room-player-list li,
+  .room-actions,
+  .host-session-actions {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 
   .start-cta {

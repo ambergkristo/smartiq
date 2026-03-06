@@ -20,7 +20,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/health", "/version").permitAll()
+                        .requestMatchers("/api/auth", "/api/auth/**").permitAll()
                         .requestMatchers("/api/me", "/api/me/**").permitAll()
+                        .requestMatchers("/api/onboarding", "/api/onboarding/**").permitAll()
+                        .requestMatchers("/api/billing", "/api/billing/**").permitAll()
                         .requestMatchers("/api/topics").permitAll()
                         .requestMatchers("/api/cards/nextRandom", "/api/cards/next", "/api/cards/random").permitAll()
                         .requestMatchers("/api/game/**").permitAll()

@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const ROOT = process.cwd();
-const CANONICAL_PLAN = 'docs/plans/2026-03-03-masterplan-roadmap-to-beta.md';
+const CANONICAL_PLAN = 'docs/plans/2026-03-06-recurring-host-saas-masterplan-v1.md';
 const LEGACY_PLAN = 'docs/plan.md';
 const README = 'README.md';
 const CONTRIBUTING = 'CONTRIBUTING.md';
@@ -32,7 +32,7 @@ function main() {
   const prTemplate = readFile(PR_TEMPLATE);
 
   requireContains(canonical, 'status: active', CANONICAL_PLAN);
-  requireContains(canonical, '# SmartIQ Masterplan + Roadmap', CANONICAL_PLAN);
+  requireContains(canonical, '# SmartIQ Recurring Host SaaS Masterplan v1', CANONICAL_PLAN);
 
   requireContains(legacy, CANONICAL_PLAN, LEGACY_PLAN);
 
@@ -68,4 +68,3 @@ try {
   console.error(error.message || String(error));
   process.exit(1);
 }
-

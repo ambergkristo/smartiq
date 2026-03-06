@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.smartiq.backend.auth.RuntimeAuthTokenService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -54,12 +55,17 @@ public class TenantService {
     private static final String AUDIT_ACTION_TENANT_SETTINGS_UPDATED = "TENANT_SETTINGS_UPDATED";
     private static final String AUDIT_ACTION_TENANT_SUBSCRIPTION_UPDATED = "TENANT_SUBSCRIPTION_UPDATED";
     private static final String AUDIT_ACTION_TENANT_USAGE_LIMIT_REJECTED = "TENANT_USAGE_LIMIT_REJECTED";
+    private static final String AUDIT_ACTION_HOST_GAME_SESSION_CREATED = "HOST_GAME_SESSION_CREATED";
+    private static final String AUDIT_ACTION_HOST_GAME_SESSION_COMPLETED = "HOST_GAME_SESSION_COMPLETED";
+    private static final String AUDIT_ACTION_HOST_ROOM_CREATED = "HOST_ROOM_CREATED";
     private static final String AUDIT_ENTITY_TENANT = "tenant";
     private static final String AUDIT_ENTITY_TENANT_BRANDING = "tenant_branding";
     private static final String AUDIT_ENTITY_TENANT_MEMBERSHIP = "tenant_membership";
     private static final String AUDIT_ENTITY_TENANT_SETTINGS = "tenant_settings";
     private static final String AUDIT_ENTITY_TENANT_SUBSCRIPTION = "tenant_subscription";
     private static final String AUDIT_ENTITY_TENANT_USAGE_EVENT = "tenant_usage_event";
+    private static final String AUDIT_ENTITY_HOST_GAME_SESSION = "host_game_session";
+    private static final String AUDIT_ENTITY_HOST_ROOM = "host_room";
     private static final int SETTINGS_SCHEMA_VERSION = 1;
     private static final String DEFAULT_THEME = "classic";
     private static final int DEFAULT_MAX_PLAYERS = 10;
@@ -83,6 +89,7 @@ public class TenantService {
     private final TenantUserRepository tenantUserRepository;
     private final TenantMembershipRepository tenantMembershipRepository;
     private final ObjectMapper objectMapper;
+    private final RuntimeAuthTokenService runtimeAuthTokenService;
 
     public TenantService(TenantRepository tenantRepository,
                          TenantBrandingRepository tenantBrandingRepository,
@@ -92,7 +99,8 @@ public class TenantService {
                          TenantAuditEventRepository tenantAuditEventRepository,
                          TenantUserRepository tenantUserRepository,
                          TenantMembershipRepository tenantMembershipRepository,
-                         ObjectMapper objectMapper) {
+                         ObjectMapper objectMapper,
+                         RuntimeAuthTokenService runtimeAuthTokenService) {
         this.tenantRepository = tenantRepository;
         this.tenantBrandingRepository = tenantBrandingRepository;
         this.tenantSettingsRepository = tenantSettingsRepository;
@@ -102,6 +110,7 @@ public class TenantService {
         this.tenantUserRepository = tenantUserRepository;
         this.tenantMembershipRepository = tenantMembershipRepository;
         this.objectMapper = objectMapper;
+        this.runtimeAuthTokenService = runtimeAuthTokenService;
     }
 
     @Transactional
@@ -156,6 +165,29 @@ public class TenantService {
         );
 
         return toDetail(tenant, branding);
+    }
+
+    @Transactional
+    public OnboardingBootstrapResponse bootstrapOnboarding(OnboardingBootstrapRequest request) {
+        String workspaceName = normalizeRequired(request == null ? null : request.workspaceName(), "workspaceName", 160);
+        String ownerEmail = normalizeEmail(request == null ? null : request.ownerEmail());
+        String ownerDisplayName = normalizeOptional(request == null ? null : request.ownerDisplayName(), 160);
+
+        String slug = generateUniqueOnboardingSlug(workspaceName);
+        TenantDetailResponse tenant = createTenant(new CreateTenantRequest(slug, workspaceName, null, ownerEmail), null);
+        TenantMemberResponse member = addMember(
+                tenant.tenantId(),
+                new AddTenantMemberRequest(ownerEmail, ownerDisplayName, ROLE_OWNER),
+                null
+        );
+        MeResponse me = getMe(ownerEmail, tenant.tenantId());
+        RuntimeAuthContextResponse runtimeAuth = new RuntimeAuthContextResponse(
+                runtimeAuthTokenService.issueBearerToken(ownerEmail, tenant.tenantId()),
+                ownerEmail,
+                tenant.tenantId()
+        );
+
+        return new OnboardingBootstrapResponse(tenant, member, me, runtimeAuth);
     }
 
     @Transactional(readOnly = true)
@@ -762,6 +794,29 @@ public class TenantService {
     }
 
     @Transactional(readOnly = true)
+    public TenantBrandingRuntimeResponse getTenantBrandingForRuntimeTenant(UUID tenantId) {
+        if (tenantId == null) {
+            throw new IllegalArgumentException("tenant context is required");
+        }
+
+        Tenant tenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new NoSuchElementException("tenant not found"));
+        ensureTenantIsActive(tenant);
+        TenantBranding branding = tenantBrandingRepository.findById(tenantId).orElseGet(() -> defaultBranding(tenant));
+
+        return new TenantBrandingRuntimeResponse(
+                tenantId,
+                new TenantBrandingResponse(
+                        branding.getAppName(),
+                        branding.getLogoUrl(),
+                        branding.getPrimaryColor(),
+                        branding.getSecondaryColor()
+                ),
+                branding.getUpdatedAt() == null ? tenant.getUpdatedAt() : branding.getUpdatedAt()
+        );
+    }
+
+    @Transactional(readOnly = true)
     public TenantSubscriptionResponse getTenantSubscriptionForMember(String userEmail, UUID tenantId) {
         if (tenantId == null) {
             throw new IllegalArgumentException("tenant context is required");
@@ -774,6 +829,151 @@ public class TenantService {
                 .orElseThrow(() -> new NoSuchElementException("tenant not found"));
         ensureTenantIsActive(tenant);
         return getTenantSubscription(tenantId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<TenantAuditEventResponse> listTenantAuditEventsForMember(String userEmail, UUID tenantId, Integer limit) {
+        TenantRuntimeCapabilitiesResponse capabilities = getTenantCapabilitiesForMember(userEmail, tenantId);
+        if (!capabilities.analyticsHistoryEnabled()) {
+            throw new ForbiddenTenantAccessException("current plan does not include host analytics/history");
+        }
+        return listTenantAuditEvents(tenantId, limit);
+    }
+
+    @Transactional(readOnly = true)
+    public List<TenantUsageSummaryResponse> getTenantUsageSummaryForMember(String userEmail,
+                                                                           UUID tenantId,
+                                                                           String eventType,
+                                                                           String from,
+                                                                           String to) {
+        TenantRuntimeCapabilitiesResponse capabilities = getTenantCapabilitiesForMember(userEmail, tenantId);
+        if (!capabilities.analyticsHistoryEnabled()) {
+            throw new ForbiddenTenantAccessException("current plan does not include host analytics/history");
+        }
+        return getTenantUsageSummary(tenantId, eventType, from, to);
+    }
+
+    @Transactional(readOnly = true)
+    public TenantSubscriptionResponse assertHostedRuntimeAllowedForMember(String userEmail, UUID tenantId) {
+        TenantSubscriptionResponse subscription = getTenantSubscriptionForMember(userEmail, tenantId);
+        String status = normalizeOptional(subscription.status(), 32);
+        if (status == null) {
+            return subscription;
+        }
+        String normalizedStatus = normalizeSubscriptionStatus(status);
+        if (SUBSCRIPTION_STATUS_ACTIVE.equals(normalizedStatus) || SUBSCRIPTION_STATUS_TRIALING.equals(normalizedStatus)) {
+            return subscription;
+        }
+        throw new ForbiddenTenantAccessException("subscription status does not allow hosted runtime");
+    }
+
+    @Transactional(readOnly = true)
+    public TenantRuntimeCapabilitiesResponse getTenantCapabilitiesForMember(String userEmail, UUID tenantId) {
+        TenantSubscriptionResponse subscription = getTenantSubscriptionForMember(userEmail, tenantId);
+        return resolveRuntimeCapabilities(tenantId, subscription);
+    }
+
+    @Transactional(readOnly = true)
+    public TenantRuntimeCapabilitiesResponse assertHostedGameSessionCreationAllowedForMember(String userEmail,
+                                                                                             UUID tenantId,
+                                                                                             List<String> players) {
+        TenantSubscriptionResponse subscription = assertHostedRuntimeAllowedForMember(userEmail, tenantId);
+        TenantRuntimeCapabilitiesResponse capabilities = resolveRuntimeCapabilities(tenantId, subscription);
+        int playerCount = players == null ? 0 : (int) players.stream()
+                .map(player -> normalizeOptional(player, 160))
+                .filter(value -> value != null)
+                .count();
+        if (playerCount > capabilities.maxHostedPlayers()) {
+            throw new ForbiddenTenantAccessException(
+                    "current plan allows up to " + capabilities.maxHostedPlayers() + " hosted players"
+            );
+        }
+        return capabilities;
+    }
+
+    @Transactional
+    public void recordHostGameSessionCreated(String userEmail,
+                                             UUID tenantId,
+                                             String gameId,
+                                             int playerCount,
+                                             String language,
+                                             String topic) {
+        MeResponse me = requireRuntimeMemberContext(userEmail, tenantId);
+        Instant now = Instant.now();
+        ObjectNode metadata = objectMapper.createObjectNode();
+        metadata.put("gameId", gameId);
+        metadata.put("playerCount", playerCount);
+        String normalizedLanguage = normalizeOptional(language, 16);
+        if (normalizedLanguage != null) {
+            metadata.put("language", normalizedLanguage);
+        }
+        String normalizedTopic = normalizeOptional(topic, 128);
+        if (normalizedTopic != null) {
+            metadata.put("topic", normalizedTopic);
+        }
+        recordAuditEvent(
+                tenantId,
+                AUDIT_ACTION_HOST_GAME_SESSION_CREATED,
+                AUDIT_ENTITY_HOST_GAME_SESSION,
+                gameId,
+                metadata,
+                now,
+                me.userId()
+        );
+    }
+
+    @Transactional
+    public void recordHostGameSessionCompleted(String userEmail,
+                                               UUID tenantId,
+                                               String gameId,
+                                               String winnerDisplayName,
+                                               Integer winnerScore,
+                                               Integer roundNumber,
+                                               String topic) {
+        MeResponse me = requireRuntimeMemberContext(userEmail, tenantId);
+        Instant now = Instant.now();
+        ObjectNode metadata = objectMapper.createObjectNode();
+        metadata.put("gameId", gameId);
+        String normalizedWinnerDisplayName = normalizeOptional(winnerDisplayName, 64);
+        if (normalizedWinnerDisplayName != null) {
+            metadata.put("winnerDisplayName", normalizedWinnerDisplayName);
+        }
+        if (winnerScore != null && winnerScore >= 0) {
+            metadata.put("winnerScore", winnerScore);
+        }
+        if (roundNumber != null && roundNumber > 0) {
+            metadata.put("roundNumber", roundNumber);
+        }
+        String normalizedTopic = normalizeOptional(topic, 128);
+        if (normalizedTopic != null) {
+            metadata.put("topic", normalizedTopic);
+        }
+        recordAuditEvent(
+                tenantId,
+                AUDIT_ACTION_HOST_GAME_SESSION_COMPLETED,
+                AUDIT_ENTITY_HOST_GAME_SESSION,
+                gameId,
+                metadata,
+                now,
+                me.userId()
+        );
+    }
+
+    @Transactional
+    public void recordHostRoomCreated(String userEmail, UUID tenantId, String roomCode) {
+        MeResponse me = requireRuntimeMemberContext(userEmail, tenantId);
+        Instant now = Instant.now();
+        ObjectNode metadata = objectMapper.createObjectNode();
+        metadata.put("roomCode", roomCode);
+        recordAuditEvent(
+                tenantId,
+                AUDIT_ACTION_HOST_ROOM_CREATED,
+                AUDIT_ENTITY_HOST_ROOM,
+                roomCode,
+                metadata,
+                now,
+                me.userId()
+        );
     }
 
     @Transactional(readOnly = true)
@@ -821,6 +1021,33 @@ public class TenantService {
                 requestedTenantId,
                 selectedRole,
                 membershipResponses
+        );
+    }
+
+    private MeResponse requireRuntimeMemberContext(String userEmail, UUID tenantId) {
+        if (tenantId == null) {
+            throw new IllegalArgumentException("tenant context is required");
+        }
+        return getMe(userEmail, tenantId);
+    }
+
+    private TenantRuntimeCapabilitiesResponse resolveRuntimeCapabilities(UUID tenantId,
+                                                                        TenantSubscriptionResponse subscription) {
+        String normalizedStatus = normalizeOptional(subscription == null ? null : subscription.status(), 32);
+        String normalizedPlanCode = normalizeOptional(subscription == null ? null : subscription.planCode(), 64);
+
+        boolean proHost = normalizedStatus != null
+                && SUBSCRIPTION_STATUS_ACTIVE.equals(normalizedStatus.toLowerCase(Locale.ROOT))
+                && normalizedPlanCode != null
+                && !normalizedPlanCode.toLowerCase(Locale.ROOT).contains("starter");
+
+        return new TenantRuntimeCapabilitiesResponse(
+                tenantId,
+                proHost ? "pro_host" : "trial",
+                proHost ? 10 : 4,
+                proHost,
+                proHost,
+                proHost
         );
     }
 
@@ -1189,6 +1416,33 @@ public class TenantService {
             throw new IllegalArgumentException(fieldName + " must match #RRGGBB");
         }
         return normalized.toUpperCase(Locale.ROOT);
+    }
+
+    private String generateUniqueOnboardingSlug(String workspaceName) {
+        String baseSlug = normalizeSlug(null, workspaceName);
+        if (!tenantRepository.existsBySlug(baseSlug)) {
+            return baseSlug;
+        }
+
+        int suffixLength = 8;
+        int maxPrefixLength = 63 - suffixLength - 1;
+        String prefix = baseSlug.length() > maxPrefixLength
+                ? baseSlug.substring(0, maxPrefixLength)
+                : baseSlug;
+        prefix = prefix.replaceAll("-+$", "");
+        if (prefix.length() < 3) {
+            prefix = "quiz";
+        }
+
+        for (int attempt = 0; attempt < 20; attempt++) {
+            String suffix = UUID.randomUUID().toString().replace("-", "").substring(0, suffixLength);
+            String candidate = prefix + "-" + suffix;
+            if (!tenantRepository.existsBySlug(candidate)) {
+                return candidate;
+            }
+        }
+
+        throw new IllegalStateException("could not allocate unique tenant slug");
     }
 
     private static String normalizeSlug(String requestedSlug, String fallbackName) {

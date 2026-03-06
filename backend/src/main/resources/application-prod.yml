@@ -28,3 +28,12 @@ smartiq:
   auth:
     context:
       header-fallback-enabled: false
+      jwt-secret: ${SMARTIQ_AUTH_JWT_SECRET:}
+      magic-link-echo-enabled: false
+  billing:
+    provider: ${SMARTIQ_BILLING_PROVIDER:}
+    checkout-base-url: ${SMARTIQ_BILLING_CHECKOUT_BASE_URL:}
+    success-return-url: ${SMARTIQ_BILLING_SUCCESS_RETURN_URL:}
+    cancel-return-url: ${SMARTIQ_BILLING_CANCEL_RETURN_URL:}
+    webhook-signing-secret: ${SMARTIQ_BILLING_WEBHOOK_SIGNING_SECRET:}
+    webhook-signature-header: ${SMARTIQ_BILLING_WEBHOOK_SIGNATURE_HEADER:X-SmartIQ-Billing-Signature}

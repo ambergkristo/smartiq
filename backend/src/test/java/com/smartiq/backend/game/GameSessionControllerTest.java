@@ -1,5 +1,7 @@
 package com.smartiq.backend.game;
 
+import com.smartiq.backend.auth.AuthContextResolver;
+import com.smartiq.backend.auth.ResolvedAuthContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.game.contract.BoardStateSnapshot;
 import com.smartiq.backend.game.contract.GameSessionSnapshot;
@@ -7,6 +9,8 @@ import com.smartiq.backend.game.contract.PegSnapshot;
 import com.smartiq.backend.game.contract.PlayerRoundStatus;
 import com.smartiq.backend.game.contract.PlayerSnapshot;
 import com.smartiq.backend.game.contract.RoundStateSnapshot;
+import com.smartiq.backend.tenant.ForbiddenTenantAccessException;
+import com.smartiq.backend.tenant.TenantService;
 import com.smartiq.backend.web.ApiExceptionHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,9 +24,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -35,19 +42,26 @@ class GameSessionControllerTest {
     @Mock
     private GameSessionService gameSessionService;
 
+    @Mock
+    private AuthContextResolver authContextResolver;
+
+    @Mock
+    private TenantService tenantService;
+
     private final ObjectMapper objectMapper = new ObjectMapper();
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(new GameSessionController(gameSessionService))
+        when(authContextResolver.resolveOptional(any())).thenReturn(null);
+        mockMvc = MockMvcBuilders.standaloneSetup(new GameSessionController(gameSessionService, authContextResolver, tenantService))
                 .setControllerAdvice(new ApiExceptionHandler(false))
                 .build();
     }
 
     @Test
     void createGameReturnsSnapshot() throws Exception {
-        when(gameSessionService.createGameWithControl(any())).thenReturn(
+        when(gameSessionService.createGameWithControl(any(), isNull(), isNull())).thenReturn(
                 new GameSessionCreateResponse(
                         snapshot("game-1", "CHOOSING"),
                         Map.of("p1", "at_1", "p2", "at_2")
@@ -65,7 +79,7 @@ class GameSessionControllerTest {
 
     @Test
     void getGameReturnsSnapshot() throws Exception {
-        when(gameSessionService.getSnapshot(eq("game-1"))).thenReturn(snapshot("game-1", "CHOOSING"));
+        when(gameSessionService.getSnapshot(eq("game-1"), isNull())).thenReturn(snapshot("game-1", "CHOOSING"));
 
         mockMvc.perform(get("/api/game/game-1"))
                 .andExpect(status().isOk())
@@ -74,8 +88,71 @@ class GameSessionControllerTest {
     }
 
     @Test
+    void duplicateGameReturnsNewControlledSnapshot() throws Exception {
+        when(gameSessionService.buildDuplicateRequest(eq("game-1"), isNull()))
+                .thenReturn(new CreateGameRequest(List.of("Alice", "Bob"), "en", "Science", 30));
+        when(gameSessionService.duplicateGameWithControl(eq("game-1"), isNull(), isNull()))
+                .thenReturn(new GameSessionCreateResponse(
+                        snapshot("game-2", "CHOOSING"),
+                        Map.of("p1", "at_3", "p2", "at_4")
+                ));
+
+        mockMvc.perform(post("/api/game/game-1/duplicate"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.snapshot.gameId").value("game-2"))
+                .andExpect(jsonPath("$.actionTokens.p1").value("at_3"));
+    }
+
+    @Test
+    void duplicateGameMapsCrossTenantAccessToForbiddenErrorShape() throws Exception {
+        UUID tenantId = UUID.randomUUID();
+        when(authContextResolver.resolveOptional(any()))
+                .thenReturn(new ResolvedAuthContext("owner@acme.test", tenantId));
+        when(gameSessionService.buildDuplicateRequest(eq("game-1"), eq(tenantId)))
+                .thenReturn(new CreateGameRequest(List.of("Alice", "Bob"), "en", "Science", 30));
+        when(gameSessionService.duplicateGameWithControl(eq("game-1"), eq(tenantId), eq("owner@acme.test")))
+                .thenThrow(new ForbiddenTenantAccessException("tenant does not have access to game session"));
+
+        mockMvc.perform(post("/api/game/game-1/duplicate"))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.code").value("FORBIDDEN_TENANT_ACCESS"))
+                .andExpect(jsonPath("$.error").value("tenant does not have access to game session"))
+                .andExpect(jsonPath("$.path").value("/api/game/game-1/duplicate"));
+    }
+
+    @Test
+    void resumeGameReturnsControlledSnapshotForTenantMember() throws Exception {
+        UUID tenantId = UUID.randomUUID();
+        when(authContextResolver.resolveOptional(any()))
+                .thenReturn(new ResolvedAuthContext("owner@acme.test", tenantId));
+        when(gameSessionService.getGameWithControl(eq("game-1"), eq(tenantId)))
+                .thenReturn(new GameSessionCreateResponse(
+                        snapshot("game-1", "CHOOSING"),
+                        Map.of("p1", "at_1", "p2", "at_2")
+                ));
+
+        mockMvc.perform(post("/api/game/game-1/resume"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.snapshot.gameId").value("game-1"))
+                .andExpect(jsonPath("$.actionTokens.p1").value("at_1"));
+
+        verify(tenantService).assertHostedRuntimeAllowedForMember("owner@acme.test", tenantId);
+    }
+
+    @Test
+    void resumeGameRequiresTenantContext() throws Exception {
+        when(authContextResolver.resolveOptional(any())).thenReturn(null);
+
+        mockMvc.perform(post("/api/game/game-1/resume"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("INVALID_ACTION"))
+                .andExpect(jsonPath("$.error").value("tenant context is required"))
+                .andExpect(jsonPath("$.path").value("/api/game/game-1/resume"));
+    }
+
+    @Test
     void applyActionReturnsUpdatedSnapshot() throws Exception {
-        when(gameSessionService.applyAction(eq("game-1"), any())).thenReturn(snapshot("game-1", "GAME_OVER"));
+        when(gameSessionService.applyAction(eq("game-1"), any(), isNull())).thenReturn(snapshot("game-1", "GAME_OVER"));
 
         mockMvc.perform(post("/api/game/game-1/action")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -85,8 +162,33 @@ class GameSessionControllerTest {
     }
 
     @Test
+    void applyActionRecordsCompletionAuditWhenTenantGameEnds() throws Exception {
+        UUID tenantId = UUID.randomUUID();
+        when(authContextResolver.resolveOptional(any()))
+                .thenReturn(new ResolvedAuthContext("owner@acme.test", tenantId));
+        when(gameSessionService.applyAction(eq("game-1"), any(), eq(tenantId)))
+                .thenReturn(snapshot("game-1", "GAME_OVER"));
+
+        mockMvc.perform(post("/api/game/game-1/action")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new GameActionRequest("PASS", null, null, "p1", "at_1", "req-finish-1"))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.roundState.phase").value("GAME_OVER"));
+
+        verify(tenantService).recordHostGameSessionCompleted(
+                eq("owner@acme.test"),
+                eq(tenantId),
+                eq("game-1"),
+                eq("Alice"),
+                eq(0),
+                eq(1),
+                eq("Science")
+        );
+    }
+
+    @Test
     void gameNotFoundIsMappedToMachineReadableCode() throws Exception {
-        when(gameSessionService.getSnapshot(eq("missing-game")))
+        when(gameSessionService.getSnapshot(eq("missing-game"), isNull()))
                 .thenThrow(new NoSuchElementException("game not found: missing-game"));
 
         mockMvc.perform(get("/api/game/missing-game"))
@@ -97,7 +199,7 @@ class GameSessionControllerTest {
 
     @Test
     void invalidActionIsMappedToBadRequestErrorShape() throws Exception {
-        when(gameSessionService.applyAction(eq("game-1"), any()))
+        when(gameSessionService.applyAction(eq("game-1"), any(), isNull()))
                 .thenThrow(new IllegalArgumentException("type is required"));
 
         mockMvc.perform(post("/api/game/game-1/action")
@@ -112,7 +214,7 @@ class GameSessionControllerTest {
 
     @Test
     void forbiddenActionIsMappedToForbiddenErrorShape() throws Exception {
-        when(gameSessionService.applyAction(eq("game-1"), any()))
+        when(gameSessionService.applyAction(eq("game-1"), any(), isNull()))
                 .thenThrow(new ForbiddenGameActionException("invalid action token"));
 
         mockMvc.perform(post("/api/game/game-1/action")
@@ -127,7 +229,7 @@ class GameSessionControllerTest {
 
     @Test
     void duplicateActionIsMappedToConflictErrorShape() throws Exception {
-        when(gameSessionService.applyAction(eq("game-1"), any()))
+        when(gameSessionService.applyAction(eq("game-1"), any(), isNull()))
                 .thenThrow(new DuplicateGameActionException("duplicate actionRequestId"));
 
         mockMvc.perform(post("/api/game/game-1/action")

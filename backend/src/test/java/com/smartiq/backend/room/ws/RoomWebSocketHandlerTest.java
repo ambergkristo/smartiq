@@ -230,6 +230,8 @@ class RoomWebSocketHandlerTest {
     private static RoomSnapshot snapshot(String roomCode) {
         return new RoomSnapshot(
                 roomCode,
+                null,
+                null,
                 List.of(
                         new RoomPlayerSnapshot("p1", "Alice"),
                         new RoomPlayerSnapshot("p2", "Bob")
