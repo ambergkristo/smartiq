@@ -25,6 +25,11 @@ function ensureDir(filePath) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
 }
 
+function writeJsonFile(filePath, payload) {
+  ensureDir(filePath);
+  fs.writeFileSync(filePath, `${JSON.stringify(payload, null, 2)}\n`);
+}
+
 function readNumberArg(args, prefix, envKey, fallback) {
   const raw = parseArg(args, prefix) || process.env[envKey] || '';
   if (!raw) {
@@ -243,6 +248,7 @@ async function main() {
     process.env.X_INTERNAL_API_KEY ||
     '';
   const outputPath = parseArg(args, '--output=') || `docs/reports/recurring-host-pilot-summary-${todayStamp()}.md`;
+  const jsonOutputPath = parseArg(args, '--json-output=');
   const thresholds = {
     minActivatedHosts: readNumberArg(args, '--min-activated-hosts=', 'SMARTIQ_M6_MIN_ACTIVATED_HOSTS', 10),
     minRepeatHosts: readNumberArg(args, '--min-repeat-hosts=', 'SMARTIQ_M6_MIN_REPEAT_HOSTS', 5),
@@ -282,7 +288,33 @@ async function main() {
 
   ensureDir(outputPath);
   fs.writeFileSync(outputPath, report);
+  const summaryPayload = {
+    generatedAt: sourceData.generatedAt,
+    source: sourceData.source,
+    sourceRef: sourceData.backendUrl,
+    thresholdStatus,
+    thresholds,
+    aggregate,
+    tenantCount: tenants.length,
+    tenants: tenants.map((entry) => ({
+      tenantId: entry.tenant.tenantId || '',
+      tenantName: entry.tenant.name || '',
+      riskStatus: entry.pilotSummary?.riskStatus || 'tracking',
+      stage: formatStage(entry.pilotSummary),
+      activated: Boolean(entry.pilotSummary?.activated),
+      repeatHost: Boolean(entry.pilotSummary?.repeatHost),
+      paidConverted: Boolean(entry.pilotSummary?.paidConverted),
+      openSupportCases: entry.openSupportCases,
+      resolvedSupportCases: entry.resolvedSupportCases
+    }))
+  };
+  if (jsonOutputPath) {
+    writeJsonFile(jsonOutputPath, summaryPayload);
+  }
   console.log(`Recurring host pilot summary written: ${outputPath}`);
+  if (hasFlag(args, '--print-json')) {
+    console.log(JSON.stringify(summaryPayload, null, 2));
+  }
 
   if (hasFlag(args, '--fail-on-below-threshold') && thresholdStatus !== 'READY') {
     process.exitCode = 1;

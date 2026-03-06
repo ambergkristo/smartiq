@@ -56,6 +56,14 @@ Observed result:
 2. the generator can read live internal admin telemetry or a snapshot file for reproducible dry-runs,
 3. the markdown report aggregates activated hosts, repeat hosts, paid conversions, support load, risk mix, and tenant-by-tenant recommendations.
 
+### M6 pilot gate automation now exists
+
+Observed result:
+
+1. repo now exposes `npm run validate:m6:recurring-host:pilot-gate`,
+2. the gate runs touched-scope backend and admin frontend tests before generating the pilot summary,
+3. the gate can emit a machine-readable JSON summary and optionally fail when live pilot thresholds are still below target.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -63,6 +71,7 @@ The following checks executed successfully after this progress slice:
 1. `mvn -q -f backend/pom.xml "-Dtest=TenantAdminControllerTest,TenantMeControllerTest,GameSessionControllerTest,BillingServiceTest" test`
 2. `npm --prefix frontend run test -- --run src/admin/api.test.js src/admin/AdminConsole.test.jsx`
 3. `node tools/generate_recurring_host_pilot_summary.js --snapshot=tools/fixtures/recurring_host_pilot_summary.sample.json --output=<temp>`
+4. `node tools/validate_recurring_host_pilot_gate.js --snapshot=tools/fixtures/recurring_host_pilot_summary.sample.json`
 
 ## Honest Status
 
