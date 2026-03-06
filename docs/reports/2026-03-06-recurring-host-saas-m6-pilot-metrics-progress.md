@@ -73,6 +73,14 @@ Observed result:
 3. the report highlights activated hosts, repeat hosts, paid conversions, open blockers with owners, onboarding blockers, upgrade blockers, and recent fixes,
 4. the pilot gate now emits both the summary report and the evidence pack in one run.
 
+### Canonical pilot capture command now exists
+
+Observed result:
+
+1. repo now exposes `npm run report:recurring-host:pilot-capture`,
+2. one command can write summary markdown, summary JSON, evidence markdown, and gate JSON into a target output directory,
+3. live pilot artifact capture now has a canonical file-naming path for `docs/reports`.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -82,6 +90,7 @@ The following checks executed successfully after this progress slice:
 3. `node tools/generate_recurring_host_pilot_summary.js --snapshot=tools/fixtures/recurring_host_pilot_summary.sample.json --output=<temp>`
 4. `node tools/validate_recurring_host_pilot_gate.js --snapshot=tools/fixtures/recurring_host_pilot_summary.sample.json`
 5. `node tools/generate_recurring_host_pilot_evidence.js --summary-json=<temp-json> --output=<temp>`
+6. `node tools/run_recurring_host_pilot_capture.js --snapshot=tools/fixtures/recurring_host_pilot_summary.sample.json --output-dir=<temp-dir>`
 
 ## Honest Status
 

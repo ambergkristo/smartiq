@@ -101,7 +101,8 @@ Required checks:
 2. `npm run validate:m6:recurring-host:pilot-gate` passes in the live pilot environment,
 3. pilot metrics artifact published,
 4. pilot evidence pack is published with blocker owners and actions,
-5. touched-scope product tests remain green.
+5. live artifact capture is reproducible via `npm run report:recurring-host:pilot-capture`,
+6. touched-scope product tests remain green.
 
 Required evidence:
 1. activated-host count,
