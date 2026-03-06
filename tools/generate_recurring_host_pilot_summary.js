@@ -116,7 +116,9 @@ milestone: M6
 
 ## Aggregate
 
-- Active tenants reviewed: \`${aggregate.totalTenants}\`
+- Tenants reviewed: \`${aggregate.totalTenants}\`
+- Active tenants: \`${aggregate.activeTenants}\`
+- Suspended tenants: \`${aggregate.suspendedTenants}\`
 - Activated hosts: \`${aggregate.activatedHosts}\`
 - Repeat hosts: \`${aggregate.repeatHosts}\`
 - Paid conversions: \`${aggregate.paidConversions}\`
@@ -156,7 +158,7 @@ async function fetchJson(baseUrl, apiKey, pathname) {
 }
 
 async function loadLiveSource(baseUrl, apiKey) {
-  const tenants = await fetchJson(baseUrl, apiKey, '/internal/wl/tenants?status=active');
+  const tenants = await fetchJson(baseUrl, apiKey, '/internal/wl/tenants');
   const normalizedTenants = Array.isArray(tenants) ? tenants : [];
   const enriched = await Promise.all(normalizedTenants.map(async (tenant) => {
     const [pilotSummary, supportCases] = await Promise.all([
@@ -203,6 +205,8 @@ function aggregateData(sourceData) {
 
   const aggregate = {
     totalTenants: tenants.length,
+    activeTenants: tenants.filter((entry) => entry.tenant.status === 'active').length,
+    suspendedTenants: tenants.filter((entry) => entry.tenant.status === 'suspended').length,
     activatedHosts: tenants.filter((entry) => entry.pilotSummary.activated).length,
     repeatHosts: tenants.filter((entry) => entry.pilotSummary.repeatHost).length,
     paidConversions: tenants.filter((entry) => entry.pilotSummary.paidConverted).length,
@@ -299,6 +303,7 @@ async function main() {
     tenants: tenants.map((entry) => ({
       tenantId: entry.tenant.tenantId || '',
       tenantName: entry.tenant.name || '',
+      tenantStatus: entry.tenant.status || '',
       planCode: entry.pilotSummary?.planCode || '',
       subscriptionStatus: entry.pilotSummary?.subscriptionStatus || '',
       riskStatus: entry.pilotSummary?.riskStatus || 'tracking',
