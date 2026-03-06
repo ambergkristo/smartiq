@@ -48,12 +48,21 @@ Observed result:
 3. founder/operator can log onboarding, live-run, billing, or retention blockers with owner and next step,
 4. pilot summary now derives support-load and friction status from both usage summary and support cases.
 
+### Canonical pilot-summary artifact generator now exists
+
+Observed result:
+
+1. repo now exposes `npm run report:recurring-host:pilot-summary`,
+2. the generator can read live internal admin telemetry or a snapshot file for reproducible dry-runs,
+3. the markdown report aggregates activated hosts, repeat hosts, paid conversions, support load, risk mix, and tenant-by-tenant recommendations.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
 
 1. `mvn -q -f backend/pom.xml "-Dtest=TenantAdminControllerTest,TenantMeControllerTest,GameSessionControllerTest,BillingServiceTest" test`
 2. `npm --prefix frontend run test -- --run src/admin/api.test.js src/admin/AdminConsole.test.jsx`
+3. `node tools/generate_recurring_host_pilot_summary.js --snapshot=tools/fixtures/recurring_host_pilot_summary.sample.json --output=<temp>`
 
 ## Honest Status
 

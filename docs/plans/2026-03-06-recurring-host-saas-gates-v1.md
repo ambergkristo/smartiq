@@ -97,7 +97,7 @@ Required evidence:
 ### M6 Gate - Pilot Conversion and Retention Proof
 
 Required checks:
-1. production analytics summary generated from real telemetry,
+1. `npm run report:recurring-host:pilot-summary` generates a production analytics summary from real telemetry,
 2. pilot metrics artifact published,
 3. touched-scope product tests remain green.
 

@@ -45,6 +45,7 @@
     "report:branches:consolidation": "node tools/report_branch_consolidation.js --repo ambergkristo/smartiq --base origin/main --max-branches=30 --output docs/branch-consolidation-audit-latest.md",
     "report:branches:consolidation:full": "node tools/report_branch_consolidation.js --repo ambergkristo/smartiq --base origin/main --output docs/branch-consolidation-audit-latest.md",
     "report:et:quality": "node tools/generate_et_quality_report.js",
+    "report:recurring-host:pilot-summary": "node tools/generate_recurring_host_pilot_summary.js",
     "validate:cards:legacy": "node tools/validate-cards.js data/smart10/cards.en.json",
     "test:golden": "node tools/validate-cards.js data/smart10/golden/golden.dataset.json",
     "pipeline:cards": "node tools/build-content-pipeline.js",

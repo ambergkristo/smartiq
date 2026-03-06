@@ -1,0 +1,84 @@
+{
+  "generatedAt": "2026-03-06T22:30:00Z",
+  "tenants": [
+    {
+      "tenant": {
+        "tenantId": "tenant-alpha",
+        "name": "Alpha Pub Quiz",
+        "status": "active"
+      },
+      "pilotSummary": {
+        "planCode": "pilot-monthly",
+        "subscriptionStatus": "trialing",
+        "workspaceBootstraps": 1,
+        "hostSignIns": 1,
+        "sessionLaunches": 2,
+        "duplicateLaunches": 1,
+        "resumeActions": 0,
+        "completedSessions": 2,
+        "upgradeAttempts": 1,
+        "paidActivations": 0,
+        "activated": true,
+        "repeatHost": true,
+        "paidConverted": false,
+        "openSupportCases": 1,
+        "resolvedSupportCases": 0,
+        "topOpenSupportCategory": "billing",
+        "riskStatus": "needs_attention",
+        "recommendation": "Resolve the highest open support category before widening pilots: billing."
+      },
+      "supportCases": [
+        {
+          "caseId": "sc_alpha_1",
+          "title": "Checkout hesitation",
+          "category": "billing",
+          "priority": "high",
+          "status": "open",
+          "owner": "Founder",
+          "summary": "Host asked for manual invoice option.",
+          "nextStep": "Clarify pricing and invoice policy."
+        }
+      ]
+    },
+    {
+      "tenant": {
+        "tenantId": "tenant-beta",
+        "name": "Beta Office Trivia",
+        "status": "active"
+      },
+      "pilotSummary": {
+        "planCode": "pro-host-monthly",
+        "subscriptionStatus": "active",
+        "workspaceBootstraps": 1,
+        "hostSignIns": 2,
+        "sessionLaunches": 3,
+        "duplicateLaunches": 1,
+        "resumeActions": 1,
+        "completedSessions": 3,
+        "upgradeAttempts": 1,
+        "paidActivations": 1,
+        "activated": true,
+        "repeatHost": true,
+        "paidConverted": true,
+        "openSupportCases": 0,
+        "resolvedSupportCases": 1,
+        "topOpenSupportCategory": null,
+        "riskStatus": "tracking",
+        "recommendation": "Continue collecting repeat-host and paid-retention evidence from real pilot traffic."
+      },
+      "supportCases": [
+        {
+          "caseId": "sc_beta_1",
+          "title": "Join screen copy",
+          "category": "onboarding",
+          "priority": "medium",
+          "status": "resolved",
+          "owner": "Founder",
+          "summary": "Players needed clearer join instructions.",
+          "nextStep": "Keep monitoring after copy update.",
+          "resolution": "Lobby copy updated."
+        }
+      ]
+    }
+  ]
+}
