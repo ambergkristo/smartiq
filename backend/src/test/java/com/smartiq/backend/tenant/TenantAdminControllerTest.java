@@ -660,4 +660,116 @@ class TenantAdminControllerTest {
                 .andExpect(jsonPath("$[0].metadata.planLimit").value(1000))
                 .andExpect(jsonPath("$[0].metadata.projectedTotal").value(1100));
     }
+
+    @Test
+    void createsSupportCasesAndReturnsDerivedPilotSummary() throws Exception {
+        String tenantResponse = mockMvc.perform(post("/internal/wl/tenants")
+                        .header("X-Internal-Api-Key", "test-internal-key")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "slug": "pilot-summary-acme",
+                                  "name": "Pilot Summary Acme"
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        String tenantId = objectMapper.readTree(tenantResponse).path("tenantId").asText();
+        String actorUserId = UUID.randomUUID().toString();
+
+        mockMvc.perform(post("/internal/wl/tenants/{tenantId}/usage-events", tenantId)
+                        .header("X-Internal-Api-Key", "test-internal-key")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "eventType": "host.workspace.bootstrapped",
+                                  "eventValue": 1,
+                                  "eventTime": "2030-01-10T00:00:00Z"
+                                }
+                                """))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(post("/internal/wl/tenants/{tenantId}/usage-events", tenantId)
+                        .header("X-Internal-Api-Key", "test-internal-key")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "eventType": "host.session.started",
+                                  "eventValue": 2,
+                                  "eventTime": "2030-01-10T01:00:00Z"
+                                }
+                                """))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(post("/internal/wl/tenants/{tenantId}/usage-events", tenantId)
+                        .header("X-Internal-Api-Key", "test-internal-key")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "eventType": "billing.checkout.started",
+                                  "eventValue": 1,
+                                  "eventTime": "2030-01-10T02:00:00Z"
+                                }
+                                """))
+                .andExpect(status().isOk());
+
+        String supportCaseResponse = mockMvc.perform(post("/internal/wl/tenants/{tenantId}/support-cases", tenantId)
+                        .header("X-Internal-Api-Key", "test-internal-key")
+                        .header("X-SmartIQ-Actor-User-Id", actorUserId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "title": "Host could not find join route",
+                                  "category": "onboarding",
+                                  "priority": "high",
+                                  "owner": "Founder",
+                                  "summary": "Pilot host stalled before first live launch.",
+                                  "nextStep": "Update onboarding copy and retry."
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("open"))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        String caseId = objectMapper.readTree(supportCaseResponse).path("caseId").asText();
+
+        mockMvc.perform(get("/internal/wl/tenants/{tenantId}/support-cases", tenantId)
+                        .header("X-Internal-Api-Key", "test-internal-key"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].caseId").value(caseId))
+                .andExpect(jsonPath("$[0].owner").value("Founder"))
+                .andExpect(jsonPath("$[0].status").value("open"));
+
+        mockMvc.perform(get("/internal/wl/tenants/{tenantId}/pilot-summary", tenantId)
+                        .header("X-Internal-Api-Key", "test-internal-key"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.activated").value(true))
+                .andExpect(jsonPath("$.repeatHost").value(false))
+                .andExpect(jsonPath("$.paidConverted").value(false))
+                .andExpect(jsonPath("$.openSupportCases").value(1))
+                .andExpect(jsonPath("$.topOpenSupportCategory").value("onboarding"))
+                .andExpect(jsonPath("$.riskStatus").value("needs_attention"));
+
+        mockMvc.perform(patch("/internal/wl/tenants/{tenantId}/support-cases/{caseId}", tenantId, caseId)
+                        .header("X-Internal-Api-Key", "test-internal-key")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "status": "resolved",
+                                  "resolution": "Updated onboarding copy."
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("resolved"))
+                .andExpect(jsonPath("$.resolution").value("Updated onboarding copy."));
+
+        mockMvc.perform(get("/internal/wl/tenants/{tenantId}/pilot-summary", tenantId)
+                        .header("X-Internal-Api-Key", "test-internal-key"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.openSupportCases").value(0))
+                .andExpect(jsonPath("$.resolvedSupportCases").value(1));
+    }
 }

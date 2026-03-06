@@ -11,4 +11,6 @@ public interface TenantAuditEventRepository extends JpaRepository<TenantAuditEve
     long countByTenantId(UUID tenantId);
 
     List<TenantAuditEvent> findByTenantId(UUID tenantId, Pageable pageable);
+
+    List<TenantAuditEvent> findByTenantIdAndEntityTypeOrderByEventTimeAscCreatedAtAsc(UUID tenantId, String entityType);
 }

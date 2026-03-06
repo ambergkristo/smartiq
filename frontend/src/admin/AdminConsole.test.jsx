@@ -2,10 +2,13 @@ import { fireEvent, render, screen, waitFor, within } from '@testing-library/rea
 import AdminConsole from './AdminConsole';
 
 vi.mock('./api', () => ({
+  createSupportCase: vi.fn(),
   listTenants: vi.fn(),
   getTenant: vi.fn(),
+  getPilotSummary: vi.fn(),
   updateTenantBranding: vi.fn(),
   listMembers: vi.fn(),
+  listSupportCases: vi.fn(),
   updateMember: vi.fn(),
   removeMember: vi.fn(),
   getSettings: vi.fn(),
@@ -15,6 +18,7 @@ vi.mock('./api', () => ({
   listUsageEvents: vi.fn(),
   listUsageSummary: vi.fn(),
   listAuditEvents: vi.fn(),
+  updateSupportCase: vi.fn(),
   resolveAdminError: vi.fn((error) => ({
     code: error?.code || 'HTTP_ERROR',
     title: error?.code || 'HTTP_ERROR',
@@ -83,12 +87,40 @@ function primeDefaultMocks() {
   adminApi.getSubscription.mockResolvedValue(SUBSCRIPTION);
   adminApi.listUsageEvents.mockResolvedValue([]);
   adminApi.listUsageSummary.mockResolvedValue([]);
+  adminApi.getPilotSummary.mockResolvedValue({
+    riskStatus: 'tracking',
+    recommendation: 'Continue collecting pilot evidence.',
+    activated: false,
+    repeatHost: false,
+    paidConverted: false,
+    openSupportCases: 0,
+    resolvedSupportCases: 0,
+    topOpenSupportCategory: null,
+    planCode: 'GROWTH',
+    subscriptionStatus: 'ACTIVE'
+  });
+  adminApi.listSupportCases.mockResolvedValue([]);
   adminApi.listAuditEvents.mockResolvedValue([]);
   adminApi.updateTenantBranding.mockResolvedValue(TENANT_DETAIL);
   adminApi.updateSettings.mockResolvedValue(SETTINGS);
   adminApi.updateSubscription.mockResolvedValue(SUBSCRIPTION);
   adminApi.updateMember.mockResolvedValue(MEMBERS[0]);
   adminApi.removeMember.mockResolvedValue(undefined);
+  adminApi.createSupportCase.mockImplementation(async (_tenantId, payload) => ({
+    caseId: 'sc_1',
+    status: 'open',
+    ...payload
+  }));
+  adminApi.updateSupportCase.mockImplementation(async (_tenantId, caseId, payload) => ({
+    caseId,
+    title: 'Join code confusion',
+    category: 'onboarding',
+    priority: 'high',
+    owner: 'Founder',
+    summary: 'Host could not find the join flow.',
+    nextStep: 'Update onboarding copy.',
+    ...payload
+  }));
 }
 
 describe('AdminConsole', () => {
@@ -178,11 +210,27 @@ describe('AdminConsole', () => {
       { eventType: 'billing.checkout.started', totalValue: 1 },
       { eventType: 'billing.subscription.activated', totalValue: 1 }
     ]);
+    adminApi.getPilotSummary.mockResolvedValue({
+      riskStatus: 'conversion_risk',
+      recommendation: 'Upgrade intent exists without paid activation; inspect checkout friction and pricing objections.',
+      activated: true,
+      repeatHost: true,
+      paidConverted: false,
+      openSupportCases: 1,
+      resolvedSupportCases: 0,
+      topOpenSupportCategory: 'billing',
+      planCode: 'pilot-monthly',
+      subscriptionStatus: 'trialing'
+    });
 
     render(<AdminConsole />);
 
     await screen.findByRole('button', { name: /acme training/i });
     fireEvent.click(screen.getByRole('button', { name: /usage & audit/i }));
+
+    const summary = await screen.findByTestId('pilot-summary');
+    expect(summary).toHaveTextContent('Conversion Risk');
+    expect(summary).toHaveTextContent('Top friction: Billing');
 
     const metrics = await screen.findByTestId('pilot-metrics');
     expect(metrics).toHaveTextContent('Session launches');
@@ -191,5 +239,100 @@ describe('AdminConsole', () => {
     expect(metrics).toHaveTextContent('2');
     expect(metrics).toHaveTextContent('Upgrade attempts');
     expect(metrics).toHaveTextContent('Paid activations');
+  });
+
+  test('logs and resolves support cases from usage tab', async () => {
+    adminApi.getPilotSummary
+      .mockResolvedValueOnce({
+        riskStatus: 'tracking',
+        recommendation: 'Continue collecting pilot evidence.',
+        activated: false,
+        repeatHost: false,
+        paidConverted: false,
+        openSupportCases: 0,
+        resolvedSupportCases: 0,
+        topOpenSupportCategory: null,
+        planCode: 'GROWTH',
+        subscriptionStatus: 'ACTIVE'
+      })
+      .mockResolvedValueOnce({
+        riskStatus: 'needs_attention',
+        recommendation: 'Resolve the highest open support category before widening pilots: onboarding.',
+        activated: true,
+        repeatHost: false,
+        paidConverted: false,
+        openSupportCases: 1,
+        resolvedSupportCases: 0,
+        topOpenSupportCategory: 'onboarding',
+        planCode: 'GROWTH',
+        subscriptionStatus: 'ACTIVE'
+      })
+      .mockResolvedValueOnce({
+        riskStatus: 'tracking',
+        recommendation: 'Continue collecting repeat-host and paid-retention evidence from real pilot traffic.',
+        activated: true,
+        repeatHost: false,
+        paidConverted: false,
+        openSupportCases: 0,
+        resolvedSupportCases: 1,
+        topOpenSupportCategory: null,
+        planCode: 'GROWTH',
+        subscriptionStatus: 'ACTIVE'
+      });
+    adminApi.createSupportCase.mockResolvedValue({
+      caseId: 'sc_1',
+      title: 'Join code confusion',
+      category: 'onboarding',
+      priority: 'high',
+      status: 'open',
+      owner: 'Founder',
+      summary: 'Host could not find the join flow.',
+      nextStep: 'Update onboarding copy.'
+    });
+    adminApi.updateSupportCase.mockResolvedValue({
+      caseId: 'sc_1',
+      title: 'Join code confusion',
+      category: 'onboarding',
+      priority: 'high',
+      status: 'resolved',
+      owner: 'Founder',
+      summary: 'Host could not find the join flow.',
+      nextStep: 'Update onboarding copy.',
+      resolution: 'Resolved in admin pilot support loop.'
+    });
+
+    render(<AdminConsole />);
+
+    await screen.findByRole('button', { name: /acme training/i });
+    fireEvent.click(screen.getByRole('button', { name: /usage & audit/i }));
+
+    fireEvent.change(screen.getByLabelText(/title/i), { target: { value: 'Join code confusion' } });
+    fireEvent.change(screen.getByLabelText(/owner/i), { target: { value: 'Founder' } });
+    fireEvent.change(screen.getByLabelText(/summary/i), { target: { value: 'Host could not find the join flow.' } });
+    fireEvent.change(screen.getByLabelText(/next step/i), { target: { value: 'Update onboarding copy.' } });
+    fireEvent.click(screen.getByRole('button', { name: /log support case/i }));
+
+    await waitFor(() => {
+      expect(adminApi.createSupportCase).toHaveBeenCalledWith(
+        'tenant-1',
+        expect.objectContaining({
+          title: 'Join code confusion',
+          owner: 'Founder'
+        })
+      );
+    });
+
+    const supportTable = await screen.findByTestId('support-cases');
+    expect(supportTable).toHaveTextContent('Join code confusion');
+    fireEvent.click(screen.getByRole('button', { name: /mark resolved/i }));
+
+    await waitFor(() => {
+      expect(adminApi.updateSupportCase).toHaveBeenCalledWith(
+        'tenant-1',
+        'sc_1',
+        expect.objectContaining({ status: 'resolved' })
+      );
+    });
+    expect(await screen.findByTestId('support-feedback')).toHaveTextContent('Support case resolved.');
   });
 });

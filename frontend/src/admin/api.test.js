@@ -1,10 +1,14 @@
 import {
   AdminApiError,
+  createSupportCase,
+  getPilotSummary,
+  listSupportCases,
   listUsageSummary,
   listTenants,
   removeMember,
   resolveAdminError,
   toBrandingPayload,
+  updateSupportCase,
   toSubscriptionPayload,
   updateSettings,
   updateTenantBranding
@@ -56,6 +60,60 @@ describe('admin api contract', () => {
     expect(globalThis.fetch).toHaveBeenCalledWith(
       'http://localhost:8081/internal/wl/tenants/tenant-1/usage-summary?eventType=host.session.started&from=2026-03-01T00%3A00%3A00Z&to=2026-03-31T00%3A00%3A00Z',
       expect.objectContaining({ method: 'GET' })
+    );
+  });
+
+  test('uses pilot summary and support case endpoints', async () => {
+    mockJsonResponse({
+      body: { tenantId: 'tenant-1', riskStatus: 'tracking' }
+    });
+    await getPilotSummary('tenant-1');
+    expect(globalThis.fetch).toHaveBeenCalledWith(
+      'http://localhost:8081/internal/wl/tenants/tenant-1/pilot-summary',
+      expect.objectContaining({ method: 'GET' })
+    );
+
+    mockJsonResponse({
+      body: [{ caseId: 'sc_1', title: 'Join code confusion' }]
+    });
+    await listSupportCases('tenant-1');
+    expect(globalThis.fetch).toHaveBeenCalledWith(
+      'http://localhost:8081/internal/wl/tenants/tenant-1/support-cases',
+      expect.objectContaining({ method: 'GET' })
+    );
+
+    mockJsonResponse({
+      body: { caseId: 'sc_1', status: 'open' }
+    });
+    await createSupportCase('tenant-1', {
+      title: 'Join code confusion',
+      owner: 'Founder'
+    });
+    expect(globalThis.fetch).toHaveBeenCalledWith(
+      'http://localhost:8081/internal/wl/tenants/tenant-1/support-cases',
+      expect.objectContaining({
+        method: 'POST',
+        body: JSON.stringify({
+          title: 'Join code confusion',
+          owner: 'Founder'
+        })
+      })
+    );
+
+    mockJsonResponse({
+      body: { caseId: 'sc_1', status: 'resolved' }
+    });
+    await updateSupportCase('tenant-1', 'sc_1', {
+      status: 'resolved'
+    });
+    expect(globalThis.fetch).toHaveBeenCalledWith(
+      'http://localhost:8081/internal/wl/tenants/tenant-1/support-cases/sc_1',
+      expect.objectContaining({
+        method: 'PATCH',
+        body: JSON.stringify({
+          status: 'resolved'
+        })
+      })
     );
   });
 

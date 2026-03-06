@@ -39,11 +39,20 @@ Observed result:
 2. admin console renders a pilot-metrics card over canonical usage-summary rows,
 3. founder/operator can see bootstraps, host sign-ins, session launches, duplicate/resume actions, completed sessions, upgrade attempts, and paid activations without manual log parsing.
 
+### Lightweight pilot support loop now exists in admin operations
+
+Observed result:
+
+1. internal admin API can create, list, and update tenant support cases without a new persistence table,
+2. support cases are stored as canonical tenant audit evidence under `support_case`,
+3. founder/operator can log onboarding, live-run, billing, or retention blockers with owner and next step,
+4. pilot summary now derives support-load and friction status from both usage summary and support cases.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
 
-1. `mvn -q -f backend/pom.xml "-Dtest=TenantMeControllerTest,GameSessionControllerTest,BillingServiceTest" test`
+1. `mvn -q -f backend/pom.xml "-Dtest=TenantAdminControllerTest,TenantMeControllerTest,GameSessionControllerTest,BillingServiceTest" test`
 2. `npm --prefix frontend run test -- --run src/admin/api.test.js src/admin/AdminConsole.test.jsx`
 
 ## Honest Status
@@ -51,5 +60,5 @@ The following checks executed successfully after this progress slice:
 `M6 Pilot Conversion and Retention Proof` remains active and is not promotable done yet because:
 
 1. telemetry is now captured, but no recurring-host pilot summary artifact has been generated from live recurring-host usage yet,
-2. support/feedback loop handling is not yet wired into product or ops workflow,
-3. repeat-host and early paid-retention interpretation still needs a canonical report/evidence pack.
+2. support/feedback loop now exists internally, but it is not yet backed by actual recurring-host pilot volume,
+3. repeat-host and early paid-retention interpretation still needs a canonical report/evidence pack from real usage.

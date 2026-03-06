@@ -186,6 +186,28 @@ export async function listUsageSummary(tenantId, { eventType, from, to } = {}) {
   });
 }
 
+export async function getPilotSummary(tenantId) {
+  return request(`${ADMIN_BASE_PATH}/${encodeURIComponent(normalizeTenantId(tenantId))}/pilot-summary`);
+}
+
+export async function listSupportCases(tenantId) {
+  return request(`${ADMIN_BASE_PATH}/${encodeURIComponent(normalizeTenantId(tenantId))}/support-cases`);
+}
+
+export async function createSupportCase(tenantId, payload) {
+  return request(`${ADMIN_BASE_PATH}/${encodeURIComponent(normalizeTenantId(tenantId))}/support-cases`, {
+    method: 'POST',
+    body: payload
+  });
+}
+
+export async function updateSupportCase(tenantId, caseId, payload) {
+  return request(`${ADMIN_BASE_PATH}/${encodeURIComponent(normalizeTenantId(tenantId))}/support-cases/${encodeURIComponent(normalizeMembershipId(caseId))}`, {
+    method: 'PATCH',
+    body: payload
+  });
+}
+
 export async function listAuditEvents(tenantId, { limit } = {}) {
   return request(`${ADMIN_BASE_PATH}/${encodeURIComponent(normalizeTenantId(tenantId))}/audit-events`, {
     query: { limit }

@@ -120,6 +120,31 @@ public class TenantAdminController {
         return tenantService.getTenantUsageSummary(tenantId, eventType, from, to);
     }
 
+    @GetMapping("/{tenantId}/pilot-summary")
+    public TenantPilotSummaryResponse getPilotSummary(@PathVariable UUID tenantId) {
+        return tenantService.getTenantPilotSummary(tenantId);
+    }
+
+    @GetMapping("/{tenantId}/support-cases")
+    public List<TenantSupportCaseResponse> listSupportCases(@PathVariable UUID tenantId) {
+        return tenantService.listTenantSupportCases(tenantId);
+    }
+
+    @PostMapping("/{tenantId}/support-cases")
+    public TenantSupportCaseResponse createSupportCase(@PathVariable UUID tenantId,
+                                                       @RequestBody(required = false) CreateTenantSupportCaseRequest request,
+                                                       @RequestHeader(name = ACTOR_USER_ID_HEADER, required = false) String actorUserIdHeader) {
+        return tenantService.createTenantSupportCase(tenantId, request, resolveActorUserId(actorUserIdHeader));
+    }
+
+    @PatchMapping("/{tenantId}/support-cases/{caseId}")
+    public TenantSupportCaseResponse updateSupportCase(@PathVariable UUID tenantId,
+                                                       @PathVariable String caseId,
+                                                       @RequestBody(required = false) UpdateTenantSupportCaseRequest request,
+                                                       @RequestHeader(name = ACTOR_USER_ID_HEADER, required = false) String actorUserIdHeader) {
+        return tenantService.updateTenantSupportCase(tenantId, caseId, request, resolveActorUserId(actorUserIdHeader));
+    }
+
     @GetMapping("/{tenantId}/settings")
     public TenantSettingsResponse getSettings(@PathVariable UUID tenantId) {
         return tenantService.getTenantSettings(tenantId);

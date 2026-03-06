@@ -1,10 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
+  createSupportCase,
   getSettings,
+  getPilotSummary,
   getSubscription,
   getTenant,
   listAuditEvents,
   listMembers,
+  listSupportCases,
   listTenants,
   listUsageEvents,
   listUsageSummary,
@@ -12,6 +15,7 @@ import {
   resolveAdminError,
   toBrandingPayload,
   toSubscriptionPayload,
+  updateSupportCase,
   updateMember,
   updateSettings,
   updateTenantBranding,
@@ -30,6 +34,9 @@ const PILOT_METRIC_LABELS = [
   { eventType: 'billing.checkout.started', label: 'Upgrade attempts' },
   { eventType: 'billing.subscription.activated', label: 'Paid activations' }
 ];
+
+const SUPPORT_CASE_CATEGORY_OPTIONS = ['onboarding', 'live_run', 'billing', 'retention', 'general'];
+const SUPPORT_CASE_PRIORITY_OPTIONS = ['high', 'medium', 'low'];
 
 function toPrettyJson(value) {
   if (value === null || value === undefined) {
@@ -76,6 +83,22 @@ function formatTime(value) {
   return parsed.toLocaleString();
 }
 
+function formatSupportLabel(value) {
+  return String(value || '')
+    .split('_')
+    .filter(Boolean)
+    .map((token) => token.charAt(0).toUpperCase() + token.slice(1))
+    .join(' ') || '-';
+}
+
+function formatPilotRisk(value) {
+  return String(value || '')
+    .split('_')
+    .filter(Boolean)
+    .map((token) => token.charAt(0).toUpperCase() + token.slice(1))
+    .join(' ') || 'Tracking';
+}
+
 function buildMemberDrafts(members) {
   const drafts = {};
   members.forEach((member) => {
@@ -98,6 +121,8 @@ export default function AdminConsole() {
   const [usageEvents, setUsageEvents] = useState([]);
   const [usageSummary, setUsageSummary] = useState([]);
   const [auditEvents, setAuditEvents] = useState([]);
+  const [pilotSummary, setPilotSummary] = useState(null);
+  const [supportCases, setSupportCases] = useState([]);
 
   const [loadingTenants, setLoadingTenants] = useState(true);
   const [loadingTenantData, setLoadingTenantData] = useState(false);
@@ -132,6 +157,15 @@ export default function AdminConsole() {
   const [usageLimit, setUsageLimit] = useState('20');
   const [auditLimit, setAuditLimit] = useState('20');
   const [usageFeedback, setUsageFeedback] = useState('');
+  const [supportCaseForm, setSupportCaseForm] = useState({
+    title: '',
+    category: 'onboarding',
+    priority: 'high',
+    owner: '',
+    summary: '',
+    nextStep: ''
+  });
+  const [supportFeedback, setSupportFeedback] = useState('');
 
   async function loadTenants() {
     setLoadingTenants(true);
@@ -170,6 +204,8 @@ export default function AdminConsole() {
         limit: usageLimit
       });
       const tenantUsageSummary = await listUsageSummary(tenantId);
+      const tenantPilotSummary = await getPilotSummary(tenantId);
+      const tenantSupportCases = await listSupportCases(tenantId);
       const tenantAudit = await listAuditEvents(tenantId, {
         limit: auditLimit
       });
@@ -180,6 +216,8 @@ export default function AdminConsole() {
       setSubscription(tenantSubscription);
       setUsageEvents(Array.isArray(tenantUsage) ? tenantUsage : []);
       setUsageSummary(Array.isArray(tenantUsageSummary) ? tenantUsageSummary : []);
+      setPilotSummary(tenantPilotSummary || null);
+      setSupportCases(Array.isArray(tenantSupportCases) ? tenantSupportCases : []);
       setAuditEvents(Array.isArray(tenantAudit) ? tenantAudit : []);
 
       const branding = detail?.branding || {};
@@ -205,6 +243,15 @@ export default function AdminConsole() {
       setSettingsFeedback('');
       setSubscriptionFeedback('');
       setUsageFeedback('');
+      setSupportCaseForm({
+        title: '',
+        category: 'onboarding',
+        priority: 'high',
+        owner: '',
+        summary: '',
+        nextStep: ''
+      });
+      setSupportFeedback('');
     } catch (error) {
       const resolved = resolveAdminError(error);
       setGlobalError(`${resolved.title}: ${resolved.detail}`);
@@ -379,16 +426,74 @@ export default function AdminConsole() {
         limit: usageLimit
       });
       const nextUsageSummary = await listUsageSummary(selectedTenantId);
+      const nextPilotSummary = await getPilotSummary(selectedTenantId);
+      const nextSupportCases = await listSupportCases(selectedTenantId);
       const nextAudit = await listAuditEvents(selectedTenantId, {
         limit: auditLimit
       });
       setUsageEvents(Array.isArray(nextUsage) ? nextUsage : []);
       setUsageSummary(Array.isArray(nextUsageSummary) ? nextUsageSummary : []);
+      setPilotSummary(nextPilotSummary || null);
+      setSupportCases(Array.isArray(nextSupportCases) ? nextSupportCases : []);
       setAuditEvents(Array.isArray(nextAudit) ? nextAudit : []);
       setUsageFeedback('Usage and audit refreshed.');
     } catch (error) {
       const resolved = resolveAdminError(error);
       setUsageFeedback(`${resolved.title}: ${resolved.detail}`);
+    }
+  }
+
+  async function handleSupportCaseSubmit(event) {
+    event.preventDefault();
+    if (!selectedTenantId) {
+      return;
+    }
+
+    if (!String(supportCaseForm.title || '').trim() || !String(supportCaseForm.owner || '').trim() || !String(supportCaseForm.summary || '').trim()) {
+      setSupportFeedback('Validation: title, owner, and summary are required.');
+      return;
+    }
+
+    try {
+      const created = await createSupportCase(selectedTenantId, supportCaseForm);
+      setSupportCases((current) => [created, ...current]);
+      setSupportCaseForm({
+        title: '',
+        category: 'onboarding',
+        priority: 'high',
+        owner: '',
+        summary: '',
+        nextStep: ''
+      });
+      const nextPilotSummary = await getPilotSummary(selectedTenantId);
+      setPilotSummary(nextPilotSummary || null);
+      setSupportFeedback('Support case logged.');
+    } catch (error) {
+      const resolved = resolveAdminError(error);
+      setSupportFeedback(`${resolved.title}: ${resolved.detail}`);
+    }
+  }
+
+  async function handleSupportStatusToggle(caseItem) {
+    if (!selectedTenantId || !caseItem?.caseId) {
+      return;
+    }
+
+    const nextStatus = caseItem.status === 'resolved' ? 'open' : 'resolved';
+    try {
+      const updated = await updateSupportCase(selectedTenantId, caseItem.caseId, {
+        status: nextStatus,
+        resolution: nextStatus === 'resolved' ? 'Resolved in admin pilot support loop.' : null
+      });
+      setSupportCases((current) => current.map((item) => (
+        item.caseId === updated.caseId ? updated : item
+      )));
+      const nextPilotSummary = await getPilotSummary(selectedTenantId);
+      setPilotSummary(nextPilotSummary || null);
+      setSupportFeedback(nextStatus === 'resolved' ? 'Support case resolved.' : 'Support case reopened.');
+    } catch (error) {
+      const resolved = resolveAdminError(error);
+      setSupportFeedback(`${resolved.title}: ${resolved.detail}`);
     }
   }
 
@@ -637,6 +742,40 @@ export default function AdminConsole() {
 
               {activeTab === 'Usage & Audit' ? (
                 <section className="wl-admin-block">
+                  <h3>Pilot summary</h3>
+                  <section className="wl-admin-pilot-summary" data-testid="pilot-summary">
+                    <article className="wl-admin-pilot-summary-card">
+                      <span>Risk</span>
+                      <strong>{formatPilotRisk(pilotSummary?.riskStatus)}</strong>
+                      <small>{pilotSummary?.recommendation || 'Continue collecting pilot evidence.'}</small>
+                    </article>
+                    <article className="wl-admin-pilot-summary-card">
+                      <span>Stage</span>
+                      <strong>
+                        {pilotSummary?.paidConverted
+                          ? 'Paid'
+                          : pilotSummary?.repeatHost
+                            ? 'Repeat host'
+                            : pilotSummary?.activated
+                              ? 'Activated'
+                              : 'Not started'}
+                      </strong>
+                      <small>
+                        {pilotSummary?.planCode || 'No plan code'}
+                        {pilotSummary?.subscriptionStatus ? ` | ${pilotSummary.subscriptionStatus}` : ''}
+                      </small>
+                    </article>
+                    <article className="wl-admin-pilot-summary-card">
+                      <span>Support load</span>
+                      <strong>{pilotSummary?.openSupportCases ?? 0} open</strong>
+                      <small>
+                        {pilotSummary?.topOpenSupportCategory
+                          ? `Top friction: ${formatSupportLabel(pilotSummary.topOpenSupportCategory)}`
+                          : `Resolved: ${pilotSummary?.resolvedSupportCases ?? 0}`}
+                      </small>
+                    </article>
+                  </section>
+
                   <h3>Pilot metrics</h3>
                   <div className="wl-admin-pilot-metrics" data-testid="pilot-metrics">
                     {PILOT_METRIC_LABELS.map((metric) => {
@@ -690,6 +829,105 @@ export default function AdminConsole() {
                   <div className="wl-admin-actions">
                     <button type="button" onClick={handleUsageRefresh}>Refresh usage and audit</button>
                   </div>
+
+                  <h3>Support cases</h3>
+                  <form className="wl-admin-form wl-admin-support-form" onSubmit={handleSupportCaseSubmit}>
+                    <div className="wl-admin-grid-two">
+                      <div>
+                        <label htmlFor="support-case-title">Title</label>
+                        <input
+                          id="support-case-title"
+                          value={supportCaseForm.title}
+                          onChange={(event) => setSupportCaseForm((current) => ({ ...current, title: event.target.value }))}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="support-case-owner">Owner</label>
+                        <input
+                          id="support-case-owner"
+                          value={supportCaseForm.owner}
+                          onChange={(event) => setSupportCaseForm((current) => ({ ...current, owner: event.target.value }))}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="support-case-category">Category</label>
+                        <select
+                          id="support-case-category"
+                          value={supportCaseForm.category}
+                          onChange={(event) => setSupportCaseForm((current) => ({ ...current, category: event.target.value }))}
+                        >
+                          {SUPPORT_CASE_CATEGORY_OPTIONS.map((option) => (
+                            <option key={option} value={option}>{formatSupportLabel(option)}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label htmlFor="support-case-priority">Priority</label>
+                        <select
+                          id="support-case-priority"
+                          value={supportCaseForm.priority}
+                          onChange={(event) => setSupportCaseForm((current) => ({ ...current, priority: event.target.value }))}
+                        >
+                          {SUPPORT_CASE_PRIORITY_OPTIONS.map((option) => (
+                            <option key={option} value={option}>{formatSupportLabel(option)}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <label htmlFor="support-case-summary">Summary</label>
+                    <textarea
+                      id="support-case-summary"
+                      rows={4}
+                      value={supportCaseForm.summary}
+                      onChange={(event) => setSupportCaseForm((current) => ({ ...current, summary: event.target.value }))}
+                    />
+                    <label htmlFor="support-case-next-step">Next step</label>
+                    <input
+                      id="support-case-next-step"
+                      value={supportCaseForm.nextStep}
+                      onChange={(event) => setSupportCaseForm((current) => ({ ...current, nextStep: event.target.value }))}
+                    />
+                    <div className="wl-admin-actions">
+                      <button type="submit">Log support case</button>
+                    </div>
+                    {supportFeedback ? <p data-testid="support-feedback">{supportFeedback}</p> : null}
+                  </form>
+
+                  <table data-testid="support-cases">
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Owner</th>
+                        <th>Next step</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {supportCases.map((caseItem) => (
+                        <tr key={caseItem.caseId}>
+                          <td>
+                            <strong>{caseItem.title}</strong>
+                            <div>{formatSupportLabel(caseItem.category)} | {formatSupportLabel(caseItem.priority)}</div>
+                            <small>{caseItem.summary}</small>
+                          </td>
+                          <td>{formatSupportLabel(caseItem.status)}</td>
+                          <td>{caseItem.owner || '-'}</td>
+                          <td>{caseItem.nextStep || '-'}</td>
+                          <td>
+                            <button type="button" onClick={() => handleSupportStatusToggle(caseItem)}>
+                              {caseItem.status === 'resolved' ? 'Reopen' : 'Mark resolved'}
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                      {supportCases.length === 0 ? (
+                        <tr>
+                          <td colSpan={5}>No support cases logged.</td>
+                        </tr>
+                      ) : null}
+                    </tbody>
+                  </table>
 
                   <h3>Usage events</h3>
                   <table>
