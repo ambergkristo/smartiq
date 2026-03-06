@@ -54,7 +54,7 @@ public class BillingService {
         this.billingProperties = billingProperties;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public BillingCheckoutResponse initiateCheckout(String userEmail, UUID tenantIdContext, BillingCheckoutRequest request) {
         if (tenantIdContext == null) {
             throw new IllegalArgumentException("tenant context is required");
@@ -66,6 +66,7 @@ public class BillingService {
         String checkoutSessionId = "chk_" + UUID.randomUUID().toString().replace("-", "").substring(0, 12);
         Instant expiresAt = Instant.now().plusSeconds(30L * 60L);
         String checkoutUrl = buildCheckoutUrl(checkoutSessionId, tenantIdContext, planCode, billingCycle);
+        tenantService.recordBillingCheckoutStarted(userEmail, tenantIdContext, planCode, billingCycle);
 
         return new BillingCheckoutResponse(
                 checkoutSessionId,
@@ -122,6 +123,13 @@ public class BillingService {
 
         UpdateTenantSubscriptionRequest updateRequest = toSubscriptionUpdateRequest(eventType, request);
         TenantSubscriptionResponse updated = tenantService.updateTenantSubscription(tenantId, updateRequest);
+        tenantService.recordBillingSubscriptionLifecycle(
+                tenantId,
+                updated.planCode(),
+                updated.status(),
+                updated.billingCycle(),
+                occurredAt
+        );
         persistLedger(eventId, tenantId, eventType, EVENT_STATUS_PROCESSED, occurredAt, receivedAt, request);
 
         return new BillingWebhookResponse(

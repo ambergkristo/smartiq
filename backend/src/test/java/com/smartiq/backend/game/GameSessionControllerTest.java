@@ -104,6 +104,31 @@ class GameSessionControllerTest {
     }
 
     @Test
+    void duplicateGameRecordsRepeatHostTelemetryForTenantMember() throws Exception {
+        UUID tenantId = UUID.randomUUID();
+        when(authContextResolver.resolveOptional(any()))
+                .thenReturn(new ResolvedAuthContext("owner@acme.test", tenantId));
+        when(gameSessionService.buildDuplicateRequest(eq("game-1"), eq(tenantId)))
+                .thenReturn(new CreateGameRequest(List.of("Alice", "Bob"), "en", "Science", 30));
+        when(gameSessionService.duplicateGameWithControl(eq("game-1"), eq(tenantId), eq("owner@acme.test")))
+                .thenReturn(new GameSessionCreateResponse(
+                        snapshot("game-2", "CHOOSING"),
+                        Map.of("p1", "at_3", "p2", "at_4")
+                ));
+
+        mockMvc.perform(post("/api/game/game-1/duplicate"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.snapshot.gameId").value("game-2"));
+
+        verify(tenantService).recordHostGameSessionDuplicated(
+                eq("owner@acme.test"),
+                eq(tenantId),
+                eq("game-1"),
+                eq("game-2")
+        );
+    }
+
+    @Test
     void duplicateGameMapsCrossTenantAccessToForbiddenErrorShape() throws Exception {
         UUID tenantId = UUID.randomUUID();
         when(authContextResolver.resolveOptional(any()))
@@ -137,6 +162,7 @@ class GameSessionControllerTest {
                 .andExpect(jsonPath("$.actionTokens.p1").value("at_1"));
 
         verify(tenantService).assertHostedRuntimeAllowedForMember("owner@acme.test", tenantId);
+        verify(tenantService).recordHostGameSessionResumed("owner@acme.test", tenantId, "game-1");
     }
 
     @Test

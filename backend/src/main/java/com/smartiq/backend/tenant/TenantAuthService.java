@@ -75,6 +75,7 @@ public class TenantAuthService {
                 challenge.email(),
                 challenge.tenantId()
         );
+        tenantService.recordRuntimeAuthCompleted(challenge.email(), challenge.tenantId());
         return new AuthCompleteResponse(runtimeAuth, me);
     }
 

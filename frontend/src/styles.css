@@ -1710,6 +1710,34 @@ button:disabled {
   margin-top: 8px;
 }
 
+.wl-admin-pilot-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.wl-admin-pilot-metric-card {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 227, 190, 0.2);
+  background: rgba(255, 244, 228, 0.05);
+}
+
+.wl-admin-pilot-metric-card strong {
+  font-size: 1.4rem;
+}
+
+.wl-admin-pilot-metric-card span {
+  color: var(--text);
+}
+
+.wl-admin-pilot-metric-card small {
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
 .wl-admin-usage-controls {
   align-items: end;
 }
@@ -1733,6 +1761,10 @@ textarea {
 
   .wl-admin-grid-two {
     grid-template-columns: 1fr;
+  }
+
+  .wl-admin-pilot-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

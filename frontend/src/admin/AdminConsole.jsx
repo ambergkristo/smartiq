@@ -7,6 +7,7 @@ import {
   listMembers,
   listTenants,
   listUsageEvents,
+  listUsageSummary,
   removeMember,
   resolveAdminError,
   toBrandingPayload,
@@ -18,6 +19,17 @@ import {
 } from './api';
 
 const TABS = ['Branding', 'Members', 'Settings', 'Subscription', 'Usage & Audit'];
+
+const PILOT_METRIC_LABELS = [
+  { eventType: 'host.workspace.bootstrapped', label: 'Bootstraps' },
+  { eventType: 'host.auth.completed', label: 'Host sign-ins' },
+  { eventType: 'host.session.started', label: 'Session launches' },
+  { eventType: 'host.session.duplicated', label: 'Duplicate relaunches' },
+  { eventType: 'host.session.resumed', label: 'Resume actions' },
+  { eventType: 'host.session.completed', label: 'Completed sessions' },
+  { eventType: 'billing.checkout.started', label: 'Upgrade attempts' },
+  { eventType: 'billing.subscription.activated', label: 'Paid activations' }
+];
 
 function toPrettyJson(value) {
   if (value === null || value === undefined) {
@@ -84,6 +96,7 @@ export default function AdminConsole() {
   const [settings, setSettings] = useState(null);
   const [subscription, setSubscription] = useState(null);
   const [usageEvents, setUsageEvents] = useState([]);
+  const [usageSummary, setUsageSummary] = useState([]);
   const [auditEvents, setAuditEvents] = useState([]);
 
   const [loadingTenants, setLoadingTenants] = useState(true);
@@ -156,6 +169,7 @@ export default function AdminConsole() {
         eventType: eventTypeFilter,
         limit: usageLimit
       });
+      const tenantUsageSummary = await listUsageSummary(tenantId);
       const tenantAudit = await listAuditEvents(tenantId, {
         limit: auditLimit
       });
@@ -165,6 +179,7 @@ export default function AdminConsole() {
       setSettings(tenantSettings);
       setSubscription(tenantSubscription);
       setUsageEvents(Array.isArray(tenantUsage) ? tenantUsage : []);
+      setUsageSummary(Array.isArray(tenantUsageSummary) ? tenantUsageSummary : []);
       setAuditEvents(Array.isArray(tenantAudit) ? tenantAudit : []);
 
       const branding = detail?.branding || {};
@@ -363,10 +378,12 @@ export default function AdminConsole() {
         eventType: eventTypeFilter,
         limit: usageLimit
       });
+      const nextUsageSummary = await listUsageSummary(selectedTenantId);
       const nextAudit = await listAuditEvents(selectedTenantId, {
         limit: auditLimit
       });
       setUsageEvents(Array.isArray(nextUsage) ? nextUsage : []);
+      setUsageSummary(Array.isArray(nextUsageSummary) ? nextUsageSummary : []);
       setAuditEvents(Array.isArray(nextAudit) ? nextAudit : []);
       setUsageFeedback('Usage and audit refreshed.');
     } catch (error) {
@@ -620,6 +637,22 @@ export default function AdminConsole() {
 
               {activeTab === 'Usage & Audit' ? (
                 <section className="wl-admin-block">
+                  <h3>Pilot metrics</h3>
+                  <div className="wl-admin-pilot-metrics" data-testid="pilot-metrics">
+                    {PILOT_METRIC_LABELS.map((metric) => {
+                      const row = Array.isArray(usageSummary)
+                        ? usageSummary.find((entry) => entry.eventType === metric.eventType)
+                        : null;
+                      return (
+                        <article key={metric.eventType} className="wl-admin-pilot-metric-card">
+                          <strong>{row?.totalValue ?? 0}</strong>
+                          <span>{metric.label}</span>
+                          <small>{metric.eventType}</small>
+                        </article>
+                      );
+                    })}
+                  </div>
+
                   <div className="wl-admin-grid-two wl-admin-usage-controls">
                     <div>
                       <label htmlFor="usage-event-type">Usage event type</label>

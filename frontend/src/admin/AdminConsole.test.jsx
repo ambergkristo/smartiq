@@ -13,6 +13,7 @@ vi.mock('./api', () => ({
   getSubscription: vi.fn(),
   updateSubscription: vi.fn(),
   listUsageEvents: vi.fn(),
+  listUsageSummary: vi.fn(),
   listAuditEvents: vi.fn(),
   resolveAdminError: vi.fn((error) => ({
     code: error?.code || 'HTTP_ERROR',
@@ -81,6 +82,7 @@ function primeDefaultMocks() {
   adminApi.getSettings.mockResolvedValue(SETTINGS);
   adminApi.getSubscription.mockResolvedValue(SUBSCRIPTION);
   adminApi.listUsageEvents.mockResolvedValue([]);
+  adminApi.listUsageSummary.mockResolvedValue([]);
   adminApi.listAuditEvents.mockResolvedValue([]);
   adminApi.updateTenantBranding.mockResolvedValue(TENANT_DETAIL);
   adminApi.updateSettings.mockResolvedValue(SETTINGS);
@@ -167,5 +169,27 @@ describe('AdminConsole', () => {
         'LAST_OWNER_PROTECTION: Cannot remove the final active owner.'
       );
     });
+  });
+
+  test('renders pilot metrics summary from usage summary data', async () => {
+    adminApi.listUsageSummary.mockResolvedValue([
+      { eventType: 'host.session.started', totalValue: 3 },
+      { eventType: 'host.session.completed', totalValue: 2 },
+      { eventType: 'billing.checkout.started', totalValue: 1 },
+      { eventType: 'billing.subscription.activated', totalValue: 1 }
+    ]);
+
+    render(<AdminConsole />);
+
+    await screen.findByRole('button', { name: /acme training/i });
+    fireEvent.click(screen.getByRole('button', { name: /usage & audit/i }));
+
+    const metrics = await screen.findByTestId('pilot-metrics');
+    expect(metrics).toHaveTextContent('Session launches');
+    expect(metrics).toHaveTextContent('3');
+    expect(metrics).toHaveTextContent('Completed sessions');
+    expect(metrics).toHaveTextContent('2');
+    expect(metrics).toHaveTextContent('Upgrade attempts');
+    expect(metrics).toHaveTextContent('Paid activations');
   });
 });

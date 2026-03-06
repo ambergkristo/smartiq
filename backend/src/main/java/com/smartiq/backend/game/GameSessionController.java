@@ -98,6 +98,12 @@ public class GameSessionController {
                     duplicateRequest.language(),
                     duplicateRequest.topic()
             );
+            tenantService.recordHostGameSessionDuplicated(
+                    context.userEmail(),
+                    context.tenantId(),
+                    gameId,
+                    duplicated.snapshot().gameId()
+            );
         }
         return duplicated;
     }
@@ -110,7 +116,9 @@ public class GameSessionController {
             throw new IllegalArgumentException("tenant context is required");
         }
         tenantService.assertHostedRuntimeAllowedForMember(context.userEmail(), context.tenantId());
-        return gameSessionService.getGameWithControl(gameId, context.tenantId());
+        GameSessionCreateResponse response = gameSessionService.getGameWithControl(gameId, context.tenantId());
+        tenantService.recordHostGameSessionResumed(context.userEmail(), context.tenantId(), gameId);
+        return response;
     }
 
     @PostMapping("/{gameId}/action")

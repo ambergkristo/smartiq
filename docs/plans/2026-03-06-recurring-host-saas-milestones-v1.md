@@ -44,6 +44,7 @@ Current execution pointer:
 2. `M5` is complete.
 3. `M5` promotion is based on hosted player-cap enforcement, analytics/history gating, custom-branding runtime enforcement, session-template paid workflow, and deterministic billing-return entitlement refresh.
 4. `M6` is now the active milestone.
+5. `M6` telemetry now captures bootstrap, auth completion, session launch/duplicate/resume/complete, and billing upgrade lifecycle events into tenant usage summary, with an internal pilot-metrics summary card available in admin ops.
 
 ## Milestone Definitions
 

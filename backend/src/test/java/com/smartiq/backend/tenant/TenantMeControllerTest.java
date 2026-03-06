@@ -314,6 +314,12 @@ class TenantMeControllerTest {
                 .andExpect(jsonPath("$.selectedTenantId").value(tenantId))
                 .andExpect(jsonPath("$.selectedRole").value("owner"))
                 .andExpect(jsonPath("$.memberships.length()").value(1));
+
+        mockMvc.perform(get("/internal/wl/tenants/{tenantId}/usage-summary?eventType=host.workspace.bootstrapped", tenantId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].eventType").value("host.workspace.bootstrapped"))
+                .andExpect(jsonPath("$[0].totalValue").value(1))
+                .andExpect(jsonPath("$[1]").doesNotExist());
     }
 
     @Test
@@ -422,6 +428,18 @@ class TenantMeControllerTest {
                 .andExpect(jsonPath("$.planCode").value("pilot-monthly"))
                 .andExpect(jsonPath("$.status").value("active"))
                 .andExpect(jsonPath("$.billingCycle").value("monthly"));
+
+        mockMvc.perform(get("/internal/wl/tenants/{tenantId}/usage-summary?eventType=billing.checkout.started", tenantId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].eventType").value("billing.checkout.started"))
+                .andExpect(jsonPath("$[0].totalValue").value(1))
+                .andExpect(jsonPath("$[1]").doesNotExist());
+
+        mockMvc.perform(get("/internal/wl/tenants/{tenantId}/usage-summary?eventType=billing.subscription.activated", tenantId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].eventType").value("billing.subscription.activated"))
+                .andExpect(jsonPath("$[0].totalValue").value(1))
+                .andExpect(jsonPath("$[1]").doesNotExist());
     }
 
     @Test
@@ -666,6 +684,12 @@ class TenantMeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value("signin@acme.test"))
                 .andExpect(jsonPath("$.selectedTenantId").value(tenantId));
+
+        mockMvc.perform(get("/internal/wl/tenants/{tenantId}/usage-summary?eventType=host.auth.completed", tenantId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].eventType").value("host.auth.completed"))
+                .andExpect(jsonPath("$[0].totalValue").value(1))
+                .andExpect(jsonPath("$[1]").doesNotExist());
 
         mockMvc.perform(post("/api/auth/complete")
                         .contentType(MediaType.APPLICATION_JSON)

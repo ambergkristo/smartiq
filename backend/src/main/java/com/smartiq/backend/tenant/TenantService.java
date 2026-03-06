@@ -74,6 +74,16 @@ public class TenantService {
     private static final String AUDIT_ENTITY_HOST_GAME_SESSION = "host_game_session";
     private static final String AUDIT_ENTITY_HOST_ROOM = "host_room";
     private static final String AUDIT_ENTITY_HOST_SESSION_TEMPLATE = "host_session_template";
+    private static final String USAGE_EVENT_HOST_WORKSPACE_BOOTSTRAPPED = "host.workspace.bootstrapped";
+    private static final String USAGE_EVENT_HOST_AUTH_COMPLETED = "host.auth.completed";
+    private static final String USAGE_EVENT_HOST_SESSION_STARTED = "host.session.started";
+    private static final String USAGE_EVENT_HOST_SESSION_DUPLICATED = "host.session.duplicated";
+    private static final String USAGE_EVENT_HOST_SESSION_RESUMED = "host.session.resumed";
+    private static final String USAGE_EVENT_HOST_SESSION_COMPLETED = "host.session.completed";
+    private static final String USAGE_EVENT_BILLING_CHECKOUT_STARTED = "billing.checkout.started";
+    private static final String USAGE_EVENT_BILLING_SUBSCRIPTION_ACTIVATED = "billing.subscription.activated";
+    private static final String USAGE_EVENT_BILLING_SUBSCRIPTION_CANCELED = "billing.subscription.canceled";
+    private static final String USAGE_EVENT_BILLING_SUBSCRIPTION_UPDATED = "billing.subscription.updated";
     private static final int SETTINGS_SCHEMA_VERSION = 1;
     private static final String DEFAULT_THEME = "classic";
     private static final int DEFAULT_MAX_PLAYERS = 10;
@@ -196,6 +206,7 @@ public class TenantService {
                 ownerEmail,
                 tenant.tenantId()
         );
+        recordHostWorkspaceBootstrapped(tenant.tenantId(), ownerEmail);
 
         return new OnboardingBootstrapResponse(tenant, member, me, runtimeAuth);
     }
@@ -644,6 +655,22 @@ public class TenantService {
         return toUsageEventResponse(event);
     }
 
+    private TenantUsageEventResponse recordRuntimeUsageEvent(UUID tenantId,
+                                                             String eventType,
+                                                             long eventValue,
+                                                             JsonNode metadata,
+                                                             Instant eventTime) {
+        return createTenantUsageEvent(
+                tenantId,
+                new CreateTenantUsageEventRequest(
+                        eventType,
+                        eventValue,
+                        eventTime,
+                        metadata
+                )
+        );
+    }
+
     @Transactional(readOnly = true)
     public List<TenantUsageEventResponse> listTenantUsageEvents(UUID tenantId, String eventType, Integer limit) {
         if (!tenantRepository.existsById(tenantId)) {
@@ -1069,6 +1096,7 @@ public class TenantService {
                 now,
                 me.userId()
         );
+        recordRuntimeUsageEvent(tenantId, USAGE_EVENT_HOST_SESSION_STARTED, 1L, metadata, now);
     }
 
     @Transactional
@@ -1106,6 +1134,7 @@ public class TenantService {
                 now,
                 me.userId()
         );
+        recordRuntimeUsageEvent(tenantId, USAGE_EVENT_HOST_SESSION_COMPLETED, 1L, metadata, now);
     }
 
     @Transactional
@@ -1123,6 +1152,83 @@ public class TenantService {
                 now,
                 me.userId()
         );
+    }
+
+    @Transactional
+    public void recordHostGameSessionDuplicated(String userEmail,
+                                                UUID tenantId,
+                                                String sourceGameId,
+                                                String duplicatedGameId) {
+        MeResponse me = requireRuntimeMemberContext(userEmail, tenantId);
+        Instant now = Instant.now();
+        ObjectNode metadata = objectMapper.createObjectNode();
+        metadata.put("sourceGameId", normalizeRequired(sourceGameId, "sourceGameId", 128));
+        metadata.put("duplicatedGameId", normalizeRequired(duplicatedGameId, "duplicatedGameId", 128));
+        metadata.put("userEmail", me.email());
+        recordRuntimeUsageEvent(tenantId, USAGE_EVENT_HOST_SESSION_DUPLICATED, 1L, metadata, now);
+    }
+
+    @Transactional
+    public void recordHostGameSessionResumed(String userEmail, UUID tenantId, String gameId) {
+        MeResponse me = requireRuntimeMemberContext(userEmail, tenantId);
+        Instant now = Instant.now();
+        ObjectNode metadata = objectMapper.createObjectNode();
+        metadata.put("gameId", normalizeRequired(gameId, "gameId", 128));
+        metadata.put("userEmail", me.email());
+        recordRuntimeUsageEvent(tenantId, USAGE_EVENT_HOST_SESSION_RESUMED, 1L, metadata, now);
+    }
+
+    @Transactional
+    public void recordHostWorkspaceBootstrapped(UUID tenantId, String ownerEmail) {
+        Instant now = Instant.now();
+        ObjectNode metadata = objectMapper.createObjectNode();
+        metadata.put("ownerEmail", normalizeEmail(ownerEmail));
+        recordRuntimeUsageEvent(tenantId, USAGE_EVENT_HOST_WORKSPACE_BOOTSTRAPPED, 1L, metadata, now);
+    }
+
+    @Transactional
+    public void recordRuntimeAuthCompleted(String userEmail, UUID tenantId) {
+        MeResponse me = requireRuntimeMemberContext(userEmail, tenantId);
+        Instant now = Instant.now();
+        ObjectNode metadata = objectMapper.createObjectNode();
+        metadata.put("userEmail", me.email());
+        String role = normalizeOptional(me.selectedRole(), 32);
+        if (role != null) {
+            metadata.put("role", role);
+        }
+        recordRuntimeUsageEvent(tenantId, USAGE_EVENT_HOST_AUTH_COMPLETED, 1L, metadata, now);
+    }
+
+    @Transactional
+    public void recordBillingCheckoutStarted(String userEmail,
+                                             UUID tenantId,
+                                             String planCode,
+                                             String billingCycle) {
+        MeResponse me = requireRuntimeMemberContext(userEmail, tenantId);
+        Instant now = Instant.now();
+        ObjectNode metadata = objectMapper.createObjectNode();
+        metadata.put("userEmail", me.email());
+        metadata.put("planCode", normalizePlanCode(planCode));
+        metadata.put("billingCycle", normalizeBillingCycle(billingCycle));
+        recordRuntimeUsageEvent(tenantId, USAGE_EVENT_BILLING_CHECKOUT_STARTED, 1L, metadata, now);
+    }
+
+    @Transactional
+    public void recordBillingSubscriptionLifecycle(UUID tenantId,
+                                                   String planCode,
+                                                   String status,
+                                                   String billingCycle,
+                                                   Instant eventTime) {
+        Instant recordedAt = eventTime == null ? Instant.now() : eventTime;
+        ObjectNode metadata = objectMapper.createObjectNode();
+        metadata.put("planCode", normalizePlanCode(planCode));
+        metadata.put("status", normalizeSubscriptionStatus(status));
+        metadata.put("billingCycle", normalizeBillingCycle(billingCycle));
+        String lifecycleEvent = resolveBillingLifecycleUsageEvent(status);
+        recordRuntimeUsageEvent(tenantId, lifecycleEvent, 1L, metadata, recordedAt);
+        if (!USAGE_EVENT_BILLING_SUBSCRIPTION_UPDATED.equals(lifecycleEvent)) {
+            recordRuntimeUsageEvent(tenantId, USAGE_EVENT_BILLING_SUBSCRIPTION_UPDATED, 1L, metadata, recordedAt);
+        }
     }
 
     @Transactional(readOnly = true)
@@ -1207,6 +1313,15 @@ public class TenantService {
                 proHost,
                 proHost
         );
+    }
+
+    private static String resolveBillingLifecycleUsageEvent(String status) {
+        String normalizedStatus = normalizeSubscriptionStatus(status);
+        return switch (normalizedStatus) {
+            case SUBSCRIPTION_STATUS_ACTIVE -> USAGE_EVENT_BILLING_SUBSCRIPTION_ACTIVATED;
+            case "canceled" -> USAGE_EVENT_BILLING_SUBSCRIPTION_CANCELED;
+            default -> USAGE_EVENT_BILLING_SUBSCRIPTION_UPDATED;
+        };
     }
 
     private static TenantBranding defaultBranding(Tenant tenant) {

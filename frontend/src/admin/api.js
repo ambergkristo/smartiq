@@ -180,6 +180,12 @@ export async function listUsageEvents(tenantId, { eventType, limit } = {}) {
   });
 }
 
+export async function listUsageSummary(tenantId, { eventType, from, to } = {}) {
+  return request(`${ADMIN_BASE_PATH}/${encodeURIComponent(normalizeTenantId(tenantId))}/usage-summary`, {
+    query: { eventType, from, to }
+  });
+}
+
 export async function listAuditEvents(tenantId, { limit } = {}) {
   return request(`${ADMIN_BASE_PATH}/${encodeURIComponent(normalizeTenantId(tenantId))}/audit-events`, {
     query: { limit }

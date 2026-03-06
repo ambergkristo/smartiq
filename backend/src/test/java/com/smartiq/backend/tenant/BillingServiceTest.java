@@ -13,19 +13,20 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class BillingServiceTest {
 
     @Test
     void rejectsMissingBillingProviderForCheckout() {
-        BillingService service = serviceWithProperties(new BillingProperties(
+        BillingService service = fixtureWithProperties(new BillingProperties(
                 null,
                 "https://billing.smartiq.test/checkout",
                 "https://app.smartiq.test/billing/success",
                 "https://app.smartiq.test/billing/cancel",
                 "test-webhook-secret",
                 "X-SmartIQ-Billing-Signature"
-        ));
+        )).service();
 
         IllegalArgumentException error = assertThrows(IllegalArgumentException.class, () ->
                 service.initiateCheckout(
@@ -40,14 +41,14 @@ class BillingServiceTest {
 
     @Test
     void rejectsLocalBillingProviderForCheckout() {
-        BillingService service = serviceWithProperties(new BillingProperties(
+        BillingService service = fixtureWithProperties(new BillingProperties(
                 "local",
                 "https://billing.smartiq.test/checkout",
                 "https://app.smartiq.test/billing/success",
                 "https://app.smartiq.test/billing/cancel",
                 "test-webhook-secret",
                 "X-SmartIQ-Billing-Signature"
-        ));
+        )).service();
 
         IllegalArgumentException error = assertThrows(IllegalArgumentException.class, () ->
                 service.initiateCheckout(
@@ -60,7 +61,34 @@ class BillingServiceTest {
         assertEquals("billing provider must be an external provider, not a local/fake checkout", error.getMessage());
     }
 
-    private BillingService serviceWithProperties(BillingProperties properties) {
+    @Test
+    void recordsCheckoutStartTelemetryForValidCheckout() {
+        BillingServiceFixture fixture = fixtureWithProperties(new BillingProperties(
+                "stripe",
+                "https://billing.smartiq.test/checkout",
+                "https://app.smartiq.test/billing/success",
+                "https://app.smartiq.test/billing/cancel",
+                "test-webhook-secret",
+                "X-SmartIQ-Billing-Signature"
+        ));
+        UUID tenantId = UUID.randomUUID();
+
+        BillingCheckoutResponse response = fixture.service().initiateCheckout(
+                "owner@acme.test",
+                tenantId,
+                new BillingCheckoutRequest("pilot-monthly", "monthly")
+        );
+
+        assertEquals(tenantId, response.tenantId());
+        verify(fixture.tenantService()).recordBillingCheckoutStarted(
+                "owner@acme.test",
+                tenantId,
+                "pilot-monthly",
+                "monthly"
+        );
+    }
+
+    private BillingServiceFixture fixtureWithProperties(BillingProperties properties) {
         TenantService tenantService = mock(TenantService.class);
         TenantRepository tenantRepository = mock(TenantRepository.class);
         TenantBillingEventRepository tenantBillingEventRepository = mock(TenantBillingEventRepository.class);
@@ -74,12 +102,21 @@ class BillingServiceTest {
                 List.of(new MeTenantAccessResponse(tenantId, "acme", "Acme", "owner", "active"))
         )).when(tenantService).getMe(eq("owner@acme.test"), any(UUID.class));
 
-        return new BillingService(
-                tenantService,
-                tenantRepository,
-                tenantBillingEventRepository,
-                new ObjectMapper(),
-                properties
+        return new BillingServiceFixture(
+                new BillingService(
+                        tenantService,
+                        tenantRepository,
+                        tenantBillingEventRepository,
+                        new ObjectMapper(),
+                        properties
+                ),
+                tenantService
         );
+    }
+
+    private record BillingServiceFixture(
+            BillingService service,
+            TenantService tenantService
+    ) {
     }
 }

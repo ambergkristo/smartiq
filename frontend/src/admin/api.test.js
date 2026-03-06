@@ -1,5 +1,6 @@
 import {
   AdminApiError,
+  listUsageSummary,
   listTenants,
   removeMember,
   resolveAdminError,
@@ -36,6 +37,24 @@ describe('admin api contract', () => {
     expect(response).toHaveLength(1);
     expect(globalThis.fetch).toHaveBeenCalledWith(
       'http://localhost:8081/internal/wl/tenants?status=ACTIVE&q=alpha',
+      expect.objectContaining({ method: 'GET' })
+    );
+  });
+
+  test('uses usage summary endpoint with query params', async () => {
+    mockJsonResponse({
+      body: [{ tenantId: 'tenant-1', eventType: 'host.session.started', totalValue: 3 }]
+    });
+
+    const response = await listUsageSummary('tenant-1', {
+      eventType: 'host.session.started',
+      from: '2026-03-01T00:00:00Z',
+      to: '2026-03-31T00:00:00Z'
+    });
+
+    expect(response).toHaveLength(1);
+    expect(globalThis.fetch).toHaveBeenCalledWith(
+      'http://localhost:8081/internal/wl/tenants/tenant-1/usage-summary?eventType=host.session.started&from=2026-03-01T00%3A00%3A00Z&to=2026-03-31T00%3A00%3A00Z',
       expect.objectContaining({ method: 'GET' })
     );
   });
