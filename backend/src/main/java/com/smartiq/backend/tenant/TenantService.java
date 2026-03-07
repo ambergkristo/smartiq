@@ -45,7 +45,7 @@ public class TenantService {
     private static final Set<String> ALLOWED_SETTINGS_KEYS = Set.of("schemaVersion", "theme", "game", "features", "host");
     private static final Set<String> ALLOWED_GAME_SETTINGS_KEYS = Set.of("maxPlayers", "roundsPerMatch");
     private static final Set<String> ALLOWED_FEATURE_SETTINGS_KEYS = Set.of("leaderboardEnabled", "teamsEnabled");
-    private static final Set<String> ALLOWED_HOST_SETTINGS_KEYS = Set.of("sessionTemplates");
+    private static final Set<String> ALLOWED_HOST_SETTINGS_KEYS = Set.of("sessionTemplates", "sessionReviewNotes");
     private static final String STATUS_ACTIVE = "active";
     private static final String STATUS_SUSPENDED = "suspended";
     private static final String SUBSCRIPTION_STATUS_TRIALING = "trialing";
@@ -67,6 +67,8 @@ public class TenantService {
     private static final String AUDIT_ACTION_HOST_ROOM_CREATED = "HOST_ROOM_CREATED";
     private static final String AUDIT_ACTION_HOST_SESSION_TEMPLATE_UPSERTED = "HOST_SESSION_TEMPLATE_UPSERTED";
     private static final String AUDIT_ACTION_HOST_SESSION_TEMPLATE_DELETED = "HOST_SESSION_TEMPLATE_DELETED";
+    private static final String AUDIT_ACTION_HOST_SESSION_REVIEW_NOTE_UPSERTED = "HOST_SESSION_REVIEW_NOTE_UPSERTED";
+    private static final String AUDIT_ACTION_HOST_SESSION_REVIEW_NOTE_DELETED = "HOST_SESSION_REVIEW_NOTE_DELETED";
     private static final String AUDIT_ACTION_SUPPORT_CASE_OPENED = "SUPPORT_CASE_OPENED";
     private static final String AUDIT_ACTION_SUPPORT_CASE_UPDATED = "SUPPORT_CASE_UPDATED";
     private static final String AUDIT_ACTION_SUPPORT_CASE_RESOLVED = "SUPPORT_CASE_RESOLVED";
@@ -79,6 +81,7 @@ public class TenantService {
     private static final String AUDIT_ENTITY_HOST_GAME_SESSION = "host_game_session";
     private static final String AUDIT_ENTITY_HOST_ROOM = "host_room";
     private static final String AUDIT_ENTITY_HOST_SESSION_TEMPLATE = "host_session_template";
+    private static final String AUDIT_ENTITY_HOST_SESSION_REVIEW_NOTE = "host_session_review_note";
     private static final String AUDIT_ENTITY_SUPPORT_CASE = "support_case";
     private static final String USAGE_EVENT_HOST_WORKSPACE_BOOTSTRAPPED = "host.workspace.bootstrapped";
     private static final String USAGE_EVENT_HOST_AUTH_COMPLETED = "host.auth.completed";
@@ -104,6 +107,8 @@ public class TenantService {
     private static final int DEFAULT_USAGE_LIMIT = 100;
     private static final int MAX_USAGE_LIMIT = 500;
     private static final int MAX_SESSION_TEMPLATE_COUNT = 12;
+    private static final int MAX_SESSION_REVIEW_NOTE_COUNT = 24;
+    private static final int MAX_SESSION_REVIEW_NOTE_LENGTH = 280;
     private static final int MAX_TEMPLATE_PLAYERS = 10;
     private static final long PLAN_LIMIT_STARTER = 1_000L;
     private static final long PLAN_LIMIT_PILOT = 2_000L;
@@ -1210,6 +1215,123 @@ public class TenantService {
         );
     }
 
+    @Transactional
+    public TenantRuntimeSessionReviewNotesResponse upsertSessionReviewNoteForMember(String userEmail,
+                                                                                    UUID tenantId,
+                                                                                    String gameId,
+                                                                                    RuntimeSessionReviewNoteUpsertRequest request) {
+        MeResponse me = assertSessionReviewNoteAccess(userEmail, tenantId);
+        String normalizedGameId = normalizeRequired(gameId, "gameId", 128);
+        Instant now = Instant.now();
+
+        JsonNode currentSettingsNode = getTenantSettings(tenantId).settings();
+        if (!(currentSettingsNode instanceof ObjectNode currentSettingsObject)) {
+            throw new IllegalStateException("stored tenant settings are invalid");
+        }
+        ObjectNode nextSettings = currentSettingsObject.deepCopy();
+        ObjectNode host = nextSettings.with("host");
+        ArrayNode sessionReviewNotes = objectMapper.createArrayNode();
+        ObjectNode normalizedNote = createSessionReviewNoteNode(normalizedGameId, request, now);
+        boolean replaced = false;
+
+        for (RuntimeSessionReviewNoteResponse existing : readSessionReviewNotes(nextSettings)) {
+            if (normalizedGameId.equals(existing.gameId())) {
+                sessionReviewNotes.add(normalizedNote);
+                replaced = true;
+                continue;
+            }
+            sessionReviewNotes.add(toSessionReviewNoteNode(existing));
+        }
+        if (!replaced) {
+            sessionReviewNotes.insert(0, normalizedNote);
+        }
+        if (sessionReviewNotes.size() > MAX_SESSION_REVIEW_NOTE_COUNT) {
+            throw new IllegalArgumentException(
+                    "sessionReviewNotes must contain at most " + MAX_SESSION_REVIEW_NOTE_COUNT + " notes"
+            );
+        }
+        host.set("sessionReviewNotes", sessionReviewNotes);
+
+        TenantSettingsResponse updatedSettings = updateTenantSettings(
+                tenantId,
+                new UpdateTenantSettingsRequest(nextSettings),
+                me.userId()
+        );
+
+        ObjectNode metadata = objectMapper.createObjectNode();
+        metadata.put("gameId", normalizedGameId);
+        metadata.put("noteLength", normalizedNote.path("note").asText().length());
+        recordAuditEvent(
+                tenantId,
+                AUDIT_ACTION_HOST_SESSION_REVIEW_NOTE_UPSERTED,
+                AUDIT_ENTITY_HOST_SESSION_REVIEW_NOTE,
+                normalizedGameId,
+                metadata,
+                now,
+                me.userId()
+        );
+
+        return new TenantRuntimeSessionReviewNotesResponse(
+                tenantId,
+                readSessionReviewNotes(updatedSettings.settings()),
+                updatedSettings.updatedAt()
+        );
+    }
+
+    @Transactional
+    public TenantRuntimeSessionReviewNotesResponse deleteSessionReviewNoteForMember(String userEmail,
+                                                                                    UUID tenantId,
+                                                                                    String gameId) {
+        MeResponse me = assertSessionReviewNoteAccess(userEmail, tenantId);
+        String normalizedGameId = normalizeRequired(gameId, "gameId", 128);
+        Instant now = Instant.now();
+
+        JsonNode currentSettingsNode = getTenantSettings(tenantId).settings();
+        if (!(currentSettingsNode instanceof ObjectNode currentSettingsObject)) {
+            throw new IllegalStateException("stored tenant settings are invalid");
+        }
+        ObjectNode currentSettings = currentSettingsObject.deepCopy();
+        ObjectNode host = currentSettings.with("host");
+        ArrayNode sessionReviewNotes = objectMapper.createArrayNode();
+        RuntimeSessionReviewNoteResponse deletedNote = null;
+
+        for (RuntimeSessionReviewNoteResponse existing : readSessionReviewNotes(currentSettings)) {
+            if (normalizedGameId.equals(existing.gameId())) {
+                deletedNote = existing;
+                continue;
+            }
+            sessionReviewNotes.add(toSessionReviewNoteNode(existing));
+        }
+        if (deletedNote == null) {
+            throw new NoSuchElementException("session review note not found");
+        }
+        host.set("sessionReviewNotes", sessionReviewNotes);
+
+        TenantSettingsResponse updatedSettings = updateTenantSettings(
+                tenantId,
+                new UpdateTenantSettingsRequest(currentSettings),
+                me.userId()
+        );
+
+        ObjectNode metadata = objectMapper.createObjectNode();
+        metadata.put("gameId", normalizedGameId);
+        recordAuditEvent(
+                tenantId,
+                AUDIT_ACTION_HOST_SESSION_REVIEW_NOTE_DELETED,
+                AUDIT_ENTITY_HOST_SESSION_REVIEW_NOTE,
+                normalizedGameId,
+                metadata,
+                now,
+                me.userId()
+        );
+
+        return new TenantRuntimeSessionReviewNotesResponse(
+                tenantId,
+                readSessionReviewNotes(updatedSettings.settings()),
+                updatedSettings.updatedAt()
+        );
+    }
+
     @Transactional(readOnly = true)
     public TenantBrandingRuntimeResponse getTenantBrandingForRuntimeTenant(UUID tenantId) {
         if (tenantId == null) {
@@ -1532,6 +1654,15 @@ public class TenantService {
         TenantRuntimeCapabilitiesResponse capabilities = getTenantCapabilitiesForMember(userEmail, tenantId);
         if (!capabilities.sessionTemplatesEnabled()) {
             throw new ForbiddenTenantAccessException("current plan does not include session templates");
+        }
+        return me;
+    }
+
+    private MeResponse assertSessionReviewNoteAccess(String userEmail, UUID tenantId) {
+        MeResponse me = requireRuntimeMemberContext(userEmail, tenantId);
+        TenantRuntimeCapabilitiesResponse capabilities = getTenantCapabilitiesForMember(userEmail, tenantId);
+        if (!capabilities.analyticsHistoryEnabled()) {
+            throw new ForbiddenTenantAccessException("current plan does not include host analytics/history");
         }
         return me;
     }
@@ -2100,13 +2231,17 @@ public class TenantService {
         };
     }
 
-    private static String normalizeTemplateUpdatedAt(String value) {
-        String normalized = normalizeRequired(value, "updatedAt", 64);
+    private static String normalizeIsoTimestamp(String value, String fieldName) {
+        String normalized = normalizeRequired(value, fieldName, 64);
         try {
             return Instant.parse(normalized).toString();
         } catch (DateTimeParseException ex) {
-            throw new IllegalArgumentException("updatedAt must be an ISO-8601 timestamp", ex);
+            throw new IllegalArgumentException(fieldName + " must be an ISO-8601 timestamp", ex);
         }
+    }
+
+    private static String normalizeTemplateUpdatedAt(String value) {
+        return normalizeIsoTimestamp(value, "updatedAt");
     }
 
     private static List<String> normalizeTemplatePlayers(JsonNode playersNode) {
@@ -2295,6 +2430,7 @@ public class TenantService {
 
         ObjectNode host = objectMapper.createObjectNode();
         host.set("sessionTemplates", objectMapper.createArrayNode());
+        host.set("sessionReviewNotes", objectMapper.createArrayNode());
 
         ObjectNode root = objectMapper.createObjectNode();
         root.put("schemaVersion", SETTINGS_SCHEMA_VERSION);
@@ -2338,6 +2474,7 @@ public class TenantService {
             ensureNoUnknownKeys(hostSource, ALLOWED_HOST_SETTINGS_KEYS, "settings.host");
         }
         ArrayNode normalizedSessionTemplates = normalizeSessionTemplates(hostSource == null ? null : hostSource.get("sessionTemplates"));
+        ArrayNode normalizedSessionReviewNotes = normalizeSessionReviewNotes(hostSource == null ? null : hostSource.get("sessionReviewNotes"));
 
         ObjectNode normalizedGame = objectMapper.createObjectNode();
         normalizedGame.put("maxPlayers", maxPlayers);
@@ -2349,6 +2486,7 @@ public class TenantService {
 
         ObjectNode normalizedHost = objectMapper.createObjectNode();
         normalizedHost.set("sessionTemplates", normalizedSessionTemplates);
+        normalizedHost.set("sessionReviewNotes", normalizedSessionReviewNotes);
 
         ObjectNode normalizedRoot = objectMapper.createObjectNode();
         normalizedRoot.put("schemaVersion", SETTINGS_SCHEMA_VERSION);
@@ -2374,6 +2512,25 @@ public class TenantService {
             normalizedTemplates.add(normalizeSessionTemplateNode(templateNode));
         }
         return normalizedTemplates;
+    }
+
+    private ArrayNode normalizeSessionReviewNotes(JsonNode sessionReviewNotesNode) {
+        ArrayNode normalizedNotes = objectMapper.createArrayNode();
+        if (sessionReviewNotesNode == null || sessionReviewNotesNode.isNull()) {
+            return normalizedNotes;
+        }
+        if (!(sessionReviewNotesNode instanceof ArrayNode noteArray)) {
+            throw new IllegalArgumentException("settings.host.sessionReviewNotes must be a JSON array");
+        }
+        if (noteArray.size() > MAX_SESSION_REVIEW_NOTE_COUNT) {
+            throw new IllegalArgumentException(
+                    "sessionReviewNotes must contain at most " + MAX_SESSION_REVIEW_NOTE_COUNT + " notes"
+            );
+        }
+        for (JsonNode noteNode : noteArray) {
+            normalizedNotes.add(normalizeSessionReviewNoteNode(noteNode));
+        }
+        return normalizedNotes;
     }
 
     private ObjectNode normalizeSessionTemplateNode(JsonNode templateNode) {
@@ -2406,6 +2563,26 @@ public class TenantService {
         return normalizedTemplate;
     }
 
+    private ObjectNode normalizeSessionReviewNoteNode(JsonNode noteNode) {
+        if (!(noteNode instanceof ObjectNode noteObject)) {
+            throw new IllegalArgumentException("sessionReviewNotes entries must be JSON objects");
+        }
+
+        String gameId = normalizeRequired(readRequiredText(noteObject, "gameId"), "gameId", 128);
+        String note = normalizeRequired(
+                readRequiredText(noteObject, "note"),
+                "note",
+                MAX_SESSION_REVIEW_NOTE_LENGTH
+        );
+        String updatedAt = normalizeIsoTimestamp(readOptionalText(noteObject, "updatedAt"), "updatedAt");
+
+        ObjectNode normalizedNote = objectMapper.createObjectNode();
+        normalizedNote.put("gameId", gameId);
+        normalizedNote.put("note", note);
+        normalizedNote.put("updatedAt", updatedAt);
+        return normalizedNote;
+    }
+
     private ObjectNode createSessionTemplateNode(String templateId,
                                                  RuntimeSessionTemplateUpsertRequest request,
                                                  Instant updatedAt) {
@@ -2427,6 +2604,19 @@ public class TenantService {
         return normalizeSessionTemplateNode(template);
     }
 
+    private ObjectNode createSessionReviewNoteNode(String gameId,
+                                                   RuntimeSessionReviewNoteUpsertRequest request,
+                                                   Instant updatedAt) {
+        ObjectNode note = objectMapper.createObjectNode();
+        note.put("gameId", normalizeRequired(gameId, "gameId", 128));
+        note.put(
+                "note",
+                normalizeRequired(request == null ? null : request.note(), "note", MAX_SESSION_REVIEW_NOTE_LENGTH)
+        );
+        note.put("updatedAt", updatedAt.toString());
+        return normalizeSessionReviewNoteNode(note);
+    }
+
     private List<RuntimeSessionTemplateResponse> readSessionTemplates(JsonNode settingsNode) {
         JsonNode templateNodes = settingsNode == null
                 ? null
@@ -2445,6 +2635,24 @@ public class TenantService {
         return List.copyOf(templates);
     }
 
+    private List<RuntimeSessionReviewNoteResponse> readSessionReviewNotes(JsonNode settingsNode) {
+        JsonNode noteNodes = settingsNode == null
+                ? null
+                : settingsNode.path("host").path("sessionReviewNotes");
+        if (noteNodes == null || noteNodes.isMissingNode() || noteNodes.isNull()) {
+            return List.of();
+        }
+        if (!(noteNodes instanceof ArrayNode noteArray)) {
+            throw new IllegalStateException("stored host.sessionReviewNotes is invalid");
+        }
+        ArrayNode normalizedNotes = normalizeSessionReviewNotes(noteArray);
+        List<RuntimeSessionReviewNoteResponse> notes = new java.util.ArrayList<>(normalizedNotes.size());
+        for (JsonNode noteNode : normalizedNotes) {
+            notes.add(toSessionReviewNoteResponse(noteNode));
+        }
+        return List.copyOf(notes);
+    }
+
     private RuntimeSessionTemplateResponse toSessionTemplateResponse(JsonNode templateNode) {
         return new RuntimeSessionTemplateResponse(
                 templateNode.path("templateId").asText(),
@@ -2454,6 +2662,14 @@ public class TenantService {
                 templateNode.path("theme").asText(DEFAULT_THEME),
                 normalizeTemplatePlayers(templateNode.get("players")),
                 normalizeTemplateUpdatedAt(templateNode.path("updatedAt").asText())
+        );
+    }
+
+    private RuntimeSessionReviewNoteResponse toSessionReviewNoteResponse(JsonNode noteNode) {
+        return new RuntimeSessionReviewNoteResponse(
+                normalizeRequired(noteNode.path("gameId").asText(), "gameId", 128),
+                normalizeRequired(noteNode.path("note").asText(), "note", MAX_SESSION_REVIEW_NOTE_LENGTH),
+                normalizeIsoTimestamp(noteNode.path("updatedAt").asText(), "updatedAt")
         );
     }
 
@@ -2472,6 +2688,14 @@ public class TenantService {
         normalizeTemplatePlayers(template.players()).forEach(players::add);
         node.set("players", players);
         node.put("updatedAt", normalizeTemplateUpdatedAt(template.updatedAt()));
+        return node;
+    }
+
+    private ObjectNode toSessionReviewNoteNode(RuntimeSessionReviewNoteResponse note) {
+        ObjectNode node = objectMapper.createObjectNode();
+        node.put("gameId", normalizeRequired(note.gameId(), "gameId", 128));
+        node.put("note", normalizeRequired(note.note(), "note", MAX_SESSION_REVIEW_NOTE_LENGTH));
+        node.put("updatedAt", normalizeIsoTimestamp(note.updatedAt(), "updatedAt"));
         return node;
     }
 

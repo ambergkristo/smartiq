@@ -7,6 +7,7 @@ vi.mock('./api', () => ({
   clearRuntimeAuthContext: vi.fn(),
   completeRuntimeAuth: vi.fn(),
   createRoomSession: vi.fn(),
+  deleteRuntimeSessionReviewNote: vi.fn(),
   deleteRuntimeSessionTemplate: vi.fn(),
   duplicateServerGameSession: vi.fn(),
   fetchRoomPreview: vi.fn(),
@@ -25,6 +26,7 @@ vi.mock('./api', () => ({
   rejoinRoomSession: vi.fn(),
   requestRuntimeAuthLink: vi.fn(),
   setRuntimeAuthContext: vi.fn(),
+  upsertRuntimeSessionReviewNote: vi.fn(),
   upsertRuntimeSessionTemplate: vi.fn(),
   updateRuntimeTenantBranding: vi.fn(),
   resolveCardErrorMessage: vi.fn(() => 'Fallback mode'),
@@ -44,6 +46,8 @@ import {
   fetchTopics,
   hasRuntimeAuthContext,
   resumeServerGameSession,
+  deleteRuntimeSessionReviewNote,
+  upsertRuntimeSessionReviewNote,
   upsertRuntimeSessionTemplate
 } from './api';
 
@@ -57,6 +61,14 @@ describe('App tenant runtime integration', () => {
     document.title = 'SmartIQ';
     fetchTenantAuditEvents.mockResolvedValue([]);
     fetchTenantUsageSummary.mockResolvedValue([]);
+    upsertRuntimeSessionReviewNote.mockImplementation(async (gameId, { note }) => ({
+      tenantId: 'tenant-northwind',
+      notes: [{ gameId, note, updatedAt: '2026-03-07T08:00:00Z' }]
+    }));
+    deleteRuntimeSessionReviewNote.mockResolvedValue({
+      tenantId: 'tenant-northwind',
+      notes: []
+    });
     duplicateServerGameSession.mockResolvedValue({
       snapshot: {
         apiVersion: '1',
@@ -625,7 +637,10 @@ describe('App tenant runtime integration', () => {
       settings: {
         settings: {
           schemaVersion: 1,
-          theme: 'ocean'
+          theme: 'ocean',
+          host: {
+            sessionReviewNotes: []
+          }
         }
       },
       branding: {
@@ -835,7 +850,10 @@ describe('App tenant runtime integration', () => {
     fireEvent.change(screen.getByLabelText(/follow-up note/i), { target: { value: 'Switch to shorter opening round next time.' } });
     fireEvent.click(screen.getByRole('button', { name: /save note/i }));
 
-    expect(screen.getByTestId('recent-session-note-message')).toHaveTextContent(/follow-up note saved/i);
+    await waitFor(() => expect(upsertRuntimeSessionReviewNote).toHaveBeenCalledWith('game-review', {
+      note: 'Switch to shorter opening round next time.'
+    }));
+    await waitFor(() => expect(screen.getByTestId('recent-session-note-message')).toHaveTextContent(/follow-up note saved/i));
     expect(localStorage.getItem('smartiq.sessionReviewNote.game-review')).toBe('Switch to shorter opening round next time.');
     expect(screen.getAllByText(/switch to shorter opening round next time/i).length).toBeGreaterThan(1);
     expect(screen.getAllByText(/note saved/i).length).toBeGreaterThan(0);
@@ -855,7 +873,10 @@ describe('App tenant runtime integration', () => {
       settings: {
         settings: {
           schemaVersion: 1,
-          theme: 'ocean'
+          theme: 'ocean',
+          host: {
+            sessionReviewNotes: []
+          }
         }
       },
       branding: {
@@ -898,11 +919,15 @@ describe('App tenant runtime integration', () => {
 
     fireEvent.change(screen.getByLabelText(/follow-up note/i), { target: { value: 'Trim the intro next time.' } });
     fireEvent.click(screen.getByRole('button', { name: /save note/i }));
+    await waitFor(() => expect(upsertRuntimeSessionReviewNote).toHaveBeenCalledWith('game-review', {
+      note: 'Trim the intro next time.'
+    }));
     expect(localStorage.getItem('smartiq.sessionReviewNote.game-review')).toBe('Trim the intro next time.');
 
     fireEvent.click(screen.getByRole('button', { name: /clear note/i }));
 
-    expect(screen.getByTestId('recent-session-note-message')).toHaveTextContent(/follow-up note cleared/i);
+    await waitFor(() => expect(deleteRuntimeSessionReviewNote).toHaveBeenCalledWith('game-review'));
+    await waitFor(() => expect(screen.getByTestId('recent-session-note-message')).toHaveTextContent(/follow-up note cleared/i));
     expect(localStorage.getItem('smartiq.sessionReviewNote.game-review')).toBeNull();
     expect(screen.getByLabelText(/follow-up note/i)).toHaveValue('');
     expect(screen.queryByText(/trim the intro next time/i)).not.toBeInTheDocument();
@@ -997,7 +1022,6 @@ describe('App tenant runtime integration', () => {
   });
 
   test('filters recent hosted sessions by saved follow-up notes', async () => {
-    localStorage.setItem('smartiq.sessionReviewNote.game-complete', 'Bring a faster tie-breaker next time.');
     fetchTopics.mockResolvedValue([
       { topic: 'Science', count: 12 },
       { topic: 'History', count: 10 }
@@ -1011,7 +1035,16 @@ describe('App tenant runtime integration', () => {
       settings: {
         settings: {
           schemaVersion: 1,
-          theme: 'ocean'
+          theme: 'ocean',
+          host: {
+            sessionReviewNotes: [
+              {
+                gameId: 'game-complete',
+                note: 'Bring a faster tie-breaker next time.',
+                updatedAt: '2026-03-06T11:30:00Z'
+              }
+            ]
+          }
         }
       },
       branding: {
@@ -1085,7 +1118,6 @@ describe('App tenant runtime integration', () => {
   });
 
   test('shows host momentum analytics from recent hosted sessions and templates', async () => {
-    localStorage.setItem('smartiq.sessionReviewNote.game-c', 'Keep the finals shorter.');
     fetchTopics.mockResolvedValue([
       { topic: 'Science', count: 12 },
       { topic: 'History', count: 10 }
@@ -1101,6 +1133,13 @@ describe('App tenant runtime integration', () => {
           schemaVersion: 1,
           theme: 'ocean',
           host: {
+            sessionReviewNotes: [
+              {
+                gameId: 'game-c',
+                note: 'Keep the finals shorter.',
+                updatedAt: '2026-03-06T16:30:00Z'
+              }
+            ],
             sessionTemplates: [
               {
                 templateId: 'tpl-1',

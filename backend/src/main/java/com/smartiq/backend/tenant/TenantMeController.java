@@ -67,6 +67,21 @@ public class TenantMeController {
         return tenantService.deleteSessionTemplateForMember(context.userEmail(), context.tenantId(), templateId);
     }
 
+    @PutMapping("/session-review-notes/{gameId}")
+    public TenantRuntimeSessionReviewNotesResponse upsertSessionReviewNote(HttpServletRequest request,
+                                                                           @PathVariable String gameId,
+                                                                           @RequestBody(required = false) RuntimeSessionReviewNoteUpsertRequest upsertRequest) {
+        ResolvedAuthContext context = authContextResolver.resolve(request);
+        return tenantService.upsertSessionReviewNoteForMember(context.userEmail(), context.tenantId(), gameId, upsertRequest);
+    }
+
+    @DeleteMapping("/session-review-notes/{gameId}")
+    public TenantRuntimeSessionReviewNotesResponse deleteSessionReviewNote(HttpServletRequest request,
+                                                                           @PathVariable String gameId) {
+        ResolvedAuthContext context = authContextResolver.resolve(request);
+        return tenantService.deleteSessionReviewNoteForMember(context.userEmail(), context.tenantId(), gameId);
+    }
+
     @GetMapping("/tenant-subscription")
     public TenantSubscriptionResponse getTenantSubscription(HttpServletRequest request) {
         ResolvedAuthContext context = authContextResolver.resolve(request);

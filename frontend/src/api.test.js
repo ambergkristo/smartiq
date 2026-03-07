@@ -6,9 +6,11 @@ import {
   buildServerGamePayload,
   createRoomSession,
   createServerGameSession,
+  deleteRuntimeSessionReviewNote,
   deleteRuntimeSessionTemplate,
   fetchTenantRuntimeSnapshot,
   removeRoomPlayerFromSession,
+  upsertRuntimeSessionReviewNote,
   upsertRuntimeSessionTemplate,
   updateRuntimeTenantBranding,
   getRuntimeAuthContext,
@@ -425,6 +427,69 @@ describe('api error mapping', () => {
 
     expect(globalThis.fetch).toHaveBeenCalledWith(
       expect.stringMatching(/\/api\/me\/session-templates\/tpl-1$/),
+      expect.objectContaining({
+        method: 'DELETE',
+        headers: expect.objectContaining({
+          Authorization: 'Bearer token-1',
+          'X-SmartIQ-User-Email': 'owner@acme.test',
+          'X-SmartIQ-Tenant-Id': 'tenant-1'
+        })
+      })
+    );
+  });
+
+  test('sends runtime auth headers with session review note upserts', async () => {
+    globalThis.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
+      tenantId: 'tenant-1',
+      notes: []
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    }));
+    setRuntimeAuthContext({
+      userEmail: 'owner@acme.test',
+      tenantId: 'tenant-1',
+      bearerToken: 'token-1'
+    });
+
+    await upsertRuntimeSessionReviewNote('game-1', {
+      note: 'Keep the opener shorter.'
+    });
+
+    expect(globalThis.fetch).toHaveBeenCalledWith(
+      expect.stringMatching(/\/api\/me\/session-review-notes\/game-1$/),
+      expect.objectContaining({
+        method: 'PUT',
+        headers: expect.objectContaining({
+          Authorization: 'Bearer token-1',
+          'X-SmartIQ-User-Email': 'owner@acme.test',
+          'X-SmartIQ-Tenant-Id': 'tenant-1'
+        }),
+        body: JSON.stringify({
+          note: 'Keep the opener shorter.'
+        })
+      })
+    );
+  });
+
+  test('sends runtime auth headers with session review note deletes', async () => {
+    globalThis.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
+      tenantId: 'tenant-1',
+      notes: []
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    }));
+    setRuntimeAuthContext({
+      userEmail: 'owner@acme.test',
+      tenantId: 'tenant-1',
+      bearerToken: 'token-1'
+    });
+
+    await deleteRuntimeSessionReviewNote('game-1');
+
+    expect(globalThis.fetch).toHaveBeenCalledWith(
+      expect.stringMatching(/\/api\/me\/session-review-notes\/game-1$/),
       expect.objectContaining({
         method: 'DELETE',
         headers: expect.objectContaining({

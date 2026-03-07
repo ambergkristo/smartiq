@@ -5,6 +5,7 @@ import {
   clearRuntimeAuthContext,
   completeRuntimeAuth,
   createRoomSession,
+  deleteRuntimeSessionReviewNote,
   duplicateServerGameSession,
   deleteRuntimeSessionTemplate,
   fetchRoomPreview,
@@ -23,6 +24,7 @@ import {
   rejoinRoomSession,
   requestRuntimeAuthLink,
   setRuntimeAuthContext,
+  upsertRuntimeSessionReviewNote,
   upsertRuntimeSessionTemplate,
   updateRuntimeTenantBranding,
   resolveCardErrorMessage,
@@ -416,12 +418,12 @@ function deriveRecentHostedSessions(auditEvents) {
     .slice(0, 6);
 }
 
-function buildHostWorkspaceAnalytics(sessions, templateCount) {
+function buildHostWorkspaceAnalytics(sessions, templateCount, sessionReviewNotes) {
   const normalizedSessions = Array.isArray(sessions) ? sessions : [];
   const playerCounts = normalizedSessions
     .map((entry) => (Number.isInteger(entry?.playerCount) ? entry.playerCount : null))
     .filter((value) => value != null);
-  const followUpSessions = normalizedSessions.filter((entry) => Boolean(loadSessionReviewNote(entry?.gameId))).length;
+  const followUpSessions = normalizedSessions.filter((entry) => Boolean(resolveSessionReviewNote(sessionReviewNotes, entry?.gameId))).length;
   const topicCounts = normalizedSessions.reduce((accumulator, entry) => {
     const topic = String(entry?.topic || '').trim() || STRINGS.recentHostedSessionTopicFallback;
     accumulator.set(topic, (accumulator.get(topic) || 0) + 1);
@@ -572,6 +574,37 @@ function readRuntimeSessionTemplates(settingsResponse) {
       updatedAt: String(entry?.updatedAt || '').trim()
     }))
     .filter((entry) => entry.templateId && entry.name && entry.players.length > 0);
+}
+
+function buildSessionReviewNoteLookup(notes) {
+  if (!Array.isArray(notes)) {
+    return {};
+  }
+  return notes.reduce((accumulator, entry) => {
+    const gameId = String(entry?.gameId || '').trim();
+    const note = String(entry?.note || '').trim();
+    if (!gameId || !note) {
+      return accumulator;
+    }
+    accumulator[gameId] = note;
+    return accumulator;
+  }, {});
+}
+
+function readRuntimeSessionReviewNotes(settingsResponse) {
+  return buildSessionReviewNoteLookup(settingsResponse?.settings?.host?.sessionReviewNotes);
+}
+
+function resolveSessionReviewNote(sessionReviewNotes, gameId) {
+  const normalizedGameId = String(gameId || '').trim();
+  if (!normalizedGameId) {
+    return '';
+  }
+  const runtimeNote = String(sessionReviewNotes?.[normalizedGameId] || '').trim();
+  if (runtimeNote) {
+    return runtimeNote;
+  }
+  return loadSessionReviewNote(normalizedGameId);
 }
 
 function resolvePlayerJoinRoute() {
@@ -762,6 +795,7 @@ function StartScreen({
   sessionTemplatePending,
   sessionTemplateMessage,
   sessionTemplateError,
+  sessionReviewNotes,
   onBrandingDraftChange,
   onSaveBranding,
   onSessionTemplateDraftChange,
@@ -809,9 +843,9 @@ function StartScreen({
     : null;
   const canUpgrade = Boolean(tenantId) && typeof onUpgrade === 'function';
   const recentHostedSessions = deriveRecentHostedSessions(workspaceInsights?.auditEvents);
-  const hostWorkspaceAnalytics = buildHostWorkspaceAnalytics(recentHostedSessions, sessionTemplates.length);
+  const hostWorkspaceAnalytics = buildHostWorkspaceAnalytics(recentHostedSessions, sessionTemplates.length, sessionReviewNotes);
   const visibleHostedSessions = recentHostedSessions.filter((entry) => {
-    const hasSavedNote = Boolean(loadSessionReviewNote(entry.gameId));
+    const hasSavedNote = Boolean(resolveSessionReviewNote(sessionReviewNotes, entry.gameId));
     if (hostedSessionFilter === 'completed') {
       return entry.status === 'completed';
     }
@@ -1139,7 +1173,7 @@ function StartScreen({
                       className={activeHostedSession?.gameId === entry.gameId ? 'selected' : ''}
                     >
                       {(() => {
-                        const savedNote = loadSessionReviewNote(entry.gameId);
+                        const savedNote = resolveSessionReviewNote(sessionReviewNotes, entry.gameId);
                         const notePreview = formatSessionReviewNotePreview(savedNote);
                         return (
                           <>
@@ -2130,6 +2164,7 @@ function GameApp() {
   const [sessionTemplatePending, setSessionTemplatePending] = useState(false);
   const [sessionTemplateMessage, setSessionTemplateMessage] = useState('');
   const [sessionTemplateError, setSessionTemplateError] = useState('');
+  const [sessionReviewNotes, setSessionReviewNotes] = useState({});
   const [workspaceInsights, setWorkspaceInsights] = useState({
     auditEvents: [],
     usageSummary: []
@@ -2282,9 +2317,12 @@ function GameApp() {
       setReviewedHostedSessionNoteMessage('');
       return;
     }
-    setReviewedHostedSessionNote(loadSessionReviewNote(reviewedHostedSession.gameId));
+    setReviewedHostedSessionNote(resolveSessionReviewNote(sessionReviewNotes, reviewedHostedSession.gameId));
+  }, [reviewedHostedSession, sessionReviewNotes]);
+
+  useEffect(() => {
     setReviewedHostedSessionNoteMessage('');
-  }, [reviewedHostedSession]);
+  }, [reviewedHostedSession?.gameId]);
 
   useEffect(() => {
     if (roomSession?.role !== 'host' || !roomSession?.roomCode) {
@@ -2359,6 +2397,7 @@ function GameApp() {
     setRuntimeSnapshot(snapshot);
     setBrandingDraft(buildBrandingDraft(snapshot?.branding));
     setSessionTemplates(readRuntimeSessionTemplates(snapshot?.settings));
+    setSessionReviewNotes(readRuntimeSessionReviewNotes(snapshot?.settings));
     const runtimeTheme = snapshot?.settings?.settings?.theme;
     if (isSupportedTheme(runtimeTheme)) {
       setConfig((prev) => ({ ...prev, theme: runtimeTheme }));
@@ -2383,6 +2422,7 @@ function GameApp() {
     setBrandingError('');
     setBrandingDraft(buildBrandingDraft(null));
     setSessionTemplates([]);
+    setSessionReviewNotes({});
     setSessionTemplateDraft(buildSessionTemplateDraft());
     setSessionTemplatePending(false);
     setSessionTemplateMessage('');
@@ -2751,17 +2791,48 @@ function GameApp() {
     setReviewedHostedSessionNoteMessage('');
   }
 
-  function handleSaveReviewedHostedSessionNote() {
+  async function handleSaveReviewedHostedSessionNote() {
     if (!reviewedHostedSession?.gameId) {
       return;
     }
-    persistSessionReviewNote(reviewedHostedSession.gameId, reviewedHostedSessionNote);
+    const normalizedNote = String(reviewedHostedSessionNote || '').trim();
+    if (!normalizedNote) {
+      return;
+    }
+    if (runtimeSnapshot?.me?.selectedTenantId) {
+      try {
+        const response = await upsertRuntimeSessionReviewNote(reviewedHostedSession.gameId, {
+          note: normalizedNote
+        });
+        setSessionReviewNotes(buildSessionReviewNoteLookup(response?.notes));
+      } catch (error) {
+        const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+          ? error.detail
+          : error?.message || 'Could not save follow-up note.';
+        setReviewedHostedSessionNoteMessage(detail);
+        return;
+      }
+    }
+    persistSessionReviewNote(reviewedHostedSession.gameId, normalizedNote);
+    setReviewedHostedSessionNote(normalizedNote);
     setReviewedHostedSessionNoteMessage(STRINGS.recentHostedSessionNotesSaved);
   }
 
-  function handleClearReviewedHostedSessionNote() {
+  async function handleClearReviewedHostedSessionNote() {
     if (!reviewedHostedSession?.gameId) {
       return;
+    }
+    if (runtimeSnapshot?.me?.selectedTenantId) {
+      try {
+        const response = await deleteRuntimeSessionReviewNote(reviewedHostedSession.gameId);
+        setSessionReviewNotes(buildSessionReviewNoteLookup(response?.notes));
+      } catch (error) {
+        const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+          ? error.detail
+          : error?.message || 'Could not clear follow-up note.';
+        setReviewedHostedSessionNoteMessage(detail);
+        return;
+      }
     }
     persistSessionReviewNote(reviewedHostedSession.gameId, '');
     setReviewedHostedSessionNote('');
@@ -3458,6 +3529,7 @@ function GameApp() {
                 sessionTemplatePending={sessionTemplatePending}
                 sessionTemplateMessage={sessionTemplateMessage}
                 sessionTemplateError={sessionTemplateError}
+                sessionReviewNotes={sessionReviewNotes}
                 onBrandingDraftChange={handleBrandingDraftChange}
                 onSaveBranding={handleSaveBranding}
                 onSessionTemplateDraftChange={handleSessionTemplateDraftChange}

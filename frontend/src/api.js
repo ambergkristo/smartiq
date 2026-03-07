@@ -367,6 +367,35 @@ export async function deleteRuntimeSessionTemplate(templateId) {
   });
 }
 
+export async function upsertRuntimeSessionReviewNote(gameId, { note } = {}) {
+  requireApiBase();
+  const headers = resolveRuntimeAuthHeaders();
+  if (Object.keys(headers).length === 0) {
+    throw new ApiError('Runtime auth context is required for session review notes.', 0, 'UNAUTHENTICATED');
+  }
+  const normalizedGameId = normalizeRequiredField(gameId, 'gameId');
+  return fetchJson(`${API_BASE}/api/me/session-review-notes/${encodeURIComponent(normalizedGameId)}`, {
+    method: 'PUT',
+    headers,
+    body: {
+      note: normalizeRequiredField(note, 'note')
+    }
+  });
+}
+
+export async function deleteRuntimeSessionReviewNote(gameId) {
+  requireApiBase();
+  const headers = resolveRuntimeAuthHeaders();
+  if (Object.keys(headers).length === 0) {
+    throw new ApiError('Runtime auth context is required for session review notes.', 0, 'UNAUTHENTICATED');
+  }
+  const normalizedGameId = normalizeRequiredField(gameId, 'gameId');
+  return fetchJson(`${API_BASE}/api/me/session-review-notes/${encodeURIComponent(normalizedGameId)}`, {
+    method: 'DELETE',
+    headers
+  });
+}
+
 export async function fetchTenantCapabilities() {
   requireApiBase();
   const headers = resolveRuntimeAuthHeaders();

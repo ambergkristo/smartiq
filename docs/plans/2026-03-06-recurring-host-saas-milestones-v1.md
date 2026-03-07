@@ -64,6 +64,7 @@ Current execution pointer:
 22. The latest `M9` slice also adds a follow-up queue metric plus a `Clear note` action in reviewed session detail, so hosts can work down local post-session notes instead of only accumulating them.
 23. The latest `M9` slice also adds host-side room player removal with backend host-token enforcement, so pre-live participant management is no longer limited to checkbox-based local roster selection.
 24. The latest `M9` slice also adds bulk `Trim to selected` room moderation, so selected launch rosters can be enforced server-side in one step instead of one removal at a time.
+25. The latest `M9` slice also upgrades reviewed-session follow-up notes from browser-local storage to tenant-synced runtime settings, so post-session host ops are no longer tied to one device.
 
 ## Milestone Definitions
 

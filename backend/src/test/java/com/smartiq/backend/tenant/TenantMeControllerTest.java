@@ -280,6 +280,76 @@ class TenantMeControllerTest {
     }
 
     @Test
+    void allowsProHostSessionReviewNoteSaveAndDelete() throws Exception {
+        String tenantId = createTenant("notes-pro", "Notes Pro");
+        addMember(tenantId, "notes-owner@acme.test", "Notes Owner", "owner");
+        updateSubscription(tenantId, """
+                {
+                  "planCode": "pro-host-monthly",
+                  "status": "active",
+                  "billingCycle": "monthly"
+                }
+                """);
+
+        mockMvc.perform(put("/api/me/session-review-notes/{gameId}", "game-review")
+                        .header("Authorization", bearerToken("notes-owner@acme.test", tenantId))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "note": "Switch to a shorter opener next time."
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.tenantId").value(tenantId))
+                .andExpect(jsonPath("$.notes.length()").value(1))
+                .andExpect(jsonPath("$.notes[0].gameId").value("game-review"))
+                .andExpect(jsonPath("$.notes[0].note").value("Switch to a shorter opener next time."));
+
+        mockMvc.perform(get("/api/me/tenant-settings")
+                        .header("Authorization", bearerToken("notes-owner@acme.test", tenantId)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.settings.host.sessionReviewNotes.length()").value(1))
+                .andExpect(jsonPath("$.settings.host.sessionReviewNotes[0].gameId").value("game-review"))
+                .andExpect(jsonPath("$.settings.host.sessionReviewNotes[0].note").value("Switch to a shorter opener next time."));
+
+        mockMvc.perform(delete("/api/me/session-review-notes/{gameId}", "game-review")
+                        .header("Authorization", bearerToken("notes-owner@acme.test", tenantId)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.tenantId").value(tenantId))
+                .andExpect(jsonPath("$.notes.length()").value(0));
+
+        mockMvc.perform(get("/api/me/tenant-settings")
+                        .header("Authorization", bearerToken("notes-owner@acme.test", tenantId)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.settings.host.sessionReviewNotes.length()").value(0));
+    }
+
+    @Test
+    void blocksSessionReviewNoteSaveWhenAnalyticsAreLocked() throws Exception {
+        String tenantId = createTenant("notes-trial", "Notes Trial");
+        addMember(tenantId, "notes-trial@acme.test", "Notes Trial", "owner");
+        updateSubscription(tenantId, """
+                {
+                  "planCode": "pilot-monthly",
+                  "status": "trialing",
+                  "billingCycle": "monthly"
+                }
+                """);
+
+        mockMvc.perform(put("/api/me/session-review-notes/{gameId}", "game-review")
+                        .header("Authorization", bearerToken("notes-trial@acme.test", tenantId))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "note": "Keep it tighter."
+                                }
+                                """))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.code").value("FORBIDDEN_TENANT_ACCESS"))
+                .andExpect(jsonPath("$.error").value("current plan does not include host analytics/history"));
+    }
+
+    @Test
     void bootstrapsOnboardingWorkspaceAndRuntimeContext() throws Exception {
         String payload = """
                 {

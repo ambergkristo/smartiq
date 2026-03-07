@@ -155,6 +155,7 @@ Priority order:
 25. The latest `M9` slice also adds a follow-up queue metric and `Clear note` action, so local host follow-up work can be reduced inside the workspace rather than only collected.
 26. The latest `M9` slice also adds host-side room player removal with backend host-token enforcement, moving pre-live participant management beyond checkbox-only local moderation.
 27. The latest `M9` slice also adds bulk `Trim to selected` room moderation, so selected launch rosters can be enforced server-side in one step.
+28. The latest `M9` slice also upgrades reviewed-session follow-up notes to tenant-synced runtime state, reducing post-session host-workspace dependence on one browser.
 28. The locked next-sequence is:
    - product stabilization,
    - auth/trust hardening,

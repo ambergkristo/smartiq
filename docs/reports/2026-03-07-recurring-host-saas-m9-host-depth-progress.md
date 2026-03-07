@@ -124,6 +124,15 @@ Observed result:
 3. this turns the selected launch roster from a planning hint into a fast server-backed moderation action,
 4. repeat hosts can now collapse a noisy room into the intended live roster without removing participants one by one.
 
+### Follow-up notes are now tenant-synced instead of browser-only
+
+Observed result:
+
+1. reviewed-session follow-up notes now persist through tenant runtime settings, not only `localStorage`,
+2. the same note set can therefore survive sign-in restore and move with the tenant workspace rather than staying trapped on one browser,
+3. the existing history badges, note previews, and `Needs follow-up` queue now read from tenant-synced state first,
+4. this makes post-session host ops meaningfully closer to a real repeat-host workspace instead of a single-device scratchpad.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -158,6 +167,6 @@ The following checks executed successfully after this progress slice:
 5. template reuse is now stronger from both current setup and reviewed history, but the workspace still lacks deeper post-session workflow and operational feedback loops.
 6. reviewed-session reuse is now more trustworthy than before, but real post-session notes, tagging, and host follow-up workflow still remain open.
 7. host-side lobby moderation is now less fragile across reloads, but true multi-device moderation and server-backed lobby control still remain open.
-8. follow-up notes now exist, but they are still browser-local rather than tenant-synced operational data.
-9. follow-up context is now visible in history rows, but there is still no shared or server-backed post-session ops layer.
-10. the new follow-up queue can now also be cleared locally, but it is still not a shared ops inbox across hosts or devices.
+8. follow-up notes are now tenant-synced, but they are still a lightweight per-session note layer rather than a broader shared ops system.
+9. follow-up context is now visible and synced in history rows, but there is still no richer shared post-session workflow such as assignments, tags, or escalation states.
+10. the follow-up queue can now be worked down across runtime sessions, but it is still not a full multi-host ops inbox.
