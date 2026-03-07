@@ -54,6 +54,42 @@ class TenantAdminControllerTest {
     }
 
     @Test
+    void returnsEmptyUsageSummaryAndDefaultPilotSummaryForFreshTenant() throws Exception {
+        String tenantResponse = mockMvc.perform(post("/internal/wl/tenants")
+                        .header("X-Internal-Api-Key", "test-internal-key")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "slug": "fresh-tenant-usage",
+                                  "name": "Fresh Tenant Usage"
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        String tenantId = objectMapper.readTree(tenantResponse).path("tenantId").asText();
+
+        mockMvc.perform(get("/internal/wl/tenants/{tenantId}/usage-summary", tenantId)
+                        .header("X-Internal-Api-Key", "test-internal-key"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0]").doesNotExist());
+
+        mockMvc.perform(get("/internal/wl/tenants/{tenantId}/pilot-summary", tenantId)
+                        .header("X-Internal-Api-Key", "test-internal-key"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.activated").value(false))
+                .andExpect(jsonPath("$.repeatHost").value(false))
+                .andExpect(jsonPath("$.paidConverted").value(false))
+                .andExpect(jsonPath("$.workspaceBootstraps").value(0))
+                .andExpect(jsonPath("$.hostSignIns").value(0))
+                .andExpect(jsonPath("$.sessionLaunches").value(0))
+                .andExpect(jsonPath("$.completedSessions").value(0))
+                .andExpect(jsonPath("$.openSupportCases").value(0))
+                .andExpect(jsonPath("$.resolvedSupportCases").value(0));
+    }
+
+    @Test
     void updatesTenantStatusAndRejectsUnsupportedStatus() throws Exception {
         String createPayload = """
                 {

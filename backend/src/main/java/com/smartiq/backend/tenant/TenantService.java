@@ -22,6 +22,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.regex.Pattern;
@@ -718,15 +719,24 @@ public class TenantService {
             throw new IllegalArgumentException("from must be less than or equal to to");
         }
 
-        return tenantUsageEventRepository.summarizeByTenantId(tenantId, fromInclusive, toInclusive, normalizedEventType)
+        return tenantUsageEventRepository.findAllByTenantId(tenantId).stream()
+                .filter(event -> normalizedEventType == null || normalizedEventType.equals(event.getEventType()))
+                .filter(event -> fromInclusive == null || !event.getEventTime().isBefore(fromInclusive))
+                .filter(event -> toInclusive == null || !event.getEventTime().isAfter(toInclusive))
+                .collect(Collectors.groupingBy(
+                        TenantUsageEvent::getEventType,
+                        TreeMap::new,
+                        Collectors.toList()
+                ))
+                .entrySet()
                 .stream()
-                .map(row -> new TenantUsageSummaryResponse(
+                .map(entry -> new TenantUsageSummaryResponse(
                         tenantId,
-                        row.eventType(),
-                        row.totalValue(),
-                        row.eventCount(),
-                        row.firstEventTime(),
-                        row.lastEventTime()
+                        entry.getKey(),
+                        entry.getValue().stream().mapToLong(TenantUsageEvent::getEventValue).sum(),
+                        entry.getValue().size(),
+                        entry.getValue().stream().map(TenantUsageEvent::getEventTime).min(Instant::compareTo).orElse(null),
+                        entry.getValue().stream().map(TenantUsageEvent::getEventTime).max(Instant::compareTo).orElse(null)
                 ))
                 .toList();
     }
