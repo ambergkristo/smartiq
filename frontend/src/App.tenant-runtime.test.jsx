@@ -42,7 +42,8 @@ import {
   fetchTenantUsageSummary,
   fetchTopics,
   hasRuntimeAuthContext,
-  resumeServerGameSession
+  resumeServerGameSession,
+  upsertRuntimeSessionTemplate
 } from './api';
 
 describe('App tenant runtime integration', () => {
@@ -156,6 +157,18 @@ describe('App tenant runtime integration', () => {
         p1: 'at_resume_1',
         p2: 'at_resume_2'
       }
+    });
+    upsertRuntimeSessionTemplate.mockResolvedValue({
+      templates: [
+        {
+          templateId: 'tpl-history',
+          name: 'History replay',
+          topic: 'History',
+          language: 'et',
+          theme: 'ocean',
+          players: ['Host One', 'Alice']
+        }
+      ]
     });
   });
 
@@ -581,6 +594,80 @@ describe('App tenant runtime integration', () => {
 
     await waitFor(() => expect(resumeServerGameSession).toHaveBeenCalledWith('game-review'));
     await waitFor(() => expect(screen.getByText(/resume question/i)).toBeInTheDocument());
+  });
+
+  test('saves reviewed hosted session as a reusable template', async () => {
+    fetchTopics.mockResolvedValue([
+      { topic: 'Science', count: 12 },
+      { topic: 'History', count: 10 }
+    ]);
+    hasRuntimeAuthContext.mockReturnValue(true);
+    fetchTenantRuntimeSnapshot.mockResolvedValue({
+      me: {
+        email: 'owner@northwind.test',
+        selectedTenantId: 'tenant-northwind'
+      },
+      settings: {
+        settings: {
+          schemaVersion: 1,
+          theme: 'ocean',
+          host: {
+            sessionTemplates: []
+          }
+        }
+      },
+      branding: {
+        branding: {
+          appName: 'Northwind Quiz',
+          primaryColor: '#223344',
+          secondaryColor: '#556677'
+        }
+      },
+      subscription: {
+        planCode: 'pro-host',
+        status: 'active',
+        billingCycle: 'monthly'
+      },
+      capabilities: {
+        planTier: 'pro_host',
+        maxHostedPlayers: 10,
+        analyticsHistoryEnabled: true,
+        sessionTemplatesEnabled: true
+      }
+    });
+    fetchTenantAuditEvents.mockResolvedValue([
+      {
+        auditEventId: 'evt-15',
+        action: 'HOST_GAME_SESSION_CREATED',
+        entityId: 'game-review',
+        metadata: {
+          gameId: 'game-review',
+          topic: 'History',
+          language: 'et',
+          playerCount: 2
+        }
+      }
+    ]);
+
+    render(<App />);
+
+    await waitFor(() => expect(fetchTenantAuditEvents).toHaveBeenCalled());
+    fireEvent.click(screen.getByRole('button', { name: /review session/i }));
+
+    await waitFor(() => expect(fetchServerGameSession).toHaveBeenCalledWith('game-review'));
+    fireEvent.click(within(screen.getByTestId('recent-hosted-session-review')).getByRole('button', { name: /save as template/i }));
+
+    await waitFor(() => expect(upsertRuntimeSessionTemplate).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        name: 'History replay',
+        topic: 'History',
+        language: 'et',
+        theme: 'ocean',
+        players: ['Host One', 'Alice']
+      })
+    ));
+    expect(screen.getByTestId('session-template-message')).toHaveTextContent(/saved from history: history replay/i);
   });
 
   test('filters recent hosted sessions by live vs completed status', async () => {

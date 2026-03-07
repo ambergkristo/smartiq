@@ -145,7 +145,8 @@ Priority order:
 15. The current live `M8` artifact output is still honestly `NO_GO_SELLABLE` because the live cohort remains bootstrap-only for commercial proof.
 16. `M9` technical work has now also started in parallel with that deferred `M8` proof blocker, beginning with a `Host momentum` repeat-host analytics card inside the host workspace.
 17. The latest `M9` slice also adds host-side pre-live roster selection in room management, reducing repeat-host setup friction before launch without requiring manual player-list rebuilding.
-18. The locked next-sequence is:
+18. The latest `M9` slice also adds one-click `history -> template` reuse from the reviewed session panel, strengthening repeat-host reuse beyond the current setup form alone.
+19. The locked next-sequence is:
    - product stabilization,
    - auth/trust hardening,
    - billing/payment hardening,

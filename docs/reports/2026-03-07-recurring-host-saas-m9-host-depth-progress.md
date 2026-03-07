@@ -48,6 +48,15 @@ Observed result:
 3. the selected roster is shown inline before launch, so the host can verify the exact live setup before starting,
 4. repeat hosts can now turn a live room roster into a curated launch roster in one place, which is materially closer to the `M9` pre-live control goal.
 
+### Reviewed history sessions can now become reusable templates in one click
+
+Observed result:
+
+1. the host session review panel now exposes `Save as template`,
+2. the shortcut derives a reusable preset from the reviewed session topic, language, current theme, and saved scoreboard roster,
+3. this removes the need to manually copy history state back into the template form before the next recurring event,
+4. repeat-host reuse is therefore faster from session history, not only from the current setup form.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -56,6 +65,7 @@ The following checks executed successfully after this progress slice:
 2. `npm --prefix frontend run lint`
 3. `npm --prefix frontend run build`
 4. `npm --prefix frontend run test -- --run src/App.startup.test.jsx src/App.tenant-runtime.test.jsx`
+5. `npm --prefix frontend run test -- --run src/App.tenant-runtime.test.jsx src/App.startup.test.jsx`
 
 ## Honest Status
 
@@ -66,3 +76,4 @@ The following checks executed successfully after this progress slice:
    - stronger pre-live controls,
    - measurable repeat-host friction reduction.
 4. pre-live control is now meaningfully better than before, but lobby moderation and deeper participant/session control still remain open.
+5. template reuse is now stronger from both current setup and reviewed history, but the workspace still lacks deeper post-session workflow and operational feedback loops.

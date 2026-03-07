@@ -149,6 +149,8 @@ const STRINGS = {
   sessionTemplatesEmpty: 'No saved templates yet.',
   sessionTemplatesApplySubmit: 'Apply template',
   sessionTemplatesDeleteSubmit: 'Delete template',
+  sessionTemplatesSaveFromHistorySubmit: 'Save as template',
+  sessionTemplatesSavedFromHistoryPrefix: 'Session template saved from history:',
   hostedRuntimeBlocked: 'Hosted runtime is blocked until billing is restored. Upgrade or fix billing to launch sessions.',
   hostedRuntimePastDue: 'Billing is past due. Hosted launches are blocked until payment state is recovered.',
   hostedRuntimeCanceled: 'Subscription is canceled. Hosted launches are blocked until the tenant is upgraded again.',
@@ -502,6 +504,24 @@ function buildBrandingDraft(brandingResponse) {
   };
 }
 
+function buildRecentHostedSessionTemplateInput(review, session, fallbackTheme) {
+  const topic = String(review?.topic || session?.topic || '').trim();
+  const language = String(review?.language || session?.language || 'en').trim().toLowerCase() || 'en';
+  const players = Array.isArray(review?.scoreboard) && review.scoreboard.length > 0
+    ? review.scoreboard
+      .map((entry) => normalizePlayerName(entry?.displayName || entry?.playerId || ''))
+      .filter(Boolean)
+    : buildPlaceholderPlayers(session?.playerCount);
+  const resolvedTopic = topic || STRINGS.recentHostedSessionTopicFallback;
+  return {
+    name: `${resolvedTopic} replay`,
+    topic,
+    language,
+    theme: isSupportedTheme(fallbackTheme) ? fallbackTheme : 'classic',
+    players
+  };
+}
+
 function buildSessionTemplateDraft() {
   return {
     name: ''
@@ -730,6 +750,7 @@ function StartScreen({
   onReviewRecentHostedSession,
   onResumeRecentHostedSession,
   onLaunchRecentHostedSession,
+  onSaveRecentHostedSessionAsTemplate,
   canLaunchRecentHostedSessions
 }) {
   const [playerDraft, setPlayerDraft] = useState('');
@@ -1182,6 +1203,16 @@ function StartScreen({
                       >
                         {STRINGS.recentHostedSessionLaunchSubmit}
                       </button>
+                      {sessionTemplatesEnabled && typeof onSaveRecentHostedSessionAsTemplate === 'function' ? (
+                        <button
+                          type="button"
+                          className="secondary-action"
+                          onClick={() => onSaveRecentHostedSessionAsTemplate(activeHostedSession)}
+                          disabled={sessionTemplatePending}
+                        >
+                          {STRINGS.sessionTemplatesSaveFromHistorySubmit}
+                        </button>
+                      ) : null}
                     </div>
                   ) : null}
                   <ul className="recent-session-scoreboard">
@@ -2501,6 +2532,16 @@ function GameApp() {
     setSessionTemplateError('');
   }
 
+  async function handleSaveRecentHostedSessionAsTemplate(session) {
+    const templateInput = buildRecentHostedSessionTemplateInput(reviewedHostedSession, session, config.theme);
+    if (!templateInput.name || templateInput.players.length === 0) {
+      setSessionTemplateError('Could not derive a reusable template from this hosted session.');
+      return;
+    }
+    await handleSaveSessionTemplate(templateInput);
+    setSessionTemplateMessage(`${STRINGS.sessionTemplatesSavedFromHistoryPrefix} ${templateInput.name}`);
+  }
+
   async function handleDeleteSessionTemplate(template) {
     const templateId = String(template?.templateId || '').trim();
     if (sessionTemplatePending || !templateId || !runtimeSnapshot?.me?.selectedTenantId) {
@@ -3123,6 +3164,7 @@ function GameApp() {
                 onReviewRecentHostedSession={handleReviewRecentHostedSession}
                 onResumeRecentHostedSession={handleResumeRecentHostedSession}
                 onLaunchRecentHostedSession={handleLaunchRecentHostedSession}
+                onSaveRecentHostedSessionAsTemplate={handleSaveRecentHostedSessionAsTemplate}
                 canLaunchRecentHostedSessions={canLaunchRecentHostedSessions}
               />
             </>
