@@ -1,5 +1,9 @@
 package com.smartiq.backend.config;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.card.CardRepository;
 import com.smartiq.backend.card.CardSourcePolicy;
@@ -17,6 +21,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
+import org.slf4j.LoggerFactory;
 
 @ExtendWith(MockitoExtension.class)
 class CardImportRunnerTest {
@@ -56,7 +61,7 @@ class CardImportRunnerTest {
     }
 
     @Test
-    void recordsCountOfCategoriesBelowThresholdAsMetric() throws Exception {
+    void recordsCountOfCategoriesBelowThresholdAsMetricAndWarnsWithoutFailing() throws Exception {
         when(cardRepository.countBySourcesLower(CardSourcePolicy.DEPRECATED_SOURCES)).thenReturn(0L);
         when(cardRepository.count()).thenReturn(130L);
         when(cardRepository.findCategoryCounts()).thenReturn(List.of(
@@ -75,10 +80,27 @@ class CardImportRunnerTest {
                 100
         );
 
-        runner.run(new DefaultApplicationArguments());
+        Logger logger = (Logger) LoggerFactory.getLogger(CardImportRunner.class);
+        ListAppender<ILoggingEvent> appender = new ListAppender<>();
+        appender.start();
+        logger.addAppender(appender);
+        try {
+            runner.run(new DefaultApplicationArguments());
+        } finally {
+            logger.detachAppender(appender);
+        }
 
         assertThat(meterRegistry.get("smartiq.dataset.category.below.threshold").gauge().value())
                 .isEqualTo(5.0);
+        assertThat(appender.list)
+                .anySatisfy(event -> {
+                    assertThat(event.getLevel()).isEqualTo(Level.WARN);
+                    assertThat(event.getFormattedMessage()).contains("Dataset category below threshold");
+                })
+                .anySatisfy(event -> {
+                    assertThat(event.getLevel()).isEqualTo(Level.WARN);
+                    assertThat(event.getFormattedMessage()).contains("Dataset threshold warnings will not block startup");
+                });
     }
 
     private static final class SimpleLabelCount implements LabelCountView {

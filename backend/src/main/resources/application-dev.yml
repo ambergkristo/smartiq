@@ -5,6 +5,8 @@ spring:
     password: ""
 
 smartiq:
+  import:
+    fail-on-category-threshold: ${STRICT_DATASET_VALIDATION:${SMARTIQ_IMPORT_FAIL_ON_CATEGORY_THRESHOLD:true}}
   bank:
     trigger-pipeline-on-low-bank: false
     block-on-low-bank: false

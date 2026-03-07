@@ -6,7 +6,7 @@ management:
 
 smartiq:
   import:
-    fail-on-category-threshold: ${SMARTIQ_IMPORT_FAIL_ON_CATEGORY_THRESHOLD:true}
+    fail-on-category-threshold: ${STRICT_DATASET_VALIDATION:${SMARTIQ_IMPORT_FAIL_ON_CATEGORY_THRESHOLD:false}}
   game:
     session-store: ${SMARTIQ_GAME_SESSION_STORE:redis}
     session-retention-minutes: ${SMARTIQ_GAME_SESSION_RETENTION_MINUTES:180}

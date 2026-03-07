@@ -119,12 +119,17 @@ public class CardImportRunner implements ApplicationRunner {
 
         for (String category : belowThreshold) {
             long count = categories.getOrDefault(category, 0L);
-            log.error("Dataset category below threshold category={} count={} minThreshold={}",
+            log.warn("Dataset category below threshold category={} count={} minThreshold={}",
                     category, count, minimumCategoryThreshold);
         }
 
         if (!belowThreshold.isEmpty() && failOnThreshold) {
             throw new IllegalStateException("Dataset categories below threshold: " + belowThreshold);
+        }
+
+        if (!belowThreshold.isEmpty()) {
+            log.warn("Dataset threshold warnings will not block startup categories={} minThreshold={} strictDatasetValidation={}",
+                    belowThreshold, minimumCategoryThreshold, failOnThreshold);
         }
     }
 
