@@ -1,0 +1,67 @@
+name: Recurring Host Pilot Seed
+
+on:
+  workflow_dispatch:
+    inputs:
+      backend_url:
+        description: "Backend base URL (https://...)"
+        required: false
+        type: string
+      internal_api_key:
+        description: "Internal API key override (optional; defaults to repo secret)"
+        required: false
+        type: string
+
+jobs:
+  recurring-host-pilot-seed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Resolve live seed secrets
+        env:
+          INPUT_BACKEND_URL: ${{ inputs.backend_url }}
+          SECRET_BACKEND_URL: ${{ secrets.BETA_BACKEND_URL }}
+          INPUT_INTERNAL_API_KEY: ${{ inputs.internal_api_key }}
+          SECRET_INTERNAL_API_KEY: ${{ secrets.SMARTIQ_INTERNAL_API_KEY }}
+          LEGACY_INTERNAL_API_KEY: ${{ secrets.BETA_INTERNAL_API_KEY }}
+        run: |
+          BACKEND_URL="$INPUT_BACKEND_URL"
+          if [ -z "$BACKEND_URL" ]; then
+            BACKEND_URL="$SECRET_BACKEND_URL"
+          fi
+          if [ -z "$BACKEND_URL" ]; then
+            echo "Missing backend URL. Provide workflow input 'backend_url' or set secret BETA_BACKEND_URL." >&2
+            exit 1
+          fi
+
+          INTERNAL_API_KEY="$INPUT_INTERNAL_API_KEY"
+          if [ -z "$INTERNAL_API_KEY" ]; then
+            INTERNAL_API_KEY="$SECRET_INTERNAL_API_KEY"
+          fi
+          if [ -z "$INTERNAL_API_KEY" ]; then
+            INTERNAL_API_KEY="$LEGACY_INTERNAL_API_KEY"
+          fi
+          if [ -z "$INTERNAL_API_KEY" ]; then
+            echo "Missing internal API key. Provide workflow input 'internal_api_key' or set secret SMARTIQ_INTERNAL_API_KEY." >&2
+            exit 1
+          fi
+
+          echo "BACKEND_URL=$BACKEND_URL" >> "$GITHUB_ENV"
+          echo "SMARTIQ_INTERNAL_API_KEY=$INTERNAL_API_KEY" >> "$GITHUB_ENV"
+
+      - name: Seed recurring-host pilot bootstrap data
+        env:
+          BACKEND_URL: ${{ env.BACKEND_URL }}
+          SMARTIQ_INTERNAL_API_KEY: ${{ env.SMARTIQ_INTERNAL_API_KEY }}
+        run: npm run seed:recurring-host:pilot -- --apply

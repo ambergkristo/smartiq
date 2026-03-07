@@ -40,6 +40,12 @@ Equivalent npm command:
 npm run seed:recurring-host:pilot -- --apply
 ```
 
+GitHub Actions option:
+
+```powershell
+gh workflow run recurring-host-pilot-seed.yml --repo ambergkristo/smartiq -f backend_url=https://<your-render-backend>
+```
+
 ## Contracts used
 
 - `POST /internal/wl/tenants`
