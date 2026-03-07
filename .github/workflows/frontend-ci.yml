@@ -48,6 +48,12 @@ jobs:
       - name: Semantic quality gate (ET >= 0.70)
         run: node ../tools/score_cards_semantic.js ../data/smart10/cards.et.json --fail-threshold=0.70
 
+      - name: Semantic content honesty gate (EN >= 0.95)
+        run: node ../tools/semantic_content_validator.js ../data/smart10/cards.en.json --fail-threshold=0.95
+
+      - name: Semantic content honesty gate (ET >= 0.95)
+        run: node ../tools/semantic_content_validator.js ../data/smart10/cards.et.json --fail-threshold=0.95
+
       - name: Semantic locale parity gate (blocking)
         run: node ../tools/report_semantic_locale_parity.js ../data/smart10/cards.en.json ../data/smart10/cards.et.json --min-category-score=NUMBER:0.90,COLOR:0.95 --max-short-option-ratio=NUMBER:0.20,COLOR:0.10 --max-locale-score-gap=0.02 --max-locale-warning-gap=10 --fail-on-exceed
 
