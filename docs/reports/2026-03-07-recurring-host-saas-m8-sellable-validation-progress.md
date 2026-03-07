@@ -38,6 +38,14 @@ Observed result:
 2. the wrapper generates the canonical go/no-go pack and operating plan from the same pilot-summary input,
 3. the wrapper returns an honest `externalProofDeferred` flag until real activation/repeat/paid thresholds exist.
 
+### Live sellable-SaaS artifacts now generate from the latest recurring-host summary
+
+Observed result:
+
+1. the latest live recurring-host summary now produces a canonical `NO_GO_SELLABLE` pack,
+2. the same live summary now produces a 12-month operating plan grounded in real-vs-bootstrap cohort separation,
+3. the live `M8` gate remains honestly deferred because real activated/repeat/paid counts are still `0/0/0`.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -45,9 +53,13 @@ The following checks executed successfully after this progress slice:
 1. `node tools/generate_recurring_host_go_no_go_pack.js --summary-json=tools/fixtures/recurring_host_pilot_summary.sample.json --output=<temp>`
 2. `node tools/generate_recurring_host_operating_plan.js --summary-json=tools/fixtures/recurring_host_pilot_summary.sample.json --output=<temp>`
 3. `node tools/validate_recurring_host_sellable_saas_gate.js --summary-json=tools/fixtures/recurring_host_pilot_summary.sample.json --go-no-go-output=<temp> --operating-plan-output=<temp>`
+4. `node tools/generate_recurring_host_go_no_go_pack.js --summary-json=.tmp/m6-live-artifacts-5/recurring-host-pilot-22787954955/2026-03-07-recurring-host-saas-m6-pilot-22787954955-summary.json --output=<temp>`
+5. `node tools/generate_recurring_host_operating_plan.js --summary-json=.tmp/m6-live-artifacts-5/recurring-host-pilot-22787954955/2026-03-07-recurring-host-saas-m6-pilot-22787954955-summary.json --output=<temp>`
+6. `node tools/validate_recurring_host_sellable_saas_gate.js --summary-json=.tmp/m6-live-artifacts-5/recurring-host-pilot-22787954955/2026-03-07-recurring-host-saas-m6-pilot-22787954955-summary.json --go-no-go-output=<temp> --operating-plan-output=<temp>`
 
 ## Honest Status
 
 1. `M8` technical artifact generation is now underway even though `M7` still has a live deploy verification blocker,
-2. the artifact chain is ready to consume real recurring-host summary JSON as soon as live narrow-launch proof is stable,
-3. `M8` is not promotable done because sellable-SaaS proof still depends on real paying hosts, repeatable segment evidence, and a final go/no-go recommendation grounded in real usage.
+2. the artifact chain is now proven against both sample data and the latest live recurring-host summary JSON,
+3. the current live recommendation is honestly `NO_GO_SELLABLE`,
+4. `M8` is not promotable done because sellable-SaaS proof still depends on real paying hosts, repeatable segment evidence, and a final go/no-go recommendation grounded in real usage.

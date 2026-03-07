@@ -141,7 +141,8 @@ Priority order:
 11. `M7` technical work may now proceed in parallel with the deferred `M6` external-proof blocker, starting with the public recurring-host launch surface, launch KPI snapshot tooling, recurring-host incident runbook, and a technical launch gate wrapper.
 12. The latest `M7` slice removed frontend lint/tooling blockers, hardened post-deploy smoke/runtime-deck verification, and corrected public topic/public fallback-source behavior so the remaining blocker is an honest live deploy validation against `https://smartiq-63tk.onrender.com`, not a local gate defect.
 13. `M8` technical work has now also begun in parallel as artifact infrastructure only: recurring-host go/no-go pack generation, 12-month operating-plan generation, and a sellable-SaaS gate wrapper that stays explicitly deferred until real paid/repeat evidence exists.
-14. The locked next-sequence is:
+14. The latest live state is now split cleanly: public smoke is green on `https://smartiq-63tk.onrender.com`, but `M7` runtime-deck verification still waits for the richer fallback-deck deploy, while `M8` can already generate a truthful live `NO_GO_SELLABLE` pack from the latest recurring-host summary.
+15. The locked next-sequence is:
    - product stabilization,
    - auth/trust hardening,
    - billing/payment hardening,

@@ -93,11 +93,13 @@ The following checks executed successfully after this progress slice:
 8. `mvn -q -f backend/pom.xml "-Dtest=CardControllerTest,CardControllerTopicCountsLanguageFilterTest,SeedDataMigrationTest,SecurityConfigTest" test`
 9. `mvn -q -f backend/pom.xml "-Dtest=SeedDataMigrationTest,CardDeckResponseContractTest,CardControllerTest" test`
 10. `node tools/verify_runtime_deck_gate.js`
+11. `BACKEND_URL=https://smartiq-63tk.onrender.com FRONTEND_URL=https://smartiq-nine.vercel.app node tools/post-deploy-smoke.js`
 
 ## Honest Status
 
 1. `M7` public conversion surface is now in progress and product-real,
 2. `M6` remains deferred as an external proof dependency because real pilot usage is still missing,
 3. `M7` now has a recurring-host KPI snapshot path, incident runbook, frontend release-readiness fixes, and hardened smoke/runtime-deck tooling,
-4. the current live blocker is specific and honest: the deployed backend at `https://smartiq-63tk.onrender.com` still needs the richer fallback-deck deploy before the full launch gate can be re-run against production,
-5. `M7` is therefore not promotable done yet because live production monitoring validation, launch-scope smoke proof, and final blocker review still need a post-deploy evidence slice.
+4. live public smoke against `https://smartiq-63tk.onrender.com` and `https://smartiq-nine.vercel.app` is now green,
+5. the current live blocker is specific and honest: the deployed backend still serves the old `OPEN`-only fallback deck shape, so external runtime-deck verification fails on immediate category repeats until commit `22919df` is fully live,
+6. `M7` is therefore not promotable done yet because live production monitoring validation, launch-scope smoke proof, and final blocker review still need a post-deploy evidence slice with the richer fallback deck live.

@@ -51,6 +51,7 @@ Current execution pointer:
 9. `M7` technical implementation is now allowed to proceed in parallel with that deferred external blocker, and the first landed slices are the public recurring-host launch surface, launch KPI snapshot tooling, recurring-host incident runbook, and technical launch gate wrapper.
 10. The latest `M7` slice removed frontend lint/tooling blockers from the launch gate, hardened post-deploy smoke/runtime-deck verification, and corrected public topic/public fallback-source behavior so the remaining blocker is a live deploy verification step on `https://smartiq-63tk.onrender.com`.
 11. `M8` technical artifact work has now started in parallel with that external launch blocker: recurring-host go/no-go pack generation, 12-month operating-plan generation, and a sellable-SaaS gate wrapper now exist, but the milestone remains commercially unproven.
+12. Current live state is explicit: public smoke is green, `M7` runtime-deck verification is still blocked by the old fallback deck remaining live, and `M8` already generates a truthful live `NO_GO_SELLABLE` pack from the latest recurring-host summary.
 
 ## Milestone Definitions
 
