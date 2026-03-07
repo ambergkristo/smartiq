@@ -10,7 +10,6 @@ import {
   deleteRuntimeSessionTemplate,
   fetchRoomPreview,
   fetchTenantAuditEvents,
-  fetchNextCard,
   resumeServerGameSession,
   fetchServerGameSession,
   fetchTenantRuntimeSnapshot,
@@ -27,14 +26,12 @@ import {
   upsertRuntimeSessionReviewNote,
   upsertRuntimeSessionTemplate,
   updateRuntimeTenantBranding,
-  resolveCardErrorMessage,
   resolveTopicsErrorState
 } from './api';
 import AdminConsole from './admin/AdminConsole';
 import GameBoard from './components/GameBoard';
 import RoundSummary from './components/RoundSummary';
 import { useAudioFeedback } from './audio/useAudioFeedback';
-import { useGameEngine } from './state/useGameEngine';
 import { useServerGameEngine } from './state/useServerGameEngine';
 import { DEFAULT_LANGS, GamePhase } from './state/types';
 
@@ -249,7 +246,6 @@ const STRINGS = {
   recentHostedSessionReviewError: 'Could not launch duplicate session from host history.',
   recentHostedSessionReviewLoadError: 'Could not load session review from host history.'
 };
-const GAME_STORAGE_KEY = 'smartiq.gameId';
 const CONFIG_STORAGE_KEY = 'smartiq.roundConfig';
 const ROOM_SESSION_STORAGE_KEY = 'smartiq.roomSession';
 const ROOM_SELECTION_STORAGE_PREFIX = 'smartiq.roomSelection.';
@@ -266,15 +262,6 @@ const STARTUP_PHASE = {
 const SHOW_BUILD_BADGE = import.meta.env.DEV
   || String(import.meta.env.VITE_SHOW_BUILD_BADGE || '').toLowerCase() === 'true';
 const BUILD_SHA = String(import.meta.env.VITE_BUILD_SHA || '').trim();
-
-function isServerEngineEnabled() {
-  const configured = String(import.meta.env.VITE_USE_SERVER_GAME_ENGINE || '').toLowerCase();
-  const mode = String(import.meta.env.MODE || '').toLowerCase();
-  if (mode === 'test') {
-    return configured === 'true';
-  }
-  return true;
-}
 
 const DIFFICULTY_OPTIONS = [
   { value: '1', label: 'Easy' },
@@ -2132,9 +2119,6 @@ function GameApp() {
     theme: storedConfig?.theme ?? 'classic',
     playersText: storedConfig?.playersText ?? ''
   });
-  const [gameId, setGameId] = useState('');
-  const [cardError, setCardError] = useState('');
-  const [runtimeMode, setRuntimeMode] = useState('local');
   const [runtimeSnapshot, setRuntimeSnapshot] = useState(null);
   const [runtimeWarning, setRuntimeWarning] = useState('');
   const [onboardingDraft, setOnboardingDraft] = useState({
@@ -2187,15 +2171,8 @@ function GameApp() {
   const [roomSession, setRoomSession] = useState(storedRoomSession);
   const [selectedRoomPlayerNames, setSelectedRoomPlayerNames] = useState(() => getRoomPlayerNames(storedRoomSession));
 
-  const legacyEngine = useGameEngine(30);
   const serverEngine = useServerGameEngine(30);
-  const engine = runtimeMode === 'server' ? serverEngine : legacyEngine;
-  const {
-    phase: legacyPhase,
-    loadTicket: legacyLoadTicket,
-    cardLoaded: legacyCardLoaded,
-    cardLoadFailed: legacyCardLoadFailed
-  } = legacyEngine;
+  const engine = serverEngine;
 
   const {
     muted: audioMuted,
@@ -2333,16 +2310,6 @@ function GameApp() {
 
   useEffect(() => {
     loadTopics();
-
-    const savedGameId = localStorage.getItem(GAME_STORAGE_KEY);
-    if (savedGameId) {
-      setGameId(savedGameId);
-      return;
-    }
-
-    const generated = globalThis.crypto?.randomUUID?.() || `game-${Date.now()}`;
-    localStorage.setItem(GAME_STORAGE_KEY, generated);
-    setGameId(generated);
   }, [loadTopics]);
 
   useEffect(() => {
@@ -3215,8 +3182,6 @@ function GameApp() {
         lang: resumedLanguage,
         playersText: resumedPlayers.join(', ')
       }));
-      setRuntimeMode('server');
-      setCardError('');
       serverEngine.clearError();
       serverEngine.adoptCreatedSession(response, {
         players: resumedPlayers,
@@ -3270,8 +3235,6 @@ function GameApp() {
           lang: nextConfig.lang,
           playersText: duplicatedPlayers.join(', ')
         }));
-        setRuntimeMode('server');
-        setCardError('');
         serverEngine.clearError();
         serverEngine.adoptCreatedSession(response, {
           language: nextConfig.lang
@@ -3295,29 +3258,6 @@ function GameApp() {
   useEffect(() => {
     document.title = appTitle;
   }, [appTitle]);
-
-  useEffect(() => {
-    async function loadCard() {
-      if (runtimeMode !== 'local') return;
-      if (legacyPhase !== GamePhase.LOADING_CARD) return;
-      if (!gameId) return;
-
-      try {
-        setCardError('');
-        const card = await fetchNextCard({
-          topic: config.topic || undefined,
-          language: config.lang,
-          gameId
-        });
-        legacyCardLoaded(card);
-      } catch (error) {
-        setCardError(resolveCardErrorMessage(error) || STRINGS.cardErrorFallback);
-        legacyCardLoadFailed();
-      }
-    }
-
-    loadCard();
-  }, [runtimeMode, legacyLoadTicket, legacyCardLoaded, legacyCardLoadFailed, legacyPhase, gameId, config.topic, config.lang]);
 
   useEffect(() => {
     const cardId = engine.card?.cardId || engine.card?.id || '';
@@ -3356,23 +3296,13 @@ function GameApp() {
       return;
     }
     const parsedPlayers = parsePlayers(playersText);
-    if (isServerEngineEnabled()) {
-      setRuntimeMode('server');
-      setCardError('');
-      serverEngine.clearError();
-      serverEngine.startRound({
-        players: parsedPlayers,
-        language,
-        topic: topic || undefined,
-        winCondition: 30
-      });
-      return;
-    }
-
-    setRuntimeMode('local');
-    serverEngine.resetToSetup();
     serverEngine.clearError();
-    legacyEngine.startRound(playersText);
+    serverEngine.startRound({
+      players: parsedPlayers,
+      language,
+      topic: topic || undefined,
+      winCondition: 30
+    });
   }
 
   function handleStartRound(playersTextOverride = null) {
@@ -3392,18 +3322,15 @@ function GameApp() {
   }
 
   function handleRestart() {
-    legacyEngine.resetToSetup();
     serverEngine.resetToSetup();
     serverEngine.clearError();
-    setRuntimeMode('local');
-    setCardError('');
     if (runtimeSnapshot?.me?.selectedTenantId) {
       refreshWorkspaceInsights();
     }
   }
 
-  const activeError = runtimeMode === 'server' ? serverEngine.errorMessage : cardError;
-  const controlsDisabled = runtimeMode === 'server' && !serverEngine.isLocalTurn;
+  const activeError = serverEngine.errorMessage;
+  const controlsDisabled = !serverEngine.isLocalTurn;
 
   return (
     <main data-phase={engine.phase === GamePhase.SETUP ? 'setup' : 'game'}>

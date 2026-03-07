@@ -11,6 +11,7 @@ vi.mock('./api', () => {
     deleteRuntimeSessionReviewNote: vi.fn(),
     deleteRuntimeSessionTemplate: vi.fn(),
     duplicateServerGameSession: vi.fn(),
+    createServerGameSession: vi.fn(),
     fetchRoomPreview: vi.fn(),
     fetchTenantAuditEvents: vi.fn(),
     fetchTopics: vi.fn(),
@@ -30,6 +31,7 @@ vi.mock('./api', () => {
     upsertRuntimeSessionReviewNote: vi.fn(),
     upsertRuntimeSessionTemplate: vi.fn(),
     updateRuntimeTenantBranding: vi.fn(),
+    resolveGameSessionErrorMessage: vi.fn(() => 'Could not process game action. Retry.'),
     resolveCardErrorMessage: vi.fn(() => 'Fallback mode'),
     resolveTopicsErrorState: vi.fn(() => ({
       title: 'Backend is unreachable.',
@@ -43,9 +45,9 @@ import {
   bootstrapOnboardingTenant,
   clearRuntimeAuthContext,
   completeRuntimeAuth,
+  createServerGameSession,
   createRoomSession,
   deleteRuntimeSessionTemplate,
-  fetchNextCard,
   fetchRoomPreview,
   fetchTenantAuditEvents,
   fetchTenantRuntimeSnapshot,
@@ -63,17 +65,43 @@ import {
   updateRuntimeTenantBranding
 } from './api';
 
-function makeCard(id, correctIndex = 0) {
+function makeServerSnapshot({
+  gameId = 'game-ready',
+  question = 'Question ready',
+  topic = 'Math',
+  players = ['Host One', 'Alice']
+} = {}) {
+  const normalizedPlayers = players.map((displayName, index) => ({
+    playerId: `p${index + 1}`,
+    displayName
+  }));
+
   return {
-    id,
-    cardId: id,
-    topic: 'Math',
-    category: 'OPEN',
-    difficulty: '2',
-    language: 'en',
-    question: `Question ${id}`,
-    options: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa'],
-    correct: { correctIndex }
+    apiVersion: '1',
+    gameId,
+    winCondition: 30,
+    activePlayerIndex: 0,
+    players: normalizedPlayers,
+    roundState: {
+      roundNumber: 1,
+      phase: 'CHOOSING',
+      starterPlayerId: normalizedPlayers[0]?.playerId || 'p1',
+      currentPlayerId: normalizedPlayers[0]?.playerId || 'p1',
+      lastAction: 'Server round ready'
+    },
+    boardState: {
+      question,
+      category: 'OPEN',
+      topic,
+      pegs: Array.from({ length: 10 }, (_, index) => ({
+        index,
+        state: 'hidden',
+        value: null
+      }))
+    },
+    totalScores: Object.fromEntries(normalizedPlayers.map((player) => [player.playerId, 0])),
+    roundScores: Object.fromEntries(normalizedPlayers.map((player) => [player.playerId, 0])),
+    statuses: Object.fromEntries(normalizedPlayers.map((player) => [player.playerId, 'ACTIVE']))
   };
 }
 
@@ -101,7 +129,7 @@ describe('App startup resilience', () => {
     });
     fetchTenantAuditEvents.mockResolvedValue([]);
     fetchTenantUsageSummary.mockResolvedValue([]);
-    fetchNextCard.mockResolvedValue(makeCard('ready'));
+    createServerGameSession.mockResolvedValue(makeServerSnapshot());
     updateRuntimeTenantBranding.mockResolvedValue({
       tenantId: 'tenant-branding',
       branding: {
@@ -842,6 +870,10 @@ describe('App startup resilience', () => {
 
   test('starts live session from selected room roster only', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({
+      gameId: 'game-room-start',
+      players: ['Host One', 'Bob']
+    }));
     rejoinRoomSession.mockResolvedValue({
       roomCode: 'QUIZ42',
       playerId: 'p1',
@@ -866,6 +898,12 @@ describe('App startup resilience', () => {
     fireEvent.click(screen.getAllByRole('checkbox', { name: /include in launch/i })[1]);
     fireEvent.click(screen.getByRole('button', { name: /start selected room/i }));
 
+    await waitFor(() => expect(createServerGameSession).toHaveBeenCalledWith(expect.objectContaining({
+      players: ['Host One', 'Bob'],
+      language: 'en',
+      topic: undefined,
+      winCondition: 30
+    })));
     await waitFor(() => expect(screen.getByText(/question ready/i)).toBeInTheDocument());
     expect(screen.getAllByText('Host One').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Bob').length).toBeGreaterThan(0);
