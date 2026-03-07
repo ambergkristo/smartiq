@@ -4,6 +4,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const BOOTSTRAP_SEEDED_SLUG_PREFIX = 'pilot-recurring-host-';
+
 function nowIso() {
   return new Date().toISOString();
 }
@@ -67,6 +69,12 @@ function sum(items, selector) {
   return items.reduce((total, item) => total + selector(item), 0);
 }
 
+function isBootstrapSeededTenant(tenant) {
+  const slug = String(tenant?.slug || '').trim().toLowerCase();
+  const name = String(tenant?.name || '').trim().toLowerCase();
+  return slug.startsWith(BOOTSTRAP_SEEDED_SLUG_PREFIX) || name.startsWith('pilot recurring host ');
+}
+
 function buildMarkdown({
   generatedAt,
   backendUrl,
@@ -88,6 +96,7 @@ function buildMarkdown({
       return [
         `### ${entry.tenant.name}`,
         `- Tenant: \`${entry.tenant.tenantId}\``,
+        `- Cohort: ${entry.seededBootstrap ? 'Bootstrap seeded' : 'Real pilot'}`,
         `- Stage: ${formatStage(entry.pilotSummary)}`,
         `- Risk: ${formatLabel(entry.pilotSummary?.riskStatus)}`,
         `- Plan: ${entry.pilotSummary?.planCode || 'n/a'} | ${entry.pilotSummary?.subscriptionStatus || 'n/a'}`,
@@ -119,18 +128,21 @@ milestone: M6
 - Tenants reviewed: \`${aggregate.totalTenants}\`
 - Active tenants: \`${aggregate.activeTenants}\`
 - Suspended tenants: \`${aggregate.suspendedTenants}\`
-- Activated hosts: \`${aggregate.activatedHosts}\`
-- Repeat hosts: \`${aggregate.repeatHosts}\`
-- Paid conversions: \`${aggregate.paidConversions}\`
+- Bootstrap-seeded tenants: \`${aggregate.bootstrapSeededTenants}\`
+- Real pilot tenants: \`${aggregate.realPilotTenants}\`
+- Activated hosts: \`${aggregate.activatedHosts}\` total | \`${aggregate.realActivatedHosts}\` real
+- Repeat hosts: \`${aggregate.repeatHosts}\` total | \`${aggregate.realRepeatHosts}\` real
+- Paid conversions: \`${aggregate.paidConversions}\` total | \`${aggregate.realPaidConversions}\` real
 - Open support cases: \`${aggregate.openSupportCases}\`
 - Resolved support cases: \`${aggregate.resolvedSupportCases}\`
 - Top open support category: \`${aggregate.topOpenSupportCategory || 'n/a'}\`
 
 ## Thresholds
 
-- Activated hosts target: \`${aggregate.activatedHosts}\` / \`${thresholds.minActivatedHosts}\`
-- Repeat hosts target: \`${aggregate.repeatHosts}\` / \`${thresholds.minRepeatHosts}\`
-- Paid conversions target: \`${aggregate.paidConversions}\` / \`${thresholds.minPaidConversions}\`
+- Real activated hosts target: \`${aggregate.realActivatedHosts}\` / \`${thresholds.minActivatedHosts}\`
+- Real repeat hosts target: \`${aggregate.realRepeatHosts}\` / \`${thresholds.minRepeatHosts}\`
+- Real paid conversions target: \`${aggregate.realPaidConversions}\` / \`${thresholds.minPaidConversions}\`
+- Thresholds intentionally ignore bootstrap-seeded tenants.
 
 ## Risk Mix
 
@@ -194,22 +206,30 @@ function aggregateData(sourceData) {
     const supportCases = Array.isArray(entry.supportCases) ? entry.supportCases : [];
     const openSupportCases = supportCases.filter((item) => item.status !== 'resolved').length;
     const resolvedSupportCases = supportCases.filter((item) => item.status === 'resolved').length;
+    const seededBootstrap = isBootstrapSeededTenant(entry.tenant);
     return {
       tenant: entry.tenant || {},
       pilotSummary: entry.pilotSummary || {},
       supportCases,
       openSupportCases,
-      resolvedSupportCases
+      resolvedSupportCases,
+      seededBootstrap
     };
   });
 
+  const realTenants = tenants.filter((entry) => !entry.seededBootstrap);
   const aggregate = {
     totalTenants: tenants.length,
     activeTenants: tenants.filter((entry) => entry.tenant.status === 'active').length,
     suspendedTenants: tenants.filter((entry) => entry.tenant.status === 'suspended').length,
+    bootstrapSeededTenants: tenants.filter((entry) => entry.seededBootstrap).length,
+    realPilotTenants: realTenants.length,
     activatedHosts: tenants.filter((entry) => entry.pilotSummary.activated).length,
     repeatHosts: tenants.filter((entry) => entry.pilotSummary.repeatHost).length,
     paidConversions: tenants.filter((entry) => entry.pilotSummary.paidConverted).length,
+    realActivatedHosts: realTenants.filter((entry) => entry.pilotSummary.activated).length,
+    realRepeatHosts: realTenants.filter((entry) => entry.pilotSummary.repeatHost).length,
+    realPaidConversions: realTenants.filter((entry) => entry.pilotSummary.paidConverted).length,
     openSupportCases: sum(tenants, (entry) => entry.openSupportCases),
     resolvedSupportCases: sum(tenants, (entry) => entry.resolvedSupportCases),
     topOpenSupportCategory: null,
@@ -274,9 +294,9 @@ async function main() {
 
   const { aggregate, tenants } = aggregateData(sourceData);
   const thresholdStatus =
-    aggregate.activatedHosts >= thresholds.minActivatedHosts &&
-    aggregate.repeatHosts >= thresholds.minRepeatHosts &&
-    aggregate.paidConversions >= thresholds.minPaidConversions
+    aggregate.realActivatedHosts >= thresholds.minActivatedHosts &&
+    aggregate.realRepeatHosts >= thresholds.minRepeatHosts &&
+    aggregate.realPaidConversions >= thresholds.minPaidConversions
       ? 'READY'
       : 'NOT_YET';
 
@@ -304,6 +324,8 @@ async function main() {
       tenantId: entry.tenant.tenantId || '',
       tenantName: entry.tenant.name || '',
       tenantStatus: entry.tenant.status || '',
+      tenantSlug: entry.tenant.slug || '',
+      seededBootstrap: entry.seededBootstrap,
       planCode: entry.pilotSummary?.planCode || '',
       subscriptionStatus: entry.pilotSummary?.subscriptionStatus || '',
       riskStatus: entry.pilotSummary?.riskStatus || 'tracking',

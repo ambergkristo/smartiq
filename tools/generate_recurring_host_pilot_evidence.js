@@ -51,10 +51,12 @@ function buildMarkdown(summary) {
   const thresholds = summary.thresholds || {};
   const aggregate = summary.aggregate || {};
   const tenants = Array.isArray(summary.tenants) ? summary.tenants : [];
+  const realTenants = tenants.filter((tenant) => !tenant.seededBootstrap);
+  const seededTenants = tenants.filter((tenant) => tenant.seededBootstrap);
 
-  const activatedTenants = tenants.filter((tenant) => tenant.activated);
-  const repeatTenants = tenants.filter((tenant) => tenant.repeatHost);
-  const paidTenants = tenants.filter((tenant) => tenant.paidConverted);
+  const activatedTenants = realTenants.filter((tenant) => tenant.activated);
+  const repeatTenants = realTenants.filter((tenant) => tenant.repeatHost);
+  const paidTenants = realTenants.filter((tenant) => tenant.paidConverted);
   const onboardingBlockers = chooseTopCases(tenants, (item) => item.status !== 'resolved' && item.category === 'onboarding');
   const upgradeBlockers = chooseTopCases(tenants, (item) => item.status !== 'resolved' && item.category === 'billing');
   const openCases = chooseTopCases(tenants, (item) => item.status !== 'resolved');
@@ -80,11 +82,26 @@ milestone: M6
 
 ## Outcome Summary
 
-- Activated hosts: \`${aggregate.activatedHosts ?? 0}\` / \`${thresholds.minActivatedHosts ?? 0}\`
-- Repeat hosts: \`${aggregate.repeatHosts ?? 0}\` / \`${thresholds.minRepeatHosts ?? 0}\`
-- Paid conversions: \`${aggregate.paidConversions ?? 0}\` / \`${thresholds.minPaidConversions ?? 0}\`
+- Bootstrap-seeded tenants: \`${aggregate.bootstrapSeededTenants ?? 0}\`
+- Real pilot tenants: \`${aggregate.realPilotTenants ?? 0}\`
+- Real activated hosts: \`${aggregate.realActivatedHosts ?? 0}\` / \`${thresholds.minActivatedHosts ?? 0}\`
+- Real repeat hosts: \`${aggregate.realRepeatHosts ?? 0}\` / \`${thresholds.minRepeatHosts ?? 0}\`
+- Real paid conversions: \`${aggregate.realPaidConversions ?? 0}\` / \`${thresholds.minPaidConversions ?? 0}\`
+- Total activated hosts: \`${aggregate.activatedHosts ?? 0}\`
+- Total repeat hosts: \`${aggregate.repeatHosts ?? 0}\`
+- Total paid conversions: \`${aggregate.paidConversions ?? 0}\`
 - Open support cases: \`${aggregate.openSupportCases ?? 0}\`
 - Resolved support cases: \`${aggregate.resolvedSupportCases ?? 0}\`
+
+## Cohort Integrity
+
+- Bootstrap cohort: ${seededTenants.length === 0 ? '`none`' : seededTenants.map((tenant) => `\`${tenant.tenantName}\``).join(', ')}
+- Real pilot cohort: ${realTenants.length === 0 ? '`none`' : realTenants.map((tenant) => `\`${tenant.tenantName}\``).join(', ')}
+- Interpretation: ${seededTenants.length > 0 && realTenants.length === 0
+    ? 'current threshold result depends entirely on bootstrap-seeded tenants, so M6 real-host proof is still not satisfied'
+    : seededTenants.length > 0
+      ? 'bootstrap tenants exist, but real-host counts remain the authoritative M6 threshold'
+      : 'all observed tenants are treated as real pilot cohort'}
 
 ## Activation Review
 
@@ -104,7 +121,7 @@ milestone: M6
 ## Conversion Review
 
 - Paid-converted tenants: ${paidTenants.length === 0 ? '`none`' : paidTenants.map((tenant) => `\`${tenant.tenantName}\``).join(', ')}
-- Upgrade-risk tenants: ${tenants.filter((tenant) => tenant.upgradeAttempts > 0 && !tenant.paidConverted).length}
+- Upgrade-risk tenants: ${realTenants.filter((tenant) => tenant.upgradeAttempts > 0 && !tenant.paidConverted).length}
 - Conversion interpretation: ${paidTenants.length > 0
     ? 'at least one tenant has crossed into paid usage'
     : 'no paid conversion proof exists yet'}
@@ -137,7 +154,7 @@ ${resolvedCases.length === 0
 
 ${tenants.length === 0
     ? '- No tenants available.'
-    : tenants.map((tenant) => `- \`${tenant.tenantName}\` | stage=\`${tenant.stage}\` | risk=\`${formatLabel(tenant.riskStatus)}\` | launches=\`${tenant.sessionLaunches}\` | completed=\`${tenant.completedSessions}\` | upgrades=\`${tenant.upgradeAttempts}\` | paid=\`${tenant.paidActivations}\` | recommendation=${tenant.recommendation || 'n/a'}`).join('\n')}
+    : tenants.map((tenant) => `- \`${tenant.tenantName}\` | cohort=\`${tenant.seededBootstrap ? 'bootstrap-seeded' : 'real-pilot'}\` | stage=\`${tenant.stage}\` | risk=\`${formatLabel(tenant.riskStatus)}\` | launches=\`${tenant.sessionLaunches}\` | completed=\`${tenant.completedSessions}\` | upgrades=\`${tenant.upgradeAttempts}\` | paid=\`${tenant.paidActivations}\` | recommendation=${tenant.recommendation || 'n/a'}`).join('\n')}
 `;
 }
 

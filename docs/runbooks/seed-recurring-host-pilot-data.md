@@ -2,6 +2,8 @@
 
 Use this runbook to create a minimal real pilot dataset for M6 recurring-host live capture without bypassing internal API security.
 
+This runbook is for bootstrap validation only. It proves that telemetry, support-case logging, paid-conversion rails, and live capture tooling work end-to-end, but it does not satisfy the `M6` definition of done on its own because seeded tenants are not counted as `real pilot hosts`.
+
 ## What this seeds
 
 - 10 active tenants
@@ -13,7 +15,7 @@ Use this runbook to create a minimal real pilot dataset for M6 recurring-host li
   - `repeatHosts >= 5`
   - `paidConversions >= 1`
 
-This bootstrap also creates lightweight support-case evidence and one paid-conversion path so the live artifact is not empty on blocker ownership.
+This bootstrap also creates lightweight support-case evidence and one paid-conversion path so the live artifact is not empty on blocker ownership. The resulting cohort is intentionally treated as `bootstrap-seeded`, not as real pilot proof.
 
 ## Required environment
 
@@ -67,15 +69,19 @@ If the environment was previously empty, the next live capture should report:
 
 - `totalTenants = 10`
 - `activeTenants = 10`
-- `activatedHosts = 10`
-- `repeatHosts = 5`
-- `paidConversions >= 1`
+- `bootstrapSeededTenants = 10`
+- `realPilotTenants = 0`
+- `activatedHosts = 10` total
+- `repeatHosts = 5` total
+- `paidConversions >= 1` total
+- `thresholdStatus = NOT_YET` until real pilot hosts exist
 
 If the environment already contains tenants, the capture should move to at least:
 
 - `totalTenants >= current + 10` if none of the seeded slugs exist yet
-- `activatedHosts >= 10`
-- `repeatHosts >= 5`
+- `activatedHosts >= previous total`
+- `repeatHosts >= previous total`
+- `thresholdStatus` remains driven by the real, non-seeded cohort only
 
 ## Verification
 
