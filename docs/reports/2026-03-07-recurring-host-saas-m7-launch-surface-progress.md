@@ -38,15 +38,30 @@ Observed result:
 2. `Sign in to existing workspace` focuses the runtime sign-in form,
 3. the public surface therefore routes directly into the canonical host conversion path instead of leaving the user on a dead marketing screen.
 
+### Narrow-launch ops artifacts now exist for recurring-host telemetry
+
+Observed result:
+
+1. repo now exposes `npm run report:recurring-host:launch-kpi`,
+2. the launch KPI dashboard consumes recurring-host pilot summary JSON and emits a narrow-launch scoreboard over:
+   - real activated hosts,
+   - real repeat hosts,
+   - real paid conversions,
+   - auth/billing/live-session watchlists,
+3. the dashboard explicitly separates bootstrap-seeded tenants from real pilot tenants,
+4. a recurring-host incident runbook now exists for auth, billing, and live-session launch failures.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
 
 1. `npm --prefix frontend run test -- --run src/App.startup.test.jsx src/App.tenant-runtime.test.jsx src/App.server-mode.test.jsx src/App.test.jsx src/api.test.js`
 2. `npm --prefix frontend run build`
+3. `node tools/generate_recurring_host_pilot_summary.js --snapshot=tools/fixtures/recurring_host_pilot_summary.sample.json --json-output=<temp> --output=<temp>`
+4. `node tools/generate_recurring_host_launch_kpi_dashboard.js --summary-json=<temp> --output=<temp>`
 
 ## Honest Status
 
 1. `M7` public conversion surface is now in progress and product-real,
 2. `M6` remains deferred as an external proof dependency because real pilot usage is still missing,
-3. `M7` is not promotable done yet because observability ownership, support/rollback proof, and production KPI dashboard evidence still need their own slices.
+3. `M7` now has a recurring-host KPI snapshot path and incident runbook, but it is not promotable done yet because production monitoring validation, launch-scope smoke proof, and final blocker review still need their own slices.

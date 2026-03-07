@@ -48,6 +48,7 @@
     "report:recurring-host:pilot-summary": "node tools/generate_recurring_host_pilot_summary.js",
     "report:recurring-host:pilot-evidence": "node tools/generate_recurring_host_pilot_evidence.js",
     "report:recurring-host:pilot-capture": "node tools/run_recurring_host_pilot_capture.js",
+    "report:recurring-host:launch-kpi": "node tools/generate_recurring_host_launch_kpi_dashboard.js",
     "seed:recurring-host:pilot": "node tools/seed_recurring_host_pilot.js",
     "validate:m6:recurring-host:pilot-gate": "node tools/validate_recurring_host_pilot_gate.js",
     "validate:cards:legacy": "node tools/validate-cards.js data/smart10/cards.en.json",

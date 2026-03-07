@@ -48,7 +48,7 @@ Current execution pointer:
 6. Live `M6` seeding and capture now execute successfully against `https://smartiq-63tk.onrender.com`, including a bootstrap cohort that can exercise repeat-host, paid-conversion, and support-case evidence paths.
 7. The `M6` gate now excludes bootstrap-seeded tenants from readiness counts, and the latest corrected artifact reports `10` bootstrap-seeded tenants but `0` real pilot tenants.
 8. `M6` therefore remains honestly blocked on real pilot volume rather than missing instrumentation, because the milestone still requires `10` real activated hosts and `5` real repeat hosts.
-9. `M7` technical implementation is now allowed to proceed in parallel with that deferred external blocker, and the public recurring-host launch surface is the first landed slice.
+9. `M7` technical implementation is now allowed to proceed in parallel with that deferred external blocker, and the first landed slices are the public recurring-host launch surface, launch KPI snapshot tooling, and recurring-host incident runbook.
 
 ## Milestone Definitions
 

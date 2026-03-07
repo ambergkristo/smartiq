@@ -103,6 +103,24 @@ Related main branch protection policy validation:
 - `docs/policies/main-branch-protection-policy.json`
 - `npm run validate:branch-protection:policy`
 
+## Recurring Host Launch KPI Snapshot
+
+Use the recurring-host telemetry/evidence path to build a narrow-launch dashboard snapshot from production data:
+
+1. Generate pilot summary JSON:
+   - `$env:BACKEND_URL="https://<backend-domain>"; $env:SMARTIQ_INTERNAL_API_KEY="<internal-api-key>"; npm run report:recurring-host:pilot-summary -- --json-output=docs/reports/recurring-host-launch-summary.json`
+2. Generate launch KPI dashboard markdown:
+   - `npm run report:recurring-host:launch-kpi -- --summary-json=docs/reports/recurring-host-launch-summary.json --output=docs/reports/recurring-host-launch-kpi-dashboard.md`
+
+The launch KPI dashboard intentionally separates:
+
+- bootstrap-seeded tenants,
+- real pilot tenants,
+- real activated/repeat/paid counts,
+- auth, billing, and live-session watchlists.
+
+Use it as the canonical narrow-launch snapshot before promoting `M7`.
+
 ## Deck Event Logs
 
 `NextRandomCardService` logs one INFO line per served deck card:
