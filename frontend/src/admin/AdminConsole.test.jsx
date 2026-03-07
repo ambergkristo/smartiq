@@ -208,7 +208,7 @@ describe('AdminConsole', () => {
       { eventType: 'host.session.started', totalValue: 3 },
       { eventType: 'host.session.completed', totalValue: 2 },
       { eventType: 'billing.checkout.started', totalValue: 1 },
-      { eventType: 'billing.subscription.activated', totalValue: 1 }
+      { eventType: 'billing.subscription.activated', totalValue: 0 }
     ]);
     adminApi.getPilotSummary.mockResolvedValue({
       riskStatus: 'conversion_risk',
@@ -231,6 +231,15 @@ describe('AdminConsole', () => {
     const summary = await screen.findByTestId('pilot-summary');
     expect(summary).toHaveTextContent('Conversion Risk');
     expect(summary).toHaveTextContent('Top friction: Billing');
+
+    const sellableReadiness = await screen.findByTestId('sellable-readiness');
+    expect(sellableReadiness).toHaveTextContent('Repeat-host signal');
+    expect(sellableReadiness).toHaveTextContent('0 paid activations');
+    expect(sellableReadiness).toHaveTextContent('1 upgrade attempts');
+    expect(sellableReadiness).toHaveTextContent('2 completed');
+    expect(sellableReadiness).toHaveTextContent('3 launches tracked');
+    expect(screen.getByTestId('sellable-readiness-gaps')).toHaveTextContent('Need canonical paid conversion from a repeat host.');
+    expect(screen.getByTestId('sellable-readiness-gaps')).toHaveTextContent('Reduce open support friction in billing.');
 
     const metrics = await screen.findByTestId('pilot-metrics');
     expect(metrics).toHaveTextContent('Session launches');

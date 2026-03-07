@@ -99,6 +99,61 @@ function formatPilotRisk(value) {
     .join(' ') || 'Tracking';
 }
 
+function getUsageMetricTotal(usageSummary, eventType) {
+  if (!Array.isArray(usageSummary)) {
+    return 0;
+  }
+  const row = usageSummary.find((entry) => entry.eventType === eventType);
+  const totalValue = Number(row?.totalValue ?? 0);
+  return Number.isFinite(totalValue) ? totalValue : 0;
+}
+
+function buildSellableReadiness(pilotSummary, usageSummary) {
+  const activated = Boolean(pilotSummary?.activated);
+  const repeatHost = Boolean(pilotSummary?.repeatHost);
+  const paidConverted = Boolean(pilotSummary?.paidConverted);
+  const openSupportCases = Number(pilotSummary?.openSupportCases ?? 0);
+  const launches = getUsageMetricTotal(usageSummary, 'host.session.started');
+  const completedSessions = getUsageMetricTotal(usageSummary, 'host.session.completed');
+  const upgradeAttempts = getUsageMetricTotal(usageSummary, 'billing.checkout.started');
+  const paidActivations = getUsageMetricTotal(usageSummary, 'billing.subscription.activated');
+
+  let signal = 'No validated signal';
+  if (activated) {
+    signal = 'Activation signal';
+  }
+  if (repeatHost) {
+    signal = 'Repeat-host signal';
+  }
+  if (paidConverted) {
+    signal = repeatHost ? 'Repeatable paid signal' : 'First paid signal';
+  }
+
+  const proofGaps = [];
+  if (!activated) {
+    proofGaps.push('Need first live host activation on the canonical workflow.');
+  }
+  if (activated && !repeatHost) {
+    proofGaps.push('Need repeat hosting behavior from the same segment.');
+  }
+  if (repeatHost && !paidConverted) {
+    proofGaps.push('Need canonical paid conversion from a repeat host.');
+  }
+  if (openSupportCases > 0) {
+    proofGaps.push(`Reduce open support friction in ${formatSupportLabel(pilotSummary?.topOpenSupportCategory).toLowerCase()}.`);
+  }
+
+  return {
+    signal,
+    launches,
+    completedSessions,
+    upgradeAttempts,
+    paidActivations,
+    proofGaps,
+    nextAction: proofGaps[0] || 'Pressure-test broader sell motion while monitoring support load.'
+  };
+}
+
 function buildMemberDrafts(members) {
   const drafts = {};
   members.forEach((member) => {
@@ -274,6 +329,10 @@ export default function AdminConsole() {
   const selectedTenant = useMemo(
     () => tenants.find((tenant) => tenant.tenantId === selectedTenantId) || null,
     [tenants, selectedTenantId]
+  );
+  const sellableReadiness = useMemo(
+    () => buildSellableReadiness(pilotSummary, usageSummary),
+    [pilotSummary, usageSummary]
   );
 
   async function handleBrandingSubmit(event) {
@@ -775,6 +834,34 @@ export default function AdminConsole() {
                       </small>
                     </article>
                   </section>
+
+                  <h3>Sellable readiness</h3>
+                  <section className="wl-admin-pilot-summary" data-testid="sellable-readiness">
+                    <article className="wl-admin-pilot-summary-card">
+                      <span>Signal</span>
+                      <strong>{sellableReadiness.signal}</strong>
+                      <small>{sellableReadiness.nextAction}</small>
+                    </article>
+                    <article className="wl-admin-pilot-summary-card">
+                      <span>Revenue evidence</span>
+                      <strong>{sellableReadiness.paidActivations} paid activations</strong>
+                      <small>{sellableReadiness.upgradeAttempts} upgrade attempts</small>
+                    </article>
+                    <article className="wl-admin-pilot-summary-card">
+                      <span>Repeat evidence</span>
+                      <strong>{sellableReadiness.completedSessions} completed</strong>
+                      <small>{sellableReadiness.launches} launches tracked</small>
+                    </article>
+                  </section>
+                  <ul className="wl-admin-proof-gaps" data-testid="sellable-readiness-gaps">
+                    {sellableReadiness.proofGaps.length > 0 ? (
+                      sellableReadiness.proofGaps.map((gap) => (
+                        <li key={gap}>{gap}</li>
+                      ))
+                    ) : (
+                      <li>No immediate proof gaps flagged from current tenant data.</li>
+                    )}
+                  </ul>
 
                   <h3>Pilot metrics</h3>
                   <div className="wl-admin-pilot-metrics" data-testid="pilot-metrics">

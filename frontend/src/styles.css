@@ -1930,6 +1930,14 @@ button:disabled {
   font-size: 0.76rem;
 }
 
+.wl-admin-proof-gaps {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+}
+
 .wl-admin-usage-controls {
   align-items: end;
 }

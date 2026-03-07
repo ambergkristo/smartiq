@@ -52,15 +52,16 @@ Current execution pointer:
 10. Live `M7` validation is now green on `https://smartiq-63tk.onrender.com` and `https://smartiq-nine.vercel.app`, including release readiness, alert validation, launch smoke, and runtime-deck verification through the launch gate.
 11. `M7` is therefore promoted done on 2026-03-07, while `M6` remains explicitly deferred because real pilot proof is still missing.
 12. `M8` is now the active commercial-proof milestone: recurring-host go/no-go pack generation, 12-month operating-plan generation, and a sellable-SaaS gate wrapper exist, but the milestone remains commercially unproven.
-13. `M9` technical work has now also started in parallel with that deferred `M8` proof blocker: the host workspace includes a new `Host momentum` repeat-host analytics card derived from recent hosted sessions and saved templates.
-14. The latest `M9` slice also adds host-side pre-live roster selection inside room management, so repeat hosts can curate selected room players directly into launch setup without rebuilding the player list manually.
-15. The latest `M9` slice also adds one-click `history -> template` reuse from the session review panel, so repeat hosts can turn reviewed sessions directly into reusable presets.
-16. The latest `M9` slice also makes reviewed session rosters win over stale room rosters during duplicate setup, so repeat-host reuse follows the last reviewed event reality more closely.
-17. The latest `M9` slice also persists host launch-roster moderation locally per room code, so curated pre-live rosters survive browser resume for saved rooms.
-18. The latest `M9` slice also adds persistent follow-up notes inside reviewed session detail, giving repeat hosts a lightweight post-session memory loop without leaving the workspace.
-19. The latest `M9` slice also surfaces those saved follow-up notes directly in recent-session history rows, making the host workspace more useful as an operational queue.
-20. The latest `M9` slice also adds a dedicated `Needs follow-up` session filter, turning local follow-up notes into a lightweight actionable queue.
-21. The latest `M9` slice also adds a follow-up queue metric plus a `Clear note` action in reviewed session detail, so hosts can work down local post-session notes instead of only accumulating them.
+13. The latest `M8` slice also adds a founder-facing `Sellable readiness` view in admin ops, translating live pilot summary and usage counters into explicit per-tenant proof gaps and next commercial action.
+14. `M9` technical work has now also started in parallel with that deferred `M8` proof blocker: the host workspace includes a new `Host momentum` repeat-host analytics card derived from recent hosted sessions and saved templates.
+15. The latest `M9` slice also adds host-side pre-live roster selection inside room management, so repeat hosts can curate selected room players directly into launch setup without rebuilding the player list manually.
+16. The latest `M9` slice also adds one-click `history -> template` reuse from the session review panel, so repeat hosts can turn reviewed sessions directly into reusable presets.
+17. The latest `M9` slice also makes reviewed session rosters win over stale room rosters during duplicate setup, so repeat-host reuse follows the last reviewed event reality more closely.
+18. The latest `M9` slice also persists host launch-roster moderation locally per room code, so curated pre-live rosters survive browser resume for saved rooms.
+19. The latest `M9` slice also adds persistent follow-up notes inside reviewed session detail, giving repeat hosts a lightweight post-session memory loop without leaving the workspace.
+20. The latest `M9` slice also surfaces those saved follow-up notes directly in recent-session history rows, making the host workspace more useful as an operational queue.
+21. The latest `M9` slice also adds a dedicated `Needs follow-up` session filter, turning local follow-up notes into a lightweight actionable queue.
+22. The latest `M9` slice also adds a follow-up queue metric plus a `Clear note` action in reviewed session detail, so hosts can work down local post-session notes instead of only accumulating them.
 
 ## Milestone Definitions
 

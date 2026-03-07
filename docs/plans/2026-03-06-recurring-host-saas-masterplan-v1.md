@@ -143,16 +143,17 @@ Priority order:
 13. `M7` is therefore promoted done on 2026-03-07, with `M6` still explicitly deferred because real pilot proof remains absent.
 14. `M8` is now the active commercial-proof milestone: recurring-host go/no-go pack generation, 12-month operating-plan generation, and a sellable-SaaS gate wrapper all exist, but commercial proof remains deferred until real paid/repeat evidence exists.
 15. The current live `M8` artifact output is still honestly `NO_GO_SELLABLE` because the live cohort remains bootstrap-only for commercial proof.
-16. `M9` technical work has now also started in parallel with that deferred `M8` proof blocker, beginning with a `Host momentum` repeat-host analytics card inside the host workspace.
-17. The latest `M9` slice also adds host-side pre-live roster selection in room management, reducing repeat-host setup friction before launch without requiring manual player-list rebuilding.
-18. The latest `M9` slice also adds one-click `history -> template` reuse from the reviewed session panel, strengthening repeat-host reuse beyond the current setup form alone.
-19. The latest `M9` slice also makes reviewed session rosters take priority during duplicate setup, reducing repeat-host drift between reviewed history and the next prepared launch.
-20. The latest `M9` slice also persists host launch-roster moderation locally per room code, reducing repeat-host friction when saved rooms are resumed after a reload.
-21. The latest `M9` slice also adds persistent follow-up notes inside reviewed session detail, making the post-session workspace slightly more operational instead of only replay-oriented.
-22. The latest `M9` slice also surfaces saved follow-up notes directly in recent-session history rows, increasing the operational value of host history without reopening session detail.
-23. The latest `M9` slice also adds a dedicated `Needs follow-up` filter, turning local follow-up notes into a lightweight actionable queue inside host history.
-24. The latest `M9` slice also adds a follow-up queue metric and `Clear note` action, so local host follow-up work can be reduced inside the workspace rather than only collected.
-25. The locked next-sequence is:
+16. The latest `M8` slice also adds a founder-facing `Sellable readiness` view inside admin ops, so live pilot summary and usage counters turn into explicit proof gaps and next commercial action without offline report generation.
+17. `M9` technical work has now also started in parallel with that deferred `M8` proof blocker, beginning with a `Host momentum` repeat-host analytics card inside the host workspace.
+18. The latest `M9` slice also adds host-side pre-live roster selection in room management, reducing repeat-host setup friction before launch without requiring manual player-list rebuilding.
+19. The latest `M9` slice also adds one-click `history -> template` reuse from the reviewed session panel, strengthening repeat-host reuse beyond the current setup form alone.
+20. The latest `M9` slice also makes reviewed session rosters take priority during duplicate setup, reducing repeat-host drift between reviewed history and the next prepared launch.
+21. The latest `M9` slice also persists host launch-roster moderation locally per room code, reducing repeat-host friction when saved rooms are resumed after a reload.
+22. The latest `M9` slice also adds persistent follow-up notes inside reviewed session detail, making the post-session workspace slightly more operational instead of only replay-oriented.
+23. The latest `M9` slice also surfaces saved follow-up notes directly in recent-session history rows, increasing the operational value of host history without reopening session detail.
+24. The latest `M9` slice also adds a dedicated `Needs follow-up` filter, turning local follow-up notes into a lightweight actionable queue inside host history.
+25. The latest `M9` slice also adds a follow-up queue metric and `Clear note` action, so local host follow-up work can be reduced inside the workspace rather than only collected.
+26. The locked next-sequence is:
    - product stabilization,
    - auth/trust hardening,
    - billing/payment hardening,
