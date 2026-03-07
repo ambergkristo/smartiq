@@ -36,3 +36,4 @@ data/review/generation-budget.json
 
 # Local parallel-worktree orchestration
 worktrees/
+autogpt/
