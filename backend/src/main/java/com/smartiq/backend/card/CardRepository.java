@@ -106,6 +106,17 @@ public interface CardRepository extends JpaRepository<Card, String> {
     @Query(value = "select topic as topic, count(*) as count from cards group by topic order by topic", nativeQuery = true)
     List<TopicCountView> findTopicCounts();
 
+    @Query(value = """
+            select topic as topic, count(*) as count
+            from cards
+            where lower(language) in (:languages)
+              and lower(source) in (:allowedSources)
+            group by topic
+            order by topic
+            """, nativeQuery = true)
+    List<TopicCountView> findTopicCountsByLanguagesAndSources(@Param("languages") List<String> languages,
+                                                              @Param("allowedSources") List<String> allowedSources);
+
     @Query(value = "select category as label, count(*) as count from cards group by category order by category", nativeQuery = true)
     List<LabelCountView> findCategoryCounts();
 

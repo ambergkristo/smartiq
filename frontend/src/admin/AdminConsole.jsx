@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   createSupportCase,
   getSettings,
@@ -186,7 +186,7 @@ export default function AdminConsole() {
     }
   }
 
-  async function loadTenantData(tenantId) {
+  const loadTenantData = useCallback(async (tenantId) => {
     if (!tenantId) {
       return;
     }
@@ -258,7 +258,7 @@ export default function AdminConsole() {
     } finally {
       setLoadingTenantData(false);
     }
-  }
+  }, [auditLimit, eventTypeFilter, usageLimit]);
 
   useEffect(() => {
     loadTenants();
@@ -269,7 +269,7 @@ export default function AdminConsole() {
       return;
     }
     loadTenantData(selectedTenantId);
-  }, [selectedTenantId]);
+  }, [loadTenantData, selectedTenantId]);
 
   const selectedTenant = useMemo(
     () => tenants.find((tenant) => tenant.tenantId === selectedTenantId) || null,

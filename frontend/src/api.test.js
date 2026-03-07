@@ -20,7 +20,7 @@ import {
 describe('api error mapping', () => {
   beforeEach(() => {
     localStorage.clear();
-    global.fetch = vi.fn();
+    globalThis.fetch = vi.fn();
   });
 
   test('maps forbidden topics status without backend-unreachable message', () => {
@@ -212,7 +212,7 @@ describe('api error mapping', () => {
   });
 
   test('sends runtime auth headers with server game session create', async () => {
-    global.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
+    globalThis.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
       snapshot: { gameId: 'game-1' },
       actionTokens: {}
     }), {
@@ -227,7 +227,7 @@ describe('api error mapping', () => {
 
     await createServerGameSession({ players: ['Alice'], language: 'en', winCondition: 30 });
 
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(globalThis.fetch).toHaveBeenCalledWith(
       expect.stringMatching(/\/api\/game$/),
       expect.objectContaining({
         headers: expect.objectContaining({
@@ -240,7 +240,7 @@ describe('api error mapping', () => {
   });
 
   test('sends runtime auth headers with room creation', async () => {
-    global.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
+    globalThis.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
       roomCode: 'ABC123',
       playerId: 'p1',
       authToken: 'rt_123'
@@ -256,7 +256,7 @@ describe('api error mapping', () => {
 
     await createRoomSession({ displayName: 'Alice' });
 
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(globalThis.fetch).toHaveBeenCalledWith(
       expect.stringMatching(/\/api\/rooms$/),
       expect.objectContaining({
         headers: expect.objectContaining({
@@ -269,7 +269,7 @@ describe('api error mapping', () => {
   });
 
   test('sends runtime auth headers with tenant branding updates', async () => {
-    global.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
+    globalThis.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
       tenantId: 'tenant-1',
       branding: {
         appName: 'Late Night Quiz',
@@ -294,7 +294,7 @@ describe('api error mapping', () => {
       secondaryColor: '#FEE715'
     });
 
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(globalThis.fetch).toHaveBeenCalledWith(
       expect.stringMatching(/\/api\/me\/tenant-branding$/),
       expect.objectContaining({
         method: 'PATCH',
@@ -314,7 +314,7 @@ describe('api error mapping', () => {
   });
 
   test('sends runtime auth headers with session template upserts', async () => {
-    global.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
+    globalThis.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
       tenantId: 'tenant-1',
       templates: []
     }), {
@@ -335,7 +335,7 @@ describe('api error mapping', () => {
       players: ['Alice', 'Bob']
     });
 
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(globalThis.fetch).toHaveBeenCalledWith(
       expect.stringMatching(/\/api\/me\/session-templates\/tpl-1$/),
       expect.objectContaining({
         method: 'PUT',
@@ -356,7 +356,7 @@ describe('api error mapping', () => {
   });
 
   test('sends runtime auth headers with session template deletes', async () => {
-    global.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
+    globalThis.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
       tenantId: 'tenant-1',
       templates: []
     }), {
@@ -371,7 +371,7 @@ describe('api error mapping', () => {
 
     await deleteRuntimeSessionTemplate('tpl-1');
 
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(globalThis.fetch).toHaveBeenCalledWith(
       expect.stringMatching(/\/api\/me\/session-templates\/tpl-1$/),
       expect.objectContaining({
         method: 'DELETE',
@@ -385,7 +385,7 @@ describe('api error mapping', () => {
   });
 
   test('loads tenant runtime snapshot with capabilities', async () => {
-    global.fetch
+    globalThis.fetch
       .mockResolvedValueOnce(new Response(JSON.stringify({
         selectedTenantId: 'tenant-1'
       }), {

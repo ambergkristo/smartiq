@@ -14,7 +14,8 @@ public final class CardSourcePolicy {
     public static final List<String> ALLOWED_SOURCES = List.of(
             "smartiq-v2",
             "smartiq-human",
-            "smartiq-verified"
+            "smartiq-verified",
+            "flyway-seed-core"
     );
 
     private CardSourcePolicy() {

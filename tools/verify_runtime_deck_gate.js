@@ -7,11 +7,15 @@ const DEFAULT_PORT = Number.parseInt(process.env.RUNTIME_DECK_BACKEND_PORT || '8
 const STARTUP_TIMEOUT_MS = Number.parseInt(process.env.RUNTIME_DECK_STARTUP_TIMEOUT_MS || '120000', 10);
 const HEALTH_POLL_MS = Number.parseInt(process.env.RUNTIME_DECK_HEALTH_POLL_MS || '1500', 10);
 const DATA_READY_TIMEOUT_MS = Number.parseInt(process.env.RUNTIME_DECK_DATA_READY_TIMEOUT_MS || '180000', 10);
-const MIN_READY_TOPIC_CARD_COUNT = Number.parseInt(process.env.RUNTIME_DECK_MIN_TOPIC_CARD_COUNT || '1000', 10);
+const EXTERNAL_BACKEND_MIN_READY_TOPIC_CARD_COUNT = 1;
 const MAVEN_BIN = process.platform === 'win32' ? 'mvn.cmd' : 'mvn';
 
 const explicitApiBase = process.env.API_BASE_URL || process.env.BACKEND_URL;
 const apiBaseUrl = (explicitApiBase || `http://localhost:${DEFAULT_PORT}`).replace(/\/+$/, '');
+const MIN_READY_TOPIC_CARD_COUNT = Number.parseInt(
+  process.env.RUNTIME_DECK_MIN_TOPIC_CARD_COUNT || (explicitApiBase ? String(EXTERNAL_BACKEND_MIN_READY_TOPIC_CARD_COUNT) : '1000'),
+  10
+);
 
 function sleep(ms) {
   return new Promise((resolve) => {

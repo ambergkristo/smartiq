@@ -113,6 +113,14 @@ public class NextRandomCardService {
         }
     }
 
+    public boolean isLanguageEnabled(String language) {
+        return switch (String.valueOf(language).trim().toLowerCase(Locale.ROOT)) {
+            case "en" -> true;
+            case "et" -> etEnabled;
+            default -> false;
+        };
+    }
+
     private void recordMetrics(DeckCardMeta last, Card selected, List<String> relaxed, String language) {
         String category = resolveCategory(selected);
         String topic = selected.getTopic() == null ? "unknown" : selected.getTopic();

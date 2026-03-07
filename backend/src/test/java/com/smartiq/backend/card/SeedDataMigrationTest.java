@@ -34,4 +34,17 @@ class SeedDataMigrationTest {
                 .andExpect(jsonPath("$[*].topic").value(hasItem("History")))
                 .andExpect(jsonPath("$[?(@.topic=='History')].count").value(hasItem(10)));
     }
+
+    @Test
+    void nextRandomServesSeededFallbackCards() throws Exception {
+        mockMvc.perform(get("/api/cards/nextRandom")
+                        .param("language", "en")
+                        .param("gameId", "seed-fallback-1")
+                        .param("topic", "History"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.topic").value("History"))
+                .andExpect(jsonPath("$.language").value("en"))
+                .andExpect(jsonPath("$.source").value("flyway-seed-core"))
+                .andExpect(jsonPath("$.options.length()").value(10));
+    }
 }

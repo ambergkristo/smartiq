@@ -49,6 +49,7 @@ Current execution pointer:
 7. The `M6` gate now excludes bootstrap-seeded tenants from readiness counts, and the latest corrected artifact reports `10` bootstrap-seeded tenants but `0` real pilot tenants.
 8. `M6` therefore remains honestly blocked on real pilot volume rather than missing instrumentation, because the milestone still requires `10` real activated hosts and `5` real repeat hosts.
 9. `M7` technical implementation is now allowed to proceed in parallel with that deferred external blocker, and the first landed slices are the public recurring-host launch surface, launch KPI snapshot tooling, recurring-host incident runbook, and technical launch gate wrapper.
+10. The latest `M7` slice removed frontend lint/tooling blockers from the launch gate, hardened post-deploy smoke/runtime-deck verification, and corrected public topic/public fallback-source behavior so the remaining blocker is a live deploy verification step on `https://smartiq-63tk.onrender.com`.
 
 ## Milestone Definitions
 
