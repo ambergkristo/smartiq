@@ -776,6 +776,68 @@ describe('App tenant runtime integration', () => {
     expect(screen.getByTestId('session-template-message')).toHaveTextContent(/saved from history: history replay/i);
   });
 
+  test('saves follow-up notes for a reviewed hosted session', async () => {
+    fetchTopics.mockResolvedValue([
+      { topic: 'Science', count: 12 },
+      { topic: 'History', count: 10 }
+    ]);
+    hasRuntimeAuthContext.mockReturnValue(true);
+    fetchTenantRuntimeSnapshot.mockResolvedValue({
+      me: {
+        email: 'owner@northwind.test',
+        selectedTenantId: 'tenant-northwind'
+      },
+      settings: {
+        settings: {
+          schemaVersion: 1,
+          theme: 'ocean'
+        }
+      },
+      branding: {
+        branding: {
+          appName: 'Northwind Quiz',
+          primaryColor: '#223344',
+          secondaryColor: '#556677'
+        }
+      },
+      subscription: {
+        planCode: 'pro-host',
+        status: 'active',
+        billingCycle: 'monthly'
+      },
+      capabilities: {
+        planTier: 'pro_host',
+        maxHostedPlayers: 10,
+        analyticsHistoryEnabled: true
+      }
+    });
+    fetchTenantAuditEvents.mockResolvedValue([
+      {
+        auditEventId: 'evt-17',
+        action: 'HOST_GAME_SESSION_CREATED',
+        entityId: 'game-review',
+        metadata: {
+          gameId: 'game-review',
+          topic: 'History',
+          language: 'et',
+          playerCount: 2
+        }
+      }
+    ]);
+
+    render(<App />);
+
+    await waitFor(() => expect(fetchTenantAuditEvents).toHaveBeenCalled());
+    fireEvent.click(screen.getByRole('button', { name: /review session/i }));
+    await waitFor(() => expect(fetchServerGameSession).toHaveBeenCalledWith('game-review'));
+
+    fireEvent.change(screen.getByLabelText(/follow-up note/i), { target: { value: 'Switch to shorter opening round next time.' } });
+    fireEvent.click(screen.getByRole('button', { name: /save note/i }));
+
+    expect(screen.getByTestId('recent-session-note-message')).toHaveTextContent(/follow-up note saved/i);
+    expect(localStorage.getItem('smartiq.sessionReviewNote.game-review')).toBe('Switch to shorter opening round next time.');
+  });
+
   test('filters recent hosted sessions by live vs completed status', async () => {
     fetchTopics.mockResolvedValue([
       { topic: 'Science', count: 12 },

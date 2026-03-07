@@ -851,6 +851,11 @@ button:disabled {
   font-size: 0.82rem;
 }
 
+.recent-session-note-editor {
+  display: grid;
+  gap: 8px;
+}
+
 .active-filter {
   margin-top: -6px;
   margin-bottom: 2px;

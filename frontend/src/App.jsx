@@ -226,6 +226,10 @@ const STRINGS = {
   recentHostedSessionReviewEmpty: 'Pick a recent hosted session to review its latest saved state.',
   recentHostedSessionReviewQuestionFallback: 'No saved round question is available for this session yet.',
   recentHostedSessionReviewLastActionFallback: 'No saved host action yet.',
+  recentHostedSessionNotesTitle: 'Follow-up note',
+  recentHostedSessionNotesPlaceholder: 'What should change before the next run?',
+  recentHostedSessionNotesSaveSubmit: 'Save note',
+  recentHostedSessionNotesSaved: 'Follow-up note saved.',
   recentHostedSessionLeaderPrefix: 'Current leader:',
   recentHostedSessionStatusPrefix: 'Status:',
   recentHostedSessionStatusLive: 'Live',
@@ -237,6 +241,7 @@ const GAME_STORAGE_KEY = 'smartiq.gameId';
 const CONFIG_STORAGE_KEY = 'smartiq.roundConfig';
 const ROOM_SESSION_STORAGE_KEY = 'smartiq.roomSession';
 const ROOM_SELECTION_STORAGE_PREFIX = 'smartiq.roomSelection.';
+const SESSION_REVIEW_NOTE_STORAGE_PREFIX = 'smartiq.sessionReviewNote.';
 const STARTUP_PHASE = {
   LOADING: 'loading',
   BACKEND_UNREACHABLE: 'backend-unreachable',
@@ -752,6 +757,10 @@ function StartScreen({
   onApplySessionTemplate,
   onDeleteSessionTemplate,
   reviewedHostedSession,
+  reviewedHostedSessionNote,
+  reviewedHostedSessionNoteMessage,
+  onReviewedHostedSessionNoteChange,
+  onSaveReviewedHostedSessionNote,
   activeHostedSession,
   hostedSessionFilter,
   onHostedSessionFilterChange,
@@ -1232,6 +1241,24 @@ function StartScreen({
                       </li>
                     ))}
                   </ul>
+                  <div className="recent-session-note-editor">
+                    <label htmlFor="recent-session-note">{STRINGS.recentHostedSessionNotesTitle}</label>
+                    <textarea
+                      id="recent-session-note"
+                      rows="3"
+                      value={reviewedHostedSessionNote}
+                      onChange={(event) => onReviewedHostedSessionNoteChange(event.target.value)}
+                      placeholder={STRINGS.recentHostedSessionNotesPlaceholder}
+                    />
+                    <div className="host-session-actions host-session-actions--detail">
+                      <button type="button" onClick={onSaveReviewedHostedSessionNote}>
+                        {STRINGS.recentHostedSessionNotesSaveSubmit}
+                      </button>
+                    </div>
+                    {reviewedHostedSessionNoteMessage ? (
+                      <p className="field-hint" data-testid="recent-session-note-message">{reviewedHostedSessionNoteMessage}</p>
+                    ) : null}
+                  </div>
                 </>
               ) : (
                 <p className="field-hint">{STRINGS.recentHostedSessionReviewEmpty}</p>
@@ -1908,6 +1935,36 @@ function loadStoredRoomSelection(roomCode) {
   }
 }
 
+function buildSessionReviewNoteStorageKey(gameId) {
+  const normalized = String(gameId || '').trim();
+  return normalized ? `${SESSION_REVIEW_NOTE_STORAGE_PREFIX}${normalized}` : '';
+}
+
+function loadSessionReviewNote(gameId) {
+  try {
+    const key = buildSessionReviewNoteStorageKey(gameId);
+    if (!key) {
+      return '';
+    }
+    return String(localStorage.getItem(key) || '').trim();
+  } catch {
+    return '';
+  }
+}
+
+function persistSessionReviewNote(gameId, note) {
+  const key = buildSessionReviewNoteStorageKey(gameId);
+  if (!key) {
+    return;
+  }
+  const normalized = String(note || '').trim();
+  if (!normalized) {
+    localStorage.removeItem(key);
+    return;
+  }
+  localStorage.setItem(key, normalized);
+}
+
 function persistRoomSession(session) {
   if (!session) {
     localStorage.removeItem(ROOM_SESSION_STORAGE_KEY);
@@ -2003,6 +2060,8 @@ function GameApp() {
   const [workspaceMessage, setWorkspaceMessage] = useState('');
   const [workspaceError, setWorkspaceError] = useState('');
   const [reviewedHostedSession, setReviewedHostedSession] = useState(null);
+  const [reviewedHostedSessionNote, setReviewedHostedSessionNote] = useState('');
+  const [reviewedHostedSessionNoteMessage, setReviewedHostedSessionNoteMessage] = useState('');
   const [activeHostedSession, setActiveHostedSession] = useState(null);
   const [hostedSessionFilter, setHostedSessionFilter] = useState('all');
   const [roomDraft, setRoomDraft] = useState({
@@ -2138,6 +2197,16 @@ function GameApp() {
       return next.length > 0 ? next : roomPlayerNames;
     });
   }, [roomSession]);
+
+  useEffect(() => {
+    if (!reviewedHostedSession?.gameId) {
+      setReviewedHostedSessionNote('');
+      setReviewedHostedSessionNoteMessage('');
+      return;
+    }
+    setReviewedHostedSessionNote(loadSessionReviewNote(reviewedHostedSession.gameId));
+    setReviewedHostedSessionNoteMessage('');
+  }, [reviewedHostedSession]);
 
   useEffect(() => {
     if (roomSession?.role !== 'host' || !roomSession?.roomCode) {
@@ -2597,6 +2666,19 @@ function GameApp() {
     }
     await handleSaveSessionTemplate(templateInput);
     setSessionTemplateMessage(`${STRINGS.sessionTemplatesSavedFromHistoryPrefix} ${templateInput.name}`);
+  }
+
+  function handleReviewedHostedSessionNoteChange(value) {
+    setReviewedHostedSessionNote(value);
+    setReviewedHostedSessionNoteMessage('');
+  }
+
+  function handleSaveReviewedHostedSessionNote() {
+    if (!reviewedHostedSession?.gameId) {
+      return;
+    }
+    persistSessionReviewNote(reviewedHostedSession.gameId, reviewedHostedSessionNote);
+    setReviewedHostedSessionNoteMessage(STRINGS.recentHostedSessionNotesSaved);
   }
 
   async function handleDeleteSessionTemplate(template) {
@@ -3217,6 +3299,10 @@ function GameApp() {
                 onApplySessionTemplate={handleApplySessionTemplate}
                 onDeleteSessionTemplate={handleDeleteSessionTemplate}
                 reviewedHostedSession={reviewedHostedSession}
+                reviewedHostedSessionNote={reviewedHostedSessionNote}
+                reviewedHostedSessionNoteMessage={reviewedHostedSessionNoteMessage}
+                onReviewedHostedSessionNoteChange={handleReviewedHostedSessionNoteChange}
+                onSaveReviewedHostedSessionNote={handleSaveReviewedHostedSessionNote}
                 activeHostedSession={activeHostedSession}
                 hostedSessionFilter={hostedSessionFilter}
                 onHostedSessionFilterChange={setHostedSessionFilter}

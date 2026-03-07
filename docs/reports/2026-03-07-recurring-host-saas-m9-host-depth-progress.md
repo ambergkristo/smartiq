@@ -73,6 +73,14 @@ Observed result:
 2. if the host refreshes or returns to a saved room on the same browser, the curated launch roster is restored automatically,
 3. this removes another repeat-host annoyance where pre-live moderation work had to be repeated after a reload or resume.
 
+### Reviewed sessions now support persistent follow-up notes
+
+Observed result:
+
+1. the reviewed session panel now includes a `Follow-up note` field and save action,
+2. notes are stored locally per `gameId`, so a host can record what to change before the next recurring event,
+3. this makes session review useful for lightweight operational memory instead of only replay, duplicate, and template actions.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -84,6 +92,7 @@ The following checks executed successfully after this progress slice:
 5. `npm --prefix frontend run test -- --run src/App.tenant-runtime.test.jsx src/App.startup.test.jsx`
 6. `npm --prefix frontend run build`
 7. `npm --prefix frontend run test -- --run src/App.startup.test.jsx src/App.tenant-runtime.test.jsx`
+8. `npm --prefix frontend run test -- --run src/App.tenant-runtime.test.jsx src/App.startup.test.jsx`
 
 ## Honest Status
 
@@ -97,3 +106,4 @@ The following checks executed successfully after this progress slice:
 5. template reuse is now stronger from both current setup and reviewed history, but the workspace still lacks deeper post-session workflow and operational feedback loops.
 6. reviewed-session reuse is now more trustworthy than before, but real post-session notes, tagging, and host follow-up workflow still remain open.
 7. host-side lobby moderation is now less fragile across reloads, but true multi-device moderation and server-backed lobby control still remain open.
+8. follow-up notes now exist, but they are still browser-local rather than tenant-synced operational data.
