@@ -21,7 +21,7 @@ smartiq:
     errors:
       legacy-shape-enabled: ${SMARTIQ_API_ERRORS_LEGACY_SHAPE_ENABLED:false}
   bank:
-    block-on-low-bank: true
+    block-on-low-bank: ${STRICT_BANK_VALIDATION:${SMARTIQ_BLOCK_ON_LOW_BANK:false}}
     trigger-pipeline-on-low-bank: false
   internal-access:
     enabled: true

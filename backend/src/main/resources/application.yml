@@ -63,7 +63,7 @@ smartiq:
     room-max: ${SMARTIQ_ROOM_MAX:20000}
   bank:
     min-size: ${MIN_BANK_SIZE:1000}
-    block-on-low-bank: ${SMARTIQ_BLOCK_ON_LOW_BANK:false}
+    block-on-low-bank: ${STRICT_BANK_VALIDATION:${SMARTIQ_BLOCK_ON_LOW_BANK:false}}
     trigger-pipeline-on-low-bank: ${SMARTIQ_TRIGGER_PIPELINE_ON_LOW_BANK:false}
     pipeline-command: ${SMARTIQ_PIPELINE_COMMAND:npm run pipeline:cards}
   cors:

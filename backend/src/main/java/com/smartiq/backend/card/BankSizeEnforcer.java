@@ -32,14 +32,25 @@ public class BankSizeEnforcer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
+        List<String> allowedSources = CardSourcePolicy.ALLOWED_SOURCES;
+        List<QuestionPoolKeyView> poolKeys = cardRepository.findAllPoolKeys(allowedSources);
         List<String> lowBankKeys = new ArrayList<>();
+        String activeProfiles = resolveActiveProfiles();
 
-        for (QuestionPoolKeyView key : cardRepository.findAllPoolKeys(CardSourcePolicy.ALLOWED_SOURCES)) {
+        log.info("bank_validation_start activeProfiles={} minSize={} blockOnLowBank={} triggerPipelineOnLowBank={} countedSources={} poolKeyCount={}",
+                activeProfiles,
+                properties.minSize(),
+                properties.blockOnLowBank(),
+                properties.triggerPipelineOnLowBank(),
+                allowedSources,
+                poolKeys.size());
+
+        for (QuestionPoolKeyView key : poolKeys) {
             long count = cardRepository.countByPoolKey(
                     key.getTopic(),
                     key.getDifficulty(),
                     key.getLanguage(),
-                    CardSourcePolicy.ALLOWED_SOURCES
+                    allowedSources
             );
             if (count < properties.minSize()) {
                 String keyText = String.format("%s|%s|%s", key.getTopic(), key.getDifficulty(), key.getLanguage());
@@ -53,6 +64,14 @@ public class BankSizeEnforcer implements ApplicationRunner {
             return;
         }
 
+        log.warn("bank_validation_summary activeProfiles={} minSize={} blockOnLowBank={} countedSources={} lowBankKeyCount={} lowBankKeys={}",
+                activeProfiles,
+                properties.minSize(),
+                properties.blockOnLowBank(),
+                allowedSources,
+                lowBankKeys.size(),
+                lowBankKeys);
+
         if (properties.triggerPipelineOnLowBank() && isDevProfile()) {
             triggerPipeline();
         }
@@ -60,6 +79,12 @@ public class BankSizeEnforcer implements ApplicationRunner {
         if (properties.blockOnLowBank()) {
             throw new IllegalStateException("Bank size below minimum for keys: " + String.join(",", lowBankKeys));
         }
+
+        log.warn("bank_low_startup_not_blocked activeProfiles={} minSize={} countedSources={} lowBankKeyCount={}",
+                activeProfiles,
+                properties.minSize(),
+                allowedSources,
+                lowBankKeys.size());
     }
 
     private boolean isDevProfile() {
@@ -69,6 +94,14 @@ public class BankSizeEnforcer implements ApplicationRunner {
             }
         }
         return false;
+    }
+
+    private String resolveActiveProfiles() {
+        String[] activeProfiles = environment.getActiveProfiles();
+        if (activeProfiles == null || activeProfiles.length == 0) {
+            return "default";
+        }
+        return String.join(",", activeProfiles);
     }
 
     private void triggerPipeline() {
