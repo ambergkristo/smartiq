@@ -2,21 +2,21 @@
 
 ## Metadata
 
-- Generated: 2026-03-07T20:32:20.186Z
+- Generated: 2026-03-07T20:50:50.548Z
 - Scope: EN, ET SmartIQ locale packs
 
 ## Executive Summary
 
-- EN: NOT READY - editorial cleanup required before launch trust | score 0.912 | total issues 690
-- ET: BLOCKED - ET is not launch-ready | score 0.783 | total issues 1649
+- EN: NOT READY - editorial cleanup required before launch trust | score 0.914 | total issues 673
+- ET: BLOCKED - ET is not launch-ready | score 0.788 | total issues 1612
 
 ## EN Findings
 
 - Dataset: `data/smart10/cards.en.json`
-- Semantic content score: 0.912
+- Semantic content score: 0.914
 - Launch readiness: NOT READY - editorial cleanup required before launch trust
-- Total issue hits: 690
-- Warning count: 690
+- Total issue hits: 673
+- Warning count: 673
 
 ### Issue Counts
 
@@ -24,19 +24,19 @@
 - broken grammar: 0
 - unnatural phrasing: 210
 - placeholder content: 0
-- templated/scaffold wording: 120
-- recycled option pool: 360
+- templated/scaffold wording: 113
+- recycled option pool: 350
 - low-trust option wording: 0
 - trivial/low-value content: 0
 
 ### Highest-Risk Areas
 
-- EN History/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Sports/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Geography/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Culture/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Science/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Varia/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
+- EN Varia/ORDER: 30/30 cards flagged (100%) | unnatural_phrasing
 
 ### Categorized Findings Summary
 
@@ -49,62 +49,62 @@
 
 #### templated/scaffold wording
 
-- `history-true_false-001` History/TRUE_FALSE: History: Mark statements that are true for this topic. Focus area: Ancient Rome.
-- `history-true_false-003` History/TRUE_FALSE: History: Find the statements that fit. Focus area: Renaissance.
-- `history-true_false-004` History/TRUE_FALSE: History: Select all true statements. Focus area: Industrial Revolution.
-- `history-true_false-006` History/TRUE_FALSE: History: Identify valid statements. Focus area: Silk Road.
+- `history-true_false-012` History/TRUE_FALSE: History: Identify valid statements. Focus area: Julius Caesar.
+- `history-true_false-013` History/TRUE_FALSE: History: Mark statements that are true for this topic. Focus area: Alexander the Great.
+- `history-true_false-015` History/TRUE_FALSE: History: Find the statements that fit. Focus area: Roman Republic.
+- `history-true_false-016` History/TRUE_FALSE: History: Select all true statements. Focus area: Cold War.
 
 #### recycled option pool
 
-- `history-true_false-001` History/TRUE_FALSE: History: Mark statements that are true for this topic. Focus area: Ancient Rome.
-- `history-true_false-002` History/TRUE_FALSE: History: Which claims are accurate? Focus area: Viking Age.
-- `history-true_false-003` History/TRUE_FALSE: History: Find the statements that fit. Focus area: Renaissance.
-- `history-true_false-004` History/TRUE_FALSE: History: Select all true statements. Focus area: Industrial Revolution.
+- `history-true_false-011` History/TRUE_FALSE: History: Which lines are correct? Focus area: Napoleon.
+- `history-true_false-012` History/TRUE_FALSE: History: Identify valid statements. Focus area: Julius Caesar.
+- `history-true_false-013` History/TRUE_FALSE: History: Mark statements that are true for this topic. Focus area: Alexander the Great.
+- `history-true_false-014` History/TRUE_FALSE: History: Which claims are accurate? Focus area: Gutenberg Press.
 
 
 ## ET Findings
 
 - Dataset: `data/smart10/cards.et.json`
-- Semantic content score: 0.783
+- Semantic content score: 0.788
 - Launch readiness: BLOCKED - ET is not launch-ready
-- Total issue hits: 1649
-- Warning count: 1649
+- Total issue hits: 1612
+- Warning count: 1612
 
 ### Issue Counts
 
-- language leakage: 160
-- broken grammar: 569
+- language leakage: 150
+- broken grammar: 559
 - unnatural phrasing: 280
 - placeholder content: 0
-- templated/scaffold wording: 120
-- recycled option pool: 360
+- templated/scaffold wording: 113
+- recycled option pool: 350
 - low-trust option wording: 160
 - trivial/low-value content: 0
 
 ### Highest-Risk Areas
 
-- ET History/TRUE_FALSE: 30/30 cards flagged (100%) | language_leakage, broken_grammar, recycled_option_pool
 - ET Sports/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Geography/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Culture/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Science/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Varia/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
+- ET History/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
 
 ### Categorized Findings Summary
 
 #### language leakage
 
-- `history-true_false-001-et` History/TRUE_FALSE: Ajalugu: Margi selle teema toesed vaited. Fookus: Ancient Rome.
-- `history-true_false-002-et` History/TRUE_FALSE: Ajalugu: Millised vaited on oiged? Fookus: Viking Age.
-- `history-true_false-003-et` History/TRUE_FALSE: Ajalugu: Leia sobivad vaited. Fookus: Renaissance.
-- `history-true_false-004-et` History/TRUE_FALSE: Ajalugu: Vali koik toed vaited. Fookus: Industrial Revolution.
+- `history-true_false-011-et` History/TRUE_FALSE: Ajalugu: Millised read on oiged? Fookus: Napoleon.
+- `history-true_false-012-et` History/TRUE_FALSE: Ajalugu: Tuvasta kehtivad vaited. Fookus: Julius Caesar.
+- `history-true_false-013-et` History/TRUE_FALSE: Ajalugu: Margi selle teema toesed vaited. Fookus: Alexander the Great.
+- `history-true_false-014-et` History/TRUE_FALSE: Ajalugu: Millised vaited on oiged? Fookus: Gutenberg Press.
 
 #### broken grammar
 
-- `history-true_false-001-et` History/TRUE_FALSE: Ajalugu: Margi selle teema toesed vaited. Fookus: Ancient Rome.
-- `history-true_false-002-et` History/TRUE_FALSE: Ajalugu: Millised vaited on oiged? Fookus: Viking Age.
-- `history-true_false-003-et` History/TRUE_FALSE: Ajalugu: Leia sobivad vaited. Fookus: Renaissance.
-- `history-true_false-004-et` History/TRUE_FALSE: Ajalugu: Vali koik toed vaited. Fookus: Industrial Revolution.
+- `history-true_false-011-et` History/TRUE_FALSE: Ajalugu: Millised read on oiged? Fookus: Napoleon.
+- `history-true_false-012-et` History/TRUE_FALSE: Ajalugu: Tuvasta kehtivad vaited. Fookus: Julius Caesar.
+- `history-true_false-013-et` History/TRUE_FALSE: Ajalugu: Margi selle teema toesed vaited. Fookus: Alexander the Great.
+- `history-true_false-014-et` History/TRUE_FALSE: Ajalugu: Millised vaited on oiged? Fookus: Gutenberg Press.
 
 #### unnatural phrasing
 
@@ -115,10 +115,10 @@
 
 #### templated/scaffold wording
 
-- `history-true_false-001-et` History/TRUE_FALSE: Ajalugu: Margi selle teema toesed vaited. Fookus: Ancient Rome.
-- `history-true_false-003-et` History/TRUE_FALSE: Ajalugu: Leia sobivad vaited. Fookus: Renaissance.
-- `history-true_false-004-et` History/TRUE_FALSE: Ajalugu: Vali koik toed vaited. Fookus: Industrial Revolution.
-- `history-true_false-006-et` History/TRUE_FALSE: Ajalugu: Tuvasta kehtivad vaited. Fookus: Silk Road.
+- `history-true_false-012-et` History/TRUE_FALSE: Ajalugu: Tuvasta kehtivad vaited. Fookus: Julius Caesar.
+- `history-true_false-013-et` History/TRUE_FALSE: Ajalugu: Margi selle teema toesed vaited. Fookus: Alexander the Great.
+- `history-true_false-015-et` History/TRUE_FALSE: Ajalugu: Leia sobivad vaited. Fookus: Roman Republic.
+- `history-true_false-016-et` History/TRUE_FALSE: Ajalugu: Vali koik toed vaited. Fookus: Cold War.
 
 #### low-trust option wording
 
@@ -129,8 +129,8 @@
 
 #### recycled option pool
 
-- `history-true_false-001-et` History/TRUE_FALSE: Ajalugu: Margi selle teema toesed vaited. Fookus: Ancient Rome.
-- `history-true_false-002-et` History/TRUE_FALSE: Ajalugu: Millised vaited on oiged? Fookus: Viking Age.
-- `history-true_false-003-et` History/TRUE_FALSE: Ajalugu: Leia sobivad vaited. Fookus: Renaissance.
-- `history-true_false-004-et` History/TRUE_FALSE: Ajalugu: Vali koik toed vaited. Fookus: Industrial Revolution.
+- `history-true_false-011-et` History/TRUE_FALSE: Ajalugu: Millised read on oiged? Fookus: Napoleon.
+- `history-true_false-012-et` History/TRUE_FALSE: Ajalugu: Tuvasta kehtivad vaited. Fookus: Julius Caesar.
+- `history-true_false-013-et` History/TRUE_FALSE: Ajalugu: Margi selle teema toesed vaited. Fookus: Alexander the Great.
+- `history-true_false-014-et` History/TRUE_FALSE: Ajalugu: Millised vaited on oiged? Fookus: Gutenberg Press.
 

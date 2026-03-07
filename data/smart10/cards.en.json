@@ -5,23 +5,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Mark statements that are true for this topic. Focus area: Ancient Rome.",
+    "question": "History: Which statements about Ancient Rome are true?",
     "options": [
-      "Byzantium was centered in Madrid.",
-      "Byzantium centered in Constantinople.",
-      "Renaissance began in Australia.",
-      "USSR dissolved in 1961.",
-      "Magna Carta was signed in 1512.",
-      "Caesar was killed in 144 BC.",
-      "Cold War followed World War II.",
-      "Napoleon won at Waterloo.",
-      "Printing press spread in 1700s.",
-      "WWII ended in 1939."
+      "Augustus became Rome's first emperor.",
+      "Caesar was assassinated in 44 BC.",
+      "Punic Wars were fought with Carthage.",
+      "The Colosseum stands in Rome.",
+      "The Republic followed the Empire.",
+      "Hadrian's Wall was built in Egypt.",
+      "The Senate met in Tokyo.",
+      "Napoleon founded Constantinople.",
+      "Vesuvius destroyed Carthage.",
+      "Latin was invented in the 1800s."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        6
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -33,24 +35,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Which claims are accurate? Focus area: Viking Age.",
+    "question": "History: Which statements about the Viking Age are true?",
     "options": [
-      "Renaissance began in Australia.",
-      "Roman Empire came before Republic.",
-      "Berlin Wall fell in 1989.",
-      "Caesar was killed in 144 BC.",
-      "Berlin Wall fell in 1973.",
-      "Apollo 11 landed in 1959.",
-      "Napoleon won at Waterloo.",
-      "Cold War followed World War II.",
-      "Apollo 11 landed in 1969.",
-      "Printing press spread in 1700s."
+      "Norse sailors reached North America.",
+      "Longships used sails and oars.",
+      "The Danelaw was in England.",
+      "Leif Erikson is linked to Vinland.",
+      "Viking Age began after 1400.",
+      "Early raids used gunpowder cannons.",
+      "Only Denmark produced settlers.",
+      "Reykjavik was Rome's capital.",
+      "Raids began after the Black Death.",
+      "Harald Bluetooth ruled Ming China."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        7,
-        8
+        3
       ]
     },
     "difficulty": "2",
@@ -62,25 +65,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Find the statements that fit. Focus area: Renaissance.",
+    "question": "History: Which statements about the Renaissance are true?",
     "options": [
-      "Caesar was killed in 44 BC.",
+      "Renaissance began in Italian cities.",
+      "Humanism renewed interest in classics.",
+      "Leonardo was a Renaissance artist.",
+      "Michelangelo painted the Sistine ceiling.",
       "Renaissance began in Australia.",
-      "Apollo 11 landed in 1959.",
-      "USSR dissolved in 1961.",
-      "WWII ended in 1939.",
-      "Magna Carta was signed in 1215.",
-      "Magna Carta was signed in 1512.",
-      "Berlin Wall fell in 1989.",
-      "Caesar was killed in 144 BC.",
-      "Renaissance began in Italy."
+      "Caesar invented the printing press.",
+      "Florence was minor in Renaissance art.",
+      "Raphael was a Viking explorer.",
+      "The Medici ruled the Aztec Empire.",
+      "Copernicus wrote in cuneiform."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        5,
-        7,
-        9
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -92,26 +95,26 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Select all true statements. Focus area: Industrial Revolution.",
+    "question": "History: Which statements about the Industrial Revolution are true?",
     "options": [
-      "Caesar was killed in 144 BC.",
-      "Napoleon won at Waterloo.",
-      "Printing press spread in 1400s.",
-      "Cold War followed World War II.",
-      "Byzantium was centered in Madrid.",
-      "Renaissance began in Australia.",
-      "Napoleon lost at Waterloo.",
-      "Roman Republic came before Empire.",
-      "Printing press spread in 1700s.",
-      "Caesar was killed in 44 BC."
+      "Britain was an early industrial center.",
+      "Steam engines powered factories.",
+      "Textiles were heavily mechanized.",
+      "Railways spread in the 1800s.",
+      "Nuclear power drove industry.",
+      "Coal was irrelevant to industry.",
+      "The spinning jenny was a Roman unit.",
+      "It began only after World War II.",
+      "Cities grew with industrial work.",
+      "Factories reduced need for machines."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        6,
-        7,
-        9
+        8
       ]
     },
     "difficulty": "2",
@@ -123,26 +126,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Which lines are correct? Focus area: French Revolution.",
+    "question": "History: Which statements about the French Revolution are true?",
     "options": [
-      "Printing press spread in 1400s.",
-      "Berlin Wall fell in 1973.",
-      "Byzantium centered in Constantinople.",
-      "Roman Empire came before Republic.",
-      "Renaissance began in Italy.",
-      "Caesar was killed in 144 BC.",
-      "WWII ended in 1945.",
-      "Caesar was killed in 44 BC.",
-      "Napoleon lost at Waterloo.",
-      "Printing press spread in 1700s."
+      "French Revolution began in 1789.",
+      "Bastille fell in 1789.",
+      "Louis XVI was executed.",
+      "Rights of Man was issued then.",
+      "It began in Moscow.",
+      "Bastille was in Madrid.",
+      "Napoleon fell before it began.",
+      "It happened in 1066.",
+      "France became a republic.",
+      "Marie Antoinette ruled Russia."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        4,
-        6,
-        7,
+        3,
         8
       ]
     },
@@ -155,27 +157,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Identify valid statements. Focus area: Silk Road.",
+    "question": "History: Which statements about the Silk Road are true?",
     "options": [
-      "Berlin Wall fell in 1989.",
-      "Renaissance began in Australia.",
-      "Apollo 11 landed in 1969.",
-      "Napoleon lost at Waterloo.",
-      "WWII ended in 1945.",
-      "Caesar was killed in 144 BC.",
-      "Caesar was killed in 44 BC.",
-      "Cold War followed World War II.",
-      "Magna Carta was signed in 1512.",
-      "Byzantium centered in Constantinople."
+      "Silk Road linked East and Central Asia.",
+      "Silk was traded on the network.",
+      "Trade spread ideas and religions.",
+      "Many routes crossed Central Asia.",
+      "It was one paved road to London.",
+      "It appeared only after airplanes.",
+      "Only silk was traded there.",
+      "The routes never crossed deserts.",
+      "It began in the 1900s.",
+      "Trade relied on many middlemen."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        4,
-        6,
-        7,
         9
       ]
     },
@@ -188,23 +188,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Mark statements that are true for this topic. Focus area: Magna Carta.",
+    "question": "History: Which statements about Magna Carta are true?",
     "options": [
-      "Renaissance began in Australia.",
-      "Printing press spread in 1700s.",
-      "Byzantium was centered in Madrid.",
-      "Napoleon won at Waterloo.",
-      "Caesar was killed in 44 BC.",
-      "Berlin Wall fell in 1973.",
-      "Magna Carta was signed in 1512.",
-      "Roman Republic came before Empire.",
-      "USSR dissolved in 1961.",
-      "Apollo 11 landed in 1959."
+      "Magna Carta was agreed in 1215.",
+      "It is linked to King John.",
+      "It limited royal authority.",
+      "It was sealed at Runnymede.",
+      "It was written in 1789.",
+      "Henry VIII signed it.",
+      "It regulated trade with Japan.",
+      "It abolished Parliament.",
+      "It first applied only in colonial India.",
+      "It made England a republic at once."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        7
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -216,24 +218,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Which claims are accurate? Focus area: Ottoman Empire.",
+    "question": "History: Which statements about the Ottoman Empire are true?",
     "options": [
-      "Apollo 11 landed in 1959.",
-      "Roman Empire came before Republic.",
-      "Cold War followed World War II.",
-      "Berlin Wall fell in 1989.",
-      "USSR dissolved in 1961.",
-      "Napoleon won at Waterloo.",
-      "Cold War started before WWI.",
-      "Berlin Wall fell in 1973.",
-      "Byzantium was centered in Madrid.",
-      "Roman Republic came before Empire."
+      "Constantinople fell in 1453.",
+      "It ruled parts of Europe, Asia and Africa.",
+      "Suleiman was a major Ottoman sultan.",
+      "It lasted until after World War I.",
+      "It was founded in South America.",
+      "Cairo was always its capital.",
+      "Janissaries were Viking sailors.",
+      "It ended in 1492.",
+      "It never held Balkan lands.",
+      "Mehmed II captured London."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        3,
-        9
+        3
       ]
     },
     "difficulty": "2",
@@ -245,25 +248,26 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Find the statements that fit. Focus area: Ming Dynasty.",
+    "question": "History: Which statements about the Ming dynasty are true?",
     "options": [
-      "Berlin Wall fell in 1973.",
-      "WWII ended in 1939.",
-      "Napoleon won at Waterloo.",
-      "Roman Republic came before Empire.",
-      "USSR dissolved in 1961.",
-      "WWII ended in 1945.",
-      "USSR dissolved in 1991.",
-      "Cold War started before WWI.",
-      "Byzantium was centered in Madrid.",
-      "Apollo 11 landed in 1969."
+      "Ming ruled China from 1368 to 1644.",
+      "Forbidden City rose in Ming times.",
+      "Zheng He led major Ming voyages.",
+      "Ming followed the Yuan dynasty.",
+      "Ming rebuilt sections of Great Wall.",
+      "Ming ruled Japan.",
+      "It began in 1911.",
+      "Rome was its permanent capital.",
+      "Napoleon toppled the Ming.",
+      "It came before the Song dynasty."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        5,
-        6,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -275,26 +279,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Select all true statements. Focus area: Norman Conquest.",
+    "question": "History: Which statements about the Norman Conquest are true?",
     "options": [
-      "Caesar was killed in 144 BC.",
-      "WWII ended in 1939.",
-      "Renaissance began in Italy.",
-      "Cold War started before WWI.",
-      "Berlin Wall fell in 1989.",
-      "USSR dissolved in 1991.",
-      "Napoleon lost at Waterloo.",
-      "Byzantium centered in Constantinople.",
-      "Napoleon won at Waterloo.",
-      "Apollo 11 landed in 1959."
+      "Norman Conquest happened in 1066.",
+      "William invaded from Normandy.",
+      "Hastings was the key battle.",
+      "Domesday Book followed the conquest.",
+      "It happened in 1215.",
+      "Harold won Hastings and kept the crown.",
+      "Normans came from South America.",
+      "It ended castles in England.",
+      "Bayeux Tapestry shows the moon landing.",
+      "It put Vikings on Japan's throne."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        4,
-        5,
-        6,
-        7
+        3
       ]
     },
     "difficulty": "2",

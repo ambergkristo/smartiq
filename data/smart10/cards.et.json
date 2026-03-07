@@ -5,23 +5,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Margi selle teema toesed vaited. Fookus: Ancient Rome.",
+    "question": "Ajalugu: Millised väited Vana-Rooma kohta peavad paika?",
     "options": [
-      "Byzantium was centered in Madrid.",
-      "Byzantium centered in Constantinople.",
-      "Renaissance began in Australia.",
-      "USSR dissolved in 1961.",
-      "Magna Carta was signed in 1512.",
-      "Caesar was killed in 144 BC.",
-      "Cold War followed World War II.",
-      "Napoleon won at Waterloo.",
-      "Printing press spread in 1700s.",
-      "WWII ended in 1939."
+      "Augustusest sai Rooma esimene keiser.",
+      "Julius Caesar mõrvati 44. aastal eKr.",
+      "Puunia sõjad peeti Kartaago vastu.",
+      "Colosseum asub Roomas.",
+      "Vabariik järgnes keisririigile.",
+      "Hadrianuse vall ehitati Egiptusesse.",
+      "Senat kogunes Tokyos.",
+      "Konstantinoopoli rajas Napoleon.",
+      "Vesuuv hävitas Kartaago.",
+      "Ladina keel loodi 19. sajandil."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        6
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -33,24 +35,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Millised vaited on oiged? Fookus: Viking Age.",
+    "question": "Ajalugu: Millised väited viikingiaja kohta peavad paika?",
     "options": [
-      "Renaissance began in Australia.",
-      "Roman Empire came before Republic.",
-      "Berlin Wall fell in 1989.",
-      "Caesar was killed in 144 BC.",
-      "Berlin Wall fell in 1973.",
-      "Apollo 11 landed in 1959.",
-      "Napoleon won at Waterloo.",
-      "Cold War followed World War II.",
-      "Apollo 11 landed in 1969.",
-      "Printing press spread in 1700s."
+      "Põhjala meresõitjad jõudsid Ameerikasse.",
+      "Viikingilaevadel olid purjed ja aerud.",
+      "Danelaw asus Inglismaal.",
+      "Leif Erikson on seotud Vinlandiga.",
+      "Viikingiaeg algas pärast 1400. aastat.",
+      "Varastel retkedel kasutati kahureid.",
+      "Ainult Taani rajas viikingiasulaid.",
+      "Reykjavík oli Rooma pealinn.",
+      "Retked algasid pärast musta surma.",
+      "Harald Bluetooth valitses Mingi Hiinat."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        7,
-        8
+        3
       ]
     },
     "difficulty": "2",
@@ -62,25 +65,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Leia sobivad vaited. Fookus: Renaissance.",
+    "question": "Ajalugu: Millised väited renessansi kohta peavad paika?",
     "options": [
-      "Caesar was killed in 44 BC.",
-      "Renaissance began in Australia.",
-      "Apollo 11 landed in 1959.",
-      "USSR dissolved in 1961.",
-      "WWII ended in 1939.",
-      "Magna Carta was signed in 1215.",
-      "Magna Carta was signed in 1512.",
-      "Berlin Wall fell in 1989.",
-      "Caesar was killed in 144 BC.",
-      "Renaissance began in Italy."
+      "Renessanss algas Itaalia linnriikides.",
+      "Humanism tõi fookusse antiiktekstid.",
+      "Leonardo da Vinci seostub renessansiga.",
+      "Michelangelo maalis Sixtuse kabeli lae.",
+      "Renessanss algas Austraalias.",
+      "Caesar leiutas trükipressi.",
+      "Firenze oli renessansis tähtsusetu.",
+      "Raffael oli viikingist maadeavastaja.",
+      "Medicid valitsesid asteeke.",
+      "Kopernik kirjutas kiilkirjas."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        5,
-        7,
-        9
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -92,26 +95,26 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Vali koik toed vaited. Fookus: Industrial Revolution.",
+    "question": "Ajalugu: Millised väited tööstusrevolutsiooni kohta peavad paika?",
     "options": [
-      "Caesar was killed in 144 BC.",
-      "Napoleon won at Waterloo.",
-      "Printing press spread in 1400s.",
-      "Cold War followed World War II.",
-      "Byzantium was centered in Madrid.",
-      "Renaissance began in Australia.",
-      "Napoleon lost at Waterloo.",
-      "Roman Republic came before Empire.",
-      "Printing press spread in 1700s.",
-      "Caesar was killed in 44 BC."
+      "Suurbritannia oli varane tööstuskeskus.",
+      "Aurumasinad käitasid tehaseid.",
+      "Tekstiilitootmine mehhaniseeriti.",
+      "Raudteed laienesid 19. sajandil.",
+      "Tuumaenergia vedas tööstust.",
+      "Kivisüsi ei olnud tähtis.",
+      "Spinning jenny oli Rooma väeosa.",
+      "See algas pärast Teist maailmasõda.",
+      "Linnad kasvasid koos tööstustööga.",
+      "Tehased vähendasid masinate vajadust."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        6,
-        7,
-        9
+        8
       ]
     },
     "difficulty": "2",
@@ -123,26 +126,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Millised read on oiged? Fookus: French Revolution.",
+    "question": "Ajalugu: Millised väited Prantsuse revolutsiooni kohta peavad paika?",
     "options": [
-      "Printing press spread in 1400s.",
-      "Berlin Wall fell in 1973.",
-      "Byzantium centered in Constantinople.",
-      "Roman Empire came before Republic.",
-      "Renaissance began in Italy.",
-      "Caesar was killed in 144 BC.",
-      "WWII ended in 1945.",
-      "Caesar was killed in 44 BC.",
-      "Napoleon lost at Waterloo.",
-      "Printing press spread in 1700s."
+      "Prantsuse revolutsioon algas 1789.",
+      "Bastille langes 1789.",
+      "Louis XVI hukati.",
+      "Õiguste deklaratsioon sündis siis.",
+      "See algas Moskvas.",
+      "Bastille asus Madridis.",
+      "Napoleon kukkus enne selle algust.",
+      "See toimus 1066.",
+      "Prantsusmaast sai vabariik.",
+      "Marie Antoinette valitses Venemaad."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        4,
-        6,
-        7,
+        3,
         8
       ]
     },
@@ -155,27 +157,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Tuvasta kehtivad vaited. Fookus: Silk Road.",
+    "question": "Ajalugu: Millised väited Siiditee kohta peavad paika?",
     "options": [
-      "Berlin Wall fell in 1989.",
-      "Renaissance began in Australia.",
-      "Apollo 11 landed in 1969.",
-      "Napoleon lost at Waterloo.",
-      "WWII ended in 1945.",
-      "Caesar was killed in 144 BC.",
-      "Caesar was killed in 44 BC.",
-      "Cold War followed World War II.",
-      "Magna Carta was signed in 1512.",
-      "Byzantium centered in Constantinople."
+      "Siiditee ühendas Ida- ja Kesk-Aasiat.",
+      "Siidi veeti sellel võrgustikul.",
+      "Kaubandus levitas ideid ja usundeid.",
+      "Paljud harud läbisid Kesk-Aasiat.",
+      "See oli üks tee Londonisse.",
+      "See tekkis alles pärast lennukeid.",
+      "Seal kaubeldi ainult siidiga.",
+      "Marsruudid ei läbinud kõrbeid.",
+      "See algas 20. sajandil.",
+      "Kaubandus sõltus vahendajatest."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        4,
-        6,
-        7,
         9
       ]
     },
@@ -188,23 +188,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Margi selle teema toesed vaited. Fookus: Magna Carta.",
+    "question": "Ajalugu: Millised väited Magna Carta kohta peavad paika?",
     "options": [
-      "Renaissance began in Australia.",
-      "Printing press spread in 1700s.",
-      "Byzantium was centered in Madrid.",
-      "Napoleon won at Waterloo.",
-      "Caesar was killed in 44 BC.",
-      "Berlin Wall fell in 1973.",
-      "Magna Carta was signed in 1512.",
-      "Roman Republic came before Empire.",
-      "USSR dissolved in 1961.",
-      "Apollo 11 landed in 1959."
+      "Magna Carta lepiti kokku 1215.",
+      "See seostub kuningas Johniga.",
+      "See piiras kuningavõimu.",
+      "See pitseeriti Runnymedes.",
+      "See kirjutati 1789. aastal.",
+      "Henry VIII kirjutas sellele alla.",
+      "See reguleeris Jaapani kaubandust.",
+      "See kaotas parlamendi.",
+      "See kehtis esmalt vaid koloniaal-Indias.",
+      "See tegi Inglismaast kohe vabariigi."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        7
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -216,24 +218,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Millised vaited on oiged? Fookus: Ottoman Empire.",
+    "question": "Ajalugu: Millised väited Osmanite riigi kohta peavad paika?",
     "options": [
-      "Apollo 11 landed in 1959.",
-      "Roman Empire came before Republic.",
-      "Cold War followed World War II.",
-      "Berlin Wall fell in 1989.",
-      "USSR dissolved in 1961.",
-      "Napoleon won at Waterloo.",
-      "Cold War started before WWI.",
-      "Berlin Wall fell in 1973.",
-      "Byzantium was centered in Madrid.",
-      "Roman Republic came before Empire."
+      "Konstantinoopol vallutati 1453.",
+      "Riik hõlmas alasid kolmel mandril.",
+      "Suleiman oli tähtis Osmanite sultan.",
+      "Riik püsis pärast Esimest maailmasõda.",
+      "See rajati Lõuna-Ameerikas.",
+      "Kairo oli alati pealinn.",
+      "Janiitsarid olid viikingimeremehed.",
+      "See lõppes 1492. aastal.",
+      "Osmanid ei valitsenud Balkanil.",
+      "Mehmed II vallutas Londoni."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        3,
-        9
+        3
       ]
     },
     "difficulty": "2",
@@ -245,25 +248,26 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Leia sobivad vaited. Fookus: Ming Dynasty.",
+    "question": "Ajalugu: Millised väited Mingi dünastia kohta peavad paika?",
     "options": [
-      "Berlin Wall fell in 1973.",
-      "WWII ended in 1939.",
-      "Napoleon won at Waterloo.",
-      "Roman Republic came before Empire.",
-      "USSR dissolved in 1961.",
-      "WWII ended in 1945.",
-      "USSR dissolved in 1991.",
-      "Cold War started before WWI.",
-      "Byzantium was centered in Madrid.",
-      "Apollo 11 landed in 1969."
+      "Mingi dünastia valitses 1368-1644.",
+      "Keelatud linn rajati Mingi ajal.",
+      "Zheng He juhtis suuri mereretki.",
+      "Ming järgnes Yuani dünastiale.",
+      "Ming uuendas Suure müüri osi.",
+      "Ming valitses Jaapanit.",
+      "See algas 1911. aastal.",
+      "Rooma oli püsipealinn.",
+      "Napoleon kukutas Mingi.",
+      "See tuli enne Songi dünastiat."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        5,
-        6,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -275,26 +279,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Vali koik toed vaited. Fookus: Norman Conquest.",
+    "question": "Ajalugu: Millised väited normannide vallutuse kohta peavad paika?",
     "options": [
-      "Caesar was killed in 144 BC.",
-      "WWII ended in 1939.",
-      "Renaissance began in Italy.",
-      "Cold War started before WWI.",
-      "Berlin Wall fell in 1989.",
-      "USSR dissolved in 1991.",
-      "Napoleon lost at Waterloo.",
-      "Byzantium centered in Constantinople.",
-      "Napoleon won at Waterloo.",
-      "Apollo 11 landed in 1959."
+      "Normannide vallutus toimus 1066.",
+      "William tungis sisse Normandiast.",
+      "Hastings oli võtmelahing.",
+      "Domesday Book koostati pärast vallutust.",
+      "See toimus 1215.",
+      "Harold võitis Hastingsi ja jäi kuningaks.",
+      "Normannid tulid Lõuna-Ameerikast.",
+      "See lõpetas losside kasutuse Inglismaal.",
+      "Bayeux' vaip kujutab Kuule maandumist.",
+      "See pani viikingid Jaapani troonile."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        4,
-        5,
-        6,
-        7
+        3
       ]
     },
     "difficulty": "2",
