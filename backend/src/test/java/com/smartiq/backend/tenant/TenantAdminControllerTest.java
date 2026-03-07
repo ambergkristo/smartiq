@@ -1,6 +1,7 @@
 package com.smartiq.backend.tenant;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.smartiq.backend.shared.RuntimeLimits;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -270,7 +271,7 @@ class TenantAdminControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.settings.schemaVersion").value(1))
                 .andExpect(jsonPath("$.settings.theme").value("classic"))
-                .andExpect(jsonPath("$.settings.game.maxPlayers").value(10))
+                .andExpect(jsonPath("$.settings.game.maxPlayers").value(RuntimeLimits.MAX_PLAYERS_PER_ROOM))
                 .andExpect(jsonPath("$.settings.features.leaderboardEnabled").value(false));
 
         String addMemberPayload = """
@@ -809,3 +810,4 @@ class TenantAdminControllerTest {
                 .andExpect(jsonPath("$.resolvedSupportCases").value(1));
     }
 }
+

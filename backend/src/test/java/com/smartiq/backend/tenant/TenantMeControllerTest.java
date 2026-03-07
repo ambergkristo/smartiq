@@ -3,6 +3,7 @@ package com.smartiq.backend.tenant;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.auth.RuntimeAuthTokenService;
+import com.smartiq.backend.shared.RuntimeLimits;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -68,7 +69,7 @@ class TenantMeControllerTest {
                     "schemaVersion": 1,
                     "theme": "ocean",
                     "game": {
-                      "maxPlayers": 20
+                      "maxPlayers": 8
                     }
                   }
                 }
@@ -107,7 +108,7 @@ class TenantMeControllerTest {
                 .andExpect(jsonPath("$.tenantId").value(tenantB))
                 .andExpect(jsonPath("$.settings.schemaVersion").value(1))
                 .andExpect(jsonPath("$.settings.theme").value("ocean"))
-                .andExpect(jsonPath("$.settings.game.maxPlayers").value(20));
+                .andExpect(jsonPath("$.settings.game.maxPlayers").value(RuntimeLimits.MAX_PLAYERS_PER_ROOM));
 
         mockMvc.perform(get("/api/me/tenant-branding")
                         .header("Authorization", bearerToken("owner-jwt@acme.test", tenantB)))
@@ -550,7 +551,7 @@ class TenantMeControllerTest {
                         .header("Authorization", bearerToken("insights@acme.test", tenantId)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.planTier").value("pro_host"))
-                .andExpect(jsonPath("$.maxHostedPlayers").value(10))
+                .andExpect(jsonPath("$.maxHostedPlayers").value(RuntimeLimits.MAX_PLAYERS_PER_ROOM))
                 .andExpect(jsonPath("$.analyticsHistoryEnabled").value(true));
 
         mockMvc.perform(get("/api/me/tenant-usage-summary?eventType=game.round.completed")
@@ -1014,3 +1015,4 @@ class TenantMeControllerTest {
         return "sha256=" + hex;
     }
 }
+

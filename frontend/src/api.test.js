@@ -20,6 +20,7 @@ import {
   resolveTopicsErrorState,
   setRuntimeAuthContext
 } from './api';
+import { MAX_PLAYERS_PER_ROOM } from './constants/runtime';
 
 describe('api error mapping', () => {
   beforeEach(() => {
@@ -530,7 +531,7 @@ describe('api error mapping', () => {
       }))
       .mockResolvedValueOnce(new Response(JSON.stringify({
         planTier: 'pro_host',
-        maxHostedPlayers: 10,
+        maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
         analyticsHistoryEnabled: true
       }), {
         status: 200,
@@ -547,7 +548,7 @@ describe('api error mapping', () => {
     expect(snapshot?.me?.selectedTenantId).toBe('tenant-1');
     expect(snapshot?.subscription?.planCode).toBe('pilot-monthly');
     expect(snapshot?.capabilities?.planTier).toBe('pro_host');
-    expect(snapshot?.capabilities?.maxHostedPlayers).toBe(10);
+    expect(snapshot?.capabilities?.maxHostedPlayers).toBe(MAX_PLAYERS_PER_ROOM);
     expect(snapshot?.capabilities?.analyticsHistoryEnabled).toBe(true);
   });
 });

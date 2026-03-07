@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import App from './App';
+import { MAX_PLAYERS_PER_ROOM } from './constants/runtime';
 
 vi.mock('./api', () => {
   return {
@@ -561,7 +562,7 @@ describe('App startup resilience', () => {
       },
       capabilities: {
         planTier: 'pro_host',
-        maxHostedPlayers: 10,
+        maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
         analyticsHistoryEnabled: true,
         sessionTemplatesEnabled: true,
         customBrandingEnabled: true
@@ -662,7 +663,7 @@ describe('App startup resilience', () => {
       },
       capabilities: {
         planTier: 'pro_host',
-        maxHostedPlayers: 10,
+        maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
         analyticsHistoryEnabled: true,
         sessionTemplatesEnabled: true,
         customBrandingEnabled: true
@@ -746,7 +747,7 @@ describe('App startup resilience', () => {
       },
       capabilities: {
         planTier: 'pro_host',
-        maxHostedPlayers: 10,
+        maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
         analyticsHistoryEnabled: true,
         sessionTemplatesEnabled: true,
         customBrandingEnabled: true
@@ -815,7 +816,7 @@ describe('App startup resilience', () => {
         },
         capabilities: {
           planTier: 'pro_host',
-          maxHostedPlayers: 10,
+          maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
           analyticsHistoryEnabled: true,
           sessionTemplatesEnabled: true,
           customBrandingEnabled: true

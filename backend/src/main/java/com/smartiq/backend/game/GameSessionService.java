@@ -10,6 +10,7 @@ import com.smartiq.backend.game.contract.PegSnapshot;
 import com.smartiq.backend.game.contract.PlayerRoundStatus;
 import com.smartiq.backend.game.contract.PlayerSnapshot;
 import com.smartiq.backend.game.contract.RoundStateSnapshot;
+import com.smartiq.backend.shared.RuntimeLimits;
 import com.smartiq.backend.tenant.ForbiddenTenantAccessException;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class GameSessionService {
 
     private static final int DEFAULT_WIN_CONDITION = 30;
     private static final int MIN_PLAYERS = 1;
-    private static final int MAX_PLAYERS = 8;
+    private static final int MAX_PLAYERS = RuntimeLimits.MAX_PLAYERS_PER_ROOM;
     private static final String DEFAULT_LANGUAGE = "en";
     private static final String PHASE_CHOOSING = "CHOOSING";
     private static final String PHASE_GAME_OVER = "GAME_OVER";

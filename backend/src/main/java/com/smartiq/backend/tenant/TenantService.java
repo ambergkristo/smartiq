@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.smartiq.backend.auth.RuntimeAuthTokenService;
+import com.smartiq.backend.shared.RuntimeLimits;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -98,7 +99,7 @@ public class TenantService {
     private static final Set<String> ALLOWED_SUPPORT_CASE_STATUSES = Set.of("open", "monitoring", "resolved");
     private static final int SETTINGS_SCHEMA_VERSION = 1;
     private static final String DEFAULT_THEME = "classic";
-    private static final int DEFAULT_MAX_PLAYERS = 10;
+    private static final int DEFAULT_MAX_PLAYERS = RuntimeLimits.MAX_PLAYERS_PER_ROOM;
     private static final int DEFAULT_ROUNDS_PER_MATCH = 10;
     private static final boolean DEFAULT_LEADERBOARD_ENABLED = false;
     private static final boolean DEFAULT_TEAMS_ENABLED = false;
@@ -109,7 +110,7 @@ public class TenantService {
     private static final int MAX_SESSION_TEMPLATE_COUNT = 12;
     private static final int MAX_SESSION_REVIEW_NOTE_COUNT = 24;
     private static final int MAX_SESSION_REVIEW_NOTE_LENGTH = 280;
-    private static final int MAX_TEMPLATE_PLAYERS = 10;
+    private static final int MAX_TEMPLATE_PLAYERS = RuntimeLimits.MAX_PLAYERS_PER_ROOM;
     private static final long PLAN_LIMIT_STARTER = 1_000L;
     private static final long PLAN_LIMIT_PILOT = 2_000L;
     private static final long PLAN_LIMIT_GROWTH = 10_000L;
@@ -1680,7 +1681,7 @@ public class TenantService {
         return new TenantRuntimeCapabilitiesResponse(
                 tenantId,
                 proHost ? "pro_host" : "trial",
-                proHost ? 10 : 4,
+                proHost ? RuntimeLimits.MAX_PLAYERS_PER_ROOM : 4,
                 proHost,
                 proHost,
                 proHost
@@ -2459,7 +2460,7 @@ public class TenantService {
         if (gameSource != null) {
             ensureNoUnknownKeys(gameSource, ALLOWED_GAME_SETTINGS_KEYS, "settings.game");
         }
-        int maxPlayers = readOptionalInt(gameSource, "maxPlayers", DEFAULT_MAX_PLAYERS, 1, 50);
+        int maxPlayers = readOptionalInt(gameSource, "maxPlayers", DEFAULT_MAX_PLAYERS, 1, RuntimeLimits.MAX_PLAYERS_PER_ROOM);
         int roundsPerMatch = readOptionalInt(gameSource, "roundsPerMatch", DEFAULT_ROUNDS_PER_MATCH, 1, 30);
 
         ObjectNode featuresSource = readOptionalObject(root, "features");

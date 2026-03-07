@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import App from './App';
+import { MAX_PLAYERS_PER_ROOM } from './constants/runtime';
 
 vi.mock('./api', () => ({
   API_BASE: 'http://localhost:8080',
@@ -271,7 +272,7 @@ describe('App tenant runtime integration', () => {
       },
       capabilities: {
         planTier: 'pro_host',
-        maxHostedPlayers: 10,
+        maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
         analyticsHistoryEnabled: true
       }
     });
@@ -332,7 +333,7 @@ describe('App tenant runtime integration', () => {
       },
       capabilities: {
         planTier: 'pro_host',
-        maxHostedPlayers: 10,
+        maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
         analyticsHistoryEnabled: true
       }
     });
@@ -394,7 +395,7 @@ describe('App tenant runtime integration', () => {
       },
       capabilities: {
         planTier: 'pro_host',
-        maxHostedPlayers: 10,
+        maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
         analyticsHistoryEnabled: true
       }
     });
@@ -454,7 +455,7 @@ describe('App tenant runtime integration', () => {
       },
       capabilities: {
         planTier: 'pro_host',
-        maxHostedPlayers: 10,
+        maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
         analyticsHistoryEnabled: true
       }
     });
@@ -514,7 +515,7 @@ describe('App tenant runtime integration', () => {
       },
       capabilities: {
         planTier: 'pro_host',
-        maxHostedPlayers: 10,
+        maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
         analyticsHistoryEnabled: true
       }
     });
@@ -576,7 +577,7 @@ describe('App tenant runtime integration', () => {
       },
       capabilities: {
         planTier: 'pro_host',
-        maxHostedPlayers: 10,
+        maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
         analyticsHistoryEnabled: true
       }
     });
@@ -657,7 +658,7 @@ describe('App tenant runtime integration', () => {
       },
       capabilities: {
         planTier: 'pro_host',
-        maxHostedPlayers: 10,
+        maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
         analyticsHistoryEnabled: true
       }
     });
@@ -752,7 +753,7 @@ describe('App tenant runtime integration', () => {
       },
       capabilities: {
         planTier: 'pro_host',
-        maxHostedPlayers: 10,
+        maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
         analyticsHistoryEnabled: true,
         sessionTemplatesEnabled: true
       }
@@ -823,7 +824,7 @@ describe('App tenant runtime integration', () => {
       },
       capabilities: {
         planTier: 'pro_host',
-        maxHostedPlayers: 10,
+        maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
         analyticsHistoryEnabled: true
       }
     });
@@ -893,7 +894,7 @@ describe('App tenant runtime integration', () => {
       },
       capabilities: {
         planTier: 'pro_host',
-        maxHostedPlayers: 10,
+        maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
         analyticsHistoryEnabled: true
       }
     });
@@ -965,7 +966,7 @@ describe('App tenant runtime integration', () => {
       },
       capabilities: {
         planTier: 'pro_host',
-        maxHostedPlayers: 10,
+        maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
         analyticsHistoryEnabled: true
       }
     });
@@ -1061,7 +1062,7 @@ describe('App tenant runtime integration', () => {
       },
       capabilities: {
         planTier: 'pro_host',
-        maxHostedPlayers: 10,
+        maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
         analyticsHistoryEnabled: true
       }
     });
@@ -1167,7 +1168,7 @@ describe('App tenant runtime integration', () => {
       },
       capabilities: {
         planTier: 'pro_host',
-        maxHostedPlayers: 10,
+        maxHostedPlayers: MAX_PLAYERS_PER_ROOM,
         analyticsHistoryEnabled: true,
         sessionTemplatesEnabled: true
       }
@@ -1249,3 +1250,4 @@ describe('App tenant runtime integration', () => {
     expect(analyticsCard).toHaveTextContent(/latest winner: host one \(7 pts\)/i);
   });
 });
+

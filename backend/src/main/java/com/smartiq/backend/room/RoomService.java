@@ -2,6 +2,7 @@ package com.smartiq.backend.room;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.config.RoomProperties;
+import com.smartiq.backend.shared.RuntimeLimits;
 import com.smartiq.backend.tenant.ForbiddenTenantAccessException;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ import java.util.regex.Pattern;
 @Service
 public class RoomService {
 
-    private static final int MAX_PLAYERS = 8;
+    private static final int MAX_PLAYERS = RuntimeLimits.MAX_PLAYERS_PER_ROOM;
     private static final int ROOM_CODE_LENGTH = 6;
     private static final String ROOM_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     private static final String DEFAULT_HOST_NAME = "Host";

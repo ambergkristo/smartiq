@@ -2,6 +2,7 @@ package com.smartiq.backend.tenant;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.auth.RuntimeAuthTokenService;
+import com.smartiq.backend.shared.RuntimeLimits;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -118,7 +119,7 @@ class TenantMeControllerProdAuthContextTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.tenantId").value(tenantId))
                 .andExpect(jsonPath("$.planTier").value("pro_host"))
-                .andExpect(jsonPath("$.maxHostedPlayers").value(10))
+                .andExpect(jsonPath("$.maxHostedPlayers").value(RuntimeLimits.MAX_PLAYERS_PER_ROOM))
                 .andExpect(jsonPath("$.analyticsHistoryEnabled").value(true));
     }
 
@@ -300,3 +301,4 @@ class TenantMeControllerProdAuthContextTest {
         return "Bearer " + encodedHeader + "." + encodedPayload + ".";
     }
 }
+

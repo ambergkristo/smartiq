@@ -32,6 +32,7 @@ import AdminConsole from './admin/AdminConsole';
 import GameBoard from './components/GameBoard';
 import RoundSummary from './components/RoundSummary';
 import { useAudioFeedback } from './audio/useAudioFeedback';
+import { MAX_PLAYERS_PER_ROOM } from './constants/runtime';
 import { useServerGameEngine } from './state/useServerGameEngine';
 import { DEFAULT_LANGS, GamePhase } from './state/types';
 
@@ -504,7 +505,7 @@ function buildPlaceholderPlayers(playerCount) {
   if (!Number.isInteger(playerCount) || playerCount <= 0) {
     return [];
   }
-  return Array.from({ length: Math.min(playerCount, 10) }, (_, index) => `Player ${index + 1}`);
+  return Array.from({ length: Math.min(playerCount, MAX_PLAYERS_PER_ROOM) }, (_, index) => `Player ${index + 1}`);
 }
 
 function buildBrandingDraft(brandingResponse) {
@@ -815,7 +816,9 @@ function StartScreen({
   const planStatus = runtimeSnapshot?.subscription?.status || '';
   const capabilities = runtimeSnapshot?.capabilities || null;
   const planLimit = resolvePlanLimit(planCode);
-  const maxHostedPlayers = Number.isInteger(capabilities?.maxHostedPlayers) ? capabilities.maxHostedPlayers : null;
+  const maxHostedPlayers = Number.isInteger(capabilities?.maxHostedPlayers)
+    ? Math.min(capabilities.maxHostedPlayers, MAX_PLAYERS_PER_ROOM)
+    : null;
   const analyticsHistoryEnabled = capabilities?.analyticsHistoryEnabled === true;
   const sessionTemplatesEnabled = capabilities?.sessionTemplatesEnabled === true;
   const customBrandingEnabled = capabilities?.customBrandingEnabled === true;

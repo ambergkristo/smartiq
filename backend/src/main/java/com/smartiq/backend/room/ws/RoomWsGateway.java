@@ -3,6 +3,7 @@ package com.smartiq.backend.room.ws;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.room.RoomSnapshot;
+import com.smartiq.backend.shared.RuntimeLimits;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -19,7 +20,7 @@ public class RoomWsGateway {
 
     private static final int ROOM_CODE_LENGTH = 6;
     private static final String ROOM_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-    private static final int MAX_PLAYERS = 8;
+    private static final int MAX_PLAYERS = RuntimeLimits.MAX_PLAYERS_PER_ROOM;
     private static final int MAX_PLAYER_ID_LENGTH = 64;
     private static final Pattern PLAYER_ID_PATTERN = Pattern.compile("^p[1-9][0-9]*$");
 
