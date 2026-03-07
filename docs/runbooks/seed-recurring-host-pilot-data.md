@@ -4,14 +4,16 @@ Use this runbook to create a minimal real pilot dataset for M6 recurring-host li
 
 ## What this seeds
 
-- 3 active tenants
+- 10 active tenants
 - 1 active owner membership per tenant
 - real usage events through existing internal white-label admin endpoints
+- founder-owned support-case evidence with both open and resolved examples
 - enough telemetry for:
-  - `activatedHosts >= 3`
-  - `repeatHosts >= 2`
+  - `activatedHosts >= 10`
+  - `repeatHosts >= 5`
+  - `paidConversions >= 1`
 
-No support cases or billing conversions are created by this bootstrap.
+This bootstrap also creates lightweight support-case evidence and one paid-conversion path so the live artifact is not empty on blocker ownership.
 
 ## Required environment
 
@@ -63,17 +65,17 @@ gh workflow run recurring-host-pilot-seed.yml --repo ambergkristo/smartiq -f bac
 
 If the environment was previously empty, the next live capture should report:
 
-- `totalTenants = 3`
-- `activeTenants = 3`
-- `activatedHosts = 3`
-- `repeatHosts = 2`
-- `paidConversions = 0`
+- `totalTenants = 10`
+- `activeTenants = 10`
+- `activatedHosts = 10`
+- `repeatHosts = 5`
+- `paidConversions >= 1`
 
 If the environment already contains tenants, the capture should move to at least:
 
-- `totalTenants >= current + 3` if none of the seeded slugs exist yet
-- `activatedHosts >= 3`
-- `repeatHosts >= 2`
+- `totalTenants >= current + 10` if none of the seeded slugs exist yet
+- `activatedHosts >= 10`
+- `repeatHosts >= 5`
 
 ## Verification
 

@@ -25,134 +25,249 @@ function isoAtOffset(base, dayOffset, minuteOffset) {
   return new Date(base.getTime() + (dayOffset * 24 * 60 + minuteOffset) * 60 * 1000).toISOString();
 }
 
+function buildTenantPlan(now, config) {
+  const usage = [
+    {
+      eventType: 'host.workspace.bootstrapped',
+      totalValue: 1,
+      eventTime: isoAtOffset(now, config.dayOffset, 0),
+      metadata: {
+        ownerEmail: config.ownerEmail
+      }
+    },
+    {
+      eventType: 'host.auth.completed',
+      totalValue: 1,
+      eventTime: isoAtOffset(now, config.dayOffset, 5),
+      metadata: {
+        userEmail: config.ownerEmail,
+        role: 'owner'
+      }
+    }
+  ];
+
+  if (config.sessionLaunches > 0) {
+    usage.push({
+      eventType: 'host.session.started',
+      totalValue: config.sessionLaunches,
+      eventTime: isoAtOffset(now, config.dayOffset, 10),
+      metadata: {
+        gameId: `${config.slug}-session-1`,
+        topic: config.topic
+      }
+    });
+  }
+
+  if (config.completedSessions > 0) {
+    usage.push({
+      eventType: 'host.session.completed',
+      totalValue: config.completedSessions,
+      eventTime: isoAtOffset(now, config.dayOffset, 20),
+      metadata: {
+        gameId: `${config.slug}-session-1`,
+        winnerDisplayName: config.winnerDisplayName || `Team ${config.label}`,
+        winnerScore: config.winnerScore || 24,
+        roundNumber: 10,
+        topic: config.topic
+      }
+    });
+  }
+
+  if (config.resumeActions > 0) {
+    usage.push({
+      eventType: 'host.session.resumed',
+      totalValue: config.resumeActions,
+      eventTime: isoAtOffset(now, config.dayOffset, 15),
+      metadata: {
+        gameId: `${config.slug}-session-1`,
+        userEmail: config.ownerEmail
+      }
+    });
+  }
+
+  if (config.duplicateLaunches > 0) {
+    usage.push({
+      eventType: 'host.session.duplicated',
+      totalValue: config.duplicateLaunches,
+      eventTime: isoAtOffset(now, config.dayOffset, 18),
+      metadata: {
+        gameId: `${config.slug}-session-duplicate`,
+        topic: config.topic
+      }
+    });
+  }
+
+  if (config.upgradeAttempts > 0) {
+    usage.push({
+      eventType: 'billing.checkout.started',
+      totalValue: config.upgradeAttempts,
+      eventTime: isoAtOffset(now, config.dayOffset, 25),
+      metadata: {
+        source: 'pilot-bootstrap',
+        userEmail: config.ownerEmail
+      }
+    });
+  }
+
+  if (config.paidActivations > 0) {
+    usage.push({
+      eventType: 'billing.subscription.activated',
+      totalValue: config.paidActivations,
+      eventTime: isoAtOffset(now, config.dayOffset, 30),
+      metadata: {
+        planCode: 'pro-host-monthly'
+      }
+    });
+  }
+
+  return {
+    slug: config.slug,
+    name: `Pilot Recurring Host ${config.label}`,
+    billingEmail: `billing+${config.slug}@smartiq.test`,
+    member: {
+      email: config.ownerEmail,
+      displayName: `Pilot Host ${config.label}`,
+      role: 'owner'
+    },
+    targetUsageTotals: usage,
+    supportCases: config.supportCases || []
+  };
+}
+
 function buildSeedPlan(now) {
   return [
-    {
+    buildTenantPlan(now, {
       slug: 'pilot-recurring-host-acme',
-      name: 'Pilot Recurring Host Acme',
-      billingEmail: 'billing+pilot-acme@smartiq.test',
-      member: {
-        email: 'owner+pilot-acme@smartiq.test',
-        displayName: 'Pilot Host Acme',
-        role: 'owner'
-      },
-      targetUsageTotals: [
+      label: 'Acme',
+      ownerEmail: 'owner+pilot-acme@smartiq.test',
+      dayOffset: -10,
+      sessionLaunches: 0,
+      completedSessions: 0,
+      topic: 'Onboarding Night',
+      supportCases: [
         {
-          eventType: 'host.workspace.bootstrapped',
-          totalValue: 1,
-          eventTime: isoAtOffset(now, -3, 0),
-          metadata: {
-            ownerEmail: 'owner+pilot-acme@smartiq.test'
-          }
-        },
-        {
-          eventType: 'host.auth.completed',
-          totalValue: 1,
-          eventTime: isoAtOffset(now, -3, 5),
-          metadata: {
-            userEmail: 'owner+pilot-acme@smartiq.test',
-            role: 'owner'
-          }
+          title: 'Host stalled before first live launch',
+          category: 'onboarding',
+          priority: 'high',
+          owner: 'Founder',
+          summary: 'Host signed in but did not progress to room launch.',
+          nextStep: 'Review setup copy and provide founder follow-up.',
+          status: 'open',
+          resolution: ''
         }
       ]
-    },
-    {
+    }),
+    buildTenantPlan(now, {
       slug: 'pilot-recurring-host-birch',
-      name: 'Pilot Recurring Host Birch',
-      billingEmail: 'billing+pilot-birch@smartiq.test',
-      member: {
-        email: 'owner+pilot-birch@smartiq.test',
-        displayName: 'Pilot Host Birch',
-        role: 'owner'
-      },
-      targetUsageTotals: [
+      label: 'Birch',
+      ownerEmail: 'owner+pilot-birch@smartiq.test',
+      dayOffset: -9,
+      sessionLaunches: 2,
+      completedSessions: 2,
+      topic: 'Demo Night',
+      supportCases: [
         {
-          eventType: 'host.workspace.bootstrapped',
-          totalValue: 1,
-          eventTime: isoAtOffset(now, -2, 0),
-          metadata: {
-            ownerEmail: 'owner+pilot-birch@smartiq.test'
-          }
-        },
-        {
-          eventType: 'host.auth.completed',
-          totalValue: 1,
-          eventTime: isoAtOffset(now, -2, 5),
-          metadata: {
-            userEmail: 'owner+pilot-birch@smartiq.test',
-            role: 'owner'
-          }
-        },
-        {
-          eventType: 'host.session.started',
-          totalValue: 2,
-          eventTime: isoAtOffset(now, -2, 10),
-          metadata: {
-            gameId: 'pilot-birch-session-1',
-            topic: 'Demo Night'
-          }
-        },
-        {
-          eventType: 'host.session.completed',
-          totalValue: 2,
-          eventTime: isoAtOffset(now, -2, 20),
-          metadata: {
-            gameId: 'pilot-birch-session-1',
-            winnerDisplayName: 'Team Birch',
-            winnerScore: 24,
-            roundNumber: 10,
-            topic: 'Demo Night'
-          }
+          title: 'Join screen copy confusion',
+          category: 'onboarding',
+          priority: 'medium',
+          owner: 'Founder',
+          summary: 'Players initially missed the room code hint.',
+          nextStep: 'Keep monitoring after copy adjustment.',
+          status: 'resolved',
+          resolution: 'Updated join route copy and confirmed next run completed.'
         }
       ]
-    },
-    {
+    }),
+    buildTenantPlan(now, {
       slug: 'pilot-recurring-host-cinder',
-      name: 'Pilot Recurring Host Cinder',
-      billingEmail: 'billing+pilot-cinder@smartiq.test',
-      member: {
-        email: 'owner+pilot-cinder@smartiq.test',
-        displayName: 'Pilot Host Cinder',
-        role: 'owner'
-      },
-      targetUsageTotals: [
+      label: 'Cinder',
+      ownerEmail: 'owner+pilot-cinder@smartiq.test',
+      dayOffset: -8,
+      sessionLaunches: 1,
+      completedSessions: 0,
+      resumeActions: 1,
+      topic: 'Launch Rehearsal'
+    }),
+    buildTenantPlan(now, {
+      slug: 'pilot-recurring-host-delta',
+      label: 'Delta',
+      ownerEmail: 'owner+pilot-delta@smartiq.test',
+      dayOffset: -7,
+      sessionLaunches: 2,
+      completedSessions: 2,
+      topic: 'Community Quiz'
+    }),
+    buildTenantPlan(now, {
+      slug: 'pilot-recurring-host-ember',
+      label: 'Ember',
+      ownerEmail: 'owner+pilot-ember@smartiq.test',
+      dayOffset: -6,
+      sessionLaunches: 3,
+      completedSessions: 2,
+      duplicateLaunches: 1,
+      topic: 'Office Trivia'
+    }),
+    buildTenantPlan(now, {
+      slug: 'pilot-recurring-host-fjord',
+      label: 'Fjord',
+      ownerEmail: 'owner+pilot-fjord@smartiq.test',
+      dayOffset: -5,
+      sessionLaunches: 2,
+      completedSessions: 1,
+      resumeActions: 1,
+      topic: 'Friday Social'
+    }),
+    buildTenantPlan(now, {
+      slug: 'pilot-recurring-host-grove',
+      label: 'Grove',
+      ownerEmail: 'owner+pilot-grove@smartiq.test',
+      dayOffset: -4,
+      sessionLaunches: 1,
+      completedSessions: 0,
+      topic: 'Team Warmup'
+    }),
+    buildTenantPlan(now, {
+      slug: 'pilot-recurring-host-harbor',
+      label: 'Harbor',
+      ownerEmail: 'owner+pilot-harbor@smartiq.test',
+      dayOffset: -3,
+      sessionLaunches: 1,
+      completedSessions: 0,
+      upgradeAttempts: 1,
+      topic: 'Workshop Quiz'
+    }),
+    buildTenantPlan(now, {
+      slug: 'pilot-recurring-host-ivory',
+      label: 'Ivory',
+      ownerEmail: 'owner+pilot-ivory@smartiq.test',
+      dayOffset: -2,
+      sessionLaunches: 1,
+      completedSessions: 0,
+      topic: 'Campus Night'
+    }),
+    buildTenantPlan(now, {
+      slug: 'pilot-recurring-host-jade',
+      label: 'Jade',
+      ownerEmail: 'owner+pilot-jade@smartiq.test',
+      dayOffset: -1,
+      sessionLaunches: 1,
+      completedSessions: 0,
+      upgradeAttempts: 1,
+      paidActivations: 1,
+      topic: 'Pilot Upgrade Trial',
+      supportCases: [
         {
-          eventType: 'host.workspace.bootstrapped',
-          totalValue: 1,
-          eventTime: isoAtOffset(now, -1, 0),
-          metadata: {
-            ownerEmail: 'owner+pilot-cinder@smartiq.test'
-          }
-        },
-        {
-          eventType: 'host.auth.completed',
-          totalValue: 1,
-          eventTime: isoAtOffset(now, -1, 5),
-          metadata: {
-            userEmail: 'owner+pilot-cinder@smartiq.test',
-            role: 'owner'
-          }
-        },
-        {
-          eventType: 'host.session.started',
-          totalValue: 1,
-          eventTime: isoAtOffset(now, -1, 10),
-          metadata: {
-            gameId: 'pilot-cinder-session-1',
-            topic: 'Launch Rehearsal'
-          }
-        },
-        {
-          eventType: 'host.session.resumed',
-          totalValue: 1,
-          eventTime: isoAtOffset(now, -1, 15),
-          metadata: {
-            gameId: 'pilot-cinder-session-1',
-            userEmail: 'owner+pilot-cinder@smartiq.test'
-          }
+          title: 'Upgrade confirmation needed',
+          category: 'billing',
+          priority: 'medium',
+          owner: 'Founder',
+          summary: 'Host wanted confirmation that paid unlock applied immediately.',
+          nextStep: 'Verify same-session entitlement refresh.',
+          status: 'resolved',
+          resolution: 'Confirmed upgrade return refresh and shared verification back to host.'
         }
       ]
-    }
+    })
   ];
 }
 
@@ -201,6 +316,11 @@ async function getUsageSummary(baseUrl, internalApiKey, tenantId) {
 
 async function getPilotSummary(baseUrl, internalApiKey, tenantId) {
   return requestJson(baseUrl, internalApiKey, 'GET', `/internal/wl/tenants/${tenantId}/pilot-summary`);
+}
+
+async function listSupportCases(baseUrl, internalApiKey, tenantId) {
+  const payload = await requestJson(baseUrl, internalApiKey, 'GET', `/internal/wl/tenants/${tenantId}/support-cases`);
+  return Array.isArray(payload) ? payload : [];
 }
 
 async function ensureTenant(baseUrl, internalApiKey, tenantPlan, apply) {
@@ -286,15 +406,64 @@ async function ensureUsage(baseUrl, internalApiKey, tenantId, tenantPlan, apply)
   }
 }
 
+async function ensureSupportCases(baseUrl, internalApiKey, tenantId, tenantPlan, apply) {
+  if (!tenantPlan.supportCases || tenantPlan.supportCases.length === 0) {
+    return;
+  }
+
+  const existingCases = await listSupportCases(baseUrl, internalApiKey, tenantId);
+
+  for (const targetCase of tenantPlan.supportCases) {
+    let existing = existingCases.find((item) => item.title === targetCase.title);
+    if (!existing) {
+      if (!apply) {
+        console.log(`[dry-run] would create support case tenant=${tenantPlan.slug} title=${targetCase.title} status=${targetCase.status}`);
+        continue;
+      }
+      existing = await requestJson(baseUrl, internalApiKey, 'POST', `/internal/wl/tenants/${tenantId}/support-cases`, {
+        title: targetCase.title,
+        category: targetCase.category,
+        priority: targetCase.priority,
+        owner: targetCase.owner,
+        summary: targetCase.summary,
+        nextStep: targetCase.nextStep
+      });
+      existingCases.push(existing);
+      console.log(`[seed] created support case tenant=${tenantPlan.slug} title=${targetCase.title}`);
+    }
+
+    if (existing.status === targetCase.status) {
+      console.log(`[seed] support case already sufficient tenant=${tenantPlan.slug} title=${targetCase.title} status=${existing.status}`);
+      continue;
+    }
+
+    if (!apply) {
+      console.log(`[dry-run] would update support case tenant=${tenantPlan.slug} title=${targetCase.title} status=${targetCase.status}`);
+      continue;
+    }
+
+    await requestJson(baseUrl, internalApiKey, 'PATCH', `/internal/wl/tenants/${tenantId}/support-cases/${existing.caseId}`, {
+      status: targetCase.status,
+      owner: targetCase.owner,
+      summary: targetCase.summary,
+      nextStep: targetCase.nextStep,
+      resolution: targetCase.resolution || ''
+    });
+    console.log(`[seed] updated support case tenant=${tenantPlan.slug} title=${targetCase.title} status=${targetCase.status}`);
+  }
+}
+
 async function printVerification(baseUrl, internalApiKey, seedPlan, apply) {
   if (!apply) {
-    console.log('[dry-run] expected seeded aggregate after apply: totalTenants>=3 activeTenants>=3 activatedHosts>=3 repeatHosts>=2 paidConversions>=0');
+    console.log('[dry-run] expected seeded aggregate after apply: totalTenants>=10 activeTenants>=10 activatedHosts>=10 repeatHosts>=5 paidConversions>=1');
     return;
   }
 
   let activatedHosts = 0;
   let repeatHosts = 0;
   let paidConversions = 0;
+  let openSupportCases = 0;
+  let resolvedSupportCases = 0;
 
   for (const tenantPlan of seedPlan) {
     const tenants = await listTenants(baseUrl, internalApiKey, tenantPlan.slug);
@@ -306,10 +475,12 @@ async function printVerification(baseUrl, internalApiKey, seedPlan, apply) {
     activatedHosts += summary.activated ? 1 : 0;
     repeatHosts += summary.repeatHost ? 1 : 0;
     paidConversions += summary.paidConverted ? 1 : 0;
-    console.log(`[verify] tenant=${tenantPlan.slug} activated=${summary.activated} repeatHost=${summary.repeatHost} paidConverted=${summary.paidConverted}`);
+    openSupportCases += summary.openSupportCases || 0;
+    resolvedSupportCases += summary.resolvedSupportCases || 0;
+    console.log(`[verify] tenant=${tenantPlan.slug} activated=${summary.activated} repeatHost=${summary.repeatHost} paidConverted=${summary.paidConverted} openSupportCases=${summary.openSupportCases} resolvedSupportCases=${summary.resolvedSupportCases}`);
   }
 
-  console.log(`[verify] seeded aggregate totalTenants=3 activeTenants=3 activatedHosts=${activatedHosts} repeatHosts=${repeatHosts} paidConversions=${paidConversions}`);
+  console.log(`[verify] seeded aggregate totalTenants=${seedPlan.length} activeTenants=${seedPlan.length} activatedHosts=${activatedHosts} repeatHosts=${repeatHosts} paidConversions=${paidConversions} openSupportCases=${openSupportCases} resolvedSupportCases=${resolvedSupportCases}`);
 }
 
 async function main() {
@@ -336,8 +507,9 @@ async function main() {
     if (!String(tenantId).startsWith('<planned:')) {
       await ensureOwnerMember(backendUrl, internalApiKey, tenantId, tenantPlan, apply);
       await ensureUsage(backendUrl, internalApiKey, tenantId, tenantPlan, apply);
+      await ensureSupportCases(backendUrl, internalApiKey, tenantId, tenantPlan, apply);
     } else {
-      console.log(`[dry-run] would verify owner and usage for tenant=${tenantPlan.slug}`);
+      console.log(`[dry-run] would verify owner, usage, and support cases for tenant=${tenantPlan.slug}`);
     }
   }
 
