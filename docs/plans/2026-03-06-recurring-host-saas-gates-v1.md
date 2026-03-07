@@ -102,13 +102,15 @@ Required checks:
 3. pilot metrics artifact published,
 4. pilot evidence pack is published with blocker owners and actions,
 5. live artifact capture is reproducible via `npm run report:recurring-host:pilot-capture`,
-6. touched-scope product tests remain green.
+6. touched-scope product tests remain green,
+7. bootstrap-seeded tenants are excluded from readiness counts so the gate cannot pass on synthetic bootstrap data alone.
 
 Required evidence:
 1. activated-host count,
 2. early paid conversion count,
 3. repeat-host count,
-4. onboarding and upgrade friction review with actions.
+4. onboarding and upgrade friction review with actions,
+5. explicit separation between bootstrap-seeded cohorts and real pilot cohorts.
 
 ### M7 Gate - Narrow Launch Readiness
 

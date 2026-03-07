@@ -136,8 +136,9 @@ Priority order:
 6. `M5` paid value and entitlement enforcement is complete.
 7. `M6` pilot conversion and retention proof is now the active milestone.
 8. `M6` now has real runtime pilot telemetry for bootstrap, auth completion, session launch/duplicate/resume/complete, and billing upgrade activation, plus a founder-facing pilot summary, support-case loop, canonical pilot-summary report generator, pilot evidence-pack generator, pilot capture command, and pilot-gate automation in admin ops/tooling.
-9. Live `M6` seeding and capture now work successfully against `https://smartiq-63tk.onrender.com`, and the current result is still `NOT_YET` because live proof is only `3` activated hosts and `2` repeat hosts.
-10. The locked next-sequence is:
+9. Live `M6` seeding and capture now work successfully against `https://smartiq-63tk.onrender.com`, including a bootstrap cohort that can exercise repeat-host, paid-conversion, and support-case paths.
+10. The `M6` gate now explicitly excludes bootstrap-seeded tenants from readiness counts; the latest corrected live capture is still `NOT_YET` because it reports `10` bootstrap-seeded tenants and `0` real pilot tenants.
+11. The locked next-sequence is:
    - product stabilization,
    - auth/trust hardening,
    - billing/payment hardening,

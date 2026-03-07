@@ -100,6 +100,16 @@ Observed result:
 4. `M6` remains below definition of done because live proof is still short of the required `10` activated hosts and `5` repeat hosts,
 5. the remaining blocker is now real pilot volume and support ownership depth, not workflow wiring or backend path failure.
 
+### Bootstrap-seeded cohorts no longer count toward M6 readiness
+
+Observed result:
+
+1. live bootstrap seeding can now create a `10`-tenant non-empty cohort with repeat-host, paid-conversion, and support-case signals,
+2. live capture run `22787860123` briefly returned `READY` on raw totals alone, which exposed that bootstrap-seeded tenants could incorrectly satisfy the gate,
+3. the pilot summary and evidence tooling now classifies tenants with the bootstrap pilot slug family as `bootstrap-seeded` and excludes them from `M6` threshold counts,
+4. the corrected live capture run `22787954955` now reports `10` bootstrap-seeded tenants, `0` real pilot tenants, `0` real activated hosts, `0` real repeat hosts, and `thresholdStatus = NOT_YET`,
+5. the remaining blocker is therefore explicitly real founder-assisted pilot usage, not missing product, telemetry, or automation rails.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -115,6 +125,6 @@ The following checks executed successfully after this progress slice:
 
 `M6 Pilot Conversion and Retention Proof` remains active and is not promotable done yet because:
 
-1. live recurring-host pilot artifacts now exist and are non-empty, but the latest live capture still reports only `3` activated hosts and `2` repeat hosts,
-2. support/feedback loop now exists internally, but current live artifact still has `0` open support cases and `0` resolved support cases, so blocker ownership evidence is thin,
-3. repeat-host and early paid-retention interpretation still needs a canonical report/evidence pack from real usage above the `M6` threshold.
+1. live recurring-host pilot artifacts now exist, but the latest corrected live capture reports `0` real pilot tenants and treats the entire current `10`-tenant cohort as bootstrap-seeded,
+2. support/feedback loop now exists internally and is non-empty, but the recorded cases are still bootstrap evidence rather than founder-assisted real pilot proof,
+3. repeat-host and paid-retention interpretation still needs a canonical report/evidence pack from real usage above the `M6` threshold.
