@@ -90,6 +90,16 @@ Observed result:
 3. the second live run widened the capture from `status=active` to all tenant statuses and still returned `0` total tenants from `https://smartiq-63tk.onrender.com`,
 4. current blocker is no live recurring-host tenant volume in the connected backend, not missing telemetry or broken capture tooling.
 
+### Live pilot seeding and post-deploy capture now work end-to-end
+
+Observed result:
+
+1. GitHub Actions workflow `Recurring Host Pilot Seed` now succeeds against `https://smartiq-63tk.onrender.com`,
+2. the deployed backend now accepts fresh-tenant `usage-summary` and `pilot-summary` reads without `500` errors,
+3. live capture run `22787672040` now reports `3` active tenants, `3` activated hosts, and `2` repeat hosts,
+4. `M6` remains below definition of done because live proof is still short of the required `10` activated hosts and `5` repeat hosts,
+5. the remaining blocker is now real pilot volume and support ownership depth, not workflow wiring or backend path failure.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -105,6 +115,6 @@ The following checks executed successfully after this progress slice:
 
 `M6 Pilot Conversion and Retention Proof` remains active and is not promotable done yet because:
 
-1. live recurring-host pilot artifacts now exist, but the latest live captures returned `0` tenants, `0` activated hosts, and `0` repeat hosts from the connected backend,
-2. support/feedback loop now exists internally, but it is not yet backed by actual recurring-host pilot volume,
+1. live recurring-host pilot artifacts now exist and are non-empty, but the latest live capture still reports only `3` activated hosts and `2` repeat hosts,
+2. support/feedback loop now exists internally, but current live artifact still has `0` open support cases and `0` resolved support cases, so blocker ownership evidence is thin,
 3. repeat-host and early paid-retention interpretation still needs a canonical report/evidence pack from real usage above the `M6` threshold.
