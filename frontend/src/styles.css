@@ -805,6 +805,12 @@ button:disabled {
   background: rgba(255, 214, 168, 0.12);
 }
 
+.session-status-badge--note {
+  border-color: rgba(112, 180, 255, 0.32);
+  color: #b9d8ff;
+  background: rgba(112, 180, 255, 0.12);
+}
+
 .recent-hosted-session-review {
   align-content: start;
 }
@@ -854,6 +860,10 @@ button:disabled {
 .recent-session-note-editor {
   display: grid;
   gap: 8px;
+}
+
+.recent-session-note-preview {
+  margin: 0;
 }
 
 .active-filter {

@@ -58,6 +58,7 @@ Current execution pointer:
 16. The latest `M9` slice also makes reviewed session rosters win over stale room rosters during duplicate setup, so repeat-host reuse follows the last reviewed event reality more closely.
 17. The latest `M9` slice also persists host launch-roster moderation locally per room code, so curated pre-live rosters survive browser resume for saved rooms.
 18. The latest `M9` slice also adds persistent follow-up notes inside reviewed session detail, giving repeat hosts a lightweight post-session memory loop without leaving the workspace.
+19. The latest `M9` slice also surfaces those saved follow-up notes directly in recent-session history rows, making the host workspace more useful as an operational queue.
 
 ## Milestone Definitions
 

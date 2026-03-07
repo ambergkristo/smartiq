@@ -836,6 +836,8 @@ describe('App tenant runtime integration', () => {
 
     expect(screen.getByTestId('recent-session-note-message')).toHaveTextContent(/follow-up note saved/i);
     expect(localStorage.getItem('smartiq.sessionReviewNote.game-review')).toBe('Switch to shorter opening round next time.');
+    expect(screen.getAllByText(/switch to shorter opening round next time/i).length).toBeGreaterThan(1);
+    expect(screen.getAllByText(/note saved/i).length).toBeGreaterThan(0);
   });
 
   test('filters recent hosted sessions by live vs completed status', async () => {

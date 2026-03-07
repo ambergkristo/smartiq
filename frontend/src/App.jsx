@@ -205,6 +205,7 @@ const STRINGS = {
   recentHostedSessionPlayers: 'players',
   recentHostedSessionStatusLiveBadge: 'Live',
   recentHostedSessionStatusCompletedBadge: 'Completed',
+  recentHostedSessionNoteBadge: 'Note saved',
   recentHostedSessionFilterAll: 'All',
   recentHostedSessionFilterLive: 'Live',
   recentHostedSessionFilterCompleted: 'Completed',
@@ -1116,6 +1117,11 @@ function StartScreen({
                       key={entry.gameId}
                       className={activeHostedSession?.gameId === entry.gameId ? 'selected' : ''}
                     >
+                      {(() => {
+                        const savedNote = loadSessionReviewNote(entry.gameId);
+                        const notePreview = formatSessionReviewNotePreview(savedNote);
+                        return (
+                          <>
                       <strong>
                         {entry.topic || STRINGS.recentHostedSessionTopicFallback}
                         <span className={`session-status-badge${entry.status === 'completed' ? ' is-completed' : ''}`}>
@@ -1123,6 +1129,11 @@ function StartScreen({
                             ? STRINGS.recentHostedSessionStatusCompletedBadge
                             : STRINGS.recentHostedSessionStatusLiveBadge}
                         </span>
+                        {notePreview ? (
+                          <span className="session-status-badge session-status-badge--note">
+                            {STRINGS.recentHostedSessionNoteBadge}
+                          </span>
+                        ) : null}
                       </strong>
                       <span>
                         {entry.gameId}
@@ -1130,6 +1141,7 @@ function StartScreen({
                         {entry.playerCount != null ? ` | ${entry.playerCount} ${STRINGS.recentHostedSessionPlayers}` : ''}
                         {entry.winnerDisplayName ? ` | winner ${entry.winnerDisplayName}` : ''}
                       </span>
+                      {notePreview ? <p className="field-hint recent-session-note-preview">{notePreview}</p> : null}
                       {typeof onUseRecentHostedSession === 'function' ? (
                         <div className="host-session-actions">
                           <button type="button" onClick={() => onUseRecentHostedSession(entry)}>
@@ -1161,6 +1173,9 @@ function StartScreen({
                           </button>
                         </div>
                       ) : null}
+                          </>
+                        );
+                      })()}
                     </li>
                   ))}
                 </ul>
@@ -1963,6 +1978,14 @@ function persistSessionReviewNote(gameId, note) {
     return;
   }
   localStorage.setItem(key, normalized);
+}
+
+function formatSessionReviewNotePreview(note) {
+  const normalized = String(note || '').trim();
+  if (!normalized) {
+    return '';
+  }
+  return normalized.length > 64 ? `${normalized.slice(0, 61)}...` : normalized;
 }
 
 function persistRoomSession(session) {

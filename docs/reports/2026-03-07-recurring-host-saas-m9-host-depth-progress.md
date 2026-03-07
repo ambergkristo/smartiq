@@ -81,6 +81,14 @@ Observed result:
 2. notes are stored locally per `gameId`, so a host can record what to change before the next recurring event,
 3. this makes session review useful for lightweight operational memory instead of only replay, duplicate, and template actions.
 
+### Saved follow-up notes are now visible from history list rows
+
+Observed result:
+
+1. if a reviewed session already has a saved follow-up note, the recent-session list now shows a `Note saved` badge,
+2. the note preview is visible directly on the history row, so the host can spot follow-up context without reopening session detail,
+3. this makes host history more operationally useful as a working queue rather than only a chronological record.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -93,6 +101,7 @@ The following checks executed successfully after this progress slice:
 6. `npm --prefix frontend run build`
 7. `npm --prefix frontend run test -- --run src/App.startup.test.jsx src/App.tenant-runtime.test.jsx`
 8. `npm --prefix frontend run test -- --run src/App.tenant-runtime.test.jsx src/App.startup.test.jsx`
+9. `npm --prefix frontend run build`
 
 ## Honest Status
 
@@ -107,3 +116,4 @@ The following checks executed successfully after this progress slice:
 6. reviewed-session reuse is now more trustworthy than before, but real post-session notes, tagging, and host follow-up workflow still remain open.
 7. host-side lobby moderation is now less fragile across reloads, but true multi-device moderation and server-backed lobby control still remain open.
 8. follow-up notes now exist, but they are still browser-local rather than tenant-synced operational data.
+9. follow-up context is now visible in history rows, but there is still no shared or server-backed post-session ops layer.

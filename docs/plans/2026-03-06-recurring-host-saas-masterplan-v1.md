@@ -149,7 +149,8 @@ Priority order:
 19. The latest `M9` slice also makes reviewed session rosters take priority during duplicate setup, reducing repeat-host drift between reviewed history and the next prepared launch.
 20. The latest `M9` slice also persists host launch-roster moderation locally per room code, reducing repeat-host friction when saved rooms are resumed after a reload.
 21. The latest `M9` slice also adds persistent follow-up notes inside reviewed session detail, making the post-session workspace slightly more operational instead of only replay-oriented.
-22. The locked next-sequence is:
+22. The latest `M9` slice also surfaces saved follow-up notes directly in recent-session history rows, increasing the operational value of host history without reopening session detail.
+23. The locked next-sequence is:
    - product stabilization,
    - auth/trust hardening,
    - billing/payment hardening,
