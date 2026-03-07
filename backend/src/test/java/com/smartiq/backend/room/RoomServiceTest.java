@@ -123,6 +123,54 @@ class RoomServiceTest {
     }
 
     @Test
+    void hostCanRemoveNonHostPlayerFromRoom() {
+        RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
+        RoomParticipantResponse joined = roomService.joinRoom(created.roomCode(), new JoinRoomRequest("Bob"));
+
+        RoomSnapshot snapshot = roomService.removePlayer(
+                created.roomCode(),
+                new RemoveRoomPlayerRequest(created.playerId(), created.authToken(), joined.playerId()),
+                null
+        );
+
+        assertThat(snapshot.players()).extracting(RoomPlayerSnapshot::displayName).containsExactly("Alice");
+        assertThat(counterValue("smartiq.room.remove.total", "result", "success")).isEqualTo(1.0);
+    }
+
+    @Test
+    void removingPlayerDoesNotReuseExistingPlayerId() {
+        RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
+        RoomParticipantResponse joined = roomService.joinRoom(created.roomCode(), new JoinRoomRequest("Bob"));
+        roomService.joinRoom(created.roomCode(), new JoinRoomRequest("Cara"));
+        roomService.removePlayer(
+                created.roomCode(),
+                new RemoveRoomPlayerRequest(created.playerId(), created.authToken(), joined.playerId()),
+                null
+        );
+
+        RoomParticipantResponse rejoined = roomService.joinRoom(created.roomCode(), new JoinRoomRequest("Dana"));
+
+        assertThat(rejoined.playerId()).isEqualTo("p4");
+    }
+
+    @Test
+    void nonHostCannotRemoveRoomPlayers() {
+        RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
+        RoomParticipantResponse joined = roomService.joinRoom(created.roomCode(), new JoinRoomRequest("Bob"));
+
+        assertThatThrownBy(() -> roomService.removePlayer(
+                created.roomCode(),
+                new RemoveRoomPlayerRequest(joined.playerId(), joined.authToken(), created.playerId()),
+                null
+        ))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("only host can remove room players");
+
+        assertThat(counterValue("smartiq.room.remove.total", "result", "failure", "reason", "forbidden_actor"))
+                .isEqualTo(1.0);
+    }
+
+    @Test
     void rejoinRejectsInvalidToken() {
         RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
 

@@ -226,4 +226,37 @@ class RoomControllerTest {
                 .andExpect(jsonPath("$.error").value("player not found: p1"))
                 .andExpect(jsonPath("$.path").value("/api/rooms/ABC123/rejoin"));
     }
+
+    @Test
+    void removePlayerReturnsDecoratedSnapshotAndBroadcastsRoomState() throws Exception {
+        UUID tenantId = UUID.randomUUID();
+        RoomSnapshot snapshot = new RoomSnapshot(
+                "ABC123",
+                tenantId,
+                null,
+                List.of(new RoomPlayerSnapshot("p1", "Alice"))
+        );
+        when(roomService.removePlayer(eq("ABC123"), any(), isNull())).thenReturn(snapshot);
+        when(tenantService.getTenantBrandingForRuntimeTenant(eq(tenantId)))
+                .thenReturn(new TenantBrandingRuntimeResponse(
+                        tenantId,
+                        new TenantBrandingResponse("Northwind Quiz", null, "#223344", "#556677"),
+                        Instant.parse("2026-03-06T10:15:30Z")
+                ));
+        RoomSnapshot decoratedSnapshot = new RoomSnapshot(
+                "ABC123",
+                tenantId,
+                new RoomBrandingSnapshot("Northwind Quiz", null, "#223344", "#556677"),
+                snapshot.players()
+        );
+
+        mockMvc.perform(post("/api/rooms/ABC123/remove-player")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new RemoveRoomPlayerRequest("p1", "rt_host", "p2"))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.branding.appName").value("Northwind Quiz"))
+                .andExpect(jsonPath("$.players[0].displayName").value("Alice"));
+
+        verify(roomWsGateway).sendRoomState("ABC123", decoratedSnapshot);
+    }
 }

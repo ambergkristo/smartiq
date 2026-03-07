@@ -21,6 +21,7 @@ vi.mock('./api', () => {
     initiateCheckoutSession: vi.fn(),
     joinRoomSession: vi.fn(),
     logoutRuntimeAuth: vi.fn(),
+    removeRoomPlayerFromSession: vi.fn(),
     rejoinRoomSession: vi.fn(),
     resumeServerGameSession: vi.fn(),
     requestRuntimeAuthLink: vi.fn(),

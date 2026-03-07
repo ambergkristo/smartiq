@@ -94,6 +94,17 @@ public class RoomController {
         );
     }
 
+    @PostMapping("/{roomCode}/remove-player")
+    public RoomSnapshot removePlayer(@PathVariable String roomCode,
+                                     @RequestBody(required = false) RemoveRoomPlayerRequest request,
+                                     HttpServletRequest httpServletRequest) {
+        ResolvedAuthContext context = authContextResolver.resolveOptional(httpServletRequest);
+        RoomSnapshot snapshot = roomService.removePlayer(roomCode, request, context == null ? null : context.tenantId());
+        RoomSnapshot decoratedSnapshot = decorateRoomSnapshot(snapshot);
+        roomWsGateway.sendRoomState(roomCode, decoratedSnapshot);
+        return decoratedSnapshot;
+    }
+
     private RoomSnapshot decorateRoomSnapshot(RoomSnapshot snapshot) {
         if (snapshot == null || snapshot.tenantId() == null) {
             return snapshot;

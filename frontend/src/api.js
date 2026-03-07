@@ -677,6 +677,14 @@ export function buildRoomRejoinPayload({ playerId, authToken } = {}) {
   };
 }
 
+export function buildRoomPlayerRemovalPayload({ hostPlayerId, hostAuthToken, targetPlayerId } = {}) {
+  return {
+    hostPlayerId: normalizeRequiredField(hostPlayerId, 'hostPlayerId'),
+    hostAuthToken: normalizeRequiredField(hostAuthToken, 'hostAuthToken'),
+    targetPlayerId: normalizeRequiredField(targetPlayerId, 'targetPlayerId')
+  };
+}
+
 export async function createServerGameSession(input = {}) {
   requireApiBase();
   if (USE_SAMPLE_MODE) {
@@ -790,6 +798,22 @@ export async function rejoinRoomSession(roomCode, input = {}) {
   const payload = buildRoomRejoinPayload(input);
   return fetchJson(`${API_BASE}/api/rooms/${encodeURIComponent(normalizedRoomCode)}/rejoin`, {
     method: 'POST',
+    body: payload
+  });
+}
+
+export async function removeRoomPlayerFromSession(roomCode, input = {}) {
+  requireApiBase();
+  if (USE_SAMPLE_MODE) {
+    throw new ApiError('Room API is unavailable in sample mode', 0, 'SAMPLE_MODE_UNSUPPORTED');
+  }
+
+  const normalizedRoomCode = normalizeRequiredRoomCode(roomCode);
+  const payload = buildRoomPlayerRemovalPayload(input);
+  const headers = resolveRuntimeAuthHeaders();
+  return fetchJson(`${API_BASE}/api/rooms/${encodeURIComponent(normalizedRoomCode)}/remove-player`, {
+    method: 'POST',
+    headers,
     body: payload
   });
 }

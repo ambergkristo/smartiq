@@ -19,6 +19,7 @@ import {
   initiateCheckoutSession,
   joinRoomSession,
   logoutRuntimeAuth,
+  removeRoomPlayerFromSession,
   rejoinRoomSession,
   requestRuntimeAuthLink,
   setRuntimeAuthContext,
@@ -200,6 +201,8 @@ const STRINGS = {
   roomSelectedRosterEmpty: 'Select at least one room player for the live setup.',
   roomSelectedRosterReadyPrefix: 'Selected room roster ready:',
   roomSelectedRosterStartPrefix: 'Starting room roster:',
+  roomRemovePlayerSubmit: 'Remove',
+  roomRemovePlayerPrefix: 'Removed room player:',
   roomUsePlayersMessage: 'Room players loaded into the live session setup.',
   recentHostedSessionsTitle: 'Recent hosted sessions',
   recentHostedSessionsEmpty: 'No hosted sessions launched yet.',
@@ -1581,7 +1584,8 @@ function RoomPanel({
   onSelectAllRoomPlayers,
   onToggleRoomPlayer,
   onUseRoomPlayers,
-  onStartRoomSession
+  onStartRoomSession,
+  onRemoveRoomPlayer
 }) {
   const roomPlayers = Array.isArray(roomSession?.roomState?.players) ? roomSession.roomState.players : [];
   const roomPlayerNames = getRoomPlayerNames(roomSession);
@@ -1743,14 +1747,26 @@ function RoomPanel({
                     <strong>{player.displayName || player.playerId}</strong>
                     <span>{player.playerId}</span>
                     {canUseRoomPlayers ? (
-                      <label className="room-player-toggle">
-                        <input
-                          type="checkbox"
-                          checked={selectedPlayers.includes(normalizePlayerName(player.displayName || player.playerId || ''))}
-                          onChange={() => onToggleRoomPlayer(normalizePlayerName(player.displayName || player.playerId || ''))}
-                        />
-                        <span>Include in launch</span>
-                      </label>
+                      <div className="room-player-row-actions">
+                        <label className="room-player-toggle">
+                          <input
+                            type="checkbox"
+                            checked={selectedPlayers.includes(normalizePlayerName(player.displayName || player.playerId || ''))}
+                            onChange={() => onToggleRoomPlayer(normalizePlayerName(player.displayName || player.playerId || ''))}
+                          />
+                          <span>Include in launch</span>
+                        </label>
+                        {roomSession?.playerId !== player.playerId ? (
+                          <button
+                            type="button"
+                            className="secondary-action room-player-remove-action"
+                            onClick={() => onRemoveRoomPlayer(player)}
+                            disabled={pending}
+                          >
+                            {STRINGS.roomRemovePlayerSubmit}
+                          </button>
+                        ) : null}
+                      </div>
                     ) : null}
                   </li>
                 ))}
@@ -2962,6 +2978,39 @@ function GameApp() {
     });
   }
 
+  async function handleRemoveRoomPlayer(player) {
+    if (roomPending || roomSession?.role !== 'host' || !roomSession?.roomCode || !roomSession?.playerId || !roomSession?.authToken) {
+      return;
+    }
+    const targetPlayerId = String(player?.playerId || '').trim();
+    const targetDisplayName = String(player?.displayName || targetPlayerId || 'Player').trim() || 'Player';
+    if (!targetPlayerId || targetPlayerId === roomSession.playerId) {
+      return;
+    }
+    setRoomPending(true);
+    setRoomError('');
+    setRoomMessage('');
+    try {
+      const nextRoomState = await removeRoomPlayerFromSession(roomSession.roomCode, {
+        hostPlayerId: roomSession.playerId,
+        hostAuthToken: roomSession.authToken,
+        targetPlayerId
+      });
+      applyRoomSession({
+        ...roomSession,
+        roomState: nextRoomState
+      }, `${STRINGS.roomRemovePlayerPrefix} ${targetDisplayName}`);
+      setSelectedRoomPlayerNames((prev) => prev.filter((entry) => entry !== normalizePlayerName(targetDisplayName)));
+    } catch (error) {
+      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+        ? error.detail
+        : error?.message || 'Could not remove room player.';
+      setRoomError(detail);
+    } finally {
+      setRoomPending(false);
+    }
+  }
+
   function handleUseRecentHostedSession(session) {
     setActiveHostedSession(session || null);
     setWorkspaceError('');
@@ -3258,6 +3307,7 @@ function GameApp() {
                 onToggleRoomPlayer={handleToggleRoomPlayer}
                 onUseRoomPlayers={handleUseRoomPlayers}
                 onStartRoomSession={handleStartRoomSession}
+                onRemoveRoomPlayer={handleRemoveRoomPlayer}
               />
             ) : (
               <PlayerJoinRoutePanel
@@ -3319,6 +3369,7 @@ function GameApp() {
                 onToggleRoomPlayer={handleToggleRoomPlayer}
                 onUseRoomPlayers={handleUseRoomPlayers}
                 onStartRoomSession={handleStartRoomSession}
+                onRemoveRoomPlayer={handleRemoveRoomPlayer}
               />
               <StartScreen
                 topics={topics}

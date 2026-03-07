@@ -37,6 +37,7 @@ public class RoomService {
     private static final String METRIC_ROOM_CREATE = "smartiq.room.create.total";
     private static final String METRIC_ROOM_JOIN = "smartiq.room.join.total";
     private static final String METRIC_ROOM_REJOIN = "smartiq.room.rejoin.total";
+    private static final String METRIC_ROOM_REMOVE = "smartiq.room.remove.total";
     private static final String METRIC_ROOM_EVICTED = "smartiq.room.evicted.total";
     private static final int DEFAULT_ROOM_RETENTION_MINUTES = 180;
     private static final int DEFAULT_ROOM_MAX = 20000;
@@ -179,6 +180,46 @@ public class RoomService {
 
     public synchronized RoomResumeResponse resumeRoomSession(String roomCode, RejoinRoomRequest request, UUID tenantIdContext) {
         return resumeRoom(roomCode, request, tenantIdContext, false);
+    }
+
+    public synchronized RoomSnapshot removePlayer(String roomCode, RemoveRoomPlayerRequest request, UUID tenantIdContext) {
+        try {
+            evictExpiredRooms();
+            if (request == null) {
+                throw new IllegalArgumentException("remove player payload is required");
+            }
+            RoomState room = requireRoom(roomCode, tenantIdContext);
+            String hostPlayerId = normalizePlayerId(request.hostPlayerId());
+            String hostAuthToken = normalizeAuthToken(request.hostAuthToken());
+            String targetPlayerId = normalizePlayerId(request.targetPlayerId());
+            String expectedHostToken = room.playerTokens.get(hostPlayerId);
+            if (expectedHostToken == null) {
+                throw new NoSuchElementException("player not found: " + hostPlayerId);
+            }
+            if (!secureEquals(expectedHostToken, hostAuthToken)) {
+                throw new IllegalArgumentException("invalid room token");
+            }
+            String roomHostPlayerId = room.hostPlayerId();
+            if (!hostPlayerId.equals(roomHostPlayerId)) {
+                throw new IllegalArgumentException("only host can remove room players");
+            }
+            if (targetPlayerId.equals(roomHostPlayerId)) {
+                throw new IllegalArgumentException("host player cannot be removed");
+            }
+            boolean removed = room.players.removeIf(player -> player.playerId().equals(targetPlayerId));
+            if (!removed) {
+                throw new NoSuchElementException("player not found: " + targetPlayerId);
+            }
+            room.playerTokens.remove(targetPlayerId);
+            room.lastTouchedAtMillis = nowMillis();
+            persistRoom(room);
+
+            incrementCounter(METRIC_ROOM_REMOVE, "success", "none");
+            return toSnapshot(room);
+        } catch (RuntimeException ex) {
+            incrementCounter(METRIC_ROOM_REMOVE, "failure", classifyRemoveFailure(ex));
+            throw ex;
+        }
     }
 
     private RoomResumeResponse resumeRoom(String roomCode, RejoinRoomRequest request, UUID tenantIdContext, boolean rotateToken) {
@@ -539,6 +580,29 @@ public class RoomService {
         return "internal_error";
     }
 
+    private static String classifyRemoveFailure(RuntimeException ex) {
+        String message = normalizeMessage(ex);
+        if (ex instanceof NoSuchElementException && message.contains("player not found")) {
+            return "player_not_found";
+        }
+        if (ex instanceof IllegalArgumentException) {
+            if (message.contains("invalid room token")) {
+                return "invalid_room_token";
+            }
+            if (message.contains("only host can remove room players")) {
+                return "forbidden_actor";
+            }
+            if (message.contains("host player cannot be removed")) {
+                return "invalid_request";
+            }
+            if (message.contains("remove player payload is required")) {
+                return "invalid_request";
+            }
+            return "invalid_request";
+        }
+        return "internal_error";
+    }
+
     private static String normalizeMessage(RuntimeException ex) {
         if (ex.getMessage() == null) {
             return "";
@@ -573,10 +637,27 @@ public class RoomService {
         }
 
         private String addPlayer(String displayName) {
-            String playerId = "p" + (players.size() + 1);
+            String playerId = "p" + nextPlayerNumber();
             players.add(new PlayerState(playerId, displayName));
             return playerId;
         }
+
+        private String hostPlayerId() {
+            return players.isEmpty() ? null : players.get(0).playerId();
+        }
+
+        private int nextPlayerNumber() {
+            return players.stream()
+                    .map(PlayerState::playerId)
+                    .map(RoomService::normalizePlayerNumber)
+                    .max(Integer::compareTo)
+                    .orElse(0) + 1;
+        }
+    }
+
+    private static int normalizePlayerNumber(String playerId) {
+        String normalized = normalizePlayerId(playerId);
+        return Integer.parseInt(normalized.substring(1));
     }
 
     private record StoredRoomState(

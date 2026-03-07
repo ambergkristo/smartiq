@@ -1,5 +1,6 @@
 import {
   clearRuntimeAuthContext,
+  buildRoomPlayerRemovalPayload,
   buildRoomRejoinPayload,
   buildServerActionPayload,
   buildServerGamePayload,
@@ -7,6 +8,7 @@ import {
   createServerGameSession,
   deleteRuntimeSessionTemplate,
   fetchTenantRuntimeSnapshot,
+  removeRoomPlayerFromSession,
   upsertRuntimeSessionTemplate,
   updateRuntimeTenantBranding,
   getRuntimeAuthContext,
@@ -148,6 +150,18 @@ describe('api error mapping', () => {
     expect(() => buildRoomRejoinPayload({ playerId: 'p1' })).toThrow('authToken is required');
   });
 
+  test('builds room player removal payload with required fields', () => {
+    expect(buildRoomPlayerRemovalPayload({
+      hostPlayerId: ' p1 ',
+      hostAuthToken: ' rt_host ',
+      targetPlayerId: ' p2 '
+    })).toEqual({
+      hostPlayerId: 'p1',
+      hostAuthToken: 'rt_host',
+      targetPlayerId: 'p2'
+    });
+  });
+
   test('maps game session not found to restart guidance', () => {
     expect(resolveGameSessionErrorMessage({ status: 404, code: 'HTTP_ERROR' }).toLowerCase()).toContain('not found');
   });
@@ -263,6 +277,44 @@ describe('api error mapping', () => {
           Authorization: 'Bearer token-1',
           'X-SmartIQ-User-Email': 'owner@acme.test',
           'X-SmartIQ-Tenant-Id': 'tenant-1'
+        })
+      })
+    );
+  });
+
+  test('sends runtime auth headers with host room player removal', async () => {
+    globalThis.fetch.mockResolvedValueOnce(new Response(JSON.stringify({
+      roomCode: 'ABC123',
+      players: [{ playerId: 'p1', displayName: 'Host' }]
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    }));
+    setRuntimeAuthContext({
+      userEmail: 'owner@acme.test',
+      tenantId: 'tenant-1',
+      bearerToken: 'token-1'
+    });
+
+    await removeRoomPlayerFromSession('ABC123', {
+      hostPlayerId: 'p1',
+      hostAuthToken: 'rt_host',
+      targetPlayerId: 'p2'
+    });
+
+    expect(globalThis.fetch).toHaveBeenCalledWith(
+      expect.stringMatching(/\/api\/rooms\/ABC123\/remove-player$/),
+      expect.objectContaining({
+        method: 'POST',
+        headers: expect.objectContaining({
+          Authorization: 'Bearer token-1',
+          'X-SmartIQ-User-Email': 'owner@acme.test',
+          'X-SmartIQ-Tenant-Id': 'tenant-1'
+        }),
+        body: JSON.stringify({
+          hostPlayerId: 'p1',
+          hostAuthToken: 'rt_host',
+          targetPlayerId: 'p2'
         })
       })
     );

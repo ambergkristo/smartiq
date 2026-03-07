@@ -106,6 +106,15 @@ Observed result:
 3. once a note is cleared, the note badge, note preview, and `Needs follow-up` queue membership all disappear on the next render,
 4. this makes the local follow-up queue behave more like a closable ops list instead of a static annotation layer.
 
+### Host room participant management now includes real player removal
+
+Observed result:
+
+1. host-owned room sessions now expose a `Remove` action beside non-host room participants,
+2. removal is enforced through a backend host-token check instead of only local UI state,
+3. once a player is removed, the room snapshot, selected launch roster, and live room list all update to the reduced participant set,
+4. this moves `M9` closer to true pre-live participant management rather than only local roster selection.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -124,6 +133,8 @@ The following checks executed successfully after this progress slice:
 12. `npm --prefix frontend run test -- --run src/App.tenant-runtime.test.jsx`
 13. `npm --prefix frontend run lint`
 14. `npm --prefix frontend run build`
+15. `mvn -q -f backend/pom.xml "-Dtest=RoomServiceTest,RoomControllerTest" test`
+16. `npm --prefix frontend run test -- --run src/App.startup.test.jsx src/api.test.js`
 
 ## Honest Status
 
@@ -133,7 +144,7 @@ The following checks executed successfully after this progress slice:
    - faster reusable setup,
    - stronger pre-live controls,
    - measurable repeat-host friction reduction.
-4. pre-live control is now meaningfully better than before, but lobby moderation and deeper participant/session control still remain open.
+4. pre-live control is now meaningfully better than before, and host-side player removal is now real, but lobby moderation and deeper participant/session control still remain open.
 5. template reuse is now stronger from both current setup and reviewed history, but the workspace still lacks deeper post-session workflow and operational feedback loops.
 6. reviewed-session reuse is now more trustworthy than before, but real post-session notes, tagging, and host follow-up workflow still remain open.
 7. host-side lobby moderation is now less fragile across reloads, but true multi-device moderation and server-backed lobby control still remain open.

@@ -556,6 +556,19 @@ button:disabled {
   min-height: auto;
 }
 
+.room-player-row-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.room-player-remove-action {
+  width: auto;
+  min-height: 34px;
+  padding: 6px 10px;
+}
+
 .player-lobby-card {
   display: grid;
   gap: 16px;

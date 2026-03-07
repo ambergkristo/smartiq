@@ -153,7 +153,8 @@ Priority order:
 23. The latest `M9` slice also surfaces saved follow-up notes directly in recent-session history rows, increasing the operational value of host history without reopening session detail.
 24. The latest `M9` slice also adds a dedicated `Needs follow-up` filter, turning local follow-up notes into a lightweight actionable queue inside host history.
 25. The latest `M9` slice also adds a follow-up queue metric and `Clear note` action, so local host follow-up work can be reduced inside the workspace rather than only collected.
-26. The locked next-sequence is:
+26. The latest `M9` slice also adds host-side room player removal with backend host-token enforcement, moving pre-live participant management beyond checkbox-only local moderation.
+27. The locked next-sequence is:
    - product stabilization,
    - auth/trust hardening,
    - billing/payment hardening,

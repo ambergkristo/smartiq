@@ -62,6 +62,7 @@ Current execution pointer:
 20. The latest `M9` slice also surfaces those saved follow-up notes directly in recent-session history rows, making the host workspace more useful as an operational queue.
 21. The latest `M9` slice also adds a dedicated `Needs follow-up` session filter, turning local follow-up notes into a lightweight actionable queue.
 22. The latest `M9` slice also adds a follow-up queue metric plus a `Clear note` action in reviewed session detail, so hosts can work down local post-session notes instead of only accumulating them.
+23. The latest `M9` slice also adds host-side room player removal with backend host-token enforcement, so pre-live participant management is no longer limited to checkbox-based local roster selection.
 
 ## Milestone Definitions
 

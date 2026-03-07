@@ -22,6 +22,7 @@ vi.mock('./api', () => {
     initiateCheckoutSession: vi.fn(),
     joinRoomSession: vi.fn(),
     logoutRuntimeAuth: vi.fn(),
+    removeRoomPlayerFromSession: vi.fn(),
     rejoinRoomSession: vi.fn(),
     requestRuntimeAuthLink: vi.fn(),
     setRuntimeAuthContext: vi.fn(),
@@ -51,6 +52,7 @@ import {
   hasRuntimeAuthContext,
   initiateCheckoutSession,
   joinRoomSession,
+  removeRoomPlayerFromSession,
   rejoinRoomSession,
   requestRuntimeAuthLink,
   resolveTopicsErrorState,
@@ -866,6 +868,49 @@ describe('App startup resilience', () => {
     expect(screen.getAllByText('Host One').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Bob').length).toBeGreaterThan(0);
     expect(screen.queryAllByText('Alice').length).toBe(0);
+  });
+
+  test('host can remove a room player before launch', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    rejoinRoomSession.mockResolvedValue({
+      roomCode: 'QUIZ42',
+      playerId: 'p1',
+      authToken: 'rt_room_host_rotated',
+      roomState: {
+        roomCode: 'QUIZ42',
+        players: [
+          { playerId: 'p1', displayName: 'Host One' },
+          { playerId: 'p2', displayName: 'Alice' },
+          { playerId: 'p3', displayName: 'Bob' }
+        ]
+      }
+    });
+    removeRoomPlayerFromSession.mockResolvedValue({
+      roomCode: 'QUIZ42',
+      players: [
+        { playerId: 'p1', displayName: 'Host One' },
+        { playerId: 'p3', displayName: 'Bob' }
+      ]
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('room-panel')).toBeInTheDocument());
+    fireEvent.change(screen.getByLabelText(/room display name/i), { target: { value: 'Host One' } });
+    fireEvent.click(screen.getByRole('button', { name: /create room/i }));
+
+    await waitFor(() => expect(screen.getByTestId('room-session-card')).toBeInTheDocument());
+    fireEvent.click(screen.getAllByRole('button', { name: /^remove$/i })[0]);
+
+    await waitFor(() => expect(removeRoomPlayerFromSession).toHaveBeenCalledWith('QUIZ42', {
+      hostPlayerId: 'p1',
+      hostAuthToken: 'rt_room_host_rotated',
+      targetPlayerId: 'p2'
+    }));
+    expect(screen.getByTestId('room-message')).toHaveTextContent(/removed room player: alice/i);
+    expect(screen.getByTestId('room-selected-roster-hint')).not.toHaveTextContent(/alice/i);
+    expect(screen.queryByText(/^Alice$/i)).not.toBeInTheDocument();
+    expect(screen.getAllByText(/^Bob$/i).length).toBeGreaterThan(0);
   });
 
   test('joins a room into a dedicated player lobby surface', async () => {
