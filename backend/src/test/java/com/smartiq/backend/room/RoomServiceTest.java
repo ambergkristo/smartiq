@@ -123,6 +123,35 @@ class RoomServiceTest {
     }
 
     @Test
+    void reconnectHandshakeRotatesViaHttpAndPreservesTokenViaWebsocketResume() {
+        RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
+        roomService.joinRoom(created.roomCode(), new JoinRoomRequest("Bob"));
+
+        RoomResumeResponse httpResume = roomService.rejoinRoom(
+                created.roomCode(),
+                new RejoinRoomRequest(created.playerId(), created.authToken())
+        );
+
+        assertThat(httpResume.authToken()).isNotEqualTo(created.authToken());
+        assertThatThrownBy(() -> roomService.resumeRoomSession(
+                created.roomCode(),
+                new RejoinRoomRequest(created.playerId(), created.authToken())
+        ))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("invalid room token");
+
+        RoomResumeResponse websocketResume = roomService.resumeRoomSession(
+                created.roomCode(),
+                new RejoinRoomRequest(created.playerId(), httpResume.authToken())
+        );
+
+        assertThat(websocketResume.authToken()).isEqualTo(httpResume.authToken());
+        assertThat(websocketResume.roomState().players())
+                .extracting(RoomPlayerSnapshot::displayName)
+                .containsExactly("Alice", "Bob");
+    }
+
+    @Test
     void hostCanRemoveNonHostPlayerFromRoom() {
         RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
         RoomParticipantResponse joined = roomService.joinRoom(created.roomCode(), new JoinRoomRequest("Bob"));
