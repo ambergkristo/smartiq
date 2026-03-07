@@ -5,9 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+
+import com.jayway.jsonpath.JsonPath;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasItem;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,7 +36,7 @@ class SeedDataMigrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(greaterThanOrEqualTo(6)))
                 .andExpect(jsonPath("$[*].topic").value(hasItem("History")))
-                .andExpect(jsonPath("$[?(@.topic=='History')].count").value(hasItem(10)));
+                .andExpect(jsonPath("$[?(@.topic=='History')].count").value(hasItem(60)));
     }
 
     @Test
@@ -46,5 +50,28 @@ class SeedDataMigrationTest {
                 .andExpect(jsonPath("$.language").value("en"))
                 .andExpect(jsonPath("$.source").value("flyway-seed-core"))
                 .andExpect(jsonPath("$.options.length()").value(10));
+    }
+
+    @Test
+    void seededFallbackDeckAvoidsImmediateTopicAndCategoryRepeats() throws Exception {
+        MvcResult first = mockMvc.perform(get("/api/cards/nextRandom")
+                        .param("language", "en")
+                        .param("gameId", "seed-fallback-global"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        MvcResult second = mockMvc.perform(get("/api/cards/nextRandom")
+                        .param("language", "en")
+                        .param("gameId", "seed-fallback-global"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String firstTopic = JsonPath.read(first.getResponse().getContentAsString(), "$.topic");
+        String secondTopic = JsonPath.read(second.getResponse().getContentAsString(), "$.topic");
+        String firstCategory = JsonPath.read(first.getResponse().getContentAsString(), "$.category");
+        String secondCategory = JsonPath.read(second.getResponse().getContentAsString(), "$.category");
+
+        assertThat(secondTopic).isNotEqualTo(firstTopic);
+        assertThat(secondCategory).isNotEqualTo(firstCategory);
     }
 }

@@ -1,4 +1,4 @@
--- Seed minimal Smart10-aligned fallback cards for environments without JSON import.
+-- Seed Smart10-aligned fallback cards for environments without JSON import.
 -- This migration is idempotent and safe to re-run.
 
 insert into cards (id, topic, subtopic, category, language, question, correct_index, correct_flags, correct_meta, difficulty, source, created_at)
@@ -15,20 +15,45 @@ topics(topic) as (
     union all select 'Science'
     union all select 'Varia'
 ),
+categories(category, slug) as (
+    select 'OPEN', 'open'
+    union all select 'TRUE_FALSE', 'true-false'
+    union all select 'NUMBER', 'number'
+    union all select 'ORDER', 'order'
+    union all select 'COLOR', 'color'
+    union all select 'CENTURY_DECADE', 'century-decade'
+),
 cards_seed(id, topic, category, language, question, correct_index, correct_flags, correct_meta, difficulty, source, created_at) as (
     select
-        lower(topic) || '-open-seed-en-' || lpad(cast(n as varchar), 2, '0') as id,
+        lower(topic) || '-' || slug || '-seed-en-' || lpad(cast(n as varchar), 2, '0') as id,
         topic,
-        'OPEN' as category,
+        category,
         'en' as language,
-        topic || ' seed question #' || cast(n as varchar) || ': choose the matching code.' as question,
-        mod(n - 1, 10) as correct_index,
-        cast(null as varchar) as correct_flags,
-        '{"correctIndex":' || cast(mod(n - 1, 10) as varchar) || '}' as correct_meta,
+        topic || ' ' || replace(slug, '-', ' ') || ' seed question #' || cast(n as varchar) || ': choose the matching code.' as question,
+        case
+            when category in ('OPEN', 'NUMBER', 'COLOR', 'CENTURY_DECADE') then mod(n - 1, 10)
+            else cast(null as integer)
+        end as correct_index,
+        case
+            when category = 'TRUE_FALSE' then
+                case mod(n - 1, 5)
+                    when 0 then 'true,false,false,false,false,false,false,false,false,false'
+                    when 1 then 'false,true,false,false,false,false,false,false,false,false'
+                    when 2 then 'false,false,true,false,false,false,false,false,false,false'
+                    when 3 then 'false,false,false,true,false,false,false,false,false,false'
+                    else 'false,false,false,false,true,false,false,false,false,false'
+                end
+            else cast(null as varchar)
+        end as correct_flags,
+        case
+            when category = 'ORDER' then '{"rankByIndex":[0,1,2,3,4,5,6,7,8,9]}'
+            else cast(null as varchar)
+        end as correct_meta,
         '1' as difficulty,
         'flyway-seed-core' as source,
         current_timestamp as created_at
     from topics
+    cross join categories
     cross join seq
 )
 select
@@ -68,18 +93,29 @@ topics(topic) as (
     union all select 'Science'
     union all select 'Varia'
 ),
-cards_seed(id, topic, n) as (
+categories(category, slug) as (
+    select 'OPEN', 'open'
+    union all select 'TRUE_FALSE', 'true-false'
+    union all select 'NUMBER', 'number'
+    union all select 'ORDER', 'order'
+    union all select 'COLOR', 'color'
+    union all select 'CENTURY_DECADE', 'century-decade'
+),
+cards_seed(id, topic, category, n) as (
     select
-        lower(topic) || '-open-seed-en-' || lpad(cast(n as varchar), 2, '0') as id,
+        lower(topic) || '-' || slug || '-seed-en-' || lpad(cast(n as varchar), 2, '0') as id,
         topic,
+        category,
         n
     from topics
+    cross join categories
     cross join seq
 )
 select
     cs.id as card_id,
     opt.i as option_index,
     case
+        when cs.category = 'ORDER' then 'Rank slot ' || cast(opt.i + 1 as varchar)
         when opt.i = mod(cs.n - 1, 10) then 'Correct code ' || cast(opt.i + 1 as varchar)
         else 'Distractor ' || cast(opt.i + 1 as varchar)
     end as option_text

@@ -70,6 +70,15 @@ Observed result:
 3. a new regression test protects against leaking `et`-disabled or deprecated-only topics into the public topic list,
 4. a new seeded-fallback regression test protects public `nextRandom` serving for flyway-seeded environments.
 
+### Fallback runtime deck is now richer and validates like a real public deck
+
+Observed result:
+
+1. flyway-seeded fallback data now spans all SmartIQ runtime categories instead of only `OPEN`,
+2. local runtime deck verification is back on the canonical topicless path, so it validates real deck rotation instead of a forced single-topic probe,
+3. seeded fallback regression now covers immediate topic/category avoidance across sequential `nextRandom` draws for the same game,
+4. this reduces the last known `M7` technical blocker to deploy propagation rather than repo logic.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -82,11 +91,13 @@ The following checks executed successfully after this progress slice:
 6. `npm --prefix frontend run lint`
 7. `npm --prefix frontend run test -- --run src/admin/api.test.js src/admin/AdminConsole.test.jsx src/api.test.js src/App.startup.test.jsx`
 8. `mvn -q -f backend/pom.xml "-Dtest=CardControllerTest,CardControllerTopicCountsLanguageFilterTest,SeedDataMigrationTest,SecurityConfigTest" test`
+9. `mvn -q -f backend/pom.xml "-Dtest=SeedDataMigrationTest,CardDeckResponseContractTest,CardControllerTest" test`
+10. `node tools/verify_runtime_deck_gate.js`
 
 ## Honest Status
 
 1. `M7` public conversion surface is now in progress and product-real,
 2. `M6` remains deferred as an external proof dependency because real pilot usage is still missing,
 3. `M7` now has a recurring-host KPI snapshot path, incident runbook, frontend release-readiness fixes, and hardened smoke/runtime-deck tooling,
-4. the current live blocker is specific and honest: the deployed backend at `https://smartiq-63tk.onrender.com` still needs the new public-topic/fallback-source code before launch smoke can pass against production,
+4. the current live blocker is specific and honest: the deployed backend at `https://smartiq-63tk.onrender.com` still needs the richer fallback-deck deploy before the full launch gate can be re-run against production,
 5. `M7` is therefore not promotable done yet because live production monitoring validation, launch-scope smoke proof, and final blocker review still need a post-deploy evidence slice.
