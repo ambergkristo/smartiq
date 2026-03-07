@@ -150,7 +150,8 @@ Priority order:
 20. The latest `M9` slice also persists host launch-roster moderation locally per room code, reducing repeat-host friction when saved rooms are resumed after a reload.
 21. The latest `M9` slice also adds persistent follow-up notes inside reviewed session detail, making the post-session workspace slightly more operational instead of only replay-oriented.
 22. The latest `M9` slice also surfaces saved follow-up notes directly in recent-session history rows, increasing the operational value of host history without reopening session detail.
-23. The locked next-sequence is:
+23. The latest `M9` slice also adds a dedicated `Needs follow-up` filter, turning local follow-up notes into a lightweight actionable queue inside host history.
+24. The locked next-sequence is:
    - product stabilization,
    - auth/trust hardening,
    - billing/payment hardening,

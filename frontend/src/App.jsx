@@ -209,6 +209,7 @@ const STRINGS = {
   recentHostedSessionFilterAll: 'All',
   recentHostedSessionFilterLive: 'Live',
   recentHostedSessionFilterCompleted: 'Completed',
+  recentHostedSessionFilterNotes: 'Needs follow-up',
   recentHostedSessionTopicFallback: 'Any topic',
   recentHostedSessionApplySubmit: 'Duplicate setup',
   recentHostedSessionReviewSubmit: 'Review session',
@@ -799,11 +800,15 @@ function StartScreen({
   const recentHostedSessions = deriveRecentHostedSessions(workspaceInsights?.auditEvents);
   const hostWorkspaceAnalytics = buildHostWorkspaceAnalytics(recentHostedSessions, sessionTemplates.length);
   const visibleHostedSessions = recentHostedSessions.filter((entry) => {
+    const hasSavedNote = Boolean(loadSessionReviewNote(entry.gameId));
     if (hostedSessionFilter === 'completed') {
       return entry.status === 'completed';
     }
     if (hostedSessionFilter === 'live') {
       return entry.status !== 'completed';
+    }
+    if (hostedSessionFilter === 'notes') {
+      return hasSavedNote;
     }
     return true;
   });
@@ -1095,7 +1100,8 @@ function StartScreen({
                 {[
                   { value: 'all', label: STRINGS.recentHostedSessionFilterAll },
                   { value: 'live', label: STRINGS.recentHostedSessionFilterLive },
-                  { value: 'completed', label: STRINGS.recentHostedSessionFilterCompleted }
+                  { value: 'completed', label: STRINGS.recentHostedSessionFilterCompleted },
+                  { value: 'notes', label: STRINGS.recentHostedSessionFilterNotes }
                 ].map((entry) => (
                   <button
                     key={entry.value}

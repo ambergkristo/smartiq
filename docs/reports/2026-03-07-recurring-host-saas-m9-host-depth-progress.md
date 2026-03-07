@@ -89,6 +89,14 @@ Observed result:
 2. the note preview is visible directly on the history row, so the host can spot follow-up context without reopening session detail,
 3. this makes host history more operationally useful as a working queue rather than only a chronological record.
 
+### History now supports a dedicated `Needs follow-up` queue filter
+
+Observed result:
+
+1. recent hosted sessions now include a `Needs follow-up` filter beside `All`, `Live`, and `Completed`,
+2. the filter only shows sessions that already have a saved follow-up note,
+3. this turns local follow-up notes into a lightweight actionable queue instead of passive metadata.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -102,6 +110,8 @@ The following checks executed successfully after this progress slice:
 7. `npm --prefix frontend run test -- --run src/App.startup.test.jsx src/App.tenant-runtime.test.jsx`
 8. `npm --prefix frontend run test -- --run src/App.tenant-runtime.test.jsx src/App.startup.test.jsx`
 9. `npm --prefix frontend run build`
+10. `npm --prefix frontend run lint`
+11. `npm --prefix frontend run test -- --run src/App.tenant-runtime.test.jsx src/App.startup.test.jsx`
 
 ## Honest Status
 
@@ -117,3 +127,4 @@ The following checks executed successfully after this progress slice:
 7. host-side lobby moderation is now less fragile across reloads, but true multi-device moderation and server-backed lobby control still remain open.
 8. follow-up notes now exist, but they are still browser-local rather than tenant-synced operational data.
 9. follow-up context is now visible in history rows, but there is still no shared or server-backed post-session ops layer.
+10. the new follow-up queue is useful locally, but it is still not a shared ops inbox across hosts or devices.

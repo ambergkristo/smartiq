@@ -927,6 +927,94 @@ describe('App tenant runtime integration', () => {
     expect(screen.getAllByText(/^completed$/i).length).toBeGreaterThan(0);
   });
 
+  test('filters recent hosted sessions by saved follow-up notes', async () => {
+    localStorage.setItem('smartiq.sessionReviewNote.game-complete', 'Bring a faster tie-breaker next time.');
+    fetchTopics.mockResolvedValue([
+      { topic: 'Science', count: 12 },
+      { topic: 'History', count: 10 }
+    ]);
+    hasRuntimeAuthContext.mockReturnValue(true);
+    fetchTenantRuntimeSnapshot.mockResolvedValue({
+      me: {
+        email: 'owner@northwind.test',
+        selectedTenantId: 'tenant-northwind'
+      },
+      settings: {
+        settings: {
+          schemaVersion: 1,
+          theme: 'ocean'
+        }
+      },
+      branding: {
+        branding: {
+          appName: 'Northwind Quiz',
+          primaryColor: '#223344',
+          secondaryColor: '#556677'
+        }
+      },
+      subscription: {
+        planCode: 'pro-host',
+        status: 'active',
+        billingCycle: 'monthly'
+      },
+      capabilities: {
+        planTier: 'pro_host',
+        maxHostedPlayers: 10,
+        analyticsHistoryEnabled: true
+      }
+    });
+    fetchTenantAuditEvents.mockResolvedValue([
+      {
+        auditEventId: 'evt-18',
+        action: 'HOST_GAME_SESSION_CREATED',
+        entityId: 'game-live',
+        metadata: {
+          gameId: 'game-live',
+          topic: 'Live Science',
+          language: 'en',
+          playerCount: 2
+        },
+        eventTime: '2026-03-06T10:00:00Z'
+      },
+      {
+        auditEventId: 'evt-19',
+        action: 'HOST_GAME_SESSION_CREATED',
+        entityId: 'game-complete',
+        metadata: {
+          gameId: 'game-complete',
+          topic: 'Final History',
+          language: 'et',
+          playerCount: 3
+        },
+        eventTime: '2026-03-06T09:00:00Z'
+      },
+      {
+        auditEventId: 'evt-20',
+        action: 'HOST_GAME_SESSION_COMPLETED',
+        entityId: 'game-complete',
+        metadata: {
+          gameId: 'game-complete',
+          topic: 'Final History',
+          winnerDisplayName: 'Alice',
+          winnerScore: 7
+        },
+        eventTime: '2026-03-06T11:00:00Z'
+      }
+    ]);
+
+    render(<App />);
+
+    await waitFor(() => expect(fetchTenantAuditEvents).toHaveBeenCalled());
+    expect(screen.getByText(/live science/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/final history/i).length).toBeGreaterThan(0);
+
+    fireEvent.click(screen.getByRole('button', { name: /needs follow-up/i }));
+
+    expect(screen.queryByText(/live science/i)).not.toBeInTheDocument();
+    expect(screen.getAllByText(/final history/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/bring a faster tie-breaker next time/i)).toBeInTheDocument();
+  });
+
   test('shows host momentum analytics from recent hosted sessions and templates', async () => {
     fetchTopics.mockResolvedValue([
       { topic: 'Science', count: 12 },
