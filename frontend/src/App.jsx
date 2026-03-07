@@ -30,9 +30,18 @@ import {
 } from './api';
 import AdminConsole from './admin/AdminConsole';
 import GameBoard from './components/GameBoard';
+import GameRoom from './components/GameRoom';
+import HostDashboard from './components/HostDashboard';
+import PlayerJoin from './components/PlayerJoin';
 import RoundSummary from './components/RoundSummary';
 import { useAudioFeedback } from './audio/useAudioFeedback';
 import { MAX_PLAYERS_PER_ROOM } from './constants/runtime';
+import {
+  getRoomPlayerNames,
+  getSelectedRoomPlayerNames,
+  normalizePlayerName,
+  normalizeRoomCodeInput
+} from './roomRuntime';
 import { useServerGameEngine } from './state/useServerGameEngine';
 import { DEFAULT_LANGS, GamePhase } from './state/types';
 
@@ -276,10 +285,6 @@ const THEME_OPTIONS = [
   { value: 'ocean', label: 'Ocean' }
 ];
 
-function normalizePlayerName(name) {
-  return name.replace(/\s+/g, ' ').trim();
-}
-
 function isTestMode() {
   return String(import.meta.env.MODE || '').toLowerCase() === 'test';
 }
@@ -332,27 +337,6 @@ function resolveHostedRuntimeBlockMessage(subscription) {
     return STRINGS.hostedRuntimeCanceled;
   }
   return '';
-}
-
-function getRoomPlayerNames(roomSession) {
-  const players = Array.isArray(roomSession?.roomState?.players) ? roomSession.roomState.players : [];
-  return Array.from(new Set(players
-    .map((player) => normalizePlayerName(player?.displayName || player?.playerId || ''))
-    .filter(Boolean)));
-}
-
-function getSelectedRoomPlayerNames(roomSession, selectedPlayerNames) {
-  const availablePlayers = getRoomPlayerNames(roomSession);
-  if (!Array.isArray(selectedPlayerNames) || selectedPlayerNames.length === 0) {
-    return availablePlayers;
-  }
-  const selectedSet = new Set(
-    selectedPlayerNames
-      .map((entry) => normalizePlayerName(String(entry || '')))
-      .filter(Boolean)
-  );
-  const selectedPlayers = availablePlayers.filter((entry) => selectedSet.has(entry));
-  return selectedPlayers.length > 0 ? selectedPlayers : availablePlayers;
 }
 
 function deriveRecentHostedSessions(auditEvents) {
@@ -626,19 +610,6 @@ function resolveBillingReturnState() {
   return null;
 }
 
-function buildPlayerJoinUrl(roomCode) {
-  const normalizedRoomCode = normalizeRoomCodeInput(roomCode);
-  if (!normalizedRoomCode) {
-    return '';
-  }
-  if (typeof window === 'undefined') {
-    return `#/join/${normalizedRoomCode}`;
-  }
-  const url = new URL(window.location.href);
-  url.hash = `/join/${normalizedRoomCode}`;
-  return url.toString();
-}
-
 function SetupSkeleton({ appTitle }) {
   return (
     <section className="setup-panel board-surface" data-testid="setup-skeleton">
@@ -905,435 +876,67 @@ function StartScreen({
         <p className="field-hint runtime-warning" data-testid="tenant-runtime-warning">{runtimeWarning}</p>
       ) : null}
       {tenantId ? (
-        <section className="host-workspace board-surface" data-testid="host-workspace-panel">
-          <div className="host-workspace-header">
-            <div>
-              <h2>{STRINGS.hostWorkspaceTitle}</h2>
-              <p>{STRINGS.hostWorkspaceHint}</p>
-            </div>
-            <div className="host-plan-chip">
-              <span>{planCode || 'trial'}</span>
-              <strong>{formatSubscriptionStatus(planStatus)}</strong>
-            </div>
-          </div>
-          {workspacePending ? <p className="field-hint">{STRINGS.hostWorkspaceLoading}</p> : null}
-          {hostLaunchBlocked ? (
-            <p className="error" data-testid="host-launch-blocked">{hostLaunchMessage || STRINGS.hostedRuntimeBlocked}</p>
-          ) : null}
-          {workspaceError ? (
-            <p className="error" data-testid="workspace-error">{workspaceError}</p>
-          ) : null}
-          {workspaceMessage ? (
-            <p className="field-hint" data-testid="workspace-message">{workspaceMessage}</p>
-          ) : null}
-          <div className="host-workspace-grid">
-            <section className="host-workspace-card">
-              <h3>Plan</h3>
-              <p className="field-hint">Billing cycle: {runtimeSnapshot?.subscription?.billingCycle || 'not set'}</p>
-              <p className="field-hint">{STRINGS.hostedPlayerCapPrefix} {maxHostedPlayers == null ? 'not mapped yet' : maxHostedPlayers}</p>
-              <p className="field-hint">Usage cap: {planLimit == null ? 'unbounded / not mapped yet' : `${planLimit} tracked events / period`}</p>
-              <p className="field-hint">
-                Round usage: {!analyticsHistoryEnabled ? STRINGS.hostWorkspaceAnalyticsLocked : usageRow ? `${usageRow.totalValue} across ${usageRow.eventCount} events` : STRINGS.hostWorkspaceNoUsage}
-              </p>
-            </section>
-            <section className="host-workspace-card" data-testid="host-workspace-analytics-card">
-              <h3>{STRINGS.hostWorkspaceAnalyticsTitle}</h3>
-              <p className="field-hint">
-                {!analyticsHistoryEnabled ? STRINGS.hostWorkspaceAnalyticsLocked : STRINGS.hostWorkspaceAnalyticsHint}
-              </p>
-              {!analyticsHistoryEnabled ? (
-                <p className="field-hint">{STRINGS.hostWorkspaceAnalyticsLocked}</p>
-              ) : (
-                <>
-                  <div className="host-analytics-metric-grid">
-                    <article className="host-analytics-metric">
-                      <span>{STRINGS.hostWorkspaceAnalyticsRecentRuns}</span>
-                      <strong>{hostWorkspaceAnalytics.totalSessions}</strong>
-                    </article>
-                    <article className="host-analytics-metric">
-                      <span>{STRINGS.hostWorkspaceAnalyticsCompletedRuns}</span>
-                      <strong>{hostWorkspaceAnalytics.completedSessions}</strong>
-                    </article>
-                    <article className="host-analytics-metric">
-                      <span>{STRINGS.hostWorkspaceAnalyticsAverageRoster}</span>
-                      <strong>{hostWorkspaceAnalytics.averagePlayers == null ? 'n/a' : hostWorkspaceAnalytics.averagePlayers}</strong>
-                    </article>
-                    <article className="host-analytics-metric">
-                      <span>{STRINGS.hostWorkspaceAnalyticsSavedTemplates}</span>
-                      <strong>{hostWorkspaceAnalytics.templateCount}</strong>
-                    </article>
-                    <article className="host-analytics-metric">
-                      <span>{STRINGS.hostWorkspaceAnalyticsFollowUpQueue}</span>
-                      <strong>{hostWorkspaceAnalytics.followUpSessions}</strong>
-                    </article>
-                  </div>
-                  <div className="host-analytics-summary-list">
-                    <p className="field-hint">{STRINGS.hostWorkspaceAnalyticsLiveRuns}: {hostWorkspaceAnalytics.liveSessions}</p>
-                    <p className="field-hint">{STRINGS.hostWorkspaceAnalyticsTopTopic}: {hostWorkspaceAnalytics.topTopic}</p>
-                    <p className="field-hint">{STRINGS.hostWorkspaceAnalyticsLatestWinner}: {hostWorkspaceAnalytics.latestWinner}</p>
-                  </div>
-                </>
-              )}
-            </section>
-            <section className="host-workspace-card" data-testid="branding-editor-card">
-              <h3>{STRINGS.brandingEditorTitle}</h3>
-              <p className="field-hint">
-                {customBrandingEnabled ? STRINGS.brandingEditorHint : STRINGS.brandingLockedHint}
-              </p>
-              <div className="branding-preview">
-                <strong>{brandingDraft.appName || appTitle}</strong>
-                <div className="branding-swatch-row" aria-hidden>
-                  <span className="branding-swatch" style={{ backgroundColor: brandingDraft.primaryColor }} />
-                  <span className="branding-swatch" style={{ backgroundColor: brandingDraft.secondaryColor }} />
-                </div>
-              </div>
-              {!customBrandingEnabled ? (
-                <div className="branding-locked-state" data-testid="branding-locked">
-                  <p className="field-hint">{STRINGS.brandingLockedHint}</p>
-                  {canUpgrade ? (
-                    <button type="button" className="secondary-action" onClick={onUpgrade} disabled={upgradePending}>
-                      {upgradePending ? STRINGS.upgradeSubmitting : STRINGS.upgradeSubmit}
-                    </button>
-                  ) : null}
-                </div>
-              ) : !canManageBrandingRole ? (
-                <p className="field-hint" data-testid="branding-role-hint">{STRINGS.brandingRoleHint}</p>
-              ) : (
-                <>
-                  <div className="branding-form-grid">
-                    <label htmlFor="branding-app-name">{STRINGS.brandingAppNameLabel}</label>
-                    <input
-                      id="branding-app-name"
-                      type="text"
-                      value={brandingDraft.appName}
-                      onChange={(event) => onBrandingDraftChange('appName', event.target.value)}
-                      disabled={brandingPending}
-                    />
-                    <label htmlFor="branding-logo-url">{STRINGS.brandingLogoUrlLabel}</label>
-                    <input
-                      id="branding-logo-url"
-                      type="text"
-                      value={brandingDraft.logoUrl}
-                      onChange={(event) => onBrandingDraftChange('logoUrl', event.target.value)}
-                      disabled={brandingPending}
-                    />
-                    <label htmlFor="branding-primary-color">{STRINGS.brandingPrimaryColorLabel}</label>
-                    <input
-                      id="branding-primary-color"
-                      type="text"
-                      value={brandingDraft.primaryColor}
-                      onChange={(event) => onBrandingDraftChange('primaryColor', event.target.value)}
-                      disabled={brandingPending}
-                    />
-                    <label htmlFor="branding-secondary-color">{STRINGS.brandingSecondaryColorLabel}</label>
-                    <input
-                      id="branding-secondary-color"
-                      type="text"
-                      value={brandingDraft.secondaryColor}
-                      onChange={(event) => onBrandingDraftChange('secondaryColor', event.target.value)}
-                      disabled={brandingPending}
-                    />
-                  </div>
-                  <div className="host-session-actions">
-                    <button type="button" onClick={onSaveBranding} disabled={brandingPending}>
-                      {brandingPending ? STRINGS.brandingSaving : STRINGS.brandingSaveSubmit}
-                    </button>
-                  </div>
-                </>
-              )}
-              {brandingMessage ? <p className="field-hint" data-testid="branding-message">{brandingMessage}</p> : null}
-              {brandingError ? <p className="error" data-testid="branding-error">{brandingError}</p> : null}
-            </section>
-            <section className="host-workspace-card" data-testid="session-templates-card">
-              <h3>{STRINGS.sessionTemplatesTitle}</h3>
-              <p className="field-hint">
-                {sessionTemplatesEnabled ? STRINGS.sessionTemplatesHint : STRINGS.sessionTemplatesLockedHint}
-              </p>
-              {!sessionTemplatesEnabled ? (
-                <div className="branding-locked-state" data-testid="session-templates-locked">
-                  <p className="field-hint">{STRINGS.sessionTemplatesLockedHint}</p>
-                  {canUpgrade ? (
-                    <button type="button" className="secondary-action" onClick={onUpgrade} disabled={upgradePending}>
-                      {upgradePending ? STRINGS.upgradeSubmitting : STRINGS.upgradeSubmit}
-                    </button>
-                  ) : null}
-                </div>
-              ) : (
-                <>
-                  <div className="branding-form-grid">
-                    <label htmlFor="session-template-name">{STRINGS.sessionTemplatesNameLabel}</label>
-                    <input
-                      id="session-template-name"
-                      type="text"
-                      placeholder={STRINGS.sessionTemplatesNamePlaceholder}
-                      value={sessionTemplateDraft.name}
-                      onChange={(event) => onSessionTemplateDraftChange(event.target.value)}
-                      disabled={sessionTemplatePending}
-                    />
-                  </div>
-                  <div className="host-session-actions">
-                    <button
-                      type="button"
-                      onClick={handleSaveTemplateClick}
-                      disabled={sessionTemplatePending || !sessionTemplateDraft.name.trim() || (players.length === 0 && draftPlayers.length === 0)}
-                    >
-                      {sessionTemplatePending ? STRINGS.sessionTemplatesSaving : STRINGS.sessionTemplatesSaveSubmit}
-                    </button>
-                  </div>
-                  {sessionTemplates.length > 0 ? (
-                    <ul className="host-activity-list session-template-list">
-                      {sessionTemplates.map((template) => (
-                        <li key={template.templateId}>
-                          <strong>{template.name}</strong>
-                          <span>
-                            {(template.topic || STRINGS.recentHostedSessionTopicFallback)}
-                            {template.language ? ` | ${template.language.toUpperCase()}` : ''}
-                            {template.theme ? ` | ${template.theme}` : ''}
-                            {template.players.length > 0 ? ` | ${template.players.length} ${STRINGS.recentHostedSessionPlayers}` : ''}
-                          </span>
-                          <span className="session-template-players">{template.players.join(', ')}</span>
-                          <div className="host-session-actions">
-                            <button type="button" onClick={() => onApplySessionTemplate(template)}>
-                              {STRINGS.sessionTemplatesApplySubmit}
-                            </button>
-                            <button
-                              type="button"
-                              className="secondary-action"
-                              onClick={() => onDeleteSessionTemplate(template)}
-                              disabled={sessionTemplatePending}
-                            >
-                              {STRINGS.sessionTemplatesDeleteSubmit}
-                            </button>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="field-hint">{STRINGS.sessionTemplatesEmpty}</p>
-                  )}
-                </>
-              )}
-              {sessionTemplateMessage ? <p className="field-hint" data-testid="session-template-message">{sessionTemplateMessage}</p> : null}
-              {sessionTemplateError ? <p className="error" data-testid="session-template-error">{sessionTemplateError}</p> : null}
-            </section>
-            <section className="host-workspace-card">
-              <h3>Recent activity</h3>
-              {!analyticsHistoryEnabled ? (
-                <p className="field-hint">{STRINGS.hostWorkspaceAnalyticsLocked}</p>
-              ) : Array.isArray(workspaceInsights?.auditEvents) && workspaceInsights.auditEvents.length > 0 ? (
-                <ul className="host-activity-list">
-                  {workspaceInsights.auditEvents.slice(0, 5).map((entry) => (
-                    <li key={entry.auditEventId || `${entry.action}-${entry.eventTime}`}>
-                      <strong>{formatAuditAction(entry.action)}</strong>
-                      <span>{entry.entityId || entry.metadata?.roomCode || entry.metadata?.gameId || 'tenant'}</span>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                !workspacePending ? <p className="field-hint">{STRINGS.hostWorkspaceNoActivity}</p> : null
-              )}
-            </section>
-            <section className="host-workspace-card">
-              <h3>{STRINGS.recentHostedSessionsTitle}</h3>
-              <div className="host-session-filter-row" role="tablist" aria-label="Hosted session filter">
-                {[
-                  { value: 'all', label: STRINGS.recentHostedSessionFilterAll },
-                  { value: 'live', label: STRINGS.recentHostedSessionFilterLive },
-                  { value: 'completed', label: STRINGS.recentHostedSessionFilterCompleted },
-                  { value: 'notes', label: STRINGS.recentHostedSessionFilterNotes }
-                ].map((entry) => (
-                  <button
-                    key={entry.value}
-                    type="button"
-                    className={`session-filter-chip${hostedSessionFilter === entry.value ? ' selected' : ''}`}
-                    aria-pressed={hostedSessionFilter === entry.value}
-                    onClick={() => onHostedSessionFilterChange(entry.value)}
-                  >
-                    {entry.label}
-                  </button>
-                ))}
-              </div>
-              {!analyticsHistoryEnabled ? (
-                <p className="field-hint">{STRINGS.hostWorkspaceAnalyticsLocked}</p>
-              ) : visibleHostedSessions.length > 0 ? (
-                <ul className="host-activity-list">
-                  {visibleHostedSessions.map((entry) => (
-                    <li
-                      key={entry.gameId}
-                      className={activeHostedSession?.gameId === entry.gameId ? 'selected' : ''}
-                    >
-                      {(() => {
-                        const savedNote = resolveSessionReviewNote(sessionReviewNotes, entry.gameId);
-                        const notePreview = formatSessionReviewNotePreview(savedNote);
-                        return (
-                          <>
-                      <strong>
-                        {entry.topic || STRINGS.recentHostedSessionTopicFallback}
-                        <span className={`session-status-badge${entry.status === 'completed' ? ' is-completed' : ''}`}>
-                          {entry.status === 'completed'
-                            ? STRINGS.recentHostedSessionStatusCompletedBadge
-                            : STRINGS.recentHostedSessionStatusLiveBadge}
-                        </span>
-                        {notePreview ? (
-                          <span className="session-status-badge session-status-badge--note">
-                            {STRINGS.recentHostedSessionNoteBadge}
-                          </span>
-                        ) : null}
-                      </strong>
-                      <span>
-                        {entry.gameId}
-                        {entry.language ? ` | ${entry.language.toUpperCase()}` : ''}
-                        {entry.playerCount != null ? ` | ${entry.playerCount} ${STRINGS.recentHostedSessionPlayers}` : ''}
-                        {entry.winnerDisplayName ? ` | winner ${entry.winnerDisplayName}` : ''}
-                      </span>
-                      {notePreview ? <p className="field-hint recent-session-note-preview">{notePreview}</p> : null}
-                      {typeof onUseRecentHostedSession === 'function' ? (
-                        <div className="host-session-actions">
-                          <button type="button" onClick={() => onUseRecentHostedSession(entry)}>
-                            {STRINGS.recentHostedSessionApplySubmit}
-                          </button>
-                          <button
-                            type="button"
-                            className="secondary-action"
-                            onClick={() => onReviewRecentHostedSession(entry)}
-                            disabled={!entry.gameId}
-                          >
-                            {STRINGS.recentHostedSessionReviewSubmit}
-                          </button>
-                          <button
-                            type="button"
-                            className="secondary-action"
-                            onClick={() => onResumeRecentHostedSession(entry)}
-                            disabled={!entry.gameId || hostLaunchBlocked}
-                          >
-                            {STRINGS.recentHostedSessionResumeSubmit}
-                          </button>
-                          <button
-                            type="button"
-                            className="secondary-action"
-                            onClick={() => onLaunchRecentHostedSession(entry)}
-                            disabled={!canLaunchRecentHostedSessions(entry)}
-                          >
-                            {STRINGS.recentHostedSessionLaunchSubmit}
-                          </button>
-                        </div>
-                      ) : null}
-                          </>
-                        );
-                      })()}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                !workspacePending ? <p className="field-hint">{STRINGS.recentHostedSessionsEmpty}</p> : null
-              )}
-            </section>
-            <section className="host-workspace-card recent-hosted-session-review" data-testid="recent-hosted-session-review">
-              <h3>{STRINGS.recentHostedSessionReviewTitle}</h3>
-              {reviewedHostedSession ? (
-                <>
-                  <strong>{reviewedHostedSession.topic || STRINGS.recentHostedSessionTopicFallback}</strong>
-                  <p className="field-hint">
-                    {reviewedHostedSession.gameId}
-                    {reviewedHostedSession.language ? ` | ${reviewedHostedSession.language.toUpperCase()}` : ''}
-                    {` | round ${reviewedHostedSession.roundNumber}`}
-                    {` | ${reviewedHostedSession.phase}`}
-                  </p>
-                  <p className="recent-session-question">
-                    {reviewedHostedSession.question || STRINGS.recentHostedSessionReviewQuestionFallback}
-                  </p>
-                  <p className="field-hint">
-                    Last action: {reviewedHostedSession.lastAction || STRINGS.recentHostedSessionReviewLastActionFallback}
-                  </p>
-                  <div className="recent-session-meta-grid">
-                    <p className="field-hint">
-                      {STRINGS.recentHostedSessionStatusPrefix} {reviewedHostedSession.isCompleted ? STRINGS.recentHostedSessionStatusCompleted : STRINGS.recentHostedSessionStatusLive}
-                    </p>
-                    <p className="field-hint">
-                      {STRINGS.recentHostedSessionLeaderPrefix} {reviewedHostedSession.leaderDisplayName || 'n/a'}{reviewedHostedSession.leaderDisplayName ? ` (${reviewedHostedSession.leaderScore} pts)` : ''}
-                    </p>
-                  </div>
-                  {activeHostedSession ? (
-                    <div className="host-session-actions host-session-actions--detail">
-                      <button type="button" onClick={() => onUseRecentHostedSession(activeHostedSession)}>
-                        {STRINGS.recentHostedSessionApplySubmit}
-                      </button>
-                      <button
-                        type="button"
-                        className="secondary-action"
-                        onClick={() => onReviewRecentHostedSession(activeHostedSession)}
-                      >
-                        {STRINGS.recentHostedSessionRefreshSubmit}
-                      </button>
-                      <button
-                        type="button"
-                        className="secondary-action"
-                        onClick={() => onResumeRecentHostedSession(activeHostedSession)}
-                        disabled={hostLaunchBlocked}
-                      >
-                        {STRINGS.recentHostedSessionResumeSubmit}
-                      </button>
-                      <button
-                        type="button"
-                        className="secondary-action"
-                        onClick={() => onLaunchRecentHostedSession(activeHostedSession)}
-                        disabled={!canLaunchRecentHostedSessions(activeHostedSession)}
-                      >
-                        {STRINGS.recentHostedSessionLaunchSubmit}
-                      </button>
-                      {sessionTemplatesEnabled && typeof onSaveRecentHostedSessionAsTemplate === 'function' ? (
-                        <button
-                          type="button"
-                          className="secondary-action"
-                          onClick={() => onSaveRecentHostedSessionAsTemplate(activeHostedSession)}
-                          disabled={sessionTemplatePending}
-                        >
-                          {STRINGS.sessionTemplatesSaveFromHistorySubmit}
-                        </button>
-                      ) : null}
-                    </div>
-                  ) : null}
-                  <ul className="recent-session-scoreboard">
-                    {reviewedHostedSession.scoreboard.map((entry) => (
-                      <li key={entry.playerId || entry.displayName}>
-                        <strong>{entry.displayName}</strong>
-                        <span>{entry.score} pts</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="recent-session-note-editor">
-                    <label htmlFor="recent-session-note">{STRINGS.recentHostedSessionNotesTitle}</label>
-                    <textarea
-                      id="recent-session-note"
-                      rows="3"
-                      value={reviewedHostedSessionNote}
-                      onChange={(event) => onReviewedHostedSessionNoteChange(event.target.value)}
-                      placeholder={STRINGS.recentHostedSessionNotesPlaceholder}
-                    />
-                    <div className="host-session-actions host-session-actions--detail">
-                      <button type="button" onClick={onSaveReviewedHostedSessionNote}>
-                        {STRINGS.recentHostedSessionNotesSaveSubmit}
-                      </button>
-                      <button
-                        type="button"
-                        className="secondary-action"
-                        onClick={onClearReviewedHostedSessionNote}
-                        disabled={!reviewedHostedSessionNote.trim()}
-                      >
-                        {STRINGS.recentHostedSessionNotesClearSubmit}
-                      </button>
-                    </div>
-                    {reviewedHostedSessionNoteMessage ? (
-                      <p className="field-hint" data-testid="recent-session-note-message">{reviewedHostedSessionNoteMessage}</p>
-                    ) : null}
-                  </div>
-                </>
-              ) : (
-                <p className="field-hint">{STRINGS.recentHostedSessionReviewEmpty}</p>
-              )}
-            </section>
-          </div>
-        </section>
+        <HostDashboard
+          strings={STRINGS}
+          appTitle={appTitle}
+          planCode={planCode}
+          planStatus={planStatus}
+          billingCycle={runtimeSnapshot?.subscription?.billingCycle}
+          maxHostedPlayers={maxHostedPlayers}
+          planLimit={planLimit}
+          analyticsHistoryEnabled={analyticsHistoryEnabled}
+          usageRow={usageRow}
+          workspacePending={workspacePending}
+          workspaceError={workspaceError}
+          workspaceMessage={workspaceMessage}
+          hostLaunchBlocked={hostLaunchBlocked}
+          hostLaunchMessage={hostLaunchMessage}
+          hostWorkspaceAnalytics={hostWorkspaceAnalytics}
+          customBrandingEnabled={customBrandingEnabled}
+          brandingDraft={brandingDraft}
+          brandingPending={brandingPending}
+          brandingMessage={brandingMessage}
+          brandingError={brandingError}
+          sessionReviewNotes={sessionReviewNotes}
+          sessionTemplatesEnabled={sessionTemplatesEnabled}
+          sessionTemplateDraft={sessionTemplateDraft}
+          sessionTemplatePending={sessionTemplatePending}
+          sessionTemplateMessage={sessionTemplateMessage}
+          sessionTemplateError={sessionTemplateError}
+          sessionTemplates={sessionTemplates}
+          visibleHostedSessions={visibleHostedSessions}
+          auditEvents={workspaceInsights?.auditEvents}
+          activeHostedSession={activeHostedSession}
+          hostedSessionFilter={hostedSessionFilter}
+          reviewedHostedSession={reviewedHostedSession}
+          reviewedHostedSessionNote={reviewedHostedSessionNote}
+          reviewedHostedSessionNoteMessage={reviewedHostedSessionNoteMessage}
+          canUpgrade={canUpgrade}
+          canSaveTemplate={players.length > 0 || draftPlayers.length > 0}
+          upgradePending={upgradePending}
+          canManageBrandingRole={canManageBrandingRole}
+          onUpgrade={onUpgrade}
+          onBrandingDraftChange={onBrandingDraftChange}
+          onSaveBranding={onSaveBranding}
+          onSessionTemplateDraftChange={onSessionTemplateDraftChange}
+          onSaveTemplate={handleSaveTemplateClick}
+          onApplySessionTemplate={onApplySessionTemplate}
+          onDeleteSessionTemplate={onDeleteSessionTemplate}
+          onHostedSessionFilterChange={onHostedSessionFilterChange}
+          onUseRecentHostedSession={onUseRecentHostedSession}
+          onReviewRecentHostedSession={onReviewRecentHostedSession}
+          onResumeRecentHostedSession={onResumeRecentHostedSession}
+          onLaunchRecentHostedSession={onLaunchRecentHostedSession}
+          onSaveRecentHostedSessionAsTemplate={onSaveRecentHostedSessionAsTemplate}
+          onReviewedHostedSessionNoteChange={onReviewedHostedSessionNoteChange}
+          onSaveReviewedHostedSessionNote={onSaveReviewedHostedSessionNote}
+          onClearReviewedHostedSessionNote={onClearReviewedHostedSessionNote}
+          canLaunchRecentHostedSessions={canLaunchRecentHostedSessions}
+          formatSubscriptionStatus={formatSubscriptionStatus}
+          formatAuditAction={formatAuditAction}
+          resolveSessionReviewNote={resolveSessionReviewNote}
+          formatSessionReviewNotePreview={formatSessionReviewNotePreview}
+        />
       ) : null}
       {tenantId && typeof onLogout === 'function' ? (
         <div className="upgrade-row">
@@ -1594,308 +1197,6 @@ function SignInPanel({
   );
 }
 
-function RoomPanel({
-  appTitle,
-  draft,
-  pending,
-  message,
-  error,
-  roomSession,
-  selectedRoomPlayerNames,
-  onDraftChange,
-  onCreateRoom,
-  onJoinRoom,
-  onResumeRoom,
-  onClearRoom,
-  onSelectAllRoomPlayers,
-  onToggleRoomPlayer,
-  onUseRoomPlayers,
-  onStartRoomSession,
-  onRemoveRoomPlayer,
-  onTrimRoomToSelectedPlayers
-}) {
-  const roomPlayers = Array.isArray(roomSession?.roomState?.players) ? roomSession.roomState.players : [];
-  const roomPlayerNames = getRoomPlayerNames(roomSession);
-  const selectedPlayers = getSelectedRoomPlayerNames(roomSession, selectedRoomPlayerNames);
-  const canUseRoomPlayers = roomSession?.role === 'host' && roomPlayerNames.length > 0;
-  const removableSelectedGap = roomPlayers.filter((player) => (
-    roomSession?.playerId !== player.playerId
-      && !selectedPlayers.includes(normalizePlayerName(player.displayName || player.playerId || ''))
-  )).length;
-  const isPlayerLobby = roomSession?.role === 'player';
-  const roomBranding = roomSession?.roomState?.branding && typeof roomSession.roomState.branding === 'object'
-    ? roomSession.roomState.branding
-    : null;
-  const playerLobbyAppTitle = String(roomBranding?.appName || appTitle || STRINGS.title).trim() || STRINGS.title;
-  const playerLobbyStyle = roomBranding?.primaryColor || roomBranding?.secondaryColor
-    ? {
-      '--player-lobby-accent': roomBranding?.primaryColor || undefined,
-      '--player-lobby-accent-2': roomBranding?.secondaryColor || roomBranding?.primaryColor || undefined
-    }
-    : undefined;
-  const playerJoinLink = roomSession?.roomCode ? buildPlayerJoinUrl(roomSession.roomCode) : '';
-
-  return (
-    <section className="setup-panel board-surface room-panel" data-testid="room-panel">
-      <h2>{STRINGS.roomPanelTitle}</h2>
-      <p>{isPlayerLobby ? STRINGS.roomPlayerLobbyHint : STRINGS.roomPanelHint}</p>
-
-      {pending ? <p className="field-hint">{STRINGS.roomPending}</p> : null}
-      {message ? <p className="field-hint" data-testid="room-message">{message}</p> : null}
-      {error ? <p className="error" data-testid="room-error">{error}</p> : null}
-
-      {isPlayerLobby ? (
-        <div className="player-lobby-card" data-testid="player-lobby-panel" style={playerLobbyStyle}>
-          <div className="player-lobby-hero">
-            <p className="player-lobby-brand">{playerLobbyAppTitle}</p>
-            <div>
-              <h3>{STRINGS.roomPlayerLobbyTitle}</h3>
-              <p>{STRINGS.roomPlayerLobbyWaiting}</p>
-            </div>
-            <span className="host-plan-chip room-role-chip">
-              <span>{STRINGS.roomPlayerBadge}</span>
-              <strong>{roomSession.displayName || roomSession.playerId}</strong>
-            </span>
-          </div>
-          <div className="player-lobby-meta">
-            <strong>{roomSession.roomCode}</strong>
-            <span>{STRINGS.roomSavedHint}</span>
-          </div>
-          <div className="room-actions">
-            <button type="button" onClick={onResumeRoom} disabled={pending}>
-              {STRINGS.roomResumeSubmit}
-            </button>
-            <button type="button" className="secondary-action" onClick={onClearRoom} disabled={pending}>
-              {STRINGS.roomClearSubmit}
-            </button>
-          </div>
-          <div className="room-player-list">
-            <h3>{STRINGS.roomPlayerLobbyRosterTitle}</h3>
-            {roomPlayers.length > 0 ? (
-              <ul>
-                {roomPlayers.map((player) => (
-                  <li key={player.playerId || player.displayName}>
-                    <strong>{player.displayName || player.playerId}</strong>
-                    <span>{player.playerId}</span>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="field-hint">{STRINGS.roomNoPlayers}</p>
-            )}
-          </div>
-          <p className="field-hint">{STRINGS.roomPlayerLobbySwitchHint}</p>
-        </div>
-      ) : (
-        <>
-          <label htmlFor="room-display-name">{STRINGS.roomDisplayNameLabel}</label>
-          <input
-            id="room-display-name"
-            type="text"
-            value={draft.displayName}
-            onChange={(event) => onDraftChange((prev) => ({ ...prev, displayName: event.target.value }))}
-            placeholder={STRINGS.roomDisplayNamePlaceholder}
-            autoComplete="nickname"
-            disabled={pending}
-          />
-
-          <label htmlFor="room-code">{STRINGS.roomCodeLabel}</label>
-          <input
-            id="room-code"
-            type="text"
-            value={draft.roomCode}
-            onChange={(event) => onDraftChange((prev) => ({ ...prev, roomCode: normalizeRoomCodeInput(event.target.value) }))}
-            placeholder={STRINGS.roomCodePlaceholder}
-            autoComplete="off"
-            disabled={pending}
-          />
-
-          <div className="room-actions">
-            <button type="button" onClick={onCreateRoom} disabled={pending}>
-              {STRINGS.roomCreateSubmit}
-            </button>
-            <button type="button" onClick={onJoinRoom} disabled={pending}>
-              {STRINGS.roomJoinSubmit}
-            </button>
-            {roomSession ? (
-              <>
-                <button type="button" onClick={onResumeRoom} disabled={pending}>
-                  {STRINGS.roomResumeSubmit}
-                </button>
-                <button type="button" className="secondary-action" onClick={onClearRoom} disabled={pending}>
-                  {STRINGS.roomClearSubmit}
-                </button>
-              </>
-            ) : null}
-          </div>
-        </>
-      )}
-
-      {roomSession && !isPlayerLobby ? (
-        <div className="room-session-card" data-testid="room-session-card">
-          <div className="room-session-header">
-            <div>
-              <strong>{roomSession.roomCode}</strong>
-              <span className="field-hint">{STRINGS.roomSavedHint}</span>
-            </div>
-            <span className="host-plan-chip room-role-chip">
-              <span>{roomSession.role === 'host' ? STRINGS.roomHostBadge : STRINGS.roomPlayerBadge}</span>
-              <strong>{roomSession.displayName || roomSession.playerId}</strong>
-            </span>
-          </div>
-          <div className="room-player-list">
-            <h3>{STRINGS.roomPlayersTitle}</h3>
-            {roomSession?.role === 'host' && playerJoinLink ? (
-              <p className="field-hint">
-                {STRINGS.roomJoinLinkLabel}:{' '}
-                <a className="inline-link" href={playerJoinLink}>
-                  {playerJoinLink}
-                </a>
-              </p>
-            ) : null}
-            {canUseRoomPlayers ? (
-              <>
-                <div className="room-actions">
-                  <button type="button" onClick={onSelectAllRoomPlayers} disabled={pending}>
-                    {STRINGS.roomSelectAllPlayersSubmit}
-                  </button>
-                  <button type="button" onClick={onUseRoomPlayers} disabled={pending || selectedPlayers.length === 0}>
-                    {STRINGS.roomUseSelectedPlayersSubmit}
-                  </button>
-                  <button
-                    type="button"
-                    className="secondary-action"
-                    onClick={onTrimRoomToSelectedPlayers}
-                    disabled={pending || selectedPlayers.length === 0 || removableSelectedGap === 0}
-                  >
-                    {STRINGS.roomTrimSelectedPlayersSubmit}
-                  </button>
-                  <button type="button" onClick={onStartRoomSession} disabled={pending || selectedPlayers.length === 0}>
-                    {STRINGS.roomStartSelectedLiveSubmit}
-                  </button>
-                </div>
-                <p className="field-hint" data-testid="room-selected-roster-hint">
-                  {STRINGS.roomSelectedRosterTitle}: {selectedPlayers.length > 0 ? selectedPlayers.join(', ') : STRINGS.roomSelectedRosterEmpty}
-                </p>
-              </>
-            ) : null}
-            {roomPlayers.length > 0 ? (
-              <ul>
-                {roomPlayers.map((player) => (
-                  <li key={player.playerId || player.displayName}>
-                    <strong>{player.displayName || player.playerId}</strong>
-                    <span>{player.playerId}</span>
-                    {canUseRoomPlayers ? (
-                      <div className="room-player-row-actions">
-                        <label className="room-player-toggle">
-                          <input
-                            type="checkbox"
-                            checked={selectedPlayers.includes(normalizePlayerName(player.displayName || player.playerId || ''))}
-                            onChange={() => onToggleRoomPlayer(normalizePlayerName(player.displayName || player.playerId || ''))}
-                          />
-                          <span>Include in launch</span>
-                        </label>
-                        {roomSession?.playerId !== player.playerId ? (
-                          <button
-                            type="button"
-                            className="secondary-action room-player-remove-action"
-                            onClick={() => onRemoveRoomPlayer(player)}
-                            disabled={pending}
-                          >
-                            {STRINGS.roomRemovePlayerSubmit}
-                          </button>
-                        ) : null}
-                      </div>
-                    ) : null}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="field-hint">{STRINGS.roomNoPlayers}</p>
-            )}
-          </div>
-        </div>
-      ) : null}
-    </section>
-  );
-}
-
-function PlayerJoinRoutePanel({
-  roomCode,
-  appTitle,
-  preview,
-  pending,
-  message,
-  error,
-  displayName,
-  onDisplayNameChange,
-  onJoin,
-  onBack
-}) {
-  const previewBranding = preview?.branding && typeof preview.branding === 'object' ? preview.branding : null;
-  const previewPlayers = Array.isArray(preview?.players) ? preview.players : [];
-  const previewTitle = String(previewBranding?.appName || appTitle || STRINGS.title).trim() || STRINGS.title;
-  const previewStyle = previewBranding?.primaryColor || previewBranding?.secondaryColor
-    ? {
-      '--player-lobby-accent': previewBranding?.primaryColor || undefined,
-      '--player-lobby-accent-2': previewBranding?.secondaryColor || previewBranding?.primaryColor || undefined
-    }
-    : undefined;
-
-  return (
-    <section className="setup-panel board-surface player-route-panel" data-testid="player-route-panel" style={previewStyle}>
-      <p className="player-lobby-brand">{previewTitle}</p>
-      <h1>{STRINGS.playerRouteTitle}</h1>
-      <p>{STRINGS.playerRouteHint}</p>
-      <p className="field-hint">
-        {STRINGS.roomCodeLabel}: <strong>{roomCode}</strong>
-      </p>
-      {pending ? <p className="field-hint">{STRINGS.playerRouteLoading}</p> : null}
-      {message ? <p className="field-hint" data-testid="player-route-message">{message}</p> : null}
-      {error ? <p className="error" data-testid="player-route-error">{error}</p> : null}
-      <label htmlFor="player-route-display-name">{STRINGS.playerRouteDisplayNameLabel}</label>
-      <input
-        id="player-route-display-name"
-        type="text"
-        value={displayName}
-        onChange={(event) => onDisplayNameChange(event.target.value)}
-        placeholder={STRINGS.roomDisplayNamePlaceholder}
-        autoComplete="nickname"
-        disabled={pending}
-      />
-      <div className="room-actions">
-        <button type="button" onClick={onJoin} disabled={pending}>
-          {STRINGS.playerRouteJoinSubmit}
-        </button>
-        <button type="button" className="secondary-action" onClick={onBack} disabled={pending}>
-          {STRINGS.playerRouteBackSubmit}
-        </button>
-      </div>
-      {preview ? (
-        <div className="player-route-preview" data-testid="player-route-preview">
-          <p className="field-hint">
-            {STRINGS.playerRoutePreviewPlayersPrefix} {previewPlayers.length}
-          </p>
-          {previewPlayers.length > 0 ? (
-            <ul className="recent-session-scoreboard">
-              {previewPlayers.map((player) => (
-                <li key={player.playerId || player.displayName}>
-                  <strong>{player.displayName || player.playerId}</strong>
-                  <span>{player.playerId}</span>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="field-hint">{STRINGS.playerRoutePreviewMissing}</p>
-          )}
-        </div>
-      ) : (
-        <p className="field-hint">{STRINGS.playerRoutePreviewMissing}</p>
-      )}
-    </section>
-  );
-}
-
 function loadStoredConfig() {
   try {
     const raw = localStorage.getItem(CONFIG_STORAGE_KEY);
@@ -2085,10 +1386,6 @@ function persistRoomSelection(roomCode, selectedPlayerNames) {
     return;
   }
   localStorage.setItem(key, JSON.stringify(selectedPlayerNames));
-}
-
-function normalizeRoomCodeInput(value) {
-  return String(value || '').trim().toUpperCase();
 }
 
 function isAdminConsoleRoute() {
@@ -3348,7 +2645,8 @@ function GameApp() {
         <>
           {activePlayerRouteRoomCode ? (
             playerRouteMatchesSavedPlayerSession ? (
-              <RoomPanel
+              <GameRoom
+                strings={STRINGS}
                 appTitle={String(playerRoutePreview?.branding?.appName || appTitle).trim() || appTitle}
                 draft={roomDraft}
                 pending={roomPending}
@@ -3369,7 +2667,8 @@ function GameApp() {
                 onTrimRoomToSelectedPlayers={handleTrimRoomToSelectedPlayers}
               />
             ) : (
-              <PlayerJoinRoutePanel
+              <PlayerJoin
+                strings={STRINGS}
                 roomCode={activePlayerRouteRoomCode}
                 appTitle={appTitle}
                 preview={playerRoutePreview}
@@ -3411,7 +2710,8 @@ function GameApp() {
                   />
                 </>
               ) : null}
-              <RoomPanel
+              <GameRoom
+                strings={STRINGS}
                 appTitle={appTitle}
                 draft={roomDraft}
                 pending={roomPending}
