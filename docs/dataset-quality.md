@@ -73,7 +73,7 @@ CI threshold gate:
 - Backend CI enforces `--fail-threshold=0.85` for both EN and ET locale packs.
 - Raise this threshold gradually as dataset diversity improves.
 
-## Semantic Quality Gate v2
+## Semantic Quality Gate v3
 
 Semantic scoring script:
 
@@ -115,6 +115,39 @@ How to improve semantic score:
 2. Replace placeholder-like wording with domain-specific wording.
 3. Ensure 10 options are distinct and plausible.
 4. Keep question prompts specific (avoid overly short generic prompts).
+
+## Semantic Content Truth Gate
+
+Truth validator:
+
+- `node tools/semantic_content_validator.js data/smart10/cards.en.json`
+- `node tools/semantic_content_validator.js data/smart10/cards.et.json`
+
+What it now hard-checks:
+
+- opposite-language leakage inside prompts and options,
+- broken Estonian wording / ASCII-damaged localization,
+- over-templated prompt families,
+- untranslated English prompt stems inside ET cards,
+- recycled true/false option pools,
+- low-trust ET option wording,
+- placeholder and trivial answer patterns.
+
+Current CI threshold gate:
+
+- Backend CI + Frontend CI enforce:
+  - `node tools/semantic_content_validator.js <dataset> --fail-threshold=0.95`
+- `node --test tools/semantic_content_validator.test.js` runs in CI before the blocking truth gate.
+
+Truth reporting:
+
+- `node tools/generate_content_truth_report.js`
+
+Important:
+
+- A structural pass is not a launch-readiness pass.
+- If ET localization is broken or mixed-language, ET must be treated as launch-blocked even when schema and coverage are green.
+- Honest blocking is preferred over inflated readiness.
 
 ## Runtime Source Guard
 
