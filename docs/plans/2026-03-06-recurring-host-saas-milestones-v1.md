@@ -53,6 +53,7 @@ Current execution pointer:
 11. `M7` is therefore promoted done on 2026-03-07, while `M6` remains explicitly deferred because real pilot proof is still missing.
 12. `M8` is now the active commercial-proof milestone: recurring-host go/no-go pack generation, 12-month operating-plan generation, and a sellable-SaaS gate wrapper exist, but the milestone remains commercially unproven.
 13. `M9` technical work has now also started in parallel with that deferred `M8` proof blocker: the host workspace includes a new `Host momentum` repeat-host analytics card derived from recent hosted sessions and saved templates.
+14. The latest `M9` slice also adds host-side pre-live roster selection inside room management, so repeat hosts can curate selected room players directly into launch setup without rebuilding the player list manually.
 
 ## Milestone Definitions
 

@@ -543,6 +543,19 @@ button:disabled {
   font-size: 0.82rem;
 }
 
+.room-player-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.room-player-toggle input {
+  width: auto;
+  min-height: auto;
+}
+
 .player-lobby-card {
   display: grid;
   gap: 16px;

@@ -189,7 +189,14 @@ const STRINGS = {
   playerRoutePreviewMissing: 'Room preview is not available yet. You can still try joining directly.',
   playerRouteInvalid: 'Player join link is invalid.',
   roomUsePlayersSubmit: 'Use room players',
+  roomUseSelectedPlayersSubmit: 'Use selected players',
   roomStartLiveSubmit: 'Start with room',
+  roomStartSelectedLiveSubmit: 'Start selected room',
+  roomSelectAllPlayersSubmit: 'Select all',
+  roomSelectedRosterTitle: 'Selected for launch',
+  roomSelectedRosterEmpty: 'Select at least one room player for the live setup.',
+  roomSelectedRosterReadyPrefix: 'Selected room roster ready:',
+  roomSelectedRosterStartPrefix: 'Starting room roster:',
   roomUsePlayersMessage: 'Room players loaded into the live session setup.',
   recentHostedSessionsTitle: 'Recent hosted sessions',
   recentHostedSessionsEmpty: 'No hosted sessions launched yet.',
@@ -323,6 +330,20 @@ function getRoomPlayerNames(roomSession) {
   return Array.from(new Set(players
     .map((player) => normalizePlayerName(player?.displayName || player?.playerId || ''))
     .filter(Boolean)));
+}
+
+function getSelectedRoomPlayerNames(roomSession, selectedPlayerNames) {
+  const availablePlayers = getRoomPlayerNames(roomSession);
+  if (!Array.isArray(selectedPlayerNames) || selectedPlayerNames.length === 0) {
+    return availablePlayers;
+  }
+  const selectedSet = new Set(
+    selectedPlayerNames
+      .map((entry) => normalizePlayerName(String(entry || '')))
+      .filter(Boolean)
+  );
+  const selectedPlayers = availablePlayers.filter((entry) => selectedSet.has(entry));
+  return selectedPlayers.length > 0 ? selectedPlayers : availablePlayers;
 }
 
 function deriveRecentHostedSessions(auditEvents) {
@@ -1445,16 +1466,20 @@ function RoomPanel({
   message,
   error,
   roomSession,
+  selectedRoomPlayerNames,
   onDraftChange,
   onCreateRoom,
   onJoinRoom,
   onResumeRoom,
   onClearRoom,
+  onSelectAllRoomPlayers,
+  onToggleRoomPlayer,
   onUseRoomPlayers,
   onStartRoomSession
 }) {
   const roomPlayers = Array.isArray(roomSession?.roomState?.players) ? roomSession.roomState.players : [];
   const roomPlayerNames = getRoomPlayerNames(roomSession);
+  const selectedPlayers = getSelectedRoomPlayerNames(roomSession, selectedRoomPlayerNames);
   const canUseRoomPlayers = roomSession?.role === 'host' && roomPlayerNames.length > 0;
   const isPlayerLobby = roomSession?.role === 'player';
   const roomBranding = roomSession?.roomState?.branding && typeof roomSession.roomState.branding === 'object'
@@ -1588,14 +1613,22 @@ function RoomPanel({
               </p>
             ) : null}
             {canUseRoomPlayers ? (
-              <div className="room-actions">
-                <button type="button" onClick={onUseRoomPlayers} disabled={pending}>
-                  {STRINGS.roomUsePlayersSubmit}
-                </button>
-                <button type="button" onClick={onStartRoomSession} disabled={pending}>
-                  {STRINGS.roomStartLiveSubmit}
-                </button>
-              </div>
+              <>
+                <div className="room-actions">
+                  <button type="button" onClick={onSelectAllRoomPlayers} disabled={pending}>
+                    {STRINGS.roomSelectAllPlayersSubmit}
+                  </button>
+                  <button type="button" onClick={onUseRoomPlayers} disabled={pending || selectedPlayers.length === 0}>
+                    {STRINGS.roomUseSelectedPlayersSubmit}
+                  </button>
+                  <button type="button" onClick={onStartRoomSession} disabled={pending || selectedPlayers.length === 0}>
+                    {STRINGS.roomStartSelectedLiveSubmit}
+                  </button>
+                </div>
+                <p className="field-hint" data-testid="room-selected-roster-hint">
+                  {STRINGS.roomSelectedRosterTitle}: {selectedPlayers.length > 0 ? selectedPlayers.join(', ') : STRINGS.roomSelectedRosterEmpty}
+                </p>
+              </>
             ) : null}
             {roomPlayers.length > 0 ? (
               <ul>
@@ -1603,6 +1636,16 @@ function RoomPanel({
                   <li key={player.playerId || player.displayName}>
                     <strong>{player.displayName || player.playerId}</strong>
                     <span>{player.playerId}</span>
+                    {canUseRoomPlayers ? (
+                      <label className="room-player-toggle">
+                        <input
+                          type="checkbox"
+                          checked={selectedPlayers.includes(normalizePlayerName(player.displayName || player.playerId || ''))}
+                          onChange={() => onToggleRoomPlayer(normalizePlayerName(player.displayName || player.playerId || ''))}
+                        />
+                        <span>Include in launch</span>
+                      </label>
+                    ) : null}
                   </li>
                 ))}
               </ul>
@@ -1891,6 +1934,7 @@ function GameApp() {
   const [roomMessage, setRoomMessage] = useState('');
   const [roomError, setRoomError] = useState('');
   const [roomSession, setRoomSession] = useState(storedRoomSession);
+  const [selectedRoomPlayerNames, setSelectedRoomPlayerNames] = useState(() => getRoomPlayerNames(storedRoomSession));
 
   const legacyEngine = useGameEngine(30);
   const serverEngine = useServerGameEngine(30);
@@ -2001,6 +2045,18 @@ function GameApp() {
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
+
+  useEffect(() => {
+    const roomPlayerNames = getRoomPlayerNames(roomSession);
+    if (roomPlayerNames.length === 0) {
+      setSelectedRoomPlayerNames([]);
+      return;
+    }
+    setSelectedRoomPlayerNames((prev) => {
+      const next = roomPlayerNames.filter((entry) => prev.includes(entry));
+      return next.length > 0 ? next : roomPlayerNames;
+    });
+  }, [roomSession]);
 
   useEffect(() => {
     loadTopics();
@@ -2614,32 +2670,54 @@ function GameApp() {
   function handleClearRoom() {
     setRoomSession(null);
     persistRoomSession(null);
+    setSelectedRoomPlayerNames([]);
     setRoomMessage('');
     setRoomError('');
   }
 
+  function handleSelectAllRoomPlayers() {
+    setSelectedRoomPlayerNames(getRoomPlayerNames(roomSession));
+    setRoomError('');
+  }
+
+  function handleToggleRoomPlayer(playerName) {
+    const normalized = normalizePlayerName(String(playerName || ''));
+    if (!normalized) {
+      return;
+    }
+    setSelectedRoomPlayerNames((prev) => (
+      prev.includes(normalized)
+        ? prev.filter((entry) => entry !== normalized)
+        : [...prev, normalized]
+    ));
+    setRoomError('');
+  }
+
   function handleUseRoomPlayers() {
-    const roomPlayerNames = getRoomPlayerNames(roomSession);
+    const roomPlayerNames = getSelectedRoomPlayerNames(roomSession, selectedRoomPlayerNames);
     if (roomPlayerNames.length === 0) {
+      setRoomError(STRINGS.roomSelectedRosterEmpty);
       return;
     }
     setConfig((prev) => ({
       ...prev,
       playersText: roomPlayerNames.join(', ')
     }));
-    setRoomMessage(STRINGS.roomUsePlayersMessage);
+    setRoomMessage(`${STRINGS.roomSelectedRosterReadyPrefix} ${roomPlayerNames.join(', ')}`);
     setRoomError('');
   }
 
   function handleStartRoomSession() {
-    const roomPlayerNames = getRoomPlayerNames(roomSession);
+    const roomPlayerNames = getSelectedRoomPlayerNames(roomSession, selectedRoomPlayerNames);
     if (roomPlayerNames.length === 0) {
+      setRoomError(STRINGS.roomSelectedRosterEmpty);
       return;
     }
     setConfig((prev) => ({
       ...prev,
       playersText: roomPlayerNames.join(', ')
     }));
+    setRoomMessage(`${STRINGS.roomSelectedRosterStartPrefix} ${roomPlayerNames.join(', ')}`);
     launchRound({
       playersText: roomPlayerNames.join(', '),
       topic: config.topic,
@@ -2931,11 +3009,14 @@ function GameApp() {
                 message={roomMessage}
                 error={roomError}
                 roomSession={roomSession}
+                selectedRoomPlayerNames={selectedRoomPlayerNames}
                 onDraftChange={setRoomDraft}
                 onCreateRoom={handleCreateRoom}
                 onJoinRoom={handleJoinRoom}
                 onResumeRoom={handleResumeRoom}
                 onClearRoom={handleClearRoom}
+                onSelectAllRoomPlayers={handleSelectAllRoomPlayers}
+                onToggleRoomPlayer={handleToggleRoomPlayer}
                 onUseRoomPlayers={handleUseRoomPlayers}
                 onStartRoomSession={handleStartRoomSession}
               />
@@ -2989,11 +3070,14 @@ function GameApp() {
                 message={roomMessage}
                 error={roomError}
                 roomSession={roomSession}
+                selectedRoomPlayerNames={selectedRoomPlayerNames}
                 onDraftChange={setRoomDraft}
                 onCreateRoom={handleCreateRoom}
                 onJoinRoom={handleJoinRoom}
                 onResumeRoom={handleResumeRoom}
                 onClearRoom={handleClearRoom}
+                onSelectAllRoomPlayers={handleSelectAllRoomPlayers}
+                onToggleRoomPlayer={handleToggleRoomPlayer}
                 onUseRoomPlayers={handleUseRoomPlayers}
                 onStartRoomSession={handleStartRoomSession}
               />

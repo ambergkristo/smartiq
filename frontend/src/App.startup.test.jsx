@@ -42,6 +42,7 @@ import {
   completeRuntimeAuth,
   createRoomSession,
   deleteRuntimeSessionTemplate,
+  fetchNextCard,
   fetchRoomPreview,
   fetchTenantAuditEvents,
   fetchTenantRuntimeSnapshot,
@@ -57,6 +58,20 @@ import {
   upsertRuntimeSessionTemplate,
   updateRuntimeTenantBranding
 } from './api';
+
+function makeCard(id, correctIndex = 0) {
+  return {
+    id,
+    cardId: id,
+    topic: 'Math',
+    category: 'OPEN',
+    difficulty: '2',
+    language: 'en',
+    question: `Question ${id}`,
+    options: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa'],
+    correct: { correctIndex }
+  };
+}
 
 describe('App startup resilience', () => {
   let consoleErrorSpy;
@@ -82,6 +97,7 @@ describe('App startup resilience', () => {
     });
     fetchTenantAuditEvents.mockResolvedValue([]);
     fetchTenantUsageSummary.mockResolvedValue([]);
+    fetchNextCard.mockResolvedValue(makeCard('ready'));
     updateRuntimeTenantBranding.mockResolvedValue({
       tenantId: 'tenant-branding',
       branding: {
@@ -812,9 +828,44 @@ describe('App startup resilience', () => {
     expect(screen.getByText('QUIZ42')).toBeInTheDocument();
     expect(screen.getByText(/room ready: QUIZ42/i)).toBeInTheDocument();
     expect(screen.getAllByText('Host One').length).toBeGreaterThan(0);
-    fireEvent.click(screen.getByRole('button', { name: /use room players/i }));
+    fireEvent.click(screen.getAllByRole('checkbox', { name: /include in launch/i })[1]);
+    fireEvent.click(screen.getByRole('button', { name: /use selected players/i }));
     await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeEnabled());
-    expect(screen.getAllByText('Alice').length).toBeGreaterThan(0);
+    expect(screen.getByTestId('room-selected-roster-hint')).toHaveTextContent(/host one/i);
+    expect(screen.getByTestId('room-selected-roster-hint')).not.toHaveTextContent(/alice/i);
+    expect(screen.getAllByText('Host One').length).toBeGreaterThan(0);
+  });
+
+  test('starts live session from selected room roster only', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    rejoinRoomSession.mockResolvedValue({
+      roomCode: 'QUIZ42',
+      playerId: 'p1',
+      authToken: 'rt_room_host_rotated',
+      roomState: {
+        roomCode: 'QUIZ42',
+        players: [
+          { playerId: 'p1', displayName: 'Host One' },
+          { playerId: 'p2', displayName: 'Alice' },
+          { playerId: 'p3', displayName: 'Bob' }
+        ]
+      }
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('room-panel')).toBeInTheDocument());
+    fireEvent.change(screen.getByLabelText(/room display name/i), { target: { value: 'Host One' } });
+    fireEvent.click(screen.getByRole('button', { name: /create room/i }));
+
+    await waitFor(() => expect(screen.getByTestId('room-session-card')).toBeInTheDocument());
+    fireEvent.click(screen.getAllByRole('checkbox', { name: /include in launch/i })[1]);
+    fireEvent.click(screen.getByRole('button', { name: /start selected room/i }));
+
+    await waitFor(() => expect(screen.getByText(/question ready/i)).toBeInTheDocument());
+    expect(screen.getAllByText('Host One').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Bob').length).toBeGreaterThan(0);
+    expect(screen.queryAllByText('Alice').length).toBe(0);
   });
 
   test('joins a room into a dedicated player lobby surface', async () => {

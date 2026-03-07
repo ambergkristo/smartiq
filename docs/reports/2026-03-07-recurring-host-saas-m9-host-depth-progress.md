@@ -39,6 +39,15 @@ Observed result:
 2. repeat-host analytics now sits beside that flow as a decision aid instead of requiring the host to infer patterns from raw audit lines,
 3. this makes the repeat-host workspace closer to the `M9` intent of a faster second-session workflow rather than only a first-session control surface.
 
+### Host room roster now has a real pre-live selection step
+
+Observed result:
+
+1. host-owned room sessions now expose `Select all`, `Use selected players`, and `Start selected room` controls,
+2. each room participant can be included or excluded from the next live launch without editing the global player draft manually,
+3. the selected roster is shown inline before launch, so the host can verify the exact live setup before starting,
+4. repeat hosts can now turn a live room roster into a curated launch roster in one place, which is materially closer to the `M9` pre-live control goal.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -46,6 +55,7 @@ The following checks executed successfully after this progress slice:
 1. `npm --prefix frontend run test -- --run src/App.tenant-runtime.test.jsx src/App.startup.test.jsx src/App.test.jsx src/App.server-mode.test.jsx src/api.test.js`
 2. `npm --prefix frontend run lint`
 3. `npm --prefix frontend run build`
+4. `npm --prefix frontend run test -- --run src/App.startup.test.jsx src/App.tenant-runtime.test.jsx`
 
 ## Honest Status
 
@@ -55,3 +65,4 @@ The following checks executed successfully after this progress slice:
    - faster reusable setup,
    - stronger pre-live controls,
    - measurable repeat-host friction reduction.
+4. pre-live control is now meaningfully better than before, but lobby moderation and deeper participant/session control still remain open.
