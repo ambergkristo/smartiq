@@ -140,7 +140,8 @@ Priority order:
 10. The `M6` gate now explicitly excludes bootstrap-seeded tenants from readiness counts; the latest corrected live capture is still `NOT_YET` because it reports `10` bootstrap-seeded tenants and `0` real pilot tenants.
 11. `M7` technical work may now proceed in parallel with the deferred `M6` external-proof blocker, starting with the public recurring-host launch surface, launch KPI snapshot tooling, recurring-host incident runbook, and a technical launch gate wrapper.
 12. The latest `M7` slice removed frontend lint/tooling blockers, hardened post-deploy smoke/runtime-deck verification, and corrected public topic/public fallback-source behavior so the remaining blocker is an honest live deploy validation against `https://smartiq-63tk.onrender.com`, not a local gate defect.
-13. The locked next-sequence is:
+13. `M8` technical work has now also begun in parallel as artifact infrastructure only: recurring-host go/no-go pack generation, 12-month operating-plan generation, and a sellable-SaaS gate wrapper that stays explicitly deferred until real paid/repeat evidence exists.
+14. The locked next-sequence is:
    - product stabilization,
    - auth/trust hardening,
    - billing/payment hardening,

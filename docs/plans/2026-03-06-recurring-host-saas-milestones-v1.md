@@ -33,7 +33,7 @@ Execution governance:
 | M5 | S5 | Paid value and entitlement enforcement | DONE (2026-03-06) |
 | M6 | S6 | Pilot conversion and retention proof | IN_PROGRESS (2026-03-06) |
 | M7 | S7 | Narrow launch readiness | IN_PROGRESS (technical track, 2026-03-07) |
-| M8 | S8 | Sellable niche SaaS validation | TODO |
+| M8 | S8 | Sellable niche SaaS validation | IN_PROGRESS (technical track, 2026-03-07) |
 | M9 | S9 | Host product depth | TODO |
 | M10 | S10 | Content and gameplay depth | TODO |
 | M11 | S11 | Team and agency productization | TODO |
@@ -50,6 +50,7 @@ Current execution pointer:
 8. `M6` therefore remains honestly blocked on real pilot volume rather than missing instrumentation, because the milestone still requires `10` real activated hosts and `5` real repeat hosts.
 9. `M7` technical implementation is now allowed to proceed in parallel with that deferred external blocker, and the first landed slices are the public recurring-host launch surface, launch KPI snapshot tooling, recurring-host incident runbook, and technical launch gate wrapper.
 10. The latest `M7` slice removed frontend lint/tooling blockers from the launch gate, hardened post-deploy smoke/runtime-deck verification, and corrected public topic/public fallback-source behavior so the remaining blocker is a live deploy verification step on `https://smartiq-63tk.onrender.com`.
+11. `M8` technical artifact work has now started in parallel with that external launch blocker: recurring-host go/no-go pack generation, 12-month operating-plan generation, and a sellable-SaaS gate wrapper now exist, but the milestone remains commercially unproven.
 
 ## Milestone Definitions
 

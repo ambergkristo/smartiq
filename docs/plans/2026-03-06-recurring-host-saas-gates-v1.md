@@ -129,8 +129,9 @@ Required evidence:
 
 Required checks:
 1. all previous milestone gates remain green,
-2. commercial evidence pack is complete,
-3. no unresolved Critical/High blockers remain.
+2. `npm run validate:m8:recurring-host:sellable-gate`,
+3. commercial evidence pack is complete,
+4. no unresolved Critical/High blockers remain.
 
 Required evidence:
 1. at least 3 paying hosts proof,
