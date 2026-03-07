@@ -60,6 +60,7 @@ Current execution pointer:
 18. The latest `M9` slice also adds persistent follow-up notes inside reviewed session detail, giving repeat hosts a lightweight post-session memory loop without leaving the workspace.
 19. The latest `M9` slice also surfaces those saved follow-up notes directly in recent-session history rows, making the host workspace more useful as an operational queue.
 20. The latest `M9` slice also adds a dedicated `Needs follow-up` session filter, turning local follow-up notes into a lightweight actionable queue.
+21. The latest `M9` slice also adds a follow-up queue metric plus a `Clear note` action in reviewed session detail, so hosts can work down local post-session notes instead of only accumulating them.
 
 ## Milestone Definitions
 

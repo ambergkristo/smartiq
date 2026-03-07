@@ -840,6 +840,74 @@ describe('App tenant runtime integration', () => {
     expect(screen.getAllByText(/note saved/i).length).toBeGreaterThan(0);
   });
 
+  test('clears follow-up notes for a reviewed hosted session', async () => {
+    fetchTopics.mockResolvedValue([
+      { topic: 'Science', count: 12 },
+      { topic: 'History', count: 10 }
+    ]);
+    hasRuntimeAuthContext.mockReturnValue(true);
+    fetchTenantRuntimeSnapshot.mockResolvedValue({
+      me: {
+        email: 'owner@northwind.test',
+        selectedTenantId: 'tenant-northwind'
+      },
+      settings: {
+        settings: {
+          schemaVersion: 1,
+          theme: 'ocean'
+        }
+      },
+      branding: {
+        branding: {
+          appName: 'Northwind Quiz',
+          primaryColor: '#223344',
+          secondaryColor: '#556677'
+        }
+      },
+      subscription: {
+        planCode: 'pro-host',
+        status: 'active',
+        billingCycle: 'monthly'
+      },
+      capabilities: {
+        planTier: 'pro_host',
+        maxHostedPlayers: 10,
+        analyticsHistoryEnabled: true
+      }
+    });
+    fetchTenantAuditEvents.mockResolvedValue([
+      {
+        auditEventId: 'evt-17',
+        action: 'HOST_GAME_SESSION_CREATED',
+        entityId: 'game-review',
+        metadata: {
+          gameId: 'game-review',
+          topic: 'History',
+          language: 'et',
+          playerCount: 2
+        }
+      }
+    ]);
+
+    render(<App />);
+
+    await waitFor(() => expect(fetchTenantAuditEvents).toHaveBeenCalled());
+    fireEvent.click(screen.getByRole('button', { name: /review session/i }));
+    await waitFor(() => expect(fetchServerGameSession).toHaveBeenCalledWith('game-review'));
+
+    fireEvent.change(screen.getByLabelText(/follow-up note/i), { target: { value: 'Trim the intro next time.' } });
+    fireEvent.click(screen.getByRole('button', { name: /save note/i }));
+    expect(localStorage.getItem('smartiq.sessionReviewNote.game-review')).toBe('Trim the intro next time.');
+
+    fireEvent.click(screen.getByRole('button', { name: /clear note/i }));
+
+    expect(screen.getByTestId('recent-session-note-message')).toHaveTextContent(/follow-up note cleared/i);
+    expect(localStorage.getItem('smartiq.sessionReviewNote.game-review')).toBeNull();
+    expect(screen.getByLabelText(/follow-up note/i)).toHaveValue('');
+    expect(screen.queryByText(/trim the intro next time/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/^note saved$/i)).not.toBeInTheDocument();
+  });
+
   test('filters recent hosted sessions by live vs completed status', async () => {
     fetchTopics.mockResolvedValue([
       { topic: 'Science', count: 12 },
@@ -1016,6 +1084,7 @@ describe('App tenant runtime integration', () => {
   });
 
   test('shows host momentum analytics from recent hosted sessions and templates', async () => {
+    localStorage.setItem('smartiq.sessionReviewNote.game-c', 'Keep the finals shorter.');
     fetchTopics.mockResolvedValue([
       { topic: 'Science', count: 12 },
       { topic: 'History', count: 10 }
@@ -1134,6 +1203,7 @@ describe('App tenant runtime integration', () => {
     expect(analyticsCard).toHaveTextContent(/completed runs\s*2/i);
     expect(analyticsCard).toHaveTextContent(/avg roster\s*3/i);
     expect(analyticsCard).toHaveTextContent(/saved templates\s*1/i);
+    expect(analyticsCard).toHaveTextContent(/follow-up queue\s*1/i);
     expect(analyticsCard).toHaveTextContent(/live runs: 1/i);
     expect(analyticsCard).toHaveTextContent(/top topic: history/i);
     expect(analyticsCard).toHaveTextContent(/latest winner: host one \(7 pts\)/i);

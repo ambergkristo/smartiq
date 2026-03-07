@@ -97,6 +97,15 @@ Observed result:
 2. the filter only shows sessions that already have a saved follow-up note,
 3. this turns local follow-up notes into a lightweight actionable queue instead of passive metadata.
 
+### Follow-up queue can now be worked down instead of only collected
+
+Observed result:
+
+1. the `Host momentum` card now includes a dedicated `Follow-up queue` metric derived from saved session notes,
+2. reviewed sessions now expose a `Clear note` action beside `Save note`,
+3. once a note is cleared, the note badge, note preview, and `Needs follow-up` queue membership all disappear on the next render,
+4. this makes the local follow-up queue behave more like a closable ops list instead of a static annotation layer.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -112,6 +121,9 @@ The following checks executed successfully after this progress slice:
 9. `npm --prefix frontend run build`
 10. `npm --prefix frontend run lint`
 11. `npm --prefix frontend run test -- --run src/App.tenant-runtime.test.jsx src/App.startup.test.jsx`
+12. `npm --prefix frontend run test -- --run src/App.tenant-runtime.test.jsx`
+13. `npm --prefix frontend run lint`
+14. `npm --prefix frontend run build`
 
 ## Honest Status
 
@@ -127,4 +139,4 @@ The following checks executed successfully after this progress slice:
 7. host-side lobby moderation is now less fragile across reloads, but true multi-device moderation and server-backed lobby control still remain open.
 8. follow-up notes now exist, but they are still browser-local rather than tenant-synced operational data.
 9. follow-up context is now visible in history rows, but there is still no shared or server-backed post-session ops layer.
-10. the new follow-up queue is useful locally, but it is still not a shared ops inbox across hosts or devices.
+10. the new follow-up queue can now also be cleared locally, but it is still not a shared ops inbox across hosts or devices.

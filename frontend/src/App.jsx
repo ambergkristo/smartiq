@@ -121,6 +121,7 @@ const STRINGS = {
   hostWorkspaceAnalyticsCompletedRuns: 'Completed runs',
   hostWorkspaceAnalyticsAverageRoster: 'Avg roster',
   hostWorkspaceAnalyticsSavedTemplates: 'Saved templates',
+  hostWorkspaceAnalyticsFollowUpQueue: 'Follow-up queue',
   hostWorkspaceAnalyticsLiveRuns: 'Live runs',
   hostWorkspaceAnalyticsTopTopic: 'Top topic',
   hostWorkspaceAnalyticsLatestWinner: 'Latest winner',
@@ -231,7 +232,9 @@ const STRINGS = {
   recentHostedSessionNotesTitle: 'Follow-up note',
   recentHostedSessionNotesPlaceholder: 'What should change before the next run?',
   recentHostedSessionNotesSaveSubmit: 'Save note',
+  recentHostedSessionNotesClearSubmit: 'Clear note',
   recentHostedSessionNotesSaved: 'Follow-up note saved.',
+  recentHostedSessionNotesCleared: 'Follow-up note cleared.',
   recentHostedSessionLeaderPrefix: 'Current leader:',
   recentHostedSessionStatusPrefix: 'Status:',
   recentHostedSessionStatusLive: 'Live',
@@ -413,6 +416,7 @@ function buildHostWorkspaceAnalytics(sessions, templateCount) {
   const playerCounts = normalizedSessions
     .map((entry) => (Number.isInteger(entry?.playerCount) ? entry.playerCount : null))
     .filter((value) => value != null);
+  const followUpSessions = normalizedSessions.filter((entry) => Boolean(loadSessionReviewNote(entry?.gameId))).length;
   const topicCounts = normalizedSessions.reduce((accumulator, entry) => {
     const topic = String(entry?.topic || '').trim() || STRINGS.recentHostedSessionTopicFallback;
     accumulator.set(topic, (accumulator.get(topic) || 0) + 1);
@@ -429,6 +433,7 @@ function buildHostWorkspaceAnalytics(sessions, templateCount) {
     completedSessions: normalizedSessions.filter((entry) => entry?.status === 'completed').length,
     liveSessions: normalizedSessions.filter((entry) => entry?.status !== 'completed').length,
     averagePlayers,
+    followUpSessions,
     topTopic: topTopicEntry?.[0] || STRINGS.recentHostedSessionTopicFallback,
     latestWinner: latestWinner?.winnerDisplayName
       ? `${latestWinner.winnerDisplayName}${Number.isInteger(latestWinner.winnerScore) ? ` (${latestWinner.winnerScore} pts)` : ''}`
@@ -763,6 +768,7 @@ function StartScreen({
   reviewedHostedSessionNoteMessage,
   onReviewedHostedSessionNoteChange,
   onSaveReviewedHostedSessionNote,
+  onClearReviewedHostedSessionNote,
   activeHostedSession,
   hostedSessionFilter,
   onHostedSessionFilterChange,
@@ -926,6 +932,10 @@ function StartScreen({
                     <article className="host-analytics-metric">
                       <span>{STRINGS.hostWorkspaceAnalyticsSavedTemplates}</span>
                       <strong>{hostWorkspaceAnalytics.templateCount}</strong>
+                    </article>
+                    <article className="host-analytics-metric">
+                      <span>{STRINGS.hostWorkspaceAnalyticsFollowUpQueue}</span>
+                      <strong>{hostWorkspaceAnalytics.followUpSessions}</strong>
                     </article>
                   </div>
                   <div className="host-analytics-summary-list">
@@ -1274,6 +1284,14 @@ function StartScreen({
                     <div className="host-session-actions host-session-actions--detail">
                       <button type="button" onClick={onSaveReviewedHostedSessionNote}>
                         {STRINGS.recentHostedSessionNotesSaveSubmit}
+                      </button>
+                      <button
+                        type="button"
+                        className="secondary-action"
+                        onClick={onClearReviewedHostedSessionNote}
+                        disabled={!reviewedHostedSessionNote.trim()}
+                      >
+                        {STRINGS.recentHostedSessionNotesClearSubmit}
                       </button>
                     </div>
                     {reviewedHostedSessionNoteMessage ? (
@@ -2710,6 +2728,15 @@ function GameApp() {
     setReviewedHostedSessionNoteMessage(STRINGS.recentHostedSessionNotesSaved);
   }
 
+  function handleClearReviewedHostedSessionNote() {
+    if (!reviewedHostedSession?.gameId) {
+      return;
+    }
+    persistSessionReviewNote(reviewedHostedSession.gameId, '');
+    setReviewedHostedSessionNote('');
+    setReviewedHostedSessionNoteMessage(STRINGS.recentHostedSessionNotesCleared);
+  }
+
   async function handleDeleteSessionTemplate(template) {
     const templateId = String(template?.templateId || '').trim();
     if (sessionTemplatePending || !templateId || !runtimeSnapshot?.me?.selectedTenantId) {
@@ -3332,6 +3359,7 @@ function GameApp() {
                 reviewedHostedSessionNoteMessage={reviewedHostedSessionNoteMessage}
                 onReviewedHostedSessionNoteChange={handleReviewedHostedSessionNoteChange}
                 onSaveReviewedHostedSessionNote={handleSaveReviewedHostedSessionNote}
+                onClearReviewedHostedSessionNote={handleClearReviewedHostedSessionNote}
                 activeHostedSession={activeHostedSession}
                 hostedSessionFilter={hostedSessionFilter}
                 onHostedSessionFilterChange={setHostedSessionFilter}
