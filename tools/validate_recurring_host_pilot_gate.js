@@ -21,7 +21,7 @@ function runStep(name, commandLine) {
     shell: true,
     stdio: 'pipe',
     encoding: 'utf8',
-    env: process.env
+    env: { ...process.env }
   });
 
   return {
@@ -35,6 +35,41 @@ function runStep(name, commandLine) {
   };
 }
 
+function writeDiagnosticResult(label, result) {
+  const lines = [];
+  lines.push(`[diag] ${label} exitCode=${result.status ?? 'null'}`);
+  if (result.error) {
+    lines.push(`[diag] ${label} error=${result.error.message}`);
+  }
+  if (result.stdout && result.stdout.trim()) {
+    lines.push(`[diag] ${label} stdout:\n${result.stdout.trim()}`);
+  }
+  if (result.stderr && result.stderr.trim()) {
+    lines.push(`[diag] ${label} stderr:\n${result.stderr.trim()}`);
+  }
+  console.error(lines.join('\n'));
+}
+
+function logJavaDiagnostics() {
+  console.error(`[diag] JAVA_HOME=${process.env.JAVA_HOME || '<unset>'}`);
+
+  writeDiagnosticResult('java -version', spawnSync('java -version', {
+    cwd: process.cwd(),
+    shell: true,
+    stdio: 'pipe',
+    encoding: 'utf8',
+    env: { ...process.env }
+  }));
+
+  writeDiagnosticResult('mvn -version', spawnSync('mvn -version', {
+    cwd: process.cwd(),
+    shell: true,
+    stdio: 'pipe',
+    encoding: 'utf8',
+    env: { ...process.env }
+  }));
+}
+
 function readSummary(summaryPath) {
   return JSON.parse(fs.readFileSync(summaryPath, 'utf8'));
 }
@@ -46,6 +81,8 @@ function main() {
   const summaryPath = parseArg(args, '--json-output=') || path.join(os.tmpdir(), 'smartiq-recurring-host-pilot-summary.json');
   const evidencePath = parseArg(args, '--evidence-output=') || path.join(os.tmpdir(), 'smartiq-recurring-host-pilot-evidence.md');
   const failOnBelowThreshold = hasFlag(args, '--fail-on-below-threshold');
+
+  logJavaDiagnostics();
 
   const steps = [
     runStep(

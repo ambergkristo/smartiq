@@ -32,7 +32,7 @@ function run(commandLine) {
     shell: true,
     stdio: 'pipe',
     encoding: 'utf8',
-    env: process.env
+    env: { ...process.env }
   });
 }
 
