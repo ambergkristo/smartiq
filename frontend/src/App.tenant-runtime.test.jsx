@@ -596,6 +596,112 @@ describe('App tenant runtime integration', () => {
     await waitFor(() => expect(screen.getByText(/resume question/i)).toBeInTheDocument());
   });
 
+  test('prefers reviewed session roster when preparing duplicate setup', async () => {
+    localStorage.setItem('smartiq.roomSession', JSON.stringify({
+      roomCode: 'QUIZ42',
+      playerId: 'p1',
+      authToken: 'rt_room_1',
+      displayName: 'Host One',
+      role: 'host',
+      roomState: {
+        roomCode: 'QUIZ42',
+        players: [
+          { playerId: 'p1', displayName: 'Host One' },
+          { playerId: 'p2', displayName: 'Alice' }
+        ]
+      }
+    }));
+    fetchTopics.mockResolvedValue([
+      { topic: 'Science', count: 12 },
+      { topic: 'History', count: 10 }
+    ]);
+    hasRuntimeAuthContext.mockReturnValue(true);
+    fetchTenantRuntimeSnapshot.mockResolvedValue({
+      me: {
+        email: 'owner@northwind.test',
+        selectedTenantId: 'tenant-northwind'
+      },
+      settings: {
+        settings: {
+          schemaVersion: 1,
+          theme: 'ocean'
+        }
+      },
+      branding: {
+        branding: {
+          appName: 'Northwind Quiz',
+          primaryColor: '#223344',
+          secondaryColor: '#556677'
+        }
+      },
+      subscription: {
+        planCode: 'pro-host',
+        status: 'active',
+        billingCycle: 'monthly'
+      },
+      capabilities: {
+        planTier: 'pro_host',
+        maxHostedPlayers: 10,
+        analyticsHistoryEnabled: true
+      }
+    });
+    fetchServerGameSession.mockResolvedValueOnce({
+      apiVersion: '1',
+      gameId: 'game-review',
+      winCondition: 30,
+      activePlayerIndex: 0,
+      players: [
+        { playerId: 'p1', displayName: 'Host One' },
+        { playerId: 'p9', displayName: 'Bob' }
+      ],
+      roundState: {
+        roundNumber: 2,
+        phase: 'GAME_OVER',
+        starterPlayerId: 'p1',
+        currentPlayerId: 'p1',
+        lastAction: 'Host One completed the session'
+      },
+      boardState: {
+        question: 'History review question',
+        category: 'OPEN',
+        topic: 'History',
+        pegs: Array.from({ length: 10 }, (_, index) => ({
+          index,
+          state: 'hidden',
+          value: null
+        }))
+      },
+      totalScores: { p1: 3, p9: 2 },
+      roundScores: { p1: 0, p9: 0 },
+      statuses: { p1: 'ACTIVE', p9: 'ACTIVE' }
+    });
+    fetchTenantAuditEvents.mockResolvedValue([
+      {
+        auditEventId: 'evt-16',
+        action: 'HOST_GAME_SESSION_CREATED',
+        entityId: 'game-review',
+        metadata: {
+          gameId: 'game-review',
+          topic: 'History',
+          language: 'et',
+          playerCount: 2
+        }
+      }
+    ]);
+
+    render(<App />);
+
+    await waitFor(() => expect(fetchTenantAuditEvents).toHaveBeenCalled());
+    fireEvent.click(screen.getByRole('button', { name: /review session/i }));
+    await waitFor(() => expect(fetchServerGameSession).toHaveBeenCalledWith('game-review'));
+
+    fireEvent.click(within(screen.getByTestId('recent-hosted-session-review')).getByRole('button', { name: /^duplicate setup$/i }));
+
+    await waitFor(() => expect(screen.getByTestId('workspace-message')).toHaveTextContent(/using reviewed session roster/i));
+    expect(screen.getByTestId('workspace-message')).toHaveTextContent(/duplicate setup ready: history/i);
+    expect(screen.getAllByText('Bob').length).toBeGreaterThan(0);
+  });
+
   test('saves reviewed hosted session as a reusable template', async () => {
     fetchTopics.mockResolvedValue([
       { topic: 'Science', count: 12 },

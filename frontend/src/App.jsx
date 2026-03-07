@@ -220,6 +220,7 @@ const STRINGS = {
   recentHostedSessionResumePrefix: 'Resuming live session:',
   recentHostedSessionLaunchPrefix: 'Launching duplicate session:',
   recentHostedSessionUseRoomRoster: 'Using saved room roster for the duplicate launch.',
+  recentHostedSessionUseReviewedRoster: 'Using reviewed session roster for the duplicate launch.',
   recentHostedSessionUsePlaceholderRoster: 'Using placeholder player slots from the previous hosted session.',
   recentHostedSessionReviewTitle: 'Session review',
   recentHostedSessionReviewEmpty: 'Pick a recent hosted session to review its latest saved state.',
@@ -470,14 +471,21 @@ function buildRecentHostedSessionReview(snapshot, fallbackSession) {
   };
 }
 
-function resolveRecentHostedSessionConfig(session, fallbackConfig, roomSession) {
+function resolveRecentHostedSessionConfig(session, fallbackConfig, roomSession, reviewedSession) {
   const roomPlayerNames = getRoomPlayerNames(roomSession);
+  const reviewedPlayerNames = reviewedSession?.gameId === session?.gameId && Array.isArray(reviewedSession?.scoreboard)
+    ? reviewedSession.scoreboard
+      .map((entry) => normalizePlayerName(entry?.displayName || entry?.playerId || ''))
+      .filter(Boolean)
+    : [];
   const placeholderPlayers = buildPlaceholderPlayers(session?.playerCount);
   const normalizedLanguage = String(session?.language || '').trim().toLowerCase();
   return {
     topic: String(session?.topic || '').trim(),
     lang: DEFAULT_LANGS.includes(normalizedLanguage) ? normalizedLanguage : fallbackConfig.lang,
-    playersText: roomPlayerNames.length > 0
+    playersText: reviewedPlayerNames.length > 0
+      ? reviewedPlayerNames.join(', ')
+      : roomPlayerNames.length > 0
       ? roomPlayerNames.join(', ')
       : placeholderPlayers.length > 0
         ? placeholderPlayers.join(', ')
@@ -1999,9 +2007,9 @@ function GameApp() {
     if (String(session?.gameId || '').trim()) {
       return true;
     }
-    const nextConfig = resolveRecentHostedSessionConfig(session, config, roomSession);
+    const nextConfig = resolveRecentHostedSessionConfig(session, config, roomSession, reviewedHostedSession);
     return parsePlayers(nextConfig.playersText).length > 0;
-  }, [config, roomSession]);
+  }, [config, roomSession, reviewedHostedSession]);
 
   const focusOnboardingWorkspace = useCallback(() => {
     const input = onboardingWorkspaceInputRef.current;
@@ -2769,7 +2777,7 @@ function GameApp() {
   function handleUseRecentHostedSession(session) {
     setActiveHostedSession(session || null);
     setWorkspaceError('');
-    const nextConfig = resolveRecentHostedSessionConfig(session, config, roomSession);
+    const nextConfig = resolveRecentHostedSessionConfig(session, config, roomSession, reviewedHostedSession);
     setConfig((prev) => ({
       ...prev,
       topic: nextConfig.topic,
@@ -2780,7 +2788,9 @@ function GameApp() {
       `${STRINGS.recentHostedSessionPreparedPrefix} ${nextConfig.topic || STRINGS.recentHostedSessionTopicFallback}`,
       nextConfig.lang ? nextConfig.lang.toUpperCase() : String(config.lang || 'en').toUpperCase()
     ];
-    if (getRoomPlayerNames(roomSession).length > 0) {
+    if (reviewedHostedSession?.gameId === session?.gameId && Array.isArray(reviewedHostedSession?.scoreboard) && reviewedHostedSession.scoreboard.length > 0) {
+      messageParts.push(STRINGS.recentHostedSessionUseReviewedRoster);
+    } else if (getRoomPlayerNames(roomSession).length > 0) {
       messageParts.push(STRINGS.recentHostedSessionUseRoomRoster);
     } else if (buildPlaceholderPlayers(session?.playerCount).length > 0) {
       messageParts.push(STRINGS.recentHostedSessionUsePlaceholderRoster);
@@ -2861,7 +2871,7 @@ function GameApp() {
   function handleLaunchRecentHostedSession(session) {
     setActiveHostedSession(session || null);
     setWorkspaceError('');
-    const nextConfig = resolveRecentHostedSessionConfig(session, config, roomSession);
+    const nextConfig = resolveRecentHostedSessionConfig(session, config, roomSession, reviewedHostedSession);
     if (!session?.gameId) {
       setConfig((prev) => ({
         ...prev,

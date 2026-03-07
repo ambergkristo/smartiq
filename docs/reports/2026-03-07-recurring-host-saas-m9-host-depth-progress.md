@@ -57,6 +57,14 @@ Observed result:
 3. this removes the need to manually copy history state back into the template form before the next recurring event,
 4. repeat-host reuse is therefore faster from session history, not only from the current setup form.
 
+### Reviewed session roster now feeds duplicate setup before stale room state
+
+Observed result:
+
+1. when a host reviews a prior session and then prepares a duplicate setup, the reviewed session roster now takes priority,
+2. this means duplicate preparation can reuse the actual reviewed event participants instead of falling back immediately to the currently attached room roster,
+3. repeat-host recovery is therefore closer to post-session reality, especially when the saved room roster has drifted since the original event.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -66,6 +74,7 @@ The following checks executed successfully after this progress slice:
 3. `npm --prefix frontend run build`
 4. `npm --prefix frontend run test -- --run src/App.startup.test.jsx src/App.tenant-runtime.test.jsx`
 5. `npm --prefix frontend run test -- --run src/App.tenant-runtime.test.jsx src/App.startup.test.jsx`
+6. `npm --prefix frontend run build`
 
 ## Honest Status
 
@@ -77,3 +86,4 @@ The following checks executed successfully after this progress slice:
    - measurable repeat-host friction reduction.
 4. pre-live control is now meaningfully better than before, but lobby moderation and deeper participant/session control still remain open.
 5. template reuse is now stronger from both current setup and reviewed history, but the workspace still lacks deeper post-session workflow and operational feedback loops.
+6. reviewed-session reuse is now more trustworthy than before, but real post-session notes, tagging, and host follow-up workflow still remain open.
