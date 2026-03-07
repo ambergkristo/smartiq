@@ -56,6 +56,7 @@ Current execution pointer:
 14. The latest `M9` slice also adds host-side pre-live roster selection inside room management, so repeat hosts can curate selected room players directly into launch setup without rebuilding the player list manually.
 15. The latest `M9` slice also adds one-click `history -> template` reuse from the session review panel, so repeat hosts can turn reviewed sessions directly into reusable presets.
 16. The latest `M9` slice also makes reviewed session rosters win over stale room rosters during duplicate setup, so repeat-host reuse follows the last reviewed event reality more closely.
+17. The latest `M9` slice also persists host launch-roster moderation locally per room code, so curated pre-live rosters survive browser resume for saved rooms.
 
 ## Milestone Definitions
 

@@ -65,6 +65,14 @@ Observed result:
 2. this means duplicate preparation can reuse the actual reviewed event participants instead of falling back immediately to the currently attached room roster,
 3. repeat-host recovery is therefore closer to post-session reality, especially when the saved room roster has drifted since the original event.
 
+### Host launch-roster moderation now survives browser resume for saved rooms
+
+Observed result:
+
+1. selected host launch rosters are now persisted locally per room code,
+2. if the host refreshes or returns to a saved room on the same browser, the curated launch roster is restored automatically,
+3. this removes another repeat-host annoyance where pre-live moderation work had to be repeated after a reload or resume.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -75,6 +83,7 @@ The following checks executed successfully after this progress slice:
 4. `npm --prefix frontend run test -- --run src/App.startup.test.jsx src/App.tenant-runtime.test.jsx`
 5. `npm --prefix frontend run test -- --run src/App.tenant-runtime.test.jsx src/App.startup.test.jsx`
 6. `npm --prefix frontend run build`
+7. `npm --prefix frontend run test -- --run src/App.startup.test.jsx src/App.tenant-runtime.test.jsx`
 
 ## Honest Status
 
@@ -87,3 +96,4 @@ The following checks executed successfully after this progress slice:
 4. pre-live control is now meaningfully better than before, but lobby moderation and deeper participant/session control still remain open.
 5. template reuse is now stronger from both current setup and reviewed history, but the workspace still lacks deeper post-session workflow and operational feedback loops.
 6. reviewed-session reuse is now more trustworthy than before, but real post-session notes, tagging, and host follow-up workflow still remain open.
+7. host-side lobby moderation is now less fragile across reloads, but true multi-device moderation and server-backed lobby control still remain open.

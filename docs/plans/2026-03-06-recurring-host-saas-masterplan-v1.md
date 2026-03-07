@@ -147,7 +147,8 @@ Priority order:
 17. The latest `M9` slice also adds host-side pre-live roster selection in room management, reducing repeat-host setup friction before launch without requiring manual player-list rebuilding.
 18. The latest `M9` slice also adds one-click `history -> template` reuse from the reviewed session panel, strengthening repeat-host reuse beyond the current setup form alone.
 19. The latest `M9` slice also makes reviewed session rosters take priority during duplicate setup, reducing repeat-host drift between reviewed history and the next prepared launch.
-20. The locked next-sequence is:
+20. The latest `M9` slice also persists host launch-roster moderation locally per room code, reducing repeat-host friction when saved rooms are resumed after a reload.
+21. The locked next-sequence is:
    - product stabilization,
    - auth/trust hardening,
    - billing/payment hardening,

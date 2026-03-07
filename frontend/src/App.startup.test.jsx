@@ -1026,4 +1026,31 @@ describe('App startup resilience', () => {
     expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent(/waiting for the host/i);
     expect(screen.getAllByText('Saved Player').length).toBeGreaterThan(0);
   });
+
+  test('restores saved host room launch roster selection from local storage', async () => {
+    localStorage.setItem('smartiq.roomSession', JSON.stringify({
+      roomCode: 'SAVE42',
+      playerId: 'p1',
+      authToken: 'rt_saved_host',
+      displayName: 'Host One',
+      role: 'host',
+      roomState: {
+        roomCode: 'SAVE42',
+        players: [
+          { playerId: 'p1', displayName: 'Host One' },
+          { playerId: 'p2', displayName: 'Alice' },
+          { playerId: 'p3', displayName: 'Bob' }
+        ]
+      }
+    }));
+    localStorage.setItem('smartiq.roomSelection.SAVE42', JSON.stringify(['Host One', 'Bob']));
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('room-session-card')).toBeInTheDocument());
+    expect(screen.getByTestId('room-selected-roster-hint')).toHaveTextContent(/host one/i);
+    expect(screen.getByTestId('room-selected-roster-hint')).toHaveTextContent(/bob/i);
+    expect(screen.getByTestId('room-selected-roster-hint')).not.toHaveTextContent(/alice/i);
+  });
 });

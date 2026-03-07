@@ -236,6 +236,7 @@ const STRINGS = {
 const GAME_STORAGE_KEY = 'smartiq.gameId';
 const CONFIG_STORAGE_KEY = 'smartiq.roundConfig';
 const ROOM_SESSION_STORAGE_KEY = 'smartiq.roomSession';
+const ROOM_SELECTION_STORAGE_PREFIX = 'smartiq.roomSelection.';
 const STARTUP_PHASE = {
   LOADING: 'loading',
   BACKEND_UNREACHABLE: 'backend-unreachable',
@@ -1880,12 +1881,51 @@ function loadStoredRoomSession() {
   }
 }
 
+function buildRoomSelectionStorageKey(roomCode) {
+  const normalized = normalizeRoomCodeInput(String(roomCode || ''));
+  return normalized ? `${ROOM_SELECTION_STORAGE_PREFIX}${normalized}` : '';
+}
+
+function loadStoredRoomSelection(roomCode) {
+  try {
+    const key = buildRoomSelectionStorageKey(roomCode);
+    if (!key) {
+      return [];
+    }
+    const raw = localStorage.getItem(key);
+    if (!raw) {
+      return [];
+    }
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) {
+      return [];
+    }
+    return parsed
+      .map((entry) => normalizePlayerName(String(entry || '')))
+      .filter(Boolean);
+  } catch {
+    return [];
+  }
+}
+
 function persistRoomSession(session) {
   if (!session) {
     localStorage.removeItem(ROOM_SESSION_STORAGE_KEY);
     return;
   }
   localStorage.setItem(ROOM_SESSION_STORAGE_KEY, JSON.stringify(session));
+}
+
+function persistRoomSelection(roomCode, selectedPlayerNames) {
+  const key = buildRoomSelectionStorageKey(roomCode);
+  if (!key) {
+    return;
+  }
+  if (!Array.isArray(selectedPlayerNames) || selectedPlayerNames.length === 0) {
+    localStorage.removeItem(key);
+    return;
+  }
+  localStorage.setItem(key, JSON.stringify(selectedPlayerNames));
 }
 
 function normalizeRoomCodeInput(value) {
@@ -2091,11 +2131,20 @@ function GameApp() {
       setSelectedRoomPlayerNames([]);
       return;
     }
+    const storedSelection = loadStoredRoomSelection(roomSession?.roomCode);
     setSelectedRoomPlayerNames((prev) => {
-      const next = roomPlayerNames.filter((entry) => prev.includes(entry));
+      const baseline = storedSelection.length > 0 ? storedSelection : prev;
+      const next = roomPlayerNames.filter((entry) => baseline.includes(entry));
       return next.length > 0 ? next : roomPlayerNames;
     });
   }, [roomSession]);
+
+  useEffect(() => {
+    if (roomSession?.role !== 'host' || !roomSession?.roomCode) {
+      return;
+    }
+    persistRoomSelection(roomSession.roomCode, selectedRoomPlayerNames);
+  }, [roomSession, selectedRoomPlayerNames]);
 
   useEffect(() => {
     loadTopics();
@@ -2717,6 +2766,7 @@ function GameApp() {
   }
 
   function handleClearRoom() {
+    persistRoomSelection(roomSession?.roomCode, []);
     setRoomSession(null);
     persistRoomSession(null);
     setSelectedRoomPlayerNames([]);
