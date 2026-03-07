@@ -115,6 +115,15 @@ Observed result:
 3. once a player is removed, the room snapshot, selected launch roster, and live room list all update to the reduced participant set,
 4. this moves `M9` closer to true pre-live participant management rather than only local roster selection.
 
+### Host can now bulk-trim a room to the selected launch roster
+
+Observed result:
+
+1. host room controls now include `Trim to selected`,
+2. the action removes every non-selected non-host participant through the same backend-enforced remove flow,
+3. this turns the selected launch roster from a planning hint into a fast server-backed moderation action,
+4. repeat hosts can now collapse a noisy room into the intended live roster without removing participants one by one.
+
 ## Validation
 
 The following checks executed successfully after this progress slice:
@@ -135,6 +144,7 @@ The following checks executed successfully after this progress slice:
 14. `npm --prefix frontend run build`
 15. `mvn -q -f backend/pom.xml "-Dtest=RoomServiceTest,RoomControllerTest" test`
 16. `npm --prefix frontend run test -- --run src/App.startup.test.jsx src/api.test.js`
+17. `npm --prefix frontend run test -- --run src/App.startup.test.jsx`
 
 ## Honest Status
 
@@ -144,7 +154,7 @@ The following checks executed successfully after this progress slice:
    - faster reusable setup,
    - stronger pre-live controls,
    - measurable repeat-host friction reduction.
-4. pre-live control is now meaningfully better than before, and host-side player removal is now real, but lobby moderation and deeper participant/session control still remain open.
+4. pre-live control is now meaningfully better than before, and host-side player removal plus bulk roster trimming are now real, but lobby moderation and deeper participant/session control still remain open.
 5. template reuse is now stronger from both current setup and reviewed history, but the workspace still lacks deeper post-session workflow and operational feedback loops.
 6. reviewed-session reuse is now more trustworthy than before, but real post-session notes, tagging, and host follow-up workflow still remain open.
 7. host-side lobby moderation is now less fragile across reloads, but true multi-device moderation and server-backed lobby control still remain open.

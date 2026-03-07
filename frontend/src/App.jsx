@@ -201,6 +201,8 @@ const STRINGS = {
   roomSelectedRosterEmpty: 'Select at least one room player for the live setup.',
   roomSelectedRosterReadyPrefix: 'Selected room roster ready:',
   roomSelectedRosterStartPrefix: 'Starting room roster:',
+  roomTrimSelectedPlayersSubmit: 'Trim to selected',
+  roomTrimSelectedPlayersPrefix: 'Room trimmed to selected roster:',
   roomRemovePlayerSubmit: 'Remove',
   roomRemovePlayerPrefix: 'Removed room player:',
   roomUsePlayersMessage: 'Room players loaded into the live session setup.',
@@ -1585,12 +1587,17 @@ function RoomPanel({
   onToggleRoomPlayer,
   onUseRoomPlayers,
   onStartRoomSession,
-  onRemoveRoomPlayer
+  onRemoveRoomPlayer,
+  onTrimRoomToSelectedPlayers
 }) {
   const roomPlayers = Array.isArray(roomSession?.roomState?.players) ? roomSession.roomState.players : [];
   const roomPlayerNames = getRoomPlayerNames(roomSession);
   const selectedPlayers = getSelectedRoomPlayerNames(roomSession, selectedRoomPlayerNames);
   const canUseRoomPlayers = roomSession?.role === 'host' && roomPlayerNames.length > 0;
+  const removableSelectedGap = roomPlayers.filter((player) => (
+    roomSession?.playerId !== player.playerId
+      && !selectedPlayers.includes(normalizePlayerName(player.displayName || player.playerId || ''))
+  )).length;
   const isPlayerLobby = roomSession?.role === 'player';
   const roomBranding = roomSession?.roomState?.branding && typeof roomSession.roomState.branding === 'object'
     ? roomSession.roomState.branding
@@ -1730,6 +1737,14 @@ function RoomPanel({
                   </button>
                   <button type="button" onClick={onUseRoomPlayers} disabled={pending || selectedPlayers.length === 0}>
                     {STRINGS.roomUseSelectedPlayersSubmit}
+                  </button>
+                  <button
+                    type="button"
+                    className="secondary-action"
+                    onClick={onTrimRoomToSelectedPlayers}
+                    disabled={pending || selectedPlayers.length === 0 || removableSelectedGap === 0}
+                  >
+                    {STRINGS.roomTrimSelectedPlayersSubmit}
                   </button>
                   <button type="button" onClick={onStartRoomSession} disabled={pending || selectedPlayers.length === 0}>
                     {STRINGS.roomStartSelectedLiveSubmit}
@@ -3011,6 +3026,48 @@ function GameApp() {
     }
   }
 
+  async function handleTrimRoomToSelectedPlayers() {
+    if (roomPending || roomSession?.role !== 'host' || !roomSession?.roomCode || !roomSession?.playerId || !roomSession?.authToken) {
+      return;
+    }
+    const selectedNames = getSelectedRoomPlayerNames(roomSession, selectedRoomPlayerNames);
+    if (selectedNames.length === 0) {
+      setRoomError(STRINGS.roomSelectedRosterEmpty);
+      return;
+    }
+    const playersToRemove = (Array.isArray(roomSession?.roomState?.players) ? roomSession.roomState.players : [])
+      .filter((player) => player?.playerId !== roomSession.playerId)
+      .filter((player) => !selectedNames.includes(normalizePlayerName(player?.displayName || player?.playerId || '')));
+    if (playersToRemove.length === 0) {
+      return;
+    }
+
+    setRoomPending(true);
+    setRoomError('');
+    setRoomMessage('');
+    try {
+      let nextRoomState = roomSession.roomState;
+      for (const player of playersToRemove) {
+        nextRoomState = await removeRoomPlayerFromSession(roomSession.roomCode, {
+          hostPlayerId: roomSession.playerId,
+          hostAuthToken: roomSession.authToken,
+          targetPlayerId: player.playerId
+        });
+      }
+      applyRoomSession({
+        ...roomSession,
+        roomState: nextRoomState
+      }, `${STRINGS.roomTrimSelectedPlayersPrefix} ${selectedNames.join(', ')}`);
+    } catch (error) {
+      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
+        ? error.detail
+        : error?.message || 'Could not trim room players.';
+      setRoomError(detail);
+    } finally {
+      setRoomPending(false);
+    }
+  }
+
   function handleUseRecentHostedSession(session) {
     setActiveHostedSession(session || null);
     setWorkspaceError('');
@@ -3308,6 +3365,7 @@ function GameApp() {
                 onUseRoomPlayers={handleUseRoomPlayers}
                 onStartRoomSession={handleStartRoomSession}
                 onRemoveRoomPlayer={handleRemoveRoomPlayer}
+                onTrimRoomToSelectedPlayers={handleTrimRoomToSelectedPlayers}
               />
             ) : (
               <PlayerJoinRoutePanel
@@ -3370,6 +3428,7 @@ function GameApp() {
                 onUseRoomPlayers={handleUseRoomPlayers}
                 onStartRoomSession={handleStartRoomSession}
                 onRemoveRoomPlayer={handleRemoveRoomPlayer}
+                onTrimRoomToSelectedPlayers={handleTrimRoomToSelectedPlayers}
               />
               <StartScreen
                 topics={topics}
