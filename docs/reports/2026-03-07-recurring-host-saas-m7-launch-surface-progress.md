@@ -49,7 +49,8 @@ Observed result:
    - real paid conversions,
    - auth/billing/live-session watchlists,
 3. the dashboard explicitly separates bootstrap-seeded tenants from real pilot tenants,
-4. a recurring-host incident runbook now exists for auth, billing, and live-session launch failures.
+4. a recurring-host incident runbook now exists for auth, billing, and live-session launch failures,
+5. repo now exposes `npm run validate:m7:recurring-host:launch-gate` to aggregate release readiness, alert validation, launch smoke, and recurring-host KPI snapshot generation into one technical gate.
 
 ## Validation
 
@@ -59,9 +60,10 @@ The following checks executed successfully after this progress slice:
 2. `npm --prefix frontend run build`
 3. `node tools/generate_recurring_host_pilot_summary.js --snapshot=tools/fixtures/recurring_host_pilot_summary.sample.json --json-output=<temp> --output=<temp>`
 4. `node tools/generate_recurring_host_launch_kpi_dashboard.js --summary-json=<temp> --output=<temp>`
+5. `node tools/validate_recurring_host_launch_gate.js --summary-json=<temp> --skip-release-check --skip-smoke --skip-alert-validation`
 
 ## Honest Status
 
 1. `M7` public conversion surface is now in progress and product-real,
 2. `M6` remains deferred as an external proof dependency because real pilot usage is still missing,
-3. `M7` now has a recurring-host KPI snapshot path and incident runbook, but it is not promotable done yet because production monitoring validation, launch-scope smoke proof, and final blocker review still need their own slices.
+3. `M7` now has a recurring-host KPI snapshot path, incident runbook, and technical launch gate, but it is not promotable done yet because live production monitoring validation, launch-scope smoke proof, and final blocker review still need their own slices.

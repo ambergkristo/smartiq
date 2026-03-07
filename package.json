@@ -51,6 +51,7 @@
     "report:recurring-host:launch-kpi": "node tools/generate_recurring_host_launch_kpi_dashboard.js",
     "seed:recurring-host:pilot": "node tools/seed_recurring_host_pilot.js",
     "validate:m6:recurring-host:pilot-gate": "node tools/validate_recurring_host_pilot_gate.js",
+    "validate:m7:recurring-host:launch-gate": "node tools/validate_recurring_host_launch_gate.js",
     "validate:cards:legacy": "node tools/validate-cards.js data/smart10/cards.en.json",
     "test:golden": "node tools/validate-cards.js data/smart10/golden/golden.dataset.json",
     "pipeline:cards": "node tools/build-content-pipeline.js",

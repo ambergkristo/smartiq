@@ -138,7 +138,7 @@ Priority order:
 8. `M6` now has real runtime pilot telemetry for bootstrap, auth completion, session launch/duplicate/resume/complete, and billing upgrade activation, plus a founder-facing pilot summary, support-case loop, canonical pilot-summary report generator, pilot evidence-pack generator, pilot capture command, and pilot-gate automation in admin ops/tooling.
 9. Live `M6` seeding and capture now work successfully against `https://smartiq-63tk.onrender.com`, including a bootstrap cohort that can exercise repeat-host, paid-conversion, and support-case paths.
 10. The `M6` gate now explicitly excludes bootstrap-seeded tenants from readiness counts; the latest corrected live capture is still `NOT_YET` because it reports `10` bootstrap-seeded tenants and `0` real pilot tenants.
-11. `M7` technical work may now proceed in parallel with the deferred `M6` external-proof blocker, starting with the public recurring-host launch surface, launch KPI snapshot tooling, and recurring-host incident runbook.
+11. `M7` technical work may now proceed in parallel with the deferred `M6` external-proof blocker, starting with the public recurring-host launch surface, launch KPI snapshot tooling, recurring-host incident runbook, and a technical launch gate wrapper.
 12. The locked next-sequence is:
    - product stabilization,
    - auth/trust hardening,

@@ -115,9 +115,10 @@ Required evidence:
 ### M7 Gate - Narrow Launch Readiness
 
 Required checks:
-1. `npm run release:check`
-2. launch-scope smoke checks are green,
-3. production monitoring and alert validation is green.
+1. `npm run validate:m7:recurring-host:launch-gate`
+2. `npm run release:check`
+3. launch-scope smoke checks are green,
+4. production monitoring and alert validation is green.
 
 Required evidence:
 1. pricing and public conversion surface review,
