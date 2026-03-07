@@ -74,6 +74,26 @@ const STRINGS = {
   signInSubmit: 'Send sign-in link',
   signInSubmitting: 'Signing in...',
   signInSuccess: 'Host session restored.',
+  launchPanelEyebrow: 'Narrow launch for recurring live quiz hosts',
+  launchPanelTitle: 'Run branded recurring quiz nights without rebuilding the setup every week.',
+  launchPanelHint: 'SmartIQ is aimed at small professional hosts: community organizers, event operators, and recurring venue quiz nights.',
+  launchPanelPrimaryCta: 'Start free host trial',
+  launchPanelSecondaryCta: 'Sign in to existing workspace',
+  launchPanelValueTitle: 'What the launch plan includes',
+  launchPanelValue1: 'Branded host and player entry surfaces with one canonical create, join, replay, and duplicate-event flow.',
+  launchPanelValue2: 'Host workspace with templates, recent session history, review, and replay tools built for repeat events.',
+  launchPanelValue3: 'Runtime billing recovery, capability enforcement, and recurring-host support tracking already wired into the product.',
+  launchPanelPricingTitle: 'Launch pricing',
+  launchPanelPricingTrial: 'Trial',
+  launchPanelPricingTrialDetail: 'Short evaluation path for first hosted runs and product fit checks.',
+  launchPanelPricingPro: 'Pro Host',
+  launchPanelPricingProDetail: 'Main paid plan for recurring hosts who need branding, analytics, templates, and larger live sessions.',
+  launchPanelPricingTeam: 'Team/Agency later',
+  launchPanelPricingTeamDetail: 'Reserved for multi-host collaboration after the solo recurring-host path is fully proven.',
+  launchPanelAssuranceTitle: 'Launch assurances',
+  launchPanelAssurance1: 'Hosted billing recovery path is built into the runtime.',
+  launchPanelAssurance2: 'Recent host history, review, and duplicate launch are already first-class.',
+  launchPanelAssurance3: 'Support and pilot evidence rails exist, even when launch proof is still below threshold.',
   signOutSubmit: 'Sign out',
   signOutSuccess: 'Signed out. Sign in again to restore tenant runtime.',
   sessionExpired: 'Host session expired or is invalid. Sign in again to restore tenant runtime.',
@@ -505,6 +525,63 @@ function SetupSkeleton({ appTitle }) {
       <button disabled type="button">
         {STRINGS.startRound}
       </button>
+    </section>
+  );
+}
+
+function PublicLaunchPanel({ onStartTrial, onSignIn }) {
+  return (
+    <section className="setup-panel board-surface launch-panel" data-testid="launch-panel">
+      <p className="section-title">{STRINGS.launchPanelEyebrow}</p>
+      <div className="launch-panel-hero">
+        <div className="launch-panel-copy">
+          <h1>{STRINGS.launchPanelTitle}</h1>
+          <p>{STRINGS.launchPanelHint}</p>
+          <div className="launch-panel-actions">
+            <button type="button" onClick={onStartTrial}>
+              {STRINGS.launchPanelPrimaryCta}
+            </button>
+            <button type="button" className="secondary-action" onClick={onSignIn}>
+              {STRINGS.launchPanelSecondaryCta}
+            </button>
+          </div>
+        </div>
+        <div className="launch-panel-pricing" aria-label={STRINGS.launchPanelPricingTitle}>
+          <article className="launch-plan-card launch-plan-card--trial">
+            <p>{STRINGS.launchPanelPricingTrial}</p>
+            <strong>Start light</strong>
+            <span>{STRINGS.launchPanelPricingTrialDetail}</span>
+          </article>
+          <article className="launch-plan-card launch-plan-card--pro">
+            <p>{STRINGS.launchPanelPricingPro}</p>
+            <strong>Recurring host default</strong>
+            <span>{STRINGS.launchPanelPricingProDetail}</span>
+          </article>
+          <article className="launch-plan-card launch-plan-card--team">
+            <p>{STRINGS.launchPanelPricingTeam}</p>
+            <strong>Not the launch wedge</strong>
+            <span>{STRINGS.launchPanelPricingTeamDetail}</span>
+          </article>
+        </div>
+      </div>
+      <div className="launch-panel-grid">
+        <article className="launch-panel-card">
+          <h2>{STRINGS.launchPanelValueTitle}</h2>
+          <ul className="launch-panel-list">
+            <li>{STRINGS.launchPanelValue1}</li>
+            <li>{STRINGS.launchPanelValue2}</li>
+            <li>{STRINGS.launchPanelValue3}</li>
+          </ul>
+        </article>
+        <article className="launch-panel-card">
+          <h2>{STRINGS.launchPanelAssuranceTitle}</h2>
+          <ul className="launch-panel-list">
+            <li>{STRINGS.launchPanelAssurance1}</li>
+            <li>{STRINGS.launchPanelAssurance2}</li>
+            <li>{STRINGS.launchPanelAssurance3}</li>
+          </ul>
+        </article>
+      </div>
     </section>
   );
 }
@@ -1175,7 +1252,8 @@ function OnboardingPanel({
   success,
   error,
   onDraftChange,
-  onSubmit
+  onSubmit,
+  workspaceInputRef
 }) {
   return (
     <section className="setup-panel board-surface onboarding-panel" data-testid="onboarding-panel">
@@ -1190,6 +1268,7 @@ function OnboardingPanel({
         <label htmlFor="onboarding-workspace">{STRINGS.onboardingWorkspaceLabel}</label>
         <input
           id="onboarding-workspace"
+          ref={workspaceInputRef}
           type="text"
           value={draft.workspaceName}
           onChange={(event) => onDraftChange((prev) => ({ ...prev, workspaceName: event.target.value }))}
@@ -1237,7 +1316,8 @@ function SignInPanel({
   success,
   error,
   onDraftChange,
-  onSubmit
+  onSubmit,
+  emailInputRef
 }) {
   return (
     <section className="setup-panel board-surface onboarding-panel" data-testid="signin-panel">
@@ -1252,6 +1332,7 @@ function SignInPanel({
         <label htmlFor="signin-email">{STRINGS.signInEmailLabel}</label>
         <input
           id="signin-email"
+          ref={emailInputRef}
           type="email"
           value={draft.email}
           onChange={(event) => onDraftChange((prev) => ({ ...prev, email: event.target.value }))}
@@ -1759,6 +1840,8 @@ function GameApp() {
   const lastRevealedCountRef = useRef(0);
   const lastWrongCountRef = useRef(0);
   const billingReturnHandledRef = useRef(false);
+  const onboardingWorkspaceInputRef = useRef(null);
+  const signInEmailInputRef = useRef(null);
   const activePlayerRouteRoomCode = String(playerJoinRoute || '').trim();
   const playerRouteMatchesSavedPlayerSession = roomSession?.role === 'player'
     && normalizeRoomCodeInput(roomSession?.roomCode) === activePlayerRouteRoomCode;
@@ -1769,6 +1852,28 @@ function GameApp() {
     const nextConfig = resolveRecentHostedSessionConfig(session, config, roomSession);
     return parsePlayers(nextConfig.playersText).length > 0;
   }, [config, roomSession]);
+
+  const focusOnboardingWorkspace = useCallback(() => {
+    const input = onboardingWorkspaceInputRef.current;
+    if (!input) {
+      return;
+    }
+    input.focus();
+    if (typeof input.scrollIntoView === 'function') {
+      input.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+  }, []);
+
+  const focusSignInEmail = useCallback(() => {
+    const input = signInEmailInputRef.current;
+    if (!input) {
+      return;
+    }
+    input.focus();
+    if (typeof input.scrollIntoView === 'function') {
+      input.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+  }, []);
 
   const loadTopics = useCallback(async () => {
     setStartup({
@@ -2778,6 +2883,10 @@ function GameApp() {
             <>
               {!runtimeSnapshot ? (
                 <>
+                  <PublicLaunchPanel
+                    onStartTrial={focusOnboardingWorkspace}
+                    onSignIn={focusSignInEmail}
+                  />
                   <OnboardingPanel
                     draft={onboardingDraft}
                     pending={onboardingPending}
@@ -2785,6 +2894,7 @@ function GameApp() {
                     error={onboardingError}
                     onDraftChange={setOnboardingDraft}
                     onSubmit={handleOnboardingBootstrap}
+                    workspaceInputRef={onboardingWorkspaceInputRef}
                   />
                   <SignInPanel
                     draft={signInDraft}
@@ -2793,6 +2903,7 @@ function GameApp() {
                     error={signInError}
                     onDraftChange={setSignInDraft}
                     onSubmit={handleSignIn}
+                    emailInputRef={signInEmailInputRef}
                   />
                 </>
               ) : null}

@@ -32,7 +32,7 @@ Execution governance:
 | M4 | S4 | Full host/join/replay canonical flow | DONE (2026-03-06) |
 | M5 | S5 | Paid value and entitlement enforcement | DONE (2026-03-06) |
 | M6 | S6 | Pilot conversion and retention proof | IN_PROGRESS (2026-03-06) |
-| M7 | S7 | Narrow launch readiness | TODO |
+| M7 | S7 | Narrow launch readiness | IN_PROGRESS (technical track, 2026-03-07) |
 | M8 | S8 | Sellable niche SaaS validation | TODO |
 | M9 | S9 | Host product depth | TODO |
 | M10 | S10 | Content and gameplay depth | TODO |
@@ -48,6 +48,7 @@ Current execution pointer:
 6. Live `M6` seeding and capture now execute successfully against `https://smartiq-63tk.onrender.com`, including a bootstrap cohort that can exercise repeat-host, paid-conversion, and support-case evidence paths.
 7. The `M6` gate now excludes bootstrap-seeded tenants from readiness counts, and the latest corrected artifact reports `10` bootstrap-seeded tenants but `0` real pilot tenants.
 8. `M6` therefore remains honestly blocked on real pilot volume rather than missing instrumentation, because the milestone still requires `10` real activated hosts and `5` real repeat hosts.
+9. `M7` technical implementation is now allowed to proceed in parallel with that deferred external blocker, and the public recurring-host launch surface is the first landed slice.
 
 ## Milestone Definitions
 

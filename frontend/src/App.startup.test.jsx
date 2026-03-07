@@ -174,6 +174,31 @@ describe('App startup resilience', () => {
     expect(screen.getByTestId('active-filter')).toHaveTextContent(/any topic \| en/i);
   });
 
+  test('shows public launch panel before host onboarding', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('launch-panel')).toBeInTheDocument());
+    expect(screen.getByText(/narrow launch for recurring live quiz hosts/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /start free host trial/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /sign in to existing workspace/i })).toBeInTheDocument();
+  });
+
+  test('launch panel ctas focus onboarding and sign-in inputs', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('launch-panel')).toBeInTheDocument());
+
+    fireEvent.click(screen.getByRole('button', { name: /start free host trial/i }));
+    expect(screen.getByLabelText(/workspace name/i)).toHaveFocus();
+
+    fireEvent.click(screen.getByRole('button', { name: /sign in to existing workspace/i }));
+    expect(screen.getByLabelText(/host email/i)).toHaveFocus();
+  });
+
   test('persists audio controls state between renders', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
 
