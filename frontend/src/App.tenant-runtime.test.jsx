@@ -661,12 +661,136 @@ describe('App tenant runtime integration', () => {
 
     await waitFor(() => expect(fetchTenantAuditEvents).toHaveBeenCalled());
     expect(screen.getByText(/live science/i)).toBeInTheDocument();
-    expect(screen.getByText(/final history/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/final history/i).length).toBeGreaterThan(0);
     fireEvent.click(screen.getByRole('button', { name: /^completed$/i }));
 
     expect(screen.queryByText(/live science/i)).not.toBeInTheDocument();
-    expect(screen.getByText(/final history/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/final history/i).length).toBeGreaterThan(0);
     expect(screen.getByText(/winner alice/i)).toBeInTheDocument();
     expect(screen.getAllByText(/^completed$/i).length).toBeGreaterThan(0);
+  });
+
+  test('shows host momentum analytics from recent hosted sessions and templates', async () => {
+    fetchTopics.mockResolvedValue([
+      { topic: 'Science', count: 12 },
+      { topic: 'History', count: 10 }
+    ]);
+    hasRuntimeAuthContext.mockReturnValue(true);
+    fetchTenantRuntimeSnapshot.mockResolvedValue({
+      me: {
+        email: 'owner@northwind.test',
+        selectedTenantId: 'tenant-northwind'
+      },
+      settings: {
+        settings: {
+          schemaVersion: 1,
+          theme: 'ocean',
+          host: {
+            sessionTemplates: [
+              {
+                templateId: 'tpl-1',
+                name: 'Friday default',
+                topic: 'History',
+                language: 'en',
+                theme: 'classic',
+                players: ['Host One', 'Alice', 'Bob']
+              }
+            ]
+          }
+        }
+      },
+      branding: {
+        branding: {
+          appName: 'Northwind Quiz',
+          primaryColor: '#223344',
+          secondaryColor: '#556677'
+        }
+      },
+      subscription: {
+        planCode: 'pro-host',
+        status: 'active',
+        billingCycle: 'monthly'
+      },
+      capabilities: {
+        planTier: 'pro_host',
+        maxHostedPlayers: 10,
+        analyticsHistoryEnabled: true,
+        sessionTemplatesEnabled: true
+      }
+    });
+    fetchTenantAuditEvents.mockResolvedValue([
+      {
+        auditEventId: 'evt-10',
+        action: 'HOST_GAME_SESSION_CREATED',
+        entityId: 'game-a',
+        metadata: {
+          gameId: 'game-a',
+          topic: 'History',
+          language: 'en',
+          playerCount: 4
+        },
+        eventTime: '2026-03-06T12:00:00Z'
+      },
+      {
+        auditEventId: 'evt-11',
+        action: 'HOST_GAME_SESSION_COMPLETED',
+        entityId: 'game-a',
+        metadata: {
+          gameId: 'game-a',
+          topic: 'History',
+          winnerDisplayName: 'Alice',
+          winnerScore: 9
+        },
+        eventTime: '2026-03-06T13:00:00Z'
+      },
+      {
+        auditEventId: 'evt-12',
+        action: 'HOST_GAME_SESSION_CREATED',
+        entityId: 'game-b',
+        metadata: {
+          gameId: 'game-b',
+          topic: 'Science',
+          language: 'en',
+          playerCount: 2
+        },
+        eventTime: '2026-03-06T14:00:00Z'
+      },
+      {
+        auditEventId: 'evt-13',
+        action: 'HOST_GAME_SESSION_CREATED',
+        entityId: 'game-c',
+        metadata: {
+          gameId: 'game-c',
+          topic: 'History',
+          language: 'et',
+          playerCount: 3
+        },
+        eventTime: '2026-03-06T15:00:00Z'
+      },
+      {
+        auditEventId: 'evt-14',
+        action: 'HOST_GAME_SESSION_COMPLETED',
+        entityId: 'game-c',
+        metadata: {
+          gameId: 'game-c',
+          topic: 'History',
+          winnerDisplayName: 'Host One',
+          winnerScore: 7
+        },
+        eventTime: '2026-03-06T16:00:00Z'
+      }
+    ]);
+
+    render(<App />);
+
+    await waitFor(() => expect(fetchTenantAuditEvents).toHaveBeenCalled());
+    const analyticsCard = screen.getByTestId('host-workspace-analytics-card');
+    expect(analyticsCard).toHaveTextContent(/recent runs\s*3/i);
+    expect(analyticsCard).toHaveTextContent(/completed runs\s*2/i);
+    expect(analyticsCard).toHaveTextContent(/avg roster\s*3/i);
+    expect(analyticsCard).toHaveTextContent(/saved templates\s*1/i);
+    expect(analyticsCard).toHaveTextContent(/live runs: 1/i);
+    expect(analyticsCard).toHaveTextContent(/top topic: history/i);
+    expect(analyticsCard).toHaveTextContent(/latest winner: host one \(7 pts\)/i);
   });
 });

@@ -14,7 +14,7 @@ milestone: M7
 - Date: 2026-03-07
 - Branch: `main`
 - Track: `recurring-host-saas`
-- Milestone status: `M7 technical track in progress`
+- Milestone status: `M7 done with deferred M6 external proof`
 
 ## Progress Landed
 
@@ -101,5 +101,6 @@ The following checks executed successfully after this progress slice:
 2. `M6` remains deferred as an external proof dependency because real pilot usage is still missing,
 3. `M7` now has a recurring-host KPI snapshot path, incident runbook, frontend release-readiness fixes, and hardened smoke/runtime-deck tooling,
 4. live public smoke against `https://smartiq-63tk.onrender.com` and `https://smartiq-nine.vercel.app` is now green,
-5. the current live blocker is specific and honest: the deployed backend still serves the old `OPEN`-only fallback deck shape, so external runtime-deck verification fails on immediate category repeats until commit `22919df` is fully live,
-6. `M7` is therefore not promotable done yet because live production monitoring validation, launch-scope smoke proof, and final blocker review still need a post-deploy evidence slice with the richer fallback deck live.
+5. the former live blocker is now resolved: the deployed backend serves the richer fallback deck shape and live runtime-deck verification is green,
+6. `M7` promotion evidence now exists separately in `docs/reports/2026-03-07-recurring-host-saas-m7-launch-readiness-evidence.md`,
+7. `M7` is therefore technically done even though `M6` remains externally deferred for real commercial proof.

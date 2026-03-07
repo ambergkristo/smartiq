@@ -27,6 +27,9 @@
 - `docs/reports/2026-03-06-recurring-host-saas-m6-pilot-metrics-progress.md`
 - `docs/reports/2026-03-07-recurring-host-saas-m6-bootstrap-cohort-evidence.md`
 - `docs/reports/2026-03-07-recurring-host-saas-m7-launch-surface-progress.md`
+- `docs/reports/2026-03-07-recurring-host-saas-m7-launch-readiness-evidence.md`
+- `docs/reports/2026-03-07-recurring-host-saas-m8-sellable-validation-progress.md`
+- `docs/reports/2026-03-07-recurring-host-saas-m9-host-depth-progress.md`
 - `docs/reports/2026-03-06-quiz-night-saas-milestone-evidence-m0-m9.md`
 - `docs/reports/2026-03-06-quiz-night-saas-m8-go-no-go-report.md`
 - `docs/reports/2026-03-06-quiz-night-saas-m9-post-launch-hardening-pack.md`

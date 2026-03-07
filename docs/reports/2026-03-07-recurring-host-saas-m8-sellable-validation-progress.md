@@ -59,7 +59,7 @@ The following checks executed successfully after this progress slice:
 
 ## Honest Status
 
-1. `M8` technical artifact generation is now underway even though `M7` still has a live deploy verification blocker,
+1. `M7` launch readiness is now technically complete on live production surfaces, so `M8` is the active follow-on technical milestone,
 2. the artifact chain is now proven against both sample data and the latest live recurring-host summary JSON,
 3. the current live recommendation is honestly `NO_GO_SELLABLE`,
 4. `M8` is not promotable done because sellable-SaaS proof still depends on real paying hosts, repeatable segment evidence, and a final go/no-go recommendation grounded in real usage.

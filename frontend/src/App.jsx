@@ -115,6 +115,16 @@ const STRINGS = {
   hostWorkspaceNoActivity: 'No recent host activity yet.',
   hostWorkspaceNoUsage: 'No tracked tenant usage yet for this period.',
   hostWorkspaceAnalyticsLocked: 'Analytics and host history unlock on Pro Host. Upgrade to view recent activity and usage trends.',
+  hostWorkspaceAnalyticsTitle: 'Host momentum',
+  hostWorkspaceAnalyticsHint: 'A repeat-host snapshot from recent runs, roster size, and reusable templates.',
+  hostWorkspaceAnalyticsRecentRuns: 'Recent runs',
+  hostWorkspaceAnalyticsCompletedRuns: 'Completed runs',
+  hostWorkspaceAnalyticsAverageRoster: 'Avg roster',
+  hostWorkspaceAnalyticsSavedTemplates: 'Saved templates',
+  hostWorkspaceAnalyticsLiveRuns: 'Live runs',
+  hostWorkspaceAnalyticsTopTopic: 'Top topic',
+  hostWorkspaceAnalyticsLatestWinner: 'Latest winner',
+  hostWorkspaceAnalyticsWinnerFallback: 'n/a',
   brandingEditorTitle: 'Branding',
   brandingEditorHint: 'Update the runtime app name, logo, and colors shown across host and player surfaces.',
   brandingLockedHint: 'Custom branding unlocks on Pro Host. Upgrade to apply your own app identity.',
@@ -364,6 +374,35 @@ function deriveRecentHostedSessions(auditEvents) {
       return (Number.isNaN(rightTime) ? 0 : rightTime) - (Number.isNaN(leftTime) ? 0 : leftTime);
     })
     .slice(0, 6);
+}
+
+function buildHostWorkspaceAnalytics(sessions, templateCount) {
+  const normalizedSessions = Array.isArray(sessions) ? sessions : [];
+  const playerCounts = normalizedSessions
+    .map((entry) => (Number.isInteger(entry?.playerCount) ? entry.playerCount : null))
+    .filter((value) => value != null);
+  const topicCounts = normalizedSessions.reduce((accumulator, entry) => {
+    const topic = String(entry?.topic || '').trim() || STRINGS.recentHostedSessionTopicFallback;
+    accumulator.set(topic, (accumulator.get(topic) || 0) + 1);
+    return accumulator;
+  }, new Map());
+  const topTopicEntry = Array.from(topicCounts.entries()).sort((left, right) => right[1] - left[1])[0] || null;
+  const latestWinner = normalizedSessions.find((entry) => entry?.status === 'completed' && entry?.winnerDisplayName);
+  const averagePlayers = playerCounts.length > 0
+    ? Math.round((playerCounts.reduce((sum, value) => sum + value, 0) / playerCounts.length) * 10) / 10
+    : null;
+
+  return {
+    totalSessions: normalizedSessions.length,
+    completedSessions: normalizedSessions.filter((entry) => entry?.status === 'completed').length,
+    liveSessions: normalizedSessions.filter((entry) => entry?.status !== 'completed').length,
+    averagePlayers,
+    topTopic: topTopicEntry?.[0] || STRINGS.recentHostedSessionTopicFallback,
+    latestWinner: latestWinner?.winnerDisplayName
+      ? `${latestWinner.winnerDisplayName}${Number.isInteger(latestWinner.winnerScore) ? ` (${latestWinner.winnerScore} pts)` : ''}`
+      : STRINGS.hostWorkspaceAnalyticsWinnerFallback,
+    templateCount: Number.isInteger(templateCount) ? templateCount : 0
+  };
 }
 
 function formatRecentHostedSessionPhase(phase) {
@@ -697,6 +736,7 @@ function StartScreen({
     : null;
   const canUpgrade = Boolean(tenantId) && typeof onUpgrade === 'function';
   const recentHostedSessions = deriveRecentHostedSessions(workspaceInsights?.auditEvents);
+  const hostWorkspaceAnalytics = buildHostWorkspaceAnalytics(recentHostedSessions, sessionTemplates.length);
   const visibleHostedSessions = recentHostedSessions.filter((entry) => {
     if (hostedSessionFilter === 'completed') {
       return entry.status === 'completed';
@@ -794,6 +834,41 @@ function StartScreen({
               <p className="field-hint">
                 Round usage: {!analyticsHistoryEnabled ? STRINGS.hostWorkspaceAnalyticsLocked : usageRow ? `${usageRow.totalValue} across ${usageRow.eventCount} events` : STRINGS.hostWorkspaceNoUsage}
               </p>
+            </section>
+            <section className="host-workspace-card" data-testid="host-workspace-analytics-card">
+              <h3>{STRINGS.hostWorkspaceAnalyticsTitle}</h3>
+              <p className="field-hint">
+                {!analyticsHistoryEnabled ? STRINGS.hostWorkspaceAnalyticsLocked : STRINGS.hostWorkspaceAnalyticsHint}
+              </p>
+              {!analyticsHistoryEnabled ? (
+                <p className="field-hint">{STRINGS.hostWorkspaceAnalyticsLocked}</p>
+              ) : (
+                <>
+                  <div className="host-analytics-metric-grid">
+                    <article className="host-analytics-metric">
+                      <span>{STRINGS.hostWorkspaceAnalyticsRecentRuns}</span>
+                      <strong>{hostWorkspaceAnalytics.totalSessions}</strong>
+                    </article>
+                    <article className="host-analytics-metric">
+                      <span>{STRINGS.hostWorkspaceAnalyticsCompletedRuns}</span>
+                      <strong>{hostWorkspaceAnalytics.completedSessions}</strong>
+                    </article>
+                    <article className="host-analytics-metric">
+                      <span>{STRINGS.hostWorkspaceAnalyticsAverageRoster}</span>
+                      <strong>{hostWorkspaceAnalytics.averagePlayers == null ? 'n/a' : hostWorkspaceAnalytics.averagePlayers}</strong>
+                    </article>
+                    <article className="host-analytics-metric">
+                      <span>{STRINGS.hostWorkspaceAnalyticsSavedTemplates}</span>
+                      <strong>{hostWorkspaceAnalytics.templateCount}</strong>
+                    </article>
+                  </div>
+                  <div className="host-analytics-summary-list">
+                    <p className="field-hint">{STRINGS.hostWorkspaceAnalyticsLiveRuns}: {hostWorkspaceAnalytics.liveSessions}</p>
+                    <p className="field-hint">{STRINGS.hostWorkspaceAnalyticsTopTopic}: {hostWorkspaceAnalytics.topTopic}</p>
+                    <p className="field-hint">{STRINGS.hostWorkspaceAnalyticsLatestWinner}: {hostWorkspaceAnalytics.latestWinner}</p>
+                  </div>
+                </>
+              )}
             </section>
             <section className="host-workspace-card" data-testid="branding-editor-card">
               <h3>{STRINGS.brandingEditorTitle}</h3>

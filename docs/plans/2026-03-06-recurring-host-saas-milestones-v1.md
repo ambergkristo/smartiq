@@ -32,9 +32,9 @@ Execution governance:
 | M4 | S4 | Full host/join/replay canonical flow | DONE (2026-03-06) |
 | M5 | S5 | Paid value and entitlement enforcement | DONE (2026-03-06) |
 | M6 | S6 | Pilot conversion and retention proof | IN_PROGRESS (2026-03-06) |
-| M7 | S7 | Narrow launch readiness | IN_PROGRESS (technical track, 2026-03-07) |
+| M7 | S7 | Narrow launch readiness | DONE (2026-03-07, with deferred M6 external proof) |
 | M8 | S8 | Sellable niche SaaS validation | IN_PROGRESS (technical track, 2026-03-07) |
-| M9 | S9 | Host product depth | TODO |
+| M9 | S9 | Host product depth | IN_PROGRESS (technical track, 2026-03-07) |
 | M10 | S10 | Content and gameplay depth | TODO |
 | M11 | S11 | Team and agency productization | TODO |
 | M12 | S12 | Mature niche product readiness | TODO |
@@ -48,10 +48,11 @@ Current execution pointer:
 6. Live `M6` seeding and capture now execute successfully against `https://smartiq-63tk.onrender.com`, including a bootstrap cohort that can exercise repeat-host, paid-conversion, and support-case evidence paths.
 7. The `M6` gate now excludes bootstrap-seeded tenants from readiness counts, and the latest corrected artifact reports `10` bootstrap-seeded tenants but `0` real pilot tenants.
 8. `M6` therefore remains honestly blocked on real pilot volume rather than missing instrumentation, because the milestone still requires `10` real activated hosts and `5` real repeat hosts.
-9. `M7` technical implementation is now allowed to proceed in parallel with that deferred external blocker, and the first landed slices are the public recurring-host launch surface, launch KPI snapshot tooling, recurring-host incident runbook, and technical launch gate wrapper.
-10. The latest `M7` slice removed frontend lint/tooling blockers from the launch gate, hardened post-deploy smoke/runtime-deck verification, and corrected public topic/public fallback-source behavior so the remaining blocker is a live deploy verification step on `https://smartiq-63tk.onrender.com`.
-11. `M8` technical artifact work has now started in parallel with that external launch blocker: recurring-host go/no-go pack generation, 12-month operating-plan generation, and a sellable-SaaS gate wrapper now exist, but the milestone remains commercially unproven.
-12. Current live state is explicit: public smoke is green, `M7` runtime-deck verification is still blocked by the old fallback deck remaining live, and `M8` already generates a truthful live `NO_GO_SELLABLE` pack from the latest recurring-host summary.
+9. `M7` was allowed to proceed in parallel with that deferred external blocker, and it now has a complete public recurring-host launch surface, launch KPI snapshot tooling, recurring-host incident runbook, and technical launch gate wrapper.
+10. Live `M7` validation is now green on `https://smartiq-63tk.onrender.com` and `https://smartiq-nine.vercel.app`, including release readiness, alert validation, launch smoke, and runtime-deck verification through the launch gate.
+11. `M7` is therefore promoted done on 2026-03-07, while `M6` remains explicitly deferred because real pilot proof is still missing.
+12. `M8` is now the active commercial-proof milestone: recurring-host go/no-go pack generation, 12-month operating-plan generation, and a sellable-SaaS gate wrapper exist, but the milestone remains commercially unproven.
+13. `M9` technical work has now also started in parallel with that deferred `M8` proof blocker: the host workspace includes a new `Host momentum` repeat-host analytics card derived from recent hosted sessions and saved templates.
 
 ## Milestone Definitions
 

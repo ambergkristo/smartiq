@@ -725,6 +725,37 @@ button:disabled {
   gap: 8px;
 }
 
+.host-analytics-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.host-analytics-metric {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 228, 196, 0.09);
+  background: rgba(255, 236, 211, 0.06);
+}
+
+.host-analytics-metric span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.host-analytics-metric strong {
+  font-size: 1.2rem;
+}
+
+.host-analytics-summary-list {
+  display: grid;
+  gap: 4px;
+}
+
 .session-filter-chip {
   width: auto;
   min-height: 38px;
