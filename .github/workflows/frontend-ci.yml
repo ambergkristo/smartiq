@@ -48,6 +48,9 @@ jobs:
       - name: Semantic quality gate (ET >= 0.70)
         run: node ../tools/score_cards_semantic.js ../data/smart10/cards.et.json --fail-threshold=0.70
 
+      - name: Semantic content validator tests
+        run: node --test ../tools/semantic_content_validator.test.js
+
       - name: Semantic content honesty gate (EN >= 0.95)
         run: node ../tools/semantic_content_validator.js ../data/smart10/cards.en.json --fail-threshold=0.95
 
