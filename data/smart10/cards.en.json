@@ -21258,10 +21258,10 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Which color matches 'clear daytime sky'?",
+    "question": "History: What hue best fits 'clear daytime sky'?",
     "options": [
       "Brown",
-      "Mint",
+      "Mint Green",
       "Black",
       "Blue",
       "Orange",
@@ -21283,10 +21283,10 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Pick the color best matching 'fresh grass'.",
+    "question": "History: Which shade would you associate with 'fresh grass'?",
     "options": [
       "Brown",
-      "Mint",
+      "Mint Green",
       "Gray",
       "White",
       "Black",
@@ -21308,7 +21308,7 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Select the color for 'ripe banana peel'.",
+    "question": "History: If you had to choose a color for 'ripe banana peel', which would it be?",
     "options": [
       "White",
       "Navy",
@@ -21333,12 +21333,12 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: 'ripe tomato' is closest to which color?",
+    "question": "History: 'ripe tomato' points most naturally to which color?",
     "options": [
       "Orange",
       "Black",
       "Gray",
-      "Mint",
+      "Mint Green",
       "Silver",
       "Navy",
       "Gold",
@@ -21358,7 +21358,7 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Which option names the right color for 'new snow'?",
+    "question": "History: Which hue feels most plausible for 'new snow'?",
     "options": [
       "Silver",
       "Red",
@@ -21383,14 +21383,14 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Choose the color cue: 'charcoal'.",
+    "question": "History: What color would you expect for 'charcoal'?",
     "options": [
       "Blue",
       "Silver",
       "Black",
       "Orange",
       "Navy",
-      "Mint",
+      "Mint Green",
       "Gold",
       "Green",
       "Yellow",
@@ -21408,12 +21408,12 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Which color matches 'pumpkin skin'?",
+    "question": "History: Which color impression does 'pumpkin skin' create?",
     "options": [
       "Orange",
       "Yellow",
       "Blue",
-      "Mint",
+      "Mint Green",
       "Black",
       "Gold",
       "White",
@@ -21433,14 +21433,14 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Pick the color best matching 'lavender flower'.",
+    "question": "History: Which shade sounds right for 'lavender flower'?",
     "options": [
       "Black",
       "Red",
       "Green",
       "Pink",
       "Silver",
-      "Mint",
+      "Mint Green",
       "Blue",
       "Purple",
       "White",
@@ -21458,13 +21458,13 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Select the color for 'strawberry ice cream'.",
+    "question": "History: What color would you connect with 'strawberry ice cream' first?",
     "options": [
       "Pink",
       "Blue",
       "Black",
       "Red",
-      "Mint",
+      "Mint Green",
       "Yellow",
       "Green",
       "Purple",
@@ -21483,7 +21483,7 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: 'cocoa powder' is closest to which color?",
+    "question": "History: Which hue would you pick for 'cocoa powder'?",
     "options": [
       "Green",
       "Blue",
@@ -21508,7 +21508,7 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Which option names the right color for 'storm cloud'?",
+    "question": "History: What color feels closest to 'storm cloud'?",
     "options": [
       "Red",
       "Orange",
@@ -21533,7 +21533,7 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Choose the color cue: 'deep ocean at night'.",
+    "question": "History: Which color association suits 'deep ocean at night' best?",
     "options": [
       "Gold",
       "Yellow",
@@ -21558,7 +21558,7 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Which color matches 'mint leaf'?",
+    "question": "History: Which shade would you choose for 'mint leaf'?",
     "options": [
       "Gray",
       "Black",
@@ -21566,7 +21566,7 @@
       "Silver",
       "Pink",
       "Navy",
-      "Mint",
+      "Mint Green",
       "Orange",
       "Brown",
       "Purple"
@@ -21583,7 +21583,7 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Pick the color best matching 'gold medal'.",
+    "question": "History: What color seems most fitting for 'gold medal'?",
     "options": [
       "Brown",
       "Blue",
@@ -21608,7 +21608,7 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Select the color for 'silver coin'.",
+    "question": "History: Which hue belongs with 'silver coin'?",
     "options": [
       "Blue",
       "Orange",
@@ -21616,7 +21616,7 @@
       "Pink",
       "Red",
       "Gray",
-      "Mint",
+      "Mint Green",
       "Yellow",
       "Brown",
       "Gold"
@@ -21633,7 +21633,7 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: 'clear daytime sky' is closest to which color?",
+    "question": "History: Which color comes to mind first for 'clear daytime sky'?",
     "options": [
       "Brown",
       "Red",
@@ -21641,7 +21641,7 @@
       "Gray",
       "Purple",
       "Black",
-      "Mint",
+      "Mint Green",
       "Blue",
       "White",
       "Navy"
@@ -21658,9 +21658,9 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Which option names the right color for 'fresh grass'?",
+    "question": "History: What color would you most readily pair with 'fresh grass'?",
     "options": [
-      "Mint",
+      "Mint Green",
       "Green",
       "White",
       "Pink",
@@ -21683,7 +21683,7 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Choose the color cue: 'ripe banana peel'.",
+    "question": "History: Which hue feels like the best match for 'ripe banana peel'?",
     "options": [
       "White",
       "Black",
@@ -21692,7 +21692,7 @@
       "Blue",
       "Yellow",
       "Brown",
-      "Mint",
+      "Mint Green",
       "Green",
       "Orange"
     ],
@@ -21708,14 +21708,14 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Which color matches 'ripe tomato'?",
+    "question": "History: What shade would you link to 'ripe tomato'?",
     "options": [
       "White",
       "Orange",
       "Navy",
       "Brown",
       "Gray",
-      "Mint",
+      "Mint Green",
       "Red",
       "Yellow",
       "Green",
@@ -21733,7 +21733,7 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Pick the color best matching 'new snow'.",
+    "question": "History: Which color seems the most natural choice for 'new snow'?",
     "options": [
       "White",
       "Orange",
@@ -21742,7 +21742,7 @@
       "Brown",
       "Silver",
       "Yellow",
-      "Mint",
+      "Mint Green",
       "Red",
       "Navy"
     ],
@@ -21758,13 +21758,13 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Select the color for 'charcoal'.",
+    "question": "History: If 'charcoal' had one color, which would you choose?",
     "options": [
       "Green",
       "Silver",
       "Purple",
       "White",
-      "Mint",
+      "Mint Green",
       "Navy",
       "Black",
       "Blue",
@@ -21783,10 +21783,10 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: 'pumpkin skin' is closest to which color?",
+    "question": "History: Which hue would you most strongly connect with 'pumpkin skin'?",
     "options": [
       "Silver",
-      "Mint",
+      "Mint Green",
       "Navy",
       "Orange",
       "Blue",
@@ -21808,7 +21808,7 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Which option names the right color for 'lavender flower'?",
+    "question": "History: What color best captures 'lavender flower'?",
     "options": [
       "Blue",
       "Navy",
@@ -21833,11 +21833,11 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Choose the color cue: 'strawberry ice cream'.",
+    "question": "History: Which shade feels closest to 'strawberry ice cream'?",
     "options": [
       "Blue",
       "Navy",
-      "Mint",
+      "Mint Green",
       "Orange",
       "Gold",
       "Yellow",
@@ -21858,7 +21858,7 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Which color matches 'cocoa powder'?",
+    "question": "History: What color would you assign to 'cocoa powder'?",
     "options": [
       "Brown",
       "Gray",
@@ -21883,13 +21883,13 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Pick the color best matching 'storm cloud'.",
+    "question": "History: Which hue sounds most convincing for 'storm cloud'?",
     "options": [
       "Gray",
       "Yellow",
       "Pink",
       "Blue",
-      "Mint",
+      "Mint Green",
       "Black",
       "White",
       "Purple",
@@ -21908,12 +21908,12 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Select the color for 'deep ocean at night'.",
+    "question": "History: What color pairing makes the most sense for 'deep ocean at night'?",
     "options": [
       "Pink",
       "Red",
       "Navy",
-      "Mint",
+      "Mint Green",
       "Yellow",
       "Orange",
       "Blue",
@@ -21933,7 +21933,7 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: 'mint leaf' is closest to which color?",
+    "question": "History: Which shade feels right when you hear 'mint leaf'?",
     "options": [
       "Yellow",
       "Red",
@@ -21944,7 +21944,7 @@
       "Green",
       "Navy",
       "Silver",
-      "Mint"
+      "Mint Green"
     ],
     "correct": {
       "correctIndex": 9
@@ -21958,7 +21958,7 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Which option names the right color for 'gold medal'?",
+    "question": "History: What hue would you settle on for 'gold medal'?",
     "options": [
       "Blue",
       "Gray",
@@ -21983,7 +21983,7 @@
     "topic": "History",
     "category": "COLOR",
     "language": "en",
-    "question": "History: Choose the color cue: 'silver coin'.",
+    "question": "History: Which color best matches the image of 'silver coin'?",
     "options": [
       "Gray",
       "Red",
@@ -21994,7 +21994,7 @@
       "Pink",
       "Silver",
       "Green",
-      "Mint"
+      "Mint Green"
     ],
     "correct": {
       "correctIndex": 7
@@ -22008,7 +22008,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Which color matches 'clear daytime sky'?",
+    "question": "Sports: What hue best fits 'clear daytime sky'?",
     "options": [
       "Black",
       "Pink",
@@ -22033,7 +22033,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Pick the color best matching 'fresh grass'.",
+    "question": "Sports: Which shade would you associate with 'fresh grass'?",
     "options": [
       "Pink",
       "Green",
@@ -22058,7 +22058,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Select the color for 'ripe banana peel'.",
+    "question": "Sports: If you had to choose a color for 'ripe banana peel', which would it be?",
     "options": [
       "Green",
       "Gold",
@@ -22083,14 +22083,14 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: 'ripe tomato' is closest to which color?",
+    "question": "Sports: 'ripe tomato' points most naturally to which color?",
     "options": [
       "White",
       "Gold",
       "Yellow",
       "Red",
       "Gray",
-      "Mint",
+      "Mint Green",
       "Black",
       "Green",
       "Pink",
@@ -22108,7 +22108,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Which option names the right color for 'new snow'?",
+    "question": "Sports: Which hue feels most plausible for 'new snow'?",
     "options": [
       "Green",
       "Blue",
@@ -22133,7 +22133,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Choose the color cue: 'charcoal'.",
+    "question": "Sports: What color would you expect for 'charcoal'?",
     "options": [
       "Gray",
       "Silver",
@@ -22158,7 +22158,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Which color matches 'pumpkin skin'?",
+    "question": "Sports: Which color impression does 'pumpkin skin' create?",
     "options": [
       "Gold",
       "Red",
@@ -22166,7 +22166,7 @@
       "Orange",
       "Yellow",
       "Purple",
-      "Mint",
+      "Mint Green",
       "Green",
       "Silver",
       "Gray"
@@ -22183,7 +22183,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Pick the color best matching 'lavender flower'.",
+    "question": "Sports: Which shade sounds right for 'lavender flower'?",
     "options": [
       "Gold",
       "Navy",
@@ -22208,7 +22208,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Select the color for 'strawberry ice cream'.",
+    "question": "Sports: What color would you connect with 'strawberry ice cream' first?",
     "options": [
       "Yellow",
       "Orange",
@@ -22216,7 +22216,7 @@
       "Gold",
       "Blue",
       "Pink",
-      "Mint",
+      "Mint Green",
       "Brown",
       "Silver",
       "Purple"
@@ -22233,7 +22233,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: 'cocoa powder' is closest to which color?",
+    "question": "Sports: Which hue would you pick for 'cocoa powder'?",
     "options": [
       "Green",
       "Gold",
@@ -22258,7 +22258,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Which option names the right color for 'storm cloud'?",
+    "question": "Sports: What color feels closest to 'storm cloud'?",
     "options": [
       "Green",
       "Blue",
@@ -22268,7 +22268,7 @@
       "Pink",
       "White",
       "Yellow",
-      "Mint",
+      "Mint Green",
       "Gold"
     ],
     "correct": {
@@ -22283,14 +22283,14 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Choose the color cue: 'deep ocean at night'.",
+    "question": "Sports: Which color association suits 'deep ocean at night' best?",
     "options": [
       "Gray",
       "Black",
       "Navy",
       "Purple",
       "Red",
-      "Mint",
+      "Mint Green",
       "Silver",
       "Yellow",
       "Blue",
@@ -22308,12 +22308,12 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Which color matches 'mint leaf'?",
+    "question": "Sports: Which shade would you choose for 'mint leaf'?",
     "options": [
       "Purple",
       "Navy",
       "Black",
-      "Mint",
+      "Mint Green",
       "Red",
       "Gray",
       "Silver",
@@ -22333,7 +22333,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Pick the color best matching 'gold medal'.",
+    "question": "Sports: What color seems most fitting for 'gold medal'?",
     "options": [
       "Brown",
       "White",
@@ -22358,7 +22358,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Select the color for 'silver coin'.",
+    "question": "Sports: Which hue belongs with 'silver coin'?",
     "options": [
       "Red",
       "Brown",
@@ -22383,10 +22383,10 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: 'clear daytime sky' is closest to which color?",
+    "question": "Sports: Which color comes to mind first for 'clear daytime sky'?",
     "options": [
       "Brown",
-      "Mint",
+      "Mint Green",
       "Purple",
       "Green",
       "Navy",
@@ -22408,12 +22408,12 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Which option names the right color for 'fresh grass'?",
+    "question": "Sports: What color would you most readily pair with 'fresh grass'?",
     "options": [
       "White",
       "Red",
       "Blue",
-      "Mint",
+      "Mint Green",
       "Gray",
       "Gold",
       "Yellow",
@@ -22433,7 +22433,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Choose the color cue: 'ripe banana peel'.",
+    "question": "Sports: Which hue feels like the best match for 'ripe banana peel'?",
     "options": [
       "Orange",
       "Red",
@@ -22458,7 +22458,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Which color matches 'ripe tomato'?",
+    "question": "Sports: What shade would you link to 'ripe tomato'?",
     "options": [
       "Gold",
       "Black",
@@ -22467,7 +22467,7 @@
       "Silver",
       "Yellow",
       "Red",
-      "Mint",
+      "Mint Green",
       "Purple",
       "Pink"
     ],
@@ -22483,12 +22483,12 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Pick the color best matching 'new snow'.",
+    "question": "Sports: Which color seems the most natural choice for 'new snow'?",
     "options": [
       "Yellow",
       "Green",
       "Silver",
-      "Mint",
+      "Mint Green",
       "Red",
       "Black",
       "Purple",
@@ -22508,13 +22508,13 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Select the color for 'charcoal'.",
+    "question": "Sports: If 'charcoal' had one color, which would you choose?",
     "options": [
       "Purple",
       "Navy",
       "Pink",
       "Gray",
-      "Mint",
+      "Mint Green",
       "Brown",
       "Gold",
       "Red",
@@ -22533,14 +22533,14 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: 'pumpkin skin' is closest to which color?",
+    "question": "Sports: Which hue would you most strongly connect with 'pumpkin skin'?",
     "options": [
       "White",
       "Silver",
       "Yellow",
       "Blue",
       "Red",
-      "Mint",
+      "Mint Green",
       "Green",
       "Pink",
       "Orange",
@@ -22558,7 +22558,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Which option names the right color for 'lavender flower'?",
+    "question": "Sports: What color best captures 'lavender flower'?",
     "options": [
       "Black",
       "Silver",
@@ -22583,7 +22583,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Choose the color cue: 'strawberry ice cream'.",
+    "question": "Sports: Which shade feels closest to 'strawberry ice cream'?",
     "options": [
       "Purple",
       "Yellow",
@@ -22591,7 +22591,7 @@
       "Green",
       "Blue",
       "Gold",
-      "Mint",
+      "Mint Green",
       "Red",
       "Orange",
       "Brown"
@@ -22608,7 +22608,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Which color matches 'cocoa powder'?",
+    "question": "Sports: What color would you assign to 'cocoa powder'?",
     "options": [
       "Brown",
       "Pink",
@@ -22618,7 +22618,7 @@
       "Orange",
       "Gold",
       "Blue",
-      "Mint",
+      "Mint Green",
       "Purple"
     ],
     "correct": {
@@ -22633,7 +22633,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Pick the color best matching 'storm cloud'.",
+    "question": "Sports: Which hue sounds most convincing for 'storm cloud'?",
     "options": [
       "Blue",
       "Red",
@@ -22658,7 +22658,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Select the color for 'deep ocean at night'.",
+    "question": "Sports: What color pairing makes the most sense for 'deep ocean at night'?",
     "options": [
       "Black",
       "Green",
@@ -22683,11 +22683,11 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: 'mint leaf' is closest to which color?",
+    "question": "Sports: Which shade feels right when you hear 'mint leaf'?",
     "options": [
       "Brown",
       "White",
-      "Mint",
+      "Mint Green",
       "Yellow",
       "Orange",
       "Blue",
@@ -22708,7 +22708,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Which option names the right color for 'gold medal'?",
+    "question": "Sports: What hue would you settle on for 'gold medal'?",
     "options": [
       "Orange",
       "Purple",
@@ -22733,7 +22733,7 @@
     "topic": "Sports",
     "category": "COLOR",
     "language": "en",
-    "question": "Sports: Choose the color cue: 'silver coin'.",
+    "question": "Sports: Which color best matches the image of 'silver coin'?",
     "options": [
       "Silver",
       "Navy",
@@ -22758,7 +22758,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Which color matches 'clear daytime sky'?",
+    "question": "Geography: What hue best fits 'clear daytime sky'?",
     "options": [
       "Purple",
       "Black",
@@ -22766,7 +22766,7 @@
       "Blue",
       "Red",
       "White",
-      "Mint",
+      "Mint Green",
       "Silver",
       "Yellow",
       "Orange"
@@ -22783,7 +22783,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Pick the color best matching 'fresh grass'.",
+    "question": "Geography: Which shade would you associate with 'fresh grass'?",
     "options": [
       "Yellow",
       "Red",
@@ -22793,7 +22793,7 @@
       "White",
       "Blue",
       "Gray",
-      "Mint",
+      "Mint Green",
       "Brown"
     ],
     "correct": {
@@ -22808,14 +22808,14 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Select the color for 'ripe banana peel'.",
+    "question": "Geography: If you had to choose a color for 'ripe banana peel', which would it be?",
     "options": [
       "Orange",
       "White",
       "Yellow",
       "Green",
       "Brown",
-      "Mint",
+      "Mint Green",
       "Gray",
       "Pink",
       "Black",
@@ -22833,7 +22833,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: 'ripe tomato' is closest to which color?",
+    "question": "Geography: 'ripe tomato' points most naturally to which color?",
     "options": [
       "Yellow",
       "Pink",
@@ -22843,7 +22843,7 @@
       "Silver",
       "Gold",
       "Green",
-      "Mint",
+      "Mint Green",
       "Red"
     ],
     "correct": {
@@ -22858,7 +22858,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Which option names the right color for 'new snow'?",
+    "question": "Geography: Which hue feels most plausible for 'new snow'?",
     "options": [
       "Yellow",
       "Gray",
@@ -22883,12 +22883,12 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Choose the color cue: 'charcoal'.",
+    "question": "Geography: What color would you expect for 'charcoal'?",
     "options": [
       "Navy",
       "Red",
       "Orange",
-      "Mint",
+      "Mint Green",
       "Black",
       "Gold",
       "Blue",
@@ -22908,7 +22908,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Which color matches 'pumpkin skin'?",
+    "question": "Geography: Which color impression does 'pumpkin skin' create?",
     "options": [
       "Black",
       "Gold",
@@ -22919,7 +22919,7 @@
       "Navy",
       "Silver",
       "Red",
-      "Mint"
+      "Mint Green"
     ],
     "correct": {
       "correctIndex": 4
@@ -22933,7 +22933,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Pick the color best matching 'lavender flower'.",
+    "question": "Geography: Which shade sounds right for 'lavender flower'?",
     "options": [
       "White",
       "Purple",
@@ -22958,7 +22958,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Select the color for 'strawberry ice cream'.",
+    "question": "Geography: What color would you connect with 'strawberry ice cream' first?",
     "options": [
       "Yellow",
       "Orange",
@@ -22983,7 +22983,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: 'cocoa powder' is closest to which color?",
+    "question": "Geography: Which hue would you pick for 'cocoa powder'?",
     "options": [
       "Brown",
       "Gold",
@@ -23008,7 +23008,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Which option names the right color for 'storm cloud'?",
+    "question": "Geography: What color feels closest to 'storm cloud'?",
     "options": [
       "Black",
       "Navy",
@@ -23033,13 +23033,13 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Choose the color cue: 'deep ocean at night'.",
+    "question": "Geography: Which color association suits 'deep ocean at night' best?",
     "options": [
       "Navy",
       "Gold",
       "Red",
       "White",
-      "Mint",
+      "Mint Green",
       "Brown",
       "Blue",
       "Gray",
@@ -23058,9 +23058,9 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Which color matches 'mint leaf'?",
+    "question": "Geography: Which shade would you choose for 'mint leaf'?",
     "options": [
-      "Mint",
+      "Mint Green",
       "Gray",
       "Silver",
       "Red",
@@ -23083,7 +23083,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Pick the color best matching 'gold medal'.",
+    "question": "Geography: What color seems most fitting for 'gold medal'?",
     "options": [
       "White",
       "Silver",
@@ -23093,7 +23093,7 @@
       "Navy",
       "Green",
       "Blue",
-      "Mint",
+      "Mint Green",
       "Gray"
     ],
     "correct": {
@@ -23108,7 +23108,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Select the color for 'silver coin'.",
+    "question": "Geography: Which hue belongs with 'silver coin'?",
     "options": [
       "Brown",
       "Green",
@@ -23117,7 +23117,7 @@
       "White",
       "Pink",
       "Yellow",
-      "Mint",
+      "Mint Green",
       "Black",
       "Navy"
     ],
@@ -23133,7 +23133,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: 'clear daytime sky' is closest to which color?",
+    "question": "Geography: Which color comes to mind first for 'clear daytime sky'?",
     "options": [
       "Yellow",
       "Purple",
@@ -23141,7 +23141,7 @@
       "Gray",
       "Orange",
       "Red",
-      "Mint",
+      "Mint Green",
       "Blue",
       "Black",
       "White"
@@ -23158,7 +23158,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Which option names the right color for 'fresh grass'?",
+    "question": "Geography: What color would you most readily pair with 'fresh grass'?",
     "options": [
       "Navy",
       "Purple",
@@ -23183,7 +23183,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Choose the color cue: 'ripe banana peel'.",
+    "question": "Geography: Which hue feels like the best match for 'ripe banana peel'?",
     "options": [
       "Green",
       "Navy",
@@ -23208,10 +23208,10 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Which color matches 'ripe tomato'?",
+    "question": "Geography: What shade would you link to 'ripe tomato'?",
     "options": [
       "Silver",
-      "Mint",
+      "Mint Green",
       "Green",
       "Black",
       "Blue",
@@ -23233,9 +23233,9 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Pick the color best matching 'new snow'.",
+    "question": "Geography: Which color seems the most natural choice for 'new snow'?",
     "options": [
-      "Mint",
+      "Mint Green",
       "Gold",
       "Gray",
       "Red",
@@ -23258,7 +23258,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Select the color for 'charcoal'.",
+    "question": "Geography: If 'charcoal' had one color, which would you choose?",
     "options": [
       "Navy",
       "Yellow",
@@ -23266,7 +23266,7 @@
       "Pink",
       "White",
       "Gold",
-      "Mint",
+      "Mint Green",
       "Brown",
       "Gray",
       "Silver"
@@ -23283,12 +23283,12 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: 'pumpkin skin' is closest to which color?",
+    "question": "Geography: Which hue would you most strongly connect with 'pumpkin skin'?",
     "options": [
       "Silver",
       "Green",
       "Blue",
-      "Mint",
+      "Mint Green",
       "Gray",
       "Navy",
       "Red",
@@ -23308,10 +23308,10 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Which option names the right color for 'lavender flower'?",
+    "question": "Geography: What color best captures 'lavender flower'?",
     "options": [
       "Pink",
-      "Mint",
+      "Mint Green",
       "Blue",
       "Orange",
       "Navy",
@@ -23333,7 +23333,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Choose the color cue: 'strawberry ice cream'.",
+    "question": "Geography: Which shade feels closest to 'strawberry ice cream'?",
     "options": [
       "Green",
       "Blue",
@@ -23358,10 +23358,10 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Which color matches 'cocoa powder'?",
+    "question": "Geography: What color would you assign to 'cocoa powder'?",
     "options": [
       "Red",
-      "Mint",
+      "Mint Green",
       "Silver",
       "Brown",
       "Gray",
@@ -23383,12 +23383,12 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Pick the color best matching 'storm cloud'.",
+    "question": "Geography: Which hue sounds most convincing for 'storm cloud'?",
     "options": [
       "Black",
       "Gold",
       "Blue",
-      "Mint",
+      "Mint Green",
       "Navy",
       "Gray",
       "Orange",
@@ -23408,7 +23408,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Select the color for 'deep ocean at night'.",
+    "question": "Geography: What color pairing makes the most sense for 'deep ocean at night'?",
     "options": [
       "Pink",
       "Gold",
@@ -23433,7 +23433,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: 'mint leaf' is closest to which color?",
+    "question": "Geography: Which shade feels right when you hear 'mint leaf'?",
     "options": [
       "Gold",
       "Blue",
@@ -23441,7 +23441,7 @@
       "Brown",
       "Yellow",
       "Red",
-      "Mint",
+      "Mint Green",
       "White",
       "Purple",
       "Navy"
@@ -23458,7 +23458,7 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Which option names the right color for 'gold medal'?",
+    "question": "Geography: What hue would you settle on for 'gold medal'?",
     "options": [
       "Yellow",
       "Gold",
@@ -23483,10 +23483,10 @@
     "topic": "Geography",
     "category": "COLOR",
     "language": "en",
-    "question": "Geography: Choose the color cue: 'silver coin'.",
+    "question": "Geography: Which color best matches the image of 'silver coin'?",
     "options": [
       "Brown",
-      "Mint",
+      "Mint Green",
       "Orange",
       "Black",
       "Purple",
@@ -23508,7 +23508,7 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Which color matches 'clear daytime sky'?",
+    "question": "Culture: What hue best fits 'clear daytime sky'?",
     "options": [
       "Brown",
       "Red",
@@ -23518,7 +23518,7 @@
       "Gray",
       "Green",
       "Navy",
-      "Mint",
+      "Mint Green",
       "Blue"
     ],
     "correct": {
@@ -23533,7 +23533,7 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Pick the color best matching 'fresh grass'.",
+    "question": "Culture: Which shade would you associate with 'fresh grass'?",
     "options": [
       "Gold",
       "Gray",
@@ -23558,13 +23558,13 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Select the color for 'ripe banana peel'.",
+    "question": "Culture: If you had to choose a color for 'ripe banana peel', which would it be?",
     "options": [
       "Yellow",
       "Blue",
       "Gold",
       "Black",
-      "Mint",
+      "Mint Green",
       "Silver",
       "Green",
       "Gray",
@@ -23583,14 +23583,14 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: 'ripe tomato' is closest to which color?",
+    "question": "Culture: 'ripe tomato' points most naturally to which color?",
     "options": [
       "Pink",
       "Blue",
       "White",
       "Gold",
       "Green",
-      "Mint",
+      "Mint Green",
       "Navy",
       "Purple",
       "Gray",
@@ -23608,7 +23608,7 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Which option names the right color for 'new snow'?",
+    "question": "Culture: Which hue feels most plausible for 'new snow'?",
     "options": [
       "Red",
       "Blue",
@@ -23618,7 +23618,7 @@
       "Pink",
       "White",
       "Gold",
-      "Mint",
+      "Mint Green",
       "Yellow"
     ],
     "correct": {
@@ -23633,7 +23633,7 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Choose the color cue: 'charcoal'.",
+    "question": "Culture: What color would you expect for 'charcoal'?",
     "options": [
       "Brown",
       "Silver",
@@ -23658,9 +23658,9 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Which color matches 'pumpkin skin'?",
+    "question": "Culture: Which color impression does 'pumpkin skin' create?",
     "options": [
-      "Mint",
+      "Mint Green",
       "Red",
       "Orange",
       "Black",
@@ -23683,12 +23683,12 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Pick the color best matching 'lavender flower'.",
+    "question": "Culture: Which shade sounds right for 'lavender flower'?",
     "options": [
       "Pink",
       "Blue",
       "Black",
-      "Mint",
+      "Mint Green",
       "Purple",
       "Navy",
       "Orange",
@@ -23708,11 +23708,11 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Select the color for 'strawberry ice cream'.",
+    "question": "Culture: What color would you connect with 'strawberry ice cream' first?",
     "options": [
       "Gold",
       "Orange",
-      "Mint",
+      "Mint Green",
       "Gray",
       "Pink",
       "Brown",
@@ -23733,13 +23733,13 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: 'cocoa powder' is closest to which color?",
+    "question": "Culture: Which hue would you pick for 'cocoa powder'?",
     "options": [
       "Gold",
       "Silver",
       "Purple",
       "Red",
-      "Mint",
+      "Mint Green",
       "White",
       "Brown",
       "Orange",
@@ -23758,14 +23758,14 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Which option names the right color for 'storm cloud'?",
+    "question": "Culture: What color feels closest to 'storm cloud'?",
     "options": [
       "Purple",
       "Silver",
       "White",
       "Gray",
       "Pink",
-      "Mint",
+      "Mint Green",
       "Gold",
       "Blue",
       "Red",
@@ -23783,7 +23783,7 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Choose the color cue: 'deep ocean at night'.",
+    "question": "Culture: Which color association suits 'deep ocean at night' best?",
     "options": [
       "Purple",
       "Blue",
@@ -23793,7 +23793,7 @@
       "Red",
       "Pink",
       "Gray",
-      "Mint",
+      "Mint Green",
       "Green"
     ],
     "correct": {
@@ -23808,7 +23808,7 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Which color matches 'mint leaf'?",
+    "question": "Culture: Which shade would you choose for 'mint leaf'?",
     "options": [
       "Orange",
       "Yellow",
@@ -23819,7 +23819,7 @@
       "Green",
       "Blue",
       "Purple",
-      "Mint"
+      "Mint Green"
     ],
     "correct": {
       "correctIndex": 9
@@ -23833,13 +23833,13 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Pick the color best matching 'gold medal'.",
+    "question": "Culture: What color seems most fitting for 'gold medal'?",
     "options": [
       "Green",
       "Navy",
       "Silver",
       "Orange",
-      "Mint",
+      "Mint Green",
       "Yellow",
       "White",
       "Brown",
@@ -23858,7 +23858,7 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Select the color for 'silver coin'.",
+    "question": "Culture: Which hue belongs with 'silver coin'?",
     "options": [
       "Brown",
       "Orange",
@@ -23883,7 +23883,7 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: 'clear daytime sky' is closest to which color?",
+    "question": "Culture: Which color comes to mind first for 'clear daytime sky'?",
     "options": [
       "Blue",
       "Orange",
@@ -23892,7 +23892,7 @@
       "Pink",
       "Red",
       "Gold",
-      "Mint",
+      "Mint Green",
       "Silver",
       "Yellow"
     ],
@@ -23908,7 +23908,7 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Which option names the right color for 'fresh grass'?",
+    "question": "Culture: What color would you most readily pair with 'fresh grass'?",
     "options": [
       "Orange",
       "Pink",
@@ -23933,7 +23933,7 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Choose the color cue: 'ripe banana peel'.",
+    "question": "Culture: Which hue feels like the best match for 'ripe banana peel'?",
     "options": [
       "Yellow",
       "Gold",
@@ -23941,7 +23941,7 @@
       "Red",
       "Pink",
       "Blue",
-      "Mint",
+      "Mint Green",
       "White",
       "Orange",
       "Brown"
@@ -23958,14 +23958,14 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Which color matches 'ripe tomato'?",
+    "question": "Culture: What shade would you link to 'ripe tomato'?",
     "options": [
       "Black",
       "Navy",
       "Yellow",
       "Purple",
       "Gold",
-      "Mint",
+      "Mint Green",
       "Blue",
       "Red",
       "Green",
@@ -23983,7 +23983,7 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Pick the color best matching 'new snow'.",
+    "question": "Culture: Which color seems the most natural choice for 'new snow'?",
     "options": [
       "Silver",
       "Navy",
@@ -24008,7 +24008,7 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Select the color for 'charcoal'.",
+    "question": "Culture: If 'charcoal' had one color, which would you choose?",
     "options": [
       "Black",
       "Navy",
@@ -24033,7 +24033,7 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: 'pumpkin skin' is closest to which color?",
+    "question": "Culture: Which hue would you most strongly connect with 'pumpkin skin'?",
     "options": [
       "Orange",
       "Black",
@@ -24042,7 +24042,7 @@
       "Red",
       "Yellow",
       "Green",
-      "Mint",
+      "Mint Green",
       "Silver",
       "Blue"
     ],
@@ -24058,7 +24058,7 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Which option names the right color for 'lavender flower'?",
+    "question": "Culture: What color best captures 'lavender flower'?",
     "options": [
       "Gold",
       "Green",
@@ -24083,13 +24083,13 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Choose the color cue: 'strawberry ice cream'.",
+    "question": "Culture: Which shade feels closest to 'strawberry ice cream'?",
     "options": [
       "Brown",
       "Blue",
       "Black",
       "Green",
-      "Mint",
+      "Mint Green",
       "Pink",
       "Gold",
       "Orange",
@@ -24108,12 +24108,12 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Which color matches 'cocoa powder'?",
+    "question": "Culture: What color would you assign to 'cocoa powder'?",
     "options": [
       "Silver",
       "Gray",
       "Red",
-      "Mint",
+      "Mint Green",
       "Gold",
       "Orange",
       "Navy",
@@ -24133,10 +24133,10 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Pick the color best matching 'storm cloud'.",
+    "question": "Culture: Which hue sounds most convincing for 'storm cloud'?",
     "options": [
       "Silver",
-      "Mint",
+      "Mint Green",
       "Yellow",
       "Blue",
       "Brown",
@@ -24158,10 +24158,10 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Select the color for 'deep ocean at night'.",
+    "question": "Culture: What color pairing makes the most sense for 'deep ocean at night'?",
     "options": [
       "Black",
-      "Mint",
+      "Mint Green",
       "Red",
       "White",
       "Purple",
@@ -24183,12 +24183,12 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: 'mint leaf' is closest to which color?",
+    "question": "Culture: Which shade feels right when you hear 'mint leaf'?",
     "options": [
       "Orange",
       "White",
       "Silver",
-      "Mint",
+      "Mint Green",
       "Blue",
       "Brown",
       "Purple",
@@ -24208,7 +24208,7 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Which option names the right color for 'gold medal'?",
+    "question": "Culture: What hue would you settle on for 'gold medal'?",
     "options": [
       "Gray",
       "Orange",
@@ -24219,7 +24219,7 @@
       "White",
       "Navy",
       "Brown",
-      "Mint"
+      "Mint Green"
     ],
     "correct": {
       "correctIndex": 2
@@ -24233,7 +24233,7 @@
     "topic": "Culture",
     "category": "COLOR",
     "language": "en",
-    "question": "Culture: Choose the color cue: 'silver coin'.",
+    "question": "Culture: Which color best matches the image of 'silver coin'?",
     "options": [
       "Red",
       "Pink",
@@ -24244,7 +24244,7 @@
       "Gray",
       "Orange",
       "Blue",
-      "Mint"
+      "Mint Green"
     ],
     "correct": {
       "correctIndex": 4
@@ -24258,13 +24258,13 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Which color matches 'clear daytime sky'?",
+    "question": "Science: What hue best fits 'clear daytime sky'?",
     "options": [
       "Black",
       "Pink",
       "Gold",
       "Gray",
-      "Mint",
+      "Mint Green",
       "Green",
       "Yellow",
       "Blue",
@@ -24283,7 +24283,7 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Pick the color best matching 'fresh grass'.",
+    "question": "Science: Which shade would you associate with 'fresh grass'?",
     "options": [
       "Navy",
       "Blue",
@@ -24291,7 +24291,7 @@
       "Green",
       "Orange",
       "Brown",
-      "Mint",
+      "Mint Green",
       "Silver",
       "Purple",
       "Gray"
@@ -24308,7 +24308,7 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Select the color for 'ripe banana peel'.",
+    "question": "Science: If you had to choose a color for 'ripe banana peel', which would it be?",
     "options": [
       "Purple",
       "Pink",
@@ -24319,7 +24319,7 @@
       "Green",
       "Navy",
       "Yellow",
-      "Mint"
+      "Mint Green"
     ],
     "correct": {
       "correctIndex": 8
@@ -24333,7 +24333,7 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: 'ripe tomato' is closest to which color?",
+    "question": "Science: 'ripe tomato' points most naturally to which color?",
     "options": [
       "Gray",
       "Gold",
@@ -24341,7 +24341,7 @@
       "Black",
       "Green",
       "Brown",
-      "Mint",
+      "Mint Green",
       "Red",
       "Orange",
       "Silver"
@@ -24358,9 +24358,9 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Which option names the right color for 'new snow'?",
+    "question": "Science: Which hue feels most plausible for 'new snow'?",
     "options": [
-      "Mint",
+      "Mint Green",
       "Gray",
       "White",
       "Navy",
@@ -24383,7 +24383,7 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Choose the color cue: 'charcoal'.",
+    "question": "Science: What color would you expect for 'charcoal'?",
     "options": [
       "Red",
       "Purple",
@@ -24394,7 +24394,7 @@
       "Brown",
       "Orange",
       "White",
-      "Mint"
+      "Mint Green"
     ],
     "correct": {
       "correctIndex": 5
@@ -24408,7 +24408,7 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Which color matches 'pumpkin skin'?",
+    "question": "Science: Which color impression does 'pumpkin skin' create?",
     "options": [
       "Gray",
       "Orange",
@@ -24433,7 +24433,7 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Pick the color best matching 'lavender flower'.",
+    "question": "Science: Which shade sounds right for 'lavender flower'?",
     "options": [
       "Silver",
       "Pink",
@@ -24458,7 +24458,7 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Select the color for 'strawberry ice cream'.",
+    "question": "Science: What color would you connect with 'strawberry ice cream' first?",
     "options": [
       "Pink",
       "Yellow",
@@ -24483,7 +24483,7 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: 'cocoa powder' is closest to which color?",
+    "question": "Science: Which hue would you pick for 'cocoa powder'?",
     "options": [
       "Gray",
       "Navy",
@@ -24508,7 +24508,7 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Which option names the right color for 'storm cloud'?",
+    "question": "Science: What color feels closest to 'storm cloud'?",
     "options": [
       "White",
       "Orange",
@@ -24533,13 +24533,13 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Choose the color cue: 'deep ocean at night'.",
+    "question": "Science: Which color association suits 'deep ocean at night' best?",
     "options": [
       "Red",
       "Yellow",
       "Silver",
       "White",
-      "Mint",
+      "Mint Green",
       "Blue",
       "Navy",
       "Green",
@@ -24558,10 +24558,10 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Which color matches 'mint leaf'?",
+    "question": "Science: Which shade would you choose for 'mint leaf'?",
     "options": [
       "Purple",
-      "Mint",
+      "Mint Green",
       "Brown",
       "Silver",
       "Yellow",
@@ -24583,7 +24583,7 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Pick the color best matching 'gold medal'.",
+    "question": "Science: What color seems most fitting for 'gold medal'?",
     "options": [
       "Gray",
       "Yellow",
@@ -24594,7 +24594,7 @@
       "Red",
       "Silver",
       "Pink",
-      "Mint"
+      "Mint Green"
     ],
     "correct": {
       "correctIndex": 4
@@ -24608,12 +24608,12 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Select the color for 'silver coin'.",
+    "question": "Science: Which hue belongs with 'silver coin'?",
     "options": [
       "Navy",
       "White",
       "Gold",
-      "Mint",
+      "Mint Green",
       "Orange",
       "Black",
       "Green",
@@ -24633,7 +24633,7 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: 'clear daytime sky' is closest to which color?",
+    "question": "Science: Which color comes to mind first for 'clear daytime sky'?",
     "options": [
       "Green",
       "Black",
@@ -24658,14 +24658,14 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Which option names the right color for 'fresh grass'?",
+    "question": "Science: What color would you most readily pair with 'fresh grass'?",
     "options": [
       "Green",
       "Red",
       "Pink",
       "Gray",
       "Brown",
-      "Mint",
+      "Mint Green",
       "Yellow",
       "Orange",
       "Navy",
@@ -24683,7 +24683,7 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Choose the color cue: 'ripe banana peel'.",
+    "question": "Science: Which hue feels like the best match for 'ripe banana peel'?",
     "options": [
       "Green",
       "Black",
@@ -24694,7 +24694,7 @@
       "Gold",
       "Brown",
       "Red",
-      "Mint"
+      "Mint Green"
     ],
     "correct": {
       "correctIndex": 4
@@ -24708,7 +24708,7 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Which color matches 'ripe tomato'?",
+    "question": "Science: What shade would you link to 'ripe tomato'?",
     "options": [
       "White",
       "Blue",
@@ -24733,7 +24733,7 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Pick the color best matching 'new snow'.",
+    "question": "Science: Which color seems the most natural choice for 'new snow'?",
     "options": [
       "Gray",
       "Black",
@@ -24758,7 +24758,7 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Select the color for 'charcoal'.",
+    "question": "Science: If 'charcoal' had one color, which would you choose?",
     "options": [
       "Blue",
       "Purple",
@@ -24783,7 +24783,7 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: 'pumpkin skin' is closest to which color?",
+    "question": "Science: Which hue would you most strongly connect with 'pumpkin skin'?",
     "options": [
       "Pink",
       "Green",
@@ -24791,7 +24791,7 @@
       "Silver",
       "Red",
       "Black",
-      "Mint",
+      "Mint Green",
       "White",
       "Orange",
       "Purple"
@@ -24808,12 +24808,12 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Which option names the right color for 'lavender flower'?",
+    "question": "Science: What color best captures 'lavender flower'?",
     "options": [
       "Red",
       "Purple",
       "Orange",
-      "Mint",
+      "Mint Green",
       "Blue",
       "Green",
       "Gray",
@@ -24833,11 +24833,11 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Choose the color cue: 'strawberry ice cream'.",
+    "question": "Science: Which shade feels closest to 'strawberry ice cream'?",
     "options": [
       "Orange",
       "Yellow",
-      "Mint",
+      "Mint Green",
       "Pink",
       "Black",
       "Green",
@@ -24858,10 +24858,10 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Which color matches 'cocoa powder'?",
+    "question": "Science: What color would you assign to 'cocoa powder'?",
     "options": [
       "Black",
-      "Mint",
+      "Mint Green",
       "Green",
       "Red",
       "Gold",
@@ -24883,7 +24883,7 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Pick the color best matching 'storm cloud'.",
+    "question": "Science: Which hue sounds most convincing for 'storm cloud'?",
     "options": [
       "Black",
       "Blue",
@@ -24908,13 +24908,13 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Select the color for 'deep ocean at night'.",
+    "question": "Science: What color pairing makes the most sense for 'deep ocean at night'?",
     "options": [
       "Gold",
       "Blue",
       "Green",
       "Black",
-      "Mint",
+      "Mint Green",
       "Red",
       "White",
       "Yellow",
@@ -24933,9 +24933,9 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: 'mint leaf' is closest to which color?",
+    "question": "Science: Which shade feels right when you hear 'mint leaf'?",
     "options": [
-      "Mint",
+      "Mint Green",
       "Purple",
       "Black",
       "Pink",
@@ -24958,9 +24958,9 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Which option names the right color for 'gold medal'?",
+    "question": "Science: What hue would you settle on for 'gold medal'?",
     "options": [
-      "Mint",
+      "Mint Green",
       "Blue",
       "Green",
       "Gray",
@@ -24983,10 +24983,10 @@
     "topic": "Science",
     "category": "COLOR",
     "language": "en",
-    "question": "Science: Choose the color cue: 'silver coin'.",
+    "question": "Science: Which color best matches the image of 'silver coin'?",
     "options": [
       "Pink",
-      "Mint",
+      "Mint Green",
       "Yellow",
       "White",
       "Green",
@@ -25008,7 +25008,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Which color matches 'clear daytime sky'?",
+    "question": "Varia: What hue best fits 'clear daytime sky'?",
     "options": [
       "Green",
       "Gray",
@@ -25033,7 +25033,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Pick the color best matching 'fresh grass'.",
+    "question": "Varia: Which shade would you associate with 'fresh grass'?",
     "options": [
       "Black",
       "Gold",
@@ -25058,12 +25058,12 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Select the color for 'ripe banana peel'.",
+    "question": "Varia: If you had to choose a color for 'ripe banana peel', which would it be?",
     "options": [
       "Gold",
       "Pink",
       "Brown",
-      "Mint",
+      "Mint Green",
       "White",
       "Green",
       "Purple",
@@ -25083,14 +25083,14 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: 'ripe tomato' is closest to which color?",
+    "question": "Varia: 'ripe tomato' points most naturally to which color?",
     "options": [
       "Yellow",
       "Silver",
       "Orange",
       "Gold",
       "Red",
-      "Mint",
+      "Mint Green",
       "Purple",
       "Gray",
       "Black",
@@ -25108,7 +25108,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Which option names the right color for 'new snow'?",
+    "question": "Varia: Which hue feels most plausible for 'new snow'?",
     "options": [
       "Black",
       "White",
@@ -25117,7 +25117,7 @@
       "Yellow",
       "Silver",
       "Pink",
-      "Mint",
+      "Mint Green",
       "Green",
       "Navy"
     ],
@@ -25133,7 +25133,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Choose the color cue: 'charcoal'.",
+    "question": "Varia: What color would you expect for 'charcoal'?",
     "options": [
       "Brown",
       "Gold",
@@ -25158,7 +25158,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Which color matches 'pumpkin skin'?",
+    "question": "Varia: Which color impression does 'pumpkin skin' create?",
     "options": [
       "Orange",
       "Gold",
@@ -25183,7 +25183,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Pick the color best matching 'lavender flower'.",
+    "question": "Varia: Which shade sounds right for 'lavender flower'?",
     "options": [
       "Silver",
       "Brown",
@@ -25208,7 +25208,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Select the color for 'strawberry ice cream'.",
+    "question": "Varia: What color would you connect with 'strawberry ice cream' first?",
     "options": [
       "Black",
       "Blue",
@@ -25217,7 +25217,7 @@
       "Silver",
       "Purple",
       "Red",
-      "Mint",
+      "Mint Green",
       "Gray",
       "Pink"
     ],
@@ -25233,7 +25233,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: 'cocoa powder' is closest to which color?",
+    "question": "Varia: Which hue would you pick for 'cocoa powder'?",
     "options": [
       "Brown",
       "Yellow",
@@ -25258,13 +25258,13 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Which option names the right color for 'storm cloud'?",
+    "question": "Varia: What color feels closest to 'storm cloud'?",
     "options": [
       "Green",
       "Red",
       "Silver",
       "Gray",
-      "Mint",
+      "Mint Green",
       "Black",
       "Navy",
       "Orange",
@@ -25283,7 +25283,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Choose the color cue: 'deep ocean at night'.",
+    "question": "Varia: Which color association suits 'deep ocean at night' best?",
     "options": [
       "Silver",
       "Gray",
@@ -25308,13 +25308,13 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Which color matches 'mint leaf'?",
+    "question": "Varia: Which shade would you choose for 'mint leaf'?",
     "options": [
       "White",
       "Navy",
       "Gold",
       "Black",
-      "Mint",
+      "Mint Green",
       "Green",
       "Brown",
       "Purple",
@@ -25333,7 +25333,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Pick the color best matching 'gold medal'.",
+    "question": "Varia: What color seems most fitting for 'gold medal'?",
     "options": [
       "Yellow",
       "Red",
@@ -25358,7 +25358,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Select the color for 'silver coin'.",
+    "question": "Varia: Which hue belongs with 'silver coin'?",
     "options": [
       "Silver",
       "Green",
@@ -25368,7 +25368,7 @@
       "Navy",
       "Blue",
       "Orange",
-      "Mint",
+      "Mint Green",
       "Red"
     ],
     "correct": {
@@ -25383,7 +25383,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: 'clear daytime sky' is closest to which color?",
+    "question": "Varia: Which color comes to mind first for 'clear daytime sky'?",
     "options": [
       "Gold",
       "Green",
@@ -25393,7 +25393,7 @@
       "Yellow",
       "Brown",
       "Blue",
-      "Mint",
+      "Mint Green",
       "Black"
     ],
     "correct": {
@@ -25408,7 +25408,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Which option names the right color for 'fresh grass'?",
+    "question": "Varia: What color would you most readily pair with 'fresh grass'?",
     "options": [
       "Brown",
       "Blue",
@@ -25433,10 +25433,10 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Choose the color cue: 'ripe banana peel'.",
+    "question": "Varia: Which hue feels like the best match for 'ripe banana peel'?",
     "options": [
       "Brown",
-      "Mint",
+      "Mint Green",
       "Silver",
       "Green",
       "Red",
@@ -25458,7 +25458,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Which color matches 'ripe tomato'?",
+    "question": "Varia: What shade would you link to 'ripe tomato'?",
     "options": [
       "White",
       "Pink",
@@ -25469,7 +25469,7 @@
       "Navy",
       "Orange",
       "Brown",
-      "Mint"
+      "Mint Green"
     ],
     "correct": {
       "correctIndex": 3
@@ -25483,7 +25483,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Pick the color best matching 'new snow'.",
+    "question": "Varia: Which color seems the most natural choice for 'new snow'?",
     "options": [
       "Navy",
       "Green",
@@ -25491,7 +25491,7 @@
       "Gray",
       "White",
       "Blue",
-      "Mint",
+      "Mint Green",
       "Silver",
       "Red",
       "Gold"
@@ -25508,7 +25508,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Select the color for 'charcoal'.",
+    "question": "Varia: If 'charcoal' had one color, which would you choose?",
     "options": [
       "White",
       "Green",
@@ -25533,10 +25533,10 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: 'pumpkin skin' is closest to which color?",
+    "question": "Varia: Which hue would you most strongly connect with 'pumpkin skin'?",
     "options": [
       "Brown",
-      "Mint",
+      "Mint Green",
       "Silver",
       "Blue",
       "Navy",
@@ -25558,7 +25558,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Which option names the right color for 'lavender flower'?",
+    "question": "Varia: What color best captures 'lavender flower'?",
     "options": [
       "Brown",
       "Black",
@@ -25583,11 +25583,11 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Choose the color cue: 'strawberry ice cream'.",
+    "question": "Varia: Which shade feels closest to 'strawberry ice cream'?",
     "options": [
       "Green",
       "Black",
-      "Mint",
+      "Mint Green",
       "Yellow",
       "Purple",
       "White",
@@ -25608,7 +25608,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Which color matches 'cocoa powder'?",
+    "question": "Varia: What color would you assign to 'cocoa powder'?",
     "options": [
       "Orange",
       "Purple",
@@ -25633,12 +25633,12 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Pick the color best matching 'storm cloud'.",
+    "question": "Varia: Which hue sounds most convincing for 'storm cloud'?",
     "options": [
       "Purple",
       "Red",
       "Yellow",
-      "Mint",
+      "Mint Green",
       "Orange",
       "Silver",
       "Blue",
@@ -25658,9 +25658,9 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Select the color for 'deep ocean at night'.",
+    "question": "Varia: What color pairing makes the most sense for 'deep ocean at night'?",
     "options": [
-      "Mint",
+      "Mint Green",
       "Gray",
       "Blue",
       "White",
@@ -25683,7 +25683,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: 'mint leaf' is closest to which color?",
+    "question": "Varia: Which shade feels right when you hear 'mint leaf'?",
     "options": [
       "Gray",
       "Green",
@@ -25691,7 +25691,7 @@
       "Yellow",
       "Black",
       "White",
-      "Mint",
+      "Mint Green",
       "Silver",
       "Red",
       "Purple"
@@ -25708,7 +25708,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Which option names the right color for 'gold medal'?",
+    "question": "Varia: What hue would you settle on for 'gold medal'?",
     "options": [
       "Brown",
       "Silver",
@@ -25733,7 +25733,7 @@
     "topic": "Varia",
     "category": "COLOR",
     "language": "en",
-    "question": "Varia: Choose the color cue: 'silver coin'.",
+    "question": "Varia: Which color best matches the image of 'silver coin'?",
     "options": [
       "Pink",
       "Blue",
@@ -25743,7 +25743,7 @@
       "Green",
       "Navy",
       "Red",
-      "Mint",
+      "Mint Green",
       "Purple"
     ],
     "correct": {
