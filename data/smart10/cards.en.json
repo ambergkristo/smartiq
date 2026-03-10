@@ -1868,23 +1868,27 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Mark statements that are true for this topic. Focus area: Tallinn.",
+    "question": "Geography: Which statements about Tallinn are true?",
     "options": [
-      "Atlantic is the largest ocean.",
-      "Ottawa is US capital.",
-      "Everest is in the Alps.",
-      "Lisbon is in Spain.",
-      "Nile flows through Brazil.",
-      "Sahara is a desert.",
-      "Lisbon is in Portugal.",
-      "Sahara is a rainforest.",
-      "Andes are in Africa.",
-      "Iceland is in the tropics."
+      "Tallinn is Estonia's capital.",
+      "Tallinn sits on the Baltic Sea.",
+      "Old Town is a UNESCO site.",
+      "Parliament meets in Tallinn.",
+      "Tallinn lies in Portugal.",
+      "The city stands on the Nile.",
+      "Tallinn is south of Riga.",
+      "It is known for medieval walls.",
+      "Tallinn is Australia's capital.",
+      "The euro is used in Tallinn."
     ],
     "correct": {
       "correctIndexes": [
-        5,
-        6
+        0,
+        1,
+        2,
+        3,
+        7,
+        9
       ]
     },
     "difficulty": "2",
@@ -1896,24 +1900,27 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Which claims are accurate? Focus area: Riga.",
+    "question": "Geography: Which statements about Riga are true?",
     "options": [
-      "Iceland is an island nation.",
-      "Everest is in the Alps.",
-      "Lisbon is in Portugal.",
-      "Pacific is the largest ocean.",
-      "Sahara is a rainforest.",
-      "Nile flows through Brazil.",
-      "Danube flows through Australia.",
-      "Greenland is near equator.",
-      "Iceland is in the tropics.",
-      "Ottawa is US capital."
+      "Riga is Latvia's capital.",
+      "Riga stands on the Daugava River.",
+      "Art Nouveau is prominent in Riga.",
+      "Riga lies on the Baltic Sea.",
+      "Riga is Lithuania's capital.",
+      "The city is in the Alps.",
+      "Riga uses the euro.",
+      "Riga hosted pharaoh dynasties.",
+      "The Gulf of Riga borders the city.",
+      "Riga sits in South America."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        3
+        3,
+        6,
+        8
       ]
     },
     "difficulty": "2",
@@ -1925,25 +1932,27 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Find the statements that fit. Focus area: Vilnius.",
+    "question": "Geography: Which statements about Vilnius are true?",
     "options": [
-      "Lisbon is in Portugal.",
-      "Lisbon is in Spain.",
-      "Nile flows through Egypt.",
-      "Greenland is near equator.",
-      "Iceland is an island nation.",
-      "Everest is in the Alps.",
-      "Tokyo is in Japan.",
-      "Nile flows through Brazil.",
-      "Iceland is in the tropics.",
-      "Atlantic is the largest ocean."
+      "Vilnius is Lithuania's capital.",
+      "Vilnius stands near the Neris River.",
+      "Gediminas Tower is in Vilnius.",
+      "Vilnius is inland, not coastal.",
+      "Vilnius is Estonia's capital.",
+      "The city lies in Brazil.",
+      "The euro is used in Vilnius.",
+      "Vilnius sits on the Pacific coast.",
+      "Baroque marks much of the old town.",
+      "Vilnius is north of Tallinn."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        4,
-        6
+        3,
+        6,
+        8
       ]
     },
     "difficulty": "2",
@@ -1955,24 +1964,25 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Select all true statements. Focus area: Helsinki.",
+    "question": "Geography: Which statements about Helsinki are true?",
     "options": [
-      "Danube flows through Europe.",
-      "Greenland is near equator.",
-      "Canberra is in New Zealand.",
-      "Andes are in Africa.",
-      "Lisbon is in Portugal.",
-      "Nile flows through Egypt.",
-      "Tokyo is in Japan.",
-      "Ottawa is US capital.",
-      "Himalayas include Mount Everest.",
-      "Tokyo is in South Korea."
+      "Helsinki is Finland's capital.",
+      "It stands on the Gulf of Finland.",
+      "Suomenlinna is off Helsinki's coast.",
+      "Finnish and Swedish are used there.",
+      "Helsinki is Norway's capital.",
+      "It lies on the Mediterranean.",
+      "The euro is used in Helsinki.",
+      "Helsinki is an inland desert city.",
+      "Ferries link Helsinki to Tallinn.",
+      "Mount Everest rises in Helsinki."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        5,
+        1,
+        2,
+        3,
         6,
         8
       ]
@@ -1986,27 +1996,27 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Which lines are correct? Focus area: Stockholm.",
+    "question": "Geography: Which statements about Stockholm are true?",
     "options": [
-      "Ottawa is US capital.",
-      "Tokyo is in South Korea.",
-      "Tokyo is in Japan.",
-      "Pacific is the largest ocean.",
-      "Greenland is mostly ice-covered.",
-      "Lisbon is in Spain.",
-      "Sahara is a desert.",
-      "Iceland is an island nation.",
-      "Everest is in the Alps.",
-      "Lisbon is in Portugal."
+      "Stockholm is Sweden's capital.",
+      "It spans many islands.",
+      "Lake Malaren meets the Baltic there.",
+      "The Riksdag meets in Stockholm.",
+      "Stockholm is Denmark's capital.",
+      "It lies on the Black Sea.",
+      "The city uses the krona.",
+      "Stockholm stands in the Sahara.",
+      "Gamla Stan is Stockholm's old town.",
+      "It is south of Copenhagen."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        4,
         6,
-        7,
-        9
+        8
       ]
     },
     "difficulty": "2",
@@ -2018,28 +2028,27 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Identify valid statements. Focus area: Oslo.",
+    "question": "Geography: Which statements about Oslo are true?",
     "options": [
-      "Pacific is the largest ocean.",
-      "Lisbon is in Spain.",
-      "Lisbon is in Portugal.",
-      "Nile flows through Egypt.",
-      "Danube flows through Europe.",
-      "Himalayas include Mount Everest.",
-      "Danube flows through Australia.",
-      "Greenland is near equator.",
-      "Tokyo is in Japan.",
-      "Iceland is an island nation."
+      "Oslo is Norway's capital.",
+      "Oslo sits at the head of a fjord.",
+      "Nobel Peace Prize is awarded in Oslo.",
+      "Oslo uses the krone.",
+      "Oslo is Sweden's capital.",
+      "It stands on the Caspian Sea.",
+      "The city hosted the 1952 Winter Games.",
+      "Oslo lies in South America.",
+      "Parliament meets in Oslo.",
+      "Sagrada Familia stands in Oslo."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        4,
-        5,
-        8,
-        9
+        6,
+        8
       ]
     },
     "difficulty": "2",
@@ -2051,23 +2060,27 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Mark statements that are true for this topic. Focus area: Copenhagen.",
+    "question": "Geography: Which statements about Copenhagen are true?",
     "options": [
-      "Greenland is mostly ice-covered.",
-      "Andes are in Africa.",
-      "Sahara is a rainforest.",
-      "Sahara is a desert.",
-      "Danube flows through Australia.",
-      "Canberra is in New Zealand.",
-      "Lisbon is in Spain.",
-      "Everest is in the Alps.",
-      "Tokyo is in South Korea.",
-      "Iceland is in the tropics."
+      "Copenhagen is Denmark's capital.",
+      "It lies on Zealand and Amager.",
+      "The Little Mermaid is in Copenhagen.",
+      "Bicycles are common in the city.",
+      "Copenhagen is Iceland's capital.",
+      "It stands on the Red Sea.",
+      "The Danish krone is used there.",
+      "Copenhagen is in the Alps.",
+      "Oresund links Copenhagen to Sweden.",
+      "The city hosted Roman consuls."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3
+        1,
+        2,
+        3,
+        6,
+        8
       ]
     },
     "difficulty": "2",
@@ -2079,24 +2092,27 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Which claims are accurate? Focus area: Reykjavik.",
+    "question": "Geography: Which statements about Reykjavik are true?",
     "options": [
-      "Tokyo is in South Korea.",
-      "Greenland is mostly ice-covered.",
-      "Tokyo is in Japan.",
-      "Danube flows through Australia.",
-      "Canberra is in New Zealand.",
-      "Ottawa is US capital.",
-      "Sahara is a desert.",
-      "Andes are in Africa.",
-      "Atlantic is the largest ocean.",
-      "Nile flows through Brazil."
+      "Reykjavik is Iceland's capital.",
+      "It is one of Europe's northmost capitals.",
+      "Geothermal heat is common there.",
+      "The city lies on Iceland's coast.",
+      "Reykjavik is in Greenland.",
+      "It uses the euro as currency.",
+      "Hallgrimskirkja is in Reykjavik.",
+      "Reykjavik sits on the Danube.",
+      "The Icelandic krona is used there.",
+      "Mount Fuji rises beside Reykjavik."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        6
+        3,
+        6,
+        8
       ]
     },
     "difficulty": "2",
@@ -2108,23 +2124,25 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Find the statements that fit. Focus area: London.",
+    "question": "Geography: Which statements about London are true?",
     "options": [
-      "Andes are in South America.",
-      "Everest is in the Alps.",
-      "Canberra is Australia's capital.",
-      "Lisbon is in Spain.",
-      "Iceland is in the tropics.",
-      "Ottawa is US capital.",
-      "Ottawa is Canada's capital.",
-      "Atlantic is the largest ocean.",
-      "Lisbon is in Portugal.",
-      "Tokyo is in South Korea."
+      "London is the capital of the UK.",
+      "River Thames runs through London.",
+      "The Houses of Parliament are there.",
+      "London uses the pound sterling.",
+      "London is France's capital.",
+      "The city lies in the Sahara.",
+      "Heathrow is a London airport.",
+      "London stands on the Amazon.",
+      "Big Ben is in London.",
+      "The euro is the UK's currency."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
+        3,
         6,
         8
       ]
@@ -2138,26 +2156,27 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Select all true statements. Focus area: Paris.",
+    "question": "Geography: Which statements about Paris are true?",
     "options": [
-      "Canberra is in New Zealand.",
-      "Andes are in Africa.",
-      "Himalayas include Mount Everest.",
-      "Ottawa is Canada's capital.",
-      "Sahara is a desert.",
-      "Iceland is in the tropics.",
-      "Lisbon is in Portugal.",
-      "Sahara is a rainforest.",
-      "Lisbon is in Spain.",
-      "Greenland is mostly ice-covered."
+      "Paris is France's capital.",
+      "Seine flows through Paris.",
+      "The Eiffel Tower is in Paris.",
+      "Paris uses the euro.",
+      "Paris is Italy's capital.",
+      "Mount Kilimanjaro stands in Paris.",
+      "The Louvre is in Paris.",
+      "Paris lies on the Baltic Sea.",
+      "Notre-Dame is in Paris.",
+      "Paris uses the yen."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        4,
         6,
-        9
+        8
       ]
     },
     "difficulty": "2",

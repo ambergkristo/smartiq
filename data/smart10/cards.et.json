@@ -1868,23 +1868,27 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Margi selle teema toesed vaited. Fookus: Tallinn.",
+    "question": "Geograafia: Millised v?ited Tallinna kohta peavad paika?",
     "options": [
-      "Atlantic is the largest ocean.",
-      "Ottawa is US capital.",
-      "Everest is in the Alps.",
-      "Lisbon is in Spain.",
-      "Nile flows through Brazil.",
-      "Sahara is a desert.",
-      "Lisbon is in Portugal.",
-      "Sahara is a rainforest.",
-      "Andes are in Africa.",
-      "Iceland is in the tropics."
+      "Tallinn on Eesti pealinn.",
+      "Tallinn asub L??nemere ??res.",
+      "Vanalinn on UNESCO paik.",
+      "Riigikogu koguneb Tallinnas.",
+      "Tallinn asub Portugalis.",
+      "Linn paikneb Niiluse ??res.",
+      "Tallinn j??b Riiast l?unasse.",
+      "Linn on tuntud vanade m??ride t?ttu.",
+      "Tallinn on Austraalia pealinn.",
+      "Tallinnas kasutatakse eurot."
     ],
     "correct": {
       "correctIndexes": [
-        5,
-        6
+        0,
+        1,
+        2,
+        3,
+        7,
+        9
       ]
     },
     "difficulty": "2",
@@ -1896,24 +1900,27 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Millised vaited on oiged? Fookus: Riga.",
+    "question": "Geograafia: Millised v?ited Riia kohta peavad paika?",
     "options": [
-      "Iceland is an island nation.",
-      "Everest is in the Alps.",
-      "Lisbon is in Portugal.",
-      "Pacific is the largest ocean.",
-      "Sahara is a rainforest.",
-      "Nile flows through Brazil.",
-      "Danube flows through Australia.",
-      "Greenland is near equator.",
-      "Iceland is in the tropics.",
-      "Ottawa is US capital."
+      "Riia on L?ti pealinn.",
+      "Riia asub Daugava j?e ??res.",
+      "Juugend on Riias silmatorkav.",
+      "Riia asub L??nemere ??res.",
+      "Riia on Leedu pealinn.",
+      "Linn asub Alpides.",
+      "Riias kasutatakse eurot.",
+      "Riias valitsesid vaaraod.",
+      "Riia laht piirneb linnaga.",
+      "Riia asub L?una-Ameerikas."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        3
+        3,
+        6,
+        8
       ]
     },
     "difficulty": "2",
@@ -1925,25 +1932,27 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Leia sobivad vaited. Fookus: Vilnius.",
+    "question": "Geograafia: Millised v?ited Vilniuse kohta peavad paika?",
     "options": [
-      "Lisbon is in Portugal.",
-      "Lisbon is in Spain.",
-      "Nile flows through Egypt.",
-      "Greenland is near equator.",
-      "Iceland is an island nation.",
-      "Everest is in the Alps.",
-      "Tokyo is in Japan.",
-      "Nile flows through Brazil.",
-      "Iceland is in the tropics.",
-      "Atlantic is the largest ocean."
+      "Vilnius on Leedu pealinn.",
+      "Vilnius asub Nerise j?e l?hedal.",
+      "Gediminase torn on Vilniuses.",
+      "Vilnius on sisemaal, mitte rannikul.",
+      "Vilnius on Eesti pealinn.",
+      "Linn asub Brasiilias.",
+      "Vilniuses kasutatakse eurot.",
+      "Vilnius asub Vaikse ookeani rannikul.",
+      "Vanalinna iseloomustab barokk.",
+      "Vilnius on Tallinnast p?hja pool."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        4,
-        6
+        3,
+        6,
+        8
       ]
     },
     "difficulty": "2",
@@ -1955,24 +1964,25 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Vali koik toed vaited. Fookus: Helsinki.",
+    "question": "Geograafia: Millised v?ited Helsingi kohta peavad paika?",
     "options": [
-      "Danube flows through Europe.",
-      "Greenland is near equator.",
-      "Canberra is in New Zealand.",
-      "Andes are in Africa.",
-      "Lisbon is in Portugal.",
-      "Nile flows through Egypt.",
-      "Tokyo is in Japan.",
-      "Ottawa is US capital.",
-      "Himalayas include Mount Everest.",
-      "Tokyo is in South Korea."
+      "Helsingi on Soome pealinn.",
+      "See asub Soome lahe ??res.",
+      "Suomenlinna j??b Helsingi l?histele.",
+      "Seal kasutatakse soome ja rootsi keelt.",
+      "Helsingi on Norra pealinn.",
+      "See asub Vahemere ??res.",
+      "Helsingis kasutatakse eurot.",
+      "Helsingi on sisemaine k?rbelinn.",
+      "Praamid ?hendavad Helsingi Tallinnaga.",
+      "Mount Everest asub Helsingis."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        5,
+        1,
+        2,
+        3,
         6,
         8
       ]
@@ -1986,27 +1996,27 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Millised read on oiged? Fookus: Stockholm.",
+    "question": "Geograafia: Millised v?ited Stockholmi kohta peavad paika?",
     "options": [
-      "Ottawa is US capital.",
-      "Tokyo is in South Korea.",
-      "Tokyo is in Japan.",
-      "Pacific is the largest ocean.",
-      "Greenland is mostly ice-covered.",
-      "Lisbon is in Spain.",
-      "Sahara is a desert.",
-      "Iceland is an island nation.",
-      "Everest is in the Alps.",
-      "Lisbon is in Portugal."
+      "Stockholm on Rootsi pealinn.",
+      "See paikneb paljudel saartel.",
+      "M?laren kohtub seal L??nemerega.",
+      "Riksdag koguneb Stockholmis.",
+      "Stockholm on Taani pealinn.",
+      "See asub Musta mere ??res.",
+      "Linnas kasutatakse krooni.",
+      "Stockholm asub Saharas.",
+      "Gamla Stan on Stockholmi vanalinn.",
+      "See j??b Kopenhaagenist l?una poole."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        4,
         6,
-        7,
-        9
+        8
       ]
     },
     "difficulty": "2",
@@ -2018,28 +2028,27 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Tuvasta kehtivad vaited. Fookus: Oslo.",
+    "question": "Geograafia: Millised v?ited Oslo kohta peavad paika?",
     "options": [
-      "Pacific is the largest ocean.",
-      "Lisbon is in Spain.",
-      "Lisbon is in Portugal.",
-      "Nile flows through Egypt.",
-      "Danube flows through Europe.",
-      "Himalayas include Mount Everest.",
-      "Danube flows through Australia.",
-      "Greenland is near equator.",
-      "Tokyo is in Japan.",
-      "Iceland is an island nation."
+      "Oslo on Norra pealinn.",
+      "Oslo asub fjordi tipus.",
+      "Nobeli rahupreemia antakse Oslos.",
+      "Oslos kasutatakse krooni.",
+      "Oslo on Rootsi pealinn.",
+      "See asub Kaspia mere ??res.",
+      "Linn v??rustas 1952. aasta taliol?mpiat.",
+      "Oslo asub L?una-Ameerikas.",
+      "Parlament koguneb Oslos.",
+      "Sagrada Familia asub Oslos."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        4,
-        5,
-        8,
-        9
+        6,
+        8
       ]
     },
     "difficulty": "2",
@@ -2051,23 +2060,27 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Margi selle teema toesed vaited. Fookus: Copenhagen.",
+    "question": "Geograafia: Millised v?ited Kopenhaageni kohta peavad paika?",
     "options": [
-      "Greenland is mostly ice-covered.",
-      "Andes are in Africa.",
-      "Sahara is a rainforest.",
-      "Sahara is a desert.",
-      "Danube flows through Australia.",
-      "Canberra is in New Zealand.",
-      "Lisbon is in Spain.",
-      "Everest is in the Alps.",
-      "Tokyo is in South Korea.",
-      "Iceland is in the tropics."
+      "Kopenhaagen on Taani pealinn.",
+      "See asub Zealandil ja Amageril.",
+      "V?ike merineitsi on Kopenhaagenis.",
+      "Linnas s?idetakse palju rattaga.",
+      "Kopenhaagen on Islandi pealinn.",
+      "See asub Punase mere ??res.",
+      "Seal kasutatakse Taani krooni.",
+      "Kopenhaagen asub Alpides.",
+      "?resund ?hendab linna Rootsiga.",
+      "Linn v??rustas Rooma konsuleid."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3
+        1,
+        2,
+        3,
+        6,
+        8
       ]
     },
     "difficulty": "2",
@@ -2079,24 +2092,27 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Millised vaited on oiged? Fookus: Reykjavik.",
+    "question": "Geograafia: Millised v?ited Reykjaviki kohta peavad paika?",
     "options": [
-      "Tokyo is in South Korea.",
-      "Greenland is mostly ice-covered.",
-      "Tokyo is in Japan.",
-      "Danube flows through Australia.",
-      "Canberra is in New Zealand.",
-      "Ottawa is US capital.",
-      "Sahara is a desert.",
-      "Andes are in Africa.",
-      "Atlantic is the largest ocean.",
-      "Nile flows through Brazil."
+      "Reykjavik on Islandi pealinn.",
+      "See on ?ks Euroopa p?hjapoolseid pealinnu.",
+      "Geotermaalne k?te on seal tavaline.",
+      "Linn asub Islandi rannikul.",
+      "Reykjavik asub Gr??nimaal.",
+      "Seal kasutatakse eurot.",
+      "Hallgrimskirkja on Reykjavikis.",
+      "Reykjavik asub Doonau ??res.",
+      "Seal kasutatakse Islandi krooni.",
+      "Fuji m?gi k?rgub Reykjaviki k?rval."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        6
+        3,
+        6,
+        8
       ]
     },
     "difficulty": "2",
@@ -2108,23 +2124,25 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Leia sobivad vaited. Fookus: London.",
+    "question": "Geograafia: Millised v?ited Londoni kohta peavad paika?",
     "options": [
-      "Andes are in South America.",
-      "Everest is in the Alps.",
-      "Canberra is Australia's capital.",
-      "Lisbon is in Spain.",
-      "Iceland is in the tropics.",
-      "Ottawa is US capital.",
-      "Ottawa is Canada's capital.",
-      "Atlantic is the largest ocean.",
-      "Lisbon is in Portugal.",
-      "Tokyo is in South Korea."
+      "London on ?hendkuningriigi pealinn.",
+      "Thames voolab l?bi Londoni.",
+      "Parlamendihooned asuvad seal.",
+      "Londonis kasutatakse naelsterlingit.",
+      "London on Prantsusmaa pealinn.",
+      "Linn asub Saharas.",
+      "Heathrow on Londoni lennujaam.",
+      "London paikneb Amazonase ??res.",
+      "Big Ben on Londonis.",
+      "Euro on UK ametlik raha."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
+        3,
         6,
         8
       ]
@@ -2138,26 +2156,27 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Vali koik toed vaited. Fookus: Paris.",
+    "question": "Geograafia: Millised v?ited Pariisi kohta peavad paika?",
     "options": [
-      "Canberra is in New Zealand.",
-      "Andes are in Africa.",
-      "Himalayas include Mount Everest.",
-      "Ottawa is Canada's capital.",
-      "Sahara is a desert.",
-      "Iceland is in the tropics.",
-      "Lisbon is in Portugal.",
-      "Sahara is a rainforest.",
-      "Lisbon is in Spain.",
-      "Greenland is mostly ice-covered."
+      "Pariis on Prantsusmaa pealinn.",
+      "Seine voolab l?bi Pariisi.",
+      "Eiffeli torn on Pariisis.",
+      "Pariisis kasutatakse eurot.",
+      "Pariis on Itaalia pealinn.",
+      "Kilimanjaro asub Pariisis.",
+      "Louvre on Pariisis.",
+      "Pariis asub L??nemere ??res.",
+      "Notre-Dame on Pariisis.",
+      "Pariisis kasutatakse jeeni."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        4,
         6,
-        9
+        8
       ]
     },
     "difficulty": "2",

@@ -2,21 +2,21 @@
 
 ## Metadata
 
-- Generated: 2026-03-10T12:44:08.275Z
+- Generated: 2026-03-10T12:48:27.508Z
 - Scope: EN, ET SmartIQ locale packs
 
 ## Executive Summary
 
-- EN: NOT READY - editorial cleanup required before launch trust | score 0.924 | total issues 598
-- ET: BLOCKED - ET is not launch-ready | score 0.806 | total issues 1476
+- EN: NOT READY - editorial cleanup required before launch trust | score 0.926 | total issues 581
+- ET: BLOCKED - ET is not launch-ready | score 0.810 | total issues 1449
 
 ## EN Findings
 
 - Dataset: `data/smart10/cards.en.json`
-- Semantic content score: 0.924
+- Semantic content score: 0.926
 - Launch readiness: NOT READY - editorial cleanup required before launch trust
-- Total issue hits: 598
-- Warning count: 598
+- Total issue hits: 581
+- Warning count: 581
 
 ### Issue Counts
 
@@ -24,19 +24,19 @@
 - broken grammar: 0
 - unnatural phrasing: 210
 - placeholder content: 0
-- templated/scaffold wording: 87
-- recycled option pool: 301
+- templated/scaffold wording: 80
+- recycled option pool: 291
 - low-trust option wording: 0
 - trivial/low-value content: 0
 
 ### Highest-Risk Areas
 
-- EN Geography/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Culture/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Science/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Varia/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Varia/ORDER: 30/30 cards flagged (100%) | unnatural_phrasing
 - EN History/COLOR: 30/30 cards flagged (100%) | unnatural_phrasing
+- EN Sports/COLOR: 30/30 cards flagged (100%) | unnatural_phrasing
 
 ### Categorized Findings Summary
 
@@ -57,38 +57,38 @@
 #### recycled option pool
 
 - `sports-true_false-028` Sports/TRUE_FALSE: Sports: Select all true statements. Focus area: World Cup.
-- `geography-true_false-001` Geography/TRUE_FALSE: Geography: Mark statements that are true for this topic. Focus area: Tallinn.
-- `geography-true_false-002` Geography/TRUE_FALSE: Geography: Which claims are accurate? Focus area: Riga.
-- `geography-true_false-003` Geography/TRUE_FALSE: Geography: Find the statements that fit. Focus area: Vilnius.
+- `geography-true_false-011` Geography/TRUE_FALSE: Geography: Which lines are correct? Focus area: Berlin.
+- `geography-true_false-012` Geography/TRUE_FALSE: Geography: Identify valid statements. Focus area: Rome.
+- `geography-true_false-013` Geography/TRUE_FALSE: Geography: Mark statements that are true for this topic. Focus area: Madrid.
 
 
 ## ET Findings
 
 - Dataset: `data/smart10/cards.et.json`
-- Semantic content score: 0.806
+- Semantic content score: 0.810
 - Launch readiness: BLOCKED - ET is not launch-ready
-- Total issue hits: 1476
-- Warning count: 1476
+- Total issue hits: 1449
+- Warning count: 1449
 
 ### Issue Counts
 
 - language leakage: 130
-- broken grammar: 519
+- broken grammar: 509
 - unnatural phrasing: 280
 - placeholder content: 0
-- templated/scaffold wording: 87
-- recycled option pool: 300
+- templated/scaffold wording: 80
+- recycled option pool: 290
 - low-trust option wording: 160
 - trivial/low-value content: 0
 
 ### Highest-Risk Areas
 
-- ET Geography/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Culture/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Science/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Varia/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET History/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
 - ET Sports/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
+- ET Geography/ORDER: 30/30 cards flagged (100%) | broken_grammar
 
 ### Categorized Findings Summary
 
@@ -129,8 +129,8 @@
 
 #### recycled option pool
 
-- `geography-true_false-001-et` Geography/TRUE_FALSE: Geograafia: Margi selle teema toesed vaited. Fookus: Tallinn.
-- `geography-true_false-002-et` Geography/TRUE_FALSE: Geograafia: Millised vaited on oiged? Fookus: Riga.
-- `geography-true_false-003-et` Geography/TRUE_FALSE: Geograafia: Leia sobivad vaited. Fookus: Vilnius.
-- `geography-true_false-004-et` Geography/TRUE_FALSE: Geograafia: Vali koik toed vaited. Fookus: Helsinki.
+- `geography-true_false-011-et` Geography/TRUE_FALSE: Geograafia: Millised read on oiged? Fookus: Berlin.
+- `geography-true_false-012-et` Geography/TRUE_FALSE: Geograafia: Tuvasta kehtivad vaited. Fookus: Rome.
+- `geography-true_false-013-et` Geography/TRUE_FALSE: Geograafia: Margi selle teema toesed vaited. Fookus: Madrid.
+- `geography-true_false-014-et` Geography/TRUE_FALSE: Geograafia: Millised vaited on oiged? Fookus: Lisbon.
 
