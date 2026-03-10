@@ -23,7 +23,6 @@ Todo:
 
 - ET remains blocked for launch.
 - Largest remaining ET repair zones:
-  - `Sports/TRUE_FALSE 021..030`
   - `Science/TRUE_FALSE 011..030`
   - `ORDER`
   - `COLOR`
@@ -45,7 +44,6 @@ Todo:
 
 - EN is still not launch-ready.
 - Largest remaining EN repair zones:
-  - `Sports/TRUE_FALSE 021..030`
   - `Science/TRUE_FALSE`
   - `ORDER`
   - `COLOR`
@@ -59,7 +57,7 @@ Done:
 - Review, triage, correction, verification, and rejection rules were defined for EN and ET separately.
 - Repair batches completed so far:
   - `History/TRUE_FALSE 001..030`
-  - `Sports/TRUE_FALSE 001..020`
+  - `Sports/TRUE_FALSE 001..030`
   - `Geography/TRUE_FALSE 001..030`
   - `Varia/TRUE_FALSE 001..030`
   - `Culture/TRUE_FALSE 001..030`
@@ -116,7 +114,8 @@ Todo:
 Current observed report baseline:
 
 - EN score: `0.945`
-- ET score: `0.838`
+- EN score: `0.946`
+- ET score: `0.842`
 
 Closed repair zone:
 
@@ -126,11 +125,12 @@ Closed repair zone:
 - `Varia/TRUE_FALSE` dropped out of the ET top-risk `TRUE_FALSE` backlog
 - `Geography/TRUE_FALSE` is now fully repaired across `001..030`
 - `Geography/TRUE_FALSE` dropped out of the ET top-risk `TRUE_FALSE` backlog
+- `Sports/TRUE_FALSE` is now fully repaired across `001..030`
+- `Sports/TRUE_FALSE` dropped out of the EN and ET `TRUE_FALSE` backlog
 
 ## Next Repair Priority
 
-1. `Sports/TRUE_FALSE 021..030`
-2. `Science/TRUE_FALSE 011..030`
-3. `ORDER`
-4. `COLOR`
-5. remaining `OPEN` recycled pools
+1. `Science/TRUE_FALSE 011..030`
+2. `ORDER`
+3. `COLOR`
+4. remaining `OPEN` recycled pools

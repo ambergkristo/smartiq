@@ -1559,25 +1559,26 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Sports: Find the statements that fit. Focus area: Formula One.",
+    "question": "Sports: Which statements about Formula One are true?",
     "options": [
-      "Marathon length is 12 km.",
-      "Basketball uses a hoop.",
-      "Tennis is only indoor sport.",
-      "Olympics happen every year.",
-      "Olympics are held every four years.",
-      "Wimbledon is a golf major.",
-      "Rugby uses a ping-pong ball.",
-      "Marathon length is 42.195 km.",
-      "A hat trick means three goals.",
-      "Offside is a tennis rule."
+      "Formula One uses open-wheel cars.",
+      "Drivers race on circuits worldwide.",
+      "Pit stops can change strategy.",
+      "FIA governs the championship.",
+      "Constructors compete for a title.",
+      "Matches last nine innings.",
+      "Riders use motorcycles in races.",
+      "The World Cup trophy is awarded here.",
+      "A net divides the track.",
+      "Formula One is played with a bat."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        4,
-        7,
-        8
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -1589,26 +1590,26 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Sports: Select all true statements. Focus area: MotoGP.",
+    "question": "Sports: Which statements about MotoGP are true?",
     "options": [
-      "A hat trick means three goals.",
-      "Free throw is from basketball.",
-      "Hat trick means five goals.",
-      "Rugby uses an oval ball.",
-      "Stanley Cup is for ice hockey.",
-      "Free throw is from baseball.",
-      "Wimbledon is a golf major.",
-      "Stanley Cup is for basketball.",
-      "Wimbledon is a tennis tournament.",
-      "Olympics happen every year."
+      "MotoGP is a motorcycle series.",
+      "Riders race on paved circuits.",
+      "Lean angle matters in corners.",
+      "Teams tune bikes for each track.",
+      "Prototype bikes define the class.",
+      "It is played on grass with rackets.",
+      "A scrum restarts MotoGP races.",
+      "Riders score with goals and assists.",
+      "Swimmers contest MotoGP heats.",
+      "Horses pull the bikes on track."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        4,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -1620,27 +1621,26 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Sports: Which lines are correct? Focus area: Marathon.",
+    "question": "Sports: Which statements about marathon running are true?",
     "options": [
-      "Cricket uses wickets.",
-      "Tennis can be played on clay.",
-      "A hat trick means three goals.",
-      "Marathon length is 12 km.",
-      "Free throw is from basketball.",
-      "Basketball has no hoops.",
-      "Olympics are held every four years.",
-      "Stanley Cup is for basketball.",
-      "Basketball uses a hoop.",
-      "Hat trick means five goals."
+      "A marathon covers 42.195 kilometres.",
+      "Marathons are usually road races.",
+      "Pacing matters over long distance.",
+      "Aid stations support runners.",
+      "The event tests endurance heavily.",
+      "Marathons happen in swimming pools.",
+      "A puck starts each marathon.",
+      "A marathon is shorter than a 10K.",
+      "Teams use goalkeepers in marathons.",
+      "A bat and wickets are required."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
         2,
-        4,
-        6,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -1652,28 +1652,26 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Sports: Identify valid statements. Focus area: Triathlon.",
+    "question": "Sports: Which statements about triathlon are true?",
     "options": [
-      "Wimbledon is a tennis tournament.",
-      "Cricket uses wickets.",
-      "Basketball uses a hoop.",
-      "Basketball has no hoops.",
-      "Tennis can be played on clay.",
-      "Rugby uses an oval ball.",
-      "Free throw is from basketball.",
-      "Wimbledon is a golf major.",
-      "Offside is a football rule.",
-      "Tennis is only indoor sport."
+      "Triathlon combines swim bike run.",
+      "Transitions are part of the race.",
+      "Athletes change discipline twice.",
+      "Open-water swimming is common.",
+      "Bikes and helmets are standard gear.",
+      "All legs happen on ice.",
+      "Players dribble a ball through it.",
+      "A horse is needed for the bike leg.",
+      "Penalty kicks decide the winner.",
+      "The sport uses only indoor courts."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
         2,
-        4,
-        5,
-        6,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -1685,21 +1683,23 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Sports: Mark statements that are true for this topic. Focus area: Decathlon.",
+    "question": "Sports: Which statements about decathlon are true?",
     "options": [
-      "Tour de France is a swim race.",
-      "Tennis is only indoor sport.",
-      "Cricket has no bat.",
-      "Rugby uses an oval ball.",
-      "Olympics are held every four years.",
-      "Basketball has no hoops.",
-      "Offside is a tennis rule.",
-      "Marathon length is 12 km.",
-      "Olympics happen every year.",
-      "Stanley Cup is for basketball."
+      "Decathlon has ten field events.",
+      "It is contested over two days.",
+      "Points reward each performance.",
+      "Sprints and throws are included.",
+      "The 1500 metres closes the event.",
+      "It is a cycling stage race.",
+      "Surfing decides the champion.",
+      "Only one event counts for medals.",
+      "Decathlon is played with a racket.",
+      "Teams use goalkeepers in each round."
     ],
     "correct": {
       "correctIndexes": [
+        1,
+        2,
         3,
         4
       ]
@@ -1713,24 +1713,26 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Sports: Which claims are accurate? Focus area: Wimbledon.",
+    "question": "Sports: Which statements about Wimbledon are true?",
     "options": [
-      "Rugby uses an oval ball.",
-      "Free throw is from baseball.",
-      "Tour de France is a cycling race.",
-      "Offside is a tennis rule.",
-      "Hat trick means five goals.",
-      "Marathon length is 12 km.",
-      "Basketball has no hoops.",
-      "Rugby uses a ping-pong ball.",
-      "Tour de France is a swim race.",
-      "Wimbledon is a tennis tournament."
+      "Wimbledon is a Grand Slam event.",
+      "It is played on grass courts.",
+      "The tournament is held in London.",
+      "White clothing rules are strict.",
+      "Singles and doubles titles are awarded.",
+      "It is a motorcycle series.",
+      "Ski judges score each match.",
+      "Cricket bats are required equipment.",
+      "Teams race 42.195 km there.",
+      "The trophy is the Stanley Cup."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        9
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -1742,25 +1744,26 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Sports: Find the statements that fit. Focus area: Olympics.",
+    "question": "Sports: Which statements about the Olympics are true?",
     "options": [
-      "Rugby uses a ping-pong ball.",
-      "Free throw is from baseball.",
-      "Tennis is only indoor sport.",
-      "Olympics happen every year.",
-      "Offside is a football rule.",
-      "Hat trick means five goals.",
-      "Marathon length is 42.195 km.",
-      "Free throw is from basketball.",
-      "Olympics are held every four years.",
-      "Offside is a tennis rule."
+      "The Olympics include many sports.",
+      "Summer and Winter editions exist.",
+      "Host cities stage the Games.",
+      "Athletes compete for medals.",
+      "The IOC oversees the movement.",
+      "The Games happen every year.",
+      "Only football is contested there.",
+      "One club wins the title each season.",
+      "Innings decide Olympic champions.",
+      "A yellow jersey crowns the winner."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        6,
-        7,
-        8
+        0,
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -1772,26 +1775,26 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Sports: Select all true statements. Focus area: World Cup.",
+    "question": "Sports: Which statements about the World Cup are true?",
     "options": [
-      "Tennis can be played on clay.",
-      "Hat trick means five goals.",
-      "Rugby uses an oval ball.",
-      "Free throw is from basketball.",
-      "Stanley Cup is for basketball.",
-      "Offside is a tennis rule.",
-      "Free throw is from baseball.",
-      "Cricket uses wickets.",
-      "Wimbledon is a golf major.",
-      "Stanley Cup is for ice hockey."
+      "FIFA runs the men's World Cup.",
+      "National teams compete in it.",
+      "The tournament is held every four years.",
+      "The final crowns a champion nation.",
+      "Qualifying decides many entrants.",
+      "It awards the Stanley Cup trophy.",
+      "Clubs enter instead of national teams.",
+      "It is played on clay tennis courts.",
+      "Each edition lasts one weekend only.",
+      "Motorcycles are used in matches."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        7,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -1803,27 +1806,26 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Sports: Which lines are correct? Focus area: UEFA Champions League.",
+    "question": "Sports: Which statements about the Champions League are true?",
     "options": [
-      "A hat trick means three goals.",
-      "Tour de France is a swim race.",
-      "Marathon length is 12 km.",
-      "Tennis can be played on clay.",
-      "Rugby uses an oval ball.",
-      "Offside is a football rule.",
-      "Basketball uses a hoop.",
-      "Hat trick means five goals.",
-      "Wimbledon is a tennis tournament.",
-      "Rugby uses a ping-pong ball."
+      "Top European clubs play in it.",
+      "UEFA organizes the competition.",
+      "Domestic leagues feed qualification.",
+      "The final crowns a club champion.",
+      "Group or league phases come first.",
+      "National teams enter instead of clubs.",
+      "Matches happen on ice rinks.",
+      "Winners receive the green jacket.",
+      "Matches are scored in innings.",
+      "Horses decide tiebreaks."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
+        2,
         3,
-        4,
-        5,
-        6,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -1835,18 +1837,18 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Sports: Identify valid statements. Focus area: NBA Finals.",
+    "question": "Sports: Which statements about the NBA Finals are true?",
     "options": [
-      "Free throw is from basketball.",
-      "Marathon length is 42.195 km.",
-      "Olympics are held every four years.",
-      "Wimbledon is a tennis tournament.",
-      "Wimbledon is a golf major.",
-      "Offside is a football rule.",
-      "Tennis can be played on clay.",
-      "Rugby uses an oval ball.",
-      "Stanley Cup is for basketball.",
-      "Tennis is only indoor sport."
+      "The Finals decide the NBA champion.",
+      "East and West champions meet there.",
+      "The Larry O'Brien Trophy is awarded.",
+      "Teams play a best-of-seven series.",
+      "Games use basketball courts and rules.",
+      "Matches are played on grass courts.",
+      "Riders change bikes in the Finals.",
+      "Offside decides the winner.",
+      "National teams qualify through FIFA.",
+      "It is a marathon road race."
     ],
     "correct": {
       "correctIndexes": [
@@ -1854,9 +1856,7 @@
         1,
         2,
         3,
-        5,
-        6,
-        7
+        4
       ]
     },
     "difficulty": "2",

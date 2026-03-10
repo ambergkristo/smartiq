@@ -2,21 +2,21 @@
 
 ## Metadata
 
-- Generated: 2026-03-10T14:51:01.147Z
+- Generated: 2026-03-10T14:56:31.656Z
 - Scope: EN, ET SmartIQ locale packs
 
 ## Executive Summary
 
-- EN: NOT READY - editorial cleanup required before launch trust | score 0.945 | total issues 431
-- ET: BLOCKED - ET is not launch-ready | score 0.840 | total issues 1219
+- EN: NOT READY - editorial cleanup required before launch trust | score 0.946 | total issues 423
+- ET: BLOCKED - ET is not launch-ready | score 0.842 | total issues 1202
 
 ## EN Findings
 
 - Dataset: `data/smart10/cards.en.json`
-- Semantic content score: 0.945
+- Semantic content score: 0.946
 - Launch readiness: NOT READY - editorial cleanup required before launch trust
-- Total issue hits: 431
-- Warning count: 431
+- Total issue hits: 423
+- Warning count: 423
 
 ### Issue Counts
 
@@ -24,8 +24,8 @@
 - broken grammar: 0
 - unnatural phrasing: 210
 - placeholder content: 0
-- templated/scaffold wording: 20
-- recycled option pool: 201
+- templated/scaffold wording: 13
+- recycled option pool: 200
 - low-trust option wording: 0
 - trivial/low-value content: 0
 
@@ -49,34 +49,34 @@
 
 #### templated/scaffold wording
 
-- `sports-true_false-021` Sports/TRUE_FALSE: Sports: Find the statements that fit. Focus area: Formula One.
-- `sports-true_false-022` Sports/TRUE_FALSE: Sports: Select all true statements. Focus area: MotoGP.
-- `sports-true_false-024` Sports/TRUE_FALSE: Sports: Identify valid statements. Focus area: Triathlon.
-- `sports-true_false-025` Sports/TRUE_FALSE: Sports: Mark statements that are true for this topic. Focus area: Decathlon.
+- `science-true_false-012` Science/TRUE_FALSE: Science: Identify valid statements. Focus area: Entropy.
+- `science-true_false-013` Science/TRUE_FALSE: Science: Mark statements that are true for this topic. Focus area: Oxygen.
+- `science-true_false-015` Science/TRUE_FALSE: Science: Find the statements that fit. Focus area: Nitrogen.
+- `science-true_false-016` Science/TRUE_FALSE: Science: Select all true statements. Focus area: Carbon.
 
 #### recycled option pool
 
-- `sports-true_false-028` Sports/TRUE_FALSE: Sports: Select all true statements. Focus area: World Cup.
 - `science-true_false-011` Science/TRUE_FALSE: Science: Which lines are correct? Focus area: Energy.
 - `science-true_false-012` Science/TRUE_FALSE: Science: Identify valid statements. Focus area: Entropy.
 - `science-true_false-013` Science/TRUE_FALSE: Science: Mark statements that are true for this topic. Focus area: Oxygen.
+- `science-true_false-014` Science/TRUE_FALSE: Science: Which claims are accurate? Focus area: Hydrogen.
 
 
 ## ET Findings
 
 - Dataset: `data/smart10/cards.et.json`
-- Semantic content score: 0.840
+- Semantic content score: 0.842
 - Launch readiness: BLOCKED - ET is not launch-ready
-- Total issue hits: 1219
-- Warning count: 1219
+- Total issue hits: 1202
+- Warning count: 1202
 
 ### Issue Counts
 
 - language leakage: 130
-- broken grammar: 429
+- broken grammar: 419
 - unnatural phrasing: 280
 - placeholder content: 0
-- templated/scaffold wording: 20
+- templated/scaffold wording: 13
 - recycled option pool: 200
 - low-trust option wording: 160
 - trivial/low-value content: 0
@@ -115,10 +115,10 @@
 
 #### templated/scaffold wording
 
-- `sports-true_false-021-et` Sports/TRUE_FALSE: Sport: Leia sobivad vaited. Fookus: Formula One.
-- `sports-true_false-022-et` Sports/TRUE_FALSE: Sport: Vali koik toed vaited. Fookus: MotoGP.
-- `sports-true_false-024-et` Sports/TRUE_FALSE: Sport: Tuvasta kehtivad vaited. Fookus: Triathlon.
-- `sports-true_false-025-et` Sports/TRUE_FALSE: Sport: Margi selle teema toesed vaited. Fookus: Decathlon.
+- `science-true_false-012-et` Science/TRUE_FALSE: Teadus: Tuvasta kehtivad vaited. Fookus: Entropy.
+- `science-true_false-013-et` Science/TRUE_FALSE: Teadus: Margi selle teema toesed vaited. Fookus: Oxygen.
+- `science-true_false-015-et` Science/TRUE_FALSE: Teadus: Leia sobivad vaited. Fookus: Nitrogen.
+- `science-true_false-016-et` Science/TRUE_FALSE: Teadus: Vali koik toed vaited. Fookus: Carbon.
 
 #### low-trust option wording
 
