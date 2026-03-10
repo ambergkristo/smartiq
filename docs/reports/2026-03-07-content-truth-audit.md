@@ -2,13 +2,13 @@
 
 ## Metadata
 
-- Generated: 2026-03-10T14:42:08.118Z
+- Generated: 2026-03-10T14:48:56.610Z
 - Scope: EN, ET SmartIQ locale packs
 
 ## Executive Summary
 
 - EN: NOT READY - editorial cleanup required before launch trust | score 0.945 | total issues 431
-- ET: BLOCKED - ET is not launch-ready | score 0.835 | total issues 1259
+- ET: BLOCKED - ET is not launch-ready | score 0.838 | total issues 1229
 
 ## EN Findings
 
@@ -65,15 +65,15 @@
 ## ET Findings
 
 - Dataset: `data/smart10/cards.et.json`
-- Semantic content score: 0.835
+- Semantic content score: 0.838
 - Launch readiness: BLOCKED - ET is not launch-ready
-- Total issue hits: 1259
-- Warning count: 1259
+- Total issue hits: 1229
+- Warning count: 1229
 
 ### Issue Counts
 
 - language leakage: 130
-- broken grammar: 469
+- broken grammar: 439
 - unnatural phrasing: 280
 - placeholder content: 0
 - templated/scaffold wording: 20
@@ -83,12 +83,12 @@
 
 ### Highest-Risk Areas
 
-- ET Varia/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar
 - ET History/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
 - ET Sports/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
 - ET Geography/ORDER: 30/30 cards flagged (100%) | broken_grammar
 - ET Culture/ORDER: 30/30 cards flagged (100%) | broken_grammar
 - ET Science/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
+- ET Varia/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
 
 ### Categorized Findings Summary
 
