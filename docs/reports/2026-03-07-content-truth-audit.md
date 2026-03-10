@@ -2,21 +2,21 @@
 
 ## Metadata
 
-- Generated: 2026-03-10T14:27:28.845Z
+- Generated: 2026-03-10T14:42:08.118Z
 - Scope: EN, ET SmartIQ locale packs
 
 ## Executive Summary
 
-- EN: NOT READY - editorial cleanup required before launch trust | score 0.941 | total issues 464
-- ET: BLOCKED - ET is not launch-ready | score 0.826 | total issues 1322
+- EN: NOT READY - editorial cleanup required before launch trust | score 0.945 | total issues 431
+- ET: BLOCKED - ET is not launch-ready | score 0.835 | total issues 1259
 
 ## EN Findings
 
 - Dataset: `data/smart10/cards.en.json`
-- Semantic content score: 0.941
+- Semantic content score: 0.945
 - Launch readiness: NOT READY - editorial cleanup required before launch trust
-- Total issue hits: 464
-- Warning count: 464
+- Total issue hits: 431
+- Warning count: 431
 
 ### Issue Counts
 
@@ -24,8 +24,8 @@
 - broken grammar: 0
 - unnatural phrasing: 210
 - placeholder content: 0
-- templated/scaffold wording: 33
-- recycled option pool: 221
+- templated/scaffold wording: 20
+- recycled option pool: 201
 - low-trust option wording: 0
 - trivial/low-value content: 0
 
@@ -57,38 +57,38 @@
 #### recycled option pool
 
 - `sports-true_false-028` Sports/TRUE_FALSE: Sports: Select all true statements. Focus area: World Cup.
-- `culture-true_false-011` Culture/TRUE_FALSE: Culture: Which lines are correct? Focus area: The Godfather.
-- `culture-true_false-012` Culture/TRUE_FALSE: Culture: Identify valid statements. Focus area: Casablanca.
-- `culture-true_false-013` Culture/TRUE_FALSE: Culture: Mark statements that are true for this topic. Focus area: Citizen Kane.
+- `science-true_false-011` Science/TRUE_FALSE: Science: Which lines are correct? Focus area: Energy.
+- `science-true_false-012` Science/TRUE_FALSE: Science: Identify valid statements. Focus area: Entropy.
+- `science-true_false-013` Science/TRUE_FALSE: Science: Mark statements that are true for this topic. Focus area: Oxygen.
 
 
 ## ET Findings
 
 - Dataset: `data/smart10/cards.et.json`
-- Semantic content score: 0.826
+- Semantic content score: 0.835
 - Launch readiness: BLOCKED - ET is not launch-ready
-- Total issue hits: 1322
-- Warning count: 1322
+- Total issue hits: 1259
+- Warning count: 1259
 
 ### Issue Counts
 
 - language leakage: 130
-- broken grammar: 499
+- broken grammar: 469
 - unnatural phrasing: 280
 - placeholder content: 0
-- templated/scaffold wording: 33
-- recycled option pool: 220
+- templated/scaffold wording: 20
+- recycled option pool: 200
 - low-trust option wording: 160
 - trivial/low-value content: 0
 
 ### Highest-Risk Areas
 
-- ET Culture/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Varia/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar
 - ET History/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
 - ET Sports/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
 - ET Geography/ORDER: 30/30 cards flagged (100%) | broken_grammar
 - ET Culture/ORDER: 30/30 cards flagged (100%) | broken_grammar
+- ET Science/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
 
 ### Categorized Findings Summary
 
@@ -129,8 +129,8 @@
 
 #### recycled option pool
 
-- `culture-true_false-011-et` Culture/TRUE_FALSE: Kultuur: Millised read on oiged? Fookus: The Godfather.
-- `culture-true_false-012-et` Culture/TRUE_FALSE: Kultuur: Tuvasta kehtivad vaited. Fookus: Casablanca.
-- `culture-true_false-013-et` Culture/TRUE_FALSE: Kultuur: Margi selle teema toesed vaited. Fookus: Citizen Kane.
-- `culture-true_false-014-et` Culture/TRUE_FALSE: Kultuur: Millised vaited on oiged? Fookus: The Beatles.
+- `science-true_false-011-et` Science/TRUE_FALSE: Teadus: Millised read on oiged? Fookus: Energy.
+- `science-true_false-012-et` Science/TRUE_FALSE: Teadus: Tuvasta kehtivad vaited. Fookus: Entropy.
+- `science-true_false-013-et` Science/TRUE_FALSE: Teadus: Margi selle teema toesed vaited. Fookus: Oxygen.
+- `science-true_false-014-et` Science/TRUE_FALSE: Teadus: Millised vaited on oiged? Fookus: Hydrogen.
 

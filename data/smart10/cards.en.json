@@ -3118,27 +3118,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Which lines are correct? Focus area: The Godfather.",
+    "question": "Culture: Which statements about The Godfather are true?",
     "options": [
-      "Mona Lisa is a painting.",
-      "The Odyssey is an epic poem.",
-      "The Odyssey is a modern novel.",
-      "Van Gogh painted Starry Night.",
-      "Beethoven wrote no music.",
-      "Beatles formed in Tokyo.",
-      "Ballet is a dance form.",
-      "Mona Lisa is a sculpture.",
-      "Opera combines music and drama.",
-      "Cinema uses moving images."
+      "Francis Ford Coppola directed it.",
+      "Mario Puzo wrote the source novel.",
+      "Vito Corleone is a key character.",
+      "The film follows a mafia family.",
+      "Marlon Brando stars in it.",
+      "It is a silent comedy film.",
+      "It is set in ancient Athens.",
+      "Pixar produced the movie.",
+      "The lead hero is Sherlock Holmes.",
+      "It is mainly about space travel."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        6,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -3150,28 +3149,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Identify valid statements. Focus area: Casablanca.",
+    "question": "Culture: Which statements about Casablanca are true?",
     "options": [
-      "Cinema uses moving images.",
-      "The Odyssey is an epic poem.",
-      "Beatles formed in Liverpool.",
-      "Picasso painted The Scream.",
-      "Opera combines music and drama.",
-      "Mozart was a film director.",
-      "Mona Lisa is a sculpture.",
-      "Beethoven wrote symphonies.",
-      "Mona Lisa is a painting.",
-      "Mozart was a composer."
+      "The film is set in Morocco.",
+      "Humphrey Bogart stars in it.",
+      "Ingrid Bergman appears in it.",
+      "It belongs to the WWII era.",
+      "Rick's cafe is central to the plot.",
+      "It is a modern superhero film.",
+      "The story happens in Tokyo.",
+      "It is an opera by Verdi.",
+      "It was directed by Spielberg.",
+      "The lead pair are cartoon lions."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
         2,
-        4,
-        7,
-        8,
-        9
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3183,23 +3180,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Mark statements that are true for this topic. Focus area: Citizen Kane.",
+    "question": "Culture: Which statements about Citizen Kane are true?",
     "options": [
-      "Opera has no singing.",
-      "Van Gogh painted The Last Supper.",
-      "Ballet is a martial art.",
-      "Jazz began in the United States.",
-      "Cinema predates photography.",
-      "Picasso painted The Scream.",
-      "Beatles formed in Tokyo.",
-      "Jazz began in medieval France.",
-      "Mona Lisa is a sculpture.",
-      "Beethoven wrote symphonies."
+      "Orson Welles directed the film.",
+      "Orson Welles stars as Kane.",
+      "Rosebud is a key clue in it.",
+      "The film was released in 1941.",
+      "Charles Foster Kane is a tycoon.",
+      "It is a medieval stage play.",
+      "The plot follows a rock band.",
+      "The film is set on Mars.",
+      "It was painted by Picasso.",
+      "The story centers on cooking."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -3211,24 +3211,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Which claims are accurate? Focus area: The Beatles.",
+    "question": "Culture: Which statements about The Beatles are true?",
     "options": [
-      "Jazz began in medieval France.",
-      "Picasso painted The Scream.",
-      "Cinema predates photography.",
-      "Ballet is a martial art.",
-      "Jazz began in the United States.",
-      "Beatles formed in Tokyo.",
-      "Opera has no singing.",
-      "The Odyssey is a modern novel.",
-      "Shakespeare wrote Hamlet.",
-      "Cinema uses moving images."
+      "The Beatles formed in Liverpool.",
+      "John Lennon was a Beatle.",
+      "Paul McCartney was a Beatle.",
+      "Ringo Starr played drums.",
+      "Abbey Road is one of their albums.",
+      "The Beatles came from Tokyo.",
+      "They were a silent film duo.",
+      "The Beatles wrote the Iliad.",
+      "They were founded by Mozart.",
+      "They painted Guernica."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        8,
-        9
+        0,
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3240,25 +3242,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Find the statements that fit. Focus area: Mozart.",
+    "question": "Culture: Which statements about Mozart are true?",
     "options": [
-      "Jazz began in medieval France.",
-      "Ballet is a dance form.",
-      "Opera has no singing.",
-      "Van Gogh painted Starry Night.",
-      "Picasso painted Guernica.",
-      "Beatles formed in Tokyo.",
-      "Mozart was a film director.",
-      "Beatles formed in Liverpool.",
-      "Cinema predates photography.",
-      "Picasso painted The Scream."
+      "Mozart was an Austrian composer.",
+      "Salzburg is linked to Mozart.",
+      "Mozart wrote operas.",
+      "He was a child prodigy.",
+      "Mozart died in 1791.",
+      "Mozart directed Casablanca.",
+      "Mozart painted Starry Night.",
+      "Mozart founded the Beatles.",
+      "Mozart was a Russian novelist.",
+      "Mozart built the Colosseum."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
+        2,
         3,
-        4,
-        7
+        4
       ]
     },
     "difficulty": "2",
@@ -3270,26 +3273,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Select all true statements. Focus area: Beethoven.",
+    "question": "Culture: Which statements about Beethoven are true?",
     "options": [
-      "Beatles formed in Liverpool.",
-      "Ballet is a martial art.",
-      "Beethoven wrote symphonies.",
-      "Van Gogh painted The Last Supper.",
-      "Shakespeare wrote Hamlet.",
-      "Ballet is a dance form.",
-      "The Odyssey is an epic poem.",
-      "Beethoven wrote no music.",
-      "Jazz began in medieval France.",
-      "Mozart was a film director."
+      "Beethoven was a German composer.",
+      "Bonn is linked to Beethoven.",
+      "He wrote nine symphonies.",
+      "He experienced hearing loss.",
+      "Ode to Joy appears in his Ninth.",
+      "Beethoven wrote Don Quixote.",
+      "Beethoven painted Guernica.",
+      "Beethoven was a film director.",
+      "Beethoven founded Rome.",
+      "Beethoven was a ballet company."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        4,
-        5,
-        6
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3301,27 +3304,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Which lines are correct? Focus area: Bach.",
+    "question": "Culture: Which statements about Bach are true?",
     "options": [
-      "Shakespeare wrote Don Quixote.",
-      "Cinema uses moving images.",
-      "Beatles formed in Liverpool.",
-      "Ballet is a martial art.",
-      "Jazz began in the United States.",
-      "Picasso painted Guernica.",
-      "Opera has no singing.",
-      "Opera combines music and drama.",
-      "Van Gogh painted Starry Night.",
-      "Picasso painted The Scream."
+      "Bach was a German composer.",
+      "Bach belongs to the Baroque era.",
+      "Brandenburg Concertos are his.",
+      "Leipzig is linked to Bach.",
+      "He is known for fugues.",
+      "Bach painted the Mona Lisa.",
+      "Bach wrote Hamlet.",
+      "Bach was a jazz trumpeter.",
+      "Bach founded Liverpool.",
+      "Bach directed The Godfather."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        4,
-        5,
-        7,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3333,28 +3335,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Identify valid statements. Focus area: Chopin.",
+    "question": "Culture: Which statements about Chopin are true?",
     "options": [
-      "Beatles formed in Liverpool.",
-      "Ballet is a dance form.",
-      "Cinema uses moving images.",
-      "Beatles formed in Tokyo.",
-      "The Odyssey is a modern novel.",
-      "Opera combines music and drama.",
-      "Beethoven wrote symphonies.",
-      "Picasso painted Guernica.",
-      "Mozart was a composer.",
-      "Picasso painted The Scream."
+      "Chopin was a Polish composer.",
+      "Chopin is famed for piano works.",
+      "Nocturnes are linked to Chopin.",
+      "Mazurkas are linked to Chopin.",
+      "Paris shaped much of his career.",
+      "Chopin painted the Sistine Chapel.",
+      "Chopin wrote the Odyssey.",
+      "Chopin played for the Beatles.",
+      "Chopin was a sculptor in bronze.",
+      "Chopin built the Eiffel Tower."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
         2,
-        5,
-        6,
-        7,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3366,23 +3366,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Mark statements that are true for this topic. Focus area: Picasso.",
+    "question": "Culture: Which statements about Picasso are true?",
     "options": [
-      "Van Gogh painted The Last Supper.",
-      "Opera has no singing.",
-      "Mona Lisa is a painting.",
-      "Ballet is a martial art.",
-      "Mozart was a film director.",
-      "Beethoven wrote symphonies.",
-      "Shakespeare wrote Don Quixote.",
-      "Jazz began in medieval France.",
-      "Cinema predates photography.",
-      "Beethoven wrote no music."
+      "Picasso was a Spanish artist.",
+      "Cubism is linked to Picasso.",
+      "Guernica is one of his works.",
+      "Blue Period is tied to Picasso.",
+      "He spent much of life in France.",
+      "Picasso wrote War and Peace.",
+      "Picasso was a baroque composer.",
+      "Picasso directed Citizen Kane.",
+      "Picasso founded the Vatican.",
+      "Picasso built Stonehenge."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        5
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3394,24 +3397,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Which claims are accurate? Focus area: Van Gogh.",
+    "question": "Culture: Which statements about Van Gogh are true?",
     "options": [
-      "Mozart was a film director.",
-      "Opera has no singing.",
-      "Beethoven wrote no music.",
-      "Mona Lisa is a sculpture.",
-      "Jazz began in the United States.",
-      "Mozart was a composer.",
-      "Cinema predates photography.",
-      "The Odyssey is an epic poem.",
-      "The Odyssey is a modern novel.",
-      "Jazz began in medieval France."
+      "Van Gogh was a Dutch painter.",
+      "Starry Night is his work.",
+      "Sunflowers is linked to him.",
+      "Arles is linked to Van Gogh.",
+      "Theo was his brother.",
+      "Van Gogh wrote Macbeth.",
+      "Van Gogh formed the Beatles.",
+      "Van Gogh sculpted David.",
+      "Van Gogh was born in Tokyo.",
+      "Van Gogh directed Casablanca."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        5,
-        7
+        0,
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3423,25 +3428,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Find the statements that fit. Focus area: Michelangelo.",
+    "question": "Culture: Which statements about Michelangelo are true?",
     "options": [
-      "Van Gogh painted The Last Supper.",
-      "The Odyssey is an epic poem.",
-      "Shakespeare wrote Don Quixote.",
-      "Opera has no singing.",
-      "Mona Lisa is a painting.",
-      "Cinema predates photography.",
-      "Jazz began in medieval France.",
-      "Cinema uses moving images.",
-      "Van Gogh painted Starry Night.",
-      "Mozart was a film director."
+      "Michelangelo sculpted David.",
+      "He painted the Sistine ceiling.",
+      "He worked in Renaissance Italy.",
+      "He was also an architect.",
+      "St Peter's dome is linked to him.",
+      "Michelangelo wrote Pride and Prejudice.",
+      "Michelangelo formed a rock band.",
+      "Michelangelo was a French king.",
+      "Michelangelo made The Scream.",
+      "Michelangelo directed The Beatles."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        4,
-        7,
-        8
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3453,26 +3459,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Select all true statements. Focus area: Da Vinci.",
+    "question": "Culture: Which statements about da Vinci are true?",
     "options": [
-      "Opera has no singing.",
-      "Beethoven wrote symphonies.",
-      "Shakespeare wrote Don Quixote.",
-      "Mona Lisa is a sculpture.",
-      "Beatles formed in Liverpool.",
-      "Cinema predates photography.",
-      "Jazz began in the United States.",
-      "Shakespeare wrote Hamlet.",
-      "The Odyssey is a modern novel.",
-      "Van Gogh painted Starry Night."
+      "Da Vinci painted the Mona Lisa.",
+      "The Last Supper is his work.",
+      "Da Vinci was Italian.",
+      "He kept many mirror-script notes.",
+      "He studied art and invention.",
+      "Da Vinci wrote Crime and Punishment.",
+      "Da Vinci was a jazz singer.",
+      "Da Vinci ruled ancient Rome.",
+      "Da Vinci founded Liverpool.",
+      "Da Vinci built the pyramids."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        4,
-        6,
-        7,
-        9
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3484,27 +3490,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Which lines are correct? Focus area: Shakespeare.",
+    "question": "Culture: Which statements about Shakespeare are true?",
     "options": [
-      "Jazz began in the United States.",
-      "Beethoven wrote no music.",
-      "Van Gogh painted Starry Night.",
-      "Ballet is a dance form.",
-      "Cinema predates photography.",
-      "Beethoven wrote symphonies.",
-      "Opera has no singing.",
-      "Picasso painted Guernica.",
-      "Mozart was a film director.",
-      "Shakespeare wrote Hamlet."
+      "Shakespeare wrote Hamlet.",
+      "Shakespeare wrote Macbeth.",
+      "He was an English playwright.",
+      "Stratford is linked to Shakespeare.",
+      "The Globe is linked to his work.",
+      "Shakespeare painted Guernica.",
+      "Shakespeare wrote the Ninth Symphony.",
+      "Shakespeare was a film camera.",
+      "Shakespeare founded the Louvre.",
+      "Shakespeare was a Russian tsar."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        5,
-        7,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -3516,28 +3521,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Identify valid statements. Focus area: Jane Austen.",
+    "question": "Culture: Which statements about Jane Austen are true?",
     "options": [
-      "Opera combines music and drama.",
-      "Mozart was a film director.",
-      "The Odyssey is an epic poem.",
-      "Beethoven wrote symphonies.",
-      "Beethoven wrote no music.",
-      "Mona Lisa is a painting.",
-      "Picasso painted Guernica.",
-      "Van Gogh painted The Last Supper.",
-      "Jazz began in the United States.",
-      "Van Gogh painted Starry Night."
+      "Jane Austen wrote Pride and Prejudice.",
+      "She wrote Sense and Sensibility.",
+      "Austen was an English novelist.",
+      "Regency England shapes her fiction.",
+      "Social manners matter in her novels.",
+      "Austen painted Starry Night.",
+      "Austen wrote the Iliad.",
+      "Austen directed Casablanca.",
+      "Austen was a sculptor in marble.",
+      "Austen founded the Beatles."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        5,
-        6,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -3549,23 +3552,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Mark statements that are true for this topic. Focus area: Tolstoy.",
+    "question": "Culture: Which statements about Tolstoy are true?",
     "options": [
-      "Cinema predates photography.",
-      "Mozart was a film director.",
-      "Picasso painted The Scream.",
-      "Ballet is a martial art.",
-      "Mona Lisa is a sculpture.",
-      "Jazz began in medieval France.",
-      "Beethoven wrote no music.",
-      "Beatles formed in Liverpool.",
-      "The Odyssey is a modern novel.",
-      "Shakespeare wrote Hamlet."
+      "Tolstoy wrote War and Peace.",
+      "Tolstoy wrote Anna Karenina.",
+      "Tolstoy was a Russian novelist.",
+      "Yasnaya Polyana is linked to him.",
+      "He wrote in the nineteenth century.",
+      "Tolstoy painted the Mona Lisa.",
+      "Tolstoy was a baroque composer.",
+      "Tolstoy founded Rome.",
+      "Tolstoy built the Globe Theatre.",
+      "Tolstoy was a film superhero."
     ],
     "correct": {
       "correctIndexes": [
-        7,
-        9
+        0,
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3577,24 +3583,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Which claims are accurate? Focus area: Dostoevsky.",
+    "question": "Culture: Which statements about Dostoevsky are true?",
     "options": [
-      "Van Gogh painted The Last Supper.",
-      "Beethoven wrote symphonies.",
-      "The Odyssey is a modern novel.",
-      "Jazz began in medieval France.",
-      "Mona Lisa is a sculpture.",
-      "Opera has no singing.",
-      "Jazz began in the United States.",
-      "Cinema predates photography.",
-      "Beethoven wrote no music.",
-      "Beatles formed in Liverpool."
+      "Dostoevsky wrote Crime and Punishment.",
+      "He wrote The Brothers Karamazov.",
+      "He was a Russian novelist.",
+      "Siberian exile is linked to him.",
+      "St Petersburg shapes many settings.",
+      "Dostoevsky painted Guernica.",
+      "Dostoevsky wrote the Odyssey.",
+      "Dostoevsky was a ballet dancer.",
+      "Dostoevsky founded Liverpool.",
+      "Dostoevsky was a pharaoh."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        6,
-        9
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3606,25 +3614,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Find the statements that fit. Focus area: Homer.",
+    "question": "Culture: Which statements about Homer are true?",
     "options": [
-      "Jazz began in medieval France.",
-      "Shakespeare wrote Don Quixote.",
-      "Mona Lisa is a sculpture.",
-      "Picasso painted Guernica.",
-      "Opera has no singing.",
-      "Beatles formed in Liverpool.",
-      "Van Gogh painted The Last Supper.",
-      "Mozart was a composer.",
-      "Shakespeare wrote Hamlet.",
-      "The Odyssey is a modern novel."
+      "Homer is linked to the Iliad.",
+      "Homer is linked to the Odyssey.",
+      "Homer is tied to ancient Greece.",
+      "Epic poetry is central to Homer.",
+      "His life details remain uncertain.",
+      "Homer painted Starry Night.",
+      "Homer wrote Hamlet.",
+      "Homer was a film producer.",
+      "Homer built the Colosseum.",
+      "Homer led the Beatles."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        5,
-        7,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -3636,18 +3645,18 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Select all true statements. Focus area: Sculpture.",
+    "question": "Culture: Which statements about sculpture are true?",
     "options": [
-      "Shakespeare wrote Hamlet.",
-      "Jazz began in the United States.",
-      "Mozart was a composer.",
-      "Beatles formed in Liverpool.",
-      "Mozart was a film director.",
-      "Beethoven wrote no music.",
-      "Beatles formed in Tokyo.",
-      "Mona Lisa is a painting.",
-      "The Odyssey is a modern novel.",
-      "Jazz began in medieval France."
+      "Sculpture is three-dimensional art.",
+      "Stone can be used for sculpture.",
+      "Bronze can be used for sculpture.",
+      "Sculpture can be carved or cast.",
+      "Public monuments can be sculptures.",
+      "Sculpture is only a type of song.",
+      "Sculpture must be flat on paper.",
+      "Sculpture is always a novel.",
+      "Sculpture is only digital code.",
+      "Sculpture means airport security."
     ],
     "correct": {
       "correctIndexes": [
@@ -3655,7 +3664,7 @@
         1,
         2,
         3,
-        7
+        4
       ]
     },
     "difficulty": "2",
@@ -3667,27 +3676,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Which lines are correct? Focus area: Opera.",
+    "question": "Culture: Which statements about opera are true?",
     "options": [
-      "Beatles formed in Tokyo.",
       "Opera combines music and drama.",
-      "Shakespeare wrote Hamlet.",
-      "Picasso painted The Scream.",
-      "Jazz began in the United States.",
-      "Ballet is a dance form.",
-      "Van Gogh painted The Last Supper.",
-      "Jazz began in medieval France.",
-      "Beatles formed in Liverpool.",
-      "Cinema uses moving images."
+      "Opera singers perform with orchestra.",
+      "Many operas are staged in acts.",
+      "Arias are part of opera.",
+      "Opera houses host opera performances.",
+      "Opera is a mountain range.",
+      "Opera is only silent dance.",
+      "Opera is a type of sandwich.",
+      "Opera means bicycle repair.",
+      "Opera is always filmed in space."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        4,
-        5,
-        8,
-        9
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3699,18 +3707,18 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Identify valid statements. Focus area: Ballet.",
+    "question": "Culture: Which statements about ballet are true?",
     "options": [
-      "Van Gogh painted Starry Night.",
-      "The Odyssey is an epic poem.",
-      "Mozart was a composer.",
-      "Mona Lisa is a painting.",
-      "Shakespeare wrote Hamlet.",
-      "Mona Lisa is a sculpture.",
       "Ballet is a dance form.",
-      "Van Gogh painted The Last Supper.",
-      "The Odyssey is a modern novel.",
-      "Cinema uses moving images."
+      "Choreography shapes a ballet.",
+      "Music is central to ballet.",
+      "Ballet is performed on stage.",
+      "Pointe work appears in some ballet.",
+      "Ballet is only a painting style.",
+      "Ballet is a kind of passport.",
+      "Ballet is played with rackets.",
+      "Ballet is a river in Europe.",
+      "Ballet means airport luggage."
     ],
     "correct": {
       "correctIndexes": [
@@ -3718,9 +3726,7 @@
         1,
         2,
         3,
-        4,
-        6,
-        9
+        4
       ]
     },
     "difficulty": "2",

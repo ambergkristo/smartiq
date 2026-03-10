@@ -23,7 +23,10 @@ Todo:
 
 - ET remains blocked for launch.
 - Largest remaining ET repair zones:
-  - `Culture/TRUE_FALSE`
+  - `Varia/TRUE_FALSE`
+  - `Sports/TRUE_FALSE 021..030`
+  - `Science/TRUE_FALSE 011..030`
+  - `Geography/TRUE_FALSE 001..010`
   - `Science/TRUE_FALSE`
   - `ORDER`
   - `COLOR`
@@ -45,7 +48,7 @@ Todo:
 
 - EN is still not launch-ready.
 - Largest remaining EN repair zones:
-  - `Culture/TRUE_FALSE`
+  - `Sports/TRUE_FALSE 021..030`
   - `Science/TRUE_FALSE`
   - `ORDER`
   - `COLOR`
@@ -60,9 +63,9 @@ Done:
 - Repair batches completed so far:
   - `History/TRUE_FALSE 001..030`
   - `Sports/TRUE_FALSE 001..020`
-  - `Geography/TRUE_FALSE 001..030`
-  - `Varia/TRUE_FALSE 001..030`
-  - `Culture/TRUE_FALSE 001..010`
+  - `Geography/TRUE_FALSE repair work landed; ET 001..010 remains`
+  - `Varia/TRUE_FALSE repair work landed; ET localization remains`
+  - `Culture/TRUE_FALSE 001..030`
   - `Science/TRUE_FALSE 001..010`
 
 Todo:
@@ -115,19 +118,20 @@ Todo:
 
 Current observed report baseline:
 
-- EN score: `0.941`
-- ET score: `0.826`
+- EN score: `0.945`
+- ET score: `0.835`
 
 Closed repair zone:
 
-- `Geography/TRUE_FALSE` is now fully repaired across `001..030`
-- `Varia/TRUE_FALSE` is now fully repaired across `001..030`
-- Geography and Varia both dropped out of the top `TRUE_FALSE` backlog focus
+- `Culture/TRUE_FALSE` is now fully repaired across `001..030`
+- `Culture/TRUE_FALSE` dropped out of the ET top-risk `TRUE_FALSE` backlog
 
 ## Next Repair Priority
 
-1. `Culture/TRUE_FALSE 011..030`
-2. `Science/TRUE_FALSE 011..030`
-3. `ORDER`
-4. `COLOR`
-5. remaining `OPEN` recycled pools
+1. `Varia/TRUE_FALSE 001..030`
+2. `Sports/TRUE_FALSE 021..030`
+3. `Science/TRUE_FALSE 011..030`
+4. `Geography/TRUE_FALSE 001..010`
+5. `ORDER`
+6. `COLOR`
+7. remaining `OPEN` recycled pools
