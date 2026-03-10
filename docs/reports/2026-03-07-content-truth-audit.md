@@ -2,21 +2,21 @@
 
 ## Metadata
 
-- Generated: 2026-03-10T13:34:56.574Z
+- Generated: 2026-03-10T14:10:52.052Z
 - Scope: EN, ET SmartIQ locale packs
 
 ## Executive Summary
 
-- EN: NOT READY - editorial cleanup required before launch trust | score 0.930 | total issues 547
-- ET: BLOCKED - ET is not launch-ready | score 0.813 | total issues 1425
+- EN: NOT READY - editorial cleanup required before launch trust | score 0.933 | total issues 528
+- ET: BLOCKED - ET is not launch-ready | score 0.817 | total issues 1396
 
 ## EN Findings
 
 - Dataset: `data/smart10/cards.en.json`
-- Semantic content score: 0.930
+- Semantic content score: 0.933
 - Launch readiness: NOT READY - editorial cleanup required before launch trust
-- Total issue hits: 547
-- Warning count: 547
+- Total issue hits: 528
+- Warning count: 528
 
 ### Issue Counts
 
@@ -24,8 +24,8 @@
 - broken grammar: 0
 - unnatural phrasing: 210
 - placeholder content: 0
-- templated/scaffold wording: 66
-- recycled option pool: 271
+- templated/scaffold wording: 60
+- recycled option pool: 258
 - low-trust option wording: 0
 - trivial/low-value content: 0
 
@@ -57,38 +57,38 @@
 #### recycled option pool
 
 - `sports-true_false-028` Sports/TRUE_FALSE: Sports: Select all true statements. Focus area: World Cup.
-- `geography-true_false-011` Geography/TRUE_FALSE: Geography: Which lines are correct? Focus area: Berlin.
-- `geography-true_false-012` Geography/TRUE_FALSE: Geography: Identify valid statements. Focus area: Rome.
-- `geography-true_false-013` Geography/TRUE_FALSE: Geography: Mark statements that are true for this topic. Focus area: Madrid.
+- `geography-true_false-021` Geography/TRUE_FALSE: Geography: Find the statements that fit. Focus area: Canberra.
+- `geography-true_false-022` Geography/TRUE_FALSE: Geography: Select all true statements. Focus area: Ottawa.
+- `geography-true_false-024` Geography/TRUE_FALSE: Geography: Identify valid statements. Focus area: Seoul.
 
 
 ## ET Findings
 
 - Dataset: `data/smart10/cards.et.json`
-- Semantic content score: 0.813
+- Semantic content score: 0.817
 - Launch readiness: BLOCKED - ET is not launch-ready
-- Total issue hits: 1425
-- Warning count: 1425
+- Total issue hits: 1396
+- Warning count: 1396
 
 ### Issue Counts
 
 - language leakage: 130
-- broken grammar: 519
+- broken grammar: 509
 - unnatural phrasing: 280
 - placeholder content: 0
-- templated/scaffold wording: 66
-- recycled option pool: 270
+- templated/scaffold wording: 60
+- recycled option pool: 257
 - low-trust option wording: 160
 - trivial/low-value content: 0
 
 ### Highest-Risk Areas
 
-- ET Geography/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Culture/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Varia/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET History/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
 - ET Sports/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
 - ET Geography/ORDER: 30/30 cards flagged (100%) | broken_grammar
+- ET Culture/ORDER: 30/30 cards flagged (100%) | broken_grammar
 
 ### Categorized Findings Summary
 
@@ -129,8 +129,8 @@
 
 #### recycled option pool
 
-- `geography-true_false-011-et` Geography/TRUE_FALSE: Geograafia: Millised read on oiged? Fookus: Berlin.
-- `geography-true_false-012-et` Geography/TRUE_FALSE: Geograafia: Tuvasta kehtivad vaited. Fookus: Rome.
-- `geography-true_false-013-et` Geography/TRUE_FALSE: Geograafia: Margi selle teema toesed vaited. Fookus: Madrid.
-- `geography-true_false-014-et` Geography/TRUE_FALSE: Geograafia: Millised vaited on oiged? Fookus: Lisbon.
+- `geography-true_false-021-et` Geography/TRUE_FALSE: Geograafia: Leia sobivad vaited. Fookus: Canberra.
+- `geography-true_false-022-et` Geography/TRUE_FALSE: Geograafia: Vali koik toed vaited. Fookus: Ottawa.
+- `geography-true_false-024-et` Geography/TRUE_FALSE: Geograafia: Tuvasta kehtivad vaited. Fookus: Seoul.
+- `geography-true_false-025-et` Geography/TRUE_FALSE: Geograafia: Margi selle teema toesed vaited. Fookus: Beijing.
 

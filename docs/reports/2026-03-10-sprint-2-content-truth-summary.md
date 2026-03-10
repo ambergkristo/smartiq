@@ -61,6 +61,7 @@ Done:
   - `History/TRUE_FALSE 001..030`
   - `Sports/TRUE_FALSE 001..020`
   - `Geography/TRUE_FALSE 001..010`
+  - `Geography/TRUE_FALSE 011..020`
   - `Culture/TRUE_FALSE 001..010`
   - `Science/TRUE_FALSE 001..010`
 
@@ -114,12 +115,12 @@ Todo:
 
 Current observed report baseline:
 
-- EN score: `0.930`
-- ET score: `0.813`
+- EN score: `0.933`
+- ET score: `0.817`
 
 ## Next Repair Priority
 
-1. `Geography/TRUE_FALSE 011..030`
+1. `Geography/TRUE_FALSE 021..030`
 2. `Varia/TRUE_FALSE 001..030`
 3. `ORDER`
 4. `COLOR`
