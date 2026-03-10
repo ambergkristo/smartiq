@@ -2188,27 +2188,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Which lines are correct? Focus area: Berlin.",
+    "question": "Geography: Which statements about Berlin are true?",
     "options": [
-      "Tokyo is in South Korea.",
-      "Danube flows through Australia.",
-      "Ottawa is Canada's capital.",
-      "Iceland is in the tropics.",
-      "Sahara is a desert.",
-      "Himalayas include Mount Everest.",
-      "Tokyo is in Japan.",
-      "Pacific is the largest ocean.",
-      "Greenland is mostly ice-covered.",
-      "Lisbon is in Spain."
+      "Berlin is Germany's capital.",
+      "River Spree runs through Berlin.",
+      "Brandenburg Gate is in Berlin.",
+      "Berlin Wall once split the city.",
+      "Bundestag meets in Berlin.",
+      "Berlin is Austria's capital.",
+      "Colosseum stands in Berlin.",
+      "Berlin lies on the Black Sea.",
+      "Seine flows through Berlin.",
+      "Berlin is on Iberian Peninsula."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        4,
-        5,
-        6,
-        7,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -2220,28 +2219,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Identify valid statements. Focus area: Rome.",
+    "question": "Geography: Which statements about Rome are true?",
     "options": [
-      "Andes are in South America.",
-      "Nile flows through Brazil.",
-      "Canberra is Australia's capital.",
-      "Iceland is an island nation.",
-      "Greenland is mostly ice-covered.",
-      "Everest is in the Alps.",
-      "Andes are in Africa.",
-      "Danube flows through Europe.",
-      "Sahara is a desert.",
-      "Himalayas include Mount Everest."
+      "Rome is Italy's capital.",
+      "Tiber runs through Rome.",
+      "Colosseum stands in Rome.",
+      "Vatican City lies within Rome.",
+      "Rome is in Lazio region.",
+      "Rome is Spain's capital.",
+      "Danube runs through Rome.",
+      "Eiffel Tower stands in Rome.",
+      "Rome sits on the Baltic Sea.",
+      "Andes overlook the city."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        4,
-        7,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -2253,23 +2250,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Mark statements that are true for this topic. Focus area: Madrid.",
+    "question": "Geography: Which statements about Madrid are true?",
     "options": [
-      "Lisbon is in Spain.",
-      "Iceland is in the tropics.",
-      "Himalayas include Mount Everest.",
-      "Danube flows through Australia.",
-      "Sahara is a rainforest.",
-      "Atlantic is the largest ocean.",
-      "Pacific is the largest ocean.",
-      "Tokyo is in South Korea.",
-      "Ottawa is US capital.",
-      "Nile flows through Brazil."
+      "Madrid is Spain's capital.",
+      "Manzanares runs through Madrid.",
+      "Prado Museum is in Madrid.",
+      "Real Madrid is based there.",
+      "Madrid is an inland capital.",
+      "Madrid is Portugal's capital.",
+      "Sagrada Familia stands in Madrid.",
+      "Seine crosses Madrid.",
+      "Madrid is on Adriatic coast.",
+      "Madrid sits in the Alps."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        6
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -2281,24 +2281,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Which claims are accurate? Focus area: Lisbon.",
+    "question": "Geography: Which statements about Lisbon are true?",
     "options": [
-      "Canberra is in New Zealand.",
-      "Lisbon is in Spain.",
-      "Ottawa is US capital.",
-      "Tokyo is in South Korea.",
-      "Sahara is a rainforest.",
-      "Atlantic is the largest ocean.",
-      "Andes are in Africa.",
-      "Danube flows through Europe.",
-      "Greenland is mostly ice-covered.",
-      "Sahara is a desert."
+      "Lisbon is Portugal's capital.",
+      "Tagus meets the sea at Lisbon.",
+      "Lisbon faces the Atlantic coast.",
+      "Historic yellow trams run there.",
+      "Lisbon is western mainland capital.",
+      "Lisbon is Spain's capital.",
+      "Danube flows through Lisbon.",
+      "Lisbon is landlocked.",
+      "Lisbon stands on Baltic coast.",
+      "Colosseum is in Lisbon."
     ],
     "correct": {
       "correctIndexes": [
-        7,
-        8,
-        9
+        0,
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -2310,25 +2312,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Find the statements that fit. Focus area: Vienna.",
+    "question": "Geography: Which statements about Vienna are true?",
     "options": [
-      "Sahara is a rainforest.",
-      "Nile flows through Brazil.",
-      "Himalayas include Mount Everest.",
-      "Tokyo is in Japan.",
-      "Andes are in Africa.",
-      "Iceland is an island nation.",
-      "Andes are in South America.",
-      "Greenland is near equator.",
-      "Everest is in the Alps.",
-      "Ottawa is US capital."
+      "Vienna is Austria's capital.",
+      "Danube runs through Vienna.",
+      "Schönbrunn Palace is in Vienna.",
+      "Austria's government sits there.",
+      "UN offices operate in Vienna.",
+      "Vienna is Hungary's capital.",
+      "Vienna is a sea port.",
+      "Vienna is on Atlantic coast.",
+      "Colosseum stands in Vienna.",
+      "Vienna is in Iceland."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        5,
-        6
+        4
       ]
     },
     "difficulty": "2",
@@ -2340,26 +2343,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Select all true statements. Focus area: Prague.",
+    "question": "Geography: Which statements about Prague are true?",
     "options": [
-      "Ottawa is Canada's capital.",
-      "Greenland is mostly ice-covered.",
-      "Tokyo is in South Korea.",
-      "Canberra is in New Zealand.",
-      "Ottawa is US capital.",
-      "Nile flows through Egypt.",
-      "Nile flows through Brazil.",
-      "Everest is in the Alps.",
-      "Danube flows through Europe.",
-      "Himalayas include Mount Everest."
+      "Prague is Czech Republic's capital.",
+      "Vltava runs through Prague.",
+      "Charles Bridge is in Prague.",
+      "Prague Castle overlooks the city.",
+      "Prague is an inland city.",
+      "Prague is Poland's capital.",
+      "Prague lies on Adriatic coast.",
+      "Eiffel Tower stands in Prague.",
+      "Rhine runs through Prague.",
+      "Prague is in Portugal."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        5,
-        8,
-        9
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -2371,27 +2374,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Which lines are correct? Focus area: Warsaw.",
+    "question": "Geography: Which statements about Warsaw are true?",
     "options": [
-      "Ottawa is US capital.",
-      "Greenland is near equator.",
-      "Iceland is an island nation.",
-      "Danube flows through Australia.",
-      "Pacific is the largest ocean.",
-      "Nile flows through Egypt.",
-      "Everest is in the Alps.",
-      "Andes are in South America.",
-      "Lisbon is in Portugal.",
-      "Ottawa is Canada's capital."
+      "Warsaw is Poland's capital.",
+      "Vistula runs through Warsaw.",
+      "Poland's parliament meets there.",
+      "Old Town was rebuilt after war.",
+      "Warsaw uses the Polish zloty.",
+      "Warsaw lies on the Danube.",
+      "Warsaw is Czech capital.",
+      "Warsaw stands on Atlantic coast.",
+      "Warsaw is on Sicily.",
+      "Warsaw is in the Alps."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        4,
-        5,
-        7,
-        8,
-        9
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -2403,28 +2405,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Identify valid statements. Focus area: Budapest.",
+    "question": "Geography: Which statements about Budapest are true?",
     "options": [
-      "Iceland is in the tropics.",
-      "Danube flows through Europe.",
-      "Greenland is near equator.",
-      "Ottawa is Canada's capital.",
-      "Canberra is Australia's capital.",
-      "Andes are in South America.",
-      "Nile flows through Brazil.",
-      "Lisbon is in Portugal.",
-      "Himalayas include Mount Everest.",
-      "Pacific is the largest ocean."
+      "Budapest is Hungary's capital.",
+      "Danube divides Buda and Pest.",
+      "Parliament stands by the river.",
+      "Budapest is known for hot baths.",
+      "Forint is used in Budapest.",
+      "Budapest is Romania's capital.",
+      "Budapest is on Atlantic coast.",
+      "Euro is Hungary's currency.",
+      "Budapest is a Baltic port.",
+      "Budapest is in the Alps."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
+        2,
         3,
-        4,
-        5,
-        7,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -2436,23 +2436,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Mark statements that are true for this topic. Focus area: Athens.",
+    "question": "Geography: Which statements about Athens are true?",
     "options": [
-      "Andes are in South America.",
-      "Andes are in Africa.",
-      "Danube flows through Australia.",
-      "Atlantic is the largest ocean.",
-      "Iceland is in the tropics.",
-      "Ottawa is US capital.",
-      "Tokyo is in South Korea.",
-      "Greenland is near equator.",
-      "Greenland is mostly ice-covered.",
-      "Nile flows through Brazil."
+      "Athens is Greece's capital.",
+      "Acropolis stands in Athens.",
+      "Athens lies near the Aegean Sea.",
+      "Athens has Mediterranean climate.",
+      "Athens is in Attica region.",
+      "Athens is Cyprus's capital.",
+      "Danube runs through Athens.",
+      "Eiffel Tower stands in Athens.",
+      "Athens is on Baltic coast.",
+      "Athens is in the Alps."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        8
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -2464,24 +2467,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Which claims are accurate? Focus area: Dublin.",
+    "question": "Geography: Which statements about Dublin are true?",
     "options": [
-      "Everest is in the Alps.",
-      "Nile flows through Brazil.",
-      "Greenland is near equator.",
-      "Danube flows through Australia.",
-      "Danube flows through Europe.",
-      "Andes are in South America.",
-      "Iceland is in the tropics.",
-      "Ottawa is US capital.",
-      "Atlantic is the largest ocean.",
-      "Tokyo is in Japan."
+      "Dublin is Ireland's capital.",
+      "River Liffey runs through Dublin.",
+      "Dublin stands on Ireland's east coast.",
+      "Ireland's parliament meets there.",
+      "Euro is used in Dublin.",
+      "Dublin is United Kingdom's capital.",
+      "Danube runs through Dublin.",
+      "Dublin is on Mediterranean coast.",
+      "Dublin is in the Alps.",
+      "Colosseum stands in Dublin."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        5,
-        9
+        0,
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
