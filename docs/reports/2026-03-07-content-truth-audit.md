@@ -2,21 +2,21 @@
 
 ## Metadata
 
-- Generated: 2026-03-07T20:50:50.548Z
+- Generated: 2026-03-10T12:15:00.739Z
 - Scope: EN, ET SmartIQ locale packs
 
 ## Executive Summary
 
-- EN: NOT READY - editorial cleanup required before launch trust | score 0.914 | total issues 673
-- ET: BLOCKED - ET is not launch-ready | score 0.788 | total issues 1612
+- EN: NOT READY - editorial cleanup required before launch trust | score 0.917 | total issues 650
+- ET: BLOCKED - ET is not launch-ready | score 0.794 | total issues 1568
 
 ## EN Findings
 
 - Dataset: `data/smart10/cards.en.json`
-- Semantic content score: 0.914
+- Semantic content score: 0.917
 - Launch readiness: NOT READY - editorial cleanup required before launch trust
-- Total issue hits: 673
-- Warning count: 673
+- Total issue hits: 650
+- Warning count: 650
 
 ### Issue Counts
 
@@ -24,8 +24,8 @@
 - broken grammar: 0
 - unnatural phrasing: 210
 - placeholder content: 0
-- templated/scaffold wording: 113
-- recycled option pool: 350
+- templated/scaffold wording: 107
+- recycled option pool: 333
 - low-trust option wording: 0
 - trivial/low-value content: 0
 
@@ -49,35 +49,35 @@
 
 #### templated/scaffold wording
 
-- `history-true_false-012` History/TRUE_FALSE: History: Identify valid statements. Focus area: Julius Caesar.
-- `history-true_false-013` History/TRUE_FALSE: History: Mark statements that are true for this topic. Focus area: Alexander the Great.
-- `history-true_false-015` History/TRUE_FALSE: History: Find the statements that fit. Focus area: Roman Republic.
-- `history-true_false-016` History/TRUE_FALSE: History: Select all true statements. Focus area: Cold War.
+- `history-true_false-021` History/TRUE_FALSE: History: Find the statements that fit. Focus area: Meiji Restoration.
+- `history-true_false-022` History/TRUE_FALSE: History: Select all true statements. Focus area: Age of Exploration.
+- `history-true_false-024` History/TRUE_FALSE: History: Identify valid statements. Focus area: Iron Age.
+- `history-true_false-025` History/TRUE_FALSE: History: Mark statements that are true for this topic. Focus area: Harlem Renaissance.
 
 #### recycled option pool
 
-- `history-true_false-011` History/TRUE_FALSE: History: Which lines are correct? Focus area: Napoleon.
-- `history-true_false-012` History/TRUE_FALSE: History: Identify valid statements. Focus area: Julius Caesar.
-- `history-true_false-013` History/TRUE_FALSE: History: Mark statements that are true for this topic. Focus area: Alexander the Great.
-- `history-true_false-014` History/TRUE_FALSE: History: Which claims are accurate? Focus area: Gutenberg Press.
+- `history-true_false-023` History/TRUE_FALSE: History: Which lines are correct? Focus area: Bronze Age.
+- `history-true_false-024` History/TRUE_FALSE: History: Identify valid statements. Focus area: Iron Age.
+- `history-true_false-030` History/TRUE_FALSE: History: Identify valid statements. Focus area: Maya Civilization.
+- `sports-true_false-001` Sports/TRUE_FALSE: Sports: Mark statements that are true for this topic. Focus area: Football.
 
 
 ## ET Findings
 
 - Dataset: `data/smart10/cards.et.json`
-- Semantic content score: 0.788
+- Semantic content score: 0.794
 - Launch readiness: BLOCKED - ET is not launch-ready
-- Total issue hits: 1612
-- Warning count: 1612
+- Total issue hits: 1568
+- Warning count: 1568
 
 ### Issue Counts
 
-- language leakage: 150
-- broken grammar: 559
+- language leakage: 140
+- broken grammar: 549
 - unnatural phrasing: 280
 - placeholder content: 0
-- templated/scaffold wording: 113
-- recycled option pool: 350
+- templated/scaffold wording: 107
+- recycled option pool: 332
 - low-trust option wording: 160
 - trivial/low-value content: 0
 
@@ -94,17 +94,17 @@
 
 #### language leakage
 
-- `history-true_false-011-et` History/TRUE_FALSE: Ajalugu: Millised read on oiged? Fookus: Napoleon.
-- `history-true_false-012-et` History/TRUE_FALSE: Ajalugu: Tuvasta kehtivad vaited. Fookus: Julius Caesar.
-- `history-true_false-013-et` History/TRUE_FALSE: Ajalugu: Margi selle teema toesed vaited. Fookus: Alexander the Great.
-- `history-true_false-014-et` History/TRUE_FALSE: Ajalugu: Millised vaited on oiged? Fookus: Gutenberg Press.
+- `history-true_false-021-et` History/TRUE_FALSE: Ajalugu: Leia sobivad vaited. Fookus: Meiji Restoration.
+- `history-true_false-022-et` History/TRUE_FALSE: Ajalugu: Vali koik toed vaited. Fookus: Age of Exploration.
+- `history-true_false-023-et` History/TRUE_FALSE: Ajalugu: Millised read on oiged? Fookus: Bronze Age.
+- `history-true_false-024-et` History/TRUE_FALSE: Ajalugu: Tuvasta kehtivad vaited. Fookus: Iron Age.
 
 #### broken grammar
 
-- `history-true_false-011-et` History/TRUE_FALSE: Ajalugu: Millised read on oiged? Fookus: Napoleon.
-- `history-true_false-012-et` History/TRUE_FALSE: Ajalugu: Tuvasta kehtivad vaited. Fookus: Julius Caesar.
-- `history-true_false-013-et` History/TRUE_FALSE: Ajalugu: Margi selle teema toesed vaited. Fookus: Alexander the Great.
-- `history-true_false-014-et` History/TRUE_FALSE: Ajalugu: Millised vaited on oiged? Fookus: Gutenberg Press.
+- `history-true_false-021-et` History/TRUE_FALSE: Ajalugu: Leia sobivad vaited. Fookus: Meiji Restoration.
+- `history-true_false-022-et` History/TRUE_FALSE: Ajalugu: Vali koik toed vaited. Fookus: Age of Exploration.
+- `history-true_false-023-et` History/TRUE_FALSE: Ajalugu: Millised read on oiged? Fookus: Bronze Age.
+- `history-true_false-024-et` History/TRUE_FALSE: Ajalugu: Tuvasta kehtivad vaited. Fookus: Iron Age.
 
 #### unnatural phrasing
 
@@ -115,10 +115,10 @@
 
 #### templated/scaffold wording
 
-- `history-true_false-012-et` History/TRUE_FALSE: Ajalugu: Tuvasta kehtivad vaited. Fookus: Julius Caesar.
-- `history-true_false-013-et` History/TRUE_FALSE: Ajalugu: Margi selle teema toesed vaited. Fookus: Alexander the Great.
-- `history-true_false-015-et` History/TRUE_FALSE: Ajalugu: Leia sobivad vaited. Fookus: Roman Republic.
-- `history-true_false-016-et` History/TRUE_FALSE: Ajalugu: Vali koik toed vaited. Fookus: Cold War.
+- `history-true_false-021-et` History/TRUE_FALSE: Ajalugu: Leia sobivad vaited. Fookus: Meiji Restoration.
+- `history-true_false-022-et` History/TRUE_FALSE: Ajalugu: Vali koik toed vaited. Fookus: Age of Exploration.
+- `history-true_false-024-et` History/TRUE_FALSE: Ajalugu: Tuvasta kehtivad vaited. Fookus: Iron Age.
+- `history-true_false-025-et` History/TRUE_FALSE: Ajalugu: Margi selle teema toesed vaited. Fookus: Harlem Renaissance.
 
 #### low-trust option wording
 
@@ -129,8 +129,8 @@
 
 #### recycled option pool
 
-- `history-true_false-011-et` History/TRUE_FALSE: Ajalugu: Millised read on oiged? Fookus: Napoleon.
-- `history-true_false-012-et` History/TRUE_FALSE: Ajalugu: Tuvasta kehtivad vaited. Fookus: Julius Caesar.
-- `history-true_false-013-et` History/TRUE_FALSE: Ajalugu: Margi selle teema toesed vaited. Fookus: Alexander the Great.
-- `history-true_false-014-et` History/TRUE_FALSE: Ajalugu: Millised vaited on oiged? Fookus: Gutenberg Press.
+- `history-true_false-023-et` History/TRUE_FALSE: Ajalugu: Millised read on oiged? Fookus: Bronze Age.
+- `history-true_false-030-et` History/TRUE_FALSE: Ajalugu: Tuvasta kehtivad vaited. Fookus: Maya Civilization.
+- `sports-true_false-001-et` Sports/TRUE_FALSE: Sport: Margi selle teema toesed vaited. Fookus: Football.
+- `sports-true_false-002-et` Sports/TRUE_FALSE: Sport: Millised vaited on oiged? Fookus: Basketball.
 

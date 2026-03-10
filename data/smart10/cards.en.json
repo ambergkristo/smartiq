@@ -309,27 +309,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Which lines are correct? Focus area: Napoleon.",
+    "question": "History: Which statements about Napoleon are true?",
     "options": [
-      "Magna Carta was signed in 1215.",
-      "Napoleon won at Waterloo.",
-      "Roman Republic came before Empire.",
-      "Caesar was killed in 144 BC.",
-      "Apollo 11 landed in 1969.",
-      "Renaissance began in Australia.",
-      "WWII ended in 1945.",
-      "Berlin Wall fell in 1989.",
-      "Berlin Wall fell in 1973.",
-      "USSR dissolved in 1991."
+      "Napoleon crowned himself emperor.",
+      "He lost at Waterloo in 1815.",
+      "He rose during the French Revolution.",
+      "He sold Louisiana to the United States.",
+      "Napoleon ruled Britain from London.",
+      "He was born in Prussia.",
+      "His final exile was in Iceland.",
+      "He fought only in the 20th century.",
+      "He abolished the Napoleonic Code.",
+      "He commanded the Roman legions."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        4,
-        6,
-        7,
-        9
+        3
       ]
     },
     "difficulty": "2",
@@ -341,28 +339,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Identify valid statements. Focus area: Julius Caesar.",
+    "question": "History: Which statements about Julius Caesar are true?",
     "options": [
-      "Magna Carta was signed in 1215.",
-      "Printing press spread in 1400s.",
-      "Magna Carta was signed in 1512.",
-      "USSR dissolved in 1961.",
-      "Caesar was killed in 44 BC.",
-      "Apollo 11 landed in 1969.",
-      "Roman Republic came before Empire.",
-      "Napoleon lost at Waterloo.",
-      "Apollo 11 landed in 1959.",
-      "WWII ended in 1945."
+      "Caesar was assassinated in 44 BC.",
+      "He crossed the Rubicon.",
+      "He formed the First Triumvirate.",
+      "He became dictator for life.",
+      "Caesar ruled from Constantinople.",
+      "He wrote Magna Carta.",
+      "He defeated Napoleon at Waterloo.",
+      "He lived in the 1400s.",
+      "Caesar founded the Ottoman Empire.",
+      "He was a medieval English king."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        4,
-        5,
-        6,
-        7,
-        9
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -374,23 +369,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Mark statements that are true for this topic. Focus area: Alexander the Great.",
+    "question": "History: Which statements about Alexander the Great are true?",
     "options": [
-      "Roman Empire came before Republic.",
-      "Printing press spread in 1700s.",
-      "Printing press spread in 1400s.",
-      "WWII ended in 1939.",
-      "Napoleon won at Waterloo.",
-      "Byzantium was centered in Madrid.",
-      "Apollo 11 landed in 1959.",
-      "Berlin Wall fell in 1973.",
-      "Caesar was killed in 144 BC.",
-      "Caesar was killed in 44 BC."
+      "Alexander was tutored by Aristotle.",
+      "He became king of Macedon.",
+      "He defeated Darius III.",
+      "He reached as far as India.",
+      "Alexander ruled from Rome.",
+      "He died at age eighty.",
+      "He invented gunpowder weapons.",
+      "He fought in World War I.",
+      "He founded the Ming dynasty.",
+      "His empire was centered in Peru."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        9
+        3
       ]
     },
     "difficulty": "2",
@@ -402,24 +399,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Which claims are accurate? Focus area: Gutenberg Press.",
+    "question": "History: Which statements about Gutenberg's press are true?",
     "options": [
-      "Magna Carta was signed in 1512.",
-      "Roman Republic came before Empire.",
-      "Byzantium was centered in Madrid.",
-      "USSR dissolved in 1991.",
-      "WWII ended in 1939.",
-      "Berlin Wall fell in 1973.",
-      "Caesar was killed in 144 BC.",
-      "Printing press spread in 1700s.",
-      "Roman Empire came before Republic.",
-      "Caesar was killed in 44 BC."
+      "Gutenberg built movable type in Europe.",
+      "His press spread books more widely.",
+      "Early printing helped the Reformation.",
+      "Mainz is tied to Gutenberg's work.",
+      "Gutenberg built the Great Wall.",
+      "His press first appeared in Australia.",
+      "Printing replaced all handwriting at once.",
+      "Gutenberg worked for the Ming navy.",
+      "He printed with electric motors.",
+      "His press was invented in the 1900s."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        3,
-        9
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -431,25 +429,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Find the statements that fit. Focus area: Roman Republic.",
+    "question": "History: Which statements about the Roman Republic are true?",
     "options": [
-      "Berlin Wall fell in 1989.",
-      "Printing press spread in 1700s.",
-      "Caesar was killed in 144 BC.",
-      "Byzantium was centered in Madrid.",
-      "Magna Carta was signed in 1215.",
-      "Napoleon won at Waterloo.",
-      "WWII ended in 1945.",
-      "Magna Carta was signed in 1512.",
-      "Cold War started before WWI.",
-      "Renaissance began in Italy."
+      "The Republic had elected magistrates.",
+      "Consuls served limited terms.",
+      "The Senate held major influence.",
+      "It preceded the Roman Empire.",
+      "Roman Republic was ruled by tsars.",
+      "It began after Caesar Augustus died.",
+      "Rome's capital was Reykjavik.",
+      "Legions used machine guns.",
+      "The Republic ended in 476 AD.",
+      "It was founded by Napoleon."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        6,
-        9
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -461,26 +459,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Select all true statements. Focus area: Cold War.",
+    "question": "History: Which statements about the Cold War are true?",
     "options": [
-      "USSR dissolved in 1991.",
-      "Byzantium centered in Constantinople.",
-      "Magna Carta was signed in 1512.",
-      "Byzantium was centered in Madrid.",
-      "Caesar was killed in 44 BC.",
-      "Renaissance began in Australia.",
-      "Printing press spread in 1700s.",
-      "Berlin Wall fell in 1989.",
-      "Napoleon won at Waterloo.",
-      "WWII ended in 1945."
+      "Cold War followed World War II.",
+      "United States and USSR were rivals.",
+      "Berlin was a major flashpoint.",
+      "Nuclear deterrence shaped the conflict.",
+      "Cold War began after the Soviet collapse.",
+      "It was fought mainly with Roman swords.",
+      "NATO was created by Napoleon.",
+      "It ended in 1945.",
+      "It centered on Viking raids.",
+      "It started in the 1700s."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        4,
-        7,
-        9
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -492,27 +489,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Which lines are correct? Focus area: Berlin Wall.",
+    "question": "History: Which statements about the Berlin Wall are true?",
     "options": [
-      "Renaissance began in Australia.",
-      "Napoleon lost at Waterloo.",
-      "Roman Republic came before Empire.",
-      "Byzantium was centered in Madrid.",
-      "Caesar was killed in 44 BC.",
-      "WWII ended in 1945.",
-      "Berlin Wall fell in 1989.",
-      "Caesar was killed in 144 BC.",
-      "Printing press spread in 1700s.",
-      "Byzantium centered in Constantinople."
+      "Berlin Wall went up in 1961.",
+      "It divided East and West Berlin.",
+      "The wall fell in 1989.",
+      "East Germany built the barrier.",
+      "Berlin Wall stood in Paris.",
+      "It was built by Julius Caesar.",
+      "It came down in 1918.",
+      "The wall separated Spain and Portugal.",
+      "It blocked ships on the Nile.",
+      "It surrounded the Vatican."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        4,
-        5,
-        6,
-        9
+        3
       ]
     },
     "difficulty": "2",
@@ -524,28 +519,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Identify valid statements. Focus area: Apollo 11.",
+    "question": "History: Which statements about Apollo 11 are true?",
     "options": [
-      "Roman Republic came before Empire.",
-      "Napoleon lost at Waterloo.",
-      "USSR dissolved in 1991.",
-      "Caesar was killed in 144 BC.",
-      "Cold War followed World War II.",
-      "Magna Carta was signed in 1215.",
-      "Renaissance began in Italy.",
-      "Cold War started before WWI.",
-      "Berlin Wall fell in 1989.",
-      "Roman Empire came before Republic."
+      "Apollo 11 landed on the Moon in 1969.",
+      "Neil Armstrong walked on the Moon.",
+      "Buzz Aldrin was on Apollo 11.",
+      "Michael Collins stayed in lunar orbit.",
+      "Apollo 11 launched in 1989.",
+      "The mission landed on Mars.",
+      "Yuri Gagarin commanded Apollo 11.",
+      "It was a Byzantine expedition.",
+      "The crew rode the Space Shuttle.",
+      "Apollo 11 landed in Australia."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
         2,
-        4,
-        5,
-        6,
-        8
+        3
       ]
     },
     "difficulty": "2",
@@ -557,23 +549,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Mark statements that are true for this topic. Focus area: Treaty of Versailles.",
+    "question": "History: Which statements about the Treaty of Versailles are true?",
     "options": [
-      "Printing press spread in 1700s.",
-      "Apollo 11 landed in 1959.",
-      "WWII ended in 1939.",
-      "Berlin Wall fell in 1973.",
-      "Apollo 11 landed in 1969.",
-      "Renaissance began in Australia.",
-      "WWII ended in 1945.",
-      "Cold War started before WWI.",
-      "Roman Empire came before Republic.",
-      "Magna Carta was signed in 1512."
+      "Treaty of Versailles was signed in 1919.",
+      "It followed World War I.",
+      "Germany lost territory under the treaty.",
+      "The treaty limited German forces.",
+      "It ended the Cold War.",
+      "It was signed in 1815.",
+      "Napoleon dictated it in Moscow.",
+      "It created the Roman Republic.",
+      "It placed Japan under Ottoman rule.",
+      "It was signed on the Moon."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        6
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -585,24 +579,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Which claims are accurate? Focus area: Byzantine Empire.",
+    "question": "History: Which statements about the Byzantine Empire are true?",
     "options": [
-      "Apollo 11 landed in 1959.",
-      "Magna Carta was signed in 1215.",
-      "Berlin Wall fell in 1973.",
-      "USSR dissolved in 1961.",
-      "Printing press spread in 1400s.",
-      "Printing press spread in 1700s.",
-      "Roman Empire came before Republic.",
-      "USSR dissolved in 1991.",
-      "WWII ended in 1939.",
-      "Cold War started before WWI."
+      "Constantinople was its capital.",
+      "It continued the Eastern Roman Empire.",
+      "Justinian I ruled the empire.",
+      "Hagia Sophia is tied to Byzantium.",
+      "Byzantium was centered in Madrid.",
+      "It ruled from Mexico City.",
+      "It ended before ancient Rome.",
+      "Vikings founded the empire in 1492.",
+      "It was a South American kingdom.",
+      "Its court language was only Japanese."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        4,
-        7
+        2,
+        3
       ]
     },
     "difficulty": "2",
