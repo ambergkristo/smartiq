@@ -2,21 +2,21 @@
 
 ## Metadata
 
-- Generated: 2026-03-10T12:48:27.508Z
+- Generated: 2026-03-10T13:23:23.499Z
 - Scope: EN, ET SmartIQ locale packs
 
 ## Executive Summary
 
-- EN: NOT READY - editorial cleanup required before launch trust | score 0.926 | total issues 581
-- ET: BLOCKED - ET is not launch-ready | score 0.810 | total issues 1449
+- EN: NOT READY - editorial cleanup required before launch trust | score 0.928 | total issues 564
+- ET: BLOCKED - ET is not launch-ready | score 0.810 | total issues 1452
 
 ## EN Findings
 
 - Dataset: `data/smart10/cards.en.json`
-- Semantic content score: 0.926
+- Semantic content score: 0.928
 - Launch readiness: NOT READY - editorial cleanup required before launch trust
-- Total issue hits: 581
-- Warning count: 581
+- Total issue hits: 564
+- Warning count: 564
 
 ### Issue Counts
 
@@ -24,19 +24,19 @@
 - broken grammar: 0
 - unnatural phrasing: 210
 - placeholder content: 0
-- templated/scaffold wording: 80
-- recycled option pool: 291
+- templated/scaffold wording: 73
+- recycled option pool: 281
 - low-trust option wording: 0
 - trivial/low-value content: 0
 
 ### Highest-Risk Areas
 
-- EN Culture/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Science/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Varia/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Varia/ORDER: 30/30 cards flagged (100%) | unnatural_phrasing
 - EN History/COLOR: 30/30 cards flagged (100%) | unnatural_phrasing
 - EN Sports/COLOR: 30/30 cards flagged (100%) | unnatural_phrasing
+- EN Geography/COLOR: 30/30 cards flagged (100%) | unnatural_phrasing
 
 ### Categorized Findings Summary
 
@@ -67,28 +67,28 @@
 - Dataset: `data/smart10/cards.et.json`
 - Semantic content score: 0.810
 - Launch readiness: BLOCKED - ET is not launch-ready
-- Total issue hits: 1449
-- Warning count: 1449
+- Total issue hits: 1452
+- Warning count: 1452
 
 ### Issue Counts
 
 - language leakage: 130
-- broken grammar: 509
+- broken grammar: 529
 - unnatural phrasing: 280
 - placeholder content: 0
-- templated/scaffold wording: 80
-- recycled option pool: 290
+- templated/scaffold wording: 73
+- recycled option pool: 280
 - low-trust option wording: 160
 - trivial/low-value content: 0
 
 ### Highest-Risk Areas
 
+- ET Geography/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Culture/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Science/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Varia/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET History/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
 - ET Sports/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
-- ET Geography/ORDER: 30/30 cards flagged (100%) | broken_grammar
 
 ### Categorized Findings Summary
 
@@ -101,10 +101,10 @@
 
 #### broken grammar
 
-- `sports-true_false-021-et` Sports/TRUE_FALSE: Sport: Leia sobivad vaited. Fookus: Formula One.
-- `sports-true_false-022-et` Sports/TRUE_FALSE: Sport: Vali koik toed vaited. Fookus: MotoGP.
-- `sports-true_false-023-et` Sports/TRUE_FALSE: Sport: Millised read on oiged? Fookus: Marathon.
-- `sports-true_false-024-et` Sports/TRUE_FALSE: Sport: Tuvasta kehtivad vaited. Fookus: Triathlon.
+- `sports-true_false-011-et` Sports/TRUE_FALSE: Sport: Millised v?ited lauatennise kohta peavad paika?
+- `sports-true_false-012-et` Sports/TRUE_FALSE: Sport: Millised v?ited kergej?ustiku kohta peavad paika?
+- `sports-true_false-013-et` Sports/TRUE_FALSE: Sport: Millised v?ited ujumise kohta peavad paika?
+- `sports-true_false-014-et` Sports/TRUE_FALSE: Sport: Millised v?ited rattas?idu kohta peavad paika?
 
 #### unnatural phrasing
 

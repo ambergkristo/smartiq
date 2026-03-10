@@ -2802,23 +2802,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Kultuur: Margi selle teema toesed vaited. Fookus: Mona Lisa.",
+    "question": "Kultuur: Millised v?ited Mona Lisa kohta peavad paika?",
     "options": [
-      "Opera has no singing.",
-      "Beethoven wrote no music.",
-      "Mozart was a film director.",
-      "Ballet is a dance form.",
-      "Cinema predates photography.",
-      "Jazz began in medieval France.",
-      "Van Gogh painted The Last Supper.",
-      "Picasso painted The Scream.",
-      "Van Gogh painted Starry Night.",
-      "Ballet is a martial art."
+      "Selle maalis Leonardo da Vinci.",
+      "Portreed n?eb Louvre'is.",
+      "See on renessansiajastu teos.",
+      "Seda tuntakse salap?rase naeratuse j?rgi.",
+      "See ripub Pariisis.",
+      "Selle maalis Edvard Munch.",
+      "See on Vatikani fresko.",
+      "Pildil on Napoleon hobuse seljas.",
+      "See kuulub Prado muuseumile.",
+      "See esilinastus tummfilmina."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -2830,24 +2833,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Kultuur: Millised vaited on oiged? Fookus: Starry Night.",
+    "question": "Kultuur: Millised v?ited T?htsa ?? kohta peavad paika?",
     "options": [
-      "Beethoven wrote symphonies.",
-      "Ballet is a martial art.",
-      "Mona Lisa is a sculpture.",
-      "Opera combines music and drama.",
-      "The Odyssey is a modern novel.",
-      "Shakespeare wrote Don Quixote.",
-      "Mozart was a film director.",
-      "Jazz began in medieval France.",
-      "The Odyssey is an epic poem.",
-      "Van Gogh painted The Last Supper."
+      "Selle maalis Vincent van Gogh.",
+      "Pildil on keerlev ??taevas.",
+      "Teos asub New Yorgi MoMAs.",
+      "Motiiv s?ndis Saint-R?mys.",
+      "See on ?limaal.",
+      "Selle maalis Claude Monet.",
+      "Pildil paistab Eiffeli torn.",
+      "Louvre omab seda maali.",
+      "Teos raiuti marmorist.",
+      "See ?listab jalgpallifinaali."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
+        2,
         3,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -2859,25 +2864,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Kultuur: Leia sobivad vaited. Fookus: Hamlet.",
+    "question": "Kultuur: Millised v?ited Hamleti kohta peavad paika?",
     "options": [
-      "Mozart was a composer.",
-      "Mona Lisa is a sculpture.",
-      "Shakespeare wrote Don Quixote.",
-      "The Odyssey is an epic poem.",
-      "Ballet is a dance form.",
-      "Picasso painted Guernica.",
-      "Cinema predates photography.",
-      "Ballet is a martial art.",
-      "Opera has no singing.",
-      "Van Gogh painted The Last Supper."
+      "Hamleti kirjutas Shakespeare.",
+      "Hamlet on Taani prints.",
+      "Ophelia on n?idendi tegelane.",
+      "\"To be or not to be\" tuleb sealt.",
+      "See on trag??dia.",
+      "Selle kirjutas Miguel de Cervantes.",
+      "Tegevus toimub antiik-Roomas.",
+      "Hamletist saab kauboi.",
+      "See esietendus telekom??diana.",
+      "Kuningas Lear on Hamleti isa."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
+        2,
         3,
-        4,
-        5
+        4
       ]
     },
     "difficulty": "2",
@@ -2889,26 +2895,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Kultuur: Vali koik toed vaited. Fookus: Macbeth.",
+    "question": "Kultuur: Millised v?ited Macbethi kohta peavad paika?",
     "options": [
-      "Cinema predates photography.",
-      "Jazz began in medieval France.",
-      "Van Gogh painted The Last Supper.",
-      "Mona Lisa is a painting.",
-      "Jazz began in the United States.",
-      "Beethoven wrote symphonies.",
-      "Picasso painted The Scream.",
-      "Van Gogh painted Starry Night.",
-      "Shakespeare wrote Don Quixote.",
-      "Mozart was a composer."
+      "Macbeth on Shakespeare'i trag??dia.",
+      "Tegevus algab ?otimaal.",
+      "Lady Macbeth ?hutab teda.",
+      "Kuningas Duncan m?rvatakse.",
+      "N?iad ilmuvad kohe alguses.",
+      "Selle kirjutas Tolstoi.",
+      "Macbeth v?idab Wimbledoni.",
+      "S??ee keerleb piraatide ?mber.",
+      "L?pus stardib kosmoselaev.",
+      "Banquo on Rooma keiser."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        4,
-        5,
-        7,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -2920,27 +2926,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Kultuur: Millised read on oiged? Fookus: The Odyssey.",
+    "question": "Kultuur: Millised v?ited Od?sseia kohta peavad paika?",
     "options": [
-      "Shakespeare wrote Hamlet.",
-      "Beethoven wrote symphonies.",
-      "Cinema predates photography.",
-      "Ballet is a dance form.",
-      "Jazz began in medieval France.",
-      "Mona Lisa is a painting.",
-      "Picasso painted Guernica.",
-      "Mona Lisa is a sculpture.",
-      "Picasso painted The Scream.",
-      "Beatles formed in Liverpool."
+      "Homerosega seostatakse seda poeemi.",
+      "Odysseus p??ab Ithakasse j?uda.",
+      "Pol?feemos ilmub loos.",
+      "Penelope ootab kodus.",
+      "See on eepiline poeem.",
+      "Selle kirjutas Jane Austen.",
+      "Lugu j?lgib Hamletit Taanis.",
+      "Tegevus toimub Marsil.",
+      "Don Quijote on peategelane.",
+      "See on tummfilmi stsenaarium."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        5,
-        6,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -2952,28 +2957,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Kultuur: Tuvasta kehtivad vaited. Fookus: The Iliad.",
+    "question": "Kultuur: Millised v?ited Iliasest peavad paika?",
     "options": [
-      "Shakespeare wrote Hamlet.",
-      "The Odyssey is an epic poem.",
-      "Ballet is a martial art.",
-      "Van Gogh painted Starry Night.",
-      "Jazz began in the United States.",
-      "Beatles formed in Tokyo.",
-      "Mona Lisa is a painting.",
-      "The Odyssey is a modern novel.",
-      "Mozart was a composer.",
-      "Ballet is a dance form."
+      "Homerosega seostatakse seda poeemi.",
+      "Trooja s?da kujundab s??eed.",
+      "Achilleus on keskne kangelane.",
+      "Hektor v?itleb Trooja eest.",
+      "Patroklos sureb loos.",
+      "Odysseus naaseb siin Ithakasse.",
+      "Selle kirjutas Vergilius.",
+      "Tegevus toimub Tokyos.",
+      "L?pus kroonitakse Caesar.",
+      "See r??gib peamiselt jazziklubidest."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        4,
-        6,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -2985,23 +2988,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Kultuur: Margi selle teema toesed vaited. Fookus: Don Quixote.",
+    "question": "Kultuur: Millised v?ited Don Quijote kohta peavad paika?",
     "options": [
-      "Cinema predates photography.",
-      "Mona Lisa is a sculpture.",
-      "Jazz began in the United States.",
-      "Van Gogh painted The Last Supper.",
-      "Beatles formed in Tokyo.",
-      "Shakespeare wrote Don Quixote.",
-      "Opera has no singing.",
-      "Picasso painted The Scream.",
-      "Opera combines music and drama.",
-      "Beethoven wrote no music."
+      "Cervantes kirjutas Don Quijote.",
+      "Romaan p?rineb Hispaaniast.",
+      "Sancho Panza r?ndab temaga.",
+      "Tuuleveskid on loos kuulsad.",
+      "Peategelane kujutab end r??tlina.",
+      "Selle kirjutas Victor Hugo.",
+      "Lugu toimub viikingite Islandil.",
+      "Raamat keskendub kosmosereisile.",
+      "Sherlock Holmes on tema kaaslane.",
+      "S??ee j?lgib Rooma leegioni."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3013,24 +3019,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Kultuur: Millised vaited on oiged? Fookus: The Great Gatsby.",
+    "question": "Kultuur: Millised v?ited Suure Gatsby kohta peavad paika?",
     "options": [
-      "Jazz began in medieval France.",
-      "Opera has no singing.",
-      "Van Gogh painted Starry Night.",
-      "Beatles formed in Tokyo.",
-      "Beethoven wrote no music.",
-      "Picasso painted The Scream.",
-      "The Odyssey is an epic poem.",
-      "Mozart was a film director.",
-      "Picasso painted Guernica.",
-      "Cinema predates photography."
+      "Selle kirjutas F. Scott Fitzgerald.",
+      "Jay Gatsby on keskne tegelane.",
+      "Romaan toimub 1920. aastatel.",
+      "Suur osa loost on Long Islandil.",
+      "Nick Carraway jutustab seda.",
+      "Selle kirjutas Lev Tolstoi.",
+      "Tegevus toimub antiik-Ateenas.",
+      "S??ee j?lgib rokkb?ndi.",
+      "Elizabeth Bennet on kangelanna.",
+      "See on keskaegne Islandi saaga."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        6,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3042,25 +3050,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Kultuur: Leia sobivad vaited. Fookus: Pride and Prejudice.",
+    "question": "Kultuur: Millised v?ited Uhkuse ja eelarvamuse kohta peavad paika?",
     "options": [
-      "Mona Lisa is a sculpture.",
-      "Beethoven wrote no music.",
-      "Mozart was a film director.",
-      "Jazz began in medieval France.",
-      "The Odyssey is an epic poem.",
-      "Ballet is a dance form.",
-      "The Odyssey is a modern novel.",
-      "Cinema predates photography.",
-      "Jazz began in the United States.",
-      "Van Gogh painted Starry Night."
+      "Selle kirjutas Jane Austen.",
+      "Elizabeth Bennet on keskne.",
+      "Mr Darcy on t?htis tegelane.",
+      "Lugu toimub Inglismaal.",
+      "Abieluvalikud k?ivitavad s??ee.",
+      "Selle kirjutas Homeros.",
+      "Tegevus toimub piraadilaeval.",
+      "Kangelannast saab detektiiv.",
+      "See on ulmeline eepos.",
+      "Tegevus toimub keiserlikus Hiinas."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        5,
-        8,
-        9
+        0,
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3072,26 +3081,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Kultuur: Vali koik toed vaited. Fookus: War and Peace.",
+    "question": "Kultuur: Millised v?ited S?ja ja rahu kohta peavad paika?",
     "options": [
-      "Van Gogh painted Starry Night.",
-      "The Odyssey is an epic poem.",
-      "Van Gogh painted The Last Supper.",
-      "Mona Lisa is a painting.",
-      "Mozart was a film director.",
-      "Ballet is a martial art.",
-      "Beatles formed in Tokyo.",
-      "Opera combines music and drama.",
-      "Beethoven wrote symphonies.",
-      "Beethoven wrote no music."
+      "Selle kirjutas Lev Tolstoi.",
+      "Napoleoni s?jad kujundavad loo.",
+      "Vene aadliperekonnad t?idavad loo.",
+      "Pierre Bezuhhov on peategelane.",
+      "V?rst Andrei ilmub romaani.",
+      "Selle kirjutas Charles Dickens.",
+      "Tegevus toimub antiik-Egiptuses.",
+      "Lugu j?lgib tuuril jazzitriot.",
+      "Peategelane v?itleb Pariisis draakonitega.",
+      "See on l?hike detektiivjutustus."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        7,
-        8
+        4
       ]
     },
     "difficulty": "2",

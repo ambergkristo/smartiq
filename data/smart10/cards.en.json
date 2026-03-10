@@ -2802,23 +2802,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Mark statements that are true for this topic. Focus area: Mona Lisa.",
+    "question": "Culture: Which statements about Mona Lisa are true?",
     "options": [
-      "Opera has no singing.",
-      "Beethoven wrote no music.",
-      "Mozart was a film director.",
-      "Ballet is a dance form.",
-      "Cinema predates photography.",
-      "Jazz began in medieval France.",
-      "Van Gogh painted The Last Supper.",
-      "Picasso painted The Scream.",
-      "Van Gogh painted Starry Night.",
-      "Ballet is a martial art."
+      "Leonardo da Vinci painted it.",
+      "The Louvre displays the portrait.",
+      "It is a Renaissance work.",
+      "The portrait is known for its smile.",
+      "It hangs in Paris.",
+      "Edvard Munch painted it.",
+      "It is a fresco in the Vatican.",
+      "It shows Napoleon on horseback.",
+      "It belongs to Madrid's Prado.",
+      "It debuted as a silent film."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -2830,24 +2833,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Which claims are accurate? Focus area: Starry Night.",
+    "question": "Culture: Which statements about The Starry Night are true?",
     "options": [
-      "Beethoven wrote symphonies.",
-      "Ballet is a martial art.",
-      "Mona Lisa is a sculpture.",
-      "Opera combines music and drama.",
-      "The Odyssey is a modern novel.",
-      "Shakespeare wrote Don Quixote.",
-      "Mozart was a film director.",
-      "Jazz began in medieval France.",
-      "The Odyssey is an epic poem.",
-      "Van Gogh painted The Last Supper."
+      "Vincent van Gogh painted it.",
+      "It shows a swirling night sky.",
+      "The work hangs in MoMA.",
+      "Saint-Remy inspired the scene.",
+      "It is an oil painting.",
+      "Claude Monet painted it.",
+      "It depicts the Eiffel Tower.",
+      "The Louvre owns the canvas.",
+      "The work was carved from marble.",
+      "It celebrates a football final."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
+        2,
         3,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -2859,25 +2864,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Find the statements that fit. Focus area: Hamlet.",
+    "question": "Culture: Which statements about Hamlet are true?",
     "options": [
-      "Mozart was a composer.",
-      "Mona Lisa is a sculpture.",
-      "Shakespeare wrote Don Quixote.",
-      "The Odyssey is an epic poem.",
-      "Ballet is a dance form.",
-      "Picasso painted Guernica.",
-      "Cinema predates photography.",
-      "Ballet is a martial art.",
-      "Opera has no singing.",
-      "Van Gogh painted The Last Supper."
+      "Shakespeare wrote Hamlet.",
+      "Hamlet is prince of Denmark.",
+      "Ophelia appears in the play.",
+      "\"To be, or not to be\" is from it.",
+      "It is a tragedy.",
+      "Miguel de Cervantes wrote it.",
+      "The play is set in ancient Rome.",
+      "Hamlet becomes a cowboy hero.",
+      "It premiered as a TV sitcom.",
+      "King Lear is Hamlet's father."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
+        2,
         3,
-        4,
-        5
+        4
       ]
     },
     "difficulty": "2",
@@ -2889,26 +2895,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Select all true statements. Focus area: Macbeth.",
+    "question": "Culture: Which statements about Macbeth are true?",
     "options": [
-      "Cinema predates photography.",
-      "Jazz began in medieval France.",
-      "Van Gogh painted The Last Supper.",
-      "Mona Lisa is a painting.",
-      "Jazz began in the United States.",
-      "Beethoven wrote symphonies.",
-      "Picasso painted The Scream.",
-      "Van Gogh painted Starry Night.",
-      "Shakespeare wrote Don Quixote.",
-      "Mozart was a composer."
+      "Macbeth is a Shakespeare tragedy.",
+      "The action begins in Scotland.",
+      "Lady Macbeth drives his ambition.",
+      "King Duncan is murdered.",
+      "The witches appear early.",
+      "Leo Tolstoy wrote it.",
+      "Macbeth wins Wimbledon.",
+      "The plot centers on pirates.",
+      "It ends with a spaceship launch.",
+      "Banquo is a Roman emperor."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        4,
-        5,
-        7,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -2920,27 +2926,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Which lines are correct? Focus area: The Odyssey.",
+    "question": "Culture: Which statements about The Odyssey are true?",
     "options": [
-      "Shakespeare wrote Hamlet.",
-      "Beethoven wrote symphonies.",
-      "Cinema predates photography.",
-      "Ballet is a dance form.",
-      "Jazz began in medieval France.",
-      "Mona Lisa is a painting.",
-      "Picasso painted Guernica.",
-      "Mona Lisa is a sculpture.",
-      "Picasso painted The Scream.",
-      "Beatles formed in Liverpool."
+      "Homer is linked to the poem.",
+      "Odysseus tries to reach Ithaca.",
+      "Cyclops Polyphemus appears.",
+      "Penelope waits at home.",
+      "It is an epic poem.",
+      "Jane Austen wrote it.",
+      "It follows Hamlet in Denmark.",
+      "The story is set on Mars.",
+      "Don Quixote is the hero.",
+      "It is a silent film script."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        5,
-        6,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -2952,28 +2957,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Identify valid statements. Focus area: The Iliad.",
+    "question": "Culture: Which statements about The Iliad are true?",
     "options": [
-      "Shakespeare wrote Hamlet.",
-      "The Odyssey is an epic poem.",
-      "Ballet is a martial art.",
-      "Van Gogh painted Starry Night.",
-      "Jazz began in the United States.",
-      "Beatles formed in Tokyo.",
-      "Mona Lisa is a painting.",
-      "The Odyssey is a modern novel.",
-      "Mozart was a composer.",
-      "Ballet is a dance form."
+      "Homer is linked to the poem.",
+      "The Trojan War shapes the plot.",
+      "Achilles is a central hero.",
+      "Hector fights for Troy.",
+      "Patroclus dies in the story.",
+      "Odysseus returns to Ithaca in it.",
+      "Virgil wrote the Iliad.",
+      "The story is set in Tokyo.",
+      "It ends with Caesar crowned.",
+      "It is mainly about jazz clubs."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        4,
-        6,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -2985,23 +2988,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Mark statements that are true for this topic. Focus area: Don Quixote.",
+    "question": "Culture: Which statements about Don Quixote are true?",
     "options": [
-      "Cinema predates photography.",
-      "Mona Lisa is a sculpture.",
-      "Jazz began in the United States.",
-      "Van Gogh painted The Last Supper.",
-      "Beatles formed in Tokyo.",
-      "Shakespeare wrote Don Quixote.",
-      "Opera has no singing.",
-      "Picasso painted The Scream.",
-      "Opera combines music and drama.",
-      "Beethoven wrote no music."
+      "Cervantes wrote Don Quixote.",
+      "The novel comes from Spain.",
+      "Sancho Panza travels with him.",
+      "Windmills are famous in the story.",
+      "The hero imagines knightly quests.",
+      "Victor Hugo wrote the novel.",
+      "It is set in Viking Iceland.",
+      "The book centers on space travel.",
+      "Sherlock Holmes is the squire.",
+      "The plot follows a Roman legion."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3013,24 +3019,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Which claims are accurate? Focus area: The Great Gatsby.",
+    "question": "Culture: Which statements about The Great Gatsby are true?",
     "options": [
-      "Jazz began in medieval France.",
-      "Opera has no singing.",
-      "Van Gogh painted Starry Night.",
-      "Beatles formed in Tokyo.",
-      "Beethoven wrote no music.",
-      "Picasso painted The Scream.",
-      "The Odyssey is an epic poem.",
-      "Mozart was a film director.",
-      "Picasso painted Guernica.",
-      "Cinema predates photography."
+      "F. Scott Fitzgerald wrote it.",
+      "Jay Gatsby is a central figure.",
+      "The novel is set in the 1920s.",
+      "Much of it unfolds on Long Island.",
+      "Nick Carraway narrates most of it.",
+      "Leo Tolstoy wrote the book.",
+      "It is set in ancient Athens.",
+      "The plot follows a rock band.",
+      "Elizabeth Bennet is the heroine.",
+      "It is a medieval Icelandic saga."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        6,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3042,25 +3050,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Find the statements that fit. Focus area: Pride and Prejudice.",
+    "question": "Culture: Which statements about Pride and Prejudice are true?",
     "options": [
-      "Mona Lisa is a sculpture.",
-      "Beethoven wrote no music.",
-      "Mozart was a film director.",
-      "Jazz began in medieval France.",
-      "The Odyssey is an epic poem.",
-      "Ballet is a dance form.",
-      "The Odyssey is a modern novel.",
-      "Cinema predates photography.",
-      "Jazz began in the United States.",
-      "Van Gogh painted Starry Night."
+      "Jane Austen wrote the novel.",
+      "Elizabeth Bennet is central.",
+      "Mr Darcy is a major character.",
+      "The story is set in England.",
+      "Marriage choices drive the plot.",
+      "Homer wrote the book.",
+      "It takes place on a pirate ship.",
+      "The heroine becomes a detective.",
+      "It is a science-fiction epic.",
+      "The setting is imperial China."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        5,
-        8,
-        9
+        0,
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3072,26 +3081,26 @@
     "topic": "Culture",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Culture: Select all true statements. Focus area: War and Peace.",
+    "question": "Culture: Which statements about War and Peace are true?",
     "options": [
-      "Van Gogh painted Starry Night.",
-      "The Odyssey is an epic poem.",
-      "Van Gogh painted The Last Supper.",
-      "Mona Lisa is a painting.",
-      "Mozart was a film director.",
-      "Ballet is a martial art.",
-      "Beatles formed in Tokyo.",
-      "Opera combines music and drama.",
-      "Beethoven wrote symphonies.",
-      "Beethoven wrote no music."
+      "Leo Tolstoy wrote the novel.",
+      "Napoleonic wars shape the story.",
+      "Russian noble families fill the cast.",
+      "Pierre Bezukhov is a main character.",
+      "Prince Andrei appears in the book.",
+      "Charles Dickens wrote it.",
+      "The story is set in ancient Egypt.",
+      "It follows a jazz trio on tour.",
+      "The lead battles dragons in Paris.",
+      "It is a short detective novella."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        7,
-        8
+        4
       ]
     },
     "difficulty": "2",
