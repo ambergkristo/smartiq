@@ -60,8 +60,7 @@ Done:
 - Repair batches completed so far:
   - `History/TRUE_FALSE 001..030`
   - `Sports/TRUE_FALSE 001..020`
-  - `Geography/TRUE_FALSE 001..010`
-  - `Geography/TRUE_FALSE 011..020`
+  - `Geography/TRUE_FALSE 001..030`
   - `Culture/TRUE_FALSE 001..010`
   - `Science/TRUE_FALSE 001..010`
 
@@ -116,12 +115,17 @@ Todo:
 Current observed report baseline:
 
 - EN score: `0.933`
-- ET score: `0.817`
+- ET score: `0.820`
+
+Closed repair zone:
+
+- `Geography/TRUE_FALSE` is now fully repaired across `001..030`
+- Geography dropped out of the top `TRUE_FALSE` backlog focus; the remaining highest-risk `TRUE_FALSE` deck is now `Varia`
 
 ## Next Repair Priority
 
-1. `Geography/TRUE_FALSE 021..030`
-2. `Varia/TRUE_FALSE 001..030`
-3. `ORDER`
-4. `COLOR`
-5. remaining `OPEN` recycled pools
+1. `Varia/TRUE_FALSE 001..030`
+2. `ORDER`
+3. `COLOR`
+4. remaining `OPEN` recycled pools
+5. later ET cleanup of older mojibake-heavy repaired blocks if needed

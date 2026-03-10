@@ -2,21 +2,21 @@
 
 ## Metadata
 
-- Generated: 2026-03-10T14:10:52.052Z
+- Generated: 2026-03-10T14:17:47.635Z
 - Scope: EN, ET SmartIQ locale packs
 
 ## Executive Summary
 
-- EN: NOT READY - editorial cleanup required before launch trust | score 0.933 | total issues 528
-- ET: BLOCKED - ET is not launch-ready | score 0.817 | total issues 1396
+- EN: NOT READY - editorial cleanup required before launch trust | score 0.935 | total issues 514
+- ET: BLOCKED - ET is not launch-ready | score 0.820 | total issues 1372
 
 ## EN Findings
 
 - Dataset: `data/smart10/cards.en.json`
-- Semantic content score: 0.933
+- Semantic content score: 0.935
 - Launch readiness: NOT READY - editorial cleanup required before launch trust
-- Total issue hits: 528
-- Warning count: 528
+- Total issue hits: 514
+- Warning count: 514
 
 ### Issue Counts
 
@@ -24,8 +24,8 @@
 - broken grammar: 0
 - unnatural phrasing: 210
 - placeholder content: 0
-- templated/scaffold wording: 60
-- recycled option pool: 258
+- templated/scaffold wording: 53
+- recycled option pool: 251
 - low-trust option wording: 0
 - trivial/low-value content: 0
 
@@ -57,27 +57,27 @@
 #### recycled option pool
 
 - `sports-true_false-028` Sports/TRUE_FALSE: Sports: Select all true statements. Focus area: World Cup.
-- `geography-true_false-021` Geography/TRUE_FALSE: Geography: Find the statements that fit. Focus area: Canberra.
-- `geography-true_false-022` Geography/TRUE_FALSE: Geography: Select all true statements. Focus area: Ottawa.
-- `geography-true_false-024` Geography/TRUE_FALSE: Geography: Identify valid statements. Focus area: Seoul.
+- `culture-true_false-011` Culture/TRUE_FALSE: Culture: Which lines are correct? Focus area: The Godfather.
+- `culture-true_false-012` Culture/TRUE_FALSE: Culture: Identify valid statements. Focus area: Casablanca.
+- `culture-true_false-013` Culture/TRUE_FALSE: Culture: Mark statements that are true for this topic. Focus area: Citizen Kane.
 
 
 ## ET Findings
 
 - Dataset: `data/smart10/cards.et.json`
-- Semantic content score: 0.817
+- Semantic content score: 0.820
 - Launch readiness: BLOCKED - ET is not launch-ready
-- Total issue hits: 1396
-- Warning count: 1396
+- Total issue hits: 1372
+- Warning count: 1372
 
 ### Issue Counts
 
 - language leakage: 130
-- broken grammar: 509
+- broken grammar: 499
 - unnatural phrasing: 280
 - placeholder content: 0
-- templated/scaffold wording: 60
-- recycled option pool: 257
+- templated/scaffold wording: 53
+- recycled option pool: 250
 - low-trust option wording: 160
 - trivial/low-value content: 0
 
@@ -129,8 +129,8 @@
 
 #### recycled option pool
 
-- `geography-true_false-021-et` Geography/TRUE_FALSE: Geograafia: Leia sobivad vaited. Fookus: Canberra.
-- `geography-true_false-022-et` Geography/TRUE_FALSE: Geograafia: Vali koik toed vaited. Fookus: Ottawa.
-- `geography-true_false-024-et` Geography/TRUE_FALSE: Geograafia: Tuvasta kehtivad vaited. Fookus: Seoul.
-- `geography-true_false-025-et` Geography/TRUE_FALSE: Geograafia: Margi selle teema toesed vaited. Fookus: Beijing.
+- `culture-true_false-011-et` Culture/TRUE_FALSE: Kultuur: Millised read on oiged? Fookus: The Godfather.
+- `culture-true_false-012-et` Culture/TRUE_FALSE: Kultuur: Tuvasta kehtivad vaited. Fookus: Casablanca.
+- `culture-true_false-013-et` Culture/TRUE_FALSE: Kultuur: Margi selle teema toesed vaited. Fookus: Citizen Kane.
+- `culture-true_false-014-et` Culture/TRUE_FALSE: Kultuur: Millised vaited on oiged? Fookus: The Beatles.
 
