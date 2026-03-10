@@ -25758,23 +25758,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Select statements that are true. Topic clue: Ancient Rome.",
+    "question": "History: Which statements about Ancient Rome are accurate?",
     "options": [
-      "Renaissance began in Italy.",
-      "WWII ended in 1939.",
-      "USSR dissolved in 1961.",
-      "Roman Empire came before Republic.",
-      "Napoleon won at Waterloo.",
-      "USSR dissolved in 1991.",
-      "Printing press spread in 1700s.",
-      "Apollo 11 landed in 1959.",
-      "Renaissance began in Australia.",
-      "Berlin Wall fell in 1973."
+      "Augustus was Rome's first emperor.",
+      "The Colosseum stands in Rome.",
+      "Latin was central in Roman life.",
+      "The Senate kept political influence.",
+      "Napoleon founded Ancient Rome.",
+      "Punic Wars were fought vs Japan.",
+      "The Republic came after the Empire.",
+      "Hadrian's Wall stood in Egypt.",
+      "Caesar fought at Hastings.",
+      "Rome stood on the Pacific coast."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        5
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -25786,24 +25788,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Which statements are correct? Topic clue: Viking Age.",
+    "question": "History: Select the true statements about the Viking Age.",
     "options": [
-      "Caesar was killed in 44 BC.",
-      "Berlin Wall fell in 1973.",
-      "USSR dissolved in 1961.",
-      "Caesar was killed in 144 BC.",
-      "WWII ended in 1945.",
-      "Berlin Wall fell in 1989.",
-      "Napoleon won at Waterloo.",
-      "Printing press spread in 1700s.",
-      "Cold War started before WWI.",
-      "Roman Empire came before Republic."
+      "Norse sailors reached North America.",
+      "Longships were key to Viking travel.",
+      "Vikings traded as well as raided.",
+      "The era is often dated 793 to 1066.",
+      "Vikings fought with steam engines.",
+      "The Viking Age began after WWI.",
+      "Vinland was located on the Moon.",
+      "Their core realm was in Australia.",
+      "All Vikings were Christian monks.",
+      "Longships were made from concrete."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        5
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -25815,25 +25818,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Pick all true statements. Topic clue: Renaissance.",
+    "question": "History: Which claims about the Renaissance are true?",
     "options": [
-      "Magna Carta was signed in 1215.",
-      "Byzantium was centered in Madrid.",
-      "Byzantium centered in Constantinople.",
-      "Cold War started before WWI.",
-      "Renaissance began in Australia.",
-      "Napoleon lost at Waterloo.",
-      "Berlin Wall fell in 1973.",
-      "Printing press spread in 1700s.",
-      "Printing press spread in 1400s.",
-      "USSR dissolved in 1961."
+      "It began in Italian city-states.",
+      "Humanism was a major force.",
+      "Leonardo da Vinci is tied to it.",
+      "Printing spread its ideas widely.",
+      "It began in the 20th century.",
+      "It was centered in Australia.",
+      "Galileo served as a pope.",
+      "It followed the Digital Age.",
+      "Apollo 11 ended the movement.",
+      "Its artists rejected classical models."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        5,
-        8
+        3
       ]
     },
     "difficulty": "2",
@@ -25845,25 +25848,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Identify factual statements. Topic clue: Industrial Revolution.",
+    "question": "History: Identify the true points on the Industrial Revolution.",
     "options": [
-      "Napoleon lost at Waterloo.",
-      "Roman Republic came before Empire.",
-      "Printing press spread in 1700s.",
-      "Berlin Wall fell in 1989.",
-      "Berlin Wall fell in 1973.",
-      "Byzantium was centered in Madrid.",
-      "Roman Empire came before Republic.",
-      "Caesar was killed in 44 BC.",
-      "Napoleon won at Waterloo.",
-      "Cold War followed World War II."
+      "It began in Britain.",
+      "Steam power drove many industries.",
+      "Textile output changed sharply.",
+      "Railways expanded in the 1800s.",
+      "It came before farming existed.",
+      "Silicon chips led the change.",
+      "It ended with the Berlin Wall.",
+      "Factories had no role in it.",
+      "It relied only on horse carts.",
+      "Urban growth rose alongside it."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        7,
         9
       ]
     },
@@ -25876,23 +25879,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Which options are accurate? Topic clue: French Revolution.",
+    "question": "History: Which statements about the French Revolution are right?",
     "options": [
-      "WWII ended in 1945.",
-      "USSR dissolved in 1991.",
-      "Printing press spread in 1700s.",
-      "Napoleon won at Waterloo.",
-      "Apollo 11 landed in 1959.",
-      "Byzantium was centered in Madrid.",
-      "Caesar was killed in 144 BC.",
-      "Roman Empire came before Republic.",
-      "Magna Carta was signed in 1512.",
-      "Cold War started before WWI."
+      "It began in 1789.",
+      "The Bastille was stormed.",
+      "Rights of Man was adopted.",
+      "Louis XVI was executed.",
+      "It began in 1889.",
+      "It started in Moscow.",
+      "Napoleon was king before it.",
+      "It ended with Magna Carta.",
+      "Julius Caesar led it.",
+      "It abolished the Atlantic."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -25904,24 +25909,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Select all valid statements. Topic clue: Silk Road.",
+    "question": "History: Select the accurate statements on the Silk Road.",
     "options": [
-      "Apollo 11 landed in 1959.",
-      "Caesar was killed in 144 BC.",
-      "Renaissance began in Australia.",
-      "Magna Carta was signed in 1512.",
-      "WWII ended in 1945.",
-      "WWII ended in 1939.",
-      "Roman Empire came before Republic.",
-      "Apollo 11 landed in 1969.",
-      "Berlin Wall fell in 1989.",
-      "Berlin Wall fell in 1973."
+      "It linked East Asia with Eurasia.",
+      "Silk was one trade good on it.",
+      "Ideas and faiths moved on it too.",
+      "Many routes crossed Central Asia.",
+      "It was one paved road only.",
+      "The internet invented it.",
+      "It existed only under Rome.",
+      "It was only a sea lane.",
+      "Apollo 11 ended it.",
+      "Horse trade never touched it."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        7,
-        8
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -25933,25 +25939,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Select statements that are true. Topic clue: Magna Carta.",
+    "question": "History: Which statements about Magna Carta are true?",
     "options": [
-      "Roman Republic came before Empire.",
-      "Berlin Wall fell in 1973.",
-      "Napoleon won at Waterloo.",
-      "USSR dissolved in 1961.",
-      "Printing press spread in 1400s.",
-      "Renaissance began in Australia.",
-      "Magna Carta was signed in 1512.",
-      "Renaissance began in Italy.",
-      "Magna Carta was signed in 1215.",
-      "Cold War started before WWI."
+      "It was sealed in 1215.",
+      "King John was involved.",
+      "It limited royal power.",
+      "Runnymede is tied to its sealing.",
+      "It was signed in Paris.",
+      "Julius Caesar wrote it.",
+      "It abolished Parliament.",
+      "It was a 20th-century treaty.",
+      "It came in the steam age.",
+      "It made London Japan's capital."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        7,
-        8
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -25963,26 +25969,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Which statements are correct? Topic clue: Ottoman Empire.",
+    "question": "History: Identify the true statements on the Ottoman Empire.",
     "options": [
-      "Cold War started before WWI.",
-      "Byzantium centered in Constantinople.",
-      "Roman Republic came before Empire.",
-      "Apollo 11 landed in 1969.",
-      "Roman Empire came before Republic.",
-      "Caesar was killed in 44 BC.",
-      "Apollo 11 landed in 1959.",
-      "Napoleon won at Waterloo.",
-      "USSR dissolved in 1961.",
-      "WWII ended in 1945."
+      "Constantinople fell in 1453.",
+      "It ruled land in southeast Europe.",
+      "It held parts of Mideast and Africa.",
+      "Its name comes from Osman I.",
+      "It ended in 1453.",
+      "Its capital was Tokyo.",
+      "It ruled only Iceland and Greenland.",
+      "Latin was its sole state language.",
+      "Vikings founded it.",
+      "It lasted only one decade."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        3,
-        5,
-        9
+        3
       ]
     },
     "difficulty": "2",
@@ -25994,23 +25999,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Pick all true statements. Topic clue: Ming Dynasty.",
+    "question": "History: Which statements about the Ming Dynasty are right?",
     "options": [
-      "Cold War followed World War II.",
-      "Caesar was killed in 144 BC.",
-      "WWII ended in 1939.",
-      "Napoleon won at Waterloo.",
-      "Renaissance began in Italy.",
-      "Byzantium was centered in Madrid.",
-      "Renaissance began in Australia.",
-      "Apollo 11 landed in 1959.",
-      "USSR dissolved in 1961.",
-      "Printing press spread in 1700s."
+      "It ruled China from 1368 to 1644.",
+      "Ming rulers strengthened the Great Wall.",
+      "Zheng He's voyages fit this era.",
+      "Beijing served as a major capital.",
+      "It was a Japanese dynasty.",
+      "It followed the Qing Dynasty.",
+      "It was centered in Delhi.",
+      "It invented the steam locomotive.",
+      "It began after World War II.",
+      "Its court ruled from Mexico City."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26022,24 +26029,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Identify factual statements. Topic clue: Norman Conquest.",
+    "question": "History: Select the true statements on the Norman Conquest.",
     "options": [
-      "Printing press spread in 1700s.",
-      "Magna Carta was signed in 1512.",
-      "Cold War started before WWI.",
-      "Roman Empire came before Republic.",
-      "Renaissance began in Australia.",
-      "Berlin Wall fell in 1989.",
-      "WWII ended in 1939.",
-      "WWII ended in 1945.",
-      "Byzantium centered in Constantinople.",
-      "USSR dissolved in 1961."
+      "It happened in 1066.",
+      "William won at Hastings.",
+      "It reshaped England's elite.",
+      "Domesday Book followed its aftermath.",
+      "Napoleon led the invasion.",
+      "It happened in 1215.",
+      "It took Rome from Egypt.",
+      "It happened in China.",
+      "It was a raid on New York.",
+      "It came after industrialization."
     ],
     "correct": {
       "correctIndexes": [
-        5,
-        7,
-        8
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26051,25 +26059,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Which options are accurate? Topic clue: Napoleon.",
+    "question": "History: Which statements about the Black Death are true?",
     "options": [
-      "USSR dissolved in 1991.",
-      "Napoleon won at Waterloo.",
-      "Roman Empire came before Republic.",
-      "Cold War followed World War II.",
-      "WWII ended in 1939.",
-      "Byzantium was centered in Madrid.",
-      "Printing press spread in 1700s.",
-      "Renaissance began in Italy.",
-      "Printing press spread in 1400s.",
-      "USSR dissolved in 1961."
+      "It struck Europe in the 1300s.",
+      "It killed millions of people.",
+      "Plague bacteria caused the disease.",
+      "Trade routes helped it spread.",
+      "It began in 1914.",
+      "Penicillin cured it at once.",
+      "It hit only one town in Europe.",
+      "Steam trains caused it.",
+      "It was a war of France and Spain.",
+      "It never reached port cities."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3,
-        7,
-        8
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26081,26 +26089,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Select all valid statements. Topic clue: Julius Caesar.",
+    "question": "History: Select the true statements on the Byzantine Empire.",
     "options": [
-      "Berlin Wall fell in 1989.",
-      "Berlin Wall fell in 1973.",
-      "Caesar was killed in 144 BC.",
-      "Caesar was killed in 44 BC.",
-      "WWII ended in 1945.",
-      "Byzantium was centered in Madrid.",
-      "Magna Carta was signed in 1215.",
-      "Renaissance began in Italy.",
-      "Renaissance began in Australia.",
-      "Apollo 11 landed in 1959."
+      "Constantinople was its capital.",
+      "It carried on Roman traditions.",
+      "Greek was widely used there.",
+      "Justinian is tied to its history.",
+      "Its capital was Lisbon.",
+      "It ended before Rome existed.",
+      "It ruled only South America.",
+      "Vikings named every emperor.",
+      "It began after 1945.",
+      "It had no written law."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3,
-        4,
-        6,
-        7
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26112,23 +26119,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Select statements that are true. Topic clue: Alexander the Great.",
+    "question": "History: Which claims about the Age of Exploration are right?",
     "options": [
-      "Berlin Wall fell in 1973.",
-      "Renaissance began in Italy.",
-      "Napoleon won at Waterloo.",
-      "Cold War started before WWI.",
-      "WWII ended in 1939.",
-      "Magna Carta was signed in 1512.",
-      "Caesar was killed in 144 BC.",
-      "Renaissance began in Australia.",
-      "Roman Republic came before Empire.",
-      "Apollo 11 landed in 1959."
+      "Ocean voyages linked distant regions.",
+      "Portugal was an early leader.",
+      "Spain backed major expeditions.",
+      "Columbus sailed during this era.",
+      "It began with jet aircraft.",
+      "It happened only on rivers.",
+      "Maps did not improve at all.",
+      "It ended before 1200.",
+      "Trade routes stayed unchanged.",
+      "Australia funded Columbus."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        8
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26140,24 +26149,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Which statements are correct? Topic clue: Gutenberg Press.",
+    "question": "History: Identify the true statements on the American Revolution.",
     "options": [
-      "Berlin Wall fell in 1973.",
-      "Printing press spread in 1700s.",
-      "Cold War started before WWI.",
-      "Apollo 11 landed in 1969.",
-      "Napoleon lost at Waterloo.",
-      "Renaissance began in Australia.",
-      "Apollo 11 landed in 1959.",
-      "Cold War followed World War II.",
-      "Magna Carta was signed in 1512.",
-      "Roman Empire came before Republic."
+      "It began in the late 1700s.",
+      "Britain fought the colonies.",
+      "The Declaration came in 1776.",
+      "George Washington led key forces.",
+      "It was fought in ancient Greece.",
+      "It began in 1876.",
+      "Napoleon wrote the Declaration.",
+      "It replaced the Roman Senate.",
+      "It was a China-India war.",
+      "It started after World War II."
     ],
     "correct": {
       "correctIndexes": [
-        3,
-        4,
-        7
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26169,25 +26179,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Pick all true statements. Topic clue: Roman Republic.",
+    "question": "History: Which statements about the Haitian Revolution are true?",
     "options": [
-      "Renaissance began in Australia.",
-      "Berlin Wall fell in 1989.",
-      "Magna Carta was signed in 1512.",
-      "WWII ended in 1939.",
-      "Napoleon lost at Waterloo.",
-      "Roman Republic came before Empire.",
-      "Napoleon won at Waterloo.",
-      "Cold War followed World War II.",
-      "Caesar was killed in 144 BC.",
-      "Roman Empire came before Republic."
+      "It took place in Saint-Domingue.",
+      "Enslaved people led the uprising.",
+      "Toussaint Louverture is tied to it.",
+      "It helped create independent Haiti.",
+      "It began in medieval England.",
+      "It was a Viking invasion.",
+      "It happened in the 1960s.",
+      "It restored monarchy in Rome.",
+      "It took place in Japan.",
+      "It was fought only at sea."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        4,
-        5,
-        7
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26199,26 +26209,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Identify factual statements. Topic clue: Cold War.",
+    "question": "History: Select the accurate statements on the Meiji Restoration.",
     "options": [
-      "Apollo 11 landed in 1969.",
-      "Cold War started before WWI.",
-      "Napoleon won at Waterloo.",
-      "WWII ended in 1945.",
-      "Printing press spread in 1700s.",
-      "Renaissance began in Italy.",
-      "Printing press spread in 1400s.",
-      "Roman Empire came before Republic.",
-      "USSR dissolved in 1961.",
-      "USSR dissolved in 1991."
+      "It began in Japan in 1868.",
+      "Imperial rule was restored.",
+      "Modernization sped up under it.",
+      "Samurai lost old privileges.",
+      "It happened in ancient Egypt.",
+      "It started in 1066.",
+      "It made Tokyo a Roman colony.",
+      "It banned railways forever.",
+      "Julius Caesar led it.",
+      "It happened after the Cold War."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3,
-        5,
-        6,
-        9
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26230,23 +26239,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Which options are accurate? Topic clue: Berlin Wall.",
+    "question": "History: Which statements about the Russian Revolution are right?",
     "options": [
-      "Renaissance began in Australia.",
-      "USSR dissolved in 1961.",
-      "Caesar was killed in 144 BC.",
-      "Printing press spread in 1700s.",
-      "Napoleon won at Waterloo.",
-      "Cold War started before WWI.",
-      "Apollo 11 landed in 1959.",
-      "Caesar was killed in 44 BC.",
-      "Byzantium was centered in Madrid.",
-      "Cold War followed World War II."
+      "Major upheavals came in 1917.",
+      "The Romanov dynasty fell.",
+      "Bolsheviks seized power that year.",
+      "It led toward Soviet rule.",
+      "It happened in 1817.",
+      "It restored the Ming Dynasty.",
+      "It was fought only in Spain.",
+      "Apollo 11 caused it.",
+      "It made czars stronger than before.",
+      "It ended World War II in Asia."
     ],
     "correct": {
       "correctIndexes": [
-        7,
-        9
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26258,24 +26269,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Select all valid statements. Topic clue: Apollo 11.",
+    "question": "History: Select the true statements on the Abbasid Caliphate.",
     "options": [
-      "Byzantium centered in Constantinople.",
-      "Magna Carta was signed in 1215.",
-      "Napoleon won at Waterloo.",
-      "Printing press spread in 1700s.",
-      "Roman Empire came before Republic.",
-      "Napoleon lost at Waterloo.",
-      "Cold War started before WWI.",
-      "Byzantium was centered in Madrid.",
-      "Magna Carta was signed in 1512.",
-      "WWII ended in 1939."
+      "Baghdad became a major center.",
+      "It followed the Umayyad Caliphate.",
+      "Scholarly life flourished there.",
+      "It shaped Islamic history deeply.",
+      "It ruled from Mexico City.",
+      "It began after the Internet age.",
+      "It existed only in Scandinavia.",
+      "Napoleon founded it.",
+      "It banned all scholarship.",
+      "Tokyo was its capital."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        5
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26287,25 +26299,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Select statements that are true. Topic clue: Treaty of Versailles.",
+    "question": "History: Which statements about the Gupta Empire are true?",
     "options": [
-      "Roman Empire came before Republic.",
-      "Byzantium was centered in Madrid.",
-      "Berlin Wall fell in 1989.",
-      "Napoleon won at Waterloo.",
-      "Caesar was killed in 144 BC.",
-      "USSR dissolved in 1991.",
-      "WWII ended in 1945.",
-      "Renaissance began in Italy.",
-      "Apollo 11 landed in 1959.",
-      "Cold War started before WWI."
+      "It ruled parts of northern India.",
+      "It is tied to a classical age.",
+      "Science and math advanced there.",
+      "It belongs to ancient Indian history.",
+      "Its capital was Buenos Aires.",
+      "It came after the Mughal Empire.",
+      "Vikings ruled it.",
+      "It began in the 1900s.",
+      "It was centered in Iceland.",
+      "It abolished all trade in Asia."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        5,
-        6,
-        7
+        3
       ]
     },
     "difficulty": "2",
@@ -26317,26 +26329,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Which statements are correct? Topic clue: Byzantine Empire.",
+    "question": "History: Identify the accurate statements on the Cold War.",
     "options": [
-      "Byzantium was centered in Madrid.",
-      "Napoleon won at Waterloo.",
-      "Printing press spread in 1400s.",
-      "USSR dissolved in 1991.",
-      "Printing press spread in 1700s.",
-      "Byzantium centered in Constantinople.",
-      "Apollo 11 landed in 1969.",
-      "Renaissance began in Italy.",
-      "Magna Carta was signed in 1512.",
-      "Caesar was killed in 144 BC."
+      "The US and USSR were key rivals.",
+      "Nuclear tension shaped the era.",
+      "It included proxy conflicts.",
+      "It stopped short of total war.",
+      "It began in the Middle Ages.",
+      "It was fought only with swords.",
+      "It ended in 1453.",
+      "Rome and Carthage were the rivals.",
+      "It had no effect on space research.",
+      "It started after the euro began."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        3,
-        5,
-        6,
-        7
+        3
       ]
     },
     "difficulty": "2",
@@ -26348,23 +26359,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Pick all true statements. Topic clue: Meiji Restoration.",
+    "question": "History: Which statements about Egypt's pyramids are true?",
     "options": [
-      "Roman Empire came before Republic.",
-      "Cold War started before WWI.",
-      "Magna Carta was signed in 1512.",
-      "Apollo 11 landed in 1959.",
-      "Berlin Wall fell in 1989.",
-      "WWII ended in 1939.",
-      "Berlin Wall fell in 1973.",
-      "Byzantium was centered in Madrid.",
-      "Printing press spread in 1700s.",
-      "Apollo 11 landed in 1969."
+      "The Giza pyramids stand in Egypt.",
+      "They served as royal tombs.",
+      "Khufu is tied to the Great Pyramid.",
+      "They belong to ancient history.",
+      "Romans built them.",
+      "They stand in South America.",
+      "They were made from plastic blocks.",
+      "They were built after railways.",
+      "They were Viking shipyards.",
+      "They float on the Nile all year."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        9
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26376,24 +26389,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Identify factual statements. Topic clue: Age of Exploration.",
+    "question": "History: Select the true points on the Reformation.",
     "options": [
-      "Apollo 11 landed in 1959.",
-      "Caesar was killed in 144 BC.",
-      "Berlin Wall fell in 1973.",
-      "USSR dissolved in 1961.",
-      "Printing press spread in 1400s.",
-      "Magna Carta was signed in 1512.",
-      "Printing press spread in 1700s.",
-      "Roman Empire came before Republic.",
-      "Napoleon lost at Waterloo.",
-      "Renaissance began in Italy."
+      "Martin Luther is tied to it.",
+      "It split western Christianity.",
+      "Printing spread the debate.",
+      "The 95 Theses are linked to it.",
+      "It began in ancient Rome.",
+      "Genghis Khan led it.",
+      "It happened only in Japan.",
+      "It ended before 1400.",
+      "It banned all pamphlets.",
+      "It built the pyramids of Giza."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        8,
-        9
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26405,25 +26419,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Which options are accurate? Topic clue: Bronze Age.",
+    "question": "History: Which statements about the Thirty Years' War are right?",
     "options": [
-      "Renaissance began in Australia.",
-      "USSR dissolved in 1961.",
-      "Cold War started before WWI.",
-      "WWII ended in 1939.",
-      "Apollo 11 landed in 1969.",
-      "Caesar was killed in 144 BC.",
-      "Napoleon won at Waterloo.",
-      "Caesar was killed in 44 BC.",
-      "USSR dissolved in 1991.",
-      "Napoleon lost at Waterloo."
+      "It ran from 1618 to 1648.",
+      "Much of it hit Central Europe.",
+      "Religion and power both mattered.",
+      "Westphalia is tied to its settlement.",
+      "It lasted only thirty days.",
+      "It was fought in the Pacific.",
+      "It began after World War II.",
+      "It ended with Magna Carta.",
+      "Julius Caesar led it.",
+      "It took place only in Canada."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        7,
-        8,
-        9
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26435,26 +26449,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Select all valid statements. Topic clue: Iron Age.",
+    "question": "History: Select the true statements on the Atlantic slave trade.",
     "options": [
-      "Caesar was killed in 144 BC.",
-      "WWII ended in 1939.",
-      "Renaissance began in Italy.",
-      "USSR dissolved in 1961.",
-      "Renaissance began in Australia.",
-      "USSR dissolved in 1991.",
-      "Roman Republic came before Empire.",
-      "Magna Carta was signed in 1215.",
-      "Printing press spread in 1400s.",
-      "Apollo 11 landed in 1959."
+      "It moved enslaved Africans by sea.",
+      "It tied into plantation economies.",
+      "It caused vast human suffering.",
+      "It formed part of Atlantic commerce.",
+      "It was a charity network.",
+      "It ended before Columbus sailed.",
+      "Most captives were sent to the Moon.",
+      "No European powers joined it.",
+      "It happened in one city only.",
+      "It ran on steam computers."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        5,
-        6,
-        7,
-        8
+        3
       ]
     },
     "difficulty": "2",
@@ -26466,23 +26479,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Select statements that are true. Topic clue: Harlem Renaissance.",
+    "question": "History: Which statements about the Aztec Empire are true?",
     "options": [
-      "Byzantium centered in Constantinople.",
-      "Cold War started before WWI.",
-      "Magna Carta was signed in 1512.",
-      "Renaissance began in Australia.",
-      "WWII ended in 1939.",
-      "USSR dissolved in 1991.",
-      "Napoleon won at Waterloo.",
-      "Apollo 11 landed in 1959.",
-      "Printing press spread in 1700s.",
-      "USSR dissolved in 1961."
+      "Tenochtitlan was its capital.",
+      "It flourished in central Mexico.",
+      "Spanish conquest ended its rule.",
+      "It took tribute from subject peoples.",
+      "It was based in Scandinavia.",
+      "Pharaohs ruled it.",
+      "It began after 1900.",
+      "Its capital was Lisbon.",
+      "It built Hadrian's Wall.",
+      "It existed only in Australia."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        5
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26494,24 +26509,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Which statements are correct? Topic clue: Printing Press.",
+    "question": "History: Identify the true statements on the Inca Empire.",
     "options": [
-      "Cold War started before WWI.",
-      "Apollo 11 landed in 1959.",
-      "Printing press spread in 1700s.",
-      "Magna Carta was signed in 1215.",
-      "Caesar was killed in 144 BC.",
-      "Berlin Wall fell in 1973.",
-      "Magna Carta was signed in 1512.",
-      "USSR dissolved in 1991.",
-      "Renaissance began in Australia.",
-      "Renaissance began in Italy."
+      "It centered in the Andes.",
+      "Cusco was a major capital.",
+      "Spanish conquest broke its rule.",
+      "Road networks mattered greatly.",
+      "It flourished in Iceland.",
+      "Caesar founded it.",
+      "It began after World War I.",
+      "Tokyo was its capital.",
+      "It ruled ancient Greece.",
+      "It banned mountain travel."
     ],
     "correct": {
       "correctIndexes": [
-        3,
-        7,
-        9
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26523,25 +26539,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Pick all true statements. Topic clue: Han Dynasty.",
+    "question": "History: Which statements about World War I are accurate?",
     "options": [
-      "Berlin Wall fell in 1973.",
-      "Napoleon lost at Waterloo.",
-      "Printing press spread in 1400s.",
-      "Renaissance began in Australia.",
-      "Byzantium was centered in Madrid.",
-      "Napoleon won at Waterloo.",
-      "Roman Empire came before Republic.",
-      "Apollo 11 landed in 1969.",
-      "Magna Carta was signed in 1512.",
-      "USSR dissolved in 1991."
+      "It lasted from 1914 to 1918.",
+      "Trench warfare marked the conflict.",
+      "Sarajevo killings preceded it.",
+      "Many empires were drawn into it.",
+      "It used only bronze swords.",
+      "It ended in 1815.",
+      "It happened only in South America.",
+      "Apollo missions caused it.",
+      "It never touched the Middle East.",
+      "The Aztecs led it."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        7,
-        9
+        3
       ]
     },
     "difficulty": "2",
@@ -26553,26 +26569,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Identify factual statements. Topic clue: Pax Romana.",
+    "question": "History: Select the true statements on World War II.",
     "options": [
-      "Renaissance began in Australia.",
-      "Cold War followed World War II.",
-      "Magna Carta was signed in 1215.",
-      "Cold War started before WWI.",
-      "Byzantium centered in Constantinople.",
-      "Roman Empire came before Republic.",
-      "Magna Carta was signed in 1512.",
-      "USSR dissolved in 1991.",
-      "Napoleon lost at Waterloo.",
-      "Caesar was killed in 144 BC."
+      "It lasted from 1939 to 1945.",
+      "Axis and Allied powers fought it.",
+      "The Holocaust happened during it.",
+      "Atomic bombs hit Japan at the end.",
+      "It began in 1839.",
+      "It was fought only in Antarctica.",
+      "It had no Asian front.",
+      "Rome ruled both sides.",
+      "It ended with Magna Carta.",
+      "It was a war of Viking fleets."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        4,
-        7,
-        8
+        3
       ]
     },
     "difficulty": "2",
@@ -26584,23 +26599,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Which options are accurate? Topic clue: Persian Empire.",
+    "question": "History: Which statements about African decolonization are true?",
     "options": [
-      "USSR dissolved in 1991.",
-      "Magna Carta was signed in 1512.",
-      "Roman Republic came before Empire.",
-      "Berlin Wall fell in 1973.",
-      "Byzantium was centered in Madrid.",
-      "USSR dissolved in 1961.",
-      "Renaissance began in Australia.",
-      "Napoleon won at Waterloo.",
-      "Apollo 11 landed in 1959.",
-      "Cold War started before WWI."
+      "Many states gained freedom after 1945.",
+      "European empires lost colonial rule.",
+      "Nationalist movements drove change.",
+      "The process spread across many regions.",
+      "It ended before 1800.",
+      "It happened only in Greenland.",
+      "It restored Roman rule in Africa.",
+      "Viking raids caused it.",
+      "No new African states appeared.",
+      "It happened within one year."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        2
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26612,24 +26629,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "en",
-    "question": "History: Select all valid statements. Topic clue: Maya Civilization.",
+    "question": "History: Select the true statements on the Indus Valley Civilization.",
     "options": [
-      "USSR dissolved in 1961.",
-      "Cold War started before WWI.",
-      "Byzantium centered in Constantinople.",
-      "Roman Empire came before Republic.",
-      "Napoleon won at Waterloo.",
-      "Magna Carta was signed in 1512.",
-      "Caesar was killed in 144 BC.",
-      "Printing press spread in 1700s.",
-      "Napoleon lost at Waterloo.",
-      "Cold War followed World War II."
+      "Harappa and Mohenjo-daro were key sites.",
+      "It belongs to ancient South Asia.",
+      "Urban planning stood out there.",
+      "Its script is not fully deciphered.",
+      "It was ruled from London.",
+      "It began after the internet.",
+      "It centered in Scandinavia.",
+      "It used steam tractors in cities.",
+      "It followed the Mughal Empire.",
+      "It lived only on Pacific islands."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        8,
-        9
+        3
       ]
     },
     "difficulty": "2",

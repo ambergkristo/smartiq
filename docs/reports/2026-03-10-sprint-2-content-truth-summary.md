@@ -23,7 +23,11 @@ Todo:
 
 - ET remains blocked for launch.
 - Largest remaining ET repair zones:
-  - `OPEN`
+  - `Sports/OPEN`
+  - `Geography/OPEN`
+  - `Culture/OPEN`
+  - `Science/OPEN`
+  - `Varia/OPEN`
 
 ## Task 2 - EN semantic quality audit
 
@@ -41,7 +45,11 @@ Todo:
 
 - EN is now conditionally usable, but not clean enough for launch trust.
 - Largest remaining EN repair zones:
-  - `OPEN`
+  - `Sports/OPEN`
+  - `Geography/OPEN`
+  - `Culture/OPEN`
+  - `Science/OPEN`
+  - `Varia/OPEN`
 
 ## Task 3 - Content repair workflow
 
@@ -68,6 +76,7 @@ Done:
   - `Varia/COLOR 001..030`
   - `Culture/COLOR 001..030`
   - `Science/COLOR 001..030`
+  - `History/OPEN 001..030`
 
 Todo:
 
@@ -119,8 +128,8 @@ Todo:
 
 Current observed report baseline:
 
-- EN score: `0.975`
-- ET score: `0.951`
+- EN score: `0.979`
+- ET score: `0.963`
 
 Closed repair zone:
 
@@ -139,7 +148,13 @@ Closed repair zone:
 - `COLOR` is now fully repaired across all six topic lanes (`History`, `Sports`, `Geography`, `Culture`, `Science`, `Varia`)
 - `COLOR` dropped out of the EN and ET top-risk backlog
 - ET `History/NUMBER` mojibake prompts were corrected and `NUMBER` dropped out of the top-risk backlog
+- `History/OPEN` is now fully repaired across `001..030`
+- `History/OPEN` dropped out of the EN and ET top-risk backlog
 
 ## Next Repair Priority
 
-1. remaining `OPEN` recycled pools
+1. `Sports/OPEN`
+2. `Geography/OPEN`
+3. `Culture/OPEN`
+4. `Science/OPEN`
+5. `Varia/OPEN`

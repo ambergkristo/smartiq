@@ -25758,23 +25758,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali tõesed vaited. Teemavihe: Ancient Rome.",
+    "question": "Ajalugu: Millised v�ited Vana-Rooma kohta on �iged?",
     "options": [
-      "Renaissance began in Italy.",
-      "WWII ended in 1939.",
-      "USSR dissolved in 1961.",
-      "Roman Empire came before Republic.",
-      "Napoleon won at Waterloo.",
-      "USSR dissolved in 1991.",
-      "Printing press spread in 1700s.",
-      "Apollo 11 landed in 1959.",
-      "Renaissance began in Australia.",
-      "Berlin Wall fell in 1973."
+      "Augustus oli Rooma esimene keiser.",
+      "Colosseum asub Roomas.",
+      "Ladina keel oli Roomas keskne.",
+      "Senatil oli j�tkuvalt m�ju.",
+      "Napoleon rajas Vana-Rooma.",
+      "Puunia s�jad peeti Jaapani vastu.",
+      "Vabariik tuli p�rast keisririiki.",
+      "Hadrianuse vall seisis Egiptuses.",
+      "Caesar v�itles Hastingsis.",
+      "Rooma asus Vaikse ookeani rannikul."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        5
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -25786,24 +25788,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Millised vaited on oiged? Teemavihe: Viking Age.",
+    "question": "Ajalugu: Vali t�esed v�ited viikingiaja kohta.",
     "options": [
-      "Caesar was killed in 44 BC.",
-      "Berlin Wall fell in 1973.",
-      "USSR dissolved in 1961.",
-      "Caesar was killed in 144 BC.",
-      "WWII ended in 1945.",
-      "Berlin Wall fell in 1989.",
-      "Napoleon won at Waterloo.",
-      "Printing press spread in 1700s.",
-      "Cold War started before WWI.",
-      "Roman Empire came before Republic."
+      "P�hjala meres�itjad j�udsid Ameerikasse.",
+      "Pikad laevad olid nende liikumise alus.",
+      "Viikingid nii kauplesid kui r��visid.",
+      "Ajastuks loetakse sageli 793 kuni 1066.",
+      "Viikingid s�disid aurumasinatega.",
+      "Viikingiaeg algas p�rast Esimest ilmas�da.",
+      "Vinland asus Kuul.",
+      "Nende p�hiregioon oli Austraalia.",
+      "K�ik viikingid olid kristlikud mungad.",
+      "Pikad laevad valati betoonist."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        5
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -25815,25 +25818,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali koik tõesed vaited. Teemavihe: Renaissance.",
+    "question": "Ajalugu: Millised v�ited renessansi kohta on t�esed?",
     "options": [
-      "Magna Carta was signed in 1215.",
-      "Byzantium was centered in Madrid.",
-      "Byzantium centered in Constantinople.",
-      "Cold War started before WWI.",
-      "Renaissance began in Australia.",
-      "Napoleon lost at Waterloo.",
-      "Berlin Wall fell in 1973.",
-      "Printing press spread in 1700s.",
-      "Printing press spread in 1400s.",
-      "USSR dissolved in 1961."
+      "See algas Itaalia linnriikides.",
+      "Humanism oli t�htis suund.",
+      "Leonardo da Vinci seostub sellega.",
+      "Tr�kikunst levitas selle ideid.",
+      "See algas 20. sajandil.",
+      "See keskendus Austraaliale.",
+      "Galileo oli paavst.",
+      "See j�rgnes digiajastule.",
+      "Apollo 11 l�petas selle.",
+      "Kunstnikud h�lgasid antiiksed eeskujud."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        5,
-        8
+        3
       ]
     },
     "difficulty": "2",
@@ -25845,25 +25848,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Tuvasta faktivaided. Teemavihe: Industrial Revolution.",
+    "question": "Ajalugu: Tuvasta t�esed v�ited t��stusrevolutsiooni kohta.",
     "options": [
-      "Napoleon lost at Waterloo.",
-      "Roman Republic came before Empire.",
-      "Printing press spread in 1700s.",
-      "Berlin Wall fell in 1989.",
-      "Berlin Wall fell in 1973.",
-      "Byzantium was centered in Madrid.",
-      "Roman Empire came before Republic.",
-      "Caesar was killed in 44 BC.",
-      "Napoleon won at Waterloo.",
-      "Cold War followed World War II."
+      "See algas Suurbritannias.",
+      "Auruj�ud vedas paljusid t��stusi.",
+      "Tekstiilitootmine muutus j�rsult.",
+      "Raudteed laienesid 1800. aastail.",
+      "See tuli enne p�llumajandust.",
+      "R�nikiibid vedasid seda muutust.",
+      "See l�ppes Berliini m��riga.",
+      "Tehastel polnud selles rolli.",
+      "See toetus ainult hobuvankritele.",
+      "Linnastumine kasvas koos sellega."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        7,
         9
       ]
     },
@@ -25876,23 +25879,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Millised variandid on oiged? Teemavihe: French Revolution.",
+    "question": "Ajalugu: Millised v�ited Prantsuse revolutsiooni kohta on �iged?",
     "options": [
-      "WWII ended in 1945.",
-      "USSR dissolved in 1991.",
-      "Printing press spread in 1700s.",
-      "Napoleon won at Waterloo.",
-      "Apollo 11 landed in 1959.",
-      "Byzantium was centered in Madrid.",
-      "Caesar was killed in 144 BC.",
-      "Roman Empire came before Republic.",
-      "Magna Carta was signed in 1512.",
-      "Cold War started before WWI."
+      "See algas 1789. aastal.",
+      "Bastille vallutati.",
+      "�iguste deklaratsioon v�eti vastu.",
+      "Louis XVI hukati.",
+      "See algas 1889. aastal.",
+      "See sai alguse Moskvas.",
+      "Napoleon oli enne seda kuningas.",
+      "See l�ppes Magna Cartaga.",
+      "Seda juhtis Julius Caesar.",
+      "See kaotas Atlandi ookeani."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -25904,24 +25909,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali koik kehtivad vaited. Teemavihe: Silk Road.",
+    "question": "Ajalugu: Vali �iged v�ited Siiditee kohta.",
     "options": [
-      "Apollo 11 landed in 1959.",
-      "Caesar was killed in 144 BC.",
-      "Renaissance began in Australia.",
-      "Magna Carta was signed in 1512.",
-      "WWII ended in 1945.",
-      "WWII ended in 1939.",
-      "Roman Empire came before Republic.",
-      "Apollo 11 landed in 1969.",
-      "Berlin Wall fell in 1989.",
-      "Berlin Wall fell in 1973."
+      "See �hendas Ida-Aasiat Euraasiaga.",
+      "Siid oli �ks selle kaubakaupu.",
+      "M��da seda liikusid ka usud ja ideed.",
+      "Paljud teed l�bisid Kesk-Aasiat.",
+      "See oli ainult �ks sillutatud tee.",
+      "Selle leiutas internet.",
+      "See eksisteeris vaid Rooma ajal.",
+      "See oli ainult meretee.",
+      "Apollo 11 l�petas selle.",
+      "Hobustega seal ei kaubeldud."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        7,
-        8
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -25933,25 +25939,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali tõesed vaited. Teemavihe: Magna Carta.",
+    "question": "Ajalugu: Millised v�ited Magna Carta kohta on t�esed?",
     "options": [
-      "Roman Republic came before Empire.",
-      "Berlin Wall fell in 1973.",
-      "Napoleon won at Waterloo.",
-      "USSR dissolved in 1961.",
-      "Printing press spread in 1400s.",
-      "Renaissance began in Australia.",
-      "Magna Carta was signed in 1512.",
-      "Renaissance began in Italy.",
-      "Magna Carta was signed in 1215.",
-      "Cold War started before WWI."
+      "See kinnitati 1215. aastal.",
+      "Sellega oli seotud kuningas John.",
+      "See piiras kuningav�imu.",
+      "Runnymede seostub selle kinnitamisega.",
+      "See allkirjastati Pariisis.",
+      "Selle kirjutas Julius Caesar.",
+      "See kaotas parlamendi.",
+      "See oli 20. sajandi leping.",
+      "See tuli aururongide ajastul.",
+      "See tegi Londonist Jaapani pealinna."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        7,
-        8
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -25963,26 +25969,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Millised vaited on oiged? Teemavihe: Ottoman Empire.",
+    "question": "Ajalugu: Tuvasta �iged v�ited Osmanite riigi kohta.",
     "options": [
-      "Cold War started before WWI.",
-      "Byzantium centered in Constantinople.",
-      "Roman Republic came before Empire.",
-      "Apollo 11 landed in 1969.",
-      "Roman Empire came before Republic.",
-      "Caesar was killed in 44 BC.",
-      "Apollo 11 landed in 1959.",
-      "Napoleon won at Waterloo.",
-      "USSR dissolved in 1961.",
-      "WWII ended in 1945."
+      "Konstantinoopol langes 1453. aastal.",
+      "See valitses maid Kagu-Euroopas.",
+      "See h�lmas L�his-Ida ja Aafrika osi.",
+      "Selle nimi tuleb Osman I nimest.",
+      "See l�ppes 1453. aastal.",
+      "Selle pealinn oli Tokyo.",
+      "See valitses vaid Islandit ja Gr��nimaad.",
+      "Ladina keel oli ainus riigikeel.",
+      "Selle rajasid viikingid.",
+      "See kestis vaid �he k�mnendi."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        3,
-        5,
-        9
+        3
       ]
     },
     "difficulty": "2",
@@ -25994,23 +25999,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali koik tõesed vaited. Teemavihe: Ming Dynasty.",
+    "question": "Ajalugu: Millised v�ited Mingi d�nastia kohta on �iged?",
     "options": [
-      "Cold War followed World War II.",
-      "Caesar was killed in 144 BC.",
-      "WWII ended in 1939.",
-      "Napoleon won at Waterloo.",
-      "Renaissance began in Italy.",
-      "Byzantium was centered in Madrid.",
-      "Renaissance began in Australia.",
-      "Apollo 11 landed in 1959.",
-      "USSR dissolved in 1961.",
-      "Printing press spread in 1700s."
+      "See valitses Hiinat 1368 kuni 1644.",
+      "Mingi ajal tugevdati Suurt m��ri.",
+      "Zheng He reisid kuuluvad sellesse aega.",
+      "Peking oli t�htis pealinn.",
+      "See oli Jaapani d�nastia.",
+      "See j�rgnes Qingi d�nastiale.",
+      "See keskendus Delhile.",
+      "See leiutas auruveduri.",
+      "See algas p�rast Teist ilmas�da.",
+      "�ukond valitses Mexico Cityst."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26022,24 +26029,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Tuvasta faktivaided. Teemavihe: Norman Conquest.",
+    "question": "Ajalugu: Vali t�esed v�ited normannide vallutuse kohta.",
     "options": [
-      "Printing press spread in 1700s.",
-      "Magna Carta was signed in 1512.",
-      "Cold War started before WWI.",
-      "Roman Empire came before Republic.",
-      "Renaissance began in Australia.",
-      "Berlin Wall fell in 1989.",
-      "WWII ended in 1939.",
-      "WWII ended in 1945.",
-      "Byzantium centered in Constantinople.",
-      "USSR dissolved in 1961."
+      "See toimus 1066. aastal.",
+      "William v�itis Hastingsis.",
+      "See muutis Inglismaa eliiti.",
+      "Domesday Book j�rgnes selle j�rel.",
+      "Sissetungi juhtis Napoleon.",
+      "See toimus 1215. aastal.",
+      "See v�ttis Rooma Egiptuselt.",
+      "See juhtus Hiinas.",
+      "See oli r��steretk New Yorki.",
+      "See tuli p�rast industrialiseerumist."
     ],
     "correct": {
       "correctIndexes": [
-        5,
-        7,
-        8
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26051,25 +26059,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Millised variandid on oiged? Teemavihe: Napoleon.",
+    "question": "Ajalugu: Millised v�ited musta surma kohta on t�esed?",
     "options": [
-      "USSR dissolved in 1991.",
-      "Napoleon won at Waterloo.",
-      "Roman Empire came before Republic.",
-      "Cold War followed World War II.",
-      "WWII ended in 1939.",
-      "Byzantium was centered in Madrid.",
-      "Printing press spread in 1700s.",
-      "Renaissance began in Italy.",
-      "Printing press spread in 1400s.",
-      "USSR dissolved in 1961."
+      "See tabas Euroopat 1300. aastail.",
+      "See tappis miljoneid inimesi.",
+      "Haigust p�hjustas katkibakter.",
+      "Kaubateed aitasid selle levikule kaasa.",
+      "See algas 1914. aastal.",
+      "Penitsilliin ravis selle kohe v�lja.",
+      "See tabas Euroopas vaid �ht linna.",
+      "Auruvedurid p�hjustasid selle.",
+      "See oli Prantsuse ja Hispaania s�da.",
+      "See ei j�udnud sadamalinnadesse."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3,
-        7,
-        8
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26081,26 +26089,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali koik kehtivad vaited. Teemavihe: Julius Caesar.",
+    "question": "Ajalugu: Vali t�esed v�ited B�tsantsi kohta.",
     "options": [
-      "Berlin Wall fell in 1989.",
-      "Berlin Wall fell in 1973.",
-      "Caesar was killed in 144 BC.",
-      "Caesar was killed in 44 BC.",
-      "WWII ended in 1945.",
-      "Byzantium was centered in Madrid.",
-      "Magna Carta was signed in 1215.",
-      "Renaissance began in Italy.",
-      "Renaissance began in Australia.",
-      "Apollo 11 landed in 1959."
+      "Konstantinoopol oli selle pealinn.",
+      "See kandis edasi Rooma p�randit.",
+      "Seal kasutati laialt kreeka keelt.",
+      "Justinianus seostub selle ajalooga.",
+      "Selle pealinn oli Lissabon.",
+      "See l�ppes enne Rooma teket.",
+      "See valitses ainult L�una-Ameerikat.",
+      "Viikingid nimetasid k�ik keisrid.",
+      "See algas p�rast 1945. aastat.",
+      "Seal polnud kirjalikku �igust."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3,
-        4,
-        6,
-        7
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26112,23 +26119,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali tõesed vaited. Teemavihe: Alexander the Great.",
+    "question": "Ajalugu: Millised v�ited avastusaja kohta on �iged?",
     "options": [
-      "Berlin Wall fell in 1973.",
-      "Renaissance began in Italy.",
-      "Napoleon won at Waterloo.",
-      "Cold War started before WWI.",
-      "WWII ended in 1939.",
-      "Magna Carta was signed in 1512.",
-      "Caesar was killed in 144 BC.",
-      "Renaissance began in Australia.",
-      "Roman Republic came before Empire.",
-      "Apollo 11 landed in 1959."
+      "Merereisid �hendasid kaugeid piirkondi.",
+      "Portugal oli varane eestvedaja.",
+      "Hispaania toetas suuri retki.",
+      "Columbus purjetas sel ajastul.",
+      "See algas reaktiivlennukitega.",
+      "See toimus ainult j�gedel.",
+      "Kaardid ei paranenud �ldse.",
+      "See l�ppes enne aastat 1200.",
+      "Kaubateed j�id muutumatuks.",
+      "Austraalia rahastas Columbust."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        8
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26140,24 +26149,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Millised vaited on oiged? Teemavihe: Gutenberg Press.",
+    "question": "Ajalugu: Tuvasta �iged v�ited Ameerika revolutsiooni kohta.",
     "options": [
-      "Berlin Wall fell in 1973.",
-      "Printing press spread in 1700s.",
-      "Cold War started before WWI.",
-      "Apollo 11 landed in 1969.",
-      "Napoleon lost at Waterloo.",
-      "Renaissance began in Australia.",
-      "Apollo 11 landed in 1959.",
-      "Cold War followed World War II.",
-      "Magna Carta was signed in 1512.",
-      "Roman Empire came before Republic."
+      "See algas 1700. aastate l�pus.",
+      "Britannia s�dis kolooniatega.",
+      "Deklaratsioon tuli 1776. aastal.",
+      "George Washington juhtis p�hij�ude.",
+      "See peeti Vana-Kreekas.",
+      "See algas 1876. aastal.",
+      "Deklaratsiooni kirjutas Napoleon.",
+      "See asendas Rooma senati.",
+      "See oli Hiina ja India s�da.",
+      "See algas p�rast Teist ilmas�da."
     ],
     "correct": {
       "correctIndexes": [
-        3,
-        4,
-        7
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26169,25 +26179,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali koik tõesed vaited. Teemavihe: Roman Republic.",
+    "question": "Ajalugu: Millised v�ited Haiti revolutsiooni kohta on t�esed?",
     "options": [
-      "Renaissance began in Australia.",
-      "Berlin Wall fell in 1989.",
-      "Magna Carta was signed in 1512.",
-      "WWII ended in 1939.",
-      "Napoleon lost at Waterloo.",
-      "Roman Republic came before Empire.",
-      "Napoleon won at Waterloo.",
-      "Cold War followed World War II.",
-      "Caesar was killed in 144 BC.",
-      "Roman Empire came before Republic."
+      "See toimus Saint-Domingue'is.",
+      "�lest�usu juhtisid orjastatud inimesed.",
+      "Toussaint Louverture seostub sellega.",
+      "See aitas luua iseseisva Haiti.",
+      "See algas keskaegsel Inglismaal.",
+      "See oli viikingite sissetung.",
+      "See toimus 1960. aastail.",
+      "See taastas monarhia Roomas.",
+      "See leidis aset Jaapanis.",
+      "See peeti ainult merel."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        4,
-        5,
-        7
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26199,26 +26209,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Tuvasta faktivaided. Teemavihe: Cold War.",
+    "question": "Ajalugu: Vali �iged v�ited Meiji restauratsiooni kohta.",
     "options": [
-      "Apollo 11 landed in 1969.",
-      "Cold War started before WWI.",
-      "Napoleon won at Waterloo.",
-      "WWII ended in 1945.",
-      "Printing press spread in 1700s.",
-      "Renaissance began in Italy.",
-      "Printing press spread in 1400s.",
-      "Roman Empire came before Republic.",
-      "USSR dissolved in 1961.",
-      "USSR dissolved in 1991."
+      "See algas Jaapanis 1868. aastal.",
+      "Keisriv�im taastati.",
+      "Moderniseerimine kiirenes selle all.",
+      "Samuraid kaotasid vanad ees�igused.",
+      "See toimus Vana-Egiptuses.",
+      "See algas 1066. aastal.",
+      "See tegi Tokyost Rooma koloonia.",
+      "See keelas raudteed igaveseks.",
+      "Seda juhtis Julius Caesar.",
+      "See toimus p�rast k�lma s�da."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3,
-        5,
-        6,
-        9
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26230,23 +26239,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Millised variandid on oiged? Teemavihe: Berlin Wall.",
+    "question": "Ajalugu: Millised v�ited Vene revolutsiooni kohta on �iged?",
     "options": [
-      "Renaissance began in Australia.",
-      "USSR dissolved in 1961.",
-      "Caesar was killed in 144 BC.",
-      "Printing press spread in 1700s.",
-      "Napoleon won at Waterloo.",
-      "Cold War started before WWI.",
-      "Apollo 11 landed in 1959.",
-      "Caesar was killed in 44 BC.",
-      "Byzantium was centered in Madrid.",
-      "Cold War followed World War II."
+      "Suured vapustused tulid 1917. aastal.",
+      "Romanovite d�nastia langes.",
+      "Bol�evikud haarasid sel aastal v�imu.",
+      "See viis N�ukogude v�imu suunas.",
+      "See toimus 1817. aastal.",
+      "See taastas Mingi d�nastia.",
+      "See peeti ainult Hispaanias.",
+      "Apollo 11 p�hjustas selle.",
+      "See muutis tsaari v�imu tugevamaks.",
+      "See l�petas Aasias Teise ilmas�ja."
     ],
     "correct": {
       "correctIndexes": [
-        7,
-        9
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26258,24 +26269,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali koik kehtivad vaited. Teemavihe: Apollo 11.",
+    "question": "Ajalugu: Vali t�esed v�ited Abbassiidide kalifaadi kohta.",
     "options": [
-      "Byzantium centered in Constantinople.",
-      "Magna Carta was signed in 1215.",
-      "Napoleon won at Waterloo.",
-      "Printing press spread in 1700s.",
-      "Roman Empire came before Republic.",
-      "Napoleon lost at Waterloo.",
-      "Cold War started before WWI.",
-      "Byzantium was centered in Madrid.",
-      "Magna Carta was signed in 1512.",
-      "WWII ended in 1939."
+      "Bagdadist sai suur keskpunkt.",
+      "See j�rgnes Umaijaadide kalifaadile.",
+      "�petlus ja teadus �itsesid seal.",
+      "See m�jutas islami ajalugu s�gavalt.",
+      "See valitses Mexico Cityst.",
+      "See algas p�rast internetiajastut.",
+      "See eksisteeris vaid Skandinaavias.",
+      "Selle rajas Napoleon.",
+      "See keelas kogu teaduse.",
+      "Selle pealinn oli Tokyo."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        5
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26287,25 +26299,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali tõesed vaited. Teemavihe: Treaty of Versailles.",
+    "question": "Ajalugu: Millised v�ited Gupta riigi kohta on t�esed?",
     "options": [
-      "Roman Empire came before Republic.",
-      "Byzantium was centered in Madrid.",
-      "Berlin Wall fell in 1989.",
-      "Napoleon won at Waterloo.",
-      "Caesar was killed in 144 BC.",
-      "USSR dissolved in 1991.",
-      "WWII ended in 1945.",
-      "Renaissance began in Italy.",
-      "Apollo 11 landed in 1959.",
-      "Cold War started before WWI."
+      "See valitses P�hja-India osi.",
+      "Seda seostatakse klassikalise ajaga.",
+      "Teadus ja matemaatika edenesid seal.",
+      "See kuulub Vana-India ajalukku.",
+      "Selle pealinn oli Buenos Aires.",
+      "See tuli p�rast Mogulite riiki.",
+      "Seda valitsesid viikingid.",
+      "See algas 1900. aastail.",
+      "See keskendus Islandile.",
+      "See kaotas kogu Aasia kaubanduse."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        5,
-        6,
-        7
+        3
       ]
     },
     "difficulty": "2",
@@ -26317,26 +26329,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Millised vaited on oiged? Teemavihe: Byzantine Empire.",
+    "question": "Ajalugu: Tuvasta �iged v�ited k�lma s�ja kohta.",
     "options": [
-      "Byzantium was centered in Madrid.",
-      "Napoleon won at Waterloo.",
-      "Printing press spread in 1400s.",
-      "USSR dissolved in 1991.",
-      "Printing press spread in 1700s.",
-      "Byzantium centered in Constantinople.",
-      "Apollo 11 landed in 1969.",
-      "Renaissance began in Italy.",
-      "Magna Carta was signed in 1512.",
-      "Caesar was killed in 144 BC."
+      "USA ja NSVL olid peamised rivaalid.",
+      "Ajastut kujundas tuumapinge.",
+      "See h�lmas asenduss�du.",
+      "See ei kasvanud totaalseks s�jaks.",
+      "See algas keskajal.",
+      "Seda peeti ainult m��kadega.",
+      "See l�ppes 1453. aastal.",
+      "Rivaalid olid Rooma ja Kartaago.",
+      "See ei m�jutanud kosmoseuuringuid.",
+      "See algas p�rast euro kasutuselev�ttu."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        3,
-        5,
-        6,
-        7
+        3
       ]
     },
     "difficulty": "2",
@@ -26348,23 +26359,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali koik tõesed vaited. Teemavihe: Meiji Restoration.",
+    "question": "Ajalugu: Millised v�ited Egiptuse p�ramiidide kohta on t�esed?",
     "options": [
-      "Roman Empire came before Republic.",
-      "Cold War started before WWI.",
-      "Magna Carta was signed in 1512.",
-      "Apollo 11 landed in 1959.",
-      "Berlin Wall fell in 1989.",
-      "WWII ended in 1939.",
-      "Berlin Wall fell in 1973.",
-      "Byzantium was centered in Madrid.",
-      "Printing press spread in 1700s.",
-      "Apollo 11 landed in 1969."
+      "Giza p�ramiidid asuvad Egiptuses.",
+      "Need toimisid kuninglike haudadena.",
+      "Khufu seostub Suure p�ramiidiga.",
+      "Need kuuluvad muistsesse aega.",
+      "Need ehitasid roomlased.",
+      "Need asuvad L�una-Ameerikas.",
+      "Need tehti plastplokkidest.",
+      "Need rajati p�rast raudteid.",
+      "Need olid viikingite laevatehased.",
+      "Need ujuvad aastaringselt Niilusel."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        9
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26376,24 +26389,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Tuvasta faktivaided. Teemavihe: Age of Exploration.",
+    "question": "Ajalugu: Vali t�esed v�ited reformatsiooni kohta.",
     "options": [
-      "Apollo 11 landed in 1959.",
-      "Caesar was killed in 144 BC.",
-      "Berlin Wall fell in 1973.",
-      "USSR dissolved in 1961.",
-      "Printing press spread in 1400s.",
-      "Magna Carta was signed in 1512.",
-      "Printing press spread in 1700s.",
-      "Roman Empire came before Republic.",
-      "Napoleon lost at Waterloo.",
-      "Renaissance began in Italy."
+      "Martin Luther seostub sellega.",
+      "See l�hestas l��nekristluse.",
+      "Tr�kikunst levitas vaidlust.",
+      "95 teesi kuuluvad selle loosse.",
+      "See algas Vana-Roomas.",
+      "Seda juhtis T�ingis-khaan.",
+      "See toimus ainult Jaapanis.",
+      "See l�ppes enne 1400. aastat.",
+      "See keelas k�ik lendlehed.",
+      "See ehitas Giza p�ramiidid."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        8,
-        9
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26405,25 +26419,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Millised variandid on oiged? Teemavihe: Bronze Age.",
+    "question": "Ajalugu: Millised v�ited Kolmek�mneaastase s�ja kohta on �iged?",
     "options": [
-      "Renaissance began in Australia.",
-      "USSR dissolved in 1961.",
-      "Cold War started before WWI.",
-      "WWII ended in 1939.",
-      "Apollo 11 landed in 1969.",
-      "Caesar was killed in 144 BC.",
-      "Napoleon won at Waterloo.",
-      "Caesar was killed in 44 BC.",
-      "USSR dissolved in 1991.",
-      "Napoleon lost at Waterloo."
+      "See kestis 1618 kuni 1648.",
+      "Suur osa tabas Kesk-Euroopat.",
+      "Olulised olid usk ja v�im.",
+      "Westfaal seostub selle lahendusega.",
+      "See kestis vaid kolmk�mmend p�eva.",
+      "Seda peeti Vaiksel ookeanil.",
+      "See algas p�rast Teist ilmas�da.",
+      "See l�ppes Magna Cartaga.",
+      "Seda juhtis Julius Caesar.",
+      "See toimus ainult Kanadas."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        7,
-        8,
-        9
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26435,26 +26449,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali koik kehtivad vaited. Teemavihe: Iron Age.",
+    "question": "Ajalugu: Vali t�esed v�ited Atlandi orjakaubanduse kohta.",
     "options": [
-      "Caesar was killed in 144 BC.",
-      "WWII ended in 1939.",
-      "Renaissance began in Italy.",
-      "USSR dissolved in 1961.",
-      "Renaissance began in Australia.",
-      "USSR dissolved in 1991.",
-      "Roman Republic came before Empire.",
-      "Magna Carta was signed in 1215.",
-      "Printing press spread in 1400s.",
-      "Apollo 11 landed in 1959."
+      "See viis orjastatud aafriklasi �le mere.",
+      "See seostus istandusmajandusega.",
+      "See tekitas tohutuid kannatusi.",
+      "See oli osa Atlandi kaubandusest.",
+      "See oli heategevusv�rgustik.",
+      "See l�ppes enne Columbuse retke.",
+      "Enamik vange saadeti Kuule.",
+      "�kski Euroopa riik ei osalenud.",
+      "See toimus vaid �hes linnas.",
+      "See t��tas auruarvutitel."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        5,
-        6,
-        7,
-        8
+        3
       ]
     },
     "difficulty": "2",
@@ -26466,23 +26479,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali tõesed vaited. Teemavihe: Harlem Renaissance.",
+    "question": "Ajalugu: Millised v�ited asteekide riigi kohta on t�esed?",
     "options": [
-      "Byzantium centered in Constantinople.",
-      "Cold War started before WWI.",
-      "Magna Carta was signed in 1512.",
-      "Renaissance began in Australia.",
-      "WWII ended in 1939.",
-      "USSR dissolved in 1991.",
-      "Napoleon won at Waterloo.",
-      "Apollo 11 landed in 1959.",
-      "Printing press spread in 1700s.",
-      "USSR dissolved in 1961."
+      "Tenochtitlan oli selle pealinn.",
+      "See �itses Kesk-Mehhikos.",
+      "Hispaania vallutus l�petas selle v�imu.",
+      "See kogus andamit allutatud rahvastelt.",
+      "See paiknes Skandinaavias.",
+      "Seda valitsesid vaaraod.",
+      "See algas p�rast 1900. aastat.",
+      "Selle pealinn oli Lissabon.",
+      "See ehitas Hadrianuse valli.",
+      "See eksisteeris vaid Austraalias."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        5
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26494,24 +26509,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Millised vaited on oiged? Teemavihe: Printing Press.",
+    "question": "Ajalugu: Tuvasta �iged v�ited inkade riigi kohta.",
     "options": [
-      "Cold War started before WWI.",
-      "Apollo 11 landed in 1959.",
-      "Printing press spread in 1700s.",
-      "Magna Carta was signed in 1215.",
-      "Caesar was killed in 144 BC.",
-      "Berlin Wall fell in 1973.",
-      "Magna Carta was signed in 1512.",
-      "USSR dissolved in 1991.",
-      "Renaissance began in Australia.",
-      "Renaissance began in Italy."
+      "See keskendus Andidele.",
+      "Cusco oli t�htis pealinn.",
+      "Hispaania vallutus murdis selle v�imu.",
+      "Teedev�rk oli sellele v�ga t�htis.",
+      "See �itses Islandil.",
+      "Selle rajas Caesar.",
+      "See algas p�rast Esimest ilmas�da.",
+      "Tokyo oli selle pealinn.",
+      "See valitses Vana-Kreekat.",
+      "See keelas kogu m�giliikluse."
     ],
     "correct": {
       "correctIndexes": [
-        3,
-        7,
-        9
+        0,
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26523,25 +26539,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali koik tõesed vaited. Teemavihe: Han Dynasty.",
+    "question": "Ajalugu: Millised v�ited Esimese maailmas�ja kohta on �iged?",
     "options": [
-      "Berlin Wall fell in 1973.",
-      "Napoleon lost at Waterloo.",
-      "Printing press spread in 1400s.",
-      "Renaissance began in Australia.",
-      "Byzantium was centered in Madrid.",
-      "Napoleon won at Waterloo.",
-      "Roman Empire came before Republic.",
-      "Apollo 11 landed in 1969.",
-      "Magna Carta was signed in 1512.",
-      "USSR dissolved in 1991."
+      "See kestis 1914 kuni 1918.",
+      "Kaevikus�da iseloomustas seda konflikti.",
+      "Sarajevo m�rvad eelnesid sellele.",
+      "Sellesse t�mmati palju impeeriume.",
+      "Seda peeti vaid pronksm��kadega.",
+      "See l�ppes 1815. aastal.",
+      "See toimus vaid L�una-Ameerikas.",
+      "Apollo missioonid p�hjustasid selle.",
+      "See ei puudutanud L�his-Ida.",
+      "Seda juhtisid asteegid."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        7,
-        9
+        3
       ]
     },
     "difficulty": "2",
@@ -26553,26 +26569,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Tuvasta faktivaided. Teemavihe: Pax Romana.",
+    "question": "Ajalugu: Vali t�esed v�ited Teise maailmas�ja kohta.",
     "options": [
-      "Renaissance began in Australia.",
-      "Cold War followed World War II.",
-      "Magna Carta was signed in 1215.",
-      "Cold War started before WWI.",
-      "Byzantium centered in Constantinople.",
-      "Roman Empire came before Republic.",
-      "Magna Carta was signed in 1512.",
-      "USSR dissolved in 1991.",
-      "Napoleon lost at Waterloo.",
-      "Caesar was killed in 144 BC."
+      "See kestis 1939 kuni 1945.",
+      "Selles s�disid teljeriigid ja liitlased.",
+      "Holokaust toimus selle ajal.",
+      "L�pus tabasid Jaapanit aatomipommid.",
+      "See algas 1839. aastal.",
+      "Seda peeti ainult Antarktikas.",
+      "Sellel polnud Aasia rinnet.",
+      "Rooma valitses m�lemat poolt.",
+      "See l�ppes Magna Cartaga.",
+      "See oli viikingilaevastike s�da."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        4,
-        7,
-        8
+        3
       ]
     },
     "difficulty": "2",
@@ -26584,23 +26599,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Millised variandid on oiged? Teemavihe: Persian Empire.",
+    "question": "Ajalugu: Millised v�ited Aafrika dekoloniseerimise kohta on t�esed?",
     "options": [
-      "USSR dissolved in 1991.",
-      "Magna Carta was signed in 1512.",
-      "Roman Republic came before Empire.",
-      "Berlin Wall fell in 1973.",
-      "Byzantium was centered in Madrid.",
-      "USSR dissolved in 1961.",
-      "Renaissance began in Australia.",
-      "Napoleon won at Waterloo.",
-      "Apollo 11 landed in 1959.",
-      "Cold War started before WWI."
+      "Paljud riigid vabanesid p�rast 1945.",
+      "Euroopa impeeriumid kaotasid kolooniad.",
+      "Rahvuslikud liikumised vedasid muutust.",
+      "See levis paljudesse piirkondadesse.",
+      "See l�ppes enne 1800. aastat.",
+      "See juhtus ainult Gr��nimaal.",
+      "See taastas Rooma v�imu Aafrikas.",
+      "Selle p�hjustasid viikingir��steretked.",
+      "�htki uut Aafrika riiki ei tekkinud.",
+      "See toimus vaid �he aasta jooksul."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        2
+        1,
+        2,
+        3
       ]
     },
     "difficulty": "2",
@@ -26612,24 +26629,25 @@
     "topic": "History",
     "category": "OPEN",
     "language": "et",
-    "question": "Ajalugu: Vali koik kehtivad vaited. Teemavihe: Maya Civilization.",
+    "question": "Ajalugu: Vali t�esed v�ited Induse oru tsivilisatsiooni kohta.",
     "options": [
-      "USSR dissolved in 1961.",
-      "Cold War started before WWI.",
-      "Byzantium centered in Constantinople.",
-      "Roman Empire came before Republic.",
-      "Napoleon won at Waterloo.",
-      "Magna Carta was signed in 1512.",
-      "Caesar was killed in 144 BC.",
-      "Printing press spread in 1700s.",
-      "Napoleon lost at Waterloo.",
-      "Cold War followed World War II."
+      "Harappa ja Mohenjo-daro olid v�tmekohad.",
+      "See kuulub muistse L�una-Aasia ajalukku.",
+      "Linnaplaneerimine oli seal silmatorkav.",
+      "Selle kiri pole t�ielikult loetud.",
+      "Seda valitseti Londonist.",
+      "See algas p�rast internetti.",
+      "See keskendus Skandinaaviale.",
+      "Linnades kasutati aurutrakoreid.",
+      "See j�rgnes Mogulite riigile.",
+      "See oli vaid Vaikse ookeani saartel."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        8,
-        9
+        3
       ]
     },
     "difficulty": "2",
