@@ -2,21 +2,21 @@
 
 ## Metadata
 
-- Generated: 2026-03-10T12:27:07.419Z
+- Generated: 2026-03-10T12:37:57.993Z
 - Scope: EN, ET SmartIQ locale packs
 
 ## Executive Summary
 
-- EN: NOT READY - editorial cleanup required before launch trust | score 0.918 | total issues 640
-- ET: BLOCKED - ET is not launch-ready | score 0.798 | total issues 1539
+- EN: NOT READY - editorial cleanup required before launch trust | score 0.920 | total issues 623
+- ET: BLOCKED - ET is not launch-ready | score 0.802 | total issues 1512
 
 ## EN Findings
 
 - Dataset: `data/smart10/cards.en.json`
-- Semantic content score: 0.918
+- Semantic content score: 0.920
 - Launch readiness: NOT READY - editorial cleanup required before launch trust
-- Total issue hits: 640
-- Warning count: 640
+- Total issue hits: 623
+- Warning count: 623
 
 ### Issue Counts
 
@@ -24,19 +24,19 @@
 - broken grammar: 0
 - unnatural phrasing: 210
 - placeholder content: 0
-- templated/scaffold wording: 100
-- recycled option pool: 330
+- templated/scaffold wording: 93
+- recycled option pool: 320
 - low-trust option wording: 0
 - trivial/low-value content: 0
 
 ### Highest-Risk Areas
 
-- EN Sports/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Geography/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Culture/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Science/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Varia/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Varia/ORDER: 30/30 cards flagged (100%) | unnatural_phrasing
+- EN History/COLOR: 30/30 cards flagged (100%) | unnatural_phrasing
 
 ### Categorized Findings Summary
 
@@ -49,46 +49,46 @@
 
 #### templated/scaffold wording
 
-- `sports-true_false-001` Sports/TRUE_FALSE: Sports: Mark statements that are true for this topic. Focus area: Football.
-- `sports-true_false-003` Sports/TRUE_FALSE: Sports: Find the statements that fit. Focus area: Tennis.
-- `sports-true_false-004` Sports/TRUE_FALSE: Sports: Select all true statements. Focus area: Cricket.
-- `sports-true_false-006` Sports/TRUE_FALSE: Sports: Identify valid statements. Focus area: Volleyball.
+- `sports-true_false-012` Sports/TRUE_FALSE: Sports: Identify valid statements. Focus area: Athletics.
+- `sports-true_false-013` Sports/TRUE_FALSE: Sports: Mark statements that are true for this topic. Focus area: Swimming.
+- `sports-true_false-015` Sports/TRUE_FALSE: Sports: Find the statements that fit. Focus area: Boxing.
+- `sports-true_false-016` Sports/TRUE_FALSE: Sports: Select all true statements. Focus area: Fencing.
 
 #### recycled option pool
 
-- `sports-true_false-001` Sports/TRUE_FALSE: Sports: Mark statements that are true for this topic. Focus area: Football.
-- `sports-true_false-002` Sports/TRUE_FALSE: Sports: Which claims are accurate? Focus area: Basketball.
-- `sports-true_false-003` Sports/TRUE_FALSE: Sports: Find the statements that fit. Focus area: Tennis.
-- `sports-true_false-004` Sports/TRUE_FALSE: Sports: Select all true statements. Focus area: Cricket.
+- `sports-true_false-011` Sports/TRUE_FALSE: Sports: Which lines are correct? Focus area: Table Tennis.
+- `sports-true_false-012` Sports/TRUE_FALSE: Sports: Identify valid statements. Focus area: Athletics.
+- `sports-true_false-013` Sports/TRUE_FALSE: Sports: Mark statements that are true for this topic. Focus area: Swimming.
+- `sports-true_false-014` Sports/TRUE_FALSE: Sports: Which claims are accurate? Focus area: Cycling.
 
 
 ## ET Findings
 
 - Dataset: `data/smart10/cards.et.json`
-- Semantic content score: 0.798
+- Semantic content score: 0.802
 - Launch readiness: BLOCKED - ET is not launch-ready
-- Total issue hits: 1539
-- Warning count: 1539
+- Total issue hits: 1512
+- Warning count: 1512
 
 ### Issue Counts
 
 - language leakage: 130
-- broken grammar: 539
+- broken grammar: 529
 - unnatural phrasing: 280
 - placeholder content: 0
-- templated/scaffold wording: 100
-- recycled option pool: 330
+- templated/scaffold wording: 93
+- recycled option pool: 320
 - low-trust option wording: 160
 - trivial/low-value content: 0
 
 ### Highest-Risk Areas
 
-- ET Sports/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Geography/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Culture/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Science/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Varia/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET History/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
+- ET Sports/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
 
 ### Categorized Findings Summary
 
@@ -101,10 +101,10 @@
 
 #### broken grammar
 
-- `sports-true_false-001-et` Sports/TRUE_FALSE: Sport: Margi selle teema toesed vaited. Fookus: Football.
-- `sports-true_false-002-et` Sports/TRUE_FALSE: Sport: Millised vaited on oiged? Fookus: Basketball.
-- `sports-true_false-003-et` Sports/TRUE_FALSE: Sport: Leia sobivad vaited. Fookus: Tennis.
-- `sports-true_false-004-et` Sports/TRUE_FALSE: Sport: Vali koik toed vaited. Fookus: Cricket.
+- `sports-true_false-011-et` Sports/TRUE_FALSE: Sport: Millised read on oiged? Fookus: Table Tennis.
+- `sports-true_false-012-et` Sports/TRUE_FALSE: Sport: Tuvasta kehtivad vaited. Fookus: Athletics.
+- `sports-true_false-013-et` Sports/TRUE_FALSE: Sport: Margi selle teema toesed vaited. Fookus: Swimming.
+- `sports-true_false-014-et` Sports/TRUE_FALSE: Sport: Millised vaited on oiged? Fookus: Cycling.
 
 #### unnatural phrasing
 
@@ -115,10 +115,10 @@
 
 #### templated/scaffold wording
 
-- `sports-true_false-001-et` Sports/TRUE_FALSE: Sport: Margi selle teema toesed vaited. Fookus: Football.
-- `sports-true_false-003-et` Sports/TRUE_FALSE: Sport: Leia sobivad vaited. Fookus: Tennis.
-- `sports-true_false-004-et` Sports/TRUE_FALSE: Sport: Vali koik toed vaited. Fookus: Cricket.
-- `sports-true_false-006-et` Sports/TRUE_FALSE: Sport: Tuvasta kehtivad vaited. Fookus: Volleyball.
+- `sports-true_false-012-et` Sports/TRUE_FALSE: Sport: Tuvasta kehtivad vaited. Fookus: Athletics.
+- `sports-true_false-013-et` Sports/TRUE_FALSE: Sport: Margi selle teema toesed vaited. Fookus: Swimming.
+- `sports-true_false-015-et` Sports/TRUE_FALSE: Sport: Leia sobivad vaited. Fookus: Boxing.
+- `sports-true_false-016-et` Sports/TRUE_FALSE: Sport: Vali koik toed vaited. Fookus: Fencing.
 
 #### low-trust option wording
 
@@ -129,8 +129,8 @@
 
 #### recycled option pool
 
-- `sports-true_false-001-et` Sports/TRUE_FALSE: Sport: Margi selle teema toesed vaited. Fookus: Football.
-- `sports-true_false-002-et` Sports/TRUE_FALSE: Sport: Millised vaited on oiged? Fookus: Basketball.
-- `sports-true_false-003-et` Sports/TRUE_FALSE: Sport: Leia sobivad vaited. Fookus: Tennis.
-- `sports-true_false-004-et` Sports/TRUE_FALSE: Sport: Vali koik toed vaited. Fookus: Cricket.
+- `sports-true_false-011-et` Sports/TRUE_FALSE: Sport: Millised read on oiged? Fookus: Table Tennis.
+- `sports-true_false-012-et` Sports/TRUE_FALSE: Sport: Tuvasta kehtivad vaited. Fookus: Athletics.
+- `sports-true_false-013-et` Sports/TRUE_FALSE: Sport: Margi selle teema toesed vaited. Fookus: Swimming.
+- `sports-true_false-014-et` Sports/TRUE_FALSE: Sport: Millised vaited on oiged? Fookus: Cycling.
 
