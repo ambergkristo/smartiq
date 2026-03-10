@@ -23,10 +23,10 @@ Todo:
 
 - ET remains blocked for launch.
 - Largest remaining ET repair zones:
-  - `Science/TRUE_FALSE 011..030`
   - `ORDER`
   - `COLOR`
   - `OPEN`
+  - `NUMBER` mojibake slices
 
 ## Task 2 - EN semantic quality audit
 
@@ -42,9 +42,8 @@ Done:
 
 Todo:
 
-- EN is still not launch-ready.
+- EN is now conditionally usable, but not clean enough for launch trust.
 - Largest remaining EN repair zones:
-  - `Science/TRUE_FALSE`
   - `ORDER`
   - `COLOR`
   - `OPEN`
@@ -61,7 +60,7 @@ Done:
   - `Geography/TRUE_FALSE 001..030`
   - `Varia/TRUE_FALSE 001..030`
   - `Culture/TRUE_FALSE 001..030`
-  - `Science/TRUE_FALSE 001..010`
+  - `Science/TRUE_FALSE 001..030`
 
 Todo:
 
@@ -108,14 +107,13 @@ Todo:
 
 ## Current Readiness
 
-- EN: `NOT READY`
+- EN: `CONDITIONAL`
 - ET: `BLOCKED`
 
 Current observed report baseline:
 
-- EN score: `0.945`
-- EN score: `0.946`
-- ET score: `0.842`
+- EN score: `0.951`
+- ET score: `0.850`
 
 Closed repair zone:
 
@@ -127,10 +125,12 @@ Closed repair zone:
 - `Geography/TRUE_FALSE` dropped out of the ET top-risk `TRUE_FALSE` backlog
 - `Sports/TRUE_FALSE` is now fully repaired across `001..030`
 - `Sports/TRUE_FALSE` dropped out of the EN and ET `TRUE_FALSE` backlog
+- `Science/TRUE_FALSE` is now fully repaired across `001..030`
+- `Science/TRUE_FALSE` dropped out of the EN and ET `TRUE_FALSE` backlog
 
 ## Next Repair Priority
 
-1. `Science/TRUE_FALSE 011..030`
-2. `ORDER`
-3. `COLOR`
-4. remaining `OPEN` recycled pools
+1. `ORDER`
+2. `COLOR`
+3. remaining `OPEN` recycled pools
+4. `NUMBER` mojibake slices

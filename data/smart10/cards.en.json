@@ -4048,27 +4048,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Which lines are correct? Focus area: Energy.",
+    "question": "Science: Which statements about energy are true?",
     "options": [
-      "Sun orbits the Earth.",
-      "Electrons are positively charged.",
-      "Neurons transmit signals.",
-      "Sound travels slower than light.",
-      "Atoms have a nucleus.",
-      "Sound travels faster than light.",
-      "DNA carries genetic information.",
-      "Water is CO2.",
-      "Earth orbits the Sun.",
-      "Electrons have negative charge."
+      "Energy can change form.",
+      "Joule is a unit of energy.",
+      "Kinetic energy depends on motion.",
+      "Chemical fuels store energy.",
+      "Power is energy per unit time.",
+      "Energy is measured in litres.",
+      "Only stars can contain energy.",
+      "Energy cannot be transferred.",
+      "A magnet is the SI energy unit.",
+      "Zero motion means infinite energy."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        4,
-        6,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -4080,28 +4079,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Identify valid statements. Focus area: Entropy.",
+    "question": "Science: Which statements about entropy are true?",
     "options": [
-      "Water is H2O.",
-      "Earth orbits the Sun.",
-      "Water boils at 10C.",
-      "Water boils at 100C.",
-      "Atoms have no protons.",
-      "Sun orbits the Earth.",
-      "Oxygen supports combustion.",
-      "Sound travels slower than light.",
-      "Mars is called the Red Planet.",
-      "Atoms have a nucleus."
+      "Entropy measures disorder.",
+      "Entropy matters in thermodynamics.",
+      "Heat flow can raise entropy.",
+      "Boltzmann linked entropy to states.",
+      "Isolated systems trend upward.",
+      "Entropy is electric current.",
+      "Lower entropy means more randomness.",
+      "Entropy falls in every process.",
+      "Entropy is only for astronomy.",
+      "Celsius directly measures entropy."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        6,
-        7,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -4113,23 +4110,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Mark statements that are true for this topic. Focus area: Oxygen.",
+    "question": "Science: Which statements about oxygen are true?",
     "options": [
-      "Gravity attracts mass.",
-      "Sound travels faster than light.",
-      "Gravity repels all mass.",
-      "Water boils at 100C.",
-      "Water boils at 10C.",
-      "Sun orbits the Earth.",
-      "Plants grow without sunlight.",
-      "Neurons are only in plants.",
-      "Mars is the hottest planet.",
-      "Electrons are positively charged."
+      "Oxygen has symbol O.",
+      "Air is about 21% oxygen.",
+      "Oxygen supports combustion.",
+      "Aerobic life uses oxygen.",
+      "Ozone is made from oxygen atoms.",
+      "Oxygen is the lightest element.",
+      "Pure oxygen is a metal.",
+      "Air contains no oxygen.",
+      "Oxygen has no role in fire.",
+      "Oxygen uses symbol Au."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4141,24 +4141,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Which claims are accurate? Focus area: Hydrogen.",
+    "question": "Science: Which statements about hydrogen are true?",
     "options": [
-      "Sun orbits the Earth.",
-      "Gravity repels all mass.",
-      "Sound travels faster than light.",
-      "Neurons transmit signals.",
-      "Water boils at 10C.",
-      "Oxygen cannot support fire.",
-      "Plants grow without sunlight.",
-      "Mars is called the Red Planet.",
-      "Oxygen supports combustion.",
-      "Water is CO2."
+      "Hydrogen has symbol H.",
+      "Hydrogen is the lightest element.",
+      "Water contains hydrogen atoms.",
+      "The Sun is rich in hydrogen.",
+      "Hydrogen fuels some rockets.",
+      "Hydrogen is a noble gas.",
+      "Hydrogen has atomic number 8.",
+      "Water contains no hydrogen.",
+      "Hydrogen is denser than lead.",
+      "Hydrogen uses symbol Hg."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        7,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -4170,25 +4172,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Find the statements that fit. Focus area: Nitrogen.",
+    "question": "Science: Which statements about nitrogen are true?",
     "options": [
-      "Earth orbits the Sun.",
-      "Plants grow without sunlight.",
-      "Water boils at 10C.",
-      "Sun orbits the Earth.",
-      "Gravity attracts mass.",
-      "Oxygen supports combustion.",
-      "Neurons transmit signals.",
-      "Mars is the hottest planet.",
-      "Water is CO2.",
-      "DNA stores photos."
+      "Nitrogen has symbol N.",
+      "Air is mostly nitrogen.",
+      "Liquid nitrogen is very cold.",
+      "Plants need nitrogen compounds.",
+      "Nitrogen is used in fertilizers.",
+      "Nitrogen is a halogen.",
+      "Nitrogen uses symbol Na.",
+      "Air contains no nitrogen.",
+      "Liquid nitrogen boils at 100 C.",
+      "Nitrogen is always purple."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        5,
-        6
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4200,26 +4203,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Select all true statements. Focus area: Carbon.",
+    "question": "Science: Which statements about carbon are true?",
     "options": [
-      "Oxygen cannot support fire.",
-      "Electrons have negative charge.",
-      "Plants use photosynthesis.",
-      "Plants grow without sunlight.",
-      "DNA stores photos.",
-      "Water boils at 100C.",
-      "Sun orbits the Earth.",
-      "Neurons transmit signals.",
-      "Electrons are positively charged.",
-      "Gravity attracts mass."
+      "Carbon has symbol C.",
+      "Diamond contains carbon.",
+      "Graphite contains carbon.",
+      "Carbon dioxide contains carbon.",
+      "Organic molecules rely on carbon.",
+      "Carbon uses symbol Ca.",
+      "Carbon is a noble gas.",
+      "Diamond contains no carbon.",
+      "Carbon has atomic number 92.",
+      "Plants do not cycle carbon."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        5,
-        7,
-        9
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4231,27 +4234,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Which lines are correct? Focus area: Helium.",
+    "question": "Science: Which statements about helium are true?",
     "options": [
-      "Oxygen cannot support fire.",
-      "Electrons are positively charged.",
-      "Plants use photosynthesis.",
-      "Neurons transmit signals.",
-      "Gravity attracts mass.",
-      "Sound travels slower than light.",
-      "Water is CO2.",
-      "Water boils at 100C.",
-      "Earth orbits the Sun.",
-      "Water boils at 10C."
+      "Helium is a noble gas.",
+      "Helium has symbol He.",
+      "Helium is lighter than air.",
+      "Helium balloons can float.",
+      "Helium is very unreactive.",
+      "Helium is liquid at room temp.",
+      "Helium is a heavy metal.",
+      "Helium uses symbol Hm.",
+      "Stars contain no helium.",
+      "Helium burns like gasoline."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        4,
-        5,
-        7,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -4263,28 +4265,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Identify valid statements. Focus area: Neon.",
+    "question": "Science: Which statements about neon are true?",
     "options": [
-      "Plants use photosynthesis.",
-      "Sound travels slower than light.",
-      "Water is CO2.",
-      "Water boils at 100C.",
-      "DNA carries genetic information.",
-      "Water is H2O.",
-      "Gravity attracts mass.",
-      "Atoms have no protons.",
-      "Atoms have a nucleus.",
-      "Mars is the hottest planet."
+      "Neon is a noble gas.",
+      "Neon has symbol Ne.",
+      "Neon signs glow when energized.",
+      "Neon is very unreactive.",
+      "Air contains trace neon.",
+      "Neon is a liquid metal.",
+      "Neon uses symbol Na.",
+      "Neon is common table salt.",
+      "Neon makes up most seawater.",
+      "Neon burns like gasoline."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        4,
-        5,
-        6,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -4296,23 +4296,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Mark statements that are true for this topic. Focus area: Sodium.",
+    "question": "Science: Which statements about sodium are true?",
     "options": [
-      "Mars is called the Red Planet.",
-      "DNA stores photos.",
-      "Mars is the hottest planet.",
-      "Gravity repels all mass.",
-      "Electrons are positively charged.",
-      "Sun orbits the Earth.",
-      "Sound travels slower than light.",
-      "Atoms have no protons.",
-      "Oxygen cannot support fire.",
-      "Water is CO2."
+      "Sodium has symbol Na.",
+      "Sodium is an alkali metal.",
+      "Table salt contains sodium.",
+      "Sodium reacts strongly with water.",
+      "Nerve cells use sodium ions.",
+      "Sodium uses symbol So.",
+      "Sodium is a noble gas.",
+      "Table salt has no sodium.",
+      "Sodium is harmless in water.",
+      "Sodium is the heaviest metal."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        6
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4324,24 +4327,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Which claims are accurate? Focus area: Potassium.",
+    "question": "Science: Which statements about potassium are true?",
     "options": [
-      "Electrons are positively charged.",
-      "Gravity repels all mass.",
-      "Water boils at 10C.",
-      "Earth orbits the Sun.",
-      "Oxygen cannot support fire.",
-      "Water boils at 100C.",
-      "Mars is called the Red Planet.",
-      "Sun orbits the Earth.",
-      "Water is CO2.",
-      "DNA stores photos."
+      "Potassium has symbol K.",
+      "Potassium is an alkali metal.",
+      "Bananas contain potassium.",
+      "Cells use potassium ions.",
+      "Potassium can react with water.",
+      "Potassium uses symbol P.",
+      "Potassium is a noble gas.",
+      "Bananas contain no potassium.",
+      "Cells never use potassium.",
+      "Potassium is denser than gold."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        5,
-        6
+        4
       ]
     },
     "difficulty": "2",
@@ -4353,25 +4358,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Find the statements that fit. Focus area: Calcium.",
+    "question": "Science: Which statements about calcium are true?",
     "options": [
-      "Neurons are only in plants.",
-      "Atoms have a nucleus.",
-      "Oxygen supports combustion.",
-      "DNA stores photos.",
-      "Water is H2O.",
-      "Sun orbits the Earth.",
-      "Sound travels slower than light.",
-      "Water boils at 10C.",
-      "Sound travels faster than light.",
-      "Gravity repels all mass."
+      "Calcium has symbol Ca.",
+      "Bones contain calcium compounds.",
+      "Milk can provide calcium.",
+      "Calcium helps muscles contract.",
+      "Limestone contains calcium carbonate.",
+      "Calcium uses symbol Cn.",
+      "Calcium is a noble gas.",
+      "Bones contain no calcium.",
+      "Milk contains no calcium.",
+      "Calcium is a planet name."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        4,
-        6
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4383,26 +4389,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Select all true statements. Focus area: Iron.",
+    "question": "Science: Which statements about iron are true?",
     "options": [
-      "Water is CO2.",
-      "Electrons have negative charge.",
-      "Sound travels slower than light.",
-      "Electrons are positively charged.",
-      "Atoms have a nucleus.",
-      "Sun orbits the Earth.",
-      "Atoms have no protons.",
-      "DNA carries genetic information.",
-      "Water boils at 100C.",
-      "Gravity repels all mass."
+      "Iron has symbol Fe.",
+      "Hemoglobin contains iron.",
+      "Steel is largely iron based.",
+      "Iron can rust in moist air.",
+      "Earth's core holds much iron.",
+      "Iron uses symbol Ir.",
+      "Iron is a noble gas.",
+      "Steel contains no iron.",
+      "Air is mostly iron gas.",
+      "Hemoglobin has no iron."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        4,
-        7,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4414,27 +4420,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Which lines are correct? Focus area: Copper.",
+    "question": "Science: Which statements about copper are true?",
     "options": [
-      "Water boils at 100C.",
-      "Water boils at 10C.",
-      "Gravity attracts mass.",
-      "Sound travels faster than light.",
-      "Mars is the hottest planet.",
-      "Plants use photosynthesis.",
-      "Mars is called the Red Planet.",
-      "Electrons are positively charged.",
-      "Oxygen supports combustion.",
-      "Atoms have a nucleus."
+      "Copper has symbol Cu.",
+      "Copper conducts electricity well.",
+      "Wires often use copper.",
+      "Copper can form green patina.",
+      "Bronze contains copper.",
+      "Copper uses symbol Co.",
+      "Copper is a noble gas.",
+      "Copper is transparent like air.",
+      "Bronze contains no copper.",
+      "Copper cannot conduct heat."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        5,
-        6,
-        8,
-        9
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4446,28 +4451,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Identify valid statements. Focus area: Silver.",
+    "question": "Science: Which statements about silver are true?",
     "options": [
-      "Plants use photosynthesis.",
-      "Gravity repels all mass.",
-      "Atoms have a nucleus.",
-      "Gravity attracts mass.",
-      "Oxygen cannot support fire.",
-      "Mars is called the Red Planet.",
-      "Water is H2O.",
-      "Water boils at 100C.",
-      "Electrons have negative charge.",
-      "Atoms have no protons."
+      "Silver has symbol Ag.",
+      "Silver conducts electricity well.",
+      "Silver is a precious metal.",
+      "Tarnish can darken silver.",
+      "Jewelry often uses silver.",
+      "Silver uses symbol Si.",
+      "Silver is a noble gas.",
+      "Silver floats like helium.",
+      "Silver has no metal atoms.",
+      "Tarnish makes silver radioactive."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        5,
-        6,
-        7,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -4479,23 +4482,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Mark statements that are true for this topic. Focus area: Gold.",
+    "question": "Science: Which statements about gold are true?",
     "options": [
-      "DNA stores photos.",
-      "Water is CO2.",
-      "Sound travels slower than light.",
-      "Electrons are positively charged.",
-      "Neurons are only in plants.",
-      "Mars is the hottest planet.",
-      "Mars is called the Red Planet.",
-      "Sound travels faster than light.",
-      "Gravity repels all mass.",
-      "Oxygen cannot support fire."
+      "Gold has symbol Au.",
+      "Gold is a precious metal.",
+      "Gold resists corrosion well.",
+      "Gold is used in jewelry.",
+      "Gold conducts electricity.",
+      "Gold uses symbol Go.",
+      "Gold is a noble gas.",
+      "Gold rusts faster than iron.",
+      "Gold is lighter than air.",
+      "Gold exists only on the Moon."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        6
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4507,24 +4513,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Which claims are accurate? Focus area: Mercury.",
+    "question": "Science: Which statements about mercury are true?",
     "options": [
-      "Neurons transmit signals.",
-      "Gravity repels all mass.",
-      "Water boils at 10C.",
-      "Sun orbits the Earth.",
-      "DNA stores photos.",
-      "Water boils at 100C.",
-      "Mars is the hottest planet.",
-      "Atoms have a nucleus.",
-      "Atoms have no protons.",
-      "Electrons are positively charged."
+      "Mercury has symbol Hg.",
+      "Mercury is liquid at room temp.",
+      "Old thermometers used mercury.",
+      "Mercury is toxic to humans.",
+      "Mercury is a metal.",
+      "Mercury uses symbol Mc.",
+      "Mercury is a noble gas.",
+      "Mercury is safe to drink.",
+      "Mercury freezes at 100 C.",
+      "Mercury forms only in oceans."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        5,
-        7
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4536,25 +4544,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Find the statements that fit. Focus area: Venus.",
+    "question": "Science: Which statements about Venus are true?",
     "options": [
-      "Plants grow without sunlight.",
-      "Oxygen supports combustion.",
-      "Neurons are only in plants.",
-      "Sun orbits the Earth.",
-      "Oxygen cannot support fire.",
-      "Electrons have negative charge.",
-      "Water boils at 100C.",
-      "Electrons are positively charged.",
-      "DNA stores photos.",
-      "Sound travels slower than light."
+      "Venus is second from the Sun.",
+      "Venus has thick carbon dioxide air.",
+      "Venus is close to Earth in size.",
+      "Venus has extreme surface heat.",
+      "Venus rotates very slowly.",
+      "Venus is the largest planet.",
+      "Venus has rings like Saturn.",
+      "Venus is colder than Pluto.",
+      "Venus is a moon of Jupiter.",
+      "Venus is made mostly of ice."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        5,
-        6,
-        9
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4566,26 +4575,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Select all true statements. Focus area: Earth.",
+    "question": "Science: Which statements about Earth are true?",
     "options": [
-      "Electrons are positively charged.",
-      "Mars is called the Red Planet.",
-      "Water is CO2.",
-      "Sun orbits the Earth.",
-      "Oxygen supports combustion.",
-      "Plants grow without sunlight.",
-      "Water boils at 10C.",
-      "Neurons transmit signals.",
-      "Atoms have a nucleus.",
-      "DNA carries genetic information."
+      "Earth is third from the Sun.",
+      "Liquid water covers much of Earth.",
+      "Earth has one natural moon.",
+      "Plate tectonics shape its crust.",
+      "Earth's air is rich in nitrogen.",
+      "Earth has rings like Saturn.",
+      "Earth is closer than Venus.",
+      "Earth has no magnetic field.",
+      "Earth is the largest gas giant.",
+      "Earth has two suns."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        4,
-        7,
-        8,
-        9
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4597,27 +4606,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Which lines are correct? Focus area: Mars.",
+    "question": "Science: Which statements about Mars are true?",
     "options": [
-      "Water is CO2.",
-      "Sun orbits the Earth.",
-      "Gravity attracts mass.",
-      "Electrons have negative charge.",
-      "Oxygen supports combustion.",
-      "Sound travels slower than light.",
-      "Plants use photosynthesis.",
-      "Neurons are only in plants.",
-      "Gravity repels all mass.",
-      "DNA carries genetic information."
+      "Mars is fourth from the Sun.",
+      "Mars is the Red Planet.",
+      "Olympus Mons is on Mars.",
+      "Mars has two small moons.",
+      "Rovers have explored Mars.",
+      "Mars is closer than Earth.",
+      "Mars is a gas giant.",
+      "Mars has dense oxygen air.",
+      "Mars has rings like Saturn.",
+      "Mars is the hottest planet."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        4,
-        5,
-        6,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -4629,28 +4637,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Identify valid statements. Focus area: Jupiter.",
+    "question": "Science: Which statements about Jupiter are true?",
     "options": [
-      "Neurons transmit signals.",
-      "Water is H2O.",
-      "Water is CO2.",
-      "Electrons are positively charged.",
-      "Plants grow without sunlight.",
-      "Atoms have a nucleus.",
-      "Oxygen supports combustion.",
-      "Plants use photosynthesis.",
-      "Sound travels slower than light.",
-      "Earth orbits the Sun."
+      "Jupiter is the largest planet.",
+      "Jupiter is a gas giant.",
+      "The Great Red Spot is on Jupiter.",
+      "Jupiter has many moons.",
+      "Jupiter is fifth from the Sun.",
+      "Jupiter is smaller than Earth.",
+      "Jupiter has no atmosphere.",
+      "Jupiter is solid iron.",
+      "Jupiter is closest to the Sun.",
+      "Jupiter has no moons."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        5,
-        6,
-        7,
-        8,
-        9
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",

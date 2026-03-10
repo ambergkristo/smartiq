@@ -1238,18 +1238,18 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Sport: Millised v?ited lauatennise kohta peavad paika?",
+    "question": "Sport: Millised väited lauatennise kohta peavad paika?",
     "options": [
       "Lauatennises kasutatakse reketit.",
-      "Kasutusel on v?ike plastpall.",
-      "Paarism?ngus servitakse diagonaali.",
-      "Mat? v?ib olla seitsme geimini.",
-      "V?ravad l??akse v?rku.",
-      "Stanley Cup kroonib lauatennist.",
-      "Laud j??b m?ngijate vahele.",
+      "Kasutusel on väike plastpall.",
+      "Paarismängus servitakse diagonaali.",
+      "Matš võib olla seitsme geimini.",
+      "Väravaid lüüakse võrku.",
+      "Stanley Cup kuulub lauatennisele.",
+      "Laud jääb mängijate vahele.",
       "Suluseis kehtib lauatennises.",
-      "Pallivahetuses v?ib olla topspinni.",
-      "Seda m?ngitakse ainult vee all."
+      "Pallivahetuses võib olla topspinni.",
+      "Seda mängitakse ainult vee all."
     ],
     "correct": {
       "correctIndexes": [
@@ -1270,18 +1270,18 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Sport: Millised v?ited kergej?ustiku kohta peavad paika?",
+    "question": "Sport: Millised väited kergejõustiku kohta peavad paika?",
     "options": [
-      "Kergej?ustik h?lmab rada ja v?lja.",
-      "Sprint on l?hike jooksuala.",
+      "Kergejõustik hõlmab rada ja välja.",
+      "Sprint on lühike jooksuala.",
       "Maraton on 42,195 km pikk.",
-      "Teatejooksus antakse teatepulk ?le.",
-      "Teivash?ppes kasutatakse piljardikeppi.",
-      "Kuulit?uget t?ugatakse, ei l??da.",
-      "K?rgush?ppes ?letatakse latt.",
-      "Kergej?ustik on ol?mpiaala.",
-      "Ketast l??akse kurikaga.",
-      "100 meetrit otsustab shot clock."
+      "Teatejooksus antakse teatepulk üle.",
+      "Teivashüppes kasutatakse piljardikeppi.",
+      "Kuulitõuget tõugatakse, ei lööda.",
+      "Kõrgushüppes ületatakse latt.",
+      "Kergejõustik on olümpiaala.",
+      "Ketast lüüakse kurikaga.",
+      "100 meetrit otsustab viskekell."
     ],
     "correct": {
       "correctIndexes": [
@@ -1303,18 +1303,18 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Sport: Millised v?ited ujumise kohta peavad paika?",
+    "question": "Sport: Millised väited ujumise kohta peavad paika?",
     "options": [
-      "Ujumisv?istlused peetakse vees.",
-      "Vabaltujumine lubab eri stiile.",
+      "Ujumisvõistlused peetakse vees.",
+      "Vabaujumine lubab eri stiile.",
       "Liblikas on ujumisstiil.",
-      "Ol?mpiabassein on 50 meetrit pikk.",
-      "Ujujad kannavad uiske.",
-      "Iga ring algab scrumiga.",
-      "Selili start k?ib veest.",
-      "Puuteplaadid fikseerivad fini?i.",
-      "V?ravad otsustavad vabaltujumise.",
-      "Tour de France on ujumisv?istlus."
+      "Olümpiabassein on 50 m pikk.",
+      "Ujujad kannavad võistlusel uiske.",
+      "Scrum alustab iga ringi.",
+      "Selili start käib veest.",
+      "Puuteplaadid fikseerivad finiši.",
+      "Väravad otsustavad vabaltujumise.",
+      "Tour de France on ujumisvõistlus."
     ],
     "correct": {
       "correctIndexes": [
@@ -1335,18 +1335,18 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Sport: Millised v?ited rattas?idu kohta peavad paika?",
+    "question": "Sport: Millised väited rattasõidu kohta peavad paika?",
     "options": [
-      "Tour de France on rattas?it.",
-      "Ratturid v?ivad tuules s?ita.",
-      "Maantees?idus v?ib olla t?use.",
-      "Peloton on p?higrupp.",
-      "Rattas?idus kasutatakse sulgpalli.",
-      "Kollased kaardid otsustavad etapi.",
-      "Rajaratast s?idetakse velodroomil.",
-      "Jalgratastel pole kette.",
-      "Maantees?idus kantakse kiivrit.",
-      "Punkte saadakse korvi tabades."
+      "Tour de France on rattasõit.",
+      "Ratturid võivad tuules sõita.",
+      "Maanteesõidus võib olla tõuse.",
+      "Peloton on põhirühm.",
+      "Rattasõidus kasutatakse sulgpalli.",
+      "Etapi võitjat otsustab kollane kaart.",
+      "Rajaratast sõidetakse velodroomil.",
+      "Jalgratastel pole ketti.",
+      "Maanteesõidus kantakse kiivrit.",
+      "Ratturid koguvad punkte korvi visates."
     ],
     "correct": {
       "correctIndexes": [
@@ -1367,17 +1367,17 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Sport: Millised v?ited poksi kohta peavad paika?",
+    "question": "Sport: Millised väited poksi kohta peavad paika?",
     "options": [
-      "Poksijad l??vad kinnastega.",
+      "Poksijad löövad kinnastega.",
       "Poksis kasutatakse ringi.",
-      "Mat? jaguneb raundideks.",
-      "Nokaut v?ib mat?i l?petada.",
-      "V?ravad otsustavad poksi.",
-      "Poksis tehakse try'sid.",
-      "Kohtunik v?ib lugemist alustada.",
-      "V?rk jagab poksiv?ljaku pooleks.",
-      "Kaalujaotus loeb poksis.",
+      "Matšid jagunevad raundideks.",
+      "Nokaut võib matši lõpetada.",
+      "Väravad otsustavad profipoksi.",
+      "Poksijad teevad lahtises mängus try'sid.",
+      "Kohtunik võib lugemist alustada.",
+      "Võrk jagab poksiväljaku pooleks.",
+      "Kaaluklassid on poksis tähtsad.",
       "Poksis kasutatakse sulgpalli."
     ],
     "correct": {
@@ -1399,18 +1399,18 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Sport: Millised v?ited vehklemise kohta peavad paika?",
+    "question": "Sport: Millised väited vehklemise kohta peavad paika?",
     "options": [
-      "Vehklemises kasutatakse relvi ja maske.",
-      "Florett, epee ja saber on relvad.",
-      "Koht v?ib otsustuda torkega.",
+      "Vehklemises kasutatakse relva ja maski.",
+      "Florett, epee ja saabel on relvad.",
+      "Koht võib otsustuda torkega.",
       "Piste on vehklemisrada.",
-      "Vehklemises on wicketid.",
-      "Stanley Cup kroonib vehklejaid.",
-      "Ees?igus loeb floreti puhul.",
-      "M?ngijad viskavad kolmepunktiviskeid.",
-      "Elektriarvestus on tavaline.",
-      "Scrum taask?ivitab vehklemise."
+      "Vehklemises kasutatakse wicket'eid.",
+      "Stanley Cup kuulub vehklejatele.",
+      "Eesõigus loeb floreti puhul.",
+      "Mängijad viskavad kolmepunktiviskeid.",
+      "Elektrooniline punktiarvestus on tavaline.",
+      "Scrum taaskäivitab vehklemise."
     ],
     "correct": {
       "correctIndexes": [
@@ -1431,18 +1431,18 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Sport: Millised v?ited judo kohta peavad paika?",
+    "question": "Sport: Millised väited judo kohta peavad paika?",
     "options": [
       "Judo sai alguse Jaapanis.",
       "Heited on judos kesksed.",
       "Judogi on treeninguvorm.",
-      "Mat?i v?ib v?ita ipponiga.",
-      "Judos kasutatakse nuiu ja kiivrit.",
-      "V?ravad otsustavad judot.",
-      "Ol?mpiajudos on kaaluklassid.",
-      "Judos on vaja reketit.",
-      "Maasv?itlus kuulub judo juurde.",
-      "Judot peetakse j??l."
+      "Matši võib võita ipponiga.",
+      "Judos kasutatakse keppe ja kiivreid.",
+      "Väravad otsustavad judot.",
+      "Olümpiajudos on kaaluklassid.",
+      "Judos on reket kohustuslik.",
+      "Maasvõitlus kuulub judo juurde.",
+      "Judot peetakse jääl."
     ],
     "correct": {
       "correctIndexes": [
@@ -1463,18 +1463,18 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Sport: Millised v?ited karate kohta peavad paika?",
+    "question": "Sport: Millised väited karate kohta peavad paika?",
     "options": [
-      "Karate p?rineb Okinawalt.",
+      "Karate pärineb Okinawalt.",
       "Kata kuulub karate juurde.",
-      "Karates kasutatakse l??ke ja jalal??ke.",
+      "Karates kasutatakse lööke ja jalalööke.",
       "Karate oli Tokyo 2020 kavas.",
       "Karates kasutatakse litrit ja uiske.",
-      "Punkte saadakse korvi tabades.",
+      "Punkti saamiseks on vaja korvi.",
       "Dojo on treeningsaal.",
-      "Karatet m?ngitakse wicketitega.",
-      "V??d n?itavad koolides taset.",
-      "Scrum taask?ivitab karate."
+      "Karatet mängitakse wicket'itega.",
+      "Vööd näitavad koolides taset.",
+      "Scrum taaskäivitab karate."
     ],
     "correct": {
       "correctIndexes": [
@@ -1495,18 +1495,18 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Sport: Millised v?ited golfi kohta peavad paika?",
+    "question": "Sport: Millised väited golfi kohta peavad paika?",
     "options": [
-      "Golfi m?ngitakse kepi ja palliga.",
-      "M?ngijad sihivad v?heste l??kidega auku.",
-      "Birdie on ?ks alla pari.",
-      "V?ljakul on sageli 18 rada.",
-      "V?ravad l??akse peaga.",
-      "Golfis on v?rk ja sulgpall.",
-      "Masters on suurturniir.",
-      "Putterit kasutatakse griinil.",
-      "Suluseis on golfi karistus.",
-      "Golfiring peetakse j??l."
+      "Golfi mängitakse kepi ja palliga.",
+      "Mängijad sihivad väheste löökidega auku.",
+      "Birdie on üks alla pari.",
+      "Väljakul on sageli 18 rada.",
+      "Väravad lüüakse peaga.",
+      "Golfis on võrk ja sulgpall.",
+      "The Masters on suurturniir.",
+      "Putterit kasutatakse green'il.",
+      "Suluseis on golfis karistus.",
+      "Golfiring peetakse jääl."
     ],
     "correct": {
       "correctIndexes": [
@@ -1527,18 +1527,18 @@
     "topic": "Sports",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Sport: Millised v?ited snookeri kohta peavad paika?",
+    "question": "Sport: Millised väited snookeri kohta peavad paika?",
     "options": [
-      "Snookerit m?ngitakse kaleviga laual.",
-      "M?ngijad l??vad palle kiiga.",
-      "M?ngus on ka v?rvilised pallid.",
-      "Maksimaalne seeria on 147.",
-      "Snookeris on ovaalne pall.",
-      "V?ravad otsustavad v?itja.",
+      "Snookerit mängitakse kaleviga laual.",
+      "Mängijad löövad palle kiiga.",
+      "Mängus on ka värvilised pallid.",
+      "Maksimaalne breik on 147.",
+      "Snookeris kasutatakse ovaalset palli.",
+      "Väravad otsustavad võitja.",
       "Must pall annab seitse punkti.",
-      "Iga l??gi eel driblatakse.",
-      "Mat? koosneb freimidest.",
-      "Snookerit m?ngitakse basseinis."
+      "Iga löögi eel driblatakse.",
+      "Freimid moodustavad snookeri matši.",
+      "Snookerit mängitakse basseinis."
     ],
     "correct": {
       "correctIndexes": [
@@ -4048,27 +4048,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Millised read on oiged? Fookus: Energy.",
+    "question": "Teadus: Millised väited energia kohta peavad paika?",
     "options": [
-      "Sun orbits the Earth.",
-      "Electrons are positively charged.",
-      "Neurons transmit signals.",
-      "Sound travels slower than light.",
-      "Atoms have a nucleus.",
-      "Sound travels faster than light.",
-      "DNA carries genetic information.",
-      "Water is CO2.",
-      "Earth orbits the Sun.",
-      "Electrons have negative charge."
+      "Energia võib muuta vormi.",
+      "Joul on energia ühik.",
+      "Kineetiline energia sõltub liikumisest.",
+      "Keemilised kütused talletavad energiat.",
+      "Võimsus on energia ajaühikus.",
+      "Energiat mõõdetakse liitrites.",
+      "Energiat leidub ainult tähtedes.",
+      "Energiat ei saa üle kanda.",
+      "Magnet on energia SI ühik.",
+      "Paigalseis tähendab lõputut energiat."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        4,
-        6,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -4080,28 +4079,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Tuvasta kehtivad vaited. Fookus: Entropy.",
+    "question": "Teadus: Millised väited entroopia kohta peavad paika?",
     "options": [
-      "Water is H2O.",
-      "Earth orbits the Sun.",
-      "Water boils at 10C.",
-      "Water boils at 100C.",
-      "Atoms have no protons.",
-      "Sun orbits the Earth.",
-      "Oxygen supports combustion.",
-      "Sound travels slower than light.",
-      "Mars is called the Red Planet.",
-      "Atoms have a nucleus."
+      "Entroopia mõõdab korratust.",
+      "Entroopia kuulub termodünaamikasse.",
+      "Soojusvoog võib entroopiat tõsta.",
+      "Boltzmann sidus entroopia olekutega.",
+      "Suletud süsteem kipub kasvama.",
+      "Entroopia on elektrivoolu ühik.",
+      "Väike entroopia tähendab juhuslikkust.",
+      "Entroopia langeb igas protsessis.",
+      "Entroopiat kasutatakse vaid astronoomias.",
+      "Celsius mõõdab entroopiat otse."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        6,
-        7,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -4113,23 +4110,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Margi selle teema toesed vaited. Fookus: Oxygen.",
+    "question": "Teadus: Millised väited hapniku kohta peavad paika?",
     "options": [
-      "Gravity attracts mass.",
-      "Sound travels faster than light.",
-      "Gravity repels all mass.",
-      "Water boils at 100C.",
-      "Water boils at 10C.",
-      "Sun orbits the Earth.",
-      "Plants grow without sunlight.",
-      "Neurons are only in plants.",
-      "Mars is the hottest planet.",
-      "Electrons are positively charged."
+      "Hapniku tähis on O.",
+      "Õhus on umbes 21% hapnikku.",
+      "Hapnik toetab põlemist.",
+      "Aeroobne elu kasutab hapnikku.",
+      "Osoon koosneb hapniku aatomitest.",
+      "Hapnik on kõige kergem element.",
+      "Puhas hapnik on metall.",
+      "Õhus pole üldse hapnikku.",
+      "Hapnikul pole tules rolli.",
+      "Hapniku tähis on Au."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4141,24 +4141,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Millised vaited on oiged? Fookus: Hydrogen.",
+    "question": "Teadus: Millised väited vesiniku kohta peavad paika?",
     "options": [
-      "Sun orbits the Earth.",
-      "Gravity repels all mass.",
-      "Sound travels faster than light.",
-      "Neurons transmit signals.",
-      "Water boils at 10C.",
-      "Oxygen cannot support fire.",
-      "Plants grow without sunlight.",
-      "Mars is called the Red Planet.",
-      "Oxygen supports combustion.",
-      "Water is CO2."
+      "Vesiniku tähis on H.",
+      "Vesinik on kõige kergem element.",
+      "Vesi sisaldab vesiniku aatomeid.",
+      "Päike on vesinikurikas.",
+      "Rakettides kasutatakse vesinikku.",
+      "Vesinik on väärisgaas.",
+      "Vesiniku järjenumber on 8.",
+      "Vesi ei sisalda vesinikku.",
+      "Vesinik on pliist tihedam.",
+      "Vesiniku tähis on Hg."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        7,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -4170,25 +4172,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Leia sobivad vaited. Fookus: Nitrogen.",
+    "question": "Teadus: Millised väited lämmastiku kohta peavad paika?",
     "options": [
-      "Earth orbits the Sun.",
-      "Plants grow without sunlight.",
-      "Water boils at 10C.",
-      "Sun orbits the Earth.",
-      "Gravity attracts mass.",
-      "Oxygen supports combustion.",
-      "Neurons transmit signals.",
-      "Mars is the hottest planet.",
-      "Water is CO2.",
-      "DNA stores photos."
+      "Lämmastiku tähis on N.",
+      "Õhk koosneb peamiselt lämmastikust.",
+      "Vedell lämmastik on väga külm.",
+      "Taimed vajavad lämmastikuühendeid.",
+      "Lämmastikku kasutatakse väetistes.",
+      "Lämmastik on halogeen.",
+      "Lämmastiku tähis on Na.",
+      "Õhus pole lämmastikku.",
+      "Vedell lämmastik keeb 100 kraadi juures.",
+      "Lämmastik on alati lilla."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        5,
-        6
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4200,26 +4203,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Vali koik toed vaited. Fookus: Carbon.",
+    "question": "Teadus: Millised väited süsiniku kohta peavad paika?",
     "options": [
-      "Oxygen cannot support fire.",
-      "Electrons have negative charge.",
-      "Plants use photosynthesis.",
-      "Plants grow without sunlight.",
-      "DNA stores photos.",
-      "Water boils at 100C.",
-      "Sun orbits the Earth.",
-      "Neurons transmit signals.",
-      "Electrons are positively charged.",
-      "Gravity attracts mass."
+      "Süsiniku tähis on C.",
+      "Teemant sisaldab süsinikku.",
+      "Grafiit sisaldab süsinikku.",
+      "Süsinikdioksiid sisaldab süsinikku.",
+      "Orgaanika tugineb süsinikule.",
+      "Süsiniku tähis on Ca.",
+      "Süsinik on väärisgaas.",
+      "Teemant ei sisalda süsinikku.",
+      "Süsiniku järjenumber on 92.",
+      "Taimed ei ringlusta süsinikku."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        5,
-        7,
-        9
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4231,27 +4234,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Millised read on oiged? Fookus: Helium.",
+    "question": "Teadus: Millised väited heeliumi kohta peavad paika?",
     "options": [
-      "Oxygen cannot support fire.",
-      "Electrons are positively charged.",
-      "Plants use photosynthesis.",
-      "Neurons transmit signals.",
-      "Gravity attracts mass.",
-      "Sound travels slower than light.",
-      "Water is CO2.",
-      "Water boils at 100C.",
-      "Earth orbits the Sun.",
-      "Water boils at 10C."
+      "Heelium on väärisgaas.",
+      "Heeliumi tähis on He.",
+      "Heelium on õhust kergem.",
+      "Heeliumi õhupallid võivad tõusta.",
+      "Heelium on väga väheaktiivne.",
+      "Heelium on toas vedel.",
+      "Heelium on raske metall.",
+      "Heeliumi tähis on Hm.",
+      "Tähtedes pole heeliumi.",
+      "Heelium põleb nagu bensiin."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        4,
-        5,
-        7,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -4263,28 +4265,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Tuvasta kehtivad vaited. Fookus: Neon.",
+    "question": "Teadus: Millised väited neooni kohta peavad paika?",
     "options": [
-      "Plants use photosynthesis.",
-      "Sound travels slower than light.",
-      "Water is CO2.",
-      "Water boils at 100C.",
-      "DNA carries genetic information.",
-      "Water is H2O.",
-      "Gravity attracts mass.",
-      "Atoms have no protons.",
-      "Atoms have a nucleus.",
-      "Mars is the hottest planet."
+      "Neoon on väärisgaas.",
+      "Neooni tähis on Ne.",
+      "Neoonsildid helendavad voolu all.",
+      "Neoon on väga väheaktiivne.",
+      "Õhus leidub neooni vähesel määral.",
+      "Neoon on vedel metall.",
+      "Neooni tähis on Na.",
+      "Neoon on tavaline lauasool.",
+      "Neoon moodustab enamiku mereveest.",
+      "Neoon põleb nagu bensiin."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        4,
-        5,
-        6,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -4296,23 +4296,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Margi selle teema toesed vaited. Fookus: Sodium.",
+    "question": "Teadus: Millised väited naatriumi kohta peavad paika?",
     "options": [
-      "Mars is called the Red Planet.",
-      "DNA stores photos.",
-      "Mars is the hottest planet.",
-      "Gravity repels all mass.",
-      "Electrons are positively charged.",
-      "Sun orbits the Earth.",
-      "Sound travels slower than light.",
-      "Atoms have no protons.",
-      "Oxygen cannot support fire.",
-      "Water is CO2."
+      "Naatriumi tähis on Na.",
+      "Naatrium on leelismetall.",
+      "Lauasool sisaldab naatriumi.",
+      "Naatrium reageerib veega tugevalt.",
+      "Naatriumi ioone kasutavad närvirakud.",
+      "Naatriumi tähis on So.",
+      "Naatrium on väärisgaas.",
+      "Lauasool ei sisalda naatriumi.",
+      "Naatrium on vees ohutu.",
+      "Naatrium on kõige raskem metall."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        6
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4324,24 +4327,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Millised vaited on oiged? Fookus: Potassium.",
+    "question": "Teadus: Millised väited kaaliumi kohta peavad paika?",
     "options": [
-      "Electrons are positively charged.",
-      "Gravity repels all mass.",
-      "Water boils at 10C.",
-      "Earth orbits the Sun.",
-      "Oxygen cannot support fire.",
-      "Water boils at 100C.",
-      "Mars is called the Red Planet.",
-      "Sun orbits the Earth.",
-      "Water is CO2.",
-      "DNA stores photos."
+      "Kaaliumi tähis on K.",
+      "Kaalium on leelismetall.",
+      "Banaanid sisaldavad kaaliumi.",
+      "Rakud kasutavad kaaliumi ioone.",
+      "Kaalium võib veega reageerida.",
+      "Kaaliumi tähis on P.",
+      "Kaalium on väärisgaas.",
+      "Banaanides pole kaaliumi.",
+      "Rakud ei kasuta kaaliumi.",
+      "Kaalium on kullast tihedam."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        5,
-        6
+        4
       ]
     },
     "difficulty": "2",
@@ -4353,25 +4358,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Leia sobivad vaited. Fookus: Calcium.",
+    "question": "Teadus: Millised väited kaltsiumi kohta peavad paika?",
     "options": [
-      "Neurons are only in plants.",
-      "Atoms have a nucleus.",
-      "Oxygen supports combustion.",
-      "DNA stores photos.",
-      "Water is H2O.",
-      "Sun orbits the Earth.",
-      "Sound travels slower than light.",
-      "Water boils at 10C.",
-      "Sound travels faster than light.",
-      "Gravity repels all mass."
+      "Kaltsiumi tähis on Ca.",
+      "Luud sisaldavad kaltsiumiühendeid.",
+      "Piim võib anda kaltsiumi.",
+      "Kaltsium aitab lihastel tõmbuda.",
+      "Lubjakivi sisaldab kaltsiumkarbonaati.",
+      "Kaltsiumi tähis on Cn.",
+      "Kaltsium on väärisgaas.",
+      "Luudes pole kaltsiumi.",
+      "Piim ei sisalda kaltsiumi.",
+      "Kaltsium on planeedi nimi."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        4,
-        6
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4383,26 +4389,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Vali koik toed vaited. Fookus: Iron.",
+    "question": "Teadus: Millised väited raua kohta peavad paika?",
     "options": [
-      "Water is CO2.",
-      "Electrons have negative charge.",
-      "Sound travels slower than light.",
-      "Electrons are positively charged.",
-      "Atoms have a nucleus.",
-      "Sun orbits the Earth.",
-      "Atoms have no protons.",
-      "DNA carries genetic information.",
-      "Water boils at 100C.",
-      "Gravity repels all mass."
+      "Raua tähis on Fe.",
+      "Hemoglobiin sisaldab rauda.",
+      "Teras põhineb suuresti raual.",
+      "Raud võib niiskes õhus roostetada.",
+      "Maa tuum sisaldab palju rauda.",
+      "Raua tähis on Ir.",
+      "Raud on väärisgaas.",
+      "Teras ei sisalda rauda.",
+      "Õhk koosneb peamiselt rauast.",
+      "Hemoglobiinis pole rauda."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        4,
-        7,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4414,27 +4420,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Millised read on oiged? Fookus: Copper.",
+    "question": "Teadus: Millised väited vase kohta peavad paika?",
     "options": [
-      "Water boils at 100C.",
-      "Water boils at 10C.",
-      "Gravity attracts mass.",
-      "Sound travels faster than light.",
-      "Mars is the hottest planet.",
-      "Plants use photosynthesis.",
-      "Mars is called the Red Planet.",
-      "Electrons are positively charged.",
-      "Oxygen supports combustion.",
-      "Atoms have a nucleus."
+      "Vase tähis on Cu.",
+      "Vask juhib elektrit hästi.",
+      "Juhtmed sisaldavad sageli vaske.",
+      "Vask võib muutuda rohekaks.",
+      "Pronks sisaldab vaske.",
+      "Vase tähis on Co.",
+      "Vask on väärisgaas.",
+      "Vask on läbipaistev nagu õhk.",
+      "Pronks ei sisalda vaske.",
+      "Vask ei juhi soojust."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        5,
-        6,
-        8,
-        9
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4446,28 +4451,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Tuvasta kehtivad vaited. Fookus: Silver.",
+    "question": "Teadus: Millised väited hõbeda kohta peavad paika?",
     "options": [
-      "Plants use photosynthesis.",
-      "Gravity repels all mass.",
-      "Atoms have a nucleus.",
-      "Gravity attracts mass.",
-      "Oxygen cannot support fire.",
-      "Mars is called the Red Planet.",
-      "Water is H2O.",
-      "Water boils at 100C.",
-      "Electrons have negative charge.",
-      "Atoms have no protons."
+      "Hõbeda tähis on Ag.",
+      "Hõbe juhib elektrit hästi.",
+      "Hõbe on väärismetall.",
+      "Tuhmumine võib hõbedat tumendada.",
+      "Hõbedat kasutatakse ehetes.",
+      "Hõbeda tähis on Si.",
+      "Hõbe on väärisgaas.",
+      "Hõbe hõljub nagu heelium.",
+      "Hõbedas pole metalli aatomeid.",
+      "Tuhmumine teeb hõbeda radioaktiivseks."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        5,
-        6,
-        7,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -4479,23 +4482,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Margi selle teema toesed vaited. Fookus: Gold.",
+    "question": "Teadus: Millised väited kulla kohta peavad paika?",
     "options": [
-      "DNA stores photos.",
-      "Water is CO2.",
-      "Sound travels slower than light.",
-      "Electrons are positively charged.",
-      "Neurons are only in plants.",
-      "Mars is the hottest planet.",
-      "Mars is called the Red Planet.",
-      "Sound travels faster than light.",
-      "Gravity repels all mass.",
-      "Oxygen cannot support fire."
+      "Kulla tähis on Au.",
+      "Kuld on väärismetall.",
+      "Kuld talub korrosiooni hästi.",
+      "Kulda kasutatakse ehetes.",
+      "Kuld juhib elektrit.",
+      "Kulla tähis on Go.",
+      "Kuld on väärisgaas.",
+      "Kuld roostetab rauast kiiremini.",
+      "Kuld on õhust kergem.",
+      "Kulda leidub ainult Kuul."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        6
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4507,24 +4513,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Millised vaited on oiged? Fookus: Mercury.",
+    "question": "Teadus: Millised väited elavhõbeda kohta peavad paika?",
     "options": [
-      "Neurons transmit signals.",
-      "Gravity repels all mass.",
-      "Water boils at 10C.",
-      "Sun orbits the Earth.",
-      "DNA stores photos.",
-      "Water boils at 100C.",
-      "Mars is the hottest planet.",
-      "Atoms have a nucleus.",
-      "Atoms have no protons.",
-      "Electrons are positively charged."
+      "Elavhõbeda tähis on Hg.",
+      "Elavhõbe on toas vedel.",
+      "Vanad termomeetrid kasutasid elavhõbedat.",
+      "Elavhõbe on inimesele mürgine.",
+      "Elavhõbe on metall.",
+      "Elavhõbeda tähis on Mc.",
+      "Elavhõbe on väärisgaas.",
+      "Elavhõbe on juues ohutu.",
+      "Elavhõbe külmub 100 kraadi juures.",
+      "Elavhõbe tekib vaid ookeanis."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        5,
-        7
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4536,25 +4544,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Leia sobivad vaited. Fookus: Venus.",
+    "question": "Teadus: Millised väited Veenuse kohta peavad paika?",
     "options": [
-      "Plants grow without sunlight.",
-      "Oxygen supports combustion.",
-      "Neurons are only in plants.",
-      "Sun orbits the Earth.",
-      "Oxygen cannot support fire.",
-      "Electrons have negative charge.",
-      "Water boils at 100C.",
-      "Electrons are positively charged.",
-      "DNA stores photos.",
-      "Sound travels slower than light."
+      "Veenus on Päikesest teine planeet.",
+      "Veenusel on paks CO2 atmosfäär.",
+      "Veenus on Maaga sarnase suurusega.",
+      "Veenuse pind on väga kuum.",
+      "Veenus pöörleb väga aeglaselt.",
+      "Veenus on suurim planeet.",
+      "Veenusel on Saturni moodi rõngad.",
+      "Veenus on Pluutost külmem.",
+      "Veenus on Jupiteri kuu.",
+      "Veenus koosneb peamiselt jääst."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        5,
-        6,
-        9
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4566,26 +4575,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Vali koik toed vaited. Fookus: Earth.",
+    "question": "Teadus: Millised väited Maa kohta peavad paika?",
     "options": [
-      "Electrons are positively charged.",
-      "Mars is called the Red Planet.",
-      "Water is CO2.",
-      "Sun orbits the Earth.",
-      "Oxygen supports combustion.",
-      "Plants grow without sunlight.",
-      "Water boils at 10C.",
-      "Neurons transmit signals.",
-      "Atoms have a nucleus.",
-      "DNA carries genetic information."
+      "Maa on Päikesest kolmas planeet.",
+      "Vedela veega on kaetud suur osa Maast.",
+      "Maal on üks looduslik kaaslane.",
+      "Laamtektoonika kujundab maakoort.",
+      "Maa õhus on palju lämmastikku.",
+      "Maal on Saturni moodi rõngad.",
+      "Maa on Päikesele lähemal kui Veenus.",
+      "Maal puudub magnetväli.",
+      "Maa on suurim gaasihiid.",
+      "Maal on kaks päikest."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        4,
-        7,
-        8,
-        9
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4597,27 +4606,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Millised read on oiged? Fookus: Mars.",
+    "question": "Teadus: Millised väited Marsi kohta peavad paika?",
     "options": [
-      "Water is CO2.",
-      "Sun orbits the Earth.",
-      "Gravity attracts mass.",
-      "Electrons have negative charge.",
-      "Oxygen supports combustion.",
-      "Sound travels slower than light.",
-      "Plants use photosynthesis.",
-      "Neurons are only in plants.",
-      "Gravity repels all mass.",
-      "DNA carries genetic information."
+      "Marss on Päikesest neljas planeet.",
+      "Marss on tuntud punase planeedina.",
+      "Olympus Mons asub Marsil.",
+      "Marsil on kaks väikest kuud.",
+      "Marsi on uurinud kulgurid.",
+      "Marss on Päikesele lähemal kui Maa.",
+      "Marss on gaasihiid.",
+      "Marsil on tihe hapnikurikas õhk.",
+      "Marsil on Saturni moodi rõngad.",
+      "Marss on kõige kuumem planeet."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        4,
-        5,
-        6,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -4629,28 +4637,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Tuvasta kehtivad vaited. Fookus: Jupiter.",
+    "question": "Teadus: Millised väited Jupiteri kohta peavad paika?",
     "options": [
-      "Neurons transmit signals.",
-      "Water is H2O.",
-      "Water is CO2.",
-      "Electrons are positively charged.",
-      "Plants grow without sunlight.",
-      "Atoms have a nucleus.",
-      "Oxygen supports combustion.",
-      "Plants use photosynthesis.",
-      "Sound travels slower than light.",
-      "Earth orbits the Sun."
+      "Jupiter on suurim planeet.",
+      "Jupiter on gaasihiid.",
+      "Suur Punane Laik on Jupiteril.",
+      "Jupiteril on palju kuid.",
+      "Jupiter on Päikesest viies planeet.",
+      "Jupiter on Maast väiksem.",
+      "Jupiteril pole atmosfääri.",
+      "Jupiter koosneb tahkest rauast.",
+      "Jupiter on Päikesele lähim planeet.",
+      "Jupiteril pole ühtegi kuud."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        5,
-        6,
-        7,
-        8,
-        9
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",

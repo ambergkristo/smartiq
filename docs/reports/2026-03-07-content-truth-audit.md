@@ -2,21 +2,21 @@
 
 ## Metadata
 
-- Generated: 2026-03-10T14:56:31.656Z
+- Generated: 2026-03-10T15:02:56.828Z
 - Scope: EN, ET SmartIQ locale packs
 
 ## Executive Summary
 
-- EN: NOT READY - editorial cleanup required before launch trust | score 0.946 | total issues 423
-- ET: BLOCKED - ET is not launch-ready | score 0.842 | total issues 1202
+- EN: CONDITIONAL - editorial cleanup still required | score 0.951 | total issues 390
+- ET: BLOCKED - ET is not launch-ready | score 0.850 | total issues 1139
 
 ## EN Findings
 
 - Dataset: `data/smart10/cards.en.json`
-- Semantic content score: 0.946
-- Launch readiness: NOT READY - editorial cleanup required before launch trust
-- Total issue hits: 423
-- Warning count: 423
+- Semantic content score: 0.951
+- Launch readiness: CONDITIONAL - editorial cleanup still required
+- Total issue hits: 390
+- Warning count: 390
 
 ### Issue Counts
 
@@ -24,8 +24,8 @@
 - broken grammar: 0
 - unnatural phrasing: 210
 - placeholder content: 0
-- templated/scaffold wording: 13
-- recycled option pool: 200
+- templated/scaffold wording: 0
+- recycled option pool: 180
 - low-trust option wording: 0
 - trivial/low-value content: 0
 
@@ -47,37 +47,30 @@
 - `varia-order-003` Varia/ORDER: Varia: Order currency values low to high. Build one correct sequence. Theme: Keyboard.
 - `varia-order-004` Varia/ORDER: Varia: Order time units shortest to longest. Rank all options from first to last. Theme: Notebook.
 
-#### templated/scaffold wording
-
-- `science-true_false-012` Science/TRUE_FALSE: Science: Identify valid statements. Focus area: Entropy.
-- `science-true_false-013` Science/TRUE_FALSE: Science: Mark statements that are true for this topic. Focus area: Oxygen.
-- `science-true_false-015` Science/TRUE_FALSE: Science: Find the statements that fit. Focus area: Nitrogen.
-- `science-true_false-016` Science/TRUE_FALSE: Science: Select all true statements. Focus area: Carbon.
-
 #### recycled option pool
 
-- `science-true_false-011` Science/TRUE_FALSE: Science: Which lines are correct? Focus area: Energy.
-- `science-true_false-012` Science/TRUE_FALSE: Science: Identify valid statements. Focus area: Entropy.
-- `science-true_false-013` Science/TRUE_FALSE: Science: Mark statements that are true for this topic. Focus area: Oxygen.
-- `science-true_false-014` Science/TRUE_FALSE: Science: Which claims are accurate? Focus area: Hydrogen.
+- `history-open-001` History/OPEN: History: Select statements that are true. Topic clue: Ancient Rome.
+- `history-open-002` History/OPEN: History: Which statements are correct? Topic clue: Viking Age.
+- `history-open-003` History/OPEN: History: Pick all true statements. Topic clue: Renaissance.
+- `history-open-004` History/OPEN: History: Identify factual statements. Topic clue: Industrial Revolution.
 
 
 ## ET Findings
 
 - Dataset: `data/smart10/cards.et.json`
-- Semantic content score: 0.842
+- Semantic content score: 0.850
 - Launch readiness: BLOCKED - ET is not launch-ready
-- Total issue hits: 1202
-- Warning count: 1202
+- Total issue hits: 1139
+- Warning count: 1139
 
 ### Issue Counts
 
 - language leakage: 130
-- broken grammar: 419
+- broken grammar: 389
 - unnatural phrasing: 280
 - placeholder content: 0
-- templated/scaffold wording: 13
-- recycled option pool: 200
+- templated/scaffold wording: 0
+- recycled option pool: 180
 - low-trust option wording: 160
 - trivial/low-value content: 0
 
@@ -101,10 +94,10 @@
 
 #### broken grammar
 
-- `sports-true_false-011-et` Sports/TRUE_FALSE: Sport: Millised v?ited lauatennise kohta peavad paika?
-- `sports-true_false-012-et` Sports/TRUE_FALSE: Sport: Millised v?ited kergej?ustiku kohta peavad paika?
-- `sports-true_false-013-et` Sports/TRUE_FALSE: Sport: Millised v?ited ujumise kohta peavad paika?
-- `sports-true_false-014-et` Sports/TRUE_FALSE: Sport: Millised v?ited rattas?idu kohta peavad paika?
+- `history-number-001-et` History/NUMBER: Ajalugu: Mis aastal loppes Teine maailmasoda? Kontekst: Ancient Rome.
+- `history-number-007-et` History/NUMBER: Ajalugu: Mis aastal loppes Teine maailmasoda? Kontekst: Magna Carta.
+- `history-number-013-et` History/NUMBER: Ajalugu: Mis aastal loppes Teine maailmasoda? Kontekst: Alexander the Great.
+- `history-number-019-et` History/NUMBER: Ajalugu: Mis aastal loppes Teine maailmasoda? Kontekst: Treaty of Versailles.
 
 #### unnatural phrasing
 
@@ -112,13 +105,6 @@
 - `history-order-003-et` History/ORDER: Ajalugu: Order dates from past to recent. Koosta uks korrektne jarjestus. Teema: Renaissance.
 - `history-order-005-et` History/ORDER: Ajalugu: Order oldest era to newest. Ara jata uhtegi kohta vahele. Teema: French Revolution.
 - `history-order-006-et` History/ORDER: Ajalugu: Order dates from past to recent. Igat kohta kasutatakse tapselt korra. Teema: Silk Road.
-
-#### templated/scaffold wording
-
-- `science-true_false-012-et` Science/TRUE_FALSE: Teadus: Tuvasta kehtivad vaited. Fookus: Entropy.
-- `science-true_false-013-et` Science/TRUE_FALSE: Teadus: Margi selle teema toesed vaited. Fookus: Oxygen.
-- `science-true_false-015-et` Science/TRUE_FALSE: Teadus: Leia sobivad vaited. Fookus: Nitrogen.
-- `science-true_false-016-et` Science/TRUE_FALSE: Teadus: Vali koik toed vaited. Fookus: Carbon.
 
 #### low-trust option wording
 
@@ -129,8 +115,8 @@
 
 #### recycled option pool
 
-- `science-true_false-011-et` Science/TRUE_FALSE: Teadus: Millised read on oiged? Fookus: Energy.
-- `science-true_false-012-et` Science/TRUE_FALSE: Teadus: Tuvasta kehtivad vaited. Fookus: Entropy.
-- `science-true_false-013-et` Science/TRUE_FALSE: Teadus: Margi selle teema toesed vaited. Fookus: Oxygen.
-- `science-true_false-014-et` Science/TRUE_FALSE: Teadus: Millised vaited on oiged? Fookus: Hydrogen.
+- `history-open-001-et` History/OPEN: Ajalugu: Vali tõesed vaited. Teemavihe: Ancient Rome.
+- `history-open-002-et` History/OPEN: Ajalugu: Millised vaited on oiged? Teemavihe: Viking Age.
+- `history-open-003-et` History/OPEN: Ajalugu: Vali koik tõesed vaited. Teemavihe: Renaissance.
+- `history-open-004-et` History/OPEN: Ajalugu: Tuvasta faktivaided. Teemavihe: Industrial Revolution.
 
