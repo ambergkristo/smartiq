@@ -2498,25 +2498,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Find the statements that fit. Focus area: Canberra.",
+    "question": "Geography: Which statements about Canberra are true?",
     "options": [
-      "Sahara is a desert.",
-      "Greenland is near equator.",
-      "Nile flows through Brazil.",
-      "Danube flows through Australia.",
-      "Ottawa is US capital.",
-      "Tokyo is in South Korea.",
-      "Ottawa is Canada's capital.",
-      "Greenland is mostly ice-covered.",
       "Canberra is Australia's capital.",
-      "Everest is in the Alps."
+      "Canberra lies in the ACT.",
+      "Parliament House stands there.",
+      "Canberra is an inland city.",
+      "Lake Burley Griffin is in Canberra.",
+      "Canberra is New Zealand's capital.",
+      "Canberra sits on the Pacific coast.",
+      "Sydney Opera House is in Canberra.",
+      "Canberra uses the euro.",
+      "Canberra is in Queensland."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        6,
-        7,
-        8
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -2528,26 +2529,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Select all true statements. Focus area: Ottawa.",
+    "question": "Geography: Which statements about Ottawa are true?",
     "options": [
-      "Tokyo is in South Korea.",
-      "Andes are in Africa.",
-      "Sahara is a desert.",
-      "Greenland is mostly ice-covered.",
-      "Canberra is Australia's capital.",
-      "Everest is in the Alps.",
-      "Lisbon is in Portugal.",
-      "Greenland is near equator.",
-      "Iceland is an island nation.",
-      "Lisbon is in Spain."
+      "Ottawa is Canada's capital.",
+      "Ottawa lies in Ontario.",
+      "Parliament Hill is in Ottawa.",
+      "Ottawa River meets the city.",
+      "Ottawa borders Quebec across river.",
+      "Ottawa is Canada's largest city.",
+      "CN Tower stands in Ottawa.",
+      "Ottawa is on the Pacific coast.",
+      "Ottawa is the US capital.",
+      "Ottawa lies in Alberta."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        4,
-        6,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -2559,18 +2560,18 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Which lines are correct? Focus area: Tokyo.",
+    "question": "Geography: Which statements about Tokyo are true?",
     "options": [
-      "Nile flows through Egypt.",
-      "Greenland is mostly ice-covered.",
-      "Andes are in South America.",
-      "Iceland is an island nation.",
-      "Canberra is in New Zealand.",
-      "Sahara is a desert.",
-      "Pacific is the largest ocean.",
-      "Nile flows through Brazil.",
-      "Ottawa is US capital.",
-      "Andes are in Africa."
+      "Tokyo is Japan's capital.",
+      "Tokyo lies on Honshu.",
+      "Tokyo Bay borders the metropolis.",
+      "Tokyo Skytree stands there.",
+      "Tokyo anchors a huge metro area.",
+      "Tokyo is South Korea's capital.",
+      "Tokyo lies on Hokkaido.",
+      "Tokyo uses the euro.",
+      "Tokyo is on Mediterranean coast.",
+      "Tokyo is in the Himalayas."
     ],
     "correct": {
       "correctIndexes": [
@@ -2578,8 +2579,7 @@
         1,
         2,
         3,
-        5,
-        6
+        4
       ]
     },
     "difficulty": "2",
@@ -2591,28 +2591,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Identify valid statements. Focus area: Seoul.",
+    "question": "Geography: Which statements about Seoul are true?",
     "options": [
-      "Sahara is a desert.",
-      "Nile flows through Egypt.",
-      "Canberra is in New Zealand.",
-      "Himalayas include Mount Everest.",
-      "Everest is in the Alps.",
-      "Greenland is mostly ice-covered.",
-      "Danube flows through Europe.",
-      "Nile flows through Brazil.",
-      "Canberra is Australia's capital.",
-      "Tokyo is in Japan."
+      "Seoul is South Korea's capital.",
+      "Han River runs through Seoul.",
+      "Seoul lies in northwest South Korea.",
+      "Gyeongbokgung is in Seoul.",
+      "South Korean won is used there.",
+      "Seoul is North Korea's capital.",
+      "Seoul is on Jeju Island.",
+      "Seoul uses the euro.",
+      "Seoul lies in the Alps.",
+      "Seoul is in Thailand."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        5,
-        6,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -2624,23 +2622,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Mark statements that are true for this topic. Focus area: Beijing.",
+    "question": "Geography: Which statements about Beijing are true?",
     "options": [
-      "Ottawa is Canada's capital.",
-      "Ottawa is US capital.",
-      "Iceland is in the tropics.",
-      "Sahara is a desert.",
-      "Tokyo is in South Korea.",
-      "Canberra is in New Zealand.",
-      "Everest is in the Alps.",
-      "Atlantic is the largest ocean.",
-      "Greenland is near equator.",
-      "Andes are in Africa."
+      "Beijing is China's capital.",
+      "Forbidden City is in Beijing.",
+      "Tiananmen Square is there.",
+      "Beijing lies in northern China.",
+      "Great Wall sections lie nearby.",
+      "Beijing is Taiwan's capital.",
+      "Beijing is on tropical island.",
+      "Beijing uses the euro.",
+      "Beijing is in the Andes.",
+      "Beijing sits on Atlantic coast."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -2652,24 +2653,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Which claims are accurate? Focus area: New Delhi.",
+    "question": "Geography: Which statements about New Delhi are true?",
     "options": [
-      "Tokyo is in South Korea.",
-      "Nile flows through Egypt.",
-      "Canberra is in New Zealand.",
-      "Iceland is in the tropics.",
-      "Danube flows through Europe.",
-      "Sahara is a rainforest.",
-      "Ottawa is US capital.",
-      "Everest is in the Alps.",
-      "Tokyo is in Japan.",
-      "Greenland is near equator."
+      "New Delhi seats India's government.",
+      "New Delhi is part of Delhi.",
+      "India Gate stands in New Delhi.",
+      "Rashtrapati Bhavan is there.",
+      "Indian rupee is used there.",
+      "New Delhi is Pakistan's capital.",
+      "New Delhi is on the Ganges.",
+      "New Delhi lies on a sea coast.",
+      "New Delhi uses the euro.",
+      "New Delhi is in the Himalayas."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        4,
-        8
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -2681,25 +2684,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Find the statements that fit. Focus area: Nile.",
+    "question": "Geography: Which statements about the Nile are true?",
     "options": [
-      "Ottawa is US capital.",
-      "Tokyo is in South Korea.",
-      "Andes are in Africa.",
-      "Andes are in South America.",
-      "Greenland is mostly ice-covered.",
-      "Nile flows through Brazil.",
-      "Everest is in the Alps.",
-      "Canberra is Australia's capital.",
-      "Iceland is in the tropics.",
-      "Lisbon is in Portugal."
+      "The Nile flows through Egypt.",
+      "The Nile flows through Sudan.",
+      "The Nile reaches Mediterranean Sea.",
+      "Blue and White Nile meet nearby.",
+      "The Nile is among longest rivers.",
+      "The Nile flows through Brazil.",
+      "The Nile empties into Atlantic.",
+      "The Nile rises in the Alps.",
+      "The Nile is only in Europe.",
+      "The Nile is Amazon tributary."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        4,
-        7,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -2711,26 +2715,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Select all true statements. Focus area: Amazon.",
+    "question": "Geography: Which statements about the Amazon are true?",
     "options": [
-      "Nile flows through Egypt.",
-      "Iceland is an island nation.",
-      "Canberra is Australia's capital.",
-      "Canberra is in New Zealand.",
-      "Greenland is mostly ice-covered.",
-      "Danube flows through Australia.",
-      "Everest is in the Alps.",
-      "Nile flows through Brazil.",
-      "Sahara is a rainforest.",
-      "Danube flows through Europe."
+      "The Amazon flows through Brazil.",
+      "The Amazon reaches Atlantic Ocean.",
+      "Amazon basin contains rainforest.",
+      "Rio Negro joins the Amazon.",
+      "Amazon is huge by discharge.",
+      "The Amazon crosses the Sahara.",
+      "The Amazon is Europe's river.",
+      "The Amazon ends in Mediterranean.",
+      "The Amazon starts in Himalayas.",
+      "The Amazon has one tributary."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
         2,
-        4,
-        9
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -2742,27 +2746,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Which lines are correct? Focus area: Danube.",
+    "question": "Geography: Which statements about the Danube are true?",
     "options": [
-      "Everest is in the Alps.",
-      "Tokyo is in South Korea.",
-      "Himalayas include Mount Everest.",
-      "Greenland is near equator.",
-      "Atlantic is the largest ocean.",
-      "Pacific is the largest ocean.",
-      "Tokyo is in Japan.",
-      "Lisbon is in Portugal.",
-      "Ottawa is Canada's capital.",
-      "Canberra is Australia's capital."
+      "The Danube flows through Europe.",
+      "Vienna stands on the Danube.",
+      "Budapest stands on the Danube.",
+      "Danube ends at the Black Sea.",
+      "Danube rises in Black Forest.",
+      "Danube is Africa's longest river.",
+      "Danube runs through Paris.",
+      "Danube empties into Atlantic.",
+      "Danube is in Australia.",
+      "Danube rises in the Andes."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
-        5,
-        6,
-        7,
-        8,
-        9
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -2774,28 +2777,26 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Geography: Identify valid statements. Focus area: Rhine.",
+    "question": "Geography: Which statements about the Rhine are true?",
     "options": [
-      "Andes are in Africa.",
-      "Ottawa is Canada's capital.",
-      "Tokyo is in Japan.",
-      "Everest is in the Alps.",
-      "Sahara is a desert.",
-      "Himalayas include Mount Everest.",
-      "Canberra is in New Zealand.",
-      "Canberra is Australia's capital.",
-      "Andes are in South America.",
-      "Danube flows through Europe."
+      "The Rhine flows through Europe.",
+      "The Rhine reaches the North Sea.",
+      "Cologne stands on the Rhine.",
+      "Rhine borders France and Germany.",
+      "The Rhine rises in Swiss Alps.",
+      "The Rhine ends in Black Sea.",
+      "The Rhine crosses the Sahara.",
+      "The Rhine flows through Brazil.",
+      "The Rhine runs through Athens.",
+      "The Rhine starts in Himalayas."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        4,
-        5,
-        7,
-        8,
-        9
+        3,
+        4
       ]
     },
     "difficulty": "2",
