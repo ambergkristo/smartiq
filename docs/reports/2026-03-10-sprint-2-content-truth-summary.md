@@ -24,7 +24,6 @@ Todo:
 - ET remains blocked for launch.
 - Largest remaining ET repair zones:
   - `OPEN`
-  - `NUMBER` mojibake slices
 
 ## Task 2 - EN semantic quality audit
 
@@ -121,7 +120,7 @@ Todo:
 Current observed report baseline:
 
 - EN score: `0.975`
-- ET score: `0.950`
+- ET score: `0.951`
 
 Closed repair zone:
 
@@ -139,8 +138,8 @@ Closed repair zone:
 - `ORDER` dropped out of the EN and ET top-risk backlog
 - `COLOR` is now fully repaired across all six topic lanes (`History`, `Sports`, `Geography`, `Culture`, `Science`, `Varia`)
 - `COLOR` dropped out of the EN and ET top-risk backlog
+- ET `History/NUMBER` mojibake prompts were corrected and `NUMBER` dropped out of the top-risk backlog
 
 ## Next Repair Priority
 
 1. remaining `OPEN` recycled pools
-2. `NUMBER` mojibake slices

@@ -2,13 +2,13 @@
 
 ## Metadata
 
-- Generated: 2026-03-10T15:26:00.903Z
+- Generated: 2026-03-10T15:37:04.562Z
 - Scope: EN, ET SmartIQ locale packs
 
 ## Executive Summary
 
 - EN: CONDITIONAL - editorial cleanup still required | score 0.975 | total issues 180
-- ET: BLOCKED - ET is not launch-ready | score 0.950 | total issues 365
+- ET: BLOCKED - ET is not launch-ready | score 0.951 | total issues 360
 
 ## EN Findings
 
@@ -51,15 +51,15 @@
 ## ET Findings
 
 - Dataset: `data/smart10/cards.et.json`
-- Semantic content score: 0.950
+- Semantic content score: 0.951
 - Launch readiness: BLOCKED - ET is not launch-ready
-- Total issue hits: 365
-- Warning count: 365
+- Total issue hits: 360
+- Warning count: 360
 
 ### Issue Counts
 
 - language leakage: 30
-- broken grammar: 155
+- broken grammar: 150
 - unnatural phrasing: 0
 - placeholder content: 0
 - templated/scaffold wording: 0
@@ -87,10 +87,10 @@
 
 #### broken grammar
 
-- `history-number-001-et` History/NUMBER: Ajalugu: Mis aastal loppes Teine maailmasoda? Kontekst: Ancient Rome.
-- `history-number-007-et` History/NUMBER: Ajalugu: Mis aastal loppes Teine maailmasoda? Kontekst: Magna Carta.
-- `history-number-013-et` History/NUMBER: Ajalugu: Mis aastal loppes Teine maailmasoda? Kontekst: Alexander the Great.
-- `history-number-019-et` History/NUMBER: Ajalugu: Mis aastal loppes Teine maailmasoda? Kontekst: Treaty of Versailles.
+- `history-open-001-et` History/OPEN: Ajalugu: Vali tõesed vaited. Teemavihe: Ancient Rome.
+- `history-open-002-et` History/OPEN: Ajalugu: Millised vaited on oiged? Teemavihe: Viking Age.
+- `history-open-003-et` History/OPEN: Ajalugu: Vali koik tõesed vaited. Teemavihe: Renaissance.
+- `history-open-005-et` History/OPEN: Ajalugu: Millised variandid on oiged? Teemavihe: French Revolution.
 
 #### recycled option pool
 

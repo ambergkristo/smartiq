@@ -5598,7 +5598,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal loppes Teine maailmasoda? Kontekst: Ancient Rome.",
+    "question": "Ajalugu: Mis aastal lõppes Teine maailmasõda? Kontekst: Vana-Rooma.",
     "options": [
       "1975",
       "1935",
@@ -5624,7 +5624,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal langes Berliini muur? Kontekst: Viking Age.",
+    "question": "Ajalugu: Mis aastal langes Berliini müür? Kontekst: Viikingiaeg.",
     "options": [
       "2019",
       "1984",
@@ -5650,7 +5650,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal maandus Apollo 11? Kontekst: Renaissance.",
+    "question": "Ajalugu: Mis aastal maandus Apollo 11? Kontekst: Renessanss.",
     "options": [
       "1949",
       "1989",
@@ -5676,7 +5676,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta? Kontekst: Industrial Revolution.",
+    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta? Kontekst: Tööstusrevolutsioon.",
     "options": [
       "1215",
       "1210",
@@ -5702,7 +5702,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal lagunes NSVL? Kontekst: French Revolution.",
+    "question": "Ajalugu: Mis aastal lagunes NSVL? Kontekst: Prantsuse revolutsioon.",
     "options": [
       "1971",
       "2011",
@@ -5728,7 +5728,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal algas Esimene maailmasoda? Kontekst: Silk Road.",
+    "question": "Ajalugu: Mis aastal algas Esimene maailmasõda? Kontekst: Siiditee.",
     "options": [
       "1904",
       "1934",
@@ -5754,7 +5754,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal loppes Teine maailmasoda? Kontekst: Magna Carta.",
+    "question": "Ajalugu: Mis aastal lõppes Teine maailmasõda? Kontekst: Magna Carta.",
     "options": [
       "1955",
       "1950",
@@ -5780,7 +5780,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal langes Berliini muur? Kontekst: Ottoman Empire.",
+    "question": "Ajalugu: Mis aastal langes Berliini müür? Kontekst: Osmanite riik.",
     "options": [
       "2029",
       "1994",
@@ -5806,7 +5806,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal maandus Apollo 11? Kontekst: Ming Dynasty.",
+    "question": "Ajalugu: Mis aastal maandus Apollo 11? Kontekst: Mingi dünastia.",
     "options": [
       "1979",
       "1999",
@@ -5832,7 +5832,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta? Kontekst: Norman Conquest.",
+    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta? Kontekst: Normanni vallutus.",
     "options": [
       "1185",
       "1255",
@@ -5884,7 +5884,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal algas Esimene maailmasoda? Kontekst: Julius Caesar.",
+    "question": "Ajalugu: Mis aastal algas Esimene maailmasõda? Kontekst: Julius Caesar.",
     "options": [
       "1934",
       "1954",
@@ -5910,7 +5910,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal loppes Teine maailmasoda? Kontekst: Alexander the Great.",
+    "question": "Ajalugu: Mis aastal lõppes Teine maailmasõda? Kontekst: Aleksander Suur.",
     "options": [
       "1955",
       "1925",
@@ -5936,7 +5936,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal langes Berliini muur? Kontekst: Gutenberg Press.",
+    "question": "Ajalugu: Mis aastal langes Berliini müür? Kontekst: Gutenbergi trükipress.",
     "options": [
       "1959",
       "1979",
@@ -5962,7 +5962,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal maandus Apollo 11? Kontekst: Roman Republic.",
+    "question": "Ajalugu: Mis aastal maandus Apollo 11? Kontekst: Rooma vabariik.",
     "options": [
       "1974",
       "1999",
@@ -5988,7 +5988,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta? Kontekst: Cold War.",
+    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta? Kontekst: Külm sõda.",
     "options": [
       "1255",
       "1195",
@@ -6014,7 +6014,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal lagunes NSVL? Kontekst: Berlin Wall.",
+    "question": "Ajalugu: Mis aastal lagunes NSVL? Kontekst: Berliini müür.",
     "options": [
       "1996",
       "1971",
@@ -6040,7 +6040,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal algas Esimene maailmasoda? Kontekst: Apollo 11.",
+    "question": "Ajalugu: Mis aastal algas Esimene maailmasõda? Kontekst: Apollo 11.",
     "options": [
       "1884",
       "1919",
@@ -6066,7 +6066,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal loppes Teine maailmasoda? Kontekst: Treaty of Versailles.",
+    "question": "Ajalugu: Mis aastal lõppes Teine maailmasõda? Kontekst: Versailles' rahuleping.",
     "options": [
       "1925",
       "1985",
@@ -6092,7 +6092,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal langes Berliini muur? Kontekst: Byzantine Empire.",
+    "question": "Ajalugu: Mis aastal langes Berliini müür? Kontekst: Bütsantsi riik.",
     "options": [
       "1979",
       "2029",
@@ -6118,7 +6118,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal maandus Apollo 11? Kontekst: Meiji Restoration.",
+    "question": "Ajalugu: Mis aastal maandus Apollo 11? Kontekst: Meiji restauratsioon.",
     "options": [
       "1964",
       "1974",
@@ -6144,7 +6144,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta? Kontekst: Age of Exploration.",
+    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta? Kontekst: Avastusretkede ajastu.",
     "options": [
       "1185",
       "1245",
@@ -6170,7 +6170,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal lagunes NSVL? Kontekst: Bronze Age.",
+    "question": "Ajalugu: Mis aastal lagunes NSVL? Kontekst: Pronksiaeg.",
     "options": [
       "2031",
       "1971",
@@ -6196,7 +6196,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal algas Esimene maailmasoda? Kontekst: Iron Age.",
+    "question": "Ajalugu: Mis aastal algas Esimene maailmasõda? Kontekst: Rauaaeg.",
     "options": [
       "1954",
       "1914",
@@ -6222,7 +6222,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal loppes Teine maailmasoda? Kontekst: Harlem Renaissance.",
+    "question": "Ajalugu: Mis aastal lõppes Teine maailmasõda? Kontekst: Harlemi renessanss.",
     "options": [
       "1940",
       "1975",
@@ -6248,7 +6248,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal langes Berliini muur? Kontekst: Printing Press.",
+    "question": "Ajalugu: Mis aastal langes Berliini müür? Kontekst: Trükipress.",
     "options": [
       "1994",
       "1984",
@@ -6274,7 +6274,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal maandus Apollo 11? Kontekst: Han Dynasty.",
+    "question": "Ajalugu: Mis aastal maandus Apollo 11? Kontekst: Hani dünastia.",
     "options": [
       "2009",
       "1999",
@@ -6326,7 +6326,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal lagunes NSVL? Kontekst: Persian Empire.",
+    "question": "Ajalugu: Mis aastal lagunes NSVL? Kontekst: Pärsia impeerium.",
     "options": [
       "2011",
       "1981",
@@ -6352,7 +6352,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal algas Esimene maailmasoda? Kontekst: Maya Civilization.",
+    "question": "Ajalugu: Mis aastal algas Esimene maailmasõda? Kontekst: Maiade tsivilisatsioon.",
     "options": [
       "1919",
       "1894",
