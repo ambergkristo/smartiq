@@ -4656,23 +4656,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Margi selle teema toesed vaited. Fookus: Calendar.",
+    "question": "Varia: Millised v?ited kalendri kohta peavad paika?",
     "options": [
-      "Recipe is a tax document.",
-      "Clock writes emails.",
-      "Wallet is footwear.",
-      "Airport is only for trains.",
-      "A week has seven days.",
-      "Ticket is always free money.",
-      "Umbrella is for underwater use.",
-      "Compass points north.",
-      "Libraries sell cars.",
-      "Passport is a house key."
+      "Kalender jagab aja kuup?evadeks.",
+      "Kuud on kalendris tavaliselt sees.",
+      "N?dalas on seitse p?eva.",
+      "Kalender aitab plaane j?lgida.",
+      "Liigaasta m?jutab kalendrit.",
+      "Kalendrit kasutatakse vaid vee all.",
+      "Kalender asendab uksev?tit.",
+      "Kalender on jalats.",
+      "Kalender k?psetab pliidil toitu.",
+      "Kalender loodi ainult e-kirjade jaoks."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        7
+        0,
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4684,24 +4687,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Millised vaited on oiged? Fookus: Compass.",
+    "question": "Varia: Millised v?ited kompassi kohta peavad paika?",
     "options": [
-      "Ticket is always free money.",
-      "Compass points north.",
-      "A week has seven days.",
-      "Keyboard is a cooking tool.",
-      "Umbrella is for underwater use.",
-      "Wallet is footwear.",
-      "Airport is only for trains.",
-      "Libraries sell cars.",
-      "Wallet holds cash or cards.",
-      "Recipe is a tax document."
+      "Kompass n?itab suunda.",
+      "P?hi on kompassi p?hisund.",
+      "Kompass aitab navigeerida.",
+      "Magnetn?el on kompassis tavaline.",
+      "Kompass ja kaart k?ivad tihti koos.",
+      "Kompass m??dab kehatemperatuuri.",
+      "Kompass on v?ileib.",
+      "Kompass prindib dokumente.",
+      "Kompass on jalats.",
+      "Kompass on vaid muusika jaoks."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4713,25 +4718,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Leia sobivad vaited. Fookus: Keyboard.",
+    "question": "Varia: Millised v?ited klaviatuuri kohta peavad paika?",
     "options": [
-      "Passport is a house key.",
-      "Recipe lists ingredients.",
-      "Recipe is a tax document.",
-      "Ticket can grant entry.",
-      "Clock writes emails.",
-      "Compass measures temperature.",
-      "Keyboard is an input device.",
-      "Keyboard is a cooking tool.",
-      "Ticket is always free money.",
-      "A week has seven days."
+      "Klaviatuur on sisendseade.",
+      "Klahvidega sisestatakse t?hti ja numbreid.",
+      "Klaviatuuri kasutatakse arvutiga.",
+      "Paljudel klaviatuuridel on t?hikuklahv.",
+      "M?ni klaviatuur t??tab juhtmevabalt.",
+      "Klaviatuur keedab tee jaoks vett.",
+      "Klaviatuur on ujumiseks m?eldud.",
+      "Klaviatuur on rahakott.",
+      "Klaviatuur n?itab p?hjasuunda.",
+      "Klaviatuur on raudteejaam."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
+        2,
         3,
-        6,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -4743,26 +4749,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Vali koik toed vaited. Fookus: Notebook.",
+    "question": "Varia: Millised v?ited m?rkmiku kohta peavad paika?",
     "options": [
-      "Recipe lists ingredients.",
-      "Coffee contains caffeine.",
-      "Ticket is always free money.",
-      "Library lends books.",
-      "Clock writes emails.",
-      "A week has nine days.",
-      "Wallet is footwear.",
-      "Keyboard is a cooking tool.",
-      "Clock shows time.",
-      "Compass points north."
+      "M?rkmikku saab teha m?rkmeid.",
+      "Paljudes m?rkmikes on paberlehed.",
+      "M?rkmikku kasutatakse ?ppimiseks.",
+      "M?rkmik mahub sageli kotti.",
+      "Kaas kaitseb paljusid m?rkmikke.",
+      "M?rkmikku kantakse jalas.",
+      "M?rkmikuga praetakse mune.",
+      "M?rkmik on vihmavari.",
+      "M?rkmik asendab k?iki teid.",
+      "M?rkmik t??tab diisliga."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -4774,27 +4780,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Millised read on oiged? Fookus: Backpack.",
+    "question": "Varia: Millised v?ited seljakoti kohta peavad paika?",
     "options": [
-      "Keyboard is a cooking tool.",
-      "Umbrella helps in rain.",
-      "Passport is travel ID.",
-      "Wallet holds cash or cards.",
-      "Clock writes emails.",
-      "Library lends books.",
-      "Ticket is always free money.",
-      "Compass points north.",
-      "Recipe is a tax document.",
-      "Ticket can grant entry."
+      "Seljakotti kantakse seljas.",
+      "?larihmad kuuluvad seljakoti juurde.",
+      "Seljakott mahutab raamatuid ja varustust.",
+      "T?mblukk on seljakotil tavaline.",
+      "Matkajad kasutavad sageli seljakotti.",
+      "Seljakott n?itab t?pset aega.",
+      "Seljakott on sukeldumisriist.",
+      "Seljakott on magustoit.",
+      "Seljakott n?itab p?hja.",
+      "Seljakott on rongipilet."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
         3,
-        5,
-        7,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -4806,28 +4811,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Tuvasta kehtivad vaited. Fookus: Umbrella.",
+    "question": "Varia: Millised v?ited vihmavarju kohta peavad paika?",
     "options": [
-      "Keyboard is an input device.",
-      "Coffee is made from plastic.",
-      "Ticket can grant entry.",
-      "Umbrella helps in rain.",
-      "Umbrella is for underwater use.",
-      "Libraries sell cars.",
-      "Library lends books.",
-      "Clock shows time.",
-      "Coffee contains caffeine.",
-      "Passport is travel ID."
+      "Vihmavari kaitseb vihma eest.",
+      "Kupli osa avaneb kasutaja kohale.",
+      "Paljud vihmavarjud k?ivad kokku.",
+      "Vihmavari v?ib anda varju.",
+      "K?epide on vihmavarjul tavaline.",
+      "Vihmavarju kantakse kiivrina.",
+      "Vihmavarjuga praetakse toitu.",
+      "Vihmavari on maja pass.",
+      "Vihmavarju kasutatakse mere all.",
+      "Vihmavari asendab jalgratast."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        6,
-        7,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -4839,23 +4842,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Margi selle teema toesed vaited. Fookus: Clock.",
+    "question": "Varia: Millised v?ited kella kohta peavad paika?",
     "options": [
-      "Ticket can grant entry.",
-      "Libraries sell cars.",
-      "Airport is only for trains.",
-      "Clock shows time.",
-      "Keyboard is a cooking tool.",
-      "Coffee is made from plastic.",
-      "Ticket is always free money.",
-      "Clock writes emails.",
-      "Recipe is a tax document.",
-      "Wallet is footwear."
+      "Kell n?itab aega.",
+      "Paljudel kelladel on tunnijaotus.",
+      "Kell v?ib olla digi v?i analoog.",
+      "Seinakella riputatakse tuppa.",
+      "?ratuskell v?ib inimese ?ratada.",
+      "Kell k?psetab leiba ahjus.",
+      "Kell on jalats.",
+      "Kella kasutatakse lennuv?ravana.",
+      "Kella pruulitakse nagu teed.",
+      "Kell on maksudokument."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4867,24 +4873,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Millised vaited on oiged? Fookus: Watch.",
+    "question": "Varia: Millised v?ited k?ekella kohta peavad paika?",
     "options": [
-      "A week has nine days.",
-      "Clock writes emails.",
-      "Ticket can grant entry.",
-      "Recipe lists ingredients.",
-      "Compass measures temperature.",
-      "Libraries sell cars.",
-      "Keyboard is a cooking tool.",
-      "Ticket is always free money.",
-      "Coffee contains caffeine.",
-      "Airport is only for trains."
+      "K?ekella kantakse sageli randmel.",
+      "K?ekell v?ib n?idata aega.",
+      "M?nel k?ekellal on alarm.",
+      "Digik?ekellal on ekraan.",
+      "Rihm on k?ekellal tavaline.",
+      "K?ekell on k??gitaldrik.",
+      "K?ekell on aiat?? jaoks.",
+      "K?ekell n?itab p?hja nagu kompass.",
+      "K?ekell on seljakott.",
+      "K?ekella s??akse vahepalaks."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -4896,25 +4904,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Leia sobivad vaited. Fookus: Bicycle.",
+    "question": "Varia: Millised v?ited jalgratta kohta peavad paika?",
     "options": [
-      "Airport serves air travel.",
-      "A week has seven days.",
-      "Clock writes emails.",
-      "Wallet holds cash or cards.",
-      "Compass measures temperature.",
-      "Keyboard is an input device.",
-      "Libraries sell cars.",
-      "Wallet is footwear.",
-      "A week has nine days.",
-      "Ticket is always free money."
+      "Jalgrattal on tavaliselt kaks ratast.",
+      "Pedaalid aitavad ratast edasi viia.",
+      "Lenksu kasutatakse juhtimiseks.",
+      "Paljudel ratastel on kett?lekanne.",
+      "Jalgratas ei vaja k?tusepaaki.",
+      "Jalgratas on vihmavari.",
+      "Jalgratast kasutatakse vaid vees.",
+      "Jalgratas prindib fotosid.",
+      "Jalgratast kantakse randmel.",
+      "Jalgratas on supp."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        5
+        4
       ]
     },
     "difficulty": "2",
@@ -4926,26 +4935,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Vali koik toed vaited. Fookus: Scooter.",
+    "question": "Varia: Millised v?ited t?ukeratta kohta peavad paika?",
     "options": [
-      "Airport serves air travel.",
-      "Umbrella is for underwater use.",
-      "Clock shows time.",
-      "Ticket is always free money.",
-      "Recipe lists ingredients.",
-      "Library lends books.",
-      "Airport is only for trains.",
-      "Passport is a house key.",
-      "Umbrella helps in rain.",
-      "Recipe is a tax document."
+      "T?ukerattal on lenks.",
+      "Paljudel t?ukeratastel on kaks ratast.",
+      "Seisulaud toetab s?itjat.",
+      "T?ukeratast l?katakse jalaga.",
+      "M?ni t?ukeratas on elektriline.",
+      "T?ukeratast k?psetatakse ahjus.",
+      "T?ukeratas on raamatukogu asi.",
+      "T?ukeratas on puuvili.",
+      "T?ukeratast kasutatakse padjana.",
+      "T?ukeratas on k?ekell."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        4,
-        5,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4957,27 +4966,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Millised read on oiged? Fookus: Elevator.",
+    "question": "Varia: Millised v?ited lifti kohta peavad paika?",
     "options": [
-      "A week has nine days.",
-      "Ticket is always free money.",
-      "Recipe is a tax document.",
-      "Coffee is made from plastic.",
-      "Ticket can grant entry.",
-      "A week has seven days.",
-      "Keyboard is an input device.",
-      "Clock shows time.",
-      "Coffee contains caffeine.",
-      "Compass points north."
+      "Lift liigub korruste vahel.",
+      "Nuppudega valitakse korrus.",
+      "Lifte on k?rgetes hoonetes palju.",
+      "Lifti uks avaneb automaatselt.",
+      "Lifti nimetatakse ka t?stukiks.",
+      "Lifti kasutatakse kookide k?psetamiseks.",
+      "Lift on jalats.",
+      "Lift navigeerib kompassiga.",
+      "Lift kasvab puu otsas.",
+      "Lifti serveeritakse tassis."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        5,
-        6,
-        7,
-        8,
-        9
+        0,
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4989,28 +4997,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Tuvasta kehtivad vaited. Fookus: Subway.",
+    "question": "Varia: Millised v?ited metroo kohta peavad paika?",
     "options": [
-      "Passport is a house key.",
-      "Keyboard is a cooking tool.",
-      "Umbrella is for underwater use.",
-      "Ticket can grant entry.",
-      "Coffee contains caffeine.",
-      "Library lends books.",
-      "Clock shows time.",
-      "Passport is travel ID.",
-      "Umbrella helps in rain.",
-      "A week has seven days."
+      "Metrooga s?idavad linnareisijad.",
+      "Paljud metrood liiguvad maa all.",
+      "Jaamad kuuluvad metroos?steemi juurde.",
+      "Rong peatub mitmes jaamas.",
+      "Metroo aitab linnas liikuda.",
+      "Metroo on rahakott.",
+      "Metrood k?psetatakse jahust.",
+      "Metroo n?itab ilma.",
+      "Metroo on ainult laevade jaoks.",
+      "Metroot kantakse peas."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -5022,23 +5028,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Margi selle teema toesed vaited. Fookus: Airport.",
+    "question": "Varia: Millised v?ited lennujaama kohta peavad paika?",
     "options": [
-      "A week has seven days.",
-      "Passport is a house key.",
-      "Libraries sell cars.",
-      "Keyboard is a cooking tool.",
-      "Umbrella is for underwater use.",
-      "Wallet is footwear.",
-      "Coffee is made from plastic.",
-      "Recipe is a tax document.",
-      "Airport serves air travel.",
-      "Ticket is always free money."
+      "Lennujaam teenindab lennureise.",
+      "Lennujaamal on rajad.",
+      "Reisijad kasutavad terminale.",
+      "Lennujaam haldab v?ljumisi ja saabumisi.",
+      "Juhtimistorn juhib ?mbruse lennukeid.",
+      "Lennujaam on vaid rongide jaoks.",
+      "Lennujaam on k??giriist.",
+      "Lennujaam on seljakott.",
+      "Lennujaam n?itab magnetp?hja.",
+      "Lennujaam on supp."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        8
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5050,21 +5059,23 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Millised vaited on oiged? Fookus: Library.",
+    "question": "Varia: Millised v?ited raamatukogu kohta peavad paika?",
     "options": [
-      "Coffee is made from plastic.",
-      "A week has nine days.",
-      "Airport serves air travel.",
-      "Keyboard is an input device.",
-      "Umbrella helps in rain.",
-      "Wallet is footwear.",
-      "Ticket is always free money.",
-      "Airport is only for trains.",
-      "Clock writes emails.",
-      "Umbrella is for underwater use."
+      "Raamatukogu laenutab raamatuid.",
+      "Raamatukogus on sageli kataloog.",
+      "Raamatukogus saab vaikselt ?ppida.",
+      "Raamatukogu v?ib hoida arhiive.",
+      "Raamatukoguhoidja aitab materjale leida.",
+      "Raamatukogu m??b peamiselt autosid.",
+      "Raamatukogu kasutatakse vihmavarjuna.",
+      "Raamatukogu viib reisijad v?lismaale.",
+      "Raamatukogu on jalats.",
+      "Raamatukogu pruulib kohviube."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
         4
@@ -5079,25 +5090,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Leia sobivad vaited. Fookus: Museum.",
+    "question": "Varia: Millised v?ited muuseumi kohta peavad paika?",
     "options": [
-      "Wallet is footwear.",
-      "A week has seven days.",
-      "Passport is a house key.",
-      "Recipe is a tax document.",
-      "Ticket can grant entry.",
-      "Passport is travel ID.",
-      "Compass points north.",
-      "Libraries sell cars.",
-      "Coffee is made from plastic.",
-      "Clock writes emails."
+      "Muuseumis n?idatakse kogusid.",
+      "Muuseum v?ib n?idata kunsti v?i ajalugu.",
+      "Eksponaadid seatakse k?lastajale v?lja.",
+      "Muuseumis kasutatakse sageli pileteid.",
+      "Muuseum s?ilitab olulisi esemeid.",
+      "Muuseum on lennuraja teenus.",
+      "Muuseum on v?ileib.",
+      "Muuseum n?itab p?hja.",
+      "Muuseumi kantakse randmel.",
+      "Muuseumit pruulitakse vees."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        4,
-        5,
-        6
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5109,26 +5121,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Vali koik toed vaited. Fookus: Restaurant.",
+    "question": "Varia: Millised v?ited restorani kohta peavad paika?",
     "options": [
-      "Airport is only for trains.",
-      "Ticket can grant entry.",
-      "Keyboard is an input device.",
-      "Compass points north.",
-      "Wallet is footwear.",
-      "A week has nine days.",
-      "Compass measures temperature.",
-      "Passport is travel ID.",
-      "Umbrella helps in rain.",
-      "Keyboard is a cooking tool."
+      "Restoran pakub valmistoitu.",
+      "Men?? loetleb s??ke ja jooke.",
+      "K?lalised s??vad seal laudades.",
+      "Teenindaja v?ib tellimusi v?tta.",
+      "Restoranis on tavaliselt k??k.",
+      "Restoran on bussipilet.",
+      "Restoran on kiiver.",
+      "Restoran n?itab t?elist p?hja.",
+      "Restoran on sukeldumiseks m?eldud.",
+      "Restoran on pass."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
         3,
-        7,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -5140,27 +5152,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Millised read on oiged? Fookus: Recipe.",
+    "question": "Varia: Millised v?ited retsepti kohta peavad paika?",
     "options": [
-      "Keyboard is an input device.",
-      "Coffee contains caffeine.",
-      "Compass measures temperature.",
-      "Airport is only for trains.",
-      "Recipe is a tax document.",
-      "A week has nine days.",
-      "Passport is travel ID.",
-      "A week has seven days.",
-      "Recipe lists ingredients.",
-      "Library lends books."
+      "Retsept loetleb koostisosi.",
+      "Retsept kirjeldab valmistamisetappe.",
+      "Retseptis v?ib olla k?psetusaeg.",
+      "Retsept aitab rooga korrata.",
+      "M??dud on retseptis tavalised.",
+      "Retsept on maksut?ekk.",
+      "Retsept on jalats.",
+      "Retsept n?itab rongide v?ljumist.",
+      "Retsept asendab vihmavarju.",
+      "Retsept on ukselukk."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        6,
-        7,
-        8,
-        9
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5172,28 +5183,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Tuvasta kehtivad vaited. Fookus: Sandwich.",
+    "question": "Varia: Millised v?ited v?ileiva kohta peavad paika?",
     "options": [
-      "Airport is only for trains.",
-      "Wallet holds cash or cards.",
-      "Ticket is always free money.",
-      "Keyboard is an input device.",
-      "Passport is travel ID.",
-      "Ticket can grant entry.",
-      "Airport serves air travel.",
-      "Library lends books.",
-      "A week has nine days.",
-      "Compass points north."
+      "V?ileivas on tavaliselt leib.",
+      "T?idis j??b leibade vahele.",
+      "V?ileiba v?ib s??a k?lmalt.",
+      "Paljusid v?ileibu on lihtne kaasa v?tta.",
+      "Leivaviilud on v?ileivas tavalised.",
+      "V?ileib on navigeerimisriist.",
+      "V?ileib on pass.",
+      "V?ileib n?itab t?pset aega.",
+      "V?ileib on tehtud poltidest.",
+      "V?ileib on metroojaam."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
+        2,
         3,
-        4,
-        5,
-        6,
-        7,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -5205,23 +5214,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Margi selle teema toesed vaited. Fookus: Pasta.",
+    "question": "Varia: Millised v?ited pasta kohta peavad paika?",
     "options": [
-      "Umbrella helps in rain.",
-      "Wallet is footwear.",
-      "Coffee contains caffeine.",
-      "Libraries sell cars.",
-      "Airport is only for trains.",
-      "Clock writes emails.",
-      "Recipe is a tax document.",
-      "Umbrella is for underwater use.",
-      "A week has nine days.",
-      "Coffee is made from plastic."
+      "Pasta tehakse tainast.",
+      "Paljusid pastasid keedetakse.",
+      "Pasta kujud on v?ga erinevad.",
+      "Nisu on pastas tavaline.",
+      "Pastat serveeritakse tihti kastmega.",
+      "Pasta on kompass.",
+      "Pasta on k?ekell.",
+      "Pastaga prinditakse lehti.",
+      "Pasta on ainult metallist.",
+      "Pasta on lennujaamahoone."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        2
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5233,24 +5245,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Millised vaited on oiged? Fookus: Chocolate.",
+    "question": "Varia: Millised v?ited ?okolaadi kohta peavad paika?",
     "options": [
-      "Compass points north.",
-      "Recipe is a tax document.",
-      "Umbrella is for underwater use.",
-      "Passport is a house key.",
-      "Clock writes emails.",
-      "Ticket is always free money.",
-      "Libraries sell cars.",
-      "Coffee contains caffeine.",
-      "Wallet is footwear.",
-      "Recipe lists ingredients."
+      "?okolaad tehakse kakaost.",
+      "?okolaad v?ib olla tume v?i piima.",
+      "?okolaad on sageli magus.",
+      "?okolaadi sulatatakse magustoitudes.",
+      "Tahvel on ?okolaadil tavaline vorm.",
+      "?okolaad on raamatukogu.",
+      "?okolaad n?itab p?hja.",
+      "?okolaad on peamine jalatsimaterjal.",
+      "?okolaad on metrooplatvorm.",
+      "?okolaad on passileht."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        7,
-        9
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5262,25 +5276,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Leia sobivad vaited. Fookus: Coffee.",
+    "question": "Varia: Millised v?ited kohvi kohta peavad paika?",
     "options": [
-      "Clock shows time.",
-      "Keyboard is a cooking tool.",
-      "Recipe lists ingredients.",
-      "Airport is only for trains.",
-      "Wallet is footwear.",
-      "Wallet holds cash or cards.",
-      "Compass measures temperature.",
-      "Umbrella is for underwater use.",
-      "Library lends books.",
-      "Passport is a house key."
+      "Kohvi pruulitakse ubadest.",
+      "Kohvis on sageli kofeiini.",
+      "Kohvi v?ib juua kuumalt.",
+      "Espresso on kohvijook.",
+      "Kohvioad r?stetakse.",
+      "Kohv tehakse plastist.",
+      "Kohv on seljakott.",
+      "Kohv on lift.",
+      "Kohv n?itab p?hja.",
+      "Kohvi s??akse alati kahvliga."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        5,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5292,26 +5307,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Vali koik toed vaited. Fookus: Tea.",
+    "question": "Varia: Millised v?ited tee kohta peavad paika?",
     "options": [
-      "Coffee is made from plastic.",
-      "Airport serves air travel.",
-      "Wallet holds cash or cards.",
-      "Keyboard is a cooking tool.",
-      "Ticket can grant entry.",
-      "Ticket is always free money.",
-      "A week has seven days.",
-      "Wallet is footwear.",
-      "Clock shows time.",
-      "Clock writes emails."
+      "Teed t?mmatakse vees.",
+      "Tee v?ib olla must v?i roheline.",
+      "Teed tehakse lehtedest.",
+      "Teed v?ib serveerida kuumalt.",
+      "Tee v?ib sisaldada kofeiini.",
+      "Tee sepistatakse terasest.",
+      "Tee on lennujaam.",
+      "Teed kantakse jalas.",
+      "Tee prindib dokumente.",
+      "Tee on pass."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        4,
-        6,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5323,27 +5338,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Millised read on oiged? Fookus: Orange.",
+    "question": "Varia: Millised v?ited apelsini kohta peavad paika?",
     "options": [
-      "Ticket can grant entry.",
-      "Library lends books.",
-      "Compass measures temperature.",
-      "Wallet is footwear.",
-      "A week has seven days.",
-      "Recipe lists ingredients.",
-      "Libraries sell cars.",
-      "Umbrella helps in rain.",
-      "A week has nine days.",
-      "Wallet holds cash or cards."
+      "Apelsin on tsitrusvili.",
+      "Koor kaitseb apelsini.",
+      "Apelsinis on tuntavalt C-vitamiini.",
+      "Apelsiniviilud on koore sees.",
+      "Apelsinist tehakse mahla.",
+      "Apelsin on klaviatuur.",
+      "Apelsin on t?is kruvisid.",
+      "Apelsin n?itab t?pset aega.",
+      "Apelsin on raudteetunnel.",
+      "Apelsini kantakse jalas."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        4,
-        5,
-        7,
-        9
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5355,28 +5369,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Tuvasta kehtivad vaited. Fookus: Banana.",
+    "question": "Varia: Millised v?ited banaani kohta peavad paika?",
     "options": [
-      "Airport serves air travel.",
-      "Clock shows time.",
-      "Clock writes emails.",
-      "Coffee is made from plastic.",
-      "Umbrella helps in rain.",
-      "Wallet holds cash or cards.",
-      "Compass points north.",
-      "Passport is a house key.",
-      "Library lends books.",
-      "Passport is travel ID."
+      "Banaan kasvab kobaras.",
+      "Banaanil on koor.",
+      "K?ps banaan muutub sageli kollaseks.",
+      "Banaan on s??dav puuvili.",
+      "Banaani kasutatakse k?psetistes.",
+      "Banaan on raamatukogukaart.",
+      "Banaan n?itab magnetp?hja.",
+      "Banaan on metallist.",
+      "Banaan on tavaliselt kandiline.",
+      "Banaan on metroorong."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        4,
-        5,
-        6,
-        8,
-        9
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5388,23 +5400,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Margi selle teema toesed vaited. Fookus: Apple.",
+    "question": "Varia: Millised v?ited ?una kohta peavad paika?",
     "options": [
-      "Wallet is footwear.",
-      "Passport is a house key.",
-      "Compass measures temperature.",
-      "Keyboard is an input device.",
-      "Clock writes emails.",
-      "Clock shows time.",
-      "Libraries sell cars.",
-      "Keyboard is a cooking tool.",
-      "Umbrella is for underwater use.",
-      "Ticket is always free money."
+      "?un on puuvili.",
+      "?unad kasvavad puu otsas.",
+      "?una v?ib s??a toorelt.",
+      "Paljudes ?untes on seemned.",
+      "?unapirukas kasutab ?unaviile.",
+      "?un on k?ekell.",
+      "?unad on betoonist.",
+      "?una kantakse jalas.",
+      "?un on rongitee.",
+      "?un prindib arveid."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        5
+        4
       ]
     },
     "difficulty": "2",
@@ -5416,22 +5431,24 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Millised vaited on oiged? Fookus: Laptop.",
+    "question": "Varia: Millised v?ited s?learvuti kohta peavad paika?",
     "options": [
-      "Compass measures temperature.",
-      "Recipe lists ingredients.",
-      "Passport is a house key.",
-      "A week has seven days.",
-      "Compass points north.",
-      "Ticket is always free money.",
-      "Coffee is made from plastic.",
-      "Wallet is footwear.",
-      "Libraries sell cars.",
-      "Recipe is a tax document."
+      "S?learvuti on kaasaskantav arvuti.",
+      "S?learvutil on ekraan ja klaviatuur.",
+      "Paljusid s?learvuteid toidab aku.",
+      "S?learvuti saab internetti ?hendada.",
+      "Puuteplaat on s?learvutil tavaline.",
+      "S?learvuti on v?ileib.",
+      "S?learvutit kantakse h?ppeliigesel.",
+      "S?learvuti n?itab p?hja.",
+      "S?learvutiga praetakse toitu.",
+      "S?learvuti on metroopilet."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
+        2,
         3,
         4
       ]
@@ -5445,25 +5462,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Leia sobivad vaited. Fookus: Smartphone.",
+    "question": "Varia: Millised v?ited nutitelefoni kohta peavad paika?",
     "options": [
-      "Library lends books.",
-      "Coffee is made from plastic.",
-      "A week has nine days.",
-      "Wallet is footwear.",
-      "Umbrella is for underwater use.",
-      "Keyboard is a cooking tool.",
-      "Ticket is always free money.",
-      "Clock shows time.",
-      "Passport is travel ID.",
-      "A week has seven days."
+      "Nutitelefoniga saab helistada.",
+      "Puuteekraan on nutitelefonil tavaline.",
+      "Nutitelefonis t??tavad ?pid.",
+      "Kaamera on nutitelefonil tavaline.",
+      "Nutitelefon saadab s?numeid.",
+      "Nutitelefon on pasta.",
+      "Nutitelefoni kasutatakse vihmavarjuna.",
+      "Nutitelefon on rongiplatvorm.",
+      "Nutitelefon on alati puidust.",
+      "Nutitelefon n?itab ise p?hja."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        7,
-        8,
-        9
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5475,26 +5493,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Vali koik toed vaited. Fookus: Headphones.",
+    "question": "Varia: Millised v?ited k?rvaklappide kohta peavad paika?",
     "options": [
-      "Recipe lists ingredients.",
-      "Clock shows time.",
-      "Libraries sell cars.",
-      "Keyboard is a cooking tool.",
-      "Compass points north.",
-      "Ticket is always free money.",
-      "A week has nine days.",
-      "Passport is travel ID.",
-      "Wallet holds cash or cards.",
-      "Clock writes emails."
+      "K?rvaklappe kantakse k?rvade juures.",
+      "K?rvaklappe kasutatakse kuulamiseks.",
+      "M?ned k?rvaklapid on juhtmevabad.",
+      "Pehmendus on paljudel klappidel.",
+      "K?rvaklapid ?henduvad seadmetega.",
+      "K?rvaklappe k?psetatakse ahjus.",
+      "K?rvaklapid on rahakott.",
+      "K?rvaklapid on pass.",
+      "K?rvaklapid on alati vett t?is.",
+      "K?rvaklapid on metroojaamad."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        4,
-        7,
-        8
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5506,27 +5524,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Millised read on oiged? Fookus: Camera.",
+    "question": "Varia: Millised v?ited kaamera kohta peavad paika?",
     "options": [
-      "Coffee contains caffeine.",
-      "Clock shows time.",
-      "Compass points north.",
-      "Compass measures temperature.",
-      "Umbrella helps in rain.",
-      "Passport is travel ID.",
-      "Recipe lists ingredients.",
-      "Passport is a house key.",
-      "Wallet is footwear.",
-      "Airport is only for trains."
+      "Kaamera saab teha fotosid.",
+      "Paljudel kaameratel on objektiiv.",
+      "M?ni kaamera salvestab videot.",
+      "Kaamera talletab pilte digitaalselt.",
+      "S?riaeg m?jutab kaamera s?ritust.",
+      "Kaamera on supp.",
+      "Kaamerat kantakse jalas.",
+      "Kaamera n?itab p?hja nagu kompass.",
+      "Kaameraga keedetakse pastat.",
+      "Kaamera on lennurada."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
         2,
-        4,
-        5,
-        6
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5538,28 +5555,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Varia: Tuvasta kehtivad vaited. Fookus: Printer.",
+    "question": "Varia: Millised v?ited printeri kohta peavad paika?",
     "options": [
-      "Airport serves air travel.",
-      "Airport is only for trains.",
-      "Recipe lists ingredients.",
-      "Umbrella helps in rain.",
-      "A week has seven days.",
-      "Compass points north.",
-      "Clock shows time.",
-      "Libraries sell cars.",
-      "Recipe is a tax document.",
-      "Keyboard is an input device."
+      "Printer paneb tindi paberile.",
+      "M?ni printer kasutab toonerit.",
+      "Printer toodab dokumente.",
+      "Paljud printerid ?henduvad arvutiga.",
+      "Printer vajab lehtede jaoks paberit.",
+      "Printer on jalgratas.",
+      "Printer on vihmavari.",
+      "Printer navigeerib t?htede j?rgi.",
+      "Printerit serveeritakse joogina.",
+      "Printer on pass."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        4,
-        5,
-        6,
-        9
+        4
       ]
     },
     "difficulty": "2",

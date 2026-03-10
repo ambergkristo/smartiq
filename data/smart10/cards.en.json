@@ -4656,23 +4656,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Mark statements that are true for this topic. Focus area: Calendar.",
+    "question": "Varia: Which statements about a calendar are true?",
     "options": [
-      "Recipe is a tax document.",
-      "Clock writes emails.",
-      "Wallet is footwear.",
-      "Airport is only for trains.",
+      "Calendars divide time into dates.",
+      "Months appear on most calendars.",
       "A week has seven days.",
-      "Ticket is always free money.",
-      "Umbrella is for underwater use.",
-      "Compass points north.",
-      "Libraries sell cars.",
-      "Passport is a house key."
+      "Calendars help track appointments.",
+      "Leap years affect calendars.",
+      "Calendars are used only underwater.",
+      "Calendars replace house keys.",
+      "Calendars are kinds of footwear.",
+      "Calendars cook food on stoves.",
+      "Calendars were invented for email."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        7
+        0,
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4684,24 +4687,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Which claims are accurate? Focus area: Compass.",
+    "question": "Varia: Which statements about a compass are true?",
     "options": [
-      "Ticket is always free money.",
-      "Compass points north.",
-      "A week has seven days.",
-      "Keyboard is a cooking tool.",
-      "Umbrella is for underwater use.",
-      "Wallet is footwear.",
-      "Airport is only for trains.",
-      "Libraries sell cars.",
-      "Wallet holds cash or cards.",
-      "Recipe is a tax document."
+      "A compass shows direction.",
+      "North is a key compass point.",
+      "Compasses help with navigation.",
+      "A magnetic needle is common.",
+      "Maps often pair with compasses.",
+      "A compass measures body temperature.",
+      "A compass is a kind of sandwich.",
+      "Compasses print documents.",
+      "A compass is worn as a shoe.",
+      "Compasses are only for music."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4713,25 +4718,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Find the statements that fit. Focus area: Keyboard.",
+    "question": "Varia: Which statements about a keyboard are true?",
     "options": [
-      "Passport is a house key.",
-      "Recipe lists ingredients.",
-      "Recipe is a tax document.",
-      "Ticket can grant entry.",
-      "Clock writes emails.",
-      "Compass measures temperature.",
-      "Keyboard is an input device.",
-      "Keyboard is a cooking tool.",
-      "Ticket is always free money.",
-      "A week has seven days."
+      "A keyboard is an input device.",
+      "Keys can type letters and numbers.",
+      "Keyboards are used with computers.",
+      "Many keyboards include a space bar.",
+      "Some keyboards connect wirelessly.",
+      "A keyboard boils water for tea.",
+      "Keyboards are built for swimming.",
+      "A keyboard is a kind of wallet.",
+      "Keyboards point to north.",
+      "A keyboard is a railway station."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
+        2,
         3,
-        6,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -4743,26 +4749,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Select all true statements. Focus area: Notebook.",
+    "question": "Varia: Which statements about a notebook are true?",
     "options": [
-      "Recipe lists ingredients.",
-      "Coffee contains caffeine.",
-      "Ticket is always free money.",
-      "Library lends books.",
-      "Clock writes emails.",
-      "A week has nine days.",
-      "Wallet is footwear.",
-      "Keyboard is a cooking tool.",
-      "Clock shows time.",
-      "Compass points north."
+      "A notebook can hold written notes.",
+      "Many notebooks contain paper pages.",
+      "People use notebooks for study.",
+      "A notebook can be carried in a bag.",
+      "A cover protects many notebooks.",
+      "A notebook is worn on your foot.",
+      "Notebooks are used to fry eggs.",
+      "Notebooks are kinds of umbrellas.",
+      "A notebook replaces all roads.",
+      "Notebooks are powered by diesel."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -4774,27 +4780,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Which lines are correct? Focus area: Backpack.",
+    "question": "Varia: Which statements about a backpack are true?",
     "options": [
-      "Keyboard is a cooking tool.",
-      "Umbrella helps in rain.",
-      "Passport is travel ID.",
-      "Wallet holds cash or cards.",
-      "Clock writes emails.",
-      "Library lends books.",
-      "Ticket is always free money.",
-      "Compass points north.",
-      "Recipe is a tax document.",
-      "Ticket can grant entry."
+      "A backpack is carried on the back.",
+      "Shoulder straps are part of it.",
+      "Backpacks can hold books or gear.",
+      "Zippers are common on backpacks.",
+      "Hikers often use backpacks.",
+      "A backpack tells exact time.",
+      "Backpacks are made for scuba diving.",
+      "A backpack is usually a dessert.",
+      "Backpacks point to north.",
+      "A backpack is a train ticket."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
         3,
-        5,
-        7,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -4806,28 +4811,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Identify valid statements. Focus area: Umbrella.",
+    "question": "Varia: Which statements about an umbrella are true?",
     "options": [
-      "Keyboard is an input device.",
-      "Coffee is made from plastic.",
-      "Ticket can grant entry.",
-      "Umbrella helps in rain.",
-      "Umbrella is for underwater use.",
-      "Libraries sell cars.",
-      "Library lends books.",
-      "Clock shows time.",
-      "Coffee contains caffeine.",
-      "Passport is travel ID."
+      "Umbrellas help block rain.",
+      "A canopy opens above the user.",
+      "Many umbrellas fold for storage.",
+      "Umbrellas can give shade.",
+      "Handles are common on umbrellas.",
+      "Umbrellas are worn as helmets.",
+      "Umbrellas are made for frying.",
+      "An umbrella is a house passport.",
+      "Umbrellas are used under the sea.",
+      "Umbrellas replace bicycles."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        6,
-        7,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -4839,23 +4842,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Mark statements that are true for this topic. Focus area: Clock.",
+    "question": "Varia: Which statements about a clock are true?",
     "options": [
-      "Ticket can grant entry.",
-      "Libraries sell cars.",
-      "Airport is only for trains.",
-      "Clock shows time.",
-      "Keyboard is a cooking tool.",
-      "Coffee is made from plastic.",
-      "Ticket is always free money.",
-      "Clock writes emails.",
-      "Recipe is a tax document.",
-      "Wallet is footwear."
+      "A clock shows time.",
+      "Many clocks have hour markings.",
+      "Clocks can be digital or analog.",
+      "Wall clocks hang in many rooms.",
+      "Alarm clocks can wake people.",
+      "A clock bakes bread in ovens.",
+      "Clocks are forms of footwear.",
+      "A clock is used as an airport gate.",
+      "Clocks are brewed like tea.",
+      "A clock is a tax document."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4867,24 +4873,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Which claims are accurate? Focus area: Watch.",
+    "question": "Varia: Which statements about a watch are true?",
     "options": [
-      "A week has nine days.",
-      "Clock writes emails.",
-      "Ticket can grant entry.",
-      "Recipe lists ingredients.",
-      "Compass measures temperature.",
-      "Libraries sell cars.",
-      "Keyboard is a cooking tool.",
-      "Ticket is always free money.",
-      "Coffee contains caffeine.",
-      "Airport is only for trains."
+      "A watch is often worn on a wrist.",
+      "A watch can show the time.",
+      "Some watches include alarms.",
+      "Digital watches use a display.",
+      "A strap or band is common.",
+      "A watch is usually a kitchen plate.",
+      "Watches are mainly for gardening.",
+      "A watch points north like a compass.",
+      "A watch is a kind of backpack.",
+      "Watches are eaten as snacks."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -4896,25 +4904,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Find the statements that fit. Focus area: Bicycle.",
+    "question": "Varia: Which statements about a bicycle are true?",
     "options": [
-      "Airport serves air travel.",
-      "A week has seven days.",
-      "Clock writes emails.",
-      "Wallet holds cash or cards.",
-      "Compass measures temperature.",
-      "Keyboard is an input device.",
-      "Libraries sell cars.",
-      "Wallet is footwear.",
-      "A week has nine days.",
-      "Ticket is always free money."
+      "A bicycle usually has two wheels.",
+      "Pedals help move a bicycle.",
+      "Handlebars are used for steering.",
+      "Many bicycles use a chain drive.",
+      "Bicycles do not need fuel tanks.",
+      "A bicycle is a sort of umbrella.",
+      "Bicycles are only used on water.",
+      "A bicycle prints photos.",
+      "A bicycle is worn on your wrist.",
+      "Bicycles are kinds of soup."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
+        2,
         3,
-        5
+        4
       ]
     },
     "difficulty": "2",
@@ -4926,26 +4935,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Select all true statements. Focus area: Scooter.",
+    "question": "Varia: Which statements about a scooter are true?",
     "options": [
-      "Airport serves air travel.",
-      "Umbrella is for underwater use.",
-      "Clock shows time.",
-      "Ticket is always free money.",
-      "Recipe lists ingredients.",
-      "Library lends books.",
-      "Airport is only for trains.",
-      "Passport is a house key.",
-      "Umbrella helps in rain.",
-      "Recipe is a tax document."
+      "Scooters have handlebars.",
+      "Many scooters have two wheels.",
+      "A deck supports the rider.",
+      "Kick scooters move by pushing off.",
+      "Some scooters use electric motors.",
+      "Scooters are baked in ovens.",
+      "Scooters are only for libraries.",
+      "A scooter is a fruit.",
+      "Scooters are used as pillows.",
+      "A scooter is a wristwatch."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        4,
-        5,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4957,27 +4966,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Which lines are correct? Focus area: Elevator.",
+    "question": "Varia: Which statements about an elevator are true?",
     "options": [
-      "A week has nine days.",
-      "Ticket is always free money.",
-      "Recipe is a tax document.",
-      "Coffee is made from plastic.",
-      "Ticket can grant entry.",
-      "A week has seven days.",
-      "Keyboard is an input device.",
-      "Clock shows time.",
-      "Coffee contains caffeine.",
-      "Compass points north."
+      "Elevators move between floors.",
+      "Buttons select a destination floor.",
+      "Elevators are common in tall buildings.",
+      "Doors open and close automatically.",
+      "An elevator is also called a lift.",
+      "Elevators are used to bake cakes.",
+      "An elevator is a kind of shoe.",
+      "Elevators navigate with a compass.",
+      "Elevators grow on trees.",
+      "Elevators are served in cups."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        5,
-        6,
-        7,
-        8,
-        9
+        0,
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -4989,28 +4997,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Identify valid statements. Focus area: Subway.",
+    "question": "Varia: Which statements about a subway are true?",
     "options": [
-      "Passport is a house key.",
-      "Keyboard is a cooking tool.",
-      "Umbrella is for underwater use.",
-      "Ticket can grant entry.",
-      "Coffee contains caffeine.",
-      "Library lends books.",
-      "Clock shows time.",
-      "Passport is travel ID.",
-      "Umbrella helps in rain.",
-      "A week has seven days."
+      "Subways carry city passengers.",
+      "Many subway systems run underground.",
+      "Stations are part of a subway system.",
+      "Trains stop at multiple stations.",
+      "Subways help urban commuting.",
+      "A subway is a type of wallet.",
+      "Subways are baked from flour.",
+      "A subway tells the weather.",
+      "Subways are only for ships.",
+      "A subway is worn on your head."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -5022,23 +5028,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Mark statements that are true for this topic. Focus area: Airport.",
+    "question": "Varia: Which statements about an airport are true?",
     "options": [
-      "A week has seven days.",
-      "Passport is a house key.",
-      "Libraries sell cars.",
-      "Keyboard is a cooking tool.",
-      "Umbrella is for underwater use.",
-      "Wallet is footwear.",
-      "Coffee is made from plastic.",
-      "Recipe is a tax document.",
-      "Airport serves air travel.",
-      "Ticket is always free money."
+      "Airports serve air travel.",
+      "Airports have runways.",
+      "Passengers use terminals at airports.",
+      "Airports handle arrivals and departures.",
+      "Control towers guide aircraft nearby.",
+      "Airports are built only for trains.",
+      "Airports are kitchen utensils.",
+      "Airports are worn as backpacks.",
+      "Airports point to magnetic north.",
+      "Airports are kinds of soup."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        8
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5050,21 +5059,23 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Which claims are accurate? Focus area: Library.",
+    "question": "Varia: Which statements about a library are true?",
     "options": [
-      "Coffee is made from plastic.",
-      "A week has nine days.",
-      "Airport serves air travel.",
-      "Keyboard is an input device.",
-      "Umbrella helps in rain.",
-      "Wallet is footwear.",
-      "Ticket is always free money.",
-      "Airport is only for trains.",
-      "Clock writes emails.",
-      "Umbrella is for underwater use."
+      "Libraries lend books.",
+      "Libraries often have catalogues.",
+      "Many libraries offer quiet study space.",
+      "Libraries can hold archives.",
+      "Librarians help people find materials.",
+      "Libraries mainly sell cars.",
+      "Libraries are used as umbrellas.",
+      "Libraries fly passengers abroad.",
+      "Libraries are forms of footwear.",
+      "Libraries brew coffee beans."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
         4
@@ -5079,25 +5090,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Find the statements that fit. Focus area: Museum.",
+    "question": "Varia: Which statements about a museum are true?",
     "options": [
-      "Wallet is footwear.",
-      "A week has seven days.",
-      "Passport is a house key.",
-      "Recipe is a tax document.",
-      "Ticket can grant entry.",
-      "Passport is travel ID.",
-      "Compass points north.",
-      "Libraries sell cars.",
-      "Coffee is made from plastic.",
-      "Clock writes emails."
+      "Museums display collections.",
+      "Museums may show art or history.",
+      "Exhibits are arranged for visitors.",
+      "Tickets are common at museums.",
+      "Museums preserve notable objects.",
+      "Museums are built for runway traffic.",
+      "Museums are a kind of sandwich.",
+      "Museums point north.",
+      "Museums are worn on the wrist.",
+      "Museums are brewed in kettles."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        4,
-        5,
-        6
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5109,26 +5121,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Select all true statements. Focus area: Restaurant.",
+    "question": "Varia: Which statements about a restaurant are true?",
     "options": [
-      "Airport is only for trains.",
-      "Ticket can grant entry.",
-      "Keyboard is an input device.",
-      "Compass points north.",
-      "Wallet is footwear.",
-      "A week has nine days.",
-      "Compass measures temperature.",
-      "Passport is travel ID.",
-      "Umbrella helps in rain.",
-      "Keyboard is a cooking tool."
+      "Restaurants serve prepared meals.",
+      "Menus list food and drink.",
+      "Guests eat at tables there.",
+      "Staff may take customer orders.",
+      "Restaurants often include a kitchen.",
+      "Restaurants are used as bus tickets.",
+      "Restaurants are kinds of helmets.",
+      "Restaurants point to true north.",
+      "Restaurants are designed for scuba.",
+      "Restaurants are a form of passport."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
         3,
-        7,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -5140,27 +5152,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Which lines are correct? Focus area: Recipe.",
+    "question": "Varia: Which statements about a recipe are true?",
     "options": [
-      "Keyboard is an input device.",
-      "Coffee contains caffeine.",
-      "Compass measures temperature.",
-      "Airport is only for trains.",
-      "Recipe is a tax document.",
-      "A week has nine days.",
-      "Passport is travel ID.",
-      "A week has seven days.",
-      "Recipe lists ingredients.",
-      "Library lends books."
+      "A recipe lists ingredients.",
+      "Recipes describe cooking steps.",
+      "Recipes can include oven times.",
+      "Recipes help repeat a dish.",
+      "Measurements appear in many recipes.",
+      "A recipe is a tax receipt.",
+      "Recipes are footwear.",
+      "A recipe shows live train arrivals.",
+      "Recipes replace umbrellas in rain.",
+      "Recipes are used as door locks."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        6,
-        7,
-        8,
-        9
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5172,28 +5183,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Identify valid statements. Focus area: Sandwich.",
+    "question": "Varia: Which statements about a sandwich are true?",
     "options": [
-      "Airport is only for trains.",
-      "Wallet holds cash or cards.",
-      "Ticket is always free money.",
-      "Keyboard is an input device.",
-      "Passport is travel ID.",
-      "Ticket can grant entry.",
-      "Airport serves air travel.",
-      "Library lends books.",
-      "A week has nine days.",
-      "Compass points north."
+      "A sandwich usually includes bread.",
+      "A filling sits between the bread.",
+      "Sandwiches can be served cold.",
+      "Many sandwiches are easy to carry.",
+      "Bread slices are common in sandwiches.",
+      "A sandwich is a navigation tool.",
+      "Sandwiches are used as passports.",
+      "A sandwich tells exact time.",
+      "Sandwiches are built from steel bolts.",
+      "A sandwich is a subway station."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
+        2,
         3,
-        4,
-        5,
-        6,
-        7,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -5205,23 +5214,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Mark statements that are true for this topic. Focus area: Pasta.",
+    "question": "Varia: Which statements about pasta are true?",
     "options": [
-      "Umbrella helps in rain.",
-      "Wallet is footwear.",
-      "Coffee contains caffeine.",
-      "Libraries sell cars.",
-      "Airport is only for trains.",
-      "Clock writes emails.",
-      "Recipe is a tax document.",
-      "Umbrella is for underwater use.",
-      "A week has nine days.",
-      "Coffee is made from plastic."
+      "Pasta is made from dough.",
+      "Many pasta dishes are boiled.",
+      "Pasta comes in many shapes.",
+      "Wheat is common in pasta.",
+      "Sauce is often served with pasta.",
+      "Pasta is a type of compass.",
+      "Pasta works as a wristwatch.",
+      "Pasta is used to print pages.",
+      "Pasta is only made from metal.",
+      "Pasta is an airport building."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        2
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5233,24 +5245,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Which claims are accurate? Focus area: Chocolate.",
+    "question": "Varia: Which statements about chocolate are true?",
     "options": [
-      "Compass points north.",
-      "Recipe is a tax document.",
-      "Umbrella is for underwater use.",
-      "Passport is a house key.",
-      "Clock writes emails.",
-      "Ticket is always free money.",
-      "Libraries sell cars.",
-      "Coffee contains caffeine.",
-      "Wallet is footwear.",
-      "Recipe lists ingredients."
+      "Chocolate is made from cocoa.",
+      "Chocolate can be dark or milk.",
+      "Chocolate is often sweet.",
+      "Chocolate can be melted in desserts.",
+      "Bars are a common chocolate form.",
+      "Chocolate is a type of library.",
+      "Chocolate points north.",
+      "Chocolate is mainly used as footwear.",
+      "Chocolate is a subway platform.",
+      "Chocolate is a passport page."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        7,
-        9
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5262,25 +5276,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Find the statements that fit. Focus area: Coffee.",
+    "question": "Varia: Which statements about coffee are true?",
     "options": [
-      "Clock shows time.",
-      "Keyboard is a cooking tool.",
-      "Recipe lists ingredients.",
-      "Airport is only for trains.",
-      "Wallet is footwear.",
-      "Wallet holds cash or cards.",
-      "Compass measures temperature.",
-      "Umbrella is for underwater use.",
-      "Library lends books.",
-      "Passport is a house key."
+      "Coffee is brewed from beans.",
+      "Coffee often contains caffeine.",
+      "Coffee can be served hot.",
+      "Espresso is a coffee style.",
+      "Coffee beans are roasted.",
+      "Coffee is made from plastic.",
+      "Coffee is used as a backpack.",
+      "Coffee is a kind of elevator.",
+      "Coffee points north.",
+      "Coffee is always eaten with a fork."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        5,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5292,26 +5307,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Select all true statements. Focus area: Tea.",
+    "question": "Varia: Which statements about tea are true?",
     "options": [
-      "Coffee is made from plastic.",
-      "Airport serves air travel.",
-      "Wallet holds cash or cards.",
-      "Keyboard is a cooking tool.",
-      "Ticket can grant entry.",
-      "Ticket is always free money.",
-      "A week has seven days.",
-      "Wallet is footwear.",
-      "Clock shows time.",
-      "Clock writes emails."
+      "Tea is brewed in water.",
+      "Tea can be black or green.",
+      "Tea is made from leaves.",
+      "Tea may be served hot.",
+      "Tea can contain caffeine.",
+      "Tea is forged from steel.",
+      "Tea is a type of airport.",
+      "Tea is worn as footwear.",
+      "Tea prints documents.",
+      "Tea is used as a passport."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        4,
-        6,
-        8
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5323,27 +5338,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Which lines are correct? Focus area: Orange.",
+    "question": "Varia: Which statements about an orange are true?",
     "options": [
-      "Ticket can grant entry.",
-      "Library lends books.",
-      "Compass measures temperature.",
-      "Wallet is footwear.",
-      "A week has seven days.",
-      "Recipe lists ingredients.",
-      "Libraries sell cars.",
-      "Umbrella helps in rain.",
-      "A week has nine days.",
-      "Wallet holds cash or cards."
+      "An orange is a citrus fruit.",
+      "Orange peel protects the fruit.",
+      "Oranges are known for vitamin C.",
+      "Orange segments are inside the peel.",
+      "Orange juice can be made from it.",
+      "An orange is a type of keyboard.",
+      "Oranges are filled with screws.",
+      "An orange tells exact time.",
+      "An orange is a railway tunnel.",
+      "Oranges are worn on the feet."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        4,
-        5,
-        7,
-        9
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5355,28 +5369,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Identify valid statements. Focus area: Banana.",
+    "question": "Varia: Which statements about a banana are true?",
     "options": [
-      "Airport serves air travel.",
-      "Clock shows time.",
-      "Clock writes emails.",
-      "Coffee is made from plastic.",
-      "Umbrella helps in rain.",
-      "Wallet holds cash or cards.",
-      "Compass points north.",
-      "Passport is a house key.",
-      "Library lends books.",
-      "Passport is travel ID."
+      "Bananas grow in bunches.",
+      "A banana has a peel.",
+      "Ripe bananas often turn yellow.",
+      "Bananas are an edible fruit.",
+      "Bananas can be used in baking.",
+      "A banana is a library card.",
+      "Bananas point north by magnetism.",
+      "A banana is made from metal.",
+      "Bananas are usually square.",
+      "A banana is a subway train."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        4,
-        5,
-        6,
-        8,
-        9
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5388,23 +5400,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Mark statements that are true for this topic. Focus area: Apple.",
+    "question": "Varia: Which statements about an apple are true?",
     "options": [
-      "Wallet is footwear.",
-      "Passport is a house key.",
-      "Compass measures temperature.",
-      "Keyboard is an input device.",
-      "Clock writes emails.",
-      "Clock shows time.",
-      "Libraries sell cars.",
-      "Keyboard is a cooking tool.",
-      "Umbrella is for underwater use.",
-      "Ticket is always free money."
+      "An apple is a fruit.",
+      "Apples grow on trees.",
+      "Apples can be eaten raw.",
+      "Many apples contain seeds.",
+      "Apple pie uses sliced apples.",
+      "An apple is a wristwatch.",
+      "Apples are made of concrete.",
+      "An apple is worn as a shoe.",
+      "Apples are used as train tracks.",
+      "An apple prints invoices."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        5
+        4
       ]
     },
     "difficulty": "2",
@@ -5416,22 +5431,24 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Which claims are accurate? Focus area: Laptop.",
+    "question": "Varia: Which statements about a laptop are true?",
     "options": [
-      "Compass measures temperature.",
-      "Recipe lists ingredients.",
-      "Passport is a house key.",
-      "A week has seven days.",
-      "Compass points north.",
-      "Ticket is always free money.",
-      "Coffee is made from plastic.",
-      "Wallet is footwear.",
-      "Libraries sell cars.",
-      "Recipe is a tax document."
+      "A laptop is a portable computer.",
+      "Laptops include a screen and keyboard.",
+      "A battery powers many laptops.",
+      "Laptops can connect to the internet.",
+      "Trackpads are common on laptops.",
+      "A laptop is a kind of sandwich.",
+      "Laptops are worn on the ankle.",
+      "A laptop points north.",
+      "Laptops are used to fry food.",
+      "A laptop is a subway ticket."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
+        2,
         3,
         4
       ]
@@ -5445,25 +5462,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Find the statements that fit. Focus area: Smartphone.",
+    "question": "Varia: Which statements about a smartphone are true?",
     "options": [
-      "Library lends books.",
-      "Coffee is made from plastic.",
-      "A week has nine days.",
-      "Wallet is footwear.",
-      "Umbrella is for underwater use.",
-      "Keyboard is a cooking tool.",
-      "Ticket is always free money.",
-      "Clock shows time.",
-      "Passport is travel ID.",
-      "A week has seven days."
+      "A smartphone can make calls.",
+      "A touchscreen is common on smartphones.",
+      "Apps run on smartphones.",
+      "Cameras are common on smartphones.",
+      "Smartphones can send messages.",
+      "A smartphone is a type of pasta.",
+      "Smartphones are used as umbrellas.",
+      "A smartphone is a train platform.",
+      "Smartphones are always made of wood.",
+      "A smartphone points north by itself."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        7,
-        8,
-        9
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5475,26 +5493,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Select all true statements. Focus area: Headphones.",
+    "question": "Varia: Which statements about headphones are true?",
     "options": [
-      "Recipe lists ingredients.",
-      "Clock shows time.",
-      "Libraries sell cars.",
-      "Keyboard is a cooking tool.",
-      "Compass points north.",
-      "Ticket is always free money.",
-      "A week has nine days.",
-      "Passport is travel ID.",
-      "Wallet holds cash or cards.",
-      "Clock writes emails."
+      "Headphones are worn near the ears.",
+      "Headphones are used for listening.",
+      "Some headphones are wireless.",
+      "Ear cushions are common on many pairs.",
+      "Headphones connect to phones or PCs.",
+      "Headphones are baked in ovens.",
+      "Headphones are a kind of wallet.",
+      "Headphones are used as passports.",
+      "Headphones are always filled with water.",
+      "Headphones are subway stations."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        4,
-        7,
-        8
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5506,27 +5524,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Which lines are correct? Focus area: Camera.",
+    "question": "Varia: Which statements about a camera are true?",
     "options": [
-      "Coffee contains caffeine.",
-      "Clock shows time.",
-      "Compass points north.",
-      "Compass measures temperature.",
-      "Umbrella helps in rain.",
-      "Passport is travel ID.",
-      "Recipe lists ingredients.",
-      "Passport is a house key.",
-      "Wallet is footwear.",
-      "Airport is only for trains."
+      "A camera can take photos.",
+      "Many cameras use a lens.",
+      "Some cameras record video too.",
+      "Cameras can store images digitally.",
+      "A shutter controls exposure in cameras.",
+      "A camera is a type of soup.",
+      "Cameras are worn as shoes.",
+      "A camera points north like a compass.",
+      "Cameras are made to boil pasta.",
+      "A camera is an airport runway."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
         2,
-        4,
-        5,
-        6
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -5538,28 +5555,26 @@
     "topic": "Varia",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Varia: Identify valid statements. Focus area: Printer.",
+    "question": "Varia: Which statements about a printer are true?",
     "options": [
-      "Airport serves air travel.",
-      "Airport is only for trains.",
-      "Recipe lists ingredients.",
-      "Umbrella helps in rain.",
-      "A week has seven days.",
-      "Compass points north.",
-      "Clock shows time.",
-      "Libraries sell cars.",
-      "Recipe is a tax document.",
-      "Keyboard is an input device."
+      "A printer puts ink on paper.",
+      "Some printers use toner.",
+      "Printers can produce documents.",
+      "Many printers connect to computers.",
+      "Printers need paper to print pages.",
+      "A printer is a kind of bicycle.",
+      "Printers are made for rain shelter.",
+      "Printers navigate by stars.",
+      "Printers are served as drinks.",
+      "Printers are a type of passport."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        4,
-        5,
-        6,
-        9
+        4
       ]
     },
     "difficulty": "2",
