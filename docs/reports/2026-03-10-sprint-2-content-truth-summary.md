@@ -23,11 +23,11 @@ Todo:
 
 - ET remains blocked for launch.
 - Largest remaining ET repair zones:
-  - `Geography/TRUE_FALSE`
+  - `Culture/TRUE_FALSE`
   - `Science/TRUE_FALSE`
-  - `Varia/TRUE_FALSE`
   - `ORDER`
   - `COLOR`
+  - `OPEN`
 
 ## Task 2 - EN semantic quality audit
 
@@ -45,11 +45,11 @@ Todo:
 
 - EN is still not launch-ready.
 - Largest remaining EN repair zones:
+  - `Culture/TRUE_FALSE`
   - `Science/TRUE_FALSE`
-  - `Varia/TRUE_FALSE`
-  - `OPEN`
   - `ORDER`
   - `COLOR`
+  - `OPEN`
 
 ## Task 3 - Content repair workflow
 
@@ -61,6 +61,7 @@ Done:
   - `History/TRUE_FALSE 001..030`
   - `Sports/TRUE_FALSE 001..020`
   - `Geography/TRUE_FALSE 001..030`
+  - `Varia/TRUE_FALSE 001..030`
   - `Culture/TRUE_FALSE 001..010`
   - `Science/TRUE_FALSE 001..010`
 
@@ -114,18 +115,19 @@ Todo:
 
 Current observed report baseline:
 
-- EN score: `0.933`
-- ET score: `0.820`
+- EN score: `0.941`
+- ET score: `0.826`
 
 Closed repair zone:
 
 - `Geography/TRUE_FALSE` is now fully repaired across `001..030`
-- Geography dropped out of the top `TRUE_FALSE` backlog focus; the remaining highest-risk `TRUE_FALSE` deck is now `Varia`
+- `Varia/TRUE_FALSE` is now fully repaired across `001..030`
+- Geography and Varia both dropped out of the top `TRUE_FALSE` backlog focus
 
 ## Next Repair Priority
 
-1. `Varia/TRUE_FALSE 001..030`
-2. `ORDER`
-3. `COLOR`
-4. remaining `OPEN` recycled pools
-5. later ET cleanup of older mojibake-heavy repaired blocks if needed
+1. `Culture/TRUE_FALSE 011..030`
+2. `Science/TRUE_FALSE 011..030`
+3. `ORDER`
+4. `COLOR`
+5. remaining `OPEN` recycled pools
