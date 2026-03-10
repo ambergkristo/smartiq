@@ -10278,7 +10278,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order earliest to latest. Use strict ascending order. Theme: Ancient Rome.",
+    "question": "History: Put these events in chronological order, earliest first. Theme: Ancient Rome.",
     "options": [
       "WWI begins",
       "WWII begins",
@@ -10314,7 +10314,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order oldest era to newest. Place earliest/lowest at rank 1. Theme: Viking Age.",
+    "question": "History: Put these eras in chronological order, oldest first. Theme: Viking Age.",
     "options": [
       "Middle Ages",
       "Industrial Revolution",
@@ -10350,7 +10350,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order dates from past to recent. Build one correct sequence. Theme: Renaissance.",
+    "question": "History: Put these years in chronological order, earliest first. Theme: Renaissance.",
     "options": [
       "1215",
       "1989",
@@ -10386,7 +10386,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order earliest to latest. Rank all options from first to last. Theme: Industrial Revolution.",
+    "question": "History: Put these events in chronological order, earliest first. Theme: Industrial Revolution.",
     "options": [
       "WWII begins",
       "Columbus reaches Americas",
@@ -10422,7 +10422,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order oldest era to newest. Do not skip any rank. Theme: French Revolution.",
+    "question": "History: Put these eras in chronological order, oldest first. Theme: French Revolution.",
     "options": [
       "Enlightenment",
       "Iron Age",
@@ -10458,7 +10458,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order dates from past to recent. Each rank is used exactly once. Theme: Silk Road.",
+    "question": "History: Put these years in chronological order, earliest first. Theme: Silk Road.",
     "options": [
       "1776",
       "1989",
@@ -10494,7 +10494,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order earliest to latest. Use strict ascending order. Theme: Magna Carta.",
+    "question": "History: Put these events in chronological order, earliest first. Theme: Magna Carta.",
     "options": [
       "Columbus reaches Americas",
       "Apollo 11 landing",
@@ -10530,7 +10530,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order oldest era to newest. Place earliest/lowest at rank 1. Theme: Ottoman Empire.",
+    "question": "History: Put these eras in chronological order, oldest first. Theme: Ottoman Empire.",
     "options": [
       "Middle Ages",
       "Renaissance",
@@ -10566,7 +10566,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order dates from past to recent. Build one correct sequence. Theme: Ming Dynasty.",
+    "question": "History: Put these years in chronological order, earliest first. Theme: Ming Dynasty.",
     "options": [
       "1776",
       "1492",
@@ -10602,7 +10602,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order earliest to latest. Rank all options from first to last. Theme: Norman Conquest.",
+    "question": "History: Put these events in chronological order, earliest first. Theme: Norman Conquest.",
     "options": [
       "Berlin Wall falls",
       "Columbus reaches Americas",
@@ -10638,7 +10638,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order oldest era to newest. Do not skip any rank. Theme: Napoleon.",
+    "question": "History: Put these eras in chronological order, oldest first. Theme: Napoleon.",
     "options": [
       "Middle Ages",
       "Classical Antiquity",
@@ -10674,7 +10674,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order dates from past to recent. Each rank is used exactly once. Theme: Julius Caesar.",
+    "question": "History: Put these years in chronological order, earliest first. Theme: Julius Caesar.",
     "options": [
       "1215",
       "1939",
@@ -10710,7 +10710,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order earliest to latest. Use strict ascending order. Theme: Alexander the Great.",
+    "question": "History: Put these events in chronological order, earliest first. Theme: Alexander the Great.",
     "options": [
       "Apollo 11 landing",
       "Berlin Wall falls",
@@ -10746,7 +10746,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order oldest era to newest. Place earliest/lowest at rank 1. Theme: Gutenberg Press.",
+    "question": "History: Put these eras in chronological order, oldest first. Theme: Gutenberg Press.",
     "options": [
       "Enlightenment",
       "Middle Ages",
@@ -10782,7 +10782,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order dates from past to recent. Build one correct sequence. Theme: Roman Republic.",
+    "question": "History: Put these years in chronological order, earliest first. Theme: Roman Republic.",
     "options": [
       "1789",
       "1989",
@@ -10818,7 +10818,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order earliest to latest. Rank all options from first to last. Theme: Cold War.",
+    "question": "History: Put these events in chronological order, earliest first. Theme: Cold War.",
     "options": [
       "French Revolution starts",
       "USSR dissolves",
@@ -10854,7 +10854,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order oldest era to newest. Do not skip any rank. Theme: Berlin Wall.",
+    "question": "History: Put these eras in chronological order, oldest first. Theme: Berlin Wall.",
     "options": [
       "Industrial Revolution",
       "Enlightenment",
@@ -10890,7 +10890,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order dates from past to recent. Each rank is used exactly once. Theme: Apollo 11.",
+    "question": "History: Put these years in chronological order, earliest first. Theme: Apollo 11.",
     "options": [
       "1939",
       "1989",
@@ -10926,7 +10926,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order earliest to latest. Use strict ascending order. Theme: Treaty of Versailles.",
+    "question": "History: Put these events in chronological order, earliest first. Theme: Treaty of Versailles.",
     "options": [
       "USSR dissolves",
       "WWII begins",
@@ -10962,7 +10962,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order oldest era to newest. Place earliest/lowest at rank 1. Theme: Byzantine Empire.",
+    "question": "History: Put these eras in chronological order, oldest first. Theme: Byzantine Empire.",
     "options": [
       "World War II",
       "Renaissance",
@@ -10998,7 +10998,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order dates from past to recent. Build one correct sequence. Theme: Meiji Restoration.",
+    "question": "History: Put these years in chronological order, earliest first. Theme: Meiji Restoration.",
     "options": [
       "1215",
       "1989",
@@ -11034,7 +11034,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order earliest to latest. Rank all options from first to last. Theme: Age of Exploration.",
+    "question": "History: Put these events in chronological order, earliest first. Theme: Age of Exploration.",
     "options": [
       "Apollo 11 landing",
       "French Revolution starts",
@@ -11070,7 +11070,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order oldest era to newest. Do not skip any rank. Theme: Bronze Age.",
+    "question": "History: Put these eras in chronological order, oldest first. Theme: Bronze Age.",
     "options": [
       "Classical Antiquity",
       "Middle Ages",
@@ -11106,7 +11106,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order dates from past to recent. Each rank is used exactly once. Theme: Iron Age.",
+    "question": "History: Put these years in chronological order, earliest first. Theme: Iron Age.",
     "options": [
       "1776",
       "1969",
@@ -11142,7 +11142,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order earliest to latest. Use strict ascending order. Theme: Harlem Renaissance.",
+    "question": "History: Put these events in chronological order, earliest first. Theme: Harlem Renaissance.",
     "options": [
       "Apollo 11 landing",
       "Battle of Waterloo",
@@ -11178,7 +11178,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order oldest era to newest. Place earliest/lowest at rank 1. Theme: Printing Press.",
+    "question": "History: Put these eras in chronological order, oldest first. Theme: Printing Press.",
     "options": [
       "Enlightenment",
       "Classical Antiquity",
@@ -11214,7 +11214,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order dates from past to recent. Build one correct sequence. Theme: Han Dynasty.",
+    "question": "History: Put these years in chronological order, earliest first. Theme: Han Dynasty.",
     "options": [
       "1066",
       "1215",
@@ -11250,7 +11250,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order earliest to latest. Rank all options from first to last. Theme: Pax Romana.",
+    "question": "History: Put these events in chronological order, earliest first. Theme: Pax Romana.",
     "options": [
       "French Revolution starts",
       "WWII ends",
@@ -11286,7 +11286,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order oldest era to newest. Do not skip any rank. Theme: Persian Empire.",
+    "question": "History: Put these eras in chronological order, oldest first. Theme: Persian Empire.",
     "options": [
       "Industrial Revolution",
       "Classical Antiquity",
@@ -11322,7 +11322,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Order dates from past to recent. Each rank is used exactly once. Theme: Maya Civilization.",
+    "question": "History: Put these years in chronological order, earliest first. Theme: Maya Civilization.",
     "options": [
       "1492",
       "1939",
@@ -11358,7 +11358,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by distance, shortest first. Use strict ascending order. Theme: Football.",
+    "question": "Sports: Put these race distances in order, shortest first. Theme: Football.",
     "options": [
       "Half marathon",
       "400m sprint",
@@ -11394,7 +11394,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by event duration, shortest first. Place earliest/lowest at rank 1. Theme: Basketball.",
+    "question": "Sports: Put these event durations in order, shortest first. Theme: Basketball.",
     "options": [
       "Tennis set",
       "Baseball game",
@@ -11430,7 +11430,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by players per side, low to high. Build one correct sequence. Theme: Tennis.",
+    "question": "Sports: Put these team sizes in order, lowest first. Theme: Tennis.",
     "options": [
       "Water polo",
       "Volleyball",
@@ -11466,7 +11466,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by distance, shortest first. Rank all options from first to last. Theme: Cricket.",
+    "question": "Sports: Put these race distances in order, shortest first. Theme: Cricket.",
     "options": [
       "Marathon",
       "400m sprint",
@@ -11502,7 +11502,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by event duration, shortest first. Do not skip any rank. Theme: Rugby.",
+    "question": "Sports: Put these event durations in order, shortest first. Theme: Rugby.",
     "options": [
       "Boxing round",
       "Rugby half",
@@ -11538,7 +11538,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by players per side, low to high. Each rank is used exactly once. Theme: Volleyball.",
+    "question": "Sports: Put these team sizes in order, lowest first. Theme: Volleyball.",
     "options": [
       "Baseball",
       "Volleyball",
@@ -11574,7 +11574,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by distance, shortest first. Use strict ascending order. Theme: Handball.",
+    "question": "Sports: Put these race distances in order, shortest first. Theme: Handball.",
     "options": [
       "400m sprint",
       "50km race walk",
@@ -11610,7 +11610,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by event duration, shortest first. Place earliest/lowest at rank 1. Theme: Baseball.",
+    "question": "Sports: Put these event durations in order, shortest first. Theme: Baseball.",
     "options": [
       "Baseball game",
       "Rugby half",
@@ -11646,7 +11646,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by players per side, low to high. Build one correct sequence. Theme: Hockey.",
+    "question": "Sports: Put these team sizes in order, lowest first. Theme: Hockey.",
     "options": [
       "Basketball",
       "Cricket",
@@ -11682,7 +11682,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by distance, shortest first. Rank all options from first to last. Theme: Badminton.",
+    "question": "Sports: Put these race distances in order, shortest first. Theme: Badminton.",
     "options": [
       "1500m run",
       "Marathon",
@@ -11718,7 +11718,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by event duration, shortest first. Do not skip any rank. Theme: Table Tennis.",
+    "question": "Sports: Put these event durations in order, shortest first. Theme: Table Tennis.",
     "options": [
       "Tennis set",
       "Rugby half",
@@ -11754,7 +11754,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by players per side, low to high. Each rank is used exactly once. Theme: Athletics.",
+    "question": "Sports: Put these team sizes in order, lowest first. Theme: Athletics.",
     "options": [
       "Tennis singles",
       "Football",
@@ -11790,7 +11790,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by distance, shortest first. Use strict ascending order. Theme: Swimming.",
+    "question": "Sports: Put these race distances in order, shortest first. Theme: Swimming.",
     "options": [
       "5000m run",
       "200m sprint",
@@ -11826,7 +11826,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by event duration, shortest first. Place earliest/lowest at rank 1. Theme: Cycling.",
+    "question": "Sports: Put these event durations in order, shortest first. Theme: Cycling.",
     "options": [
       "Baseball game",
       "Tennis set",
@@ -11862,7 +11862,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by players per side, low to high. Build one correct sequence. Theme: Boxing.",
+    "question": "Sports: Put these team sizes in order, lowest first. Theme: Boxing.",
     "options": [
       "Aussie rules football",
       "Volleyball",
@@ -11898,7 +11898,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by distance, shortest first. Rank all options from first to last. Theme: Fencing.",
+    "question": "Sports: Put these race distances in order, shortest first. Theme: Fencing.",
     "options": [
       "5000m run",
       "800m run",
@@ -11934,7 +11934,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by event duration, shortest first. Do not skip any rank. Theme: Judo.",
+    "question": "Sports: Put these event durations in order, shortest first. Theme: Judo.",
     "options": [
       "Test cricket day",
       "Table tennis rally",
@@ -11970,7 +11970,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by players per side, low to high. Each rank is used exactly once. Theme: Karate.",
+    "question": "Sports: Put these team sizes in order, lowest first. Theme: Karate.",
     "options": [
       "Baseball",
       "Beach volleyball",
@@ -12006,7 +12006,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by distance, shortest first. Use strict ascending order. Theme: Golf.",
+    "question": "Sports: Put these race distances in order, shortest first. Theme: Golf.",
     "options": [
       "Marathon",
       "100m sprint",
@@ -12042,7 +12042,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by event duration, shortest first. Place earliest/lowest at rank 1. Theme: Snooker.",
+    "question": "Sports: Put these event durations in order, shortest first. Theme: Snooker.",
     "options": [
       "Cricket T20 match",
       "100m sprint race",
@@ -12078,7 +12078,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by players per side, low to high. Build one correct sequence. Theme: Formula One.",
+    "question": "Sports: Put these team sizes in order, lowest first. Theme: Formula One.",
     "options": [
       "Tennis singles",
       "Volleyball",
@@ -12114,7 +12114,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by distance, shortest first. Rank all options from first to last. Theme: MotoGP.",
+    "question": "Sports: Put these race distances in order, shortest first. Theme: MotoGP.",
     "options": [
       "100m sprint",
       "Half marathon",
@@ -12150,7 +12150,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by event duration, shortest first. Do not skip any rank. Theme: Marathon.",
+    "question": "Sports: Put these event durations in order, shortest first. Theme: Marathon.",
     "options": [
       "Table tennis rally",
       "Basketball quarter",
@@ -12186,7 +12186,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by players per side, low to high. Each rank is used exactly once. Theme: Triathlon.",
+    "question": "Sports: Put these team sizes in order, lowest first. Theme: Triathlon.",
     "options": [
       "Cricket",
       "Tennis singles",
@@ -12222,7 +12222,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by distance, shortest first. Use strict ascending order. Theme: Decathlon.",
+    "question": "Sports: Put these race distances in order, shortest first. Theme: Decathlon.",
     "options": [
       "Half marathon",
       "5000m run",
@@ -12258,7 +12258,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by event duration, shortest first. Place earliest/lowest at rank 1. Theme: Wimbledon.",
+    "question": "Sports: Put these event durations in order, shortest first. Theme: Wimbledon.",
     "options": [
       "Baseball game",
       "Tennis set",
@@ -12294,7 +12294,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by players per side, low to high. Build one correct sequence. Theme: Olympics.",
+    "question": "Sports: Put these team sizes in order, lowest first. Theme: Olympics.",
     "options": [
       "Tennis singles",
       "Water polo",
@@ -12330,7 +12330,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by distance, shortest first. Rank all options from first to last. Theme: World Cup.",
+    "question": "Sports: Put these race distances in order, shortest first. Theme: World Cup.",
     "options": [
       "200m sprint",
       "50km race walk",
@@ -12366,7 +12366,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by event duration, shortest first. Do not skip any rank. Theme: UEFA Champions League.",
+    "question": "Sports: Put these event durations in order, shortest first. Theme: UEFA Champions League.",
     "options": [
       "100m sprint race",
       "Table tennis rally",
@@ -12402,7 +12402,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Order by players per side, low to high. Each rank is used exactly once. Theme: NBA Finals.",
+    "question": "Sports: Put these team sizes in order, lowest first. Theme: NBA Finals.",
     "options": [
       "Tennis singles",
       "Beach volleyball",
@@ -12438,7 +12438,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order countries by area, small to large. Use strict ascending order. Theme: Tallinn.",
+    "question": "Geography: Put these countries in order by area, smallest first. Theme: Tallinn.",
     "options": [
       "Argentina",
       "Kazakhstan",
@@ -12474,7 +12474,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order city latitude south to north. Place earliest/lowest at rank 1. Theme: Riga.",
+    "question": "Geography: Put these cities in order from south to north. Theme: Riga.",
     "options": [
       "Canberra",
       "Reykjavik",
@@ -12510,7 +12510,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order mountain heights, low to high. Build one correct sequence. Theme: Vilnius.",
+    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Vilnius.",
     "options": [
       "Mont Blanc",
       "Kangchenjunga",
@@ -12546,7 +12546,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order countries by area, small to large. Rank all options from first to last. Theme: Helsinki.",
+    "question": "Geography: Put these countries in order by area, smallest first. Theme: Helsinki.",
     "options": [
       "Ukraine",
       "Iceland",
@@ -12582,7 +12582,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order city latitude south to north. Do not skip any rank. Theme: Stockholm.",
+    "question": "Geography: Put these cities in order from south to north. Theme: Stockholm.",
     "options": [
       "Cape Town",
       "Buenos Aires",
@@ -12618,7 +12618,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order mountain heights, low to high. Each rank is used exactly once. Theme: Oslo.",
+    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Oslo.",
     "options": [
       "Vinson Massif",
       "Kilimanjaro",
@@ -12654,7 +12654,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order countries by area, small to large. Use strict ascending order. Theme: Copenhagen.",
+    "question": "Geography: Put these countries in order by area, smallest first. Theme: Copenhagen.",
     "options": [
       "China",
       "Russia",
@@ -12690,7 +12690,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order city latitude south to north. Place earliest/lowest at rank 1. Theme: Reykjavik.",
+    "question": "Geography: Put these cities in order from south to north. Theme: Reykjavik.",
     "options": [
       "Stockholm",
       "Athens",
@@ -12726,7 +12726,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order mountain heights, low to high. Build one correct sequence. Theme: London.",
+    "question": "Geography: Put these mountains in order by height, lowest first. Theme: London.",
     "options": [
       "Vinson Massif",
       "Kilimanjaro",
@@ -12762,7 +12762,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order countries by area, small to large. Rank all options from first to last. Theme: Paris.",
+    "question": "Geography: Put these countries in order by area, smallest first. Theme: Paris.",
     "options": [
       "United Kingdom",
       "Kazakhstan",
@@ -12798,7 +12798,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order city latitude south to north. Do not skip any rank. Theme: Berlin.",
+    "question": "Geography: Put these cities in order from south to north. Theme: Berlin.",
     "options": [
       "Nairobi",
       "Cairo",
@@ -12834,7 +12834,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order mountain heights, low to high. Each rank is used exactly once. Theme: Rome.",
+    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Rome.",
     "options": [
       "Denali",
       "Mont Blanc",
@@ -12870,7 +12870,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order countries by area, small to large. Use strict ascending order. Theme: Madrid.",
+    "question": "Geography: Put these countries in order by area, smallest first. Theme: Madrid.",
     "options": [
       "Kazakhstan",
       "France",
@@ -12906,7 +12906,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order city latitude south to north. Place earliest/lowest at rank 1. Theme: Lisbon.",
+    "question": "Geography: Put these cities in order from south to north. Theme: Lisbon.",
     "options": [
       "Nairobi",
       "Cape Town",
@@ -12942,7 +12942,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order mountain heights, low to high. Build one correct sequence. Theme: Vienna.",
+    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Vienna.",
     "options": [
       "Everest",
       "Kangchenjunga",
@@ -12978,7 +12978,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order countries by area, small to large. Rank all options from first to last. Theme: Prague.",
+    "question": "Geography: Put these countries in order by area, smallest first. Theme: Prague.",
     "options": [
       "Iceland",
       "Kazakhstan",
@@ -13014,7 +13014,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order city latitude south to north. Do not skip any rank. Theme: Warsaw.",
+    "question": "Geography: Put these cities in order from south to north. Theme: Warsaw.",
     "options": [
       "Athens",
       "Nairobi",
@@ -13050,7 +13050,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order mountain heights, low to high. Each rank is used exactly once. Theme: Budapest.",
+    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Budapest.",
     "options": [
       "Kangchenjunga",
       "Aconcagua",
@@ -13086,7 +13086,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order countries by area, small to large. Use strict ascending order. Theme: Athens.",
+    "question": "Geography: Put these countries in order by area, smallest first. Theme: Athens.",
     "options": [
       "France",
       "Canada",
@@ -13122,7 +13122,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order city latitude south to north. Place earliest/lowest at rank 1. Theme: Dublin.",
+    "question": "Geography: Put these cities in order from south to north. Theme: Dublin.",
     "options": [
       "Cairo",
       "Nairobi",
@@ -13158,7 +13158,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order mountain heights, low to high. Build one correct sequence. Theme: Canberra.",
+    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Canberra.",
     "options": [
       "Vinson Massif",
       "K2",
@@ -13194,7 +13194,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order countries by area, small to large. Rank all options from first to last. Theme: Ottawa.",
+    "question": "Geography: Put these countries in order by area, smallest first. Theme: Ottawa.",
     "options": [
       "Kazakhstan",
       "India",
@@ -13230,7 +13230,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order city latitude south to north. Do not skip any rank. Theme: Tokyo.",
+    "question": "Geography: Put these cities in order from south to north. Theme: Tokyo.",
     "options": [
       "Nairobi",
       "Cape Town",
@@ -13266,7 +13266,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order mountain heights, low to high. Each rank is used exactly once. Theme: Seoul.",
+    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Seoul.",
     "options": [
       "Mont Blanc",
       "Kangchenjunga",
@@ -13302,7 +13302,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order countries by area, small to large. Use strict ascending order. Theme: Beijing.",
+    "question": "Geography: Put these countries in order by area, smallest first. Theme: Beijing.",
     "options": [
       "Ukraine",
       "Kazakhstan",
@@ -13338,7 +13338,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order city latitude south to north. Place earliest/lowest at rank 1. Theme: New Delhi.",
+    "question": "Geography: Put these cities in order from south to north. Theme: New Delhi.",
     "options": [
       "Reykjavik",
       "Nairobi",
@@ -13374,7 +13374,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order mountain heights, low to high. Build one correct sequence. Theme: Nile.",
+    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Nile.",
     "options": [
       "Aconcagua",
       "K2",
@@ -13410,7 +13410,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order countries by area, small to large. Rank all options from first to last. Theme: Amazon.",
+    "question": "Geography: Put these countries in order by area, smallest first. Theme: Amazon.",
     "options": [
       "France",
       "Canada",
@@ -13446,7 +13446,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order city latitude south to north. Do not skip any rank. Theme: Danube.",
+    "question": "Geography: Put these cities in order from south to north. Theme: Danube.",
     "options": [
       "Singapore",
       "Stockholm",
@@ -13482,7 +13482,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Order mountain heights, low to high. Each rank is used exactly once. Theme: Rhine.",
+    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Rhine.",
     "options": [
       "Lhotse",
       "Everest",
@@ -13518,7 +13518,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order art periods earliest to latest. Use strict ascending order. Theme: Mona Lisa.",
+    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Mona Lisa.",
     "options": [
       "Baroque",
       "Cubism",
@@ -13554,7 +13554,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order release year, oldest first. Place earliest/lowest at rank 1. Theme: Starry Night.",
+    "question": "Culture: Put these releases in chronological order, earliest first. Theme: Starry Night.",
     "options": [
       "Blade Runner",
       "The Godfather",
@@ -13590,7 +13590,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order literary periods by start. Build one correct sequence. Theme: Hamlet.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Hamlet.",
     "options": [
       "Modernism",
       "Realism",
@@ -13626,7 +13626,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order art periods earliest to latest. Rank all options from first to last. Theme: Macbeth.",
+    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Macbeth.",
     "options": [
       "Pop art",
       "Neoclassicism",
@@ -13662,7 +13662,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order release year, oldest first. Do not skip any rank. Theme: The Odyssey.",
+    "question": "Culture: Put these releases in chronological order, earliest first. Theme: The Odyssey.",
     "options": [
       "Pulp Fiction",
       "The Godfather",
@@ -13698,7 +13698,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order literary periods by start. Each rank is used exactly once. Theme: The Iliad.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: The Iliad.",
     "options": [
       "Romanticism",
       "Epic poetry age",
@@ -13734,7 +13734,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order art periods earliest to latest. Use strict ascending order. Theme: Don Quixote.",
+    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Don Quixote.",
     "options": [
       "Surrealism",
       "Neoclassicism",
@@ -13770,7 +13770,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order release year, oldest first. Place earliest/lowest at rank 1. Theme: The Great Gatsby.",
+    "question": "Culture: Put these releases in chronological order, earliest first. Theme: The Great Gatsby.",
     "options": [
       "Jaws",
       "Pulp Fiction",
@@ -13806,7 +13806,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order literary periods by start. Build one correct sequence. Theme: Pride and Prejudice.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Pride and Prejudice.",
     "options": [
       "Renaissance literature",
       "Classical drama",
@@ -13842,7 +13842,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order art periods earliest to latest. Rank all options from first to last. Theme: War and Peace.",
+    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: War and Peace.",
     "options": [
       "Surrealism",
       "Classical art",
@@ -13878,7 +13878,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order release year, oldest first. Do not skip any rank. Theme: The Godfather.",
+    "question": "Culture: Put these releases in chronological order, earliest first. Theme: The Godfather.",
     "options": [
       "Blade Runner",
       "Inception",
@@ -13914,7 +13914,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order literary periods by start. Each rank is used exactly once. Theme: Casablanca.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Casablanca.",
     "options": [
       "Romanticism",
       "Enlightenment writing",
@@ -13950,7 +13950,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order art periods earliest to latest. Use strict ascending order. Theme: Citizen Kane.",
+    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Citizen Kane.",
     "options": [
       "Romanticism",
       "Classical art",
@@ -13986,7 +13986,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order release year, oldest first. Place earliest/lowest at rank 1. Theme: The Beatles.",
+    "question": "Culture: Put these releases in chronological order, earliest first. Theme: The Beatles.",
     "options": [
       "The Matrix",
       "Casablanca",
@@ -14022,7 +14022,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order literary periods by start. Build one correct sequence. Theme: Mozart.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Mozart.",
     "options": [
       "Renaissance literature",
       "Romanticism",
@@ -14058,7 +14058,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order art periods earliest to latest. Rank all options from first to last. Theme: Beethoven.",
+    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Beethoven.",
     "options": [
       "Neoclassicism",
       "Romanticism",
@@ -14094,7 +14094,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order release year, oldest first. Do not skip any rank. Theme: Bach.",
+    "question": "Culture: Put these releases in chronological order, earliest first. Theme: Bach.",
     "options": [
       "Pulp Fiction",
       "Star Wars",
@@ -14130,7 +14130,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order literary periods by start. Each rank is used exactly once. Theme: Chopin.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Chopin.",
     "options": [
       "Enlightenment writing",
       "Postmodernism",
@@ -14166,7 +14166,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order art periods earliest to latest. Use strict ascending order. Theme: Picasso.",
+    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Picasso.",
     "options": [
       "Neoclassicism",
       "Romanticism",
@@ -14202,7 +14202,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order release year, oldest first. Place earliest/lowest at rank 1. Theme: Van Gogh.",
+    "question": "Culture: Put these releases in chronological order, earliest first. Theme: Van Gogh.",
     "options": [
       "Blade Runner",
       "Jaws",
@@ -14238,7 +14238,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order literary periods by start. Build one correct sequence. Theme: Michelangelo.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Michelangelo.",
     "options": [
       "Contemporary fiction",
       "Romanticism",
@@ -14274,7 +14274,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order art periods earliest to latest. Rank all options from first to last. Theme: Da Vinci.",
+    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Da Vinci.",
     "options": [
       "Baroque",
       "Cubism",
@@ -14310,7 +14310,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order release year, oldest first. Do not skip any rank. Theme: Shakespeare.",
+    "question": "Culture: Put these releases in chronological order, earliest first. Theme: Shakespeare.",
     "options": [
       "Star Wars",
       "The Godfather",
@@ -14346,7 +14346,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order literary periods by start. Each rank is used exactly once. Theme: Jane Austen.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Jane Austen.",
     "options": [
       "Enlightenment writing",
       "Postmodernism",
@@ -14382,7 +14382,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order art periods earliest to latest. Use strict ascending order. Theme: Tolstoy.",
+    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Tolstoy.",
     "options": [
       "Medieval art",
       "Pop art",
@@ -14418,7 +14418,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order release year, oldest first. Place earliest/lowest at rank 1. Theme: Dostoevsky.",
+    "question": "Culture: Put these releases in chronological order, earliest first. Theme: Dostoevsky.",
     "options": [
       "Casablanca",
       "Pulp Fiction",
@@ -14454,7 +14454,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order literary periods by start. Build one correct sequence. Theme: Homer.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Homer.",
     "options": [
       "Epic poetry age",
       "Renaissance literature",
@@ -14490,7 +14490,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order art periods earliest to latest. Rank all options from first to last. Theme: Sculpture.",
+    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Sculpture.",
     "options": [
       "Renaissance",
       "Surrealism",
@@ -14526,7 +14526,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order release year, oldest first. Do not skip any rank. Theme: Opera.",
+    "question": "Culture: Put these releases in chronological order, earliest first. Theme: Opera.",
     "options": [
       "Citizen Kane",
       "The Godfather",
@@ -14562,7 +14562,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Order literary periods by start. Each rank is used exactly once. Theme: Ballet.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Ballet.",
     "options": [
       "Postmodernism",
       "Renaissance literature",
@@ -14598,7 +14598,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order planets from Sun outward. Use strict ascending order. Theme: Atom.",
+    "question": "Science: Put these planets in order from the Sun outward. Theme: Atom.",
     "options": [
       "Jupiter",
       "Eris",
@@ -14634,7 +14634,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order SI prefixes small to large. Place earliest/lowest at rank 1. Theme: Molecule.",
+    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Molecule.",
     "options": [
       "hecto",
       "centi",
@@ -14670,7 +14670,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order scale from smallest upward. Build one correct sequence. Theme: Electron.",
+    "question": "Science: Put these scales in order, smallest first. Theme: Electron.",
     "options": [
       "cell",
       "bacterium",
@@ -14706,7 +14706,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order planets from Sun outward. Rank all options from first to last. Theme: Proton.",
+    "question": "Science: Put these planets in order from the Sun outward. Theme: Proton.",
     "options": [
       "Mercury",
       "Mars",
@@ -14742,7 +14742,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order SI prefixes small to large. Do not skip any rank. Theme: Neutron.",
+    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Neutron.",
     "options": [
       "micro",
       "base unit",
@@ -14778,7 +14778,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order scale from smallest upward. Each rank is used exactly once. Theme: Photon.",
+    "question": "Science: Put these scales in order, smallest first. Theme: Photon.",
     "options": [
       "cell",
       "organ",
@@ -14814,7 +14814,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order planets from Sun outward. Use strict ascending order. Theme: Gravity.",
+    "question": "Science: Put these planets in order from the Sun outward. Theme: Gravity.",
     "options": [
       "Mercury",
       "Saturn",
@@ -14850,7 +14850,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order SI prefixes small to large. Place earliest/lowest at rank 1. Theme: Velocity.",
+    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Velocity.",
     "options": [
       "milli",
       "base unit",
@@ -14886,7 +14886,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order scale from smallest upward. Build one correct sequence. Theme: Acceleration.",
+    "question": "Science: Put these scales in order, smallest first. Theme: Acceleration.",
     "options": [
       "tissue",
       "cell",
@@ -14922,7 +14922,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order planets from Sun outward. Rank all options from first to last. Theme: Momentum.",
+    "question": "Science: Put these planets in order from the Sun outward. Theme: Momentum.",
     "options": [
       "Pluto",
       "Saturn",
@@ -14958,7 +14958,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order SI prefixes small to large. Do not skip any rank. Theme: Energy.",
+    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Energy.",
     "options": [
       "hecto",
       "nano",
@@ -14994,7 +14994,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order scale from smallest upward. Each rank is used exactly once. Theme: Entropy.",
+    "question": "Science: Put these scales in order, smallest first. Theme: Entropy.",
     "options": [
       "ecosystem",
       "atom",
@@ -15030,7 +15030,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order planets from Sun outward. Use strict ascending order. Theme: Oxygen.",
+    "question": "Science: Put these planets in order from the Sun outward. Theme: Oxygen.",
     "options": [
       "Venus",
       "Uranus",
@@ -15066,7 +15066,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order SI prefixes small to large. Place earliest/lowest at rank 1. Theme: Hydrogen.",
+    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Hydrogen.",
     "options": [
       "base unit",
       "kilo",
@@ -15102,7 +15102,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order scale from smallest upward. Build one correct sequence. Theme: Nitrogen.",
+    "question": "Science: Put these scales in order, smallest first. Theme: Nitrogen.",
     "options": [
       "molecule",
       "organ",
@@ -15138,7 +15138,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order planets from Sun outward. Rank all options from first to last. Theme: Carbon.",
+    "question": "Science: Put these planets in order from the Sun outward. Theme: Carbon.",
     "options": [
       "Eris",
       "Venus",
@@ -15174,7 +15174,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order SI prefixes small to large. Do not skip any rank. Theme: Helium.",
+    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Helium.",
     "options": [
       "deca",
       "hecto",
@@ -15210,7 +15210,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order scale from smallest upward. Each rank is used exactly once. Theme: Neon.",
+    "question": "Science: Put these scales in order, smallest first. Theme: Neon.",
     "options": [
       "molecule",
       "tissue",
@@ -15246,7 +15246,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order planets from Sun outward. Use strict ascending order. Theme: Sodium.",
+    "question": "Science: Put these planets in order from the Sun outward. Theme: Sodium.",
     "options": [
       "Saturn",
       "Uranus",
@@ -15282,7 +15282,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order SI prefixes small to large. Place earliest/lowest at rank 1. Theme: Potassium.",
+    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Potassium.",
     "options": [
       "mega",
       "centi",
@@ -15318,7 +15318,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order scale from smallest upward. Build one correct sequence. Theme: Calcium.",
+    "question": "Science: Put these scales in order, smallest first. Theme: Calcium.",
     "options": [
       "molecule",
       "tissue",
@@ -15354,7 +15354,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order planets from Sun outward. Rank all options from first to last. Theme: Iron.",
+    "question": "Science: Put these planets in order from the Sun outward. Theme: Iron.",
     "options": [
       "Pluto",
       "Neptune",
@@ -15390,7 +15390,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order SI prefixes small to large. Do not skip any rank. Theme: Copper.",
+    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Copper.",
     "options": [
       "nano",
       "centi",
@@ -15426,7 +15426,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order scale from smallest upward. Each rank is used exactly once. Theme: Silver.",
+    "question": "Science: Put these scales in order, smallest first. Theme: Silver.",
     "options": [
       "virus",
       "tissue",
@@ -15462,7 +15462,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order planets from Sun outward. Use strict ascending order. Theme: Gold.",
+    "question": "Science: Put these planets in order from the Sun outward. Theme: Gold.",
     "options": [
       "Earth",
       "Venus",
@@ -15498,7 +15498,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order SI prefixes small to large. Place earliest/lowest at rank 1. Theme: Mercury.",
+    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Mercury.",
     "options": [
       "mega",
       "deci",
@@ -15534,7 +15534,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order scale from smallest upward. Build one correct sequence. Theme: Venus.",
+    "question": "Science: Put these scales in order, smallest first. Theme: Venus.",
     "options": [
       "ecosystem",
       "molecule",
@@ -15570,7 +15570,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order planets from Sun outward. Rank all options from first to last. Theme: Earth.",
+    "question": "Science: Put these planets in order from the Sun outward. Theme: Earth.",
     "options": [
       "Saturn",
       "Mars",
@@ -15606,7 +15606,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order SI prefixes small to large. Do not skip any rank. Theme: Mars.",
+    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Mars.",
     "options": [
       "kilo",
       "deca",
@@ -15642,7 +15642,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Order scale from smallest upward. Each rank is used exactly once. Theme: Jupiter.",
+    "question": "Science: Put these scales in order, smallest first. Theme: Jupiter.",
     "options": [
       "ecosystem",
       "molecule",
@@ -15678,7 +15678,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order time units shortest to longest. Use strict ascending order. Theme: Calendar.",
+    "question": "Varia: Put these time units in order, shortest first. Theme: Calendar.",
     "options": [
       "second",
       "day",
@@ -15714,7 +15714,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order file sizes smallest to largest. Place earliest/lowest at rank 1. Theme: Compass.",
+    "question": "Varia: Put these file sizes in order, smallest first. Theme: Compass.",
     "options": [
       "gigabyte",
       "kilobyte",
@@ -15750,7 +15750,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order currency values low to high. Build one correct sequence. Theme: Keyboard.",
+    "question": "Varia: Put these money amounts in order, lowest first. Theme: Keyboard.",
     "options": [
       "10 cents",
       "1 dollar",
@@ -15786,7 +15786,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order time units shortest to longest. Rank all options from first to last. Theme: Notebook.",
+    "question": "Varia: Put these time units in order, shortest first. Theme: Notebook.",
     "options": [
       "month",
       "hour",
@@ -15822,7 +15822,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order file sizes smallest to largest. Do not skip any rank. Theme: Backpack.",
+    "question": "Varia: Put these file sizes in order, smallest first. Theme: Backpack.",
     "options": [
       "petabyte",
       "exabyte",
@@ -15858,7 +15858,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order currency values low to high. Each rank is used exactly once. Theme: Umbrella.",
+    "question": "Varia: Put these money amounts in order, lowest first. Theme: Umbrella.",
     "options": [
       "50 cents",
       "1 dollar",
@@ -15894,7 +15894,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order time units shortest to longest. Use strict ascending order. Theme: Clock.",
+    "question": "Varia: Put these time units in order, shortest first. Theme: Clock.",
     "options": [
       "millennium",
       "century",
@@ -15930,7 +15930,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order file sizes smallest to largest. Place earliest/lowest at rank 1. Theme: Watch.",
+    "question": "Varia: Put these file sizes in order, smallest first. Theme: Watch.",
     "options": [
       "megabyte",
       "bit",
@@ -15966,7 +15966,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order currency values low to high. Build one correct sequence. Theme: Bicycle.",
+    "question": "Varia: Put these money amounts in order, lowest first. Theme: Bicycle.",
     "options": [
       "50 cents",
       "1 cent",
@@ -16002,7 +16002,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order time units shortest to longest. Rank all options from first to last. Theme: Scooter.",
+    "question": "Varia: Put these time units in order, shortest first. Theme: Scooter.",
     "options": [
       "minute",
       "millennium",
@@ -16038,7 +16038,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order file sizes smallest to largest. Do not skip any rank. Theme: Elevator.",
+    "question": "Varia: Put these file sizes in order, smallest first. Theme: Elevator.",
     "options": [
       "petabyte",
       "gigabyte",
@@ -16074,7 +16074,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order currency values low to high. Each rank is used exactly once. Theme: Subway.",
+    "question": "Varia: Put these money amounts in order, lowest first. Theme: Subway.",
     "options": [
       "1 dollar",
       "50 cents",
@@ -16110,7 +16110,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order time units shortest to longest. Use strict ascending order. Theme: Airport.",
+    "question": "Varia: Put these time units in order, shortest first. Theme: Airport.",
     "options": [
       "hour",
       "year",
@@ -16146,7 +16146,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order file sizes smallest to largest. Place earliest/lowest at rank 1. Theme: Library.",
+    "question": "Varia: Put these file sizes in order, smallest first. Theme: Library.",
     "options": [
       "petabyte",
       "kilobyte",
@@ -16182,7 +16182,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order currency values low to high. Build one correct sequence. Theme: Museum.",
+    "question": "Varia: Put these money amounts in order, lowest first. Theme: Museum.",
     "options": [
       "5 cents",
       "10 dollars",
@@ -16218,7 +16218,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order time units shortest to longest. Rank all options from first to last. Theme: Restaurant.",
+    "question": "Varia: Put these time units in order, shortest first. Theme: Restaurant.",
     "options": [
       "hour",
       "day",
@@ -16254,7 +16254,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order file sizes smallest to largest. Do not skip any rank. Theme: Recipe.",
+    "question": "Varia: Put these file sizes in order, smallest first. Theme: Recipe.",
     "options": [
       "zettabyte",
       "kilobyte",
@@ -16290,7 +16290,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order currency values low to high. Each rank is used exactly once. Theme: Sandwich.",
+    "question": "Varia: Put these money amounts in order, lowest first. Theme: Sandwich.",
     "options": [
       "5 cents",
       "10 dollars",
@@ -16326,7 +16326,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order time units shortest to longest. Use strict ascending order. Theme: Pasta.",
+    "question": "Varia: Put these time units in order, shortest first. Theme: Pasta.",
     "options": [
       "day",
       "decade",
@@ -16362,7 +16362,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order file sizes smallest to largest. Place earliest/lowest at rank 1. Theme: Chocolate.",
+    "question": "Varia: Put these file sizes in order, smallest first. Theme: Chocolate.",
     "options": [
       "exabyte",
       "terabyte",
@@ -16398,7 +16398,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order currency values low to high. Build one correct sequence. Theme: Coffee.",
+    "question": "Varia: Put these money amounts in order, lowest first. Theme: Coffee.",
     "options": [
       "20 dollars",
       "10 dollars",
@@ -16434,7 +16434,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order time units shortest to longest. Rank all options from first to last. Theme: Tea.",
+    "question": "Varia: Put these time units in order, shortest first. Theme: Tea.",
     "options": [
       "month",
       "decade",
@@ -16470,7 +16470,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order file sizes smallest to largest. Do not skip any rank. Theme: Orange.",
+    "question": "Varia: Put these file sizes in order, smallest first. Theme: Orange.",
     "options": [
       "byte",
       "terabyte",
@@ -16506,7 +16506,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order currency values low to high. Each rank is used exactly once. Theme: Banana.",
+    "question": "Varia: Put these money amounts in order, lowest first. Theme: Banana.",
     "options": [
       "5 cents",
       "20 dollars",
@@ -16542,7 +16542,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order time units shortest to longest. Use strict ascending order. Theme: Apple.",
+    "question": "Varia: Put these time units in order, shortest first. Theme: Apple.",
     "options": [
       "hour",
       "minute",
@@ -16578,7 +16578,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order file sizes smallest to largest. Place earliest/lowest at rank 1. Theme: Laptop.",
+    "question": "Varia: Put these file sizes in order, smallest first. Theme: Laptop.",
     "options": [
       "megabyte",
       "byte",
@@ -16614,7 +16614,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order currency values low to high. Build one correct sequence. Theme: Smartphone.",
+    "question": "Varia: Put these money amounts in order, lowest first. Theme: Smartphone.",
     "options": [
       "10 dollars",
       "2 dollars",
@@ -16650,7 +16650,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order time units shortest to longest. Rank all options from first to last. Theme: Headphones.",
+    "question": "Varia: Put these time units in order, shortest first. Theme: Headphones.",
     "options": [
       "year",
       "millennium",
@@ -16686,7 +16686,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order file sizes smallest to largest. Do not skip any rank. Theme: Camera.",
+    "question": "Varia: Put these file sizes in order, smallest first. Theme: Camera.",
     "options": [
       "byte",
       "bit",
@@ -16722,7 +16722,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Order currency values low to high. Each rank is used exactly once. Theme: Printer.",
+    "question": "Varia: Put these money amounts in order, lowest first. Theme: Printer.",
     "options": [
       "10 dollars",
       "1 cent",

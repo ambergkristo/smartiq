@@ -10278,18 +10278,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Jarjesta varaseimast hiliseimani. Kasuta rangelt kasvavat jarjekorda. Teema: Ancient Rome.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Vana-Rooma.",
     "options": [
-      "WWI begins",
-      "WWII begins",
-      "Columbus reaches Americas",
-      "French Revolution starts",
-      "Berlin Wall falls",
-      "Battle of Waterloo",
-      "WWII ends",
-      "Magna Carta signed",
-      "USSR dissolves",
-      "Apollo 11 landing"
+      "Esimene maailmasõda algab",
+      "Teine maailmasõda algab",
+      "Columbus jõuab Ameerikasse",
+      "Prantsuse revolutsioon algab",
+      "Berliini müür langeb",
+      "Waterloo lahing",
+      "Teine maailmasõda lõpeb",
+      "Magna Carta allkirjastatakse",
+      "NSVL laguneb",
+      "Apollo 11 maandub Kuul"
     ],
     "correct": {
       "rankByIndex": [
@@ -10314,18 +10314,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order oldest era to newest. Pane varaseim/madalaim kohale 1. Teema: Viking Age.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Viikingiaeg.",
     "options": [
-      "Middle Ages",
-      "Industrial Revolution",
-      "World War II",
-      "Renaissance",
-      "World War I",
-      "Cold War",
-      "Enlightenment",
-      "Iron Age",
-      "Classical Antiquity",
-      "Bronze Age"
+      "Keskaeg",
+      "Tööstusrevolutsioon",
+      "Teine maailmasõda",
+      "Renessanss",
+      "Esimene maailmasõda",
+      "Külm sõda",
+      "Valgustusaeg",
+      "Rauaaeg",
+      "Klassikaline antiikaeg",
+      "Pronksiaeg"
     ],
     "correct": {
       "rankByIndex": [
@@ -10350,7 +10350,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order dates from past to recent. Koosta uks korrektne jarjestus. Teema: Renaissance.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Renessanss.",
     "options": [
       "1215",
       "1989",
@@ -10386,18 +10386,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Jarjesta varaseimast hiliseimani. Jarjesta koik variandid esimesest viimaseni. Teema: Industrial Revolution.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Tööstusrevolutsioon.",
     "options": [
-      "WWII begins",
-      "Columbus reaches Americas",
-      "Apollo 11 landing",
-      "WWI begins",
-      "Magna Carta signed",
-      "Battle of Waterloo",
-      "Berlin Wall falls",
-      "French Revolution starts",
-      "USSR dissolves",
-      "WWII ends"
+      "Teine maailmasõda algab",
+      "Columbus jõuab Ameerikasse",
+      "Apollo 11 maandub Kuul",
+      "Esimene maailmasõda algab",
+      "Magna Carta allkirjastatakse",
+      "Waterloo lahing",
+      "Berliini müür langeb",
+      "Prantsuse revolutsioon algab",
+      "NSVL laguneb",
+      "Teine maailmasõda lõpeb"
     ],
     "correct": {
       "rankByIndex": [
@@ -10422,18 +10422,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order oldest era to newest. Ara jata uhtegi kohta vahele. Teema: French Revolution.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Prantsuse revolutsioon.",
     "options": [
-      "Enlightenment",
-      "Iron Age",
-      "Renaissance",
-      "Bronze Age",
-      "Middle Ages",
-      "Industrial Revolution",
-      "Classical Antiquity",
-      "Cold War",
-      "World War II",
-      "World War I"
+      "Valgustusaeg",
+      "Rauaaeg",
+      "Renessanss",
+      "Pronksiaeg",
+      "Keskaeg",
+      "Tööstusrevolutsioon",
+      "Klassikaline antiikaeg",
+      "Külm sõda",
+      "Teine maailmasõda",
+      "Esimene maailmasõda"
     ],
     "correct": {
       "rankByIndex": [
@@ -10458,7 +10458,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order dates from past to recent. Igat kohta kasutatakse tapselt korra. Teema: Silk Road.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Siiditee.",
     "options": [
       "1776",
       "1989",
@@ -10494,18 +10494,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Jarjesta varaseimast hiliseimani. Kasuta rangelt kasvavat jarjekorda. Teema: Magna Carta.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Magna Carta.",
     "options": [
-      "Columbus reaches Americas",
-      "Apollo 11 landing",
-      "Battle of Waterloo",
-      "French Revolution starts",
-      "USSR dissolves",
-      "WWI begins",
-      "Magna Carta signed",
-      "WWII ends",
-      "WWII begins",
-      "Berlin Wall falls"
+      "Columbus jõuab Ameerikasse",
+      "Apollo 11 maandub Kuul",
+      "Waterloo lahing",
+      "Prantsuse revolutsioon algab",
+      "NSVL laguneb",
+      "Esimene maailmasõda algab",
+      "Magna Carta allkirjastatakse",
+      "Teine maailmasõda lõpeb",
+      "Teine maailmasõda algab",
+      "Berliini müür langeb"
     ],
     "correct": {
       "rankByIndex": [
@@ -10530,18 +10530,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order oldest era to newest. Pane varaseim/madalaim kohale 1. Teema: Ottoman Empire.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Osmanite riik.",
     "options": [
-      "Middle Ages",
-      "Renaissance",
-      "Bronze Age",
-      "World War I",
-      "Cold War",
-      "Enlightenment",
-      "Classical Antiquity",
-      "World War II",
-      "Industrial Revolution",
-      "Iron Age"
+      "Keskaeg",
+      "Renessanss",
+      "Pronksiaeg",
+      "Esimene maailmasõda",
+      "Külm sõda",
+      "Valgustusaeg",
+      "Klassikaline antiikaeg",
+      "Teine maailmasõda",
+      "Tööstusrevolutsioon",
+      "Rauaaeg"
     ],
     "correct": {
       "rankByIndex": [
@@ -10566,7 +10566,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order dates from past to recent. Koosta uks korrektne jarjestus. Teema: Ming Dynasty.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Mingi dünastia.",
     "options": [
       "1776",
       "1492",
@@ -10602,18 +10602,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Jarjesta varaseimast hiliseimani. Jarjesta koik variandid esimesest viimaseni. Teema: Norman Conquest.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Normanni vallutus.",
     "options": [
-      "Berlin Wall falls",
-      "Columbus reaches Americas",
-      "Magna Carta signed",
-      "Apollo 11 landing",
-      "WWII ends",
-      "USSR dissolves",
-      "French Revolution starts",
-      "Battle of Waterloo",
-      "WWII begins",
-      "WWI begins"
+      "Berliini müür langeb",
+      "Columbus jõuab Ameerikasse",
+      "Magna Carta allkirjastatakse",
+      "Apollo 11 maandub Kuul",
+      "Teine maailmasõda lõpeb",
+      "NSVL laguneb",
+      "Prantsuse revolutsioon algab",
+      "Waterloo lahing",
+      "Teine maailmasõda algab",
+      "Esimene maailmasõda algab"
     ],
     "correct": {
       "rankByIndex": [
@@ -10638,18 +10638,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order oldest era to newest. Ara jata uhtegi kohta vahele. Teema: Napoleon.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Napoleon.",
     "options": [
-      "Middle Ages",
-      "Classical Antiquity",
-      "Cold War",
-      "Renaissance",
-      "World War II",
-      "Enlightenment",
-      "Industrial Revolution",
-      "Iron Age",
-      "World War I",
-      "Bronze Age"
+      "Keskaeg",
+      "Klassikaline antiikaeg",
+      "Külm sõda",
+      "Renessanss",
+      "Teine maailmasõda",
+      "Valgustusaeg",
+      "Tööstusrevolutsioon",
+      "Rauaaeg",
+      "Esimene maailmasõda",
+      "Pronksiaeg"
     ],
     "correct": {
       "rankByIndex": [
@@ -10674,7 +10674,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order dates from past to recent. Igat kohta kasutatakse tapselt korra. Teema: Julius Caesar.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Julius Caesar.",
     "options": [
       "1215",
       "1939",
@@ -10710,18 +10710,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Jarjesta varaseimast hiliseimani. Kasuta rangelt kasvavat jarjekorda. Teema: Alexander the Great.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Aleksander Suur.",
     "options": [
-      "Apollo 11 landing",
-      "Berlin Wall falls",
-      "WWI begins",
-      "French Revolution starts",
-      "Magna Carta signed",
-      "USSR dissolves",
-      "Columbus reaches Americas",
-      "Battle of Waterloo",
-      "WWII ends",
-      "WWII begins"
+      "Apollo 11 maandub Kuul",
+      "Berliini müür langeb",
+      "Esimene maailmasõda algab",
+      "Prantsuse revolutsioon algab",
+      "Magna Carta allkirjastatakse",
+      "NSVL laguneb",
+      "Columbus jõuab Ameerikasse",
+      "Waterloo lahing",
+      "Teine maailmasõda lõpeb",
+      "Teine maailmasõda algab"
     ],
     "correct": {
       "rankByIndex": [
@@ -10746,18 +10746,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order oldest era to newest. Pane varaseim/madalaim kohale 1. Teema: Gutenberg Press.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Gutenbergi trükipress.",
     "options": [
-      "Enlightenment",
-      "Middle Ages",
-      "Classical Antiquity",
-      "World War I",
-      "World War II",
-      "Renaissance",
-      "Industrial Revolution",
-      "Bronze Age",
-      "Iron Age",
-      "Cold War"
+      "Valgustusaeg",
+      "Keskaeg",
+      "Klassikaline antiikaeg",
+      "Esimene maailmasõda",
+      "Teine maailmasõda",
+      "Renessanss",
+      "Tööstusrevolutsioon",
+      "Pronksiaeg",
+      "Rauaaeg",
+      "Külm sõda"
     ],
     "correct": {
       "rankByIndex": [
@@ -10782,7 +10782,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order dates from past to recent. Koosta uks korrektne jarjestus. Teema: Roman Republic.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Rooma vabariik.",
     "options": [
       "1789",
       "1989",
@@ -10818,18 +10818,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Jarjesta varaseimast hiliseimani. Jarjesta koik variandid esimesest viimaseni. Teema: Cold War.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Külm sõda.",
     "options": [
-      "French Revolution starts",
-      "USSR dissolves",
-      "WWII begins",
-      "Apollo 11 landing",
-      "Columbus reaches Americas",
-      "Battle of Waterloo",
-      "WWI begins",
-      "Berlin Wall falls",
-      "Magna Carta signed",
-      "WWII ends"
+      "Prantsuse revolutsioon algab",
+      "NSVL laguneb",
+      "Teine maailmasõda algab",
+      "Apollo 11 maandub Kuul",
+      "Columbus jõuab Ameerikasse",
+      "Waterloo lahing",
+      "Esimene maailmasõda algab",
+      "Berliini müür langeb",
+      "Magna Carta allkirjastatakse",
+      "Teine maailmasõda lõpeb"
     ],
     "correct": {
       "rankByIndex": [
@@ -10854,18 +10854,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order oldest era to newest. Ara jata uhtegi kohta vahele. Teema: Berlin Wall.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Berliini müür.",
     "options": [
-      "Industrial Revolution",
-      "Enlightenment",
-      "World War I",
-      "Renaissance",
-      "World War II",
-      "Bronze Age",
-      "Middle Ages",
-      "Iron Age",
-      "Classical Antiquity",
-      "Cold War"
+      "Tööstusrevolutsioon",
+      "Valgustusaeg",
+      "Esimene maailmasõda",
+      "Renessanss",
+      "Teine maailmasõda",
+      "Pronksiaeg",
+      "Keskaeg",
+      "Rauaaeg",
+      "Klassikaline antiikaeg",
+      "Külm sõda"
     ],
     "correct": {
       "rankByIndex": [
@@ -10890,7 +10890,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order dates from past to recent. Igat kohta kasutatakse tapselt korra. Teema: Apollo 11.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Apollo 11.",
     "options": [
       "1939",
       "1989",
@@ -10926,18 +10926,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Jarjesta varaseimast hiliseimani. Kasuta rangelt kasvavat jarjekorda. Teema: Treaty of Versailles.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Versailles’ leping.",
     "options": [
-      "USSR dissolves",
-      "WWII begins",
-      "WWI begins",
-      "Magna Carta signed",
-      "Battle of Waterloo",
-      "French Revolution starts",
-      "Columbus reaches Americas",
-      "WWII ends",
-      "Berlin Wall falls",
-      "Apollo 11 landing"
+      "NSVL laguneb",
+      "Teine maailmasõda algab",
+      "Esimene maailmasõda algab",
+      "Magna Carta allkirjastatakse",
+      "Waterloo lahing",
+      "Prantsuse revolutsioon algab",
+      "Columbus jõuab Ameerikasse",
+      "Teine maailmasõda lõpeb",
+      "Berliini müür langeb",
+      "Apollo 11 maandub Kuul"
     ],
     "correct": {
       "rankByIndex": [
@@ -10962,18 +10962,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order oldest era to newest. Pane varaseim/madalaim kohale 1. Teema: Byzantine Empire.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Bütsantsi riik.",
     "options": [
-      "World War II",
-      "Renaissance",
-      "Cold War",
-      "Classical Antiquity",
-      "Industrial Revolution",
-      "Enlightenment",
-      "Middle Ages",
-      "Iron Age",
-      "Bronze Age",
-      "World War I"
+      "Teine maailmasõda",
+      "Renessanss",
+      "Külm sõda",
+      "Klassikaline antiikaeg",
+      "Tööstusrevolutsioon",
+      "Valgustusaeg",
+      "Keskaeg",
+      "Rauaaeg",
+      "Pronksiaeg",
+      "Esimene maailmasõda"
     ],
     "correct": {
       "rankByIndex": [
@@ -10998,7 +10998,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order dates from past to recent. Koosta uks korrektne jarjestus. Teema: Meiji Restoration.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Meiji reformid.",
     "options": [
       "1215",
       "1989",
@@ -11034,18 +11034,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Jarjesta varaseimast hiliseimani. Jarjesta koik variandid esimesest viimaseni. Teema: Age of Exploration.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Suurte maadeavastuste ajastu.",
     "options": [
-      "Apollo 11 landing",
-      "French Revolution starts",
-      "WWII ends",
-      "Magna Carta signed",
-      "USSR dissolves",
-      "Berlin Wall falls",
-      "Battle of Waterloo",
-      "Columbus reaches Americas",
-      "WWII begins",
-      "WWI begins"
+      "Apollo 11 maandub Kuul",
+      "Prantsuse revolutsioon algab",
+      "Teine maailmasõda lõpeb",
+      "Magna Carta allkirjastatakse",
+      "NSVL laguneb",
+      "Berliini müür langeb",
+      "Waterloo lahing",
+      "Columbus jõuab Ameerikasse",
+      "Teine maailmasõda algab",
+      "Esimene maailmasõda algab"
     ],
     "correct": {
       "rankByIndex": [
@@ -11070,18 +11070,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order oldest era to newest. Ara jata uhtegi kohta vahele. Teema: Bronze Age.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Pronksiaeg.",
     "options": [
-      "Classical Antiquity",
-      "Middle Ages",
-      "Industrial Revolution",
-      "Renaissance",
-      "Cold War",
-      "World War II",
-      "Iron Age",
-      "Bronze Age",
-      "World War I",
-      "Enlightenment"
+      "Klassikaline antiikaeg",
+      "Keskaeg",
+      "Tööstusrevolutsioon",
+      "Renessanss",
+      "Külm sõda",
+      "Teine maailmasõda",
+      "Rauaaeg",
+      "Pronksiaeg",
+      "Esimene maailmasõda",
+      "Valgustusaeg"
     ],
     "correct": {
       "rankByIndex": [
@@ -11106,7 +11106,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order dates from past to recent. Igat kohta kasutatakse tapselt korra. Teema: Iron Age.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Rauaaeg.",
     "options": [
       "1776",
       "1969",
@@ -11142,18 +11142,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Jarjesta varaseimast hiliseimani. Kasuta rangelt kasvavat jarjekorda. Teema: Harlem Renaissance.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Harlemi renessanss.",
     "options": [
-      "Apollo 11 landing",
-      "Battle of Waterloo",
-      "WWI begins",
-      "Magna Carta signed",
-      "WWII begins",
-      "Berlin Wall falls",
-      "French Revolution starts",
-      "Columbus reaches Americas",
-      "WWII ends",
-      "USSR dissolves"
+      "Apollo 11 maandub Kuul",
+      "Waterloo lahing",
+      "Esimene maailmasõda algab",
+      "Magna Carta allkirjastatakse",
+      "Teine maailmasõda algab",
+      "Berliini müür langeb",
+      "Prantsuse revolutsioon algab",
+      "Columbus jõuab Ameerikasse",
+      "Teine maailmasõda lõpeb",
+      "NSVL laguneb"
     ],
     "correct": {
       "rankByIndex": [
@@ -11178,18 +11178,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order oldest era to newest. Pane varaseim/madalaim kohale 1. Teema: Printing Press.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Trükipress.",
     "options": [
-      "Enlightenment",
-      "Classical Antiquity",
-      "Renaissance",
-      "Middle Ages",
-      "World War II",
-      "Iron Age",
-      "World War I",
-      "Bronze Age",
-      "Cold War",
-      "Industrial Revolution"
+      "Valgustusaeg",
+      "Klassikaline antiikaeg",
+      "Renessanss",
+      "Keskaeg",
+      "Teine maailmasõda",
+      "Rauaaeg",
+      "Esimene maailmasõda",
+      "Pronksiaeg",
+      "Külm sõda",
+      "Tööstusrevolutsioon"
     ],
     "correct": {
       "rankByIndex": [
@@ -11214,7 +11214,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order dates from past to recent. Koosta uks korrektne jarjestus. Teema: Han Dynasty.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Hani dünastia.",
     "options": [
       "1066",
       "1215",
@@ -11250,18 +11250,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Jarjesta varaseimast hiliseimani. Jarjesta koik variandid esimesest viimaseni. Teema: Pax Romana.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Pax Romana.",
     "options": [
-      "French Revolution starts",
-      "WWII ends",
-      "Columbus reaches Americas",
-      "Magna Carta signed",
-      "WWII begins",
-      "Berlin Wall falls",
-      "USSR dissolves",
-      "WWI begins",
-      "Battle of Waterloo",
-      "Apollo 11 landing"
+      "Prantsuse revolutsioon algab",
+      "Teine maailmasõda lõpeb",
+      "Columbus jõuab Ameerikasse",
+      "Magna Carta allkirjastatakse",
+      "Teine maailmasõda algab",
+      "Berliini müür langeb",
+      "NSVL laguneb",
+      "Esimene maailmasõda algab",
+      "Waterloo lahing",
+      "Apollo 11 maandub Kuul"
     ],
     "correct": {
       "rankByIndex": [
@@ -11286,18 +11286,18 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order oldest era to newest. Ara jata uhtegi kohta vahele. Teema: Persian Empire.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Pärsia riik.",
     "options": [
-      "Industrial Revolution",
-      "Classical Antiquity",
-      "Middle Ages",
-      "Bronze Age",
-      "World War II",
-      "World War I",
-      "Enlightenment",
-      "Cold War",
-      "Renaissance",
-      "Iron Age"
+      "Tööstusrevolutsioon",
+      "Klassikaline antiikaeg",
+      "Keskaeg",
+      "Pronksiaeg",
+      "Teine maailmasõda",
+      "Esimene maailmasõda",
+      "Valgustusaeg",
+      "Külm sõda",
+      "Renessanss",
+      "Rauaaeg"
     ],
     "correct": {
       "rankByIndex": [
@@ -11322,7 +11322,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Order dates from past to recent. Igat kohta kasutatakse tapselt korra. Teema: Maya Civilization.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Maiade tsivilisatsioon.",
     "options": [
       "1492",
       "1939",
@@ -11358,18 +11358,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by distance, shortest first. Kasuta rangelt kasvavat jarjekorda. Teema: Football.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: jalgpall.",
     "options": [
-      "Half marathon",
-      "400m sprint",
-      "100m sprint",
-      "Marathon",
-      "10000m run",
-      "800m run",
-      "200m sprint",
-      "50km race walk",
-      "5000m run",
-      "1500m run"
+      "poolmaraton",
+      "400 m sprint",
+      "100 m sprint",
+      "maraton",
+      "10 000 m jooks",
+      "800 m jooks",
+      "200 m sprint",
+      "50 km käimine",
+      "5000 m jooks",
+      "1500 m jooks"
     ],
     "correct": {
       "rankByIndex": [
@@ -11394,18 +11394,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by event duration, shortest first. Pane varaseim/madalaim kohale 1. Teema: Basketball.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: korvpall.",
     "options": [
-      "Tennis set",
-      "Baseball game",
-      "Test cricket day",
-      "Basketball quarter",
-      "Table tennis rally",
-      "Rugby half",
-      "Football half",
-      "100m sprint race",
-      "Boxing round",
-      "Cricket T20 match"
+      "tennise sett",
+      "pesapallimäng",
+      "testkriketi mängupäev",
+      "korvpalli veerandaeg",
+      "lauatennise pallivahetus",
+      "ragbi poolaeg",
+      "jalgpalli poolaeg",
+      "100 m jooks",
+      "poksi raund",
+      "kriketi T20 mäng"
     ],
     "correct": {
       "rankByIndex": [
@@ -11430,18 +11430,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by players per side, low to high. Koosta uks korrektne jarjestus. Teema: Tennis.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: tennis.",
     "options": [
-      "Water polo",
-      "Volleyball",
-      "Aussie rules football",
-      "Cricket",
-      "Football",
-      "Beach volleyball",
-      "Baseball",
-      "Basketball",
-      "Tennis singles",
-      "Rugby union"
+      "veepall",
+      "võrkpall",
+      "Austraalia jalgpall",
+      "kriket",
+      "jalgpall",
+      "rannavõrkpall",
+      "pesapall",
+      "korvpall",
+      "tennise üksikmäng",
+      "ragbi"
     ],
     "correct": {
       "rankByIndex": [
@@ -11466,18 +11466,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by distance, shortest first. Jarjesta koik variandid esimesest viimaseni. Teema: Cricket.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: kriket.",
     "options": [
-      "Marathon",
-      "400m sprint",
-      "800m run",
-      "Half marathon",
-      "50km race walk",
-      "1500m run",
-      "200m sprint",
-      "10000m run",
-      "100m sprint",
-      "5000m run"
+      "maraton",
+      "400 m sprint",
+      "800 m jooks",
+      "poolmaraton",
+      "50 km käimine",
+      "1500 m jooks",
+      "200 m sprint",
+      "10 000 m jooks",
+      "100 m sprint",
+      "5000 m jooks"
     ],
     "correct": {
       "rankByIndex": [
@@ -11502,18 +11502,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by event duration, shortest first. Ara jata uhtegi kohta vahele. Teema: Rugby.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: ragbi.",
     "options": [
-      "Boxing round",
-      "Rugby half",
-      "100m sprint race",
-      "Table tennis rally",
-      "Basketball quarter",
-      "Test cricket day",
-      "Football half",
-      "Cricket T20 match",
-      "Tennis set",
-      "Baseball game"
+      "poksi raund",
+      "ragbi poolaeg",
+      "100 m jooks",
+      "lauatennise pallivahetus",
+      "korvpalli veerandaeg",
+      "testkriketi mängupäev",
+      "jalgpalli poolaeg",
+      "kriketi T20 mäng",
+      "tennise sett",
+      "pesapallimäng"
     ],
     "correct": {
       "rankByIndex": [
@@ -11538,18 +11538,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by players per side, low to high. Igat kohta kasutatakse tapselt korra. Teema: Volleyball.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: võrkpall.",
     "options": [
-      "Baseball",
-      "Volleyball",
-      "Basketball",
-      "Rugby union",
-      "Tennis singles",
-      "Cricket",
-      "Beach volleyball",
-      "Aussie rules football",
-      "Water polo",
-      "Football"
+      "pesapall",
+      "võrkpall",
+      "korvpall",
+      "ragbi",
+      "tennise üksikmäng",
+      "kriket",
+      "rannavõrkpall",
+      "Austraalia jalgpall",
+      "veepall",
+      "jalgpall"
     ],
     "correct": {
       "rankByIndex": [
@@ -11574,18 +11574,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by distance, shortest first. Kasuta rangelt kasvavat jarjekorda. Teema: Handball.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: käsipall.",
     "options": [
-      "400m sprint",
-      "50km race walk",
-      "Half marathon",
-      "200m sprint",
-      "1500m run",
-      "800m run",
-      "Marathon",
-      "100m sprint",
-      "5000m run",
-      "10000m run"
+      "400 m sprint",
+      "50 km käimine",
+      "poolmaraton",
+      "200 m sprint",
+      "1500 m jooks",
+      "800 m jooks",
+      "maraton",
+      "100 m sprint",
+      "5000 m jooks",
+      "10 000 m jooks"
     ],
     "correct": {
       "rankByIndex": [
@@ -11610,18 +11610,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by event duration, shortest first. Pane varaseim/madalaim kohale 1. Teema: Baseball.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: pesapall.",
     "options": [
-      "Baseball game",
-      "Rugby half",
-      "Table tennis rally",
-      "Tennis set",
-      "Basketball quarter",
-      "Football half",
-      "100m sprint race",
-      "Test cricket day",
-      "Boxing round",
-      "Cricket T20 match"
+      "pesapallimäng",
+      "ragbi poolaeg",
+      "lauatennise pallivahetus",
+      "tennise sett",
+      "korvpalli veerandaeg",
+      "jalgpalli poolaeg",
+      "100 m jooks",
+      "testkriketi mängupäev",
+      "poksi raund",
+      "kriketi T20 mäng"
     ],
     "correct": {
       "rankByIndex": [
@@ -11646,18 +11646,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by players per side, low to high. Koosta uks korrektne jarjestus. Teema: Hockey.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: hoki.",
     "options": [
-      "Basketball",
-      "Cricket",
-      "Aussie rules football",
-      "Volleyball",
-      "Baseball",
-      "Beach volleyball",
-      "Tennis singles",
-      "Water polo",
-      "Football",
-      "Rugby union"
+      "korvpall",
+      "kriket",
+      "Austraalia jalgpall",
+      "võrkpall",
+      "pesapall",
+      "rannavõrkpall",
+      "tennise üksikmäng",
+      "veepall",
+      "jalgpall",
+      "ragbi"
     ],
     "correct": {
       "rankByIndex": [
@@ -11682,18 +11682,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by distance, shortest first. Jarjesta koik variandid esimesest viimaseni. Teema: Badminton.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: sulgpall.",
     "options": [
-      "1500m run",
-      "Marathon",
-      "Half marathon",
-      "50km race walk",
-      "200m sprint",
-      "10000m run",
-      "100m sprint",
-      "5000m run",
-      "400m sprint",
-      "800m run"
+      "1500 m jooks",
+      "maraton",
+      "poolmaraton",
+      "50 km käimine",
+      "200 m sprint",
+      "10 000 m jooks",
+      "100 m sprint",
+      "5000 m jooks",
+      "400 m sprint",
+      "800 m jooks"
     ],
     "correct": {
       "rankByIndex": [
@@ -11718,18 +11718,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by event duration, shortest first. Ara jata uhtegi kohta vahele. Teema: Table Tennis.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: lauatennis.",
     "options": [
-      "Tennis set",
-      "Rugby half",
-      "100m sprint race",
-      "Cricket T20 match",
-      "Football half",
-      "Basketball quarter",
-      "Table tennis rally",
-      "Boxing round",
-      "Test cricket day",
-      "Baseball game"
+      "tennise sett",
+      "ragbi poolaeg",
+      "100 m jooks",
+      "kriketi T20 mäng",
+      "jalgpalli poolaeg",
+      "korvpalli veerandaeg",
+      "lauatennise pallivahetus",
+      "poksi raund",
+      "testkriketi mängupäev",
+      "pesapallimäng"
     ],
     "correct": {
       "rankByIndex": [
@@ -11754,18 +11754,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by players per side, low to high. Igat kohta kasutatakse tapselt korra. Teema: Athletics.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: kergejõustik.",
     "options": [
-      "Tennis singles",
-      "Football",
-      "Aussie rules football",
-      "Water polo",
-      "Basketball",
-      "Volleyball",
-      "Beach volleyball",
-      "Baseball",
-      "Rugby union",
-      "Cricket"
+      "tennise üksikmäng",
+      "jalgpall",
+      "Austraalia jalgpall",
+      "veepall",
+      "korvpall",
+      "võrkpall",
+      "rannavõrkpall",
+      "pesapall",
+      "ragbi",
+      "kriket"
     ],
     "correct": {
       "rankByIndex": [
@@ -11790,18 +11790,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by distance, shortest first. Kasuta rangelt kasvavat jarjekorda. Teema: Swimming.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: ujumine.",
     "options": [
-      "5000m run",
-      "200m sprint",
-      "50km race walk",
-      "400m sprint",
-      "100m sprint",
-      "800m run",
-      "10000m run",
-      "1500m run",
-      "Half marathon",
-      "Marathon"
+      "5000 m jooks",
+      "200 m sprint",
+      "50 km käimine",
+      "400 m sprint",
+      "100 m sprint",
+      "800 m jooks",
+      "10 000 m jooks",
+      "1500 m jooks",
+      "poolmaraton",
+      "maraton"
     ],
     "correct": {
       "rankByIndex": [
@@ -11826,18 +11826,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by event duration, shortest first. Pane varaseim/madalaim kohale 1. Teema: Cycling.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: rattasõit.",
     "options": [
-      "Baseball game",
-      "Tennis set",
-      "100m sprint race",
-      "Cricket T20 match",
-      "Table tennis rally",
-      "Football half",
-      "Rugby half",
-      "Test cricket day",
-      "Basketball quarter",
-      "Boxing round"
+      "pesapallimäng",
+      "tennise sett",
+      "100 m jooks",
+      "kriketi T20 mäng",
+      "lauatennise pallivahetus",
+      "jalgpalli poolaeg",
+      "ragbi poolaeg",
+      "testkriketi mängupäev",
+      "korvpalli veerandaeg",
+      "poksi raund"
     ],
     "correct": {
       "rankByIndex": [
@@ -11862,18 +11862,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by players per side, low to high. Koosta uks korrektne jarjestus. Teema: Boxing.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: poks.",
     "options": [
-      "Aussie rules football",
-      "Volleyball",
-      "Basketball",
-      "Baseball",
-      "Water polo",
-      "Rugby union",
-      "Beach volleyball",
-      "Tennis singles",
-      "Cricket",
-      "Football"
+      "Austraalia jalgpall",
+      "võrkpall",
+      "korvpall",
+      "pesapall",
+      "veepall",
+      "ragbi",
+      "rannavõrkpall",
+      "tennise üksikmäng",
+      "kriket",
+      "jalgpall"
     ],
     "correct": {
       "rankByIndex": [
@@ -11898,18 +11898,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by distance, shortest first. Jarjesta koik variandid esimesest viimaseni. Teema: Fencing.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: vehklemine.",
     "options": [
-      "5000m run",
-      "800m run",
-      "10000m run",
-      "400m sprint",
-      "100m sprint",
-      "1500m run",
-      "Half marathon",
-      "200m sprint",
-      "50km race walk",
-      "Marathon"
+      "5000 m jooks",
+      "800 m jooks",
+      "10 000 m jooks",
+      "400 m sprint",
+      "100 m sprint",
+      "1500 m jooks",
+      "poolmaraton",
+      "200 m sprint",
+      "50 km käimine",
+      "maraton"
     ],
     "correct": {
       "rankByIndex": [
@@ -11934,18 +11934,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by event duration, shortest first. Ara jata uhtegi kohta vahele. Teema: Judo.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: judo.",
     "options": [
-      "Test cricket day",
-      "Table tennis rally",
-      "Rugby half",
-      "Baseball game",
-      "Tennis set",
-      "Football half",
-      "100m sprint race",
-      "Boxing round",
-      "Cricket T20 match",
-      "Basketball quarter"
+      "testkriketi mängupäev",
+      "lauatennise pallivahetus",
+      "ragbi poolaeg",
+      "pesapallimäng",
+      "tennise sett",
+      "jalgpalli poolaeg",
+      "100 m jooks",
+      "poksi raund",
+      "kriketi T20 mäng",
+      "korvpalli veerandaeg"
     ],
     "correct": {
       "rankByIndex": [
@@ -11970,18 +11970,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by players per side, low to high. Igat kohta kasutatakse tapselt korra. Teema: Karate.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: karate.",
     "options": [
-      "Baseball",
-      "Beach volleyball",
-      "Rugby union",
-      "Tennis singles",
-      "Basketball",
-      "Cricket",
-      "Volleyball",
-      "Water polo",
-      "Aussie rules football",
-      "Football"
+      "pesapall",
+      "rannavõrkpall",
+      "ragbi",
+      "tennise üksikmäng",
+      "korvpall",
+      "kriket",
+      "võrkpall",
+      "veepall",
+      "Austraalia jalgpall",
+      "jalgpall"
     ],
     "correct": {
       "rankByIndex": [
@@ -12006,18 +12006,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by distance, shortest first. Kasuta rangelt kasvavat jarjekorda. Teema: Golf.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: golf.",
     "options": [
-      "Marathon",
-      "100m sprint",
-      "400m sprint",
-      "1500m run",
-      "Half marathon",
-      "200m sprint",
-      "5000m run",
-      "800m run",
-      "10000m run",
-      "50km race walk"
+      "maraton",
+      "100 m sprint",
+      "400 m sprint",
+      "1500 m jooks",
+      "poolmaraton",
+      "200 m sprint",
+      "5000 m jooks",
+      "800 m jooks",
+      "10 000 m jooks",
+      "50 km käimine"
     ],
     "correct": {
       "rankByIndex": [
@@ -12042,18 +12042,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by event duration, shortest first. Pane varaseim/madalaim kohale 1. Teema: Snooker.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: snooker.",
     "options": [
-      "Cricket T20 match",
-      "100m sprint race",
-      "Rugby half",
-      "Football half",
-      "Table tennis rally",
-      "Boxing round",
-      "Tennis set",
-      "Basketball quarter",
-      "Test cricket day",
-      "Baseball game"
+      "kriketi T20 mäng",
+      "100 m jooks",
+      "ragbi poolaeg",
+      "jalgpalli poolaeg",
+      "lauatennise pallivahetus",
+      "poksi raund",
+      "tennise sett",
+      "korvpalli veerandaeg",
+      "testkriketi mängupäev",
+      "pesapallimäng"
     ],
     "correct": {
       "rankByIndex": [
@@ -12078,18 +12078,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by players per side, low to high. Koosta uks korrektne jarjestus. Teema: Formula One.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: Vormel 1.",
     "options": [
-      "Tennis singles",
-      "Volleyball",
-      "Football",
-      "Basketball",
-      "Beach volleyball",
-      "Aussie rules football",
-      "Cricket",
-      "Rugby union",
-      "Water polo",
-      "Baseball"
+      "tennise üksikmäng",
+      "võrkpall",
+      "jalgpall",
+      "korvpall",
+      "rannavõrkpall",
+      "Austraalia jalgpall",
+      "kriket",
+      "ragbi",
+      "veepall",
+      "pesapall"
     ],
     "correct": {
       "rankByIndex": [
@@ -12114,18 +12114,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by distance, shortest first. Jarjesta koik variandid esimesest viimaseni. Teema: MotoGP.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: MotoGP.",
     "options": [
-      "100m sprint",
-      "Half marathon",
-      "1500m run",
-      "50km race walk",
-      "800m run",
-      "400m sprint",
-      "200m sprint",
-      "Marathon",
-      "5000m run",
-      "10000m run"
+      "100 m sprint",
+      "poolmaraton",
+      "1500 m jooks",
+      "50 km käimine",
+      "800 m jooks",
+      "400 m sprint",
+      "200 m sprint",
+      "maraton",
+      "5000 m jooks",
+      "10 000 m jooks"
     ],
     "correct": {
       "rankByIndex": [
@@ -12150,18 +12150,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by event duration, shortest first. Ara jata uhtegi kohta vahele. Teema: Marathon.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: maraton.",
     "options": [
-      "Table tennis rally",
-      "Basketball quarter",
-      "Cricket T20 match",
-      "Baseball game",
-      "Boxing round",
-      "Tennis set",
-      "Test cricket day",
-      "100m sprint race",
-      "Rugby half",
-      "Football half"
+      "lauatennise pallivahetus",
+      "korvpalli veerandaeg",
+      "kriketi T20 mäng",
+      "pesapallimäng",
+      "poksi raund",
+      "tennise sett",
+      "testkriketi mängupäev",
+      "100 m jooks",
+      "ragbi poolaeg",
+      "jalgpalli poolaeg"
     ],
     "correct": {
       "rankByIndex": [
@@ -12186,18 +12186,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by players per side, low to high. Igat kohta kasutatakse tapselt korra. Teema: Triathlon.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: triatlon.",
     "options": [
-      "Cricket",
-      "Tennis singles",
-      "Rugby union",
-      "Volleyball",
-      "Water polo",
-      "Baseball",
-      "Aussie rules football",
-      "Football",
-      "Beach volleyball",
-      "Basketball"
+      "kriket",
+      "tennise üksikmäng",
+      "ragbi",
+      "võrkpall",
+      "veepall",
+      "pesapall",
+      "Austraalia jalgpall",
+      "jalgpall",
+      "rannavõrkpall",
+      "korvpall"
     ],
     "correct": {
       "rankByIndex": [
@@ -12222,18 +12222,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by distance, shortest first. Kasuta rangelt kasvavat jarjekorda. Teema: Decathlon.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: kümnevõistlus.",
     "options": [
-      "Half marathon",
-      "5000m run",
-      "200m sprint",
-      "50km race walk",
-      "1500m run",
-      "100m sprint",
-      "Marathon",
-      "400m sprint",
-      "800m run",
-      "10000m run"
+      "poolmaraton",
+      "5000 m jooks",
+      "200 m sprint",
+      "50 km käimine",
+      "1500 m jooks",
+      "100 m sprint",
+      "maraton",
+      "400 m sprint",
+      "800 m jooks",
+      "10 000 m jooks"
     ],
     "correct": {
       "rankByIndex": [
@@ -12258,18 +12258,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by event duration, shortest first. Pane varaseim/madalaim kohale 1. Teema: Wimbledon.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: Wimbledon.",
     "options": [
-      "Baseball game",
-      "Tennis set",
-      "Football half",
-      "Test cricket day",
-      "Cricket T20 match",
-      "Rugby half",
-      "Table tennis rally",
-      "Boxing round",
-      "100m sprint race",
-      "Basketball quarter"
+      "pesapallimäng",
+      "tennise sett",
+      "jalgpalli poolaeg",
+      "testkriketi mängupäev",
+      "kriketi T20 mäng",
+      "ragbi poolaeg",
+      "lauatennise pallivahetus",
+      "poksi raund",
+      "100 m jooks",
+      "korvpalli veerandaeg"
     ],
     "correct": {
       "rankByIndex": [
@@ -12294,18 +12294,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by players per side, low to high. Koosta uks korrektne jarjestus. Teema: Olympics.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: olümpiamängud.",
     "options": [
-      "Tennis singles",
-      "Water polo",
-      "Football",
-      "Basketball",
-      "Beach volleyball",
-      "Volleyball",
-      "Rugby union",
-      "Baseball",
-      "Aussie rules football",
-      "Cricket"
+      "tennise üksikmäng",
+      "veepall",
+      "jalgpall",
+      "korvpall",
+      "rannavõrkpall",
+      "võrkpall",
+      "ragbi",
+      "pesapall",
+      "Austraalia jalgpall",
+      "kriket"
     ],
     "correct": {
       "rankByIndex": [
@@ -12330,18 +12330,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by distance, shortest first. Jarjesta koik variandid esimesest viimaseni. Teema: World Cup.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: MM.",
     "options": [
-      "200m sprint",
-      "50km race walk",
-      "100m sprint",
-      "800m run",
-      "10000m run",
-      "1500m run",
-      "Half marathon",
-      "400m sprint",
-      "Marathon",
-      "5000m run"
+      "200 m sprint",
+      "50 km käimine",
+      "100 m sprint",
+      "800 m jooks",
+      "10 000 m jooks",
+      "1500 m jooks",
+      "poolmaraton",
+      "400 m sprint",
+      "maraton",
+      "5000 m jooks"
     ],
     "correct": {
       "rankByIndex": [
@@ -12366,18 +12366,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by event duration, shortest first. Ara jata uhtegi kohta vahele. Teema: UEFA Champions League.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: Meistrite liiga.",
     "options": [
-      "100m sprint race",
-      "Table tennis rally",
-      "Rugby half",
-      "Boxing round",
-      "Tennis set",
-      "Football half",
-      "Cricket T20 match",
-      "Baseball game",
-      "Basketball quarter",
-      "Test cricket day"
+      "100 m jooks",
+      "lauatennise pallivahetus",
+      "ragbi poolaeg",
+      "poksi raund",
+      "tennise sett",
+      "jalgpalli poolaeg",
+      "kriketi T20 mäng",
+      "pesapallimäng",
+      "korvpalli veerandaeg",
+      "testkriketi mängupäev"
     ],
     "correct": {
       "rankByIndex": [
@@ -12402,18 +12402,18 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Order by players per side, low to high. Igat kohta kasutatakse tapselt korra. Teema: NBA Finals.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: NBA finaalid.",
     "options": [
-      "Tennis singles",
-      "Beach volleyball",
-      "Basketball",
-      "Baseball",
-      "Football",
-      "Volleyball",
-      "Rugby union",
-      "Water polo",
-      "Aussie rules football",
-      "Cricket"
+      "tennise üksikmäng",
+      "rannavõrkpall",
+      "korvpall",
+      "pesapall",
+      "jalgpall",
+      "võrkpall",
+      "ragbi",
+      "veepall",
+      "Austraalia jalgpall",
+      "kriket"
     ],
     "correct": {
       "rankByIndex": [
@@ -12438,18 +12438,18 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta riigid pindala jargi vaikesest suureni. Kasuta rangelt kasvavat jarjekorda. Teema: Tallinn.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Tallinn.",
     "options": [
       "Argentina",
-      "Kazakhstan",
-      "United Kingdom",
+      "Kasahstan",
+      "Ühendkuningriik",
       "India",
-      "Canada",
-      "Ukraine",
-      "France",
-      "China",
-      "Russia",
-      "Iceland"
+      "Kanada",
+      "Ukraina",
+      "Prantsusmaa",
+      "Hiina",
+      "Venemaa",
+      "Island"
     ],
     "correct": {
       "rankByIndex": [
@@ -12474,16 +12474,16 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta linnad laiuskraadi jargi lounast pohja. Pane varaseim/madalaim kohale 1. Teema: Riga.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Riia.",
     "options": [
       "Canberra",
       "Reykjavik",
-      "Singapore",
-      "Paris",
+      "Singapur",
+      "Pariis",
       "Buenos Aires",
-      "Athens",
-      "Cairo",
-      "Cape Town",
+      "Ateena",
+      "Kairo",
+      "Kaplinn",
       "Stockholm",
       "Nairobi"
     ],
@@ -12510,17 +12510,17 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta marged korguse jargi madalast korgeni. Koosta uks korrektne jarjestus. Teema: Vilnius.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Vilnius.",
     "options": [
       "Mont Blanc",
-      "Kangchenjunga",
+      "Kanchenjunga",
       "Denali",
       "K2",
       "Kilimanjaro",
       "Elbrus",
       "Aconcagua",
       "Everest",
-      "Vinson Massif",
+      "Vinsoni massiiv",
       "Lhotse"
     ],
     "correct": {
@@ -12546,18 +12546,18 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta riigid pindala jargi vaikesest suureni. Jarjesta koik variandid esimesest viimaseni. Teema: Helsinki.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Helsingi.",
     "options": [
-      "Ukraine",
-      "Iceland",
-      "Russia",
+      "Ukraina",
+      "Island",
+      "Venemaa",
       "Argentina",
-      "France",
-      "United Kingdom",
-      "Kazakhstan",
-      "Canada",
+      "Prantsusmaa",
+      "Ühendkuningriik",
+      "Kasahstan",
+      "Kanada",
       "India",
-      "China"
+      "Hiina"
     ],
     "correct": {
       "rankByIndex": [
@@ -12582,17 +12582,17 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta linnad laiuskraadi jargi lounast pohja. Ara jata uhtegi kohta vahele. Teema: Stockholm.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Stockholm.",
     "options": [
-      "Cape Town",
+      "Kaplinn",
       "Buenos Aires",
-      "Paris",
+      "Pariis",
       "Nairobi",
       "Canberra",
-      "Singapore",
+      "Singapur",
       "Reykjavik",
-      "Cairo",
-      "Athens",
+      "Kairo",
+      "Ateena",
       "Stockholm"
     ],
     "correct": {
@@ -12618,11 +12618,11 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta marged korguse jargi madalast korgeni. Igat kohta kasutatakse tapselt korra. Teema: Oslo.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Oslo.",
     "options": [
-      "Vinson Massif",
+      "Vinsoni massiiv",
       "Kilimanjaro",
-      "Kangchenjunga",
+      "Kanchenjunga",
       "Mont Blanc",
       "Denali",
       "K2",
@@ -12654,18 +12654,18 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta riigid pindala jargi vaikesest suureni. Kasuta rangelt kasvavat jarjekorda. Teema: Copenhagen.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Kopenhaagen.",
     "options": [
-      "China",
-      "Russia",
-      "Ukraine",
-      "Iceland",
-      "United Kingdom",
-      "Canada",
+      "Hiina",
+      "Venemaa",
+      "Ukraina",
+      "Island",
+      "Ühendkuningriik",
+      "Kanada",
       "Argentina",
       "India",
-      "Kazakhstan",
-      "France"
+      "Kasahstan",
+      "Prantsusmaa"
     ],
     "correct": {
       "rankByIndex": [
@@ -12690,17 +12690,17 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta linnad laiuskraadi jargi lounast pohja. Pane varaseim/madalaim kohale 1. Teema: Reykjavik.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Reykjavik.",
     "options": [
       "Stockholm",
-      "Athens",
+      "Ateena",
       "Buenos Aires",
       "Canberra",
-      "Cairo",
-      "Singapore",
-      "Cape Town",
+      "Kairo",
+      "Singapur",
+      "Kaplinn",
       "Reykjavik",
-      "Paris",
+      "Pariis",
       "Nairobi"
     ],
     "correct": {
@@ -12726,9 +12726,9 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta marged korguse jargi madalast korgeni. Koosta uks korrektne jarjestus. Teema: London.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: London.",
     "options": [
-      "Vinson Massif",
+      "Vinsoni massiiv",
       "Kilimanjaro",
       "K2",
       "Mont Blanc",
@@ -12736,7 +12736,7 @@
       "Everest",
       "Aconcagua",
       "Lhotse",
-      "Kangchenjunga",
+      "Kanchenjunga",
       "Denali"
     ],
     "correct": {
@@ -12762,17 +12762,17 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta riigid pindala jargi vaikesest suureni. Jarjesta koik variandid esimesest viimaseni. Teema: Paris.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Pariis.",
     "options": [
-      "United Kingdom",
-      "Kazakhstan",
-      "France",
-      "Iceland",
-      "Ukraine",
+      "Ühendkuningriik",
+      "Kasahstan",
+      "Prantsusmaa",
+      "Island",
+      "Ukraina",
       "India",
-      "Russia",
-      "China",
-      "Canada",
+      "Venemaa",
+      "Hiina",
+      "Kanada",
       "Argentina"
     ],
     "correct": {
@@ -12798,16 +12798,16 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta linnad laiuskraadi jargi lounast pohja. Ara jata uhtegi kohta vahele. Teema: Berlin.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Berliin.",
     "options": [
       "Nairobi",
-      "Cairo",
+      "Kairo",
       "Reykjavik",
-      "Singapore",
-      "Paris",
-      "Athens",
+      "Singapur",
+      "Pariis",
+      "Ateena",
       "Stockholm",
-      "Cape Town",
+      "Kaplinn",
       "Buenos Aires",
       "Canberra"
     ],
@@ -12834,7 +12834,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta marged korguse jargi madalast korgeni. Igat kohta kasutatakse tapselt korra. Teema: Rome.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Rooma.",
     "options": [
       "Denali",
       "Mont Blanc",
@@ -12843,9 +12843,9 @@
       "K2",
       "Lhotse",
       "Aconcagua",
-      "Kangchenjunga",
+      "Kanchenjunga",
       "Kilimanjaro",
-      "Vinson Massif"
+      "Vinsoni massiiv"
     ],
     "correct": {
       "rankByIndex": [
@@ -12870,18 +12870,18 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta riigid pindala jargi vaikesest suureni. Kasuta rangelt kasvavat jarjekorda. Teema: Madrid.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Madrid.",
     "options": [
-      "Kazakhstan",
-      "France",
-      "Iceland",
-      "United Kingdom",
+      "Kasahstan",
+      "Prantsusmaa",
+      "Island",
+      "Ühendkuningriik",
       "Argentina",
       "India",
-      "Canada",
-      "China",
-      "Ukraine",
-      "Russia"
+      "Kanada",
+      "Hiina",
+      "Ukraina",
+      "Venemaa"
     ],
     "correct": {
       "rankByIndex": [
@@ -12906,18 +12906,18 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta linnad laiuskraadi jargi lounast pohja. Pane varaseim/madalaim kohale 1. Teema: Lisbon.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Lissabon.",
     "options": [
       "Nairobi",
-      "Cape Town",
-      "Paris",
-      "Singapore",
+      "Kaplinn",
+      "Pariis",
+      "Singapur",
       "Stockholm",
-      "Athens",
+      "Ateena",
       "Canberra",
       "Buenos Aires",
       "Reykjavik",
-      "Cairo"
+      "Kairo"
     ],
     "correct": {
       "rankByIndex": [
@@ -12942,11 +12942,11 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta marged korguse jargi madalast korgeni. Koosta uks korrektne jarjestus. Teema: Vienna.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Viin.",
     "options": [
       "Everest",
-      "Kangchenjunga",
-      "Vinson Massif",
+      "Kanchenjunga",
+      "Vinsoni massiiv",
       "Kilimanjaro",
       "Aconcagua",
       "Lhotse",
@@ -12978,18 +12978,18 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta riigid pindala jargi vaikesest suureni. Jarjesta koik variandid esimesest viimaseni. Teema: Prague.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Praha.",
     "options": [
-      "Iceland",
-      "Kazakhstan",
-      "Canada",
-      "France",
+      "Island",
+      "Kasahstan",
+      "Kanada",
+      "Prantsusmaa",
       "Argentina",
-      "United Kingdom",
-      "China",
-      "Ukraine",
+      "Ühendkuningriik",
+      "Hiina",
+      "Ukraina",
       "India",
-      "Russia"
+      "Venemaa"
     ],
     "correct": {
       "rankByIndex": [
@@ -13014,18 +13014,18 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta linnad laiuskraadi jargi lounast pohja. Ara jata uhtegi kohta vahele. Teema: Warsaw.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Varssavi.",
     "options": [
-      "Athens",
+      "Ateena",
       "Nairobi",
       "Reykjavik",
       "Buenos Aires",
-      "Singapore",
-      "Cairo",
+      "Singapur",
+      "Kairo",
       "Canberra",
-      "Cape Town",
+      "Kaplinn",
       "Stockholm",
-      "Paris"
+      "Pariis"
     ],
     "correct": {
       "rankByIndex": [
@@ -13050,9 +13050,9 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta marged korguse jargi madalast korgeni. Igat kohta kasutatakse tapselt korra. Teema: Budapest.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Budapest.",
     "options": [
-      "Kangchenjunga",
+      "Kanchenjunga",
       "Aconcagua",
       "Everest",
       "Mont Blanc",
@@ -13061,7 +13061,7 @@
       "Lhotse",
       "Kilimanjaro",
       "K2",
-      "Vinson Massif"
+      "Vinsoni massiiv"
     ],
     "correct": {
       "rankByIndex": [
@@ -13086,18 +13086,18 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta riigid pindala jargi vaikesest suureni. Kasuta rangelt kasvavat jarjekorda. Teema: Athens.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Ateena.",
     "options": [
-      "France",
-      "Canada",
-      "United Kingdom",
+      "Prantsusmaa",
+      "Kanada",
+      "Ühendkuningriik",
       "Argentina",
-      "Kazakhstan",
-      "Iceland",
-      "China",
-      "Russia",
+      "Kasahstan",
+      "Island",
+      "Hiina",
+      "Venemaa",
       "India",
-      "Ukraine"
+      "Ukraina"
     ],
     "correct": {
       "rankByIndex": [
@@ -13122,17 +13122,17 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta linnad laiuskraadi jargi lounast pohja. Pane varaseim/madalaim kohale 1. Teema: Dublin.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Dublin.",
     "options": [
-      "Cairo",
+      "Kairo",
       "Nairobi",
       "Buenos Aires",
       "Stockholm",
-      "Athens",
-      "Singapore",
-      "Paris",
+      "Ateena",
+      "Singapur",
+      "Pariis",
       "Canberra",
-      "Cape Town",
+      "Kaplinn",
       "Reykjavik"
     ],
     "correct": {
@@ -13158,13 +13158,13 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta marged korguse jargi madalast korgeni. Koosta uks korrektne jarjestus. Teema: Canberra.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Canberra.",
     "options": [
-      "Vinson Massif",
+      "Vinsoni massiiv",
       "K2",
       "Elbrus",
       "Aconcagua",
-      "Kangchenjunga",
+      "Kanchenjunga",
       "Kilimanjaro",
       "Everest",
       "Lhotse",
@@ -13194,18 +13194,18 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta riigid pindala jargi vaikesest suureni. Jarjesta koik variandid esimesest viimaseni. Teema: Ottawa.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Ottawa.",
     "options": [
-      "Kazakhstan",
+      "Kasahstan",
       "India",
-      "Iceland",
-      "Russia",
-      "United Kingdom",
-      "Ukraine",
-      "China",
-      "France",
+      "Island",
+      "Venemaa",
+      "Ühendkuningriik",
+      "Ukraina",
+      "Hiina",
+      "Prantsusmaa",
       "Argentina",
-      "Canada"
+      "Kanada"
     ],
     "correct": {
       "rankByIndex": [
@@ -13230,18 +13230,18 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta linnad laiuskraadi jargi lounast pohja. Ara jata uhtegi kohta vahele. Teema: Tokyo.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Tokyo.",
     "options": [
       "Nairobi",
-      "Cape Town",
-      "Athens",
-      "Cairo",
+      "Kaplinn",
+      "Ateena",
+      "Kairo",
       "Reykjavik",
       "Buenos Aires",
-      "Singapore",
+      "Singapur",
       "Stockholm",
       "Canberra",
-      "Paris"
+      "Pariis"
     ],
     "correct": {
       "rankByIndex": [
@@ -13266,16 +13266,16 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta marged korguse jargi madalast korgeni. Igat kohta kasutatakse tapselt korra. Teema: Seoul.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Soul.",
     "options": [
       "Mont Blanc",
-      "Kangchenjunga",
+      "Kanchenjunga",
       "Denali",
       "Aconcagua",
       "Kilimanjaro",
       "Elbrus",
       "K2",
-      "Vinson Massif",
+      "Vinsoni massiiv",
       "Everest",
       "Lhotse"
     ],
@@ -13302,18 +13302,18 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta riigid pindala jargi vaikesest suureni. Kasuta rangelt kasvavat jarjekorda. Teema: Beijing.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Peking.",
     "options": [
-      "Ukraine",
-      "Kazakhstan",
-      "United Kingdom",
+      "Ukraina",
+      "Kasahstan",
+      "Ühendkuningriik",
       "India",
-      "Russia",
+      "Venemaa",
       "Argentina",
-      "France",
-      "Canada",
-      "China",
-      "Iceland"
+      "Prantsusmaa",
+      "Kanada",
+      "Hiina",
+      "Island"
     ],
     "correct": {
       "rankByIndex": [
@@ -13338,18 +13338,18 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta linnad laiuskraadi jargi lounast pohja. Pane varaseim/madalaim kohale 1. Teema: New Delhi.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Uus Delhi.",
     "options": [
       "Reykjavik",
       "Nairobi",
-      "Cape Town",
+      "Kaplinn",
       "Buenos Aires",
       "Canberra",
-      "Paris",
+      "Pariis",
       "Stockholm",
-      "Athens",
-      "Singapore",
-      "Cairo"
+      "Ateena",
+      "Singapur",
+      "Kairo"
     ],
     "correct": {
       "rankByIndex": [
@@ -13374,18 +13374,18 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta marged korguse jargi madalast korgeni. Koosta uks korrektne jarjestus. Teema: Nile.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Niilus.",
     "options": [
       "Aconcagua",
       "K2",
       "Elbrus",
       "Mont Blanc",
-      "Vinson Massif",
+      "Vinsoni massiiv",
       "Denali",
       "Lhotse",
       "Everest",
       "Kilimanjaro",
-      "Kangchenjunga"
+      "Kanchenjunga"
     ],
     "correct": {
       "rankByIndex": [
@@ -13410,17 +13410,17 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta riigid pindala jargi vaikesest suureni. Jarjesta koik variandid esimesest viimaseni. Teema: Amazon.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Amazonas.",
     "options": [
-      "France",
-      "Canada",
-      "Kazakhstan",
-      "Iceland",
-      "China",
-      "United Kingdom",
+      "Prantsusmaa",
+      "Kanada",
+      "Kasahstan",
+      "Island",
+      "Hiina",
+      "Ühendkuningriik",
       "India",
-      "Russia",
-      "Ukraine",
+      "Venemaa",
+      "Ukraina",
       "Argentina"
     ],
     "correct": {
@@ -13446,17 +13446,17 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta linnad laiuskraadi jargi lounast pohja. Ara jata uhtegi kohta vahele. Teema: Danube.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Doonau.",
     "options": [
-      "Singapore",
+      "Singapur",
       "Stockholm",
       "Canberra",
-      "Athens",
+      "Ateena",
       "Buenos Aires",
       "Nairobi",
-      "Cape Town",
-      "Cairo",
-      "Paris",
+      "Kaplinn",
+      "Kairo",
+      "Pariis",
       "Reykjavik"
     ],
     "correct": {
@@ -13482,17 +13482,17 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Jarjesta marged korguse jargi madalast korgeni. Igat kohta kasutatakse tapselt korra. Teema: Rhine.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Rein.",
     "options": [
       "Lhotse",
       "Everest",
       "Aconcagua",
       "K2",
       "Elbrus",
-      "Kangchenjunga",
+      "Kanchenjunga",
       "Kilimanjaro",
       "Mont Blanc",
-      "Vinson Massif",
+      "Vinsoni massiiv",
       "Denali"
     ],
     "correct": {
@@ -13518,18 +13518,18 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kunstiajastud varaseimast hiliseimani. Kasuta rangelt kasvavat jarjekorda. Teema: Mona Lisa.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Mona Lisa.",
     "options": [
-      "Baroque",
-      "Cubism",
-      "Surrealism",
-      "Romanticism",
-      "Neoclassicism",
-      "Classical art",
-      "Medieval art",
+      "Barokk",
+      "Kubism",
+      "Sürrealism",
+      "Romantism",
+      "Neoklassitsism",
+      "Klassikaline kunst",
+      "Keskaegne kunst",
       "Impressionism",
-      "Pop art",
-      "Renaissance"
+      "Popkunst",
+      "Renessanss"
     ],
     "correct": {
       "rankByIndex": [
@@ -13554,7 +13554,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta valjalaskeaastad vanimast uuemani. Pane varaseim/madalaim kohale 1. Teema: Starry Night.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Tähine öö.",
     "options": [
       "Blade Runner",
       "The Godfather",
@@ -13590,18 +13590,18 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kirjandusajastud alguse jargi. Koosta uks korrektne jarjestus. Teema: Hamlet.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Hamlet.",
     "options": [
       "Modernism",
       "Realism",
-      "Enlightenment writing",
-      "Epic poetry age",
-      "Renaissance literature",
-      "Romanticism",
+      "Valgustusaja kirjandus",
+      "Eepilise luule ajastu",
+      "Renessansikirjandus",
+      "Romantism",
       "Postmodernism",
-      "Classical drama",
-      "Medieval literature",
-      "Contemporary fiction"
+      "Klassikaline draama",
+      "Keskaegne kirjandus",
+      "Nüüdiskirjandus"
     ],
     "correct": {
       "rankByIndex": [
@@ -13626,18 +13626,18 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kunstiajastud varaseimast hiliseimani. Jarjesta koik variandid esimesest viimaseni. Teema: Macbeth.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Macbeth.",
     "options": [
-      "Pop art",
-      "Neoclassicism",
-      "Classical art",
+      "Popkunst",
+      "Neoklassitsism",
+      "Klassikaline kunst",
       "Impressionism",
-      "Medieval art",
-      "Surrealism",
-      "Baroque",
-      "Cubism",
-      "Renaissance",
-      "Romanticism"
+      "Keskaegne kunst",
+      "Sürrealism",
+      "Barokk",
+      "Kubism",
+      "Renessanss",
+      "Romantism"
     ],
     "correct": {
       "rankByIndex": [
@@ -13662,7 +13662,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta valjalaskeaastad vanimast uuemani. Ara jata uhtegi kohta vahele. Teema: The Odyssey.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Odüsseia.",
     "options": [
       "Pulp Fiction",
       "The Godfather",
@@ -13698,18 +13698,18 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kirjandusajastud alguse jargi. Igat kohta kasutatakse tapselt korra. Teema: The Iliad.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Ilias.",
     "options": [
-      "Romanticism",
-      "Epic poetry age",
+      "Romantism",
+      "Eepilise luule ajastu",
       "Postmodernism",
-      "Enlightenment writing",
-      "Renaissance literature",
-      "Contemporary fiction",
+      "Valgustusaja kirjandus",
+      "Renessansikirjandus",
+      "Nüüdiskirjandus",
       "Modernism",
       "Realism",
-      "Classical drama",
-      "Medieval literature"
+      "Klassikaline draama",
+      "Keskaegne kirjandus"
     ],
     "correct": {
       "rankByIndex": [
@@ -13734,18 +13734,18 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kunstiajastud varaseimast hiliseimani. Kasuta rangelt kasvavat jarjekorda. Teema: Don Quixote.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Don Quijote.",
     "options": [
-      "Surrealism",
-      "Neoclassicism",
-      "Baroque",
-      "Cubism",
-      "Romanticism",
-      "Renaissance",
-      "Classical art",
+      "Sürrealism",
+      "Neoklassitsism",
+      "Barokk",
+      "Kubism",
+      "Romantism",
+      "Renessanss",
+      "Klassikaline kunst",
       "Impressionism",
-      "Pop art",
-      "Medieval art"
+      "Popkunst",
+      "Keskaegne kunst"
     ],
     "correct": {
       "rankByIndex": [
@@ -13770,7 +13770,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta valjalaskeaastad vanimast uuemani. Pane varaseim/madalaim kohale 1. Teema: The Great Gatsby.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Suur Gatsby.",
     "options": [
       "Jaws",
       "Pulp Fiction",
@@ -13806,18 +13806,18 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kirjandusajastud alguse jargi. Koosta uks korrektne jarjestus. Teema: Pride and Prejudice.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Uhkus ja eelarvamus.",
     "options": [
-      "Renaissance literature",
-      "Classical drama",
-      "Romanticism",
+      "Renessansikirjandus",
+      "Klassikaline draama",
+      "Romantism",
       "Modernism",
-      "Enlightenment writing",
+      "Valgustusaja kirjandus",
       "Postmodernism",
-      "Medieval literature",
-      "Contemporary fiction",
+      "Keskaegne kirjandus",
+      "Nüüdiskirjandus",
       "Realism",
-      "Epic poetry age"
+      "Eepilise luule ajastu"
     ],
     "correct": {
       "rankByIndex": [
@@ -13842,18 +13842,18 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kunstiajastud varaseimast hiliseimani. Jarjesta koik variandid esimesest viimaseni. Teema: War and Peace.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Sõda ja rahu.",
     "options": [
-      "Surrealism",
-      "Classical art",
-      "Baroque",
+      "Sürrealism",
+      "Klassikaline kunst",
+      "Barokk",
       "Impressionism",
-      "Cubism",
-      "Renaissance",
-      "Neoclassicism",
-      "Pop art",
-      "Medieval art",
-      "Romanticism"
+      "Kubism",
+      "Renessanss",
+      "Neoklassitsism",
+      "Popkunst",
+      "Keskaegne kunst",
+      "Romantism"
     ],
     "correct": {
       "rankByIndex": [
@@ -13878,7 +13878,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta valjalaskeaastad vanimast uuemani. Ara jata uhtegi kohta vahele. Teema: The Godfather.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Ristiisa.",
     "options": [
       "Blade Runner",
       "Inception",
@@ -13914,16 +13914,16 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kirjandusajastud alguse jargi. Igat kohta kasutatakse tapselt korra. Teema: Casablanca.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Casablanca.",
     "options": [
-      "Romanticism",
-      "Enlightenment writing",
-      "Classical drama",
-      "Epic poetry age",
-      "Renaissance literature",
+      "Romantism",
+      "Valgustusaja kirjandus",
+      "Klassikaline draama",
+      "Eepilise luule ajastu",
+      "Renessansikirjandus",
       "Postmodernism",
-      "Contemporary fiction",
-      "Medieval literature",
+      "Nüüdiskirjandus",
+      "Keskaegne kirjandus",
       "Modernism",
       "Realism"
     ],
@@ -13950,18 +13950,18 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kunstiajastud varaseimast hiliseimani. Kasuta rangelt kasvavat jarjekorda. Teema: Citizen Kane.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Kodanik Kane.",
     "options": [
-      "Romanticism",
-      "Classical art",
-      "Medieval art",
-      "Renaissance",
-      "Surrealism",
-      "Neoclassicism",
-      "Baroque",
-      "Cubism",
+      "Romantism",
+      "Klassikaline kunst",
+      "Keskaegne kunst",
+      "Renessanss",
+      "Sürrealism",
+      "Neoklassitsism",
+      "Barokk",
+      "Kubism",
       "Impressionism",
-      "Pop art"
+      "Popkunst"
     ],
     "correct": {
       "rankByIndex": [
@@ -13986,7 +13986,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta valjalaskeaastad vanimast uuemani. Pane varaseim/madalaim kohale 1. Teema: The Beatles.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: The Beatles.",
     "options": [
       "The Matrix",
       "Casablanca",
@@ -14022,18 +14022,18 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kirjandusajastud alguse jargi. Koosta uks korrektne jarjestus. Teema: Mozart.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Mozart.",
     "options": [
-      "Renaissance literature",
-      "Romanticism",
+      "Renessansikirjandus",
+      "Romantism",
       "Postmodernism",
-      "Epic poetry age",
+      "Eepilise luule ajastu",
       "Realism",
-      "Medieval literature",
+      "Keskaegne kirjandus",
       "Modernism",
-      "Classical drama",
-      "Contemporary fiction",
-      "Enlightenment writing"
+      "Klassikaline draama",
+      "Nüüdiskirjandus",
+      "Valgustusaja kirjandus"
     ],
     "correct": {
       "rankByIndex": [
@@ -14058,17 +14058,17 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kunstiajastud varaseimast hiliseimani. Jarjesta koik variandid esimesest viimaseni. Teema: Beethoven.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Beethoven.",
     "options": [
-      "Neoclassicism",
-      "Romanticism",
-      "Surrealism",
-      "Renaissance",
-      "Classical art",
-      "Medieval art",
-      "Pop art",
-      "Cubism",
-      "Baroque",
+      "Neoklassitsism",
+      "Romantism",
+      "Sürrealism",
+      "Renessanss",
+      "Klassikaline kunst",
+      "Keskaegne kunst",
+      "Popkunst",
+      "Kubism",
+      "Barokk",
       "Impressionism"
     ],
     "correct": {
@@ -14094,7 +14094,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta valjalaskeaastad vanimast uuemani. Ara jata uhtegi kohta vahele. Teema: Bach.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Bach.",
     "options": [
       "Pulp Fiction",
       "Star Wars",
@@ -14130,18 +14130,18 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kirjandusajastud alguse jargi. Igat kohta kasutatakse tapselt korra. Teema: Chopin.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Chopin.",
     "options": [
-      "Enlightenment writing",
+      "Valgustusaja kirjandus",
       "Postmodernism",
-      "Contemporary fiction",
-      "Renaissance literature",
-      "Medieval literature",
+      "Nüüdiskirjandus",
+      "Renessansikirjandus",
+      "Keskaegne kirjandus",
       "Modernism",
       "Realism",
-      "Classical drama",
-      "Epic poetry age",
-      "Romanticism"
+      "Klassikaline draama",
+      "Eepilise luule ajastu",
+      "Romantism"
     ],
     "correct": {
       "rankByIndex": [
@@ -14166,18 +14166,18 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kunstiajastud varaseimast hiliseimani. Kasuta rangelt kasvavat jarjekorda. Teema: Picasso.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Picasso.",
     "options": [
-      "Neoclassicism",
-      "Romanticism",
-      "Classical art",
-      "Cubism",
-      "Medieval art",
-      "Renaissance",
+      "Neoklassitsism",
+      "Romantism",
+      "Klassikaline kunst",
+      "Kubism",
+      "Keskaegne kunst",
+      "Renessanss",
       "Impressionism",
-      "Pop art",
-      "Baroque",
-      "Surrealism"
+      "Popkunst",
+      "Barokk",
+      "Sürrealism"
     ],
     "correct": {
       "rankByIndex": [
@@ -14202,7 +14202,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta valjalaskeaastad vanimast uuemani. Pane varaseim/madalaim kohale 1. Teema: Van Gogh.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Van Gogh.",
     "options": [
       "Blade Runner",
       "Jaws",
@@ -14238,18 +14238,18 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kirjandusajastud alguse jargi. Koosta uks korrektne jarjestus. Teema: Michelangelo.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Michelangelo.",
     "options": [
-      "Contemporary fiction",
-      "Romanticism",
-      "Enlightenment writing",
+      "Nüüdiskirjandus",
+      "Romantism",
+      "Valgustusaja kirjandus",
       "Realism",
       "Postmodernism",
       "Modernism",
-      "Classical drama",
-      "Medieval literature",
-      "Renaissance literature",
-      "Epic poetry age"
+      "Klassikaline draama",
+      "Keskaegne kirjandus",
+      "Renessansikirjandus",
+      "Eepilise luule ajastu"
     ],
     "correct": {
       "rankByIndex": [
@@ -14274,18 +14274,18 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kunstiajastud varaseimast hiliseimani. Jarjesta koik variandid esimesest viimaseni. Teema: Da Vinci.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: da Vinci.",
     "options": [
-      "Baroque",
-      "Cubism",
-      "Surrealism",
-      "Classical art",
+      "Barokk",
+      "Kubism",
+      "Sürrealism",
+      "Klassikaline kunst",
       "Impressionism",
-      "Renaissance",
-      "Neoclassicism",
-      "Romanticism",
-      "Pop art",
-      "Medieval art"
+      "Renessanss",
+      "Neoklassitsism",
+      "Romantism",
+      "Popkunst",
+      "Keskaegne kunst"
     ],
     "correct": {
       "rankByIndex": [
@@ -14310,7 +14310,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta valjalaskeaastad vanimast uuemani. Ara jata uhtegi kohta vahele. Teema: Shakespeare.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Shakespeare.",
     "options": [
       "Star Wars",
       "The Godfather",
@@ -14346,16 +14346,16 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kirjandusajastud alguse jargi. Igat kohta kasutatakse tapselt korra. Teema: Jane Austen.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Jane Austen.",
     "options": [
-      "Enlightenment writing",
+      "Valgustusaja kirjandus",
       "Postmodernism",
-      "Classical drama",
-      "Epic poetry age",
-      "Renaissance literature",
-      "Contemporary fiction",
-      "Medieval literature",
-      "Romanticism",
+      "Klassikaline draama",
+      "Eepilise luule ajastu",
+      "Renessansikirjandus",
+      "Nüüdiskirjandus",
+      "Keskaegne kirjandus",
+      "Romantism",
       "Modernism",
       "Realism"
     ],
@@ -14382,18 +14382,18 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kunstiajastud varaseimast hiliseimani. Kasuta rangelt kasvavat jarjekorda. Teema: Tolstoy.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Tolstoi.",
     "options": [
-      "Medieval art",
-      "Pop art",
-      "Classical art",
+      "Keskaegne kunst",
+      "Popkunst",
+      "Klassikaline kunst",
       "Impressionism",
-      "Cubism",
-      "Romanticism",
-      "Renaissance",
-      "Baroque",
-      "Surrealism",
-      "Neoclassicism"
+      "Kubism",
+      "Romantism",
+      "Renessanss",
+      "Barokk",
+      "Sürrealism",
+      "Neoklassitsism"
     ],
     "correct": {
       "rankByIndex": [
@@ -14418,7 +14418,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta valjalaskeaastad vanimast uuemani. Pane varaseim/madalaim kohale 1. Teema: Dostoevsky.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Dostojevski.",
     "options": [
       "Casablanca",
       "Pulp Fiction",
@@ -14454,18 +14454,18 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kirjandusajastud alguse jargi. Koosta uks korrektne jarjestus. Teema: Homer.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Homeros.",
     "options": [
-      "Epic poetry age",
-      "Renaissance literature",
-      "Medieval literature",
-      "Romanticism",
-      "Classical drama",
-      "Contemporary fiction",
+      "Eepilise luule ajastu",
+      "Renessansikirjandus",
+      "Keskaegne kirjandus",
+      "Romantism",
+      "Klassikaline draama",
+      "Nüüdiskirjandus",
       "Modernism",
       "Postmodernism",
       "Realism",
-      "Enlightenment writing"
+      "Valgustusaja kirjandus"
     ],
     "correct": {
       "rankByIndex": [
@@ -14490,18 +14490,18 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kunstiajastud varaseimast hiliseimani. Jarjesta koik variandid esimesest viimaseni. Teema: Sculpture.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Skulptuur.",
     "options": [
-      "Renaissance",
-      "Surrealism",
+      "Renessanss",
+      "Sürrealism",
       "Impressionism",
-      "Classical art",
-      "Romanticism",
-      "Baroque",
-      "Cubism",
-      "Neoclassicism",
-      "Pop art",
-      "Medieval art"
+      "Klassikaline kunst",
+      "Romantism",
+      "Barokk",
+      "Kubism",
+      "Neoklassitsism",
+      "Popkunst",
+      "Keskaegne kunst"
     ],
     "correct": {
       "rankByIndex": [
@@ -14526,7 +14526,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta valjalaskeaastad vanimast uuemani. Ara jata uhtegi kohta vahele. Teema: Opera.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Ooper.",
     "options": [
       "Citizen Kane",
       "The Godfather",
@@ -14562,18 +14562,18 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Jarjesta kirjandusajastud alguse jargi. Igat kohta kasutatakse tapselt korra. Teema: Ballet.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Ballett.",
     "options": [
       "Postmodernism",
-      "Renaissance literature",
-      "Classical drama",
+      "Renessansikirjandus",
+      "Klassikaline draama",
       "Realism",
-      "Enlightenment writing",
+      "Valgustusaja kirjandus",
       "Modernism",
-      "Romanticism",
-      "Epic poetry age",
-      "Contemporary fiction",
-      "Medieval literature"
+      "Romantism",
+      "Eepilise luule ajastu",
+      "Nüüdiskirjandus",
+      "Keskaegne kirjandus"
     ],
     "correct": {
       "rankByIndex": [
@@ -14598,18 +14598,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Jarjesta planeedid Paikesest valjapoole. Kasuta rangelt kasvavat jarjekorda. Teema: Atom.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Aatom.",
     "options": [
       "Jupiter",
       "Eris",
-      "Pluto",
-      "Neptune",
-      "Mars",
-      "Earth",
-      "Uranus",
-      "Mercury",
+      "Pluuto",
+      "Neptuun",
+      "Marss",
+      "Maa",
+      "Uraan",
+      "Merkuur",
       "Saturn",
-      "Venus"
+      "Veenus"
     ],
     "correct": {
       "rankByIndex": [
@@ -14634,18 +14634,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order SI prefixes small to large. Pane varaseim/madalaim kohale 1. Teema: Molecule.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Molekul.",
     "options": [
-      "hecto",
-      "centi",
+      "hekto",
+      "senti",
       "nano",
-      "micro",
-      "deci",
+      "mikro",
+      "detsi",
       "milli",
       "mega",
       "kilo",
-      "base unit",
-      "deca"
+      "põhiühik",
+      "deka"
     ],
     "correct": {
       "rankByIndex": [
@@ -14670,18 +14670,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order scale from smallest upward. Koosta uks korrektne jarjestus. Teema: Electron.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Elektron.",
     "options": [
-      "cell",
-      "bacterium",
-      "atom",
-      "population",
+      "rakk",
+      "bakter",
+      "aatom",
+      "populatsioon",
       "organism",
-      "tissue",
-      "organ",
-      "ecosystem",
-      "molecule",
-      "virus"
+      "kude",
+      "elund",
+      "ökosüsteem",
+      "molekul",
+      "viirus"
     ],
     "correct": {
       "rankByIndex": [
@@ -14706,18 +14706,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Jarjesta planeedid Paikesest valjapoole. Jarjesta koik variandid esimesest viimaseni. Teema: Proton.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Prooton.",
     "options": [
-      "Mercury",
-      "Mars",
-      "Earth",
+      "Merkuur",
+      "Marss",
+      "Maa",
       "Saturn",
-      "Neptune",
-      "Venus",
+      "Neptuun",
+      "Veenus",
       "Eris",
-      "Uranus",
+      "Uraan",
       "Jupiter",
-      "Pluto"
+      "Pluuto"
     ],
     "correct": {
       "rankByIndex": [
@@ -14742,18 +14742,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order SI prefixes small to large. Ara jata uhtegi kohta vahele. Teema: Neutron.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Neutron.",
     "options": [
-      "micro",
-      "base unit",
+      "mikro",
+      "põhiühik",
       "mega",
-      "deci",
-      "centi",
+      "detsi",
+      "senti",
       "nano",
       "kilo",
-      "hecto",
+      "hekto",
       "milli",
-      "deca"
+      "deka"
     ],
     "correct": {
       "rankByIndex": [
@@ -14778,18 +14778,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order scale from smallest upward. Igat kohta kasutatakse tapselt korra. Teema: Photon.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Footon.",
     "options": [
-      "cell",
-      "organ",
-      "atom",
-      "population",
+      "rakk",
+      "elund",
+      "aatom",
+      "populatsioon",
       "organism",
-      "tissue",
-      "molecule",
-      "virus",
-      "bacterium",
-      "ecosystem"
+      "kude",
+      "molekul",
+      "viirus",
+      "bakter",
+      "ökosüsteem"
     ],
     "correct": {
       "rankByIndex": [
@@ -14814,18 +14814,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Jarjesta planeedid Paikesest valjapoole. Kasuta rangelt kasvavat jarjekorda. Teema: Gravity.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Gravitatsioon.",
     "options": [
-      "Mercury",
+      "Merkuur",
       "Saturn",
       "Eris",
-      "Neptune",
-      "Venus",
-      "Pluto",
-      "Mars",
+      "Neptuun",
+      "Veenus",
+      "Pluuto",
+      "Marss",
       "Jupiter",
-      "Earth",
-      "Uranus"
+      "Maa",
+      "Uraan"
     ],
     "correct": {
       "rankByIndex": [
@@ -14850,18 +14850,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order SI prefixes small to large. Pane varaseim/madalaim kohale 1. Teema: Velocity.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Kiirus.",
     "options": [
       "milli",
-      "base unit",
-      "micro",
+      "põhiühik",
+      "mikro",
       "nano",
-      "deci",
+      "detsi",
       "kilo",
-      "centi",
+      "senti",
       "mega",
-      "hecto",
-      "deca"
+      "hekto",
+      "deka"
     ],
     "correct": {
       "rankByIndex": [
@@ -14886,18 +14886,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order scale from smallest upward. Koosta uks korrektne jarjestus. Teema: Acceleration.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Kiirendus.",
     "options": [
-      "tissue",
-      "cell",
-      "virus",
-      "molecule",
-      "bacterium",
+      "kude",
+      "rakk",
+      "viirus",
+      "molekul",
+      "bakter",
       "organism",
-      "ecosystem",
-      "population",
-      "atom",
-      "organ"
+      "ökosüsteem",
+      "populatsioon",
+      "aatom",
+      "elund"
     ],
     "correct": {
       "rankByIndex": [
@@ -14922,18 +14922,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Jarjesta planeedid Paikesest valjapoole. Jarjesta koik variandid esimesest viimaseni. Teema: Momentum.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Impulss.",
     "options": [
-      "Pluto",
+      "Pluuto",
       "Saturn",
-      "Mercury",
-      "Venus",
+      "Merkuur",
+      "Veenus",
       "Eris",
-      "Mars",
-      "Earth",
-      "Neptune",
+      "Marss",
+      "Maa",
+      "Neptuun",
       "Jupiter",
-      "Uranus"
+      "Uraan"
     ],
     "correct": {
       "rankByIndex": [
@@ -14958,18 +14958,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order SI prefixes small to large. Ara jata uhtegi kohta vahele. Teema: Energy.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Energia.",
     "options": [
-      "hecto",
+      "hekto",
       "nano",
-      "micro",
+      "mikro",
       "kilo",
-      "deca",
+      "deka",
       "mega",
       "milli",
-      "centi",
-      "base unit",
-      "deci"
+      "senti",
+      "põhiühik",
+      "detsi"
     ],
     "correct": {
       "rankByIndex": [
@@ -14994,18 +14994,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order scale from smallest upward. Igat kohta kasutatakse tapselt korra. Teema: Entropy.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Entroopia.",
     "options": [
-      "ecosystem",
-      "atom",
-      "molecule",
-      "virus",
-      "bacterium",
-      "population",
+      "ökosüsteem",
+      "aatom",
+      "molekul",
+      "viirus",
+      "bakter",
+      "populatsioon",
       "organism",
-      "cell",
-      "tissue",
-      "organ"
+      "rakk",
+      "kude",
+      "elund"
     ],
     "correct": {
       "rankByIndex": [
@@ -15030,18 +15030,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Jarjesta planeedid Paikesest valjapoole. Kasuta rangelt kasvavat jarjekorda. Teema: Oxygen.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Hapnik.",
     "options": [
-      "Venus",
-      "Uranus",
-      "Mars",
-      "Pluto",
+      "Veenus",
+      "Uraan",
+      "Marss",
+      "Pluuto",
       "Jupiter",
       "Eris",
-      "Mercury",
-      "Neptune",
+      "Merkuur",
+      "Neptuun",
       "Saturn",
-      "Earth"
+      "Maa"
     ],
     "correct": {
       "rankByIndex": [
@@ -15066,17 +15066,17 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order SI prefixes small to large. Pane varaseim/madalaim kohale 1. Teema: Hydrogen.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Vesinik.",
     "options": [
-      "base unit",
+      "põhiühik",
       "kilo",
-      "deci",
-      "deca",
+      "detsi",
+      "deka",
       "mega",
-      "micro",
-      "centi",
+      "mikro",
+      "senti",
       "nano",
-      "hecto",
+      "hekto",
       "milli"
     ],
     "correct": {
@@ -15102,18 +15102,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order scale from smallest upward. Koosta uks korrektne jarjestus. Teema: Nitrogen.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Lämmastik.",
     "options": [
-      "molecule",
-      "organ",
-      "population",
-      "cell",
-      "bacterium",
-      "atom",
-      "tissue",
+      "molekul",
+      "elund",
+      "populatsioon",
+      "rakk",
+      "bakter",
+      "aatom",
+      "kude",
       "organism",
-      "virus",
-      "ecosystem"
+      "viirus",
+      "ökosüsteem"
     ],
     "correct": {
       "rankByIndex": [
@@ -15138,18 +15138,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Jarjesta planeedid Paikesest valjapoole. Jarjesta koik variandid esimesest viimaseni. Teema: Carbon.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Süsinik.",
     "options": [
       "Eris",
-      "Venus",
-      "Mars",
-      "Mercury",
-      "Earth",
-      "Neptune",
-      "Uranus",
+      "Veenus",
+      "Marss",
+      "Merkuur",
+      "Maa",
+      "Neptuun",
+      "Uraan",
       "Jupiter",
       "Saturn",
-      "Pluto"
+      "Pluuto"
     ],
     "correct": {
       "rankByIndex": [
@@ -15174,15 +15174,15 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order SI prefixes small to large. Ara jata uhtegi kohta vahele. Teema: Helium.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Heelium.",
     "options": [
-      "deca",
-      "hecto",
-      "deci",
-      "micro",
+      "deka",
+      "hekto",
+      "detsi",
+      "mikro",
       "mega",
-      "centi",
-      "base unit",
+      "senti",
+      "põhiühik",
       "milli",
       "nano",
       "kilo"
@@ -15210,17 +15210,17 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order scale from smallest upward. Igat kohta kasutatakse tapselt korra. Teema: Neon.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Neoon.",
     "options": [
-      "molecule",
-      "tissue",
-      "population",
-      "cell",
-      "ecosystem",
-      "bacterium",
-      "organ",
-      "atom",
-      "virus",
+      "molekul",
+      "kude",
+      "populatsioon",
+      "rakk",
+      "ökosüsteem",
+      "bakter",
+      "elund",
+      "aatom",
+      "viirus",
       "organism"
     ],
     "correct": {
@@ -15246,17 +15246,17 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Jarjesta planeedid Paikesest valjapoole. Kasuta rangelt kasvavat jarjekorda. Teema: Sodium.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Naatrium.",
     "options": [
       "Saturn",
-      "Uranus",
-      "Mercury",
-      "Neptune",
-      "Mars",
-      "Earth",
+      "Uraan",
+      "Merkuur",
+      "Neptuun",
+      "Marss",
+      "Maa",
       "Eris",
-      "Venus",
-      "Pluto",
+      "Veenus",
+      "Pluuto",
       "Jupiter"
     ],
     "correct": {
@@ -15282,17 +15282,17 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order SI prefixes small to large. Pane varaseim/madalaim kohale 1. Teema: Potassium.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Kaalium.",
     "options": [
       "mega",
-      "centi",
+      "senti",
       "milli",
-      "hecto",
-      "deca",
-      "deci",
+      "hekto",
+      "deka",
+      "detsi",
       "nano",
-      "micro",
-      "base unit",
+      "mikro",
+      "põhiühik",
       "kilo"
     ],
     "correct": {
@@ -15318,18 +15318,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order scale from smallest upward. Koosta uks korrektne jarjestus. Teema: Calcium.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Kaltsium.",
     "options": [
-      "molecule",
-      "tissue",
-      "atom",
+      "molekul",
+      "kude",
+      "aatom",
       "organism",
-      "population",
-      "ecosystem",
-      "organ",
-      "virus",
-      "cell",
-      "bacterium"
+      "populatsioon",
+      "ökosüsteem",
+      "elund",
+      "viirus",
+      "rakk",
+      "bakter"
     ],
     "correct": {
       "rankByIndex": [
@@ -15354,17 +15354,17 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Jarjesta planeedid Paikesest valjapoole. Jarjesta koik variandid esimesest viimaseni. Teema: Iron.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Raud.",
     "options": [
-      "Pluto",
-      "Neptune",
-      "Earth",
+      "Pluuto",
+      "Neptuun",
+      "Maa",
       "Eris",
-      "Mercury",
-      "Mars",
+      "Merkuur",
+      "Marss",
       "Saturn",
-      "Venus",
-      "Uranus",
+      "Veenus",
+      "Uraan",
       "Jupiter"
     ],
     "correct": {
@@ -15390,18 +15390,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order SI prefixes small to large. Ara jata uhtegi kohta vahele. Teema: Copper.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Vask.",
     "options": [
       "nano",
-      "centi",
-      "deca",
-      "base unit",
+      "senti",
+      "deka",
+      "põhiühik",
       "kilo",
-      "hecto",
+      "hekto",
       "milli",
-      "deci",
+      "detsi",
       "mega",
-      "micro"
+      "mikro"
     ],
     "correct": {
       "rankByIndex": [
@@ -15426,18 +15426,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order scale from smallest upward. Igat kohta kasutatakse tapselt korra. Teema: Silver.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Hõbe.",
     "options": [
-      "virus",
-      "tissue",
-      "organ",
-      "population",
-      "bacterium",
-      "atom",
-      "ecosystem",
-      "cell",
+      "viirus",
+      "kude",
+      "elund",
+      "populatsioon",
+      "bakter",
+      "aatom",
+      "ökosüsteem",
+      "rakk",
       "organism",
-      "molecule"
+      "molekul"
     ],
     "correct": {
       "rankByIndex": [
@@ -15462,17 +15462,17 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Jarjesta planeedid Paikesest valjapoole. Kasuta rangelt kasvavat jarjekorda. Teema: Gold.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Kuld.",
     "options": [
-      "Earth",
-      "Venus",
-      "Pluto",
-      "Neptune",
-      "Uranus",
+      "Maa",
+      "Veenus",
+      "Pluuto",
+      "Neptuun",
+      "Uraan",
       "Eris",
-      "Mercury",
+      "Merkuur",
       "Jupiter",
-      "Mars",
+      "Marss",
       "Saturn"
     ],
     "correct": {
@@ -15498,18 +15498,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order SI prefixes small to large. Pane varaseim/madalaim kohale 1. Teema: Mercury.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Merkuur.",
     "options": [
       "mega",
-      "deci",
+      "detsi",
       "milli",
-      "base unit",
+      "põhiühik",
       "kilo",
-      "hecto",
-      "centi",
-      "deca",
+      "hekto",
+      "senti",
+      "deka",
       "nano",
-      "micro"
+      "mikro"
     ],
     "correct": {
       "rankByIndex": [
@@ -15534,18 +15534,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order scale from smallest upward. Koosta uks korrektne jarjestus. Teema: Venus.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Veenus.",
     "options": [
-      "ecosystem",
-      "molecule",
-      "bacterium",
+      "ökosüsteem",
+      "molekul",
+      "bakter",
       "organism",
-      "organ",
-      "cell",
-      "population",
-      "tissue",
-      "atom",
-      "virus"
+      "elund",
+      "rakk",
+      "populatsioon",
+      "kude",
+      "aatom",
+      "viirus"
     ],
     "correct": {
       "rankByIndex": [
@@ -15570,18 +15570,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Jarjesta planeedid Paikesest valjapoole. Jarjesta koik variandid esimesest viimaseni. Teema: Earth.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Maa.",
     "options": [
       "Saturn",
-      "Mars",
-      "Mercury",
-      "Venus",
-      "Pluto",
-      "Neptune",
+      "Marss",
+      "Merkuur",
+      "Veenus",
+      "Pluuto",
+      "Neptuun",
       "Eris",
       "Jupiter",
-      "Earth",
-      "Uranus"
+      "Maa",
+      "Uraan"
     ],
     "correct": {
       "rankByIndex": [
@@ -15606,18 +15606,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order SI prefixes small to large. Ara jata uhtegi kohta vahele. Teema: Mars.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Marss.",
     "options": [
       "kilo",
-      "deca",
+      "deka",
       "milli",
-      "micro",
+      "mikro",
       "nano",
-      "deci",
+      "detsi",
       "mega",
-      "base unit",
-      "centi",
-      "hecto"
+      "põhiühik",
+      "senti",
+      "hekto"
     ],
     "correct": {
       "rankByIndex": [
@@ -15642,18 +15642,18 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Order scale from smallest upward. Igat kohta kasutatakse tapselt korra. Teema: Jupiter.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Jupiter.",
     "options": [
-      "ecosystem",
-      "molecule",
-      "organ",
-      "bacterium",
-      "cell",
-      "tissue",
+      "ökosüsteem",
+      "molekul",
+      "elund",
+      "bakter",
+      "rakk",
+      "kude",
       "organism",
-      "population",
-      "atom",
-      "virus"
+      "populatsioon",
+      "aatom",
+      "viirus"
     ],
     "correct": {
       "rankByIndex": [
@@ -15678,18 +15678,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order time units shortest to longest. Kasuta rangelt kasvavat jarjekorda. Teema: Calendar.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: kalender.",
     "options": [
-      "second",
-      "day",
-      "millennium",
-      "month",
-      "decade",
-      "week",
-      "hour",
-      "year",
-      "century",
-      "minute"
+      "sekund",
+      "päev",
+      "aastatuhat",
+      "kuu",
+      "kümnend",
+      "nädal",
+      "tund",
+      "aasta",
+      "sajand",
+      "minut"
     ],
     "correct": {
       "rankByIndex": [
@@ -15714,18 +15714,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order file sizes smallest to largest. Pane varaseim/madalaim kohale 1. Teema: Compass.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: kompass.",
     "options": [
-      "gigabyte",
-      "kilobyte",
-      "byte",
-      "yottabyte",
-      "terabyte",
-      "exabyte",
-      "zettabyte",
-      "petabyte",
-      "bit",
-      "megabyte"
+      "gigabait",
+      "kilobait",
+      "bait",
+      "jotabait",
+      "terabait",
+      "eksabait",
+      "zettabait",
+      "petabait",
+      "bitt",
+      "megabait"
     ],
     "correct": {
       "rankByIndex": [
@@ -15750,18 +15750,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order currency values low to high. Koosta uks korrektne jarjestus. Teema: Keyboard.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: klaviatuur.",
     "options": [
-      "10 cents",
+      "10 senti",
       "1 dollar",
-      "5 dollars",
-      "20 dollars",
-      "5 cents",
-      "25 cents",
-      "50 cents",
-      "2 dollars",
-      "10 dollars",
-      "1 cent"
+      "5 dollarit",
+      "20 dollarit",
+      "5 senti",
+      "25 senti",
+      "50 senti",
+      "2 dollarit",
+      "10 dollarit",
+      "1 sent"
     ],
     "correct": {
       "rankByIndex": [
@@ -15786,18 +15786,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order time units shortest to longest. Jarjesta koik variandid esimesest viimaseni. Teema: Notebook.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: märkmik.",
     "options": [
-      "month",
-      "hour",
-      "second",
-      "century",
-      "day",
-      "year",
-      "decade",
-      "minute",
-      "millennium",
-      "week"
+      "kuu",
+      "tund",
+      "sekund",
+      "sajand",
+      "päev",
+      "aasta",
+      "kümnend",
+      "minut",
+      "aastatuhat",
+      "nädal"
     ],
     "correct": {
       "rankByIndex": [
@@ -15822,18 +15822,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order file sizes smallest to largest. Ara jata uhtegi kohta vahele. Teema: Backpack.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: seljakott.",
     "options": [
-      "petabyte",
-      "exabyte",
-      "kilobyte",
-      "terabyte",
-      "byte",
-      "zettabyte",
-      "megabyte",
-      "gigabyte",
-      "bit",
-      "yottabyte"
+      "petabait",
+      "eksabait",
+      "kilobait",
+      "terabait",
+      "bait",
+      "zettabait",
+      "megabait",
+      "gigabait",
+      "bitt",
+      "jotabait"
     ],
     "correct": {
       "rankByIndex": [
@@ -15858,18 +15858,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order currency values low to high. Igat kohta kasutatakse tapselt korra. Teema: Umbrella.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: vihmavari.",
     "options": [
-      "50 cents",
+      "50 senti",
       "1 dollar",
-      "10 dollars",
-      "10 cents",
-      "20 dollars",
-      "2 dollars",
-      "5 cents",
-      "5 dollars",
-      "25 cents",
-      "1 cent"
+      "10 dollarit",
+      "10 senti",
+      "20 dollarit",
+      "2 dollarit",
+      "5 senti",
+      "5 dollarit",
+      "25 senti",
+      "1 sent"
     ],
     "correct": {
       "rankByIndex": [
@@ -15894,18 +15894,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order time units shortest to longest. Kasuta rangelt kasvavat jarjekorda. Teema: Clock.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: kell.",
     "options": [
-      "millennium",
-      "century",
-      "hour",
-      "minute",
-      "year",
-      "second",
-      "day",
-      "week",
-      "decade",
-      "month"
+      "aastatuhat",
+      "sajand",
+      "tund",
+      "minut",
+      "aasta",
+      "sekund",
+      "päev",
+      "nädal",
+      "kümnend",
+      "kuu"
     ],
     "correct": {
       "rankByIndex": [
@@ -15930,18 +15930,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order file sizes smallest to largest. Pane varaseim/madalaim kohale 1. Teema: Watch.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: käekell.",
     "options": [
-      "megabyte",
-      "bit",
-      "yottabyte",
-      "kilobyte",
-      "zettabyte",
-      "petabyte",
-      "exabyte",
-      "gigabyte",
-      "byte",
-      "terabyte"
+      "megabait",
+      "bitt",
+      "jotabait",
+      "kilobait",
+      "zettabait",
+      "petabait",
+      "eksabait",
+      "gigabait",
+      "bait",
+      "terabait"
     ],
     "correct": {
       "rankByIndex": [
@@ -15966,18 +15966,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order currency values low to high. Koosta uks korrektne jarjestus. Teema: Bicycle.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: jalgratas.",
     "options": [
-      "50 cents",
-      "1 cent",
-      "2 dollars",
-      "10 cents",
-      "5 dollars",
-      "5 cents",
+      "50 senti",
+      "1 sent",
+      "2 dollarit",
+      "10 senti",
+      "5 dollarit",
+      "5 senti",
       "1 dollar",
-      "20 dollars",
-      "25 cents",
-      "10 dollars"
+      "20 dollarit",
+      "25 senti",
+      "10 dollarit"
     ],
     "correct": {
       "rankByIndex": [
@@ -16002,18 +16002,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order time units shortest to longest. Jarjesta koik variandid esimesest viimaseni. Teema: Scooter.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: tõukeratas.",
     "options": [
-      "minute",
-      "millennium",
-      "second",
-      "day",
-      "decade",
-      "week",
-      "hour",
-      "century",
-      "year",
-      "month"
+      "minut",
+      "aastatuhat",
+      "sekund",
+      "päev",
+      "kümnend",
+      "nädal",
+      "tund",
+      "sajand",
+      "aasta",
+      "kuu"
     ],
     "correct": {
       "rankByIndex": [
@@ -16038,18 +16038,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order file sizes smallest to largest. Ara jata uhtegi kohta vahele. Teema: Elevator.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: lift.",
     "options": [
-      "petabyte",
-      "gigabyte",
-      "bit",
-      "yottabyte",
-      "exabyte",
-      "byte",
-      "kilobyte",
-      "terabyte",
-      "megabyte",
-      "zettabyte"
+      "petabait",
+      "gigabait",
+      "bitt",
+      "jotabait",
+      "eksabait",
+      "bait",
+      "kilobait",
+      "terabait",
+      "megabait",
+      "zettabait"
     ],
     "correct": {
       "rankByIndex": [
@@ -16074,18 +16074,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order currency values low to high. Igat kohta kasutatakse tapselt korra. Teema: Subway.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: Subway.",
     "options": [
       "1 dollar",
-      "50 cents",
-      "2 dollars",
-      "20 dollars",
-      "10 dollars",
-      "1 cent",
-      "5 dollars",
-      "5 cents",
-      "25 cents",
-      "10 cents"
+      "50 senti",
+      "2 dollarit",
+      "20 dollarit",
+      "10 dollarit",
+      "1 sent",
+      "5 dollarit",
+      "5 senti",
+      "25 senti",
+      "10 senti"
     ],
     "correct": {
       "rankByIndex": [
@@ -16110,18 +16110,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order time units shortest to longest. Kasuta rangelt kasvavat jarjekorda. Teema: Airport.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: lennujaam.",
     "options": [
-      "hour",
-      "year",
-      "week",
-      "decade",
-      "century",
-      "minute",
-      "day",
-      "month",
-      "millennium",
-      "second"
+      "tund",
+      "aasta",
+      "nädal",
+      "kümnend",
+      "sajand",
+      "minut",
+      "päev",
+      "kuu",
+      "aastatuhat",
+      "sekund"
     ],
     "correct": {
       "rankByIndex": [
@@ -16146,18 +16146,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order file sizes smallest to largest. Pane varaseim/madalaim kohale 1. Teema: Library.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: raamatukogu.",
     "options": [
-      "petabyte",
-      "kilobyte",
-      "gigabyte",
-      "zettabyte",
-      "exabyte",
-      "byte",
-      "yottabyte",
-      "bit",
-      "terabyte",
-      "megabyte"
+      "petabait",
+      "kilobait",
+      "gigabait",
+      "zettabait",
+      "eksabait",
+      "bait",
+      "jotabait",
+      "bitt",
+      "terabait",
+      "megabait"
     ],
     "correct": {
       "rankByIndex": [
@@ -16182,18 +16182,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order currency values low to high. Koosta uks korrektne jarjestus. Teema: Museum.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: muuseum.",
     "options": [
-      "5 cents",
-      "10 dollars",
-      "5 dollars",
-      "50 cents",
-      "20 dollars",
-      "10 cents",
-      "25 cents",
+      "5 senti",
+      "10 dollarit",
+      "5 dollarit",
+      "50 senti",
+      "20 dollarit",
+      "10 senti",
+      "25 senti",
       "1 dollar",
-      "1 cent",
-      "2 dollars"
+      "1 sent",
+      "2 dollarit"
     ],
     "correct": {
       "rankByIndex": [
@@ -16218,18 +16218,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order time units shortest to longest. Jarjesta koik variandid esimesest viimaseni. Teema: Restaurant.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: restoran.",
     "options": [
-      "hour",
-      "day",
-      "decade",
-      "century",
-      "second",
-      "minute",
-      "millennium",
-      "week",
-      "month",
-      "year"
+      "tund",
+      "päev",
+      "kümnend",
+      "sajand",
+      "sekund",
+      "minut",
+      "aastatuhat",
+      "nädal",
+      "kuu",
+      "aasta"
     ],
     "correct": {
       "rankByIndex": [
@@ -16254,18 +16254,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order file sizes smallest to largest. Ara jata uhtegi kohta vahele. Teema: Recipe.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: retsept.",
     "options": [
-      "zettabyte",
-      "kilobyte",
-      "bit",
-      "byte",
-      "gigabyte",
-      "exabyte",
-      "terabyte",
-      "yottabyte",
-      "petabyte",
-      "megabyte"
+      "zettabait",
+      "kilobait",
+      "bitt",
+      "bait",
+      "gigabait",
+      "eksabait",
+      "terabait",
+      "jotabait",
+      "petabait",
+      "megabait"
     ],
     "correct": {
       "rankByIndex": [
@@ -16290,18 +16290,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order currency values low to high. Igat kohta kasutatakse tapselt korra. Teema: Sandwich.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: võileib.",
     "options": [
-      "5 cents",
-      "10 dollars",
-      "5 dollars",
-      "10 cents",
-      "25 cents",
-      "20 dollars",
-      "50 cents",
+      "5 senti",
+      "10 dollarit",
+      "5 dollarit",
+      "10 senti",
+      "25 senti",
+      "20 dollarit",
+      "50 senti",
       "1 dollar",
-      "2 dollars",
-      "1 cent"
+      "2 dollarit",
+      "1 sent"
     ],
     "correct": {
       "rankByIndex": [
@@ -16326,18 +16326,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order time units shortest to longest. Kasuta rangelt kasvavat jarjekorda. Teema: Pasta.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: pasta.",
     "options": [
-      "day",
-      "decade",
-      "century",
-      "year",
-      "hour",
-      "week",
-      "month",
-      "second",
-      "millennium",
-      "minute"
+      "päev",
+      "kümnend",
+      "sajand",
+      "aasta",
+      "tund",
+      "nädal",
+      "kuu",
+      "sekund",
+      "aastatuhat",
+      "minut"
     ],
     "correct": {
       "rankByIndex": [
@@ -16362,18 +16362,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order file sizes smallest to largest. Pane varaseim/madalaim kohale 1. Teema: Chocolate.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: šokolaad.",
     "options": [
-      "exabyte",
-      "terabyte",
-      "gigabyte",
-      "yottabyte",
-      "megabyte",
-      "zettabyte",
-      "petabyte",
-      "byte",
-      "kilobyte",
-      "bit"
+      "eksabait",
+      "terabait",
+      "gigabait",
+      "jotabait",
+      "megabait",
+      "zettabait",
+      "petabait",
+      "bait",
+      "kilobait",
+      "bitt"
     ],
     "correct": {
       "rankByIndex": [
@@ -16398,18 +16398,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order currency values low to high. Koosta uks korrektne jarjestus. Teema: Coffee.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: kohv.",
     "options": [
-      "20 dollars",
-      "10 dollars",
+      "20 dollarit",
+      "10 dollarit",
       "1 dollar",
-      "50 cents",
-      "5 cents",
-      "25 cents",
-      "2 dollars",
-      "5 dollars",
-      "10 cents",
-      "1 cent"
+      "50 senti",
+      "5 senti",
+      "25 senti",
+      "2 dollarit",
+      "5 dollarit",
+      "10 senti",
+      "1 sent"
     ],
     "correct": {
       "rankByIndex": [
@@ -16434,18 +16434,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order time units shortest to longest. Jarjesta koik variandid esimesest viimaseni. Teema: Tea.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: tee.",
     "options": [
-      "month",
-      "decade",
-      "hour",
-      "minute",
-      "second",
-      "year",
-      "day",
-      "century",
-      "millennium",
-      "week"
+      "kuu",
+      "kümnend",
+      "tund",
+      "minut",
+      "sekund",
+      "aasta",
+      "päev",
+      "sajand",
+      "aastatuhat",
+      "nädal"
     ],
     "correct": {
       "rankByIndex": [
@@ -16470,18 +16470,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order file sizes smallest to largest. Ara jata uhtegi kohta vahele. Teema: Orange.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: apelsin.",
     "options": [
-      "byte",
-      "terabyte",
-      "yottabyte",
-      "megabyte",
-      "exabyte",
-      "zettabyte",
-      "gigabyte",
-      "kilobyte",
-      "petabyte",
-      "bit"
+      "bait",
+      "terabait",
+      "jotabait",
+      "megabait",
+      "eksabait",
+      "zettabait",
+      "gigabait",
+      "kilobait",
+      "petabait",
+      "bitt"
     ],
     "correct": {
       "rankByIndex": [
@@ -16506,18 +16506,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order currency values low to high. Igat kohta kasutatakse tapselt korra. Teema: Banana.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: banaan.",
     "options": [
-      "5 cents",
-      "20 dollars",
-      "5 dollars",
+      "5 senti",
+      "20 dollarit",
+      "5 dollarit",
       "1 dollar",
-      "2 dollars",
-      "1 cent",
-      "10 dollars",
-      "10 cents",
-      "25 cents",
-      "50 cents"
+      "2 dollarit",
+      "1 sent",
+      "10 dollarit",
+      "10 senti",
+      "25 senti",
+      "50 senti"
     ],
     "correct": {
       "rankByIndex": [
@@ -16542,18 +16542,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order time units shortest to longest. Kasuta rangelt kasvavat jarjekorda. Teema: Apple.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: õun.",
     "options": [
-      "hour",
-      "minute",
-      "week",
-      "day",
-      "decade",
-      "millennium",
-      "year",
-      "century",
-      "second",
-      "month"
+      "tund",
+      "minut",
+      "nädal",
+      "päev",
+      "kümnend",
+      "aastatuhat",
+      "aasta",
+      "sajand",
+      "sekund",
+      "kuu"
     ],
     "correct": {
       "rankByIndex": [
@@ -16578,18 +16578,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order file sizes smallest to largest. Pane varaseim/madalaim kohale 1. Teema: Laptop.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: sülearvuti.",
     "options": [
-      "megabyte",
-      "byte",
-      "terabyte",
-      "yottabyte",
-      "petabyte",
-      "kilobyte",
-      "exabyte",
-      "zettabyte",
-      "gigabyte",
-      "bit"
+      "megabait",
+      "bait",
+      "terabait",
+      "jotabait",
+      "petabait",
+      "kilobait",
+      "eksabait",
+      "zettabait",
+      "gigabait",
+      "bitt"
     ],
     "correct": {
       "rankByIndex": [
@@ -16614,18 +16614,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order currency values low to high. Koosta uks korrektne jarjestus. Teema: Smartphone.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: nutitelefon.",
     "options": [
-      "10 dollars",
-      "2 dollars",
-      "25 cents",
-      "5 cents",
-      "10 cents",
-      "50 cents",
+      "10 dollarit",
+      "2 dollarit",
+      "25 senti",
+      "5 senti",
+      "10 senti",
+      "50 senti",
       "1 dollar",
-      "5 dollars",
-      "1 cent",
-      "20 dollars"
+      "5 dollarit",
+      "1 sent",
+      "20 dollarit"
     ],
     "correct": {
       "rankByIndex": [
@@ -16650,18 +16650,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order time units shortest to longest. Jarjesta koik variandid esimesest viimaseni. Teema: Headphones.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: kõrvaklapid.",
     "options": [
-      "year",
-      "millennium",
-      "decade",
-      "century",
-      "day",
-      "second",
-      "hour",
-      "week",
-      "month",
-      "minute"
+      "aasta",
+      "aastatuhat",
+      "kümnend",
+      "sajand",
+      "päev",
+      "sekund",
+      "tund",
+      "nädal",
+      "kuu",
+      "minut"
     ],
     "correct": {
       "rankByIndex": [
@@ -16686,18 +16686,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order file sizes smallest to largest. Ara jata uhtegi kohta vahele. Teema: Camera.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: kaamera.",
     "options": [
-      "byte",
-      "bit",
-      "terabyte",
-      "exabyte",
-      "megabyte",
-      "gigabyte",
-      "zettabyte",
-      "petabyte",
-      "yottabyte",
-      "kilobyte"
+      "bait",
+      "bitt",
+      "terabait",
+      "eksabait",
+      "megabait",
+      "gigabait",
+      "zettabait",
+      "petabait",
+      "jotabait",
+      "kilobait"
     ],
     "correct": {
       "rankByIndex": [
@@ -16722,18 +16722,18 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Order currency values low to high. Igat kohta kasutatakse tapselt korra. Teema: Printer.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: printer.",
     "options": [
-      "10 dollars",
-      "1 cent",
+      "10 dollarit",
+      "1 sent",
       "1 dollar",
-      "20 dollars",
-      "2 dollars",
-      "50 cents",
-      "5 cents",
-      "25 cents",
-      "5 dollars",
-      "10 cents"
+      "20 dollarit",
+      "2 dollarit",
+      "50 senti",
+      "5 senti",
+      "25 senti",
+      "5 dollarit",
+      "10 senti"
     ],
     "correct": {
       "rankByIndex": [

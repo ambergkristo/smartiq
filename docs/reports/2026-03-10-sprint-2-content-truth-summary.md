@@ -23,7 +23,6 @@ Todo:
 
 - ET remains blocked for launch.
 - Largest remaining ET repair zones:
-  - `ORDER`
   - `COLOR`
   - `OPEN`
   - `NUMBER` mojibake slices
@@ -44,7 +43,6 @@ Todo:
 
 - EN is now conditionally usable, but not clean enough for launch trust.
 - Largest remaining EN repair zones:
-  - `ORDER`
   - `COLOR`
   - `OPEN`
 
@@ -61,6 +59,12 @@ Done:
   - `Varia/TRUE_FALSE 001..030`
   - `Culture/TRUE_FALSE 001..030`
   - `Science/TRUE_FALSE 001..030`
+  - `History/ORDER 001..030`
+  - `Sports/ORDER 001..030`
+  - `Geography/ORDER 001..030`
+  - `Varia/ORDER 001..030`
+  - `Culture/ORDER 001..030`
+  - `Science/ORDER 001..030`
 
 Todo:
 
@@ -112,8 +116,8 @@ Todo:
 
 Current observed report baseline:
 
-- EN score: `0.951`
-- ET score: `0.850`
+- EN score: `0.954`
+- ET score: `0.889`
 
 Closed repair zone:
 
@@ -127,10 +131,11 @@ Closed repair zone:
 - `Sports/TRUE_FALSE` dropped out of the EN and ET `TRUE_FALSE` backlog
 - `Science/TRUE_FALSE` is now fully repaired across `001..030`
 - `Science/TRUE_FALSE` dropped out of the EN and ET `TRUE_FALSE` backlog
+- `ORDER` is now fully repaired across all six topic lanes (`History`, `Sports`, `Geography`, `Culture`, `Science`, `Varia`)
+- `ORDER` dropped out of the EN and ET top-risk backlog
 
 ## Next Repair Priority
 
-1. `ORDER`
-2. `COLOR`
-3. remaining `OPEN` recycled pools
-4. `NUMBER` mojibake slices
+1. `COLOR`
+2. remaining `OPEN` recycled pools
+3. `NUMBER` mojibake slices
