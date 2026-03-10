@@ -25,7 +25,6 @@ Todo:
 - Largest remaining ET repair zones:
   - `Sports/TRUE_FALSE 021..030`
   - `Science/TRUE_FALSE 011..030`
-  - `Geography/TRUE_FALSE 001..010`
   - `ORDER`
   - `COLOR`
   - `OPEN`
@@ -61,7 +60,7 @@ Done:
 - Repair batches completed so far:
   - `History/TRUE_FALSE 001..030`
   - `Sports/TRUE_FALSE 001..020`
-  - `Geography/TRUE_FALSE repair work landed; ET 001..010 remains`
+  - `Geography/TRUE_FALSE 001..030`
   - `Varia/TRUE_FALSE 001..030`
   - `Culture/TRUE_FALSE 001..030`
   - `Science/TRUE_FALSE 001..010`
@@ -125,12 +124,13 @@ Closed repair zone:
 - `Culture/TRUE_FALSE` dropped out of the ET top-risk `TRUE_FALSE` backlog
 - `Varia/TRUE_FALSE` is now fully repaired across `001..030`
 - `Varia/TRUE_FALSE` dropped out of the ET top-risk `TRUE_FALSE` backlog
+- `Geography/TRUE_FALSE` is now fully repaired across `001..030`
+- `Geography/TRUE_FALSE` dropped out of the ET top-risk `TRUE_FALSE` backlog
 
 ## Next Repair Priority
 
 1. `Sports/TRUE_FALSE 021..030`
 2. `Science/TRUE_FALSE 011..030`
-3. `Geography/TRUE_FALSE 001..010`
-4. `ORDER`
-5. `COLOR`
-6. remaining `OPEN` recycled pools
+3. `ORDER`
+4. `COLOR`
+5. remaining `OPEN` recycled pools

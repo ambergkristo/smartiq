@@ -1868,16 +1868,16 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Millised v?ited Tallinna kohta peavad paika?",
+    "question": "Geograafia: Millised väited Tallinna kohta peavad paika?",
     "options": [
       "Tallinn on Eesti pealinn.",
-      "Tallinn asub L??nemere ??res.",
+      "Tallinn asub Läänemere ääres.",
       "Vanalinn on UNESCO paik.",
       "Riigikogu koguneb Tallinnas.",
       "Tallinn asub Portugalis.",
-      "Linn paikneb Niiluse ??res.",
-      "Tallinn j??b Riiast l?unasse.",
-      "Linn on tuntud vanade m??ride t?ttu.",
+      "Linn paikneb Niiluse ääres.",
+      "Tallinn jääb Riiast lõunasse.",
+      "Linn on tuntud vanade müüride tõttu.",
       "Tallinn on Austraalia pealinn.",
       "Tallinnas kasutatakse eurot."
     ],
@@ -1900,18 +1900,18 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Millised v?ited Riia kohta peavad paika?",
+    "question": "Geograafia: Millised väited Riia kohta peavad paika?",
     "options": [
-      "Riia on L?ti pealinn.",
-      "Riia asub Daugava j?e ??res.",
+      "Riia on Läti pealinn.",
+      "Riia asub Daugava jõe ääres.",
       "Juugend on Riias silmatorkav.",
-      "Riia asub L??nemere ??res.",
+      "Riia asub Läänemere ääres.",
       "Riia on Leedu pealinn.",
       "Linn asub Alpides.",
       "Riias kasutatakse eurot.",
       "Riias valitsesid vaaraod.",
       "Riia laht piirneb linnaga.",
-      "Riia asub L?una-Ameerikas."
+      "Riia asub Lõuna-Ameerikas."
     ],
     "correct": {
       "correctIndexes": [
@@ -1932,10 +1932,10 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Millised v?ited Vilniuse kohta peavad paika?",
+    "question": "Geograafia: Millised väited Vilniuse kohta peavad paika?",
     "options": [
       "Vilnius on Leedu pealinn.",
-      "Vilnius asub Nerise j?e l?hedal.",
+      "Vilnius asub Nerise jõe lähedal.",
       "Gediminase torn on Vilniuses.",
       "Vilnius on sisemaal, mitte rannikul.",
       "Vilnius on Eesti pealinn.",
@@ -1943,7 +1943,7 @@
       "Vilniuses kasutatakse eurot.",
       "Vilnius asub Vaikse ookeani rannikul.",
       "Vanalinna iseloomustab barokk.",
-      "Vilnius on Tallinnast p?hja pool."
+      "Vilnius on Tallinnast põhja pool."
     ],
     "correct": {
       "correctIndexes": [
@@ -1964,16 +1964,16 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Millised v?ited Helsingi kohta peavad paika?",
+    "question": "Geograafia: Millised väited Helsingi kohta peavad paika?",
     "options": [
       "Helsingi on Soome pealinn.",
-      "See asub Soome lahe ??res.",
-      "Suomenlinna j??b Helsingi l?histele.",
+      "See asub Soome lahe ääres.",
+      "Suomenlinna jääb Helsingi lähistele.",
       "Seal kasutatakse soome ja rootsi keelt.",
       "Helsingi on Norra pealinn.",
-      "See asub Vahemere ??res.",
+      "See asub Vahemere ääres.",
       "Helsingis kasutatakse eurot.",
-      "Helsingi on sisemaine k?rbelinn.",
+      "Helsingi on sisemaine kõrbelinn.",
       "Praamid ?hendavad Helsingi Tallinnaga.",
       "Mount Everest asub Helsingis."
     ],
@@ -1996,18 +1996,18 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Millised v?ited Stockholmi kohta peavad paika?",
+    "question": "Geograafia: Millised väited Stockholmi kohta peavad paika?",
     "options": [
       "Stockholm on Rootsi pealinn.",
       "See paikneb paljudel saartel.",
-      "M?laren kohtub seal L??nemerega.",
+      "Mälaren kohtub seal Läänemerega.",
       "Riksdag koguneb Stockholmis.",
       "Stockholm on Taani pealinn.",
-      "See asub Musta mere ??res.",
+      "See asub Musta mere ääres.",
       "Linnas kasutatakse krooni.",
       "Stockholm asub Saharas.",
       "Gamla Stan on Stockholmi vanalinn.",
-      "See j??b Kopenhaagenist l?una poole."
+      "See jääb Kopenhaagenist lõuna poole."
     ],
     "correct": {
       "correctIndexes": [
@@ -2028,16 +2028,16 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Millised v?ited Oslo kohta peavad paika?",
+    "question": "Geograafia: Millised väited Oslo kohta peavad paika?",
     "options": [
       "Oslo on Norra pealinn.",
       "Oslo asub fjordi tipus.",
       "Nobeli rahupreemia antakse Oslos.",
       "Oslos kasutatakse krooni.",
       "Oslo on Rootsi pealinn.",
-      "See asub Kaspia mere ??res.",
-      "Linn v??rustas 1952. aasta taliol?mpiat.",
-      "Oslo asub L?una-Ameerikas.",
+      "See asub Kaspia mere ääres.",
+      "Linn võõrustas 1952. aasta taliolümpiat.",
+      "Oslo asub Lõuna-Ameerikas.",
       "Parlament koguneb Oslos.",
       "Sagrada Familia asub Oslos."
     ],
@@ -2060,18 +2060,18 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Millised v?ited Kopenhaageni kohta peavad paika?",
+    "question": "Geograafia: Millised väited Kopenhaageni kohta peavad paika?",
     "options": [
       "Kopenhaagen on Taani pealinn.",
       "See asub Zealandil ja Amageril.",
-      "V?ike merineitsi on Kopenhaagenis.",
-      "Linnas s?idetakse palju rattaga.",
+      "Väike merineitsi on Kopenhaagenis.",
+      "Linnas sõidetakse palju rattaga.",
       "Kopenhaagen on Islandi pealinn.",
-      "See asub Punase mere ??res.",
+      "See asub Punase mere ääres.",
       "Seal kasutatakse Taani krooni.",
       "Kopenhaagen asub Alpides.",
       "?resund ?hendab linna Rootsiga.",
-      "Linn v??rustas Rooma konsuleid."
+      "Linn võõrustas Rooma konsuleid."
     ],
     "correct": {
       "correctIndexes": [
@@ -2092,18 +2092,18 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Millised v?ited Reykjaviki kohta peavad paika?",
+    "question": "Geograafia: Millised väited Reykjaviki kohta peavad paika?",
     "options": [
       "Reykjavik on Islandi pealinn.",
-      "See on ?ks Euroopa p?hjapoolseid pealinnu.",
-      "Geotermaalne k?te on seal tavaline.",
+      "See on üks Euroopa põhjapoolseid pealinnu.",
+      "Geotermaalne küte on seal tavaline.",
       "Linn asub Islandi rannikul.",
-      "Reykjavik asub Gr??nimaal.",
+      "Reykjavik asub Gröönimaal.",
       "Seal kasutatakse eurot.",
       "Hallgrimskirkja on Reykjavikis.",
-      "Reykjavik asub Doonau ??res.",
+      "Reykjavik asub Doonau ääres.",
       "Seal kasutatakse Islandi krooni.",
-      "Fuji m?gi k?rgub Reykjaviki k?rval."
+      "Fuji mägi kõrgub Reykjaviki kõrval."
     ],
     "correct": {
       "correctIndexes": [
@@ -2124,16 +2124,16 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Millised v?ited Londoni kohta peavad paika?",
+    "question": "Geograafia: Millised väited Londoni kohta peavad paika?",
     "options": [
       "London on ?hendkuningriigi pealinn.",
-      "Thames voolab l?bi Londoni.",
+      "Thames voolab läbi Londoni.",
       "Parlamendihooned asuvad seal.",
       "Londonis kasutatakse naelsterlingit.",
       "London on Prantsusmaa pealinn.",
       "Linn asub Saharas.",
       "Heathrow on Londoni lennujaam.",
-      "London paikneb Amazonase ??res.",
+      "London paikneb Amazonase ääres.",
       "Big Ben on Londonis.",
       "Euro on UK ametlik raha."
     ],
@@ -2156,16 +2156,16 @@
     "topic": "Geography",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Geograafia: Millised v?ited Pariisi kohta peavad paika?",
+    "question": "Geograafia: Millised väited Pariisi kohta peavad paika?",
     "options": [
       "Pariis on Prantsusmaa pealinn.",
-      "Seine voolab l?bi Pariisi.",
+      "Seine voolab läbi Pariisi.",
       "Eiffeli torn on Pariisis.",
       "Pariisis kasutatakse eurot.",
       "Pariis on Itaalia pealinn.",
       "Kilimanjaro asub Pariisis.",
       "Louvre on Pariisis.",
-      "Pariis asub L??nemere ??res.",
+      "Pariis asub Läänemere ääres.",
       "Notre-Dame on Pariisis.",
       "Pariisis kasutatakse jeeni."
     ],
