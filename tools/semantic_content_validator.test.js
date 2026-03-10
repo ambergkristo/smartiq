@@ -51,6 +51,30 @@ test('flags ET mixed-language and broken-grammar defects', () => {
   assert.equal(result.summary.issueCounts.unnaturalPhrasingCards, 1);
 });
 
+test('flags ET encoding damage inside words as broken grammar', () => {
+  const result = analyzeCards([
+    buildCard({
+      id: 'et-mojibake',
+      language: 'et',
+      question: 'Geograafia: Millised v?ited Tallinna kohta peavad paika?',
+      options: [
+        'Tallinn asub L??nemere ??res.',
+        'Riigikogu koguneb Tallinnas.',
+        'Tallinn on Eesti pealinn.',
+        'Tallinn j??b Riiast l?unasse.',
+        'Tallinnas kasutatakse eurot.',
+        'Tallinn asub Portugalis.',
+        'Tallinn on Austraalia pealinn.',
+        'Linn paikneb Niiluse ??res.',
+        'Tallinn on tuntud vanade m??ride t?ttu.',
+        'Tallinn asub L?una-Ameerikas.'
+      ]
+    })
+  ], 'fixture-et-mojibake');
+
+  assert.equal(result.summary.issueCounts.brokenGrammarCards, 1);
+});
+
 test('flags ET low-trust option words', () => {
   const result = analyzeCards([
     buildCard({

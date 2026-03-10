@@ -100,6 +100,15 @@ const BROKEN_ESTONIAN_REGEXES = [
   /\booajal\b/i
 ];
 
+const ESTONIAN_ENCODING_DAMAGE_REGEXES = [
+  /\b\p{L}+\?+\p{L}+\b/u,
+  /\?{2,}/,
+  /\bv\?ited\b/i,
+  /\bo\?iged\b/i,
+  /\bto\?ed\b/i,
+  /\bl\?\?nemere\b/i
+];
+
 const ET_LOW_TRUST_OPTION_REGEXES = [
   /^\s*mint\s*$/i,
   /^\s*hobene\s*$/i
@@ -207,7 +216,8 @@ function hasUnnaturalPhrasing(question) {
 
 function hasBrokenEstonian(text) {
   const normalized = normalizeText(text);
-  return BROKEN_ESTONIAN_REGEXES.some((regex) => regex.test(normalized));
+  return BROKEN_ESTONIAN_REGEXES.some((regex) => regex.test(normalized))
+    || ESTONIAN_ENCODING_DAMAGE_REGEXES.some((regex) => regex.test(normalized));
 }
 
 function hasLowTrustEtOptions(options) {
@@ -330,7 +340,7 @@ function analyzeCards(cards, datasetLabel = 'dataset') {
     if (language === 'et' && ([question, ...options].some((entry) => hasBrokenEstonian(entry)))) {
       issues.push({
         type: 'broken_grammar',
-        detail: 'ASCII-damaged or broken Estonian phrasing detected'
+        detail: 'ASCII-damaged, encoding-damaged, or broken Estonian phrasing detected'
       });
     }
 

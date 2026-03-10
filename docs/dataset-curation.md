@@ -30,6 +30,7 @@ Decide which repair path applies:
 Hard rule:
 
 - If ET card contains untranslated English question scaffolding or broken Estonian (`vaited`, `oiged`, `toesed`, etc.), default to `rewrite` or `replace`.
+- If ET card shows encoding damage or mojibake (`v?ited`, `L??nemeri`, `m??rid`, etc.), treat it as broken localization and default to `rewrite` or `replace`.
 - If EN/ET card depends on recycled true/false option pools unrelated to the stated focus area, default to `replace`.
 
 ## 3) Edit and repair source dataset files
@@ -78,6 +79,7 @@ Reject immediately if any of these are true:
 
 - ET prompt contains English stems like `Order oldest era to newest`,
 - ET prompt contains broken forms like `Millised vaited on oiged`,
+- ET prompt or options contain encoding-damaged forms like `Millised v?ited` or `L??nemeri`,
 - card uses placeholder or scaffold wording,
 - card reuses a stock true/false pool that is clearly detached from the named focus area,
 - option set is trivial, repetitive, or low-information.
