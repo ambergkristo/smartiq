@@ -2,21 +2,21 @@
 
 ## Metadata
 
-- Generated: 2026-03-10T13:23:23.499Z
+- Generated: 2026-03-10T13:34:56.574Z
 - Scope: EN, ET SmartIQ locale packs
 
 ## Executive Summary
 
-- EN: NOT READY - editorial cleanup required before launch trust | score 0.928 | total issues 564
-- ET: BLOCKED - ET is not launch-ready | score 0.810 | total issues 1452
+- EN: NOT READY - editorial cleanup required before launch trust | score 0.930 | total issues 547
+- ET: BLOCKED - ET is not launch-ready | score 0.813 | total issues 1425
 
 ## EN Findings
 
 - Dataset: `data/smart10/cards.en.json`
-- Semantic content score: 0.928
+- Semantic content score: 0.930
 - Launch readiness: NOT READY - editorial cleanup required before launch trust
-- Total issue hits: 564
-- Warning count: 564
+- Total issue hits: 547
+- Warning count: 547
 
 ### Issue Counts
 
@@ -24,19 +24,19 @@
 - broken grammar: 0
 - unnatural phrasing: 210
 - placeholder content: 0
-- templated/scaffold wording: 73
-- recycled option pool: 281
+- templated/scaffold wording: 66
+- recycled option pool: 271
 - low-trust option wording: 0
 - trivial/low-value content: 0
 
 ### Highest-Risk Areas
 
-- EN Science/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Varia/TRUE_FALSE: 30/30 cards flagged (100%) | recycled_option_pool, template_scaffold
 - EN Varia/ORDER: 30/30 cards flagged (100%) | unnatural_phrasing
 - EN History/COLOR: 30/30 cards flagged (100%) | unnatural_phrasing
 - EN Sports/COLOR: 30/30 cards flagged (100%) | unnatural_phrasing
 - EN Geography/COLOR: 30/30 cards flagged (100%) | unnatural_phrasing
+- EN Culture/COLOR: 30/30 cards flagged (100%) | unnatural_phrasing
 
 ### Categorized Findings Summary
 
@@ -65,19 +65,19 @@
 ## ET Findings
 
 - Dataset: `data/smart10/cards.et.json`
-- Semantic content score: 0.810
+- Semantic content score: 0.813
 - Launch readiness: BLOCKED - ET is not launch-ready
-- Total issue hits: 1452
-- Warning count: 1452
+- Total issue hits: 1425
+- Warning count: 1425
 
 ### Issue Counts
 
 - language leakage: 130
-- broken grammar: 529
+- broken grammar: 519
 - unnatural phrasing: 280
 - placeholder content: 0
-- templated/scaffold wording: 73
-- recycled option pool: 280
+- templated/scaffold wording: 66
+- recycled option pool: 270
 - low-trust option wording: 160
 - trivial/low-value content: 0
 
@@ -85,10 +85,10 @@
 
 - ET Geography/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Culture/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
-- ET Science/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET Varia/TRUE_FALSE: 30/30 cards flagged (100%) | broken_grammar, recycled_option_pool, template_scaffold
 - ET History/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
 - ET Sports/ORDER: 30/30 cards flagged (100%) | language_leakage, unnatural_phrasing, broken_grammar
+- ET Geography/ORDER: 30/30 cards flagged (100%) | broken_grammar
 
 ### Categorized Findings Summary
 
