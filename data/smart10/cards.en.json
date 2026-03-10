@@ -609,25 +609,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Find the statements that fit. Focus area: Meiji Restoration.",
+    "question": "History: Which statements about the Meiji Restoration are true?",
     "options": [
-      "Magna Carta was signed in 1512.",
-      "USSR dissolved in 1991.",
-      "Berlin Wall fell in 1989.",
-      "Printing press spread in 1700s.",
-      "WWII ended in 1945.",
-      "USSR dissolved in 1961.",
-      "Printing press spread in 1400s.",
-      "Apollo 11 landed in 1959.",
-      "Renaissance began in Australia.",
-      "WWII ended in 1939."
+      "Meiji Restoration began in 1868.",
+      "It restored imperial rule in Japan.",
+      "The shogunate lost power.",
+      "Japan industrialized rapidly under Meiji.",
+      "It began in medieval France.",
+      "Tokugawa rule grew stronger after it.",
+      "Samurai firearms were banned in 1968.",
+      "Meiji leaders moved capital to London.",
+      "It replaced emperors with pharaohs.",
+      "Perry arrived after World War II."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        4,
-        6
+        3
       ]
     },
     "difficulty": "2",
@@ -639,26 +639,27 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Select all true statements. Focus area: Age of Exploration.",
+    "question": "History: Which statements about the Age of Exploration are true?",
     "options": [
-      "WWII ended in 1945.",
-      "Magna Carta was signed in 1512.",
-      "Renaissance began in Italy.",
-      "Magna Carta was signed in 1215.",
-      "Apollo 11 landed in 1959.",
-      "Roman Republic came before Empire.",
-      "Caesar was killed in 144 BC.",
-      "Berlin Wall fell in 1989.",
-      "Roman Empire came before Republic.",
-      "WWII ended in 1939."
+      "Columbus reached the Americas in 1492.",
+      "Portuguese sailors rounded Africa.",
+      "Magellan expedition circled the globe.",
+      "Oceanic trade linked more continents.",
+      "It began after airplanes were invented.",
+      "Zheng He explored with steamships.",
+      "Spain searched for routes to Asia.",
+      "It happened only in the 1900s.",
+      "Vikings named the Pacific Ocean.",
+      "Caravels were a type of sailing ship."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        5,
-        7
+        6,
+        9
       ]
     },
     "difficulty": "2",
@@ -670,27 +671,26 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Which lines are correct? Focus area: Bronze Age.",
+    "question": "History: Which statements about the Bronze Age are true?",
     "options": [
-      "Napoleon lost at Waterloo.",
-      "Byzantium was centered in Madrid.",
-      "Roman Republic came before Empire.",
-      "WWII ended in 1945.",
-      "Magna Carta was signed in 1215.",
-      "Printing press spread in 1400s.",
-      "Magna Carta was signed in 1512.",
-      "Cold War started before WWI.",
-      "Napoleon won at Waterloo.",
-      "Berlin Wall fell in 1989."
+      "Bronze is made from copper and tin.",
+      "Many states used early writing systems.",
+      "Trade linked the Med with the Near East.",
+      "Bronze tools predated iron tools.",
+      "Bronze Age began after the Roman Empire.",
+      "Gunpowder armies defined the era.",
+      "It belongs mainly to the 1900s.",
+      "Steam engines powered Bronze Age cities.",
+      "The Hittites were part of the period.",
+      "It ended before farming existed."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        4,
-        5,
-        9
+        8
       ]
     },
     "difficulty": "2",
@@ -702,18 +702,18 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Identify valid statements. Focus area: Iron Age.",
+    "question": "History: Which statements about the Iron Age are true?",
     "options": [
-      "Magna Carta was signed in 1215.",
-      "Renaissance began in Italy.",
-      "Apollo 11 landed in 1969.",
-      "Berlin Wall fell in 1989.",
-      "Napoleon won at Waterloo.",
-      "Napoleon lost at Waterloo.",
-      "Cold War started before WWI.",
-      "Renaissance began in Australia.",
-      "USSR dissolved in 1991.",
-      "Byzantium centered in Constantinople."
+      "Iron tools spread after the Bronze Age.",
+      "Many regions used stronger iron weapons.",
+      "Classical Greece rose in the Iron Age.",
+      "Iron smelting reshaped war and farming.",
+      "It began after the moon landing.",
+      "Iron Age came before the Stone Age.",
+      "Plastic tools define the period.",
+      "Vikings fought there with lasers.",
+      "Many societies used fortified hilltops.",
+      "It ended everywhere on one exact day."
     ],
     "correct": {
       "correctIndexes": [
@@ -721,9 +721,7 @@
         1,
         2,
         3,
-        5,
-        8,
-        9
+        8
       ]
     },
     "difficulty": "2",
@@ -735,23 +733,26 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Mark statements that are true for this topic. Focus area: Harlem Renaissance.",
+    "question": "History: Which statements about the Harlem Renaissance are true?",
     "options": [
-      "Apollo 11 landed in 1959.",
-      "Printing press spread in 1700s.",
-      "USSR dissolved in 1961.",
-      "Berlin Wall fell in 1973.",
-      "Caesar was killed in 144 BC.",
-      "Cold War followed World War II.",
-      "Magna Carta was signed in 1512.",
-      "Magna Carta was signed in 1215.",
-      "Byzantium was centered in Madrid.",
-      "Renaissance began in Australia."
+      "Harlem Renaissance grew in the 1920s.",
+      "Langston Hughes was a key figure.",
+      "Jazz shaped the movement's culture.",
+      "It centered in New York City.",
+      "It happened in ancient Sparta.",
+      "It was led by Napoleon.",
+      "It rejected all Black literature.",
+      "Radio did not exist during it.",
+      "Zora Neale Hurston is linked to it.",
+      "It took place before printing."
     ],
     "correct": {
       "correctIndexes": [
-        5,
-        7
+        0,
+        1,
+        2,
+        3,
+        8
       ]
     },
     "difficulty": "2",
@@ -763,24 +764,26 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Which claims are accurate? Focus area: Printing Press.",
+    "question": "History: Which statements about the printing press are true?",
     "options": [
-      "WWII ended in 1939.",
-      "Apollo 11 landed in 1959.",
-      "Byzantium was centered in Madrid.",
-      "Napoleon won at Waterloo.",
-      "Magna Carta was signed in 1512.",
-      "Berlin Wall fell in 1989.",
-      "Berlin Wall fell in 1973.",
-      "Magna Carta was signed in 1215.",
-      "Renaissance began in Italy.",
-      "Printing press spread in 1700s."
+      "Movable type expanded book production.",
+      "Gutenberg worked in Mainz.",
+      "Printing helped spread Reformation ideas.",
+      "Cheap print widened access to texts.",
+      "The press was invented in 1969.",
+      "It replaced all scribes overnight.",
+      "Europe first printed with smartphones.",
+      "Books became easier to copy at scale.",
+      "It began in outer space.",
+      "Printing ended literacy."
     ],
     "correct": {
       "correctIndexes": [
-        5,
-        7,
-        8
+        0,
+        1,
+        2,
+        3,
+        7
       ]
     },
     "difficulty": "2",
@@ -792,25 +795,26 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Find the statements that fit. Focus area: Han Dynasty.",
+    "question": "History: Which statements about the Han dynasty are true?",
     "options": [
-      "Renaissance began in Australia.",
-      "Napoleon lost at Waterloo.",
-      "USSR dissolved in 1961.",
-      "Apollo 11 landed in 1969.",
-      "Cold War followed World War II.",
-      "Byzantium centered in Constantinople.",
-      "Printing press spread in 1700s.",
-      "Napoleon won at Waterloo.",
-      "WWII ended in 1939.",
-      "Roman Empire came before Republic."
+      "Han dynasty ruled China after Qin.",
+      "Silk Road trade expanded under Han.",
+      "Paper use is tied to the Han era.",
+      "Confucian learning shaped the state.",
+      "Han ruled from Constantinople.",
+      "It began in 1911.",
+      "Gunpowder ended the dynasty.",
+      "Han built Machu Picchu.",
+      "Emperor Wu is linked to Han expansion.",
+      "The dynasty ruled Viking England."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
+        2,
         3,
-        4,
-        5
+        8
       ]
     },
     "difficulty": "2",
@@ -822,26 +826,26 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Select all true statements. Focus area: Pax Romana.",
+    "question": "History: Which statements about Pax Romana are true?",
     "options": [
-      "Cold War followed World War II.",
-      "Berlin Wall fell in 1973.",
-      "Napoleon lost at Waterloo.",
-      "Cold War started before WWI.",
-      "Berlin Wall fell in 1989.",
-      "Roman Republic came before Empire.",
-      "Printing press spread in 1400s.",
-      "Renaissance began in Australia.",
-      "USSR dissolved in 1961.",
-      "Roman Empire came before Republic."
+      "Pax Romana means Roman peace.",
+      "It began under Augustus.",
+      "Trade and roads flourished in the period.",
+      "The empire stayed relatively stable.",
+      "It started after Rome fell in 476.",
+      "It was a Japanese shogunate.",
+      "Hannibal ruled during Pax Romana.",
+      "It belongs to the Roman Empire.",
+      "It ended before Julius Caesar lived.",
+      "Gladiators invented gunpowder then."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        4,
-        5,
-        6
+        3,
+        7
       ]
     },
     "difficulty": "2",
@@ -853,27 +857,28 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Which lines are correct? Focus area: Persian Empire.",
+    "question": "History: Which statements about the Persian Empire are true?",
     "options": [
-      "Renaissance began in Italy.",
-      "Berlin Wall fell in 1973.",
-      "Byzantium was centered in Madrid.",
-      "WWII ended in 1939.",
-      "Napoleon lost at Waterloo.",
-      "Caesar was killed in 44 BC.",
-      "Apollo 11 landed in 1969.",
-      "WWII ended in 1945.",
-      "USSR dissolved in 1991.",
-      "Apollo 11 landed in 1959."
+      "Cyrus the Great founded a Persian empire.",
+      "Royal Road sped imperial messages.",
+      "Darius I reorganized the empire.",
+      "Persepolis was a ceremonial center.",
+      "Persia lost to Alexander the Great.",
+      "The empire was based in Brazil.",
+      "Xerxes led campaigns against Greece.",
+      "Persia used jet fighters in battle.",
+      "It began after World War II.",
+      "Cuneiform archives existed in its world."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
+        2,
+        3,
         4,
-        5,
         6,
-        7,
-        8
+        9
       ]
     },
     "difficulty": "2",
@@ -885,28 +890,26 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "History: Identify valid statements. Focus area: Maya Civilization.",
+    "question": "History: Which statements about the Maya civilization are true?",
     "options": [
-      "Renaissance began in Italy.",
-      "Berlin Wall fell in 1989.",
-      "Apollo 11 landed in 1969.",
-      "Printing press spread in 1700s.",
-      "Cold War followed World War II.",
-      "Magna Carta was signed in 1215.",
-      "Cold War started before WWI.",
-      "Magna Carta was signed in 1512.",
-      "Roman Republic came before Empire.",
-      "Napoleon lost at Waterloo."
+      "Maya cities rose in Mesoamerica.",
+      "Maya writing used glyphs.",
+      "They tracked time with complex calendars.",
+      "Chichen Itza is tied to Maya history.",
+      "Maya civilization centered in Scandinavia.",
+      "Steel railways built their empire.",
+      "They landed on the Moon.",
+      "Maize was central to Maya life.",
+      "Maya used only Latin script.",
+      "Their cities vanished in one night."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
         2,
-        4,
-        5,
-        8,
-        9
+        3,
+        7
       ]
     },
     "difficulty": "2",

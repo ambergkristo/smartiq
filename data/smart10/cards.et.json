@@ -609,25 +609,25 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Leia sobivad vaited. Fookus: Meiji Restoration.",
+    "question": "Ajalugu: Millised väited Meiji restauratsiooni kohta peavad paika?",
     "options": [
-      "Magna Carta was signed in 1512.",
-      "USSR dissolved in 1991.",
-      "Berlin Wall fell in 1989.",
-      "Printing press spread in 1700s.",
-      "WWII ended in 1945.",
-      "USSR dissolved in 1961.",
-      "Printing press spread in 1400s.",
-      "Apollo 11 landed in 1959.",
-      "Renaissance began in Australia.",
-      "WWII ended in 1939."
+      "Meiji restauratsioon algas 1868.",
+      "See taastas Jaapanis keisrivõimu.",
+      "Šogunaat kaotas võimu.",
+      "Jaapan industrialiseerus kiiresti.",
+      "See algas keskaegsel Prantsusmaal.",
+      "Tokugawa võim tugevnes pärast seda.",
+      "Samuraide relvad keelati 1968.",
+      "Pealinn viidi Londonisse.",
+      "See asendas keisrid vaaraodega.",
+      "Perry saabus pärast Teist maailmasõda."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        4,
-        6
+        3
       ]
     },
     "difficulty": "2",
@@ -639,26 +639,27 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Vali koik toed vaited. Fookus: Age of Exploration.",
+    "question": "Ajalugu: Millised väited maadeavastuste ajastu kohta peavad paika?",
     "options": [
-      "WWII ended in 1945.",
-      "Magna Carta was signed in 1512.",
-      "Renaissance began in Italy.",
-      "Magna Carta was signed in 1215.",
-      "Apollo 11 landed in 1959.",
-      "Roman Republic came before Empire.",
-      "Caesar was killed in 144 BC.",
-      "Berlin Wall fell in 1989.",
-      "Roman Empire came before Republic.",
-      "WWII ended in 1939."
+      "Columbus jõudis Ameerikasse 1492.",
+      "Portugallased purjetasid ümber Aafrika.",
+      "Magellani retk tegi ümbermaailmareisi.",
+      "Mereteed sidusid rohkem mandreid.",
+      "See algas pärast lennukite leiutamist.",
+      "Zheng He purjetas aurulaevadega.",
+      "Hispaania otsis mereteed Aasiasse.",
+      "See toimus ainult 20. sajandil.",
+      "Viikingid nimetasid Vaikse ookeani.",
+      "Karavell oli purjelaeva tüüp."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        5,
-        7
+        6,
+        9
       ]
     },
     "difficulty": "2",
@@ -670,27 +671,26 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Millised read on oiged? Fookus: Bronze Age.",
+    "question": "Ajalugu: Millised väited pronksiaja kohta peavad paika?",
     "options": [
-      "Napoleon lost at Waterloo.",
-      "Byzantium was centered in Madrid.",
-      "Roman Republic came before Empire.",
-      "WWII ended in 1945.",
-      "Magna Carta was signed in 1215.",
-      "Printing press spread in 1400s.",
-      "Magna Carta was signed in 1512.",
-      "Cold War started before WWI.",
-      "Napoleon won at Waterloo.",
-      "Berlin Wall fell in 1989."
+      "Pronks tehakse vasest ja tinast.",
+      "Paljud riigid kasutasid varast kirja.",
+      "Kaubandus sidus Vahemerd ja Lähis-Ida.",
+      "Pronksriistad eelnesid rauariistadele.",
+      "Pronksiaeg algas pärast Rooma riiki.",
+      "Püssirohuarmeed määrasid selle aja.",
+      "See kuulus peamiselt 20. sajandisse.",
+      "Aurumasinad käitasid pronksiaja linnu.",
+      "Hetiidid kuulusid sellesse aega.",
+      "See lõppes enne põllumajandust."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        4,
-        5,
-        9
+        8
       ]
     },
     "difficulty": "2",
@@ -702,18 +702,18 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Tuvasta kehtivad vaited. Fookus: Iron Age.",
+    "question": "Ajalugu: Millised väited rauaaja kohta peavad paika?",
     "options": [
-      "Magna Carta was signed in 1215.",
-      "Renaissance began in Italy.",
-      "Apollo 11 landed in 1969.",
-      "Berlin Wall fell in 1989.",
-      "Napoleon won at Waterloo.",
-      "Napoleon lost at Waterloo.",
-      "Cold War started before WWI.",
-      "Renaissance began in Australia.",
-      "USSR dissolved in 1991.",
-      "Byzantium centered in Constantinople."
+      "Rauariistad levisid pärast pronksiaega.",
+      "Paljud alad kasutasid rauast relvi.",
+      "Kreeka klassikaline aeg tõusis siis.",
+      "Raua sulatamine muutis sõda ja põldu.",
+      "See algas pärast Kuule maandumist.",
+      "Rauaaeg tuli enne kiviaega.",
+      "Plasttööriistad määrasid selle aja.",
+      "Viikingid võitlesid laseritega.",
+      "Paljud ühiskonnad kindlustasid künkaid.",
+      "See lõppes kõikjal samal päeval."
     ],
     "correct": {
       "correctIndexes": [
@@ -721,9 +721,7 @@
         1,
         2,
         3,
-        5,
-        8,
-        9
+        8
       ]
     },
     "difficulty": "2",
@@ -735,23 +733,26 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Margi selle teema toesed vaited. Fookus: Harlem Renaissance.",
+    "question": "Ajalugu: Millised väited Harlemi renessansi kohta peavad paika?",
     "options": [
-      "Apollo 11 landed in 1959.",
-      "Printing press spread in 1700s.",
-      "USSR dissolved in 1961.",
-      "Berlin Wall fell in 1973.",
-      "Caesar was killed in 144 BC.",
-      "Cold War followed World War II.",
-      "Magna Carta was signed in 1512.",
-      "Magna Carta was signed in 1215.",
-      "Byzantium was centered in Madrid.",
-      "Renaissance began in Australia."
+      "Harlemi renessanss kasvas 1920ndail.",
+      "Langston Hughes oli võtmeisik.",
+      "Jazz kujundas liikumise kultuuri.",
+      "See kesknes New Yorkile.",
+      "See toimus antiikses Spartas.",
+      "Seda juhtis Napoleon.",
+      "See hülgas musta kirjanduse.",
+      "Raadiot ei olnud siis olemas.",
+      "Zora Neale Hurston on sellega seotud.",
+      "See toimus enne trükikunsti."
     ],
     "correct": {
       "correctIndexes": [
-        5,
-        7
+        0,
+        1,
+        2,
+        3,
+        8
       ]
     },
     "difficulty": "2",
@@ -763,24 +764,26 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Millised vaited on oiged? Fookus: Printing Press.",
+    "question": "Ajalugu: Millised väited trükipressi kohta peavad paika?",
     "options": [
-      "WWII ended in 1939.",
-      "Apollo 11 landed in 1959.",
-      "Byzantium was centered in Madrid.",
-      "Napoleon won at Waterloo.",
-      "Magna Carta was signed in 1512.",
-      "Berlin Wall fell in 1989.",
-      "Berlin Wall fell in 1973.",
-      "Magna Carta was signed in 1215.",
-      "Renaissance began in Italy.",
-      "Printing press spread in 1700s."
+      "Liikuv trükitüüp kasvatas tiraaže.",
+      "Gutenberg töötas Mainzis.",
+      "Trükk levitas reformatsiooni ideid.",
+      "Odav trükk laiendas ligipääsu tekstidele.",
+      "Press leiutati 1969. aastal.",
+      "See asendas kirjutajad üleöö.",
+      "Euroopa esmatrükk kasutas telefone.",
+      "Raamatuid sai lihtsamalt paljundada.",
+      "See algas kosmoses.",
+      "Trükk lõpetas kirjaoskuse."
     ],
     "correct": {
       "correctIndexes": [
-        5,
-        7,
-        8
+        0,
+        1,
+        2,
+        3,
+        7
       ]
     },
     "difficulty": "2",
@@ -792,25 +795,26 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Leia sobivad vaited. Fookus: Han Dynasty.",
+    "question": "Ajalugu: Millised väited Hani dünastia kohta peavad paika?",
     "options": [
-      "Renaissance began in Australia.",
-      "Napoleon lost at Waterloo.",
-      "USSR dissolved in 1961.",
-      "Apollo 11 landed in 1969.",
-      "Cold War followed World War II.",
-      "Byzantium centered in Constantinople.",
-      "Printing press spread in 1700s.",
-      "Napoleon won at Waterloo.",
-      "WWII ended in 1939.",
-      "Roman Empire came before Republic."
+      "Hani dünastia valitses pärast Qini.",
+      "Siiditee kaubandus kasvas Hani ajal.",
+      "Paberi kasutus seostub Hani ajaga.",
+      "Konfutsianism mõjutas riigikorda.",
+      "Han valitses Konstantinoopolist.",
+      "See algas 1911. aastal.",
+      "Püssirohi lõpetas dünastia.",
+      "Han ehitas Machu Picchu.",
+      "Keiser Wu seostub Hani laienemisega.",
+      "Dünastia valitses viikingite Inglismaad."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
+        2,
         3,
-        4,
-        5
+        8
       ]
     },
     "difficulty": "2",
@@ -822,26 +826,26 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Vali koik toed vaited. Fookus: Pax Romana.",
+    "question": "Ajalugu: Millised väited Pax Romana kohta peavad paika?",
     "options": [
-      "Cold War followed World War II.",
-      "Berlin Wall fell in 1973.",
-      "Napoleon lost at Waterloo.",
-      "Cold War started before WWI.",
-      "Berlin Wall fell in 1989.",
-      "Roman Republic came before Empire.",
-      "Printing press spread in 1400s.",
-      "Renaissance began in Australia.",
-      "USSR dissolved in 1961.",
-      "Roman Empire came before Republic."
+      "Pax Romana tähendab Rooma rahu.",
+      "See algas Augustuse ajal.",
+      "Kaubandus ja teed õitsesid siis.",
+      "Impeerium püsis üldiselt stabiilne.",
+      "See algas pärast Rooma langemist.",
+      "See oli Jaapani šogunaat.",
+      "Hannibal valitses Pax Romana ajal.",
+      "See kuulus Rooma keisririiki.",
+      "See lõppes enne Caesari sündi.",
+      "Gladiaatorid leiutasid siis püssirohu."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
-        4,
-        5,
-        6
+        3,
+        7
       ]
     },
     "difficulty": "2",
@@ -853,27 +857,28 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Millised read on oiged? Fookus: Persian Empire.",
+    "question": "Ajalugu: Millised väited Pärsia impeeriumi kohta peavad paika?",
     "options": [
-      "Renaissance began in Italy.",
-      "Berlin Wall fell in 1973.",
-      "Byzantium was centered in Madrid.",
-      "WWII ended in 1939.",
-      "Napoleon lost at Waterloo.",
-      "Caesar was killed in 44 BC.",
-      "Apollo 11 landed in 1969.",
-      "WWII ended in 1945.",
-      "USSR dissolved in 1991.",
-      "Apollo 11 landed in 1959."
+      "Kyros Suur rajas Pärsia impeeriumi.",
+      "Kuninglik tee kiirendas sõnumeid.",
+      "Dareios I korraldas riigi ümber.",
+      "Persepolis oli tseremoniaalne keskus.",
+      "Pärsia kaotas Aleksander Suurele.",
+      "Impeeriumi kese oli Brasiilias.",
+      "Xerxes sõdis Kreeka vastu.",
+      "Pärsia kasutas reaktiivhävitajaid.",
+      "See algas pärast Teist maailmasõda.",
+      "Kiilkirjaga arhiivid kuulusid sinna."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
+        2,
+        3,
         4,
-        5,
         6,
-        7,
-        8
+        9
       ]
     },
     "difficulty": "2",
@@ -885,28 +890,26 @@
     "topic": "History",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Ajalugu: Tuvasta kehtivad vaited. Fookus: Maya Civilization.",
+    "question": "Ajalugu: Millised väited maiade tsivilisatsiooni kohta peavad paika?",
     "options": [
-      "Renaissance began in Italy.",
-      "Berlin Wall fell in 1989.",
-      "Apollo 11 landed in 1969.",
-      "Printing press spread in 1700s.",
-      "Cold War followed World War II.",
-      "Magna Carta was signed in 1215.",
-      "Cold War started before WWI.",
-      "Magna Carta was signed in 1512.",
-      "Roman Republic came before Empire.",
-      "Napoleon lost at Waterloo."
+      "Maiade linnad tõusid Mesoameerikas.",
+      "Maiad kasutasid glüüfkirja.",
+      "Nad pidasid keerukaid kalendreid.",
+      "Chichen Itza seostub maiade ajalooga.",
+      "Maiad kesknesid Skandinaaviale.",
+      "Terasraudteed ehitasid nende riigi.",
+      "Nad maandusid Kuule.",
+      "Mais oli maiade elus keskne.",
+      "Maiad kasutasid vaid ladina kirja.",
+      "Nende linnad kadusid ühe ööga."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
         2,
-        4,
-        5,
-        8,
-        9
+        3,
+        7
       ]
     },
     "difficulty": "2",
