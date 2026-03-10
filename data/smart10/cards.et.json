@@ -3726,23 +3726,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Margi selle teema toesed vaited. Fookus: Atom.",
+    "question": "Teadus: Millised väited aatomi kohta peavad paika?",
     "options": [
-      "Oxygen cannot support fire.",
-      "Plants grow without sunlight.",
-      "Atoms have no protons.",
-      "Electrons are positively charged.",
-      "Sound travels faster than light.",
-      "Gravity attracts mass.",
-      "Water is CO2.",
-      "Neurons are only in plants.",
-      "DNA carries genetic information.",
-      "Water boils at 10C."
+      "Aatom sisaldab prootoneid.",
+      "Elektronid liiguvad ümber tuuma.",
+      "Neutronil puudub elektrilaeng.",
+      "Aatomitest koosnevad elemendid.",
+      "Enamik massist on tuumas.",
+      "Aatom on palja silmaga nähtav.",
+      "Kõigil aatomitel on sama mass.",
+      "Galileo avastas kõik aatomid.",
+      "Elektronid on aatomist suuremad.",
+      "Aatomid eksisteerivad vaid tähtedes."
     ],
     "correct": {
       "correctIndexes": [
-        5,
-        8
+        0,
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3754,24 +3757,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Millised vaited on oiged? Fookus: Molecule.",
+    "question": "Teadus: Millised väited molekuli kohta peavad paika?",
     "options": [
-      "Electrons are positively charged.",
-      "DNA stores photos.",
-      "Sound travels faster than light.",
-      "Mars is called the Red Planet.",
-      "Water boils at 100C.",
-      "Atoms have no protons.",
-      "Sun orbits the Earth.",
-      "DNA carries genetic information.",
-      "Water boils at 10C.",
-      "Gravity repels all mass."
+      "Molekulis on kaks või enam aatomit.",
+      "Vesi on molekul.",
+      "Hapnikugaas moodustab O2 molekule.",
+      "Keemilised sidemed hoiavad molekule koos.",
+      "Süsinikdioksiid on molekul.",
+      "Molekul peab sisaldama metalli.",
+      "Kõik molekulid on gaasid.",
+      "Molekul ei saa olekut muuta.",
+      "Iga molekul koosneb ühest aatomist.",
+      "Molekulid on planeetidest suuremad."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        4,
-        7
+        4
       ]
     },
     "difficulty": "2",
@@ -3783,25 +3788,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Leia sobivad vaited. Fookus: Electron.",
+    "question": "Teadus: Millised väited elektroni kohta peavad paika?",
     "options": [
-      "Water boils at 10C.",
-      "Sun orbits the Earth.",
-      "Water boils at 100C.",
-      "Neurons transmit signals.",
-      "Oxygen cannot support fire.",
-      "Sound travels slower than light.",
-      "Mars is the hottest planet.",
-      "Oxygen supports combustion.",
-      "Electrons are positively charged.",
-      "Water is CO2."
+      "Elektronil on negatiivne laeng.",
+      "Elektron on aatomi osa.",
+      "Elektrivoolus liiguvad elektronid.",
+      "Elektron on prootonist palju kergem.",
+      "Elektronmikroskoop kasutab elektrone.",
+      "Elektronil on positiivne laeng.",
+      "Elektron püsib alati tuumas.",
+      "Elektrone leidub ainult planeetidel.",
+      "Elektron on palja silmaga nähtav.",
+      "Elektron on sama mis footon."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        5,
-        7
+        4
       ]
     },
     "difficulty": "2",
@@ -3813,26 +3819,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Vali koik toed vaited. Fookus: Proton.",
+    "question": "Teadus: Millised väited prootoni kohta peavad paika?",
     "options": [
-      "Mars is the hottest planet.",
-      "Sound travels faster than light.",
-      "Mars is called the Red Planet.",
-      "Earth orbits the Sun.",
-      "Water boils at 10C.",
-      "Electrons are positively charged.",
-      "DNA carries genetic information.",
-      "Water boils at 100C.",
-      "Atoms have no protons.",
-      "Atoms have a nucleus."
+      "Prootonil on positiivne laeng.",
+      "Prooton asub aatomi tuumas.",
+      "Vesiniku tuumas on üks prooton.",
+      "Aatomnumber loendab prootoneid.",
+      "Prooton on elektronist raskem.",
+      "Prootonil on negatiivne laeng.",
+      "Igas tuumas on kaks prootonit.",
+      "Prootonitest koosnevad helilained.",
+      "Reaktsioonid hävitavad prootoneid.",
+      "Prootoneid leidub vaid tähtedes."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        6,
-        7,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -3844,27 +3850,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Millised read on oiged? Fookus: Neutron.",
+    "question": "Teadus: Millised väited neutroni kohta peavad paika?",
     "options": [
-      "Mars is called the Red Planet.",
-      "Neurons are only in plants.",
-      "Atoms have a nucleus.",
-      "DNA carries genetic information.",
-      "Gravity repels all mass.",
-      "Plants use photosynthesis.",
-      "Neurons transmit signals.",
-      "Gravity attracts mass.",
-      "Mars is the hottest planet.",
-      "DNA stores photos."
+      "Neutronil puudub elektrilaeng.",
+      "Neutronid on paljudes tuumades.",
+      "Isotoobid erinevad neutronite arvu järgi.",
+      "Neutronid aitavad tuuma stabiliseerida.",
+      "Vabad neutronid võivad laguneda.",
+      "Neutronil on positiivne laeng.",
+      "Vesinik-1 sisaldab kahte neutronit.",
+      "Neutronid tiirlevad ümber Maa.",
+      "Neutron on sama mis footon.",
+      "Neutroneid leidub vaid magnetites."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        5,
-        6,
-        7
+        4
       ]
     },
     "difficulty": "2",
@@ -3876,28 +3881,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Tuvasta kehtivad vaited. Fookus: Photon.",
+    "question": "Teadus: Millised väited footoni kohta peavad paika?",
     "options": [
-      "Water boils at 100C.",
-      "Sun orbits the Earth.",
-      "Plants use photosynthesis.",
-      "Gravity attracts mass.",
-      "Water is CO2.",
-      "Electrons have negative charge.",
-      "Oxygen cannot support fire.",
-      "Water is H2O.",
-      "DNA carries genetic information.",
-      "Mars is called the Red Planet."
+      "Footon on valguse osake.",
+      "Footon liigub vaakumis valguskiirusel.",
+      "Päikesepaneel neelab footoneid.",
+      "Footonil puudub elektrilaeng.",
+      "Röntgenikiired koosnevad footonitest.",
+      "Footonil on prootoniga sama puhkemass.",
+      "Footon on hapniku aatom.",
+      "Ainult laserid toodavad footoneid.",
+      "Footon liigub vaakumis helist aeglasemalt.",
+      "Punased verelibled talletavad footoneid."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        5,
-        7,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -3909,23 +3912,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Margi selle teema toesed vaited. Fookus: Gravity.",
+    "question": "Teadus: Millised väited gravitatsiooni kohta peavad paika?",
     "options": [
-      "Sound travels slower than light.",
-      "Water boils at 10C.",
-      "Water is CO2.",
-      "Water boils at 100C.",
-      "Mars is the hottest planet.",
-      "Plants grow without sunlight.",
-      "Sun orbits the Earth.",
-      "Atoms have no protons.",
-      "Neurons are only in plants.",
-      "Sound travels faster than light."
+      "Gravitatsioon tõmbab masse kokku.",
+      "Maa gravitatsioon annab kehale kaalu.",
+      "Kuu aitab tekitada loodeid.",
+      "Gravitatsioon hoiab planeete orbiidil.",
+      "Gravitatsioon mõjub kaugele.",
+      "Gravitatsioon toimib vaid vee all.",
+      "Gravitatsioon tõukab kõiki kehi eemale.",
+      "Gravitatsioon lõpeb pilvede kohal.",
+      "Gravitatsioon eksisteerib vaid Maal.",
+      "Gravitatsioon vajab õhku."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3937,24 +3943,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Millised vaited on oiged? Fookus: Velocity.",
+    "question": "Teadus: Millised väited kiirusevektori kohta peavad paika?",
     "options": [
-      "Water boils at 100C.",
-      "Electrons are positively charged.",
-      "Mars is the hottest planet.",
-      "DNA stores photos.",
-      "Atoms have a nucleus.",
-      "Neurons are only in plants.",
-      "Plants grow without sunlight.",
-      "Oxygen cannot support fire.",
-      "Sound travels faster than light.",
-      "Electrons have negative charge."
+      "Kiirusvektor sisaldab suunda.",
+      "Suunamuutus muudab kiirusvektorit.",
+      "Kiirust võib mõõta m/s.",
+      "Keskmine kiirusvektor kasutab nihet.",
+      "Kiirusvektor võib olla negatiivne.",
+      "Kiirusvektoril puudub suund.",
+      "Ainult rakettidel on kiirus.",
+      "Kiirust mõõdetakse kilogrammides.",
+      "Kurvis kiirusvektor ei muutu.",
+      "Kiirus ja kiirusvektor on alati samad."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        9
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3966,25 +3974,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Leia sobivad vaited. Fookus: Acceleration.",
+    "question": "Teadus: Millised väited kiirenduse kohta peavad paika?",
     "options": [
-      "Water is CO2.",
-      "Oxygen supports combustion.",
-      "Mars is the hottest planet.",
-      "Sound travels slower than light.",
-      "Gravity repels all mass.",
-      "Atoms have a nucleus.",
-      "Water boils at 10C.",
-      "Neurons are only in plants.",
-      "Plants use photosynthesis.",
-      "Sound travels faster than light."
+      "Kiirendus on kiiruse muut.",
+      "Pidurdamine võib tekitada kiirendust.",
+      "Kurvi läbimine muudab kiirendust.",
+      "Vabal langemisel on kiirendus.",
+      "Kiirendus võib olla negatiivne.",
+      "Kiirendus võrdub läbitud teega.",
+      "Ainult kiired kehad kiirenevad.",
+      "Paigal keha ei saa kiireneda.",
+      "Kiirendust mõõdetakse vattides.",
+      "Kiirendus ei sõltu suunast."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
+        2,
         3,
-        5,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -3996,26 +4005,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "et",
-    "question": "Teadus: Vali koik toed vaited. Fookus: Momentum.",
+    "question": "Teadus: Millised väited impulsi kohta peavad paika?",
     "options": [
-      "Sound travels faster than light.",
-      "Water is H2O.",
-      "Neurons transmit signals.",
-      "Atoms have no protons.",
-      "Water boils at 100C.",
-      "Gravity attracts mass.",
-      "Neurons are only in plants.",
-      "Mars is the hottest planet.",
-      "Gravity repels all mass.",
-      "Electrons have negative charge."
+      "Impulss sõltub massist ja kiirusest.",
+      "Liikuval veokil on impulss.",
+      "Impulss on vektoriaalne suurus.",
+      "Impulssi muudab impulssjõud.",
+      "Suletud süsteemis impulss säilib.",
+      "Impulssi mõõdetakse kraadides.",
+      "Ainult valgusel on impulss.",
+      "Impulss eksisteerib vaid vedelikes.",
+      "Impulss võrdub jõu ja pindalaga.",
+      "Paigal kehal on alati positiivne impulss."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        4,
-        5,
-        9
+        3,
+        4
       ]
     },
     "difficulty": "2",

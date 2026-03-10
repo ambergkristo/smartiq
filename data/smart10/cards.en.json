@@ -3726,23 +3726,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Mark statements that are true for this topic. Focus area: Atom.",
+    "question": "Science: Which statements about atoms are true?",
     "options": [
-      "Oxygen cannot support fire.",
-      "Plants grow without sunlight.",
-      "Atoms have no protons.",
-      "Electrons are positively charged.",
-      "Sound travels faster than light.",
-      "Gravity attracts mass.",
-      "Water is CO2.",
-      "Neurons are only in plants.",
-      "DNA carries genetic information.",
-      "Water boils at 10C."
+      "Atoms contain protons.",
+      "Electrons move around the nucleus.",
+      "Neutrons carry no electric charge.",
+      "Atoms make up chemical elements.",
+      "Most atomic mass sits in the nucleus.",
+      "Atoms are visible without tools.",
+      "Every atom has the same mass.",
+      "Galileo discovered all atoms.",
+      "Electrons are larger than atoms.",
+      "Atoms exist only inside stars."
     ],
     "correct": {
       "correctIndexes": [
-        5,
-        8
+        0,
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3754,24 +3757,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Which claims are accurate? Focus area: Molecule.",
+    "question": "Science: Which statements about molecules are true?",
     "options": [
-      "Electrons are positively charged.",
-      "DNA stores photos.",
-      "Sound travels faster than light.",
-      "Mars is called the Red Planet.",
-      "Water boils at 100C.",
-      "Atoms have no protons.",
-      "Sun orbits the Earth.",
-      "DNA carries genetic information.",
-      "Water boils at 10C.",
-      "Gravity repels all mass."
+      "Molecules contain two or more atoms.",
+      "Water is a molecule.",
+      "Oxygen gas forms O2 molecules.",
+      "Chemical bonds hold molecules together.",
+      "Carbon dioxide is a molecule.",
+      "A molecule must contain a metal.",
+      "All molecules are gases.",
+      "Molecules cannot change state.",
+      "Every molecule is one atom.",
+      "Molecules are larger than planets."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
+        2,
         3,
-        4,
-        7
+        4
       ]
     },
     "difficulty": "2",
@@ -3783,25 +3788,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Find the statements that fit. Focus area: Electron.",
+    "question": "Science: Which statements about electrons are true?",
     "options": [
-      "Water boils at 10C.",
-      "Sun orbits the Earth.",
-      "Water boils at 100C.",
-      "Neurons transmit signals.",
-      "Oxygen cannot support fire.",
-      "Sound travels slower than light.",
-      "Mars is the hottest planet.",
-      "Oxygen supports combustion.",
-      "Electrons are positively charged.",
-      "Water is CO2."
+      "Electrons carry negative charge.",
+      "Electrons are part of atoms.",
+      "Electric current involves electrons.",
+      "Electrons are far lighter than protons.",
+      "Electron microscopes use electron beams.",
+      "Electrons have positive charge.",
+      "Electrons stay inside the nucleus.",
+      "Only planets contain electrons.",
+      "Electrons are visible to naked eyes.",
+      "Electrons are the same as photons."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        5,
-        7
+        4
       ]
     },
     "difficulty": "2",
@@ -3813,26 +3819,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Select all true statements. Focus area: Proton.",
+    "question": "Science: Which statements about protons are true?",
     "options": [
-      "Mars is the hottest planet.",
-      "Sound travels faster than light.",
-      "Mars is called the Red Planet.",
-      "Earth orbits the Sun.",
-      "Water boils at 10C.",
-      "Electrons are positively charged.",
-      "DNA carries genetic information.",
-      "Water boils at 100C.",
-      "Atoms have no protons.",
-      "Atoms have a nucleus."
+      "Protons carry positive charge.",
+      "Protons sit in the atomic nucleus.",
+      "Hydrogen nuclei contain one proton.",
+      "Atomic number counts protons.",
+      "Protons are heavier than electrons.",
+      "Protons are negatively charged.",
+      "Every nucleus contains two protons.",
+      "Protons make up sound waves.",
+      "Chemical reactions destroy protons.",
+      "Protons are found only in stars."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        1,
         2,
         3,
-        6,
-        7,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -3844,27 +3850,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Which lines are correct? Focus area: Neutron.",
+    "question": "Science: Which statements about neutrons are true?",
     "options": [
-      "Mars is called the Red Planet.",
-      "Neurons are only in plants.",
-      "Atoms have a nucleus.",
-      "DNA carries genetic information.",
-      "Gravity repels all mass.",
-      "Plants use photosynthesis.",
-      "Neurons transmit signals.",
-      "Gravity attracts mass.",
-      "Mars is the hottest planet.",
-      "DNA stores photos."
+      "Neutrons carry no electric charge.",
+      "Neutrons sit in many atomic nuclei.",
+      "Isotopes differ by neutron count.",
+      "Neutrons help stabilize nuclei.",
+      "Free neutrons can decay over time.",
+      "Neutrons are positively charged.",
+      "Hydrogen-1 has two neutrons.",
+      "Neutrons orbit Earth like moons.",
+      "Neutrons are the same as photons.",
+      "Neutrons are found only in magnets."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        5,
-        6,
-        7
+        4
       ]
     },
     "difficulty": "2",
@@ -3876,28 +3881,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Identify valid statements. Focus area: Photon.",
+    "question": "Science: Which statements about photons are true?",
     "options": [
-      "Water boils at 100C.",
-      "Sun orbits the Earth.",
-      "Plants use photosynthesis.",
-      "Gravity attracts mass.",
-      "Water is CO2.",
-      "Electrons have negative charge.",
-      "Oxygen cannot support fire.",
-      "Water is H2O.",
-      "DNA carries genetic information.",
-      "Mars is called the Red Planet."
+      "Photons are particles of light.",
+      "Photons move at light speed in vacuum.",
+      "Solar panels absorb photons.",
+      "Photons have no electric charge.",
+      "X-rays are made of photons.",
+      "Photons have rest mass like protons.",
+      "Photons are atoms of oxygen.",
+      "Only lasers produce photons.",
+      "Photons move slower than sound in vacuum.",
+      "Red blood cells store photons."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         2,
         3,
-        5,
-        7,
-        8,
-        9
+        4
       ]
     },
     "difficulty": "2",
@@ -3909,23 +3912,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Mark statements that are true for this topic. Focus area: Gravity.",
+    "question": "Science: Which statements about gravity are true?",
     "options": [
-      "Sound travels slower than light.",
-      "Water boils at 10C.",
-      "Water is CO2.",
-      "Water boils at 100C.",
-      "Mars is the hottest planet.",
-      "Plants grow without sunlight.",
-      "Sun orbits the Earth.",
-      "Atoms have no protons.",
-      "Neurons are only in plants.",
-      "Sound travels faster than light."
+      "Gravity pulls masses together.",
+      "Earth's gravity gives objects weight.",
+      "The Moon helps cause tides.",
+      "Gravity keeps planets in orbit.",
+      "Gravity acts over long distances.",
+      "Gravity works only underwater.",
+      "Gravity repels every falling object.",
+      "Gravity stops beyond the clouds.",
+      "Gravity exists only on Earth.",
+      "Gravity needs air to work."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3937,24 +3943,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Which claims are accurate? Focus area: Velocity.",
+    "question": "Science: Which statements about velocity are true?",
     "options": [
-      "Water boils at 100C.",
-      "Electrons are positively charged.",
-      "Mars is the hottest planet.",
-      "DNA stores photos.",
-      "Atoms have a nucleus.",
-      "Neurons are only in plants.",
-      "Plants grow without sunlight.",
-      "Oxygen cannot support fire.",
-      "Sound travels faster than light.",
-      "Electrons have negative charge."
+      "Velocity includes speed and direction.",
+      "A turn changes velocity.",
+      "Velocity can be measured in m/s.",
+      "Average velocity uses displacement.",
+      "Velocity can be negative in 1D motion.",
+      "Velocity has no direction.",
+      "Only rockets have velocity.",
+      "Velocity is measured in kilograms.",
+      "Velocity never changes in a turn.",
+      "Speed and velocity are always identical."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        9
+        1,
+        2,
+        3,
+        4
       ]
     },
     "difficulty": "2",
@@ -3966,25 +3974,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Find the statements that fit. Focus area: Acceleration.",
+    "question": "Science: Which statements about acceleration are true?",
     "options": [
-      "Water is CO2.",
-      "Oxygen supports combustion.",
-      "Mars is the hottest planet.",
-      "Sound travels slower than light.",
-      "Gravity repels all mass.",
-      "Atoms have a nucleus.",
-      "Water boils at 10C.",
-      "Neurons are only in plants.",
-      "Plants use photosynthesis.",
-      "Sound travels faster than light."
+      "Acceleration is change in velocity.",
+      "Braking can create acceleration.",
+      "Turning changes acceleration.",
+      "Free fall involves acceleration.",
+      "Acceleration can be negative.",
+      "Acceleration equals distance traveled.",
+      "Only fast objects accelerate.",
+      "Resting objects can never accelerate.",
+      "Acceleration is measured in watts.",
+      "Acceleration ignores direction."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
+        2,
         3,
-        5,
-        8
+        4
       ]
     },
     "difficulty": "2",
@@ -3996,26 +4005,26 @@
     "topic": "Science",
     "category": "TRUE_FALSE",
     "language": "en",
-    "question": "Science: Select all true statements. Focus area: Momentum.",
+    "question": "Science: Which statements about momentum are true?",
     "options": [
-      "Sound travels faster than light.",
-      "Water is H2O.",
-      "Neurons transmit signals.",
-      "Atoms have no protons.",
-      "Water boils at 100C.",
-      "Gravity attracts mass.",
-      "Neurons are only in plants.",
-      "Mars is the hottest planet.",
-      "Gravity repels all mass.",
-      "Electrons have negative charge."
+      "Momentum depends on mass and velocity.",
+      "A moving truck has momentum.",
+      "Momentum is a vector quantity.",
+      "Impulse changes momentum.",
+      "Closed systems conserve momentum.",
+      "Momentum is measured in degrees.",
+      "Only light has momentum.",
+      "Momentum exists only in liquids.",
+      "Momentum equals force times area.",
+      "A resting object has positive momentum."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        4,
-        5,
-        9
+        3,
+        4
       ]
     },
     "difficulty": "2",
