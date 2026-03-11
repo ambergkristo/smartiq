@@ -779,18 +779,16 @@ button:disabled {
   padding: 16px;
 }
 
-.room-lobby-overview {
+.room-lobby-main {
   min-height: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.82fr);
+  grid-template-rows: auto minmax(0, 1fr);
   gap: 14px;
 }
 
-.room-lobby-side-stack {
+.room-lobby-overview {
   min-height: 0;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  gap: 14px;
+  display: block;
 }
 
 .room-entry-grid {
@@ -851,20 +849,16 @@ button:disabled {
 }
 
 .room-code-hero {
-  grid-template-rows: auto minmax(0, auto) auto auto;
-  gap: 12px;
-  padding: 22px;
+  gap: 16px;
+  padding: 24px;
   background:
-    radial-gradient(circle at top left, rgba(0, 255, 123, 0.22), transparent 30%),
-    radial-gradient(circle at 100% 100%, rgba(0, 255, 123, 0.12), transparent 28%),
+    radial-gradient(circle at top left, rgba(0, 255, 123, 0.2), transparent 32%),
+    radial-gradient(circle at 100% 100%, rgba(0, 255, 123, 0.1), transparent 30%),
     rgba(17, 18, 24, 0.96);
 }
 
 .room-code-hero-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  align-items: start;
+  display: block;
 }
 
 .room-code-hero-head .section-title,
@@ -877,26 +871,20 @@ button:disabled {
 
 .room-code-hero-code {
   font-family: "Rajdhani", "Inter", sans-serif;
-  font-size: clamp(4.4rem, 7vw, 6.4rem);
+  font-size: clamp(4.8rem, 8vw, 7rem);
   line-height: 0.9;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--text);
   text-shadow: 0 0 26px rgba(0, 255, 123, 0.18);
 }
 
 .room-code-hero-copy {
-  max-width: 34ch;
+  max-width: 36ch;
   color: var(--muted);
 }
 
-.room-code-hero-metrics {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.room-code-hero-metrics article,
+.room-code-hero-status,
 .lobby-status-metric {
   display: grid;
   gap: 4px;
@@ -904,9 +892,11 @@ button:disabled {
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.04);
+  width: fit-content;
+  min-width: 160px;
 }
 
-.room-code-hero-metrics span,
+.room-code-hero-status span,
 .lobby-status-metric span,
 .room-join-link-card span {
   color: var(--muted);
@@ -915,9 +905,9 @@ button:disabled {
   text-transform: uppercase;
 }
 
-.room-code-hero-metrics strong {
+.room-code-hero-status strong {
   font-family: "Rajdhani", "Inter", sans-serif;
-  font-size: 1.55rem;
+  font-size: 1.7rem;
   letter-spacing: 0.06em;
 }
 
@@ -1308,7 +1298,7 @@ button:disabled {
   padding: 0;
   min-height: 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 10px;
 }
 
@@ -1388,6 +1378,25 @@ button:disabled {
   width: auto;
   min-height: 34px;
   padding: 6px 10px;
+}
+
+.room-lobby-support-stack {
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, auto) minmax(0, auto) auto;
+  gap: 14px;
+}
+
+.room-lobby-support-actions {
+  padding: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.lobby-back-action {
+  width: 100%;
+  min-height: 46px;
 }
 
 .lobby-status-summary {
@@ -2615,14 +2624,6 @@ button:disabled {
   .player-waiting-room-meta,
   .player-waiting-room-actions {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .room-panel--lobby {
-    overflow: auto;
-  }
-
-  .room-lobby-side-stack {
-    grid-template-rows: repeat(2, minmax(180px, auto));
   }
 
   main[data-phase='game'] {

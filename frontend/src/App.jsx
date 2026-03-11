@@ -40,7 +40,7 @@ import PracticePlaceholder from './components/home/PracticePlaceholder';
 import GameplayActionBar from './components/gameplay/GameplayActionBar';
 import ScoreBoard from './components/gameplay/ScoreBoard';
 import { getCanAnswer, getCardCategory, getPhaseLabel } from './components/gameplay/gameplayState';
-import LobbyStatusSummary from './components/room/LobbyStatusSummary';
+import LobbySupportPanel from './components/room/LobbySupportPanel';
 import AppHeader from './components/shell/AppHeader';
 import AppShell from './components/shell/AppShell';
 import MainStage from './components/shell/MainStage';
@@ -49,6 +49,7 @@ import SidePanel from './components/shell/SidePanel';
 import { useAudioFeedback } from './audio/useAudioFeedback';
 import { MAX_PLAYERS_PER_ROOM } from './constants/runtime';
 import {
+  buildPlayerJoinUrl,
   getRoomPlayerNames,
   getSelectedRoomPlayerNames,
   normalizePlayerName,
@@ -2190,11 +2191,6 @@ function GameApp() {
     setRoomError('');
   }
 
-  function handleSelectAllRoomPlayers() {
-    setSelectedRoomPlayerNames(getRoomPlayerNames(roomSession));
-    setRoomError('');
-  }
-
   function handleToggleRoomPlayer(playerName) {
     const normalized = normalizePlayerName(String(playerName || ''));
     if (!normalized) {
@@ -2205,20 +2201,6 @@ function GameApp() {
         ? prev.filter((entry) => entry !== normalized)
         : [...prev, normalized]
     ));
-    setRoomError('');
-  }
-
-  function handleUseRoomPlayers() {
-    const roomPlayerNames = getSelectedRoomPlayerNames(roomSession, selectedRoomPlayerNames);
-    if (roomPlayerNames.length === 0) {
-      setRoomError(STRINGS.roomSelectedRosterEmpty);
-      return;
-    }
-    setConfig((prev) => ({
-      ...prev,
-      playersText: roomPlayerNames.join(', ')
-    }));
-    setRoomMessage(`${STRINGS.roomSelectedRosterReadyPrefix} ${roomPlayerNames.join(', ')}`);
     setRoomError('');
   }
 
@@ -2319,6 +2301,9 @@ function GameApp() {
     setActiveHostedSession(session || null);
     setWorkspaceError('');
     const nextConfig = resolveRecentHostedSessionConfig(session, config, roomSession, reviewedHostedSession);
+    if (roomSession?.roomCode) {
+      handleClearRoom();
+    }
     setConfig((prev) => ({
       ...prev,
       topic: nextConfig.topic,
@@ -2642,9 +2627,7 @@ function GameApp() {
       onJoinRoom={handleJoinRoom}
       onResumeRoom={handleResumeRoom}
       onClearRoom={handleClearRoom}
-      onSelectAllRoomPlayers={handleSelectAllRoomPlayers}
       onToggleRoomPlayer={handleToggleRoomPlayer}
-      onUseRoomPlayers={handleUseRoomPlayers}
       onStartRoomSession={handleStartRoomSession}
       onRemoveRoomPlayer={handleRemoveRoomPlayer}
       onTrimRoomToSelectedPlayers={handleTrimRoomToSelectedPlayers}
@@ -2718,8 +2701,8 @@ function GameApp() {
   ) : hostRoomSession ? (
     <PrimaryActionBar>
       <div className="app-shell-action-copy">
-        <span>Launch roster</span>
-        <strong>{`${selectedRoomPlayers.length} of ${roomPlayerCount} ready`}</strong>
+        <span>Lobby status</span>
+        <strong>{`${roomPlayerCount} joined${selectedRoomPlayers.length !== roomPlayerCount ? ` • ${selectedRoomPlayers.length} selected` : ''}`}</strong>
       </div>
       <button
         type="button"
@@ -2738,121 +2721,124 @@ function GameApp() {
       </div>
     </PrimaryActionBar>
   );
-  const lobbyStatusPanel = hostRoomSession ? (
-    <LobbyStatusSummary
+  const hostLobbySupportPanel = hostRoomSession ? (
+    <LobbySupportPanel
       roomCode={hostRoomSession.roomCode}
-      topicLabel={config.topic || 'Any Topic'}
-      languageLabel={String(config.lang || 'en').toUpperCase()}
-      connectedCount={roomPlayerCount}
-      readyCount={selectedRoomPlayers.length}
-      hostName={hostRoomSession.displayName || hostRoomSession.playerId || 'Host'}
-      hostLaunchBlocked={hostLaunchBlocked}
-      hostLaunchMessage={hostLaunchMessage}
-      pending={roomPending}
-      onResumeRoom={handleResumeRoom}
-      onClearRoom={handleClearRoom}
+      joinLink={buildPlayerJoinUrl(hostRoomSession.roomCode)}
+      onBackHome={() => {
+        handleClearRoom();
+        handleNavigateEntry(ENTRY_ROUTE.HOME);
+      }}
     />
   ) : null;
-  const setupSideStack = (
+  const hostRuntimePanels = !runtimeSnapshot || roomSession?.role === 'player' ? null : (
+    <>
+      <section className="setup-panel board-surface host-console-status-card" data-testid="host-console-status-card">
+        <div className="host-console-status-head">
+          <div>
+            <p className="section-title">Console status</p>
+            <h2>{appTitle}</h2>
+          </div>
+          <div className="host-plan-chip">
+            <span>{planCode || 'trial'}</span>
+            <strong>{formatSubscriptionStatus(planStatus)}</strong>
+          </div>
+        </div>
+        <div className="host-console-status-actions">
+          {typeof handleLogout === 'function' ? (
+            <button type="button" className="secondary-action" onClick={handleLogout}>
+              {STRINGS.signOutSubmit}
+            </button>
+          ) : null}
+          {canUpgrade ? (
+            <button type="button" onClick={handleUpgradeCheckout} disabled={checkoutPending}>
+              {checkoutPending ? STRINGS.upgradeSubmitting : hostLaunchBlocked ? STRINGS.upgradeRecoverySubmit : STRINGS.upgradeSubmit}
+            </button>
+          ) : null}
+        </div>
+        {checkoutMessage ? <p className="field-hint" data-testid="upgrade-message">{checkoutMessage}</p> : null}
+        {checkoutUrl ? (
+          <a className="inline-link" data-testid="checkout-link" href={checkoutUrl}>
+            {STRINGS.upgradeContinueSubmit}
+          </a>
+        ) : null}
+      </section>
+      <HostDashboard
+        strings={STRINGS}
+        appTitle={appTitle}
+        planCode={planCode}
+        planStatus={planStatus}
+        billingCycle={runtimeSnapshot?.subscription?.billingCycle}
+        maxHostedPlayers={maxHostedPlayers}
+        planLimit={planLimit}
+        analyticsHistoryEnabled={analyticsHistoryEnabled}
+        usageRow={usageRow}
+        workspacePending={workspacePending}
+        workspaceError={workspaceError}
+        workspaceMessage={workspaceMessage}
+        hostLaunchBlocked={hostLaunchBlocked}
+        hostLaunchMessage={hostLaunchMessage}
+        hostWorkspaceAnalytics={hostWorkspaceAnalytics}
+        customBrandingEnabled={customBrandingEnabled}
+        brandingDraft={brandingDraft}
+        brandingPending={brandingPending}
+        brandingMessage={brandingMessage}
+        brandingError={brandingError}
+        sessionReviewNotes={sessionReviewNotes}
+        sessionTemplatesEnabled={sessionTemplatesEnabled}
+        sessionTemplateDraft={sessionTemplateDraft}
+        sessionTemplatePending={sessionTemplatePending}
+        sessionTemplateMessage={sessionTemplateMessage}
+        sessionTemplateError={sessionTemplateError}
+        sessionTemplates={sessionTemplates}
+        visibleHostedSessions={visibleHostedSessions}
+        auditEvents={workspaceInsights?.auditEvents}
+        activeHostedSession={activeHostedSession}
+        hostedSessionFilter={hostedSessionFilter}
+        reviewedHostedSession={reviewedHostedSession}
+        reviewedHostedSessionNote={reviewedHostedSessionNote}
+        reviewedHostedSessionNoteMessage={reviewedHostedSessionNoteMessage}
+        canUpgrade={canUpgrade}
+        canSaveTemplate={setupMergedPlayerCount > 0}
+        upgradePending={checkoutPending}
+        canManageBrandingRole={canManageBrandingRole}
+        onUpgrade={handleUpgradeCheckout}
+        onBrandingDraftChange={handleBrandingDraftChange}
+        onSaveBranding={handleSaveBranding}
+        onSessionTemplateDraftChange={handleSessionTemplateDraftChange}
+        onSaveTemplate={handleSaveCurrentSetupTemplate}
+        onApplySessionTemplate={handleApplySessionTemplate}
+        onDeleteSessionTemplate={handleDeleteSessionTemplate}
+        onHostedSessionFilterChange={setHostedSessionFilter}
+        onUseRecentHostedSession={handleUseRecentHostedSession}
+        onReviewRecentHostedSession={handleReviewRecentHostedSession}
+        onResumeRecentHostedSession={handleResumeRecentHostedSession}
+        onLaunchRecentHostedSession={handleLaunchRecentHostedSession}
+        onSaveRecentHostedSessionAsTemplate={handleSaveRecentHostedSessionAsTemplate}
+        onReviewedHostedSessionNoteChange={handleReviewedHostedSessionNoteChange}
+        onSaveReviewedHostedSessionNote={handleSaveReviewedHostedSessionNote}
+        onClearReviewedHostedSessionNote={handleClearReviewedHostedSessionNote}
+        canLaunchRecentHostedSessions={canLaunchRecentHostedSessions}
+        formatSubscriptionStatus={formatSubscriptionStatus}
+        formatAuditAction={formatAuditAction}
+        resolveSessionReviewNote={resolveSessionReviewNote}
+        formatSessionReviewNotePreview={formatSessionReviewNotePreview}
+      />
+    </>
+  );
+  const hostWorkspaceSideStack = (
     <div className="host-shell-stack">
-      {hostRoomSession ? lobbyStatusPanel : !roomSession ? sharedRoomPanel : null}
-      {!runtimeSnapshot ? null : roomSession?.role === 'player' ? null : (
-        <>
-          <section className="setup-panel board-surface host-console-status-card" data-testid="host-console-status-card">
-            <div className="host-console-status-head">
-              <div>
-                <p className="section-title">Console status</p>
-                <h2>{appTitle}</h2>
-              </div>
-              <div className="host-plan-chip">
-                <span>{planCode || 'trial'}</span>
-                <strong>{formatSubscriptionStatus(planStatus)}</strong>
-              </div>
-            </div>
-            <div className="host-console-status-actions">
-              {typeof handleLogout === 'function' ? (
-                <button type="button" className="secondary-action" onClick={handleLogout}>
-                  {STRINGS.signOutSubmit}
-                </button>
-              ) : null}
-              {canUpgrade ? (
-                <button type="button" onClick={handleUpgradeCheckout} disabled={checkoutPending}>
-                  {checkoutPending ? STRINGS.upgradeSubmitting : hostLaunchBlocked ? STRINGS.upgradeRecoverySubmit : STRINGS.upgradeSubmit}
-                </button>
-              ) : null}
-            </div>
-            {checkoutMessage ? <p className="field-hint" data-testid="upgrade-message">{checkoutMessage}</p> : null}
-            {checkoutUrl ? (
-              <a className="inline-link" data-testid="checkout-link" href={checkoutUrl}>
-                {STRINGS.upgradeContinueSubmit}
-              </a>
-            ) : null}
-          </section>
-          <HostDashboard
-            strings={STRINGS}
-            appTitle={appTitle}
-            planCode={planCode}
-            planStatus={planStatus}
-            billingCycle={runtimeSnapshot?.subscription?.billingCycle}
-            maxHostedPlayers={maxHostedPlayers}
-            planLimit={planLimit}
-            analyticsHistoryEnabled={analyticsHistoryEnabled}
-            usageRow={usageRow}
-            workspacePending={workspacePending}
-            workspaceError={workspaceError}
-            workspaceMessage={workspaceMessage}
-            hostLaunchBlocked={hostLaunchBlocked}
-            hostLaunchMessage={hostLaunchMessage}
-            hostWorkspaceAnalytics={hostWorkspaceAnalytics}
-            customBrandingEnabled={customBrandingEnabled}
-            brandingDraft={brandingDraft}
-            brandingPending={brandingPending}
-            brandingMessage={brandingMessage}
-            brandingError={brandingError}
-            sessionReviewNotes={sessionReviewNotes}
-            sessionTemplatesEnabled={sessionTemplatesEnabled}
-            sessionTemplateDraft={sessionTemplateDraft}
-            sessionTemplatePending={sessionTemplatePending}
-            sessionTemplateMessage={sessionTemplateMessage}
-            sessionTemplateError={sessionTemplateError}
-            sessionTemplates={sessionTemplates}
-            visibleHostedSessions={visibleHostedSessions}
-            auditEvents={workspaceInsights?.auditEvents}
-            activeHostedSession={activeHostedSession}
-            hostedSessionFilter={hostedSessionFilter}
-            reviewedHostedSession={reviewedHostedSession}
-            reviewedHostedSessionNote={reviewedHostedSessionNote}
-            reviewedHostedSessionNoteMessage={reviewedHostedSessionNoteMessage}
-            canUpgrade={canUpgrade}
-            canSaveTemplate={setupMergedPlayerCount > 0}
-            upgradePending={checkoutPending}
-            canManageBrandingRole={canManageBrandingRole}
-            onUpgrade={handleUpgradeCheckout}
-            onBrandingDraftChange={handleBrandingDraftChange}
-            onSaveBranding={handleSaveBranding}
-            onSessionTemplateDraftChange={handleSessionTemplateDraftChange}
-            onSaveTemplate={handleSaveCurrentSetupTemplate}
-            onApplySessionTemplate={handleApplySessionTemplate}
-            onDeleteSessionTemplate={handleDeleteSessionTemplate}
-            onHostedSessionFilterChange={setHostedSessionFilter}
-            onUseRecentHostedSession={handleUseRecentHostedSession}
-            onReviewRecentHostedSession={handleReviewRecentHostedSession}
-            onResumeRecentHostedSession={handleResumeRecentHostedSession}
-            onLaunchRecentHostedSession={handleLaunchRecentHostedSession}
-            onSaveRecentHostedSessionAsTemplate={handleSaveRecentHostedSessionAsTemplate}
-            onReviewedHostedSessionNoteChange={handleReviewedHostedSessionNoteChange}
-            onSaveReviewedHostedSessionNote={handleSaveReviewedHostedSessionNote}
-            onClearReviewedHostedSessionNote={handleClearReviewedHostedSessionNote}
-            canLaunchRecentHostedSessions={canLaunchRecentHostedSessions}
-            formatSubscriptionStatus={formatSubscriptionStatus}
-            formatAuditAction={formatAuditAction}
-            resolveSessionReviewNote={resolveSessionReviewNote}
-            formatSessionReviewNotePreview={formatSessionReviewNotePreview}
-          />
-        </>
-      )}
+      {!roomSession ? sharedRoomPanel : null}
+      {hostRuntimePanels}
     </div>
   );
+  const hostLobbySideStack = hostRoomSession ? (
+    <div className="host-shell-stack">
+      {hostLobbySupportPanel}
+      {hostRuntimePanels}
+    </div>
+  ) : null;
+  const setupSideStack = hostRoomSession ? hostLobbySideStack : hostWorkspaceSideStack;
   const gameplaySidePanel = (
     <SidePanel>
       <ScoreBoard

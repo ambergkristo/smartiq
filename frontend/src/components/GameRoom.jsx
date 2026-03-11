@@ -1,18 +1,15 @@
 import {
-  buildPlayerJoinUrl,
   getRoomPlayerNames,
   getSelectedRoomPlayerNames,
   normalizePlayerName,
   normalizeRoomCodeInput
 } from '../roomRuntime';
-import JoinInfoBlock from './room/JoinInfoBlock';
 import LobbyPlayerPanel from './room/LobbyPlayerPanel';
 import JoinButton from './player/JoinButton';
 import JoinStatusPanel from './player/JoinStatusPanel';
 import PlayerNameInput from './player/PlayerNameInput';
 import RoomCodeInput from './player/RoomCodeInput';
 import WaitingRoomView from './player/WaitingRoomView';
-import QrPlaceholder from './room/QrPlaceholder';
 import RoomCodeHero from './room/RoomCodeHero';
 
 export default function GameRoom({
@@ -29,9 +26,7 @@ export default function GameRoom({
   onJoinRoom,
   onResumeRoom,
   onClearRoom,
-  onSelectAllRoomPlayers,
   onToggleRoomPlayer,
-  onUseRoomPlayers,
   onStartRoomSession,
   onRemoveRoomPlayer,
   onTrimRoomToSelectedPlayers
@@ -54,7 +49,6 @@ export default function GameRoom({
       '--player-lobby-accent-2': roomBranding?.secondaryColor || roomBranding?.primaryColor || undefined
     }
     : undefined;
-  const playerJoinLink = roomSession?.roomCode ? buildPlayerJoinUrl(roomSession.roomCode) : '';
   const hasLobbySession = Boolean(roomSession) && !isPlayerLobby;
   const canUseRoomPlayers = roomSession?.role === 'host' && roomPlayerNames.length > 0;
 
@@ -86,18 +80,12 @@ export default function GameRoom({
           style={playerLobbyStyle}
         />
       ) : hasLobbySession ? (
-        <>
+        <div className="room-lobby-main">
           <div className="room-lobby-overview">
             <RoomCodeHero
               roomCode={roomSession.roomCode}
-              connectedCount={roomPlayers.length}
-              readyCount={selectedPlayers.length}
-              hostLabel={roomSession.displayName || roomSession.playerId}
+              joinedCount={roomPlayers.length}
             />
-            <div className="room-lobby-side-stack">
-              <JoinInfoBlock roomCode={roomSession.roomCode} joinLink={playerJoinLink} />
-              <QrPlaceholder roomCode={roomSession.roomCode} />
-            </div>
           </div>
           <div data-testid="room-session-card">
             <LobbyPlayerPanel
@@ -107,14 +95,12 @@ export default function GameRoom({
               pending={pending}
               selectedPlayers={selectedPlayers}
               removableSelectedGap={removableSelectedGap}
-              onSelectAllRoomPlayers={onSelectAllRoomPlayers}
-              onUseRoomPlayers={onUseRoomPlayers}
               onTrimRoomToSelectedPlayers={onTrimRoomToSelectedPlayers}
               onToggleRoomPlayer={onToggleRoomPlayer}
               onRemoveRoomPlayer={onRemoveRoomPlayer}
             />
           </div>
-        </>
+        </div>
       ) : (
         <div className="room-entry-grid">
           <section className="room-entry-card">

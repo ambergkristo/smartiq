@@ -7,7 +7,7 @@ export default function QrPlaceholder({ roomCode }) {
         <span className="room-qr-placeholder-grid room-qr-placeholder-grid--overlay" />
       </div>
       <strong>{roomCode}</strong>
-      <p>Placeholder surface for QR handoff during demos and hosted runs.</p>
+      <p>Demo placeholder for a scan-to-join handoff.</p>
     </section>
   );
 }

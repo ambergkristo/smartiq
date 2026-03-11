@@ -7,34 +7,27 @@ export default function LobbyPlayerPanel({
   pending,
   selectedPlayers,
   removableSelectedGap,
-  onSelectAllRoomPlayers,
-  onUseRoomPlayers,
   onTrimRoomToSelectedPlayers,
   onToggleRoomPlayer,
   onRemoveRoomPlayer
 }) {
   const canUseRoomPlayers = roomSession?.role === 'host' && roomPlayers.length > 0;
+  const canTrimRoom = canUseRoomPlayers && selectedPlayers.length > 0 && removableSelectedGap > 0;
 
   return (
     <section className="lobby-player-panel board-surface" data-testid="lobby-player-panel">
       <div className="lobby-player-panel-head">
         <div>
           <p className="section-title">{strings.roomPlayersTitle}</p>
-          <h3>Connected roster</h3>
+          <h3>{roomPlayers.length > 0 ? 'Players in room' : 'Waiting for players'}</h3>
         </div>
-        {canUseRoomPlayers ? (
+        {canTrimRoom ? (
           <div className="lobby-player-panel-actions">
-            <button type="button" className="secondary-action" onClick={onSelectAllRoomPlayers} disabled={pending}>
-              {strings.roomSelectAllPlayersSubmit}
-            </button>
-            <button type="button" className="secondary-action" onClick={onUseRoomPlayers} disabled={pending || selectedPlayers.length === 0}>
-              {strings.roomUseSelectedPlayersSubmit}
-            </button>
             <button
               type="button"
               className="secondary-action"
               onClick={onTrimRoomToSelectedPlayers}
-              disabled={pending || selectedPlayers.length === 0 || removableSelectedGap === 0}
+              disabled={pending}
             >
               {strings.roomTrimSelectedPlayersSubmit}
             </button>
@@ -42,7 +35,8 @@ export default function LobbyPlayerPanel({
         ) : null}
       </div>
       <p className="field-hint room-selected-roster-hint" data-testid="room-selected-roster-hint">
-        {strings.roomSelectedRosterTitle}: {selectedPlayers.length > 0 ? selectedPlayers.join(', ') : strings.roomSelectedRosterEmpty}
+        Players joined: {roomPlayers.length}
+        {selectedPlayers.length > 0 ? ` • Start with: ${selectedPlayers.join(', ')}` : ` • ${strings.roomSelectedRosterEmpty}`}
       </p>
       {roomPlayers.length > 0 ? (
         <ul className="lobby-player-list">

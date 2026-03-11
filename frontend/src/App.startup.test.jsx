@@ -112,6 +112,12 @@ async function openStartSelection() {
   await waitFor(() => expect(screen.getByRole('radiogroup', { name: /topic options/i })).toBeInTheDocument());
 }
 
+async function openStartSetupWithRoomPanel() {
+  await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
+  fireEvent.click(screen.getByRole('button', { name: /start game/i }));
+  await waitFor(() => expect(screen.getByTestId('room-panel')).toBeInTheDocument());
+}
+
 describe('App startup resilience', () => {
   let consoleErrorSpy;
 
@@ -840,7 +846,6 @@ describe('App startup resilience', () => {
   });
 
   test('creates a shareable room and shows saved room session state', async () => {
-    window.location.hash = '#/start';
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
     rejoinRoomSession.mockResolvedValue({
       roomCode: 'QUIZ42',
@@ -857,7 +862,7 @@ describe('App startup resilience', () => {
 
     render(<App />);
 
-    await waitFor(() => expect(screen.getByTestId('room-panel')).toBeInTheDocument());
+    await openStartSetupWithRoomPanel();
     fireEvent.change(screen.getByLabelText(/room display name/i), { target: { value: 'Host One' } });
     fireEvent.click(screen.getByRole('button', { name: /create room/i }));
 
@@ -869,12 +874,10 @@ describe('App startup resilience', () => {
     await waitFor(() => expect(screen.getByTestId('room-code-hero')).toBeInTheDocument());
     expect(screen.getByTestId('join-info-block')).toBeInTheDocument();
     expect(screen.getByTestId('room-qr-placeholder')).toBeInTheDocument();
-    expect(screen.getByTestId('lobby-status-summary')).toBeInTheDocument();
     expect(screen.getByTestId('room-code-hero')).toHaveTextContent('QUIZ42');
-    expect(screen.getByText(/room ready: QUIZ42/i)).toBeInTheDocument();
+    expect(screen.getByTestId('lobby-player-panel')).toHaveTextContent(/players joined/i);
     expect(screen.getAllByText('Host One').length).toBeGreaterThan(0);
     fireEvent.click(screen.getAllByRole('checkbox', { name: /include in launch/i })[1]);
-    fireEvent.click(screen.getByRole('button', { name: /use selected players/i }));
     await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeEnabled());
     expect(screen.getByTestId('room-selected-roster-hint')).toHaveTextContent(/host one/i);
     expect(screen.getByTestId('room-selected-roster-hint')).not.toHaveTextContent(/alice/i);
@@ -882,7 +885,6 @@ describe('App startup resilience', () => {
   });
 
   test('starts live session from selected room roster only', async () => {
-    window.location.hash = '#/start';
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
     createServerGameSession.mockResolvedValue(makeServerSnapshot({
       gameId: 'game-room-start',
@@ -904,7 +906,7 @@ describe('App startup resilience', () => {
 
     render(<App />);
 
-    await waitFor(() => expect(screen.getByTestId('room-panel')).toBeInTheDocument());
+    await openStartSetupWithRoomPanel();
     fireEvent.change(screen.getByLabelText(/room display name/i), { target: { value: 'Host One' } });
     fireEvent.click(screen.getByRole('button', { name: /create room/i }));
 
@@ -924,8 +926,35 @@ describe('App startup resilience', () => {
     expect(screen.queryAllByText('Alice').length).toBe(0);
   });
 
+  test('host lobby back action returns to home screen', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    rejoinRoomSession.mockResolvedValue({
+      roomCode: 'QUIZ42',
+      playerId: 'p1',
+      authToken: 'rt_room_host_rotated',
+      roomState: {
+        roomCode: 'QUIZ42',
+        players: [
+          { playerId: 'p1', displayName: 'Host One' },
+          { playerId: 'p2', displayName: 'Alice' }
+        ]
+      }
+    });
+
+    render(<App />);
+
+    await openStartSetupWithRoomPanel();
+    fireEvent.change(screen.getByLabelText(/room display name/i), { target: { value: 'Host One' } });
+    fireEvent.click(screen.getByRole('button', { name: /create room/i }));
+
+    await waitFor(() => expect(screen.getByTestId('room-code-hero')).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /back to home/i }));
+
+    await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
+    expect(screen.queryByTestId('room-code-hero')).not.toBeInTheDocument();
+  });
+
   test('host can remove a room player before launch', async () => {
-    window.location.hash = '#/start';
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
     rejoinRoomSession.mockResolvedValue({
       roomCode: 'QUIZ42',
@@ -950,7 +979,7 @@ describe('App startup resilience', () => {
 
     render(<App />);
 
-    await waitFor(() => expect(screen.getByTestId('room-panel')).toBeInTheDocument());
+    await openStartSetupWithRoomPanel();
     fireEvent.change(screen.getByLabelText(/room display name/i), { target: { value: 'Host One' } });
     fireEvent.click(screen.getByRole('button', { name: /create room/i }));
 
@@ -969,7 +998,6 @@ describe('App startup resilience', () => {
   });
 
   test('host can trim room down to selected launch roster', async () => {
-    window.location.hash = '#/start';
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
     rejoinRoomSession.mockResolvedValue({
       roomCode: 'QUIZ42',
@@ -995,7 +1023,7 @@ describe('App startup resilience', () => {
 
     render(<App />);
 
-    await waitFor(() => expect(screen.getByTestId('room-panel')).toBeInTheDocument());
+    await openStartSetupWithRoomPanel();
     fireEvent.change(screen.getByLabelText(/room display name/i), { target: { value: 'Host One' } });
     fireEvent.click(screen.getByRole('button', { name: /create room/i }));
 
@@ -1015,7 +1043,6 @@ describe('App startup resilience', () => {
   });
 
   test('joins a room into a dedicated player lobby surface', async () => {
-    window.location.hash = '#/start';
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
     joinRoomSession.mockResolvedValue({
       roomCode: 'QUIZ42',
@@ -1042,7 +1069,7 @@ describe('App startup resilience', () => {
 
     render(<App />);
 
-    await waitFor(() => expect(screen.getByTestId('room-panel')).toBeInTheDocument());
+    await openStartSetupWithRoomPanel();
     fireEvent.change(screen.getByLabelText(/your display name/i), { target: { value: 'Alice' } });
     fireEvent.change(screen.getByLabelText(/room code/i), { target: { value: 'quiz42' } });
     fireEvent.click(screen.getByRole('button', { name: /join room/i }));
