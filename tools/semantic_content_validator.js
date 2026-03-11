@@ -86,6 +86,11 @@ const UNNATURAL_PHRASING_REGEXES = [
   /^\s*(ajalugu|sport|geograafia|kultuur|teadus|varia):\s*order\b/i
 ];
 
+const NON_FUNCTIONAL_CONTEXT_SUFFIX_REGEXES = [
+  /[?.!]\s*(?:theme|context(?: tag)?):\s*[^?.!]+[.]?$/i,
+  /[?.!]\s*(?:teema|kontekst):\s*[^?.!]+[.]?$/i
+];
+
 const BROKEN_ESTONIAN_REGEXES = [
   /\bvaited\b/i,
   /\boiged\b/i,
@@ -215,7 +220,8 @@ function hasTemplateScaffold(question) {
 
 function hasUnnaturalPhrasing(question) {
   const normalized = normalizeText(question);
-  return UNNATURAL_PHRASING_REGEXES.some((regex) => regex.test(normalized));
+  return UNNATURAL_PHRASING_REGEXES.some((regex) => regex.test(normalized))
+    || NON_FUNCTIONAL_CONTEXT_SUFFIX_REGEXES.some((regex) => regex.test(normalized));
 }
 
 function hasBrokenEstonian(text) {

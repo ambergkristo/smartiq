@@ -156,3 +156,25 @@ test('flags generic OPEN prompt scaffolds even with unique options', () => {
   assert.equal(result.summary.issueCounts.scaffoldCards, 2);
   assert.equal(result.summary.issueCounts.brokenGrammarCards, 1);
 });
+
+test('flags non-functional theme and context suffixes in EN and ET questions', () => {
+  const result = analyzeCards([
+    buildCard({
+      id: 'suffix-en',
+      topic: 'Sports',
+      category: 'NUMBER',
+      question: 'Sports: How many minutes are in one football half? Context tag: Triathlon.',
+      options: ['30', '35', '40', '45', '50', '55', '60', '65', '70', '75']
+    }),
+    buildCard({
+      id: 'suffix-et',
+      language: 'et',
+      topic: 'Sport',
+      category: 'NUMBER',
+      question: 'Sport: Mitu minutit kestab üks jalgpalli poolaeg? Kontekst: Triatlon.',
+      options: ['30', '35', '40', '45', '50', '55', '60', '65', '70', '75']
+    })
+  ], 'fixture-context-suffix');
+
+  assert.equal(result.summary.issueCounts.unnaturalPhrasingCards, 2);
+});
