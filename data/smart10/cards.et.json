@@ -28581,7 +28581,7 @@
     "language": "et",
     "question": "Kultuur: Millised väited Odüsseia kohta peavad paika?",
     "options": [
-      "Seda seostatakse traditsiooniliselt Homerosega.",
+      "Seda seostatakse Homerose nimega.",
       "Peategelane on Odysseus.",
       "Odüsseia on renessansimaal.",
       "Teos keskendub vormel 1 hooajale.",
@@ -28620,7 +28620,7 @@
       "Achilleus on üks keskseid tegelasi.",
       "Selle kirjutas Miguel de Cervantes.",
       "Ilias on krimiromaan.",
-      "Seda seostatakse traditsiooniliselt Homerosega."
+      "Seda seostatakse Homerose nimega."
     ],
     "correct": {
       "correctIndexes": [
@@ -28645,7 +28645,7 @@
       "Don Quijote on romaan.",
       "Selle kirjutas Fjodor Dostojevski.",
       "See on Tšaikovski ballett.",
-      "Teos kuulub Hispaania kirjanduse klassikasse.",
+      "Teos on Hispaania kirjanduse klassika.",
       "Don Quijote on sümfoonia.",
       "Lugu toimub antiik-Ateenas.",
       "Teos räägib Toronto pangatöötajatest.",
@@ -28852,10 +28852,10 @@
     "question": "Kultuur: Millised väited ansambli The Beatles kohta peavad paika?",
     "options": [
       "Bänd tuli Liverpoolist.",
-      "John Lennon ja Paul McCartney kuulusid sinna.",
+      "John Lennon ja Paul McCartney olid seal.",
       "The Beatles oli balletitrupp.",
       "Bänd loodi antiik-Ateenas.",
-      "The Beatles mõjutas tugevalt 1960. aastate popmuusikat.",
+      "The Beatles mõjutas 1960. aastate poppi.",
       "Nad olid renessansimaalijad.",
       "Bänd tuli Viinist.",
       "The Beatles oli ansambel.",
@@ -28916,7 +28916,7 @@
       "Beethoven sündis Soulis.",
       "Ta lavastas Casablanca.",
       "Üheksas sümfoonia seostub Beethoveniga.",
-      "Beethoven oli impressionistlik maalikunstnik.",
+      "Beethoven oli impressionistlik maalija.",
       "Ta kirjutas Don Quijote.",
       "Ta raius marmorist Davidi.",
       "Ta kirjutas sümfooniaid.",
@@ -28946,7 +28946,7 @@
       "Bach oli Rooma keiser.",
       "Bach oli tummfilmi näitleja.",
       "Ta kirjutas War and Peace'i.",
-      "Johann Sebastian Bach kirjutas vaimulikku ja instrumentaalmuusikat.",
+      "Bach kirjutas vaimulikku ja pillimuusikat.",
       "Ta asutas ansambli The Beatles.",
       "Ta sündis Tokyos.",
       "Bach oli helilooja.",
@@ -28977,7 +28977,7 @@
       "Chopin oli helilooja.",
       "Ta ehitas Eiffeli torni.",
       "Chopin sündis Poolas.",
-      "Tema nimega seostatakse nokturne ja masurkasid.",
+      "Teda seostatakse nokturnide ja masurkatega",
       "Chopin oli filmilavastaja.",
       "Ta oli Inglismaa kuningas.",
       "Chopin tuli Islandilt."
@@ -29040,7 +29040,7 @@
       "Van Gogh oli maalikunstnik.",
       "Van Gogh oli hollandlane.",
       "Ta lavastas Citizen Kane'i.",
-      "Starry Night on üks tema kuulsatest töödest."
+      "Starry Night on üks ta kuulsatest töödest."
     ],
     "correct": {
       "correctIndexes": [
@@ -29128,7 +29128,7 @@
       "Globe Theatre seostub Shakespeare'iga.",
       "Shakespeare kirjutas Iliase.",
       "Shakespeare oli vene helilooja.",
-      "Shakespeare oli näitekirjanik ja luuletaja.",
+      "Shakespeare oli näitekirjanik ja poeet.",
       "Ta lavastas Citizen Kane'i.",
       "Ta valitses antiik-Egiptust."
     ],
@@ -29160,7 +29160,7 @@
       "Austen seostub inglise kirjandusega.",
       "Austen maalis Guernica.",
       "Jane Austen oli skulptor.",
-      "Tema romaanid käsitlevad sageli suhteid ja abielu."
+      "Tema romaanid käsitlevad sageli suhteid."
     ],
     "correct": {
       "correctIndexes": [
@@ -29211,12 +29211,12 @@
     "language": "et",
     "question": "Kultuur: Millised väited Dostojevski kohta peavad paika?",
     "options": [
-      "The Brothers Karamazov on Dostojevski teos.",
+      "The Brothers Karamazov on tema teos.",
       "Dostojevski maalis Sixtuse kabeli lae.",
       "Ta juhtis The Beatlesit.",
       "Dostojevski oli Hollywoodi monteerija.",
       "Ta kirjutas Pride and Prejudice'i.",
-      "Crime and Punishment seostub Dostojevskiga.",
+      "Crime and Punishment on Dostojevski teos.",
       "Dostojevski kavandas Eiffeli torni.",
       "Dostojevski sündis Mexico Citys.",
       "Dostojevski oli romaanikirjanik.",
@@ -29243,11 +29243,11 @@
     "options": [
       "Homeros lavastas Citizen Kane'i.",
       "Homeros oli Austria barokhelilooja.",
-      "Homerost seostatakse traditsiooniliselt Odüsseiaga.",
-      "Homerost seostatakse traditsiooniliselt Iliasega.",
+      "Homerost seostatakse Odüsseiaga.",
+      "Homerost seostatakse Iliasega.",
       "Homeros ehitas Louvre'i püramiidi.",
-      "Homeros seostub vana-kreeka eepilise luulega.",
-      "Homeros on üks lääne kirjanduse põhinimesid.",
+      "Homeros seostub vana-kreeka eepikaga.",
+      "Homeros on lääne kirjanduse põhinimi.",
       "Homeros maalis Mona Lisa.",
       "Homeros kirjutas Don Quijote.",
       "Homeros juhtis The Beatlesit."
@@ -29333,9 +29333,9 @@
     "options": [
       "Pähklipureja seostub balletiga.",
       "Ballett on maleavang.",
-      "Balletis kasutatakse koreograafiat ja muusikat.",
+      "Balletis on koreograafia ja muusika.",
       "Ballett on vormel 1 meeskond.",
-      "Klassikalisel balletil on pikk lavatraditsioon.",
+      "Klassikalisel balletil on pikk ajalugu.",
       "Ballett on tantsuvorm.",
       "Ballett on jõgi Lõuna-Ameerikas.",
       "Ballett on ainult õlimaali stiil.",
@@ -29361,7 +29361,7 @@
     "language": "et",
     "question": "Teadus: Millised väited aatomi kohta peavad paika?",
     "options": [
-      "Erinevatel elementidel on erinev prootonite arv.",
+      "Elementidel on erinev prootonite arv.",
       "Aatom koosneb ainult puidust.",
       "Aatom on galaktikast suurem.",
       "Iga aatom on sama massiga.",
@@ -29393,8 +29393,8 @@
     "options": [
       "Molekul koosneb seotud aatomitest.",
       "Igas molekulis on täpselt kaks aatomit.",
-      "Molekulis võivad olla eri elementide aatomid.",
-      "Molekulid eksisteerivad ainult tahkes olekus.",
+      "Molekulis võivad olla eri aatomid.",
+      "Molekulid on ainult tahkes olekus.",
       "Vesi on molekul.",
       "Molekul on planeedi liik.",
       "Molekule kirjutatakse ainult noodikirjas.",
@@ -29423,7 +29423,7 @@
     "options": [
       "Elektronidel on ainult positiivne laeng.",
       "Elektron on taimeliik.",
-      "Elektrivool seostub liikuvate elektronidega.",
+      "Elektrivool on elektronide liikumine.",
       "Elektronil on negatiivne laeng.",
       "Elektron on aatomist suurem.",
       "Elektronid eksisteerivad vaid Päikeses.",
@@ -29483,12 +29483,12 @@
     "options": [
       "Neutronid asuvad aatomituumas.",
       "Neutronil puudub elektrilaeng.",
-      "Isotoobid võivad neutronite arvu poolest erineda.",
+      "Isotoobid võivad erineda neutronite arvus.",
       "Neutronid on positiivse laenguga.",
       "Neutron on ilmafront.",
       "Neutron on nähtav valguskiir.",
       "Neutronid annavad osa aatomi massist.",
-      "Neutronid tiirlevad ümber Maa satelliitidena.",
+      "Neutronid on Maa ümber satelliidid.",
       "Neutronid on tehtud klaasist.",
       "Igas aatomis on null neutronit."
     ],
@@ -29542,13 +29542,13 @@
     "question": "Teadus: Millised väited gravitatsiooni kohta peavad paika?",
     "options": [
       "Gravitatsioon hoiab planeete orbiidil.",
-      "Gravitatsioon eksisteerib vaid vulkaanides.",
+      "Gravitatsioon on ainult vulkaanides.",
       "Gravitatsioon on metalli liik.",
       "Gravitatsioon tekib tuulest.",
       "Gravitatsioon tõukab kõiki kehi eemale.",
       "Kehi tõmbab Maa ligi gravitatsioon.",
-      "Gravitatsioon on tugevam ainult multifilmides.",
-      "Gravitatsioon tõmbab masse teineteise poole.",
+      "Gravitatsioon on tugevam multifilmides.",
+      "Gravitatsioon tõmbab masse kokku.",
       "Kuul on gravitatsioon nõrgem kui Maal.",
       "Gravitatsioon on maalikunsti stiil."
     ],
@@ -29573,7 +29573,7 @@
     "options": [
       "Suunamuutus võib kiirusvektorit muuta.",
       "Kiirusvektor on keemiline element.",
-      "Kiirusvektor eksisteerib vaid sportautodel.",
+      "Kiirusvektor on vaid sportautodel.",
       "Kiirusvektor on linnuliik.",
       "Kiirusvektorit mõõdetakse liitrites.",
       "Kiirusvektor on alati sama mis mass.",
@@ -29603,9 +29603,9 @@
     "options": [
       "Kiirendust mõõdetakse kilogrammides.",
       "Kiirendus ei muuda kunagi kiirust.",
-      "Kiirendus võib olla positiivne või negatiivne.",
+      "Kiirendus võib olla ka negatiivne.",
       "Kiirendus eksisteerib ainult rakettidel.",
-      "Kiirendust mõõdetakse meetrites sekundis ruudus.",
+      "Kiirendust mõõdetakse m/s ruudus.",
       "Kiirendus näitab kiiruse muutumise määra.",
       "Kiirendus on planeet.",
       "Langevad kehad kiirenevad Maa lähedal.",
@@ -29634,9 +29634,9 @@
       "Impulss on füüsika mõiste.",
       "Impulss eksisteerib vaid vedelikes.",
       "Impulss on ainult keemiline reaktsioon.",
-      "Paigal oleval kehal on alati hiiglaslik impulss.",
+      "Paigal kehal on alati hiiglaslik impulss.",
       "Impulss on luulestiil.",
-      "Impulssi mõõdetakse kraadides Celsiuse järgi.",
+      "Impulssi mõõdetakse Celsiuse kraadides.",
       "Impulss sõltub massist ja kiirusest.",
       "Isolatsioonis süsteemis impulss säilib.",
       "Liikuval veokil on impulss.",
@@ -29664,7 +29664,7 @@
       "Energia on töö tegemise võime.",
       "Energia eksisteerib ainult patareides.",
       "Keemiline energia salvestub sidemetesse.",
-      "Energiat saab tavatingimustes luua eimillestki.",
+      "Energiat saab luua eimillestki.",
       "Energiat on mitmel kujul.",
       "Energia on sama mis ruumala.",
       "Energiat mõõdetakse kilomeetrites.",
@@ -29693,13 +29693,13 @@
     "options": [
       "Entroopia on sama mis gravitatsioon.",
       "Entroopia on pilve kuju.",
-      "Entroopia aitab kirjeldada energia jaotust.",
+      "Entroopia kirjeldab energia jaotust.",
       "Entroopia on termodünaamika mõiste.",
       "Entroopiat mõõdetakse ainult liitrites.",
       "Entroopia eksisteerib vaid ulmes.",
       "Entroopiat seostatakse sageli korratusega.",
       "Entroopia on metall.",
-      "Isolatsioonis süsteemis entroopia kipub kasvama.",
+      "Isolatsioonis entroopia kipub kasvama.",
       "Entroopia on linnuliik."
     ],
     "correct": {
@@ -29908,7 +29908,7 @@
       "Naatriumi tähis on S.",
       "Naatrium on ilmaolukord.",
       "Naatriumi tähis on Na.",
-      "Naatrium eksisteerib köögis ainult puhta metallina.",
+      "Naatrium on köögis ainult puhas metall.",
       "Naatrium on Jupiteri kuu.",
       "Naatrium on leelismetall."
     ],
@@ -29963,7 +29963,7 @@
     "options": [
       "Kaltsiumi tähis on Cl.",
       "Kaltsium on mäestikust raskem.",
-      "Kaltsiumiühendeid leidub kivimites ja kestades.",
+      "Kaltsiumi leidub kivimites ja kestades.",
       "Kaltsium on keemiline element.",
       "Kaltsium eksisteerib ainult tähtedes.",
       "Kaltsium on muusikastiil.",
@@ -30000,7 +30000,7 @@
       "Raua tähis on Ir.",
       "Raua tähis on Fe.",
       "Raud on keemiline element.",
-      "Raud on tähtis nii Maa tuumas kui verekeemias."
+      "Raud on tähtis Maa tuumas ja veres."
     ],
     "correct": {
       "correctIndexes": [
@@ -30201,7 +30201,7 @@
     "language": "et",
     "question": "Teadus: Millised väited Marsi kohta peavad paika?",
     "options": [
-      "Marssi kutsutakse sageli punaseks planeediks.",
+      "Marssi hüütakse tihti punaseks planeediks.",
       "Marss on Päikesest neljas planeet.",
       "Marss on väärisgaas.",
       "Marss koosneb ainult veest.",
@@ -30330,7 +30330,7 @@
       "Klaviatuuri kasutatakse kirjutamiseks.",
       "Klaviatuur ühendub sageli arvutiga.",
       "Klaviatuuriga praetakse mune.",
-      "Klaviatuur võib olla füüsiline või virtuaalne."
+      "Klaviatuur võib olla päris või virtuaalne."
     ],
     "correct": {
       "correctIndexes": [
@@ -30352,14 +30352,14 @@
     "question": "Varia: Millised väited märkmiku kohta peavad paika?",
     "options": [
       "Märkmikuga küpsetatakse leiba.",
-      "Märkmikku saab kasutada märkmete tegemiseks.",
+      "Märkmikku saab kasutada märkmete jaoks.",
       "Õpilased kasutavad sageli märkmikke.",
       "Märkmik on puuliik.",
       "Paljudes märkmikes on paberlehed.",
       "Märkmik töötab ainult bensiiniga.",
       "Märkmik on allveelaev.",
       "Märkmik on kinga liik.",
-      "Märkmikul võivad olla joonelised või tühjad lehed.",
+      "Märkmikul on jooned või tühjad lehed.",
       "Märkmik on troopiline torm."
     ],
     "correct": {
@@ -30387,7 +30387,7 @@
       "Seljakotti kasutatakse ainult vee all.",
       "Seljakotil on sageli õlarihmad.",
       "Seljakott on ookeanihoovuse liik.",
-      "Seljakott võib kanda raamatuid või varustust.",
+      "Seljakott kannab raamatuid või asju.",
       "Seljakott on pilveliik.",
       "Seljakotti kantakse seljas.",
       "Seljakotti kasutatakse reisil ja koolis."
@@ -30445,7 +30445,7 @@
       "Kell on tantsustiil.",
       "Kella süüakse lõunaks.",
       "Seinakell võib rippuda seinal.",
-      "Paljudel kelladel on tunni- ja minutiosuti.",
+      "Kellal on tihti tunni- ja minutiseier.",
       "Kell saab töötada ainult vee all.",
       "Kella kasutatakse puude istutamiseks.",
       "Kell on vaalaliik.",
@@ -30508,7 +30508,7 @@
       "Jalgratas on maalimistehnika.",
       "Jalgrattal on alati neli tiiba.",
       "Jalgratas liigub ainult raketikütusega.",
-      "Jalgratast kasutatakse raamatute trükkimiseks.",
+      "Jalgratast kasutatakse raamatute trükiks.",
       "Jalgratast liigutatakse väntamisega.",
       "Paljudel jalgratastel on lenks ja pidurid."
     ],
@@ -30531,7 +30531,7 @@
     "language": "et",
     "question": "Varia: Millised väited tõukeratta kohta peavad paika?",
     "options": [
-      "Tõukeratast saab kasutada lühikesteks sõitudeks.",
+      "Tõukeratast saab kasutada lühisõitudeks.",
       "Tõukerattal on lenks.",
       "Tõukeratas on ainult supi koostisosa.",
       "Tõukeratast kantakse mütsina.",
@@ -30565,7 +30565,7 @@
       "Liftidel on uksed.",
       "Lift liigub alati ainult külgsuunas.",
       "Lift on linnupesa.",
-      "Lifti kasutatakse kitarride häälestamiseks.",
+      "Lifti kasutatakse kitarride häälestuseks.",
       "Lift viib inimesi korruste vahel.",
       "Lift liigub püstsuunas.",
       "Lifti kasutatakse saia röstimiseks.",
@@ -30622,9 +30622,9 @@
     "question": "Varia: Millised väited lennujaama kohta peavad paika?",
     "options": [
       "Lennujaam kasvatab banaane.",
-      "Lennujaam teenindab saabuvaid ja väljuvaid lennukeid.",
+      "Lennujaam võtab vastu ja saadab lende.",
       "Lennujaamad ühendavad linnu õhureisidega.",
-      "Lennujaama kasutatakse ainult pliiatsite teritamiseks.",
+      "Lennujaam on ainult pliiatsite terituseks.",
       "Lennujaamal on lennurajad.",
       "Lennujaam on alati vee all.",
       "Lennujaam on supiliik.",
@@ -30652,12 +30652,12 @@
     "question": "Varia: Millised väited raamatukogu kohta peavad paika?",
     "options": [
       "Raamatukogu on vulkaani liik.",
-      "Raamatukogu kasutatakse kartulite praadimiseks.",
-      "Raamatukogu on ainult jalgrataste hoidmiseks.",
+      "Raamatukogus praetakse kartuleid.",
+      "Raamatukogu on vaid jalgrataste hoidla.",
       "Raamatukogu on linnuliik.",
       "Raamatukogu korraldab teabekogusid.",
       "Raamatukogul on alati lennurada.",
-      "Raamatukogu võib pakkuda vaikset õppimisruumi.",
+      "Raamatukogu võib pakkuda õppimisruumi.",
       "Raamatukogu on pilveliik.",
       "Raamatukogud laenutavad raamatuid.",
       "Rahvaraamatukogud teenindavad kogukonda."
@@ -30682,13 +30682,13 @@
     "question": "Varia: Millised väited muuseumi kohta peavad paika?",
     "options": [
       "Muuseum on alati liikuv rong.",
-      "Muuseumid võtavad tavaliselt külastajaid vastu.",
-      "Muuseumid võivad säilitada ajaloolisi esemeid.",
+      "Muuseumid võtavad külastajaid vastu.",
+      "Muuseumid võivad hoida ajaloolisi esemeid.",
       "Muuseum kasvab ainult vee all.",
-      "Kunstimuuseumid näitavad visuaalset kunsti.",
+      "Kunstimuuseumid näitavad visuaalkunsti.",
       "Muuseum on hobusetõug.",
-      "Muuseumi kasutatakse kookide küpsetamiseks.",
-      "Muuseumid näitavad eksponaate ja väljapanekuid.",
+      "Muuseumis küpsetatakse kooke.",
+      "Muuseumid näitavad eksponaate.",
       "Muuseum on tormiliik.",
       "Muuseum on puuviljamahl."
     ],
@@ -30711,7 +30711,7 @@
     "language": "et",
     "question": "Varia: Millised väited restorani kohta peavad paika?",
     "options": [
-      "Restoranid valmistavad või serveerivad toitu.",
+      "Restoranid valmistavad või pakuvad toitu.",
       "Restoran on tehtud ainult jääst.",
       "Restoran on planeet.",
       "Restoranides võivad olla lauad sööjatele.",
@@ -30719,8 +30719,8 @@
       "Restoranil on alati bassein.",
       "Restoran on roomajaliik.",
       "Restoran on luulestiil.",
-      "Restorani kasutatakse ainult jalgrataste parandamiseks.",
-      "Restoranid võivad olla lihtsad või pidulikud."
+      "Restoran on vaid rataste paranduseks.",
+      "Restoranid võivad olla lihtsad või uhked."
     ],
     "correct": {
       "correctIndexes": [
@@ -30742,7 +30742,7 @@
     "question": "Varia: Millised väited retsepti kohta peavad paika?",
     "options": [
       "Retseptis on kirjas koostisosad.",
-      "Retsepti saab ainult rääkida, mitte kirjutada.",
+      "Retsepti saab rääkida, mitte kirjutada.",
       "Retsept annab toidu valmistamise juhised.",
       "Retsept on kinga liik.",
       "Retsept on mäetipp.",
@@ -30780,7 +30780,7 @@
       "Võileib on metalliline element.",
       "Võileib on alati vedel.",
       "Võileival võivad olla täidised.",
-      "Võileiba võib serveerida külmalt või soojalt."
+      "Võileiba võib anda külmalt või soojalt."
     ],
     "correct": {
       "correctIndexes": [
@@ -30834,10 +30834,10 @@
       "Šokolaad on alati soolane supp.",
       "Šokolaad võib olla tume, piima- või valge.",
       "Šokolaad on linn Jaapanis.",
-      "Šokolaad kasvab kaevanduses metallkangidena.",
+      "Šokolaad kasvab kaevanduses metallina.",
       "Šokolaadi kasutatakse teede sillutamiseks.",
       "Šokolaad on toiduaine.",
-      "Šokolaadi kasutatakse magustoitudes ja kommides.",
+      "Šokolaadi kasutatakse magustoitudes.",
       "Šokolaad on lennuki liik.",
       "Šokolaad sisaldab sageli kakaod.",
       "Šokolaad on sõnajalaliik."
@@ -30893,7 +30893,7 @@
     "options": [
       "Tee tehakse alati ainult piimast.",
       "Tee on jook.",
-      "Tee võib sisaldada kofeiini, kuigi mitte alati palju.",
+      "Tee võib sisaldada kofeiini.",
       "Tee on betooni vorm.",
       "Teed võib serveerida kuumalt või külmalt.",
       "Teed kasutatakse nugade teritamiseks.",
@@ -31011,7 +31011,7 @@
     "language": "et",
     "question": "Varia: Millised väited sülearvuti kohta peavad paika?",
     "options": [
-      "Sülearvutil on sageli sisseehitatud ekraan.",
+      "Sülearvutil on sageli oma ekraan.",
       "Sülearvuti on kõrbetaim.",
       "Sülearvuti on kaasaskantav arvuti.",
       "Sülearvutit kantakse jalas.",
@@ -31049,7 +31049,7 @@
       "Nutitelefon on jõesuue.",
       "Nutitelefon on alati ainult puidust.",
       "Nutitelefon on ööliblika liik.",
-      "Nutitelefoniga saab helistada ja rakendusi kasutada.",
+      "Nutitelefoniga saab helistada ja surfata.",
       "Nutitelefon saab internetiga ühendada."
     ],
     "correct": {
@@ -31071,15 +31071,15 @@
     "language": "et",
     "question": "Varia: Millised väited kõrvaklappide kohta peavad paika?",
     "options": [
-      "Kõrvaklapid võivad olla juhtmega või juhtmevabad.",
+      "Kõrvaklapid on juhtmega või juhtmeta.",
       "Kõrvaklapid on sisaliku liik.",
       "Kõrvaklapid katavad või puudutavad kõrvu.",
       "Kõrvaklapid on puuvilja liik.",
       "Kõrvaklapid on alati vett täis.",
       "Kõrvaklappe kasutatakse heli kuulamiseks.",
-      "Kõrvaklapid on tavalised telefonide ja arvutite juures.",
-      "Kõrvaklappe kasutatakse toidu praadimiseks.",
-      "Kõrvaklappe kasutatakse jalgratta piduritena.",
+      "Kõrvaklapid sobivad telefoni ja arvutiga.",
+      "Kõrvaklapid on toidu praadimiseks.",
+      "Kõrvaklapid on jalgratta pidurid.",
       "Kõrvaklapid on sillatüüp."
     ],
     "correct": {

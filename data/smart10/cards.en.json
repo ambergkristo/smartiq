@@ -28522,7 +28522,7 @@
     "question": "Culture: Which statements about Hamlet are true?",
     "options": [
       "Hamlet is an opera by Verdi.",
-      "The ghost of Hamlet's father appears in it.",
+      "Hamlet features his father's ghost.",
       "Jane Austen wrote it.",
       "The story is set in Egypt.",
       "William Shakespeare wrote it.",
@@ -28556,7 +28556,7 @@
       "Macbeth is a tragedy.",
       "The action is set in Japan.",
       "Shakespeare wrote Macbeth.",
-      "The play centers on sea pirates in the Caribbean.",
+      "The play centers on Caribbean pirates.",
       "Macbeth is a Russian novel.",
       "Charles Dickens wrote it.",
       "It is a modern superhero film.",
@@ -28821,7 +28821,7 @@
     "language": "en",
     "question": "Culture: Which statements about Citizen Kane are true?",
     "options": [
-      "The film is often discussed in cinema history.",
+      "The film is often cited in film history.",
       "Its hero is Don Quixote.",
       "Citizen Kane is a film.",
       "The story is set on Mars.",
@@ -28851,14 +28851,14 @@
     "language": "en",
     "question": "Culture: Which statements about The Beatles are true?",
     "options": [
-      "The Beatles shaped popular music in the 1960s.",
+      "The Beatles shaped 1960s pop music.",
       "The group was founded in ancient Athens.",
       "The Beatles were a ballet troupe.",
       "They were painters of the Renaissance.",
       "Giuseppe Verdi led the band.",
       "The Beatles were a band.",
       "The group came from Liverpool.",
-      "John Lennon and Paul McCartney were members.",
+      "John Lennon and Paul McCartney were in it.",
       "The group came from Vienna.",
       "The Beatles wrote the Iliad."
     ],
@@ -28948,7 +28948,7 @@
       "Bach is linked to the Baroque period.",
       "He was born in Tokyo.",
       "He wrote War and Peace.",
-      "Johann Sebastian Bach wrote sacred and instrumental music.",
+      "Bach wrote sacred and instrumental music.",
       "Bach was a Roman emperor.",
       "He worked in German lands."
     ],
@@ -28977,7 +28977,7 @@
       "Chopin painted Guernica.",
       "Chopin was born in Poland.",
       "Chopin was a film director.",
-      "Many nocturnes and mazurkas are tied to him.",
+      "Many nocturnes and mazurkas are his.",
       "He built the Eiffel Tower.",
       "He wrote Hamlet.",
       "Chopin came from Iceland."
@@ -29093,7 +29093,7 @@
     "options": [
       "The Last Supper is linked to Leonardo.",
       "He led The Beatles.",
-      "Leonardo da Vinci was a Renaissance artist.",
+      "Leonardo da Vinci was a Renaissance icon.",
       "He directed The Godfather.",
       "Leonardo painted the Mona Lisa.",
       "Leonardo invented cinema in Hollywood.",
@@ -29121,14 +29121,14 @@
     "language": "en",
     "question": "Culture: Which statements about Shakespeare are true?",
     "options": [
-      "The Globe Theatre is associated with Shakespeare.",
+      "Globe Theatre is linked to Shakespeare.",
       "Shakespeare founded the Louvre.",
       "Shakespeare painted the Mona Lisa.",
       "Shakespeare wrote The Iliad.",
       "He directed Citizen Kane.",
       "Shakespeare was a playwright and poet.",
       "Shakespeare wrote Hamlet and Macbeth.",
-      "Shakespeare is linked to English literature.",
+      "Shakespeare is tied to English literature.",
       "Shakespeare was a Russian composer.",
       "He ruled ancient Egypt."
     ],
@@ -29160,7 +29160,7 @@
       "Austen painted Guernica.",
       "Jane Austen wrote The Odyssey.",
       "Austen led a rock band from Liverpool.",
-      "Her novels often focus on social relations and marriage."
+      "Her novels often focus on marriage."
     ],
     "correct": {
       "correctIndexes": [
@@ -29214,11 +29214,11 @@
       "Dostoevsky was a novelist.",
       "Dostoevsky was a film editor in Hollywood.",
       "Dostoevsky designed the Eiffel Tower.",
-      "Dostoevsky painted the Sistine Chapel ceiling.",
+      "Dostoevsky painted the Sistine Chapel.",
       "The Brothers Karamazov is by Dostoevsky.",
       "Dostoevsky was born in Mexico City.",
       "He wrote Pride and Prejudice.",
-      "Crime and Punishment is linked to Dostoevsky.",
+      "Crime and Punishment is Dostoevsky's.",
       "He led The Beatles.",
       "Dostoevsky belongs to Russian literature."
     ],
@@ -29241,13 +29241,13 @@
     "language": "en",
     "question": "Culture: Which statements about Homer are true?",
     "options": [
-      "Homer is traditionally linked to The Odyssey.",
-      "Homer is traditionally linked to The Iliad.",
+      "Homer is linked to The Odyssey.",
+      "Homer is linked to The Iliad.",
       "Homer wrote Don Quixote.",
       "Homer directed Citizen Kane.",
-      "Homer is tied to ancient Greek epic poetry.",
+      "Homer is tied to Greek epic poetry.",
       "Homer painted the Mona Lisa.",
-      "Homer is one of the foundational names in Western literature.",
+      "Homer is a foundational Western author.",
       "Homer built the Louvre pyramid.",
       "Homer was a baroque composer from Austria.",
       "Homer led the Beatles."
@@ -29272,7 +29272,7 @@
     "question": "Culture: Which statements about sculpture are true?",
     "options": [
       "A sculpture has three-dimensional form.",
-      "Sculpture can be made from stone or bronze.",
+      "Sculpture can use stone or bronze.",
       "Sculpture is always performed on stage.",
       "A symphony orchestra is a sculpture.",
       "The Iliad is a sculpture.",
@@ -29336,7 +29336,7 @@
       "Ballet is performed with cricket bats.",
       "Ballet is a style of oil painting only.",
       "Ballet uses choreography and music.",
-      "Classical ballet has a long stage tradition.",
+      "Classical ballet has a long tradition.",
       "Ballet is a Formula One team.",
       "Ballet is a chess opening.",
       "Ballet is a dance form.",
@@ -29362,7 +29362,7 @@
     "question": "Science: Which statements about the atom are true?",
     "options": [
       "Atoms contain a nucleus.",
-      "Different elements have different numbers of protons.",
+      "Elements differ by proton count.",
       "Electrons are associated with atoms.",
       "Every atom has the same mass.",
       "Atoms were invented by Shakespeare.",
@@ -29391,12 +29391,12 @@
     "language": "en",
     "question": "Science: Which statements about the molecule are true?",
     "options": [
-      "Molecules can contain atoms of different elements.",
+      "Molecules can include different elements.",
       "Molecules exist only in solids.",
       "Every molecule has exactly two atoms.",
       "A molecule is larger than a continent.",
       "A molecule consists of bonded atoms.",
-      "Molecules are written only in music notation.",
+      "Molecules are written only in music.",
       "A molecule is a type of star.",
       "Water is a molecule.",
       "Molecules are a kind of planet.",
@@ -29421,7 +29421,7 @@
     "language": "en",
     "question": "Science: Which statements about the electron are true?",
     "options": [
-      "Electric current involves moving electrons.",
+      "Electric current involves moving charge.",
       "The electron is a planet.",
       "Electrons exist only in the Sun.",
       "Electrons are much lighter than protons.",
@@ -29483,7 +29483,7 @@
     "options": [
       "Neutrons are positively charged.",
       "The neutron is a weather front.",
-      "Different isotopes can differ in neutron count.",
+      "Isotopes can differ in neutron count.",
       "Neutrons are made of glass.",
       "Neutrons are found in atomic nuclei.",
       "The neutron is a visible beam of light.",
@@ -29547,9 +29547,9 @@
       "Gravity pushes all objects away.",
       "Gravity keeps planets in orbit.",
       "Gravity is made by wind.",
-      "Gravity is weaker on the Moon than on Earth.",
+      "Gravity is weaker on the Moon.",
       "Gravity is stronger in cartoons only.",
-      "Objects fall because of gravity near Earth.",
+      "Objects fall because of gravity on Earth.",
       "Gravity is a style of painting."
     ],
     "correct": {
@@ -29573,7 +29573,7 @@
     "options": [
       "Velocity exists only in sports cars.",
       "Velocity is a chemical element.",
-      "Velocity can be measured in meters per second.",
+      "Velocity can be measured in m/s.",
       "Velocity can be measured in liters.",
       "Changing direction can change velocity.",
       "Velocity has color but no direction.",
@@ -29602,9 +29602,9 @@
     "question": "Science: Which statements about acceleration are true?",
     "options": [
       "Acceleration can be positive or negative.",
-      "Acceleration is measured in meters per second squared.",
+      "Acceleration is measured in m/s squared.",
       "Acceleration is measured in kilograms.",
-      "Acceleration is the rate of change of velocity.",
+      "Acceleration is change in velocity.",
       "Acceleration never changes speed.",
       "Falling objects accelerate near Earth.",
       "Acceleration is the same as temperature.",
@@ -29634,7 +29634,7 @@
       "A moving truck has momentum.",
       "Momentum is a physics concept.",
       "Momentum is conserved in isolated systems.",
-      "A stationary object always has enormous momentum.",
+      "Still objects do not have huge momentum.",
       "Momentum is a style of poetry.",
       "Momentum is measured in degrees Celsius.",
       "Momentum depends on mass and velocity.",
@@ -29662,7 +29662,7 @@
     "question": "Science: Which statements about energy are true?",
     "options": [
       "Chemical energy is stored in bonds.",
-      "Energy can be created from nothing in ordinary physics.",
+      "Energy cannot be created from nothing.",
       "Energy exists only in batteries.",
       "Energy is a type of insect.",
       "Energy is the capacity to do work.",
@@ -29691,10 +29691,10 @@
     "language": "en",
     "question": "Science: Which statements about entropy are true?",
     "options": [
-      "Entropy helps describe energy distribution.",
+      "Entropy describes energy distribution.",
       "Entropy is a metal.",
       "Entropy exists only in fiction.",
-      "Entropy tends to increase in isolated systems.",
+      "Entropy tends to rise in isolation.",
       "Entropy is the same as gravity.",
       "Entropy is a concept in thermodynamics.",
       "Entropy is a shape of cloud.",
@@ -29907,7 +29907,7 @@
       "Sodium is a moon of Jupiter.",
       "Table salt contains sodium.",
       "Sodium is a weather pattern.",
-      "Sodium exists only as pure metal in kitchens.",
+      "Sodium exists only as pure kitchen metal.",
       "Sodium has the symbol Na.",
       "Sodium has the symbol S.",
       "Sodium is an alkali metal."
@@ -29961,7 +29961,7 @@
     "language": "en",
     "question": "Science: Which statements about calcium are true?",
     "options": [
-      "Calcium compounds occur in rocks and shells.",
+      "Calcium occurs in rocks and shells.",
       "Calcium is a noble gas.",
       "Calcium is a style of music.",
       "Calcium has the symbol Ca.",
@@ -30000,7 +30000,7 @@
       "Iron has the symbol Ir.",
       "Iron is made only by artists.",
       "Iron is a style of poetry.",
-      "Iron is important in Earth's core and in blood chemistry."
+      "Iron matters in Earth's core and blood."
     ],
     "correct": {
       "correctIndexes": [
@@ -30175,7 +30175,7 @@
       "Earth has no atmosphere.",
       "Earth is a planet.",
       "Earth has rings like Saturn.",
-      "Liquid water is abundant on Earth's surface.",
+      "Liquid water is common on Earth's surface.",
       "Earth orbits Jupiter.",
       "Earth is a chemical element.",
       "Earth is the third planet from the Sun.",
@@ -30239,7 +30239,7 @@
       "Jupiter is a planet.",
       "Jupiter orbits Mars as a satellite.",
       "Jupiter is made only of iron.",
-      "Jupiter is the largest planet in the Solar System.",
+      "Jupiter is the system's largest planet.",
       "Jupiter has no moons."
     ],
     "correct": {
@@ -30326,7 +30326,7 @@
       "A keyboard has keys.",
       "A keyboard is a river.",
       "A keyboard is used for typing.",
-      "A keyboard has bicycle pedals instead of keys.",
+      "A keyboard has pedals instead of keys.",
       "A keyboard is always made of glass only.",
       "A keyboard is a weather system.",
       "A keyboard is a type of mountain.",
@@ -30390,7 +30390,7 @@
       "A backpack is a dessert.",
       "A backpack is worn on one finger.",
       "A backpack is a metal element.",
-      "People use backpacks for travel and school."
+      "Backpacks are used for travel and school."
     ],
     "correct": {
       "correctIndexes": [
@@ -30621,14 +30621,14 @@
     "language": "en",
     "question": "Varia: Which statements about an airport are true?",
     "options": [
-      "An airport is used to sharpen pencils only.",
+      "An airport is only for sharpening pencils.",
       "Passengers check in at airports.",
       "Airports link cities by air travel.",
       "An airport is a kind of soup.",
       "An airport grows bananas.",
       "An airport is worn on the wrist.",
       "An airport is always underwater.",
-      "Airports handle arriving and departing aircraft.",
+      "Airports handle arrivals and departures.",
       "Airports have runways.",
       "An airport is a species of coral."
     ],
@@ -30652,7 +30652,7 @@
     "question": "Varia: Which statements about a library are true?",
     "options": [
       "Libraries lend books.",
-      "Libraries organize information collections.",
+      "Libraries organize information resources.",
       "A library is a kind of cloud.",
       "A library always has a runway.",
       "A library is a bird species.",
@@ -30720,7 +30720,7 @@
       "A restaurant is used to fix bicycles only.",
       "A restaurant is a species of reptile.",
       "A restaurant is a planet.",
-      "Restaurants can range from casual to formal."
+      "Restaurants range from casual to formal."
     ],
     "correct": {
       "correctIndexes": [
@@ -30747,7 +30747,7 @@
       "A recipe gives cooking instructions.",
       "Recipes list ingredients.",
       "A recipe always needs electricity.",
-      "A recipe can only be spoken, never written.",
+      "A recipe can only be spoken, not written.",
       "A recipe is a kind of shoe.",
       "Recipes can include measurements.",
       "A recipe is a train station."
@@ -30893,7 +30893,7 @@
     "options": [
       "Tea is a form of concrete.",
       "Tea is often brewed in water.",
-      "Tea can contain caffeine, though not always much.",
+      "Tea can contain caffeine, but not always.",
       "Tea is a kind of submarine.",
       "Tea is always made from milk only.",
       "Tea is a species of tree frog.",
@@ -31071,13 +31071,13 @@
     "language": "en",
     "question": "Varia: Which statements about headphones are true?",
     "options": [
-      "Headphones can connect by wire or wirelessly.",
+      "Headphones can be wired or wireless.",
       "Headphones are used as bicycle brakes.",
-      "Headphones are used for listening to audio.",
+      "Headphones are used to listen to audio.",
       "Headphones are used to fry food.",
       "Headphones are a type of fruit.",
       "Headphones cover or sit on the ears.",
-      "Headphones are common with phones and computers.",
+      "Headphones are common with phones and PCs.",
       "Headphones are always filled with water.",
       "Headphones are a species of lizard.",
       "Headphones are a style of bridge."
@@ -31135,12 +31135,12 @@
       "Printers are used in homes and offices.",
       "A printer can connect to a computer.",
       "A printer is eaten as dessert.",
-      "A printer produces text or images on paper.",
+      "A printer puts text or images on paper.",
       "A printer is always powered by wind.",
       "A printer is a kind of ladder.",
       "A printer grows in the ocean.",
       "A printer is a musical scale.",
-      "Some printers use ink while others use toner."
+      "Some printers use ink, others use toner."
     ],
     "correct": {
       "correctIndexes": [
