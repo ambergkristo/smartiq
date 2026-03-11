@@ -24,6 +24,7 @@ Scope: SmartIQ Stabilization Sprint 2 - Content Truth
   - `data/smart10/cards.en.json`
   - `data/smart10/cards.et.json`
 - Tightened overlength `OPEN` options in `Sports/OPEN` and `Geography/OPEN` for both EN and ET without changing semantic validator outcomes.
+- Tightened remaining overlength `OPEN` options in `Culture/OPEN`, `Science/OPEN`, and `Varia/OPEN` for both EN and ET until `validate_cards_v2.js` returned `0` warnings per locale.
 - Fixed `tools/generate_content_truth_report.js` readiness logic so ET is not hardcoded to `BLOCKED` after a zero-issue audit.
 - Regenerated the canonical audit report in `docs/reports/2026-03-11-content-truth-audit.md`.
 
@@ -50,13 +51,10 @@ Current audit baseline:
 ## Remaining Highest-Risk Areas
 
 - No remaining semantic high-risk areas under `tools/semantic_content_validator.js`.
-- Current structural cleanup backlog is concentrated in:
-  - `Culture/OPEN`
-  - `Science/OPEN`
-  - `Varia/OPEN`
+- No remaining structural warning backlog under `tools/validate_cards_v2.js`.
 
 ## Notes
 
-- This is not a fake green. `tools/validate_cards_v2.js` now reports non-blocking structural warnings: `51` for EN and `72` for ET, down from `92` and `121` after the `Sports/OPEN` + `Geography/OPEN` length-tightening slice.
-- EN is semantically clean but should still be treated as `CONDITIONAL` until option lengths are tightened or explicitly accepted for pilot usage.
-- ET is no longer semantically blocked, but it should remain `CONDITIONAL` until a focused native-speaker spot-check confirms the repaired `OPEN` batches read naturally end to end.
+- This is still not a fake green. Structural validation now also returns `0` warnings for EN and ET, so remaining caution is editorial rather than mechanical.
+- EN remains `CONDITIONAL` because validator-clean content is not identical to repeated live-host proof.
+- ET remains `CONDITIONAL` because a focused native-speaker spot-check is still the honest final trust check after mass repair.
