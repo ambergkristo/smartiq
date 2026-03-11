@@ -111,3 +111,48 @@ test('flags recycled option pools in repetitive true-false cards', () => {
 
   assert.ok(result.summary.issueCounts.recycledOptionCards >= 1);
 });
+
+test('flags generic OPEN prompt scaffolds even with unique options', () => {
+  const result = analyzeCards([
+    buildCard({
+      id: 'open-scaffold-en',
+      topic: 'Sports',
+      category: 'OPEN',
+      question: 'Sports: Select statements that are true. Topic clue: Football.',
+      options: [
+        'Football uses a round ball.',
+        'A match begins with kickoff.',
+        'Goals count when the ball crosses the line.',
+        'Teams usually field eleven players.',
+        'Football is played underwater.',
+        'A match has nine innings.',
+        'The ball must be square.',
+        'Goals are scored with rackets.',
+        'Corner kicks belong to snooker.',
+        'The goalkeeper is banned by rule.'
+      ]
+    }),
+    buildCard({
+      id: 'open-scaffold-et',
+      language: 'et',
+      topic: 'Sports',
+      category: 'OPEN',
+      question: 'Sport: Millised vaited on oiged? Teemavihe: Football.',
+      options: [
+        'Jalgpallis kasutatakse ummarust palli.',
+        'Mang algab avaloogiga.',
+        'Varav loeb ule joone minnes.',
+        'Valjakul on tavaliselt uksteist mangijat.',
+        'Jalgpalli mangitakse vee all.',
+        'Mang koosneb uheksast vahetusest.',
+        'Pall peab olema kandiline.',
+        'Varavaid saadakse ainult reketiga.',
+        'Nurgaloog kuulub snuukrisse.',
+        'Varavavaht on keelatud.'
+      ]
+    })
+  ], 'fixture-open-scaffold');
+
+  assert.equal(result.summary.issueCounts.scaffoldCards, 2);
+  assert.equal(result.summary.issueCounts.brokenGrammarCards, 1);
+});

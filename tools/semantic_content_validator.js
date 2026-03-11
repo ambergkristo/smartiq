@@ -30,22 +30,24 @@ const ENGLISH_MARKER_REGEXES = [
   /\bpick the color best matching\b/i,
   /\bwhich option names the right color\b/i,
   /\bis closest to which color\b/i,
-  /\bchoose the color cue\b/i
+  /\bchoose the color cue\b/i,
+  /\btopic clue\b/i
 ];
 
 const ESTONIAN_MARKER_REGEXES = [
   /\bfookus\b/i,
-  /\bmillised väited on õiged\b/i,
+  /\bmillised vĆ¤ited on Ćµiged\b/i,
   /\bmillised vaited on oiged\b/i,
-  /\bmärgi selle teema tõesed väited\b/i,
+  /\bmĆ¤rgi selle teema tĆµesed vĆ¤ited\b/i,
   /\bmargi selle teema toesed vaited\b/i,
   /\bjarjesta\b/i,
-  /\bvali värv\b/i,
+  /\bvali vĆ¤rv\b/i,
   /\bvali varv\b/i,
-  /\bmilline värv sobib\b/i,
+  /\bmilline vĆ¤rv sobib\b/i,
   /\bmilline varv sobib\b/i,
-  /\bkõige\b/i,
-  /\bkoige\b/i
+  /\bkĆµige\b/i,
+  /\bkoige\b/i,
+  /\bteemavihe\b/i
 ];
 
 const ENGLISH_STOPWORDS = new Set([
@@ -55,9 +57,9 @@ const ENGLISH_STOPWORDS = new Set([
 ]);
 
 const ESTONIAN_STOPWORDS = new Set([
-  'ja', 'on', 'oli', 'olid', 'enne', 'pärast', 'parast', 'teema', 'fookus', 'õiged', 'oiged', 'väited',
-  'vaited', 'märgi', 'margi', 'tõene', 'toene', 'vale', 'algas', 'lõppes', 'loppes', 'selle', 'millised',
-  'jarjesta', 'vali', 'värv', 'varv', 'kõige', 'koige'
+  'ja', 'on', 'oli', 'olid', 'enne', 'pĆ¤rast', 'parast', 'teema', 'fookus', 'Ćµiged', 'oiged', 'vĆ¤ited',
+  'vaited', 'mĆ¤rgi', 'margi', 'tĆµene', 'toene', 'vale', 'algas', 'lĆµppes', 'loppes', 'selle', 'millised',
+  'jarjesta', 'vali', 'vĆ¤rv', 'varv', 'kĆµige', 'koige'
 ]);
 
 const PLACEHOLDER_REGEXES = [
@@ -73,12 +75,14 @@ const PLACEHOLDER_REGEXES = [
 
 const TEMPLATE_SCAFFOLD_REGEXES = [
   /^\s*(history|sports|geography|culture|science|varia):\s*(mark statements that are true for this topic|which claims are accurate|find the statements that fit|select all true statements|which lines are correct|identify valid statements)\.\s*focus area:/i,
-  /^\s*(ajalugu|sport|geograafia|kultuur|teadus|varia):\s*(märgi selle teema tõesed väited|margi selle teema toesed vaited|millised väited on õiged|millised vaited on oiged|leia sobivad väited|leia sobivad vaited|vali kõik tõesed väited|vali koik toed vaited|millised read on õiged|millised read on oiged|tuvasta kehtivad väited|tuvasta kehtivad vaited)\.\s*fookus:/i
+  /^\s*(history|sports|geography|culture|science|varia):\s*(select statements that are true|which statements are correct|pick all true statements|identify factual statements|mark the true statements|find the true statements|which options are correct)[\.\?]\s*topic clue:/i,
+  /^\s*(ajalugu|sport|geograafia|kultuur|teadus|varia):\s*(mĆ¤rgi selle teema tĆµesed vĆ¤ited|margi selle teema toesed vaited|millised vĆ¤ited on Ćµiged|millised vaited on oiged|leia sobivad vĆ¤ited|leia sobivad vaited|vali kĆµik tĆµesed vĆ¤ited|vali koik toed vaited|millised read on Ćµiged|millised read on oiged|tuvasta kehtivad vĆ¤ited|tuvasta kehtivad vaited)\.\s*fookus:/i,
+  /^\s*(ajalugu|sport|geograafia|kultuur|teadus|varia):\s*(vali tĆµesed vĆ¤ited|vali toesed vaited|millised vĆ¤ited on Ćµiged|millised vaited on oiged|vali kĆµik tĆµesed vĆ¤ited|vali koik toesed vaited|tuvasta faktivĆ¤ited|tuvasta faktivaited|millised variandid on Ćµiged|millised variandid on oiged)[\.\?]\s*teemavihe:/i
 ];
 
 const UNNATURAL_PHRASING_REGEXES = [
   /^\s*(history|sports|geography|culture|science|varia):\s*(which color matches|pick the color best matching|select the color for|which option names the right color for|choose the color cue|'.+' is closest to which color)/i,
-  /^\s*(ajalugu|sport|geograafia|kultuur|teadus|varia):\s*(milline värv sobib|milline varv sobib|vali värv|vali varv|milline variant nimetab õige värvi|milline variant nimetab oige varvi|vali värvivihje|vali varvivihje|'.+' on kõige lähedasem millisele värvile|'.+' on koige lahedasem millisele varvile)/i,
+  /^\s*(ajalugu|sport|geograafia|kultuur|teadus|varia):\s*(milline vĆ¤rv sobib|milline varv sobib|vali vĆ¤rv|vali varv|milline variant nimetab Ćµige vĆ¤rvi|milline variant nimetab oige varvi|vali vĆ¤rvivihje|vali varvivihje|'.+' on kĆµige lĆ¤hedasem millisele vĆ¤rvile|'.+' on koige lahedasem millisele varvile)/i,
   /^\s*(ajalugu|sport|geograafia|kultuur|teadus|varia):\s*order\b/i
 ];
 
@@ -257,7 +261,9 @@ function buildOptionFrequency(cards) {
     if (!['TRUE_FALSE', 'OPEN'].includes(category)) {
       continue;
     }
-    const options = Array.isArray(card?.options) ? card.options.map((option) => normalizeLoose(option?.text ?? option)).filter(Boolean) : [];
+    const options = Array.isArray(card?.options)
+      ? card.options.map((option) => normalizeLoose(option?.text ?? option)).filter(Boolean)
+      : [];
     for (const option of options) {
       const key = `${locale}|${category}|${option}`;
       frequency.set(key, (frequency.get(key) || 0) + 1);
