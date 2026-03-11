@@ -11,13 +11,17 @@ Scope: SmartIQ Stabilization Sprint 2 - Content Truth
 - Replaced the full `Sports/OPEN` batch in:
   - `data/smart10/cards.en.json`
   - `data/smart10/cards.et.json`
+- Replaced the full `Geography/OPEN` batch in:
+  - `data/smart10/cards.en.json`
+  - `data/smart10/cards.et.json`
 - Regenerated the canonical audit report in `docs/reports/2026-03-11-content-truth-audit.md`.
 
 ## Audit Delta
 
-- EN total issues moved from `225` under the strengthened validator baseline to `200` after the `Sports/OPEN` repair batch.
-- ET total issues moved from `275` to `260` after the `Sports/OPEN` repair batch.
+- EN total issues moved from `225` under the strengthened validator baseline to `150` after the `Sports/OPEN` and `Geography/OPEN` repair batches.
+- ET total issues moved from `275` to `195` after the `Sports/OPEN` and `Geography/OPEN` repair batches.
 - `Sports/OPEN` dropped out of the EN and ET top-risk backlog.
+- `Geography/OPEN` dropped out of the EN and ET top-risk backlog.
 
 ## Current Readiness
 
@@ -26,17 +30,16 @@ Scope: SmartIQ Stabilization Sprint 2 - Content Truth
 
 Current audit baseline:
 
-- EN score: `0.974`
-- ET score: `0.966`
+- EN score: `0.981`
+- ET score: `0.974`
 
 ## Remaining Highest-Risk Areas
 
-1. `Geography/OPEN`
-2. `Culture/OPEN`
-3. `Science/OPEN`
-4. `Varia/OPEN`
+1. `Culture/OPEN`
+2. `Science/OPEN`
+3. `Varia/OPEN`
 
 ## Notes
 
 - ET remains explicitly blocked because broken grammar and template/recycled `OPEN` content still exists in the remaining unrepaired zones.
-- The repaired `Sports/OPEN` batch still triggers non-blocking structural length warnings in `validate_cards_v2.js`; those warnings should be tightened in a follow-up cleanup pass if strict option-length conformance is required before pilot usage.
+- The repaired `Sports/OPEN` and `Geography/OPEN` batches still trigger non-blocking structural length warnings in `validate_cards_v2.js`; those warnings should be tightened in a follow-up cleanup pass if strict option-length conformance is required before pilot usage.
