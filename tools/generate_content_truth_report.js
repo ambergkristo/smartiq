@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const childProcess = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
@@ -33,7 +34,11 @@ const ISSUE_COUNT_LABELS = {
 
 function parseArgs(args) {
   const outArg = args.find((arg) => arg.startsWith('--out='));
+  const editorialArg = args.find((arg) => arg.startsWith('--editorial-report='));
   return {
+    editorialReportPath: editorialArg
+      ? editorialArg.split('=')[1]
+      : `docs/reports/${new Date().toISOString().slice(0, 10)}-editorial-spot-check.md`,
     outPath: outArg
       ? outArg.split('=')[1]
       : `docs/reports/${new Date().toISOString().slice(0, 10)}-content-truth-audit.md`
@@ -44,8 +49,12 @@ function ensureDir(filePath) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
 }
 
-function formatReadiness(summary, locale) {
+function formatReadiness(summary, structuralSummary, locale) {
   const totalIssues = issueTotal(summary);
+  const validatorClean = structuralSummary.hardErrorCount === 0 && structuralSummary.warningCount === 0;
+  if (totalIssues === 0 && validatorClean) {
+    return 'CONDITIONAL - editorial verification pending';
+  }
   if (totalIssues === 0) {
     return 'CONDITIONAL - semantic blockers cleared; structural/manual review still required';
   }
@@ -62,6 +71,75 @@ function formatReadiness(summary, locale) {
   return 'NOT READY - editorial cleanup required before launch trust';
 }
 
+function extractLeadingJson(text) {
+  const normalized = String(text || '').trim();
+  const boundaryIndex = normalized.indexOf('\n\n');
+  const jsonBlock = boundaryIndex === -1 ? normalized : normalized.slice(0, boundaryIndex);
+  return JSON.parse(jsonBlock);
+}
+
+function runStructuralValidation(datasetFile) {
+  const scriptPath = path.resolve(__dirname, 'validate_cards_v2.js');
+  const result = childProcess.spawnSync(process.execPath, [scriptPath, datasetFile], {
+    cwd: process.cwd(),
+    encoding: 'utf8'
+  });
+
+  if (result.error) {
+    throw result.error;
+  }
+
+  if (result.status !== 0) {
+    throw new Error(result.stderr || result.stdout || `Structural validation failed for ${datasetFile}`);
+  }
+
+  return extractLeadingJson(result.stdout);
+}
+
+function parseEditorialLine(content, label, fallback) {
+  const pattern = new RegExp(`^- ${label}:\\s*(.+)$`, 'm');
+  const match = String(content || '').match(pattern);
+  return match ? match[1].trim() : fallback;
+}
+
+function loadEditorialStatus(editorialReportPath) {
+  const absPath = path.resolve(process.cwd(), editorialReportPath);
+  const fallback = {
+    path: editorialReportPath,
+    validatorCleanStatus: 'UNKNOWN',
+    byLocale: {
+      en: {
+        spotCheckStatus: 'PENDING',
+        launchTrustStatus: 'CONDITIONAL - editorial verification pending'
+      },
+      et: {
+        spotCheckStatus: 'PENDING',
+        launchTrustStatus: 'CONDITIONAL - editorial verification pending'
+      }
+    }
+  };
+
+  if (!fs.existsSync(absPath)) {
+    return fallback;
+  }
+
+  const content = fs.readFileSync(absPath, 'utf8');
+  return {
+    path: editorialReportPath,
+    validatorCleanStatus: parseEditorialLine(content, 'Validator-clean status', fallback.validatorCleanStatus),
+    byLocale: {
+      en: {
+        spotCheckStatus: parseEditorialLine(content, 'EN spot-check status', fallback.byLocale.en.spotCheckStatus),
+        launchTrustStatus: parseEditorialLine(content, 'EN launch-trust status', fallback.byLocale.en.launchTrustStatus)
+      },
+      et: {
+        spotCheckStatus: parseEditorialLine(content, 'ET spot-check status', fallback.byLocale.et.spotCheckStatus),
+        launchTrustStatus: parseEditorialLine(content, 'ET launch-trust status', fallback.byLocale.et.launchTrustStatus)
+      }
+    }
+  };
+}
+
 function topExamples(cardFindings, issueType, limit = 5) {
   return cardFindings
     .filter((entry) => entry.issues.some((issue) => issue.type === issueType))
@@ -76,9 +154,11 @@ function highestRiskAreaLine(area) {
 function summarizeLocale(localeConfig) {
   const { abs, cards } = loadCards(localeConfig.file);
   const result = analyzeCards(cards, abs);
+  const structuralSummary = runStructuralValidation(localeConfig.file);
   return {
     ...localeConfig,
-    result
+    result,
+    structuralSummary
   };
 }
 
@@ -86,7 +166,7 @@ function issueTotal(summary) {
   return Object.values(summary.issueCounts).reduce((sum, value) => sum + Number(value || 0), 0);
 }
 
-function buildReport(localeSummaries) {
+function buildReport(localeSummaries, editorialStatus) {
   const generatedAt = new Date().toISOString();
   const sections = [
     '# Content Truth Audit',
@@ -95,6 +175,7 @@ function buildReport(localeSummaries) {
     '',
     `- Generated: ${generatedAt}`,
     `- Scope: ${localeSummaries.map((entry) => entry.label).join(', ')} SmartIQ locale packs`,
+    `- Editorial spot-check report: \`${editorialStatus.path}\``,
     '',
     '## Executive Summary',
     ''
@@ -102,15 +183,32 @@ function buildReport(localeSummaries) {
 
   for (const locale of localeSummaries) {
     const summary = locale.result.summary;
-    sections.push(`- ${locale.label}: ${formatReadiness(summary, locale.code)} | score ${summary.semanticContentScore.toFixed(3)} | total issues ${issueTotal(summary)}`);
+    const editorialLocale = editorialStatus.byLocale[locale.code];
+    const validatorClean =
+      locale.structuralSummary.hardErrorCount === 0 &&
+      locale.structuralSummary.warningCount === 0 &&
+      issueTotal(summary) === 0;
+    sections.push(
+      `- ${locale.label}: validator-clean ${validatorClean ? 'PASS' : 'FAIL'} | editorial spot-check ${editorialLocale.spotCheckStatus} | launch-trust ${editorialLocale.launchTrustStatus} | score ${summary.semanticContentScore.toFixed(3)} | total issues ${issueTotal(summary)}`
+    );
   }
 
   for (const locale of localeSummaries) {
     const summary = locale.result.summary;
+    const editorialLocale = editorialStatus.byLocale[locale.code];
+    const validatorClean =
+      locale.structuralSummary.hardErrorCount === 0 &&
+      locale.structuralSummary.warningCount === 0 &&
+      issueTotal(summary) === 0;
     sections.push('', `## ${locale.label} Findings`, '');
     sections.push(`- Dataset: \`${locale.file}\``);
     sections.push(`- Semantic content score: ${summary.semanticContentScore.toFixed(3)}`);
-    sections.push(`- Launch readiness: ${formatReadiness(summary, locale.code)}`);
+    sections.push(`- Structural hard errors: ${locale.structuralSummary.hardErrorCount}`);
+    sections.push(`- Structural warning count: ${locale.structuralSummary.warningCount}`);
+    sections.push(`- Validator-clean status: ${validatorClean ? 'PASS' : 'FAIL'}`);
+    sections.push(`- Editorial spot-check: ${editorialLocale.spotCheckStatus}`);
+    sections.push(`- Launch-trust status: ${editorialLocale.launchTrustStatus}`);
+    sections.push(`- Launch readiness: ${formatReadiness(summary, locale.structuralSummary, locale.code)}`);
     sections.push(`- Total issue hits: ${issueTotal(summary)}`);
     sections.push(`- Warning count: ${summary.warningCount}`);
     sections.push('');
@@ -146,9 +244,10 @@ function buildReport(localeSummaries) {
 }
 
 function main() {
-  const { outPath } = parseArgs(process.argv.slice(2));
+  const { editorialReportPath, outPath } = parseArgs(process.argv.slice(2));
   const localeSummaries = LOCALES.map(summarizeLocale);
-  const report = buildReport(localeSummaries);
+  const editorialStatus = loadEditorialStatus(editorialReportPath);
+  const report = buildReport(localeSummaries, editorialStatus);
   const absOutPath = path.resolve(process.cwd(), outPath);
   ensureDir(absOutPath);
   fs.writeFileSync(absOutPath, report, 'utf8');
