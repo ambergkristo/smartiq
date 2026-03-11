@@ -108,11 +108,34 @@ class NextRandomCardServiceLanguageFallbackTest {
                 .hasMessage("language et is disabled");
     }
 
+    @Test
+    void prioritizesMediumPoolForMostDraws() {
+        Card mediumCard = card("medium-1", "Science", "OPEN");
+        mediumCard.setDifficulty("medium");
+        Card hardCard = card("hard-1", "Science", "OPEN");
+        hardCard.setDifficulty("hard");
+
+        List<Card> selected = NextRandomCardService.prioritizeDifficultyPool(List.of(mediumCard, hardCard), 0.20d);
+
+        assertThat(selected).containsExactly(mediumCard);
+    }
+
+    @Test
+    void fallsBackToHardPoolWhenMediumCardsAreUnavailable() {
+        Card hardCard = card("hard-1", "Science", "OPEN");
+        hardCard.setDifficulty("hard");
+
+        List<Card> selected = NextRandomCardService.prioritizeDifficultyPool(List.of(hardCard), 0.10d);
+
+        assertThat(selected).containsExactly(hardCard);
+    }
+
     private static Card card(String id, String topic, String category) {
         Card card = new Card();
         card.setId(id);
         card.setTopic(topic);
         card.setCategory(category);
+        card.setSource("smartiq-verified");
         return card;
     }
 }

@@ -38,7 +38,12 @@ class SeedDataMigrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(greaterThanOrEqualTo(1)))
                 .andExpect(jsonPath("$[*].topic").value(hasItem("History")))
-                .andExpect(jsonPath("$[?(@.topic=='History')].count").value(hasItem(8)));
+                .andExpect(jsonPath("$[?(@.topic=='History')].count").value(hasItem(25)))
+                .andExpect(jsonPath("$[*].topic").value(hasItem("Sport")))
+                .andExpect(jsonPath("$[*].topic").value(hasItem("Science")))
+                .andExpect(jsonPath("$[*].topic").value(hasItem("Geography")))
+                .andExpect(jsonPath("$[*].topic").value(hasItem("Music")))
+                .andExpect(jsonPath("$[*].topic").value(hasItem("Varia")));
     }
 
     @Test
@@ -50,7 +55,7 @@ class SeedDataMigrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.topic").value("History"))
                 .andExpect(jsonPath("$.language").value("en"))
-                .andExpect(jsonPath("$.source").value("smartiq-v2"))
+                .andExpect(jsonPath("$.source").value("smartiq-verified"))
                 .andExpect(jsonPath("$.question").value(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("seed question"))))
                 .andExpect(jsonPath("$.options.length()").value(8));
     }

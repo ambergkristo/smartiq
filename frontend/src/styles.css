@@ -667,54 +667,62 @@ button:disabled {
   cursor: not-allowed;
 }
 
-.topic-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+.topic-selector-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
 }
 
-.topic-grid--skeleton {
+.topic-selector-row--skeleton {
   opacity: 0.9;
 }
 
 .topic-tile-skeleton {
-  height: 92px;
-  border-radius: 18px;
+  flex: 0 0 172px;
+  height: 78px;
+  border-radius: 999px;
   border: 1px solid var(--stroke);
   background: linear-gradient(120deg, rgba(255, 227, 187, 0.14), rgba(255, 227, 187, 0.03));
 }
 
-.topic-tile {
+.topic-chip {
+  flex: 0 0 auto;
+  min-width: 156px;
+  min-height: 78px;
+  padding: 14px 16px;
   text-align: left;
-  background: rgba(255, 231, 197, 0.06);
   color: var(--text);
-  border-radius: 18px;
+  border-radius: 22px;
   border: 1px solid var(--stroke);
-  min-height: 96px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+    rgba(255, 231, 197, 0.04);
+  display: grid;
+  gap: 8px;
+  align-content: center;
   opacity: 0;
   transform: translateY(4px);
   animation: tile-in 220ms ease-out forwards;
 }
 
-.topic-grid .topic-tile:nth-child(1) { animation-delay: 20ms; }
-.topic-grid .topic-tile:nth-child(2) { animation-delay: 45ms; }
-.topic-grid .topic-tile:nth-child(3) { animation-delay: 70ms; }
-.topic-grid .topic-tile:nth-child(4) { animation-delay: 95ms; }
-.topic-grid .topic-tile:nth-child(5) { animation-delay: 120ms; }
-.topic-grid .topic-tile:nth-child(6) { animation-delay: 145ms; }
-.topic-grid .topic-tile:nth-child(7) { animation-delay: 170ms; }
+.topic-selector-row .topic-chip:nth-child(1) { animation-delay: 20ms; }
+.topic-selector-row .topic-chip:nth-child(2) { animation-delay: 45ms; }
+.topic-selector-row .topic-chip:nth-child(3) { animation-delay: 70ms; }
+.topic-selector-row .topic-chip:nth-child(4) { animation-delay: 95ms; }
+.topic-selector-row .topic-chip:nth-child(5) { animation-delay: 120ms; }
+.topic-selector-row .topic-chip:nth-child(6) { animation-delay: 145ms; }
+.topic-selector-row .topic-chip:nth-child(7) { animation-delay: 170ms; }
 
-.topic-tile:hover {
+.topic-chip:hover {
   border-color: rgba(255, 194, 120, 0.48);
 }
 
-.topic-tile.selected {
+.topic-chip.selected {
   border-color: rgba(245, 155, 31, 0.9);
   box-shadow: 0 0 0 1px rgba(245, 155, 31, 0.45), 0 12px 30px rgba(0, 0, 0, 0.32);
-  background: rgba(245, 155, 31, 0.15);
+  background: linear-gradient(180deg, rgba(245, 155, 31, 0.22), rgba(245, 155, 31, 0.08));
 }
 
 .topic-title {
@@ -723,34 +731,14 @@ button:disabled {
 }
 
 .topic-count {
-  justify-self: end;
+  justify-self: start;
   align-self: flex-start;
-  margin-top: 10px;
   padding: 3px 9px;
   border-radius: 999px;
   border: 1px solid var(--stroke);
   color: var(--muted);
   font-size: 0.79rem;
   font-weight: 600;
-}
-
-.difficulty-pills {
-  display: flex;
-  gap: 8px;
-}
-
-.pill {
-  flex: 1;
-  color: var(--text);
-  background: rgba(255, 236, 208, 0.08);
-  border-radius: 999px;
-  min-height: 44px;
-}
-
-.pill.selected {
-  background: linear-gradient(180deg, var(--accent2), var(--accent));
-  color: #2b1207;
-  border-color: rgba(255, 189, 115, 0.75);
 }
 
 .players-chips {
@@ -2877,7 +2865,7 @@ button:disabled {
   .setup-panel,
   .gameplay-stage,
   .scoreboard-panel,
-  .topic-tile,
+  .topic-chip,
   .card-loading-panel,
   .question-card,
   .answer-tile.is-correct,
@@ -2889,12 +2877,6 @@ button:disabled {
   button,
   .answer-tile {
     transition: none !important;
-  }
-}
-
-@media (min-width: 1260px) {
-  .topic-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -3010,21 +2992,13 @@ button:disabled {
     gap: 8px;
   }
 
-  .topic-grid,
-  .difficulty-pills {
-    grid-template-columns: 1fr;
-  }
-
   .host-setup-summary {
     grid-template-columns: 1fr;
   }
 
-  .topic-tile {
-    min-height: 108px;
-  }
-
-  .pill {
-    min-height: 48px;
+  .topic-chip {
+    min-width: 144px;
+    min-height: 72px;
   }
 
   .player-token {

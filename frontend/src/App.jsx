@@ -298,17 +298,13 @@ const SHOW_BUILD_BADGE = import.meta.env.DEV
   || String(import.meta.env.VITE_SHOW_BUILD_BADGE || '').toLowerCase() === 'true';
 const BUILD_SHA = String(import.meta.env.VITE_BUILD_SHA || '').trim();
 
-const DIFFICULTY_OPTIONS = [
-  { value: '1', label: 'Easy' },
-  { value: '2', label: 'Medium' },
-  { value: '3', label: 'Hard' }
-];
-
 const THEME_OPTIONS = [
   { value: 'classic', label: 'Classic' },
   { value: 'ember', label: 'Ember' },
   { value: 'ocean', label: 'Ocean' }
 ];
+
+const TOPIC_SELECTOR_ORDER = ['Sport', 'History', 'Science', 'Geography', 'Music', 'Varia'];
 
 function isTestMode() {
   return String(import.meta.env.MODE || '').toLowerCase() === 'test';
@@ -663,7 +659,7 @@ function SetupSkeleton({ appTitle }) {
     <section className="setup-panel board-surface" data-testid="setup-skeleton">
       <h1>{appTitle}</h1>
       <p>{STRINGS.loadingTopics}</p>
-      <div className="topic-grid topic-grid--skeleton" aria-hidden>
+      <div className="topic-selector-row topic-selector-row--skeleton" aria-hidden>
         {Array.from({ length: 6 }).map((_, index) => (
           <div key={index} className="topic-tile-skeleton" />
         ))}
@@ -797,7 +793,6 @@ function StartScreen({
   const draftPlayers = parsePlayers(playerDraft);
   const activeTopic = config.topic || 'Any Topic';
   const activeLanguage = String(config.lang || 'en').toUpperCase();
-  const activeDifficulty = DIFFICULTY_OPTIONS.find((entry) => entry.value === config.difficulty)?.label || 'Medium';
   const tenantId = runtimeSnapshot?.me?.selectedTenantId || '';
   const planCode = runtimeSnapshot?.subscription?.planCode || '';
   const capabilities = runtimeSnapshot?.capabilities || null;
@@ -807,6 +802,16 @@ function StartScreen({
   const mergedPlayerCount = Array.from(new Set([...players, ...draftPlayers])).length;
   const overHostedPlayerCap = maxHostedPlayers != null && mergedPlayerCount > maxHostedPlayers;
   const canStart = (players.length > 0 || draftPlayers.length > 0) && !overHostedPlayerCap;
+  const sortedTopics = [...topics].sort((left, right) => {
+    const leftOrder = TOPIC_SELECTOR_ORDER.indexOf(left.topic);
+    const rightOrder = TOPIC_SELECTOR_ORDER.indexOf(right.topic);
+    const normalizedLeftOrder = leftOrder === -1 ? TOPIC_SELECTOR_ORDER.length : leftOrder;
+    const normalizedRightOrder = rightOrder === -1 ? TOPIC_SELECTOR_ORDER.length : rightOrder;
+    if (normalizedLeftOrder !== normalizedRightOrder) {
+      return normalizedLeftOrder - normalizedRightOrder;
+    }
+    return String(left.topic).localeCompare(String(right.topic));
+  });
 
   return (
     <section className="setup-panel board-surface host-launch-panel" data-testid="host-launch-panel">
@@ -835,8 +840,8 @@ function StartScreen({
           <strong>{activeTopic}</strong>
         </div>
         <div className="host-setup-summary-card">
-          <span>Difficulty</span>
-          <strong>{activeDifficulty}</strong>
+          <span>Language</span>
+          <strong>{activeLanguage}</strong>
         </div>
         <div className="host-setup-summary-card">
           <span>Players</span>
@@ -845,46 +850,28 @@ function StartScreen({
       </div>
 
       <h2 className="section-title">Topic</h2>
-      <div className="topic-grid" role="radiogroup" aria-label="Topic options">
+      <div className="topic-selector-row" role="radiogroup" aria-label="Topic options">
         <button
           type="button"
-          className={`topic-tile${config.topic === '' ? ' selected' : ''}`}
+          className={`topic-chip${config.topic === '' ? ' selected' : ''}`}
           onClick={() => setConfig((prev) => ({ ...prev, topic: '' }))}
           aria-pressed={config.topic === ''}
         >
           <span className="topic-title">Any Topic</span>
           <span className="topic-count">Random deck</span>
         </button>
-        {topics.map((topic) => {
+        {sortedTopics.map((topic) => {
           const selected = config.topic === topic.topic;
           return (
             <button
               key={topic.topic}
               type="button"
-              className={`topic-tile${selected ? ' selected' : ''}`}
+              className={`topic-chip${selected ? ' selected' : ''}`}
               onClick={() => setConfig((prev) => ({ ...prev, topic: topic.topic }))}
               aria-pressed={selected}
             >
               <span className="topic-title">{topic.topic}</span>
               <span className="topic-count">{topic.count} Q</span>
-            </button>
-          );
-        })}
-      </div>
-
-      <h2 className="section-title">Difficulty</h2>
-      <div className="difficulty-pills" role="radiogroup" aria-label="Difficulty">
-        {DIFFICULTY_OPTIONS.map((entry) => {
-          const selected = config.difficulty === entry.value;
-          return (
-            <button
-              key={entry.value}
-              type="button"
-              className={`pill${selected ? ' selected' : ''}`}
-              onClick={() => setConfig((prev) => ({ ...prev, difficulty: entry.value }))}
-              aria-pressed={selected}
-            >
-              {entry.label}
             </button>
           );
         })}
@@ -1059,7 +1046,6 @@ function loadStoredConfig() {
     if (!parsed || typeof parsed !== 'object') return null;
     return {
       topic: typeof parsed.topic === 'string' ? parsed.topic : '',
-      difficulty: ['1', '2', '3'].includes(String(parsed.difficulty)) ? String(parsed.difficulty) : '2',
       lang: DEFAULT_LANGS.includes(parsed.lang) ? parsed.lang : 'en',
       theme: THEME_OPTIONS.some((entry) => entry.value === parsed.theme) ? parsed.theme : 'classic',
       playersText: typeof parsed.playersText === 'string' ? parsed.playersText : ''
@@ -1295,7 +1281,6 @@ function GameApp() {
   });
   const [config, setConfig] = useState({
     topic: storedConfig?.topic ?? '',
-    difficulty: storedConfig?.difficulty ?? '2',
     lang: storedConfig?.lang ?? 'en',
     theme: storedConfig?.theme ?? 'classic',
     playersText: storedConfig?.playersText ?? ''

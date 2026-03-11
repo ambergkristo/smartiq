@@ -69,8 +69,16 @@ final class CardResponseV2Mapper {
             throw new InvalidCardContractException("Card difficulty is missing: " + source.cardId());
         }
 
+        String normalized = source.difficulty().trim().toLowerCase();
+        if ("medium".equals(normalized)) {
+            return 2;
+        }
+        if ("hard".equals(normalized)) {
+            return 3;
+        }
+
         try {
-            return Integer.parseInt(source.difficulty().trim());
+            return Integer.parseInt(normalized);
         } catch (NumberFormatException ex) {
             throw new InvalidCardContractException("Card difficulty is not numeric: " + source.cardId());
         }

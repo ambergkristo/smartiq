@@ -505,9 +505,8 @@ export async function initiateCheckoutSession({ planCode, billingCycle } = {}) {
 }
 
 function normalizeLanguage(lang) {
-  const etEnabled = String(import.meta.env.VITE_ENABLE_ET || '').toLowerCase() === 'true';
   const value = String(lang ?? '').trim().toLowerCase();
-  if (value === 'et' && etEnabled) {
+  if (value === 'et') {
     return 'et';
   }
   return 'en';

@@ -91,7 +91,7 @@ describe('api error mapping', () => {
 
     expect(payload).toEqual({
       players: ['Alice', 'Bob'],
-      language: 'en',
+      language: 'et',
       topic: 'Science',
       winCondition: 30
     });

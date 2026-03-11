@@ -32,6 +32,9 @@ public class NextRandomCardService {
     private static final int MAX_GAME_ID_LENGTH = 128;
     private static final int MAX_LANGUAGE_LENGTH = 32;
     private static final int MAX_TOPIC_LENGTH = 128;
+    static final String DIFFICULTY_MEDIUM = "medium";
+    static final String DIFFICULTY_HARD = "hard";
+    static final double MEDIUM_SELECTION_WEIGHT = 0.60d;
 
     private final CardRepository cardRepository;
     private final GameHistoryStore gameHistoryStore;
@@ -86,7 +89,8 @@ public class NextRandomCardService {
                 relaxed.add("language");
             }
 
-            Card selected = pickWithRelaxation(pool, last, recentIds, relaxed);
+            List<Card> weightedPool = prioritizeDifficultyPool(pool, ThreadLocalRandom.current().nextDouble());
+            Card selected = pickWithRelaxation(weightedPool, last, recentIds, relaxed);
             gameHistoryStore.append(
                     normalizedGameId,
                     new DeckCardMeta(selected.getId(), resolveCategory(selected), selected.getTopic()),
@@ -181,6 +185,38 @@ public class NextRandomCardService {
         return randomCard(pool);
     }
 
+    static List<Card> prioritizeDifficultyPool(List<Card> pool, double roll) {
+        if (pool == null || pool.isEmpty()) {
+            return List.of();
+        }
+
+        List<Card> mediumCards = pool.stream()
+                .filter(card -> DIFFICULTY_MEDIUM.equals(resolveDifficultyBucket(card)))
+                .toList();
+        List<Card> hardCards = pool.stream()
+                .filter(card -> DIFFICULTY_HARD.equals(resolveDifficultyBucket(card)))
+                .toList();
+
+        if (mediumCards.isEmpty() && hardCards.isEmpty()) {
+            return pool;
+        }
+
+        boolean preferMedium = roll < MEDIUM_SELECTION_WEIGHT;
+        if (preferMedium && !mediumCards.isEmpty()) {
+            return mediumCards;
+        }
+        if (!preferMedium && !hardCards.isEmpty()) {
+            return hardCards;
+        }
+        if (!mediumCards.isEmpty()) {
+            return mediumCards;
+        }
+        if (!hardCards.isEmpty()) {
+            return hardCards;
+        }
+        return pool;
+    }
+
     private static List<Card> applyConstraints(List<Card> pool,
                                                DeckCardMeta last,
                                                Set<String> recentIds,
@@ -240,6 +276,20 @@ public class NextRandomCardService {
         return switch (normalized) {
             case "TRUE_FALSE", "NUMBER", "ORDER", "CENTURY_DECADE", "COLOR", "OPEN" -> normalized;
             default -> "OPEN";
+        };
+    }
+
+    static String resolveDifficultyBucket(Card card) {
+        String raw = card == null ? null : card.getDifficulty();
+        if (raw == null || raw.isBlank()) {
+            return DIFFICULTY_MEDIUM;
+        }
+
+        String normalized = raw.trim().toLowerCase(Locale.ROOT);
+        return switch (normalized) {
+            case "3", DIFFICULTY_HARD -> DIFFICULTY_HARD;
+            case "2", DIFFICULTY_MEDIUM -> DIFFICULTY_MEDIUM;
+            default -> normalized;
         };
     }
 

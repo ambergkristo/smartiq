@@ -479,13 +479,13 @@ public class CardImportRunner implements ApplicationRunner {
 
     private String normalizeDifficulty(JsonNode node) {
         if (node == null || node.isNull()) {
-            return "1";
+            return "medium";
         }
         if (node.isInt() || node.isLong()) {
             return Integer.toString(node.asInt());
         }
         String value = textOrNull(node);
-        return StringUtils.hasText(value) ? value : "1";
+        return StringUtils.hasText(value) ? value : "medium";
     }
 
     private Integer singleCorrectIndex(List<Boolean> correctFlags) {
@@ -622,8 +622,8 @@ public class CardImportRunner implements ApplicationRunner {
         requireText(seed.language(), "Card language is required: " + seed.id());
         requireText(seed.question(), "Card question is required: " + seed.id());
         requireText(seed.difficulty(), "Card difficulty is required: " + seed.id());
-        if (seed.options() == null || seed.options().size() != 10) {
-            throw new IllegalArgumentException("Card must contain exactly 10 options: " + seed.id());
+        if (seed.options() == null || seed.options().size() < 8) {
+            throw new IllegalArgumentException("Card must contain at least 8 options: " + seed.id());
         }
         if (seed.correctIndex() == null && !StringUtils.hasText(seed.correctFlags()) && !StringUtils.hasText(seed.correctMeta())) {
             throw new IllegalArgumentException("Card must include correctness metadata: " + seed.id());

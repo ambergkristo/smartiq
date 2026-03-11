@@ -297,7 +297,7 @@ describe('App tenant runtime integration', () => {
     fireEvent.click(screen.getByRole('button', { name: /duplicate setup/i }));
 
     await waitFor(() => expect(screen.getByTestId('workspace-message')).toHaveTextContent(/duplicate setup ready/i));
-    expect(screen.getByTestId('active-filter')).toHaveTextContent(/science \| en/i);
+    expect(screen.getByTestId('active-filter')).toHaveTextContent(/science \| et/i);
     expect(screen.getAllByText('Host One').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Alice').length).toBeGreaterThan(0);
   });

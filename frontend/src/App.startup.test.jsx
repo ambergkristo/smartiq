@@ -259,7 +259,11 @@ describe('App startup resilience', () => {
   });
 
   test('home actions navigate to start, join, and practice entry screens', async () => {
-    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    fetchTopics.mockResolvedValue([
+      { topic: 'Science', count: 25 },
+      { topic: 'Sport', count: 25 },
+      { topic: 'Music', count: 25 }
+    ]);
 
     render(<App />);
 
@@ -269,6 +273,12 @@ describe('App startup resilience', () => {
     await waitFor(() => expect(screen.getByRole('radiogroup', { name: /topic options/i })).toBeInTheDocument());
     expect(screen.getAllByText(/host setup/i).length).toBeGreaterThan(0);
     expect(screen.getByTestId('host-setup-summary')).toBeInTheDocument();
+    expect(screen.queryByText(/^difficulty$/i)).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /sport/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /science/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /music/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^en$/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^et$/i })).toBeInTheDocument();
     expect(screen.queryByText(/launch console/i)).not.toBeInTheDocument();
 
     window.location.hash = '';
