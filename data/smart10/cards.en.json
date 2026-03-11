@@ -5598,7 +5598,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did WWII end? Context tag: Ancient Rome.",
+    "question": "History: In which year did WWII end?",
     "options": [
       "1975",
       "1935",
@@ -5624,7 +5624,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did Berlin Wall fall? Context tag: Viking Age.",
+    "question": "History: In which year did Berlin Wall fall?",
     "options": [
       "2019",
       "1984",
@@ -5650,7 +5650,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did Apollo 11 land? Context tag: Renaissance.",
+    "question": "History: In which year did Apollo 11 land?",
     "options": [
       "1949",
       "1989",
@@ -5676,7 +5676,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year was Magna Carta signed? Context tag: Industrial Revolution.",
+    "question": "History: In which year was Magna Carta signed?",
     "options": [
       "1215",
       "1210",
@@ -5702,7 +5702,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did USSR dissolve? Context tag: French Revolution.",
+    "question": "History: In which year did USSR dissolve?",
     "options": [
       "1971",
       "2011",
@@ -5728,7 +5728,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did WWI start? Context tag: Silk Road.",
+    "question": "History: In which year did WWI start?",
     "options": [
       "1904",
       "1934",
@@ -5754,7 +5754,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did WWII end? Context tag: Magna Carta.",
+    "question": "History: In which year did WWII end?",
     "options": [
       "1955",
       "1950",
@@ -5780,7 +5780,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did Berlin Wall fall? Context tag: Ottoman Empire.",
+    "question": "History: In which year did Berlin Wall fall?",
     "options": [
       "2029",
       "1994",
@@ -5806,7 +5806,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did Apollo 11 land? Context tag: Ming Dynasty.",
+    "question": "History: In which year did Apollo 11 land?",
     "options": [
       "1979",
       "1999",
@@ -5832,7 +5832,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year was Magna Carta signed? Context tag: Norman Conquest.",
+    "question": "History: In which year was Magna Carta signed?",
     "options": [
       "1185",
       "1255",
@@ -5858,7 +5858,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did USSR dissolve? Context tag: Napoleon.",
+    "question": "History: In which year did USSR dissolve?",
     "options": [
       "1986",
       "1981",
@@ -5884,7 +5884,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did WWI start? Context tag: Julius Caesar.",
+    "question": "History: In which year did WWI start?",
     "options": [
       "1934",
       "1954",
@@ -5910,7 +5910,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did WWII end? Context tag: Alexander the Great.",
+    "question": "History: In which year did WWII end?",
     "options": [
       "1955",
       "1925",
@@ -5936,7 +5936,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did Berlin Wall fall? Context tag: Gutenberg Press.",
+    "question": "History: In which year did Berlin Wall fall?",
     "options": [
       "1959",
       "1979",
@@ -5962,7 +5962,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did Apollo 11 land? Context tag: Roman Republic.",
+    "question": "History: In which year did Apollo 11 land?",
     "options": [
       "1974",
       "1999",
@@ -5988,7 +5988,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year was Magna Carta signed? Context tag: Cold War.",
+    "question": "History: In which year was Magna Carta signed?",
     "options": [
       "1255",
       "1195",
@@ -6014,7 +6014,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did USSR dissolve? Context tag: Berlin Wall.",
+    "question": "History: In which year did USSR dissolve?",
     "options": [
       "1996",
       "1971",
@@ -6040,7 +6040,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did WWI start? Context tag: Apollo 11.",
+    "question": "History: In which year did WWI start?",
     "options": [
       "1884",
       "1919",
@@ -6066,7 +6066,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did WWII end? Context tag: Treaty of Versailles.",
+    "question": "History: In which year did WWII end?",
     "options": [
       "1925",
       "1985",
@@ -6092,7 +6092,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did Berlin Wall fall? Context tag: Byzantine Empire.",
+    "question": "History: In which year did Berlin Wall fall?",
     "options": [
       "1979",
       "2029",
@@ -6118,7 +6118,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did Apollo 11 land? Context tag: Meiji Restoration.",
+    "question": "History: In which year did Apollo 11 land?",
     "options": [
       "1964",
       "1974",
@@ -6144,7 +6144,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year was Magna Carta signed? Context tag: Age of Exploration.",
+    "question": "History: In which year was Magna Carta signed?",
     "options": [
       "1185",
       "1245",
@@ -6170,7 +6170,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did USSR dissolve? Context tag: Bronze Age.",
+    "question": "History: In which year did USSR dissolve?",
     "options": [
       "2031",
       "1971",
@@ -6196,7 +6196,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did WWI start? Context tag: Iron Age.",
+    "question": "History: In which year did WWI start?",
     "options": [
       "1954",
       "1914",
@@ -6222,7 +6222,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did WWII end? Context tag: Harlem Renaissance.",
+    "question": "History: In which year did WWII end?",
     "options": [
       "1940",
       "1975",
@@ -6248,7 +6248,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did Berlin Wall fall? Context tag: Printing Press.",
+    "question": "History: In which year did Berlin Wall fall?",
     "options": [
       "1994",
       "1984",
@@ -6274,7 +6274,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did Apollo 11 land? Context tag: Han Dynasty.",
+    "question": "History: In which year did Apollo 11 land?",
     "options": [
       "2009",
       "1999",
@@ -6300,7 +6300,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year was Magna Carta signed? Context tag: Pax Romana.",
+    "question": "History: In which year was Magna Carta signed?",
     "options": [
       "1235",
       "1195",
@@ -6326,7 +6326,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did USSR dissolve? Context tag: Persian Empire.",
+    "question": "History: In which year did USSR dissolve?",
     "options": [
       "2011",
       "1981",
@@ -6352,7 +6352,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "en",
-    "question": "History: In which year did WWI start? Context tag: Maya Civilization.",
+    "question": "History: In which year did WWI start?",
     "options": [
       "1919",
       "1894",
@@ -6378,7 +6378,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Players on football team on field? Context tag: Football.",
+    "question": "Sports: Players on football team on field?",
     "options": [
       "10",
       "8",
@@ -6404,7 +6404,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Points for a basketball free throw? Context tag: Basketball.",
+    "question": "Sports: Points for a basketball free throw?",
     "options": [
       "4",
       "1",
@@ -6430,7 +6430,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Holes in a standard golf round? Context tag: Tennis.",
+    "question": "Sports: Holes in a standard golf round?",
     "options": [
       "16",
       "21",
@@ -6456,7 +6456,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Sets to win men's Grand Slam match? Context tag: Cricket.",
+    "question": "Sports: Sets to win men's Grand Slam match?",
     "options": [
       "6",
       "2",
@@ -6482,7 +6482,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Distance of marathon in kilometers? Context tag: Rugby.",
+    "question": "Sports: Distance of marathon in kilometers?",
     "options": [
       "34",
       "54",
@@ -6508,7 +6508,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Minutes in one football half? Context tag: Volleyball.",
+    "question": "Sports: Minutes in one football half?",
     "options": [
       "40",
       "50",
@@ -6534,7 +6534,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Players on football team on field? Context tag: Handball.",
+    "question": "Sports: Players on football team on field?",
     "options": [
       "11",
       "9",
@@ -6560,7 +6560,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Points for a basketball free throw? Context tag: Baseball.",
+    "question": "Sports: Points for a basketball free throw?",
     "options": [
       "4",
       "8",
@@ -6586,7 +6586,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Holes in a standard golf round? Context tag: Hockey.",
+    "question": "Sports: Holes in a standard golf round?",
     "options": [
       "20",
       "22",
@@ -6612,7 +6612,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Sets to win men's Grand Slam match? Context tag: Badminton.",
+    "question": "Sports: Sets to win men's Grand Slam match?",
     "options": [
       "1",
       "2",
@@ -6638,7 +6638,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Distance of marathon in kilometers? Context tag: Table Tennis.",
+    "question": "Sports: Distance of marathon in kilometers?",
     "options": [
       "32",
       "50",
@@ -6664,7 +6664,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Minutes in one football half? Context tag: Athletics.",
+    "question": "Sports: Minutes in one football half?",
     "options": [
       "45",
       "40",
@@ -6690,7 +6690,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Players on football team on field? Context tag: Swimming.",
+    "question": "Sports: Players on football team on field?",
     "options": [
       "9",
       "16",
@@ -6716,7 +6716,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Points for a basketball free throw? Context tag: Cycling.",
+    "question": "Sports: Points for a basketball free throw?",
     "options": [
       "1",
       "10",
@@ -6742,7 +6742,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Holes in a standard golf round? Context tag: Boxing.",
+    "question": "Sports: Holes in a standard golf round?",
     "options": [
       "17",
       "14",
@@ -6768,7 +6768,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Sets to win men's Grand Slam match? Context tag: Fencing.",
+    "question": "Sports: Sets to win men's Grand Slam match?",
     "options": [
       "12",
       "10",
@@ -6794,7 +6794,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Distance of marathon in kilometers? Context tag: Judo.",
+    "question": "Sports: Distance of marathon in kilometers?",
     "options": [
       "54",
       "44",
@@ -6820,7 +6820,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Minutes in one football half? Context tag: Karate.",
+    "question": "Sports: Minutes in one football half?",
     "options": [
       "40",
       "50",
@@ -6846,7 +6846,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Players on football team on field? Context tag: Golf.",
+    "question": "Sports: Players on football team on field?",
     "options": [
       "10",
       "16",
@@ -6872,7 +6872,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Points for a basketball free throw? Context tag: Snooker.",
+    "question": "Sports: Points for a basketball free throw?",
     "options": [
       "3",
       "8",
@@ -6898,7 +6898,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Holes in a standard golf round? Context tag: Formula One.",
+    "question": "Sports: Holes in a standard golf round?",
     "options": [
       "17",
       "15",
@@ -6924,7 +6924,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Sets to win men's Grand Slam match? Context tag: MotoGP.",
+    "question": "Sports: Sets to win men's Grand Slam match?",
     "options": [
       "5",
       "8",
@@ -6950,7 +6950,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Distance of marathon in kilometers? Context tag: Marathon.",
+    "question": "Sports: Distance of marathon in kilometers?",
     "options": [
       "47",
       "42",
@@ -6976,7 +6976,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Minutes in one football half? Context tag: Triathlon.",
+    "question": "Sports: Minutes in one football half?",
     "options": [
       "50",
       "40",
@@ -7002,7 +7002,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Players on football team on field? Context tag: Decathlon.",
+    "question": "Sports: Players on football team on field?",
     "options": [
       "16",
       "13",
@@ -7028,7 +7028,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Points for a basketball free throw? Context tag: Wimbledon.",
+    "question": "Sports: Points for a basketball free throw?",
     "options": [
       "21",
       "3",
@@ -7054,7 +7054,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Holes in a standard golf round? Context tag: Olympics.",
+    "question": "Sports: Holes in a standard golf round?",
     "options": [
       "14",
       "15",
@@ -7080,7 +7080,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Sets to win men's Grand Slam match? Context tag: World Cup.",
+    "question": "Sports: Sets to win men's Grand Slam match?",
     "options": [
       "2",
       "7",
@@ -7106,7 +7106,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Distance of marathon in kilometers? Context tag: UEFA Champions League.",
+    "question": "Sports: Distance of marathon in kilometers?",
     "options": [
       "50",
       "32",
@@ -7132,7 +7132,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "en",
-    "question": "Sports: Minutes in one football half? Context tag: NBA Finals.",
+    "question": "Sports: Minutes in one football half?",
     "options": [
       "37",
       "35",
@@ -7158,7 +7158,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many continents are commonly listed? Context tag: Tallinn.",
+    "question": "Geography: How many continents are commonly listed?",
     "options": [
       "6",
       "5",
@@ -7184,7 +7184,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many oceans are commonly named? Context tag: Riga.",
+    "question": "Geography: How many oceans are commonly named?",
     "options": [
       "7",
       "8",
@@ -7210,7 +7210,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many countries are in the EU (2026)? Context tag: Vilnius.",
+    "question": "Geography: How many countries are in the EU (2026)?",
     "options": [
       "35",
       "32",
@@ -7236,7 +7236,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many US states are there? Context tag: Helsinki.",
+    "question": "Geography: How many US states are there?",
     "options": [
       "60",
       "58",
@@ -7262,7 +7262,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many time zones does China use? Context tag: Stockholm.",
+    "question": "Geography: How many time zones does China use?",
     "options": [
       "4",
       "6",
@@ -7288,7 +7288,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many degrees in a full circle? Context tag: Oslo.",
+    "question": "Geography: How many degrees in a full circle?",
     "options": [
       "350",
       "355",
@@ -7314,7 +7314,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many continents are commonly listed? Context tag: Copenhagen.",
+    "question": "Geography: How many continents are commonly listed?",
     "options": [
       "9",
       "5",
@@ -7340,7 +7340,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many oceans are commonly named? Context tag: Reykjavik.",
+    "question": "Geography: How many oceans are commonly named?",
     "options": [
       "5",
       "4",
@@ -7366,7 +7366,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many countries are in the EU (2026)? Context tag: London.",
+    "question": "Geography: How many countries are in the EU (2026)?",
     "options": [
       "39",
       "22",
@@ -7392,7 +7392,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many US states are there? Context tag: Paris.",
+    "question": "Geography: How many US states are there?",
     "options": [
       "52",
       "60",
@@ -7418,7 +7418,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many time zones does China use? Context tag: Berlin.",
+    "question": "Geography: How many time zones does China use?",
     "options": [
       "1",
       "5",
@@ -7444,7 +7444,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many degrees in a full circle? Context tag: Rome.",
+    "question": "Geography: How many degrees in a full circle?",
     "options": [
       "355",
       "380",
@@ -7470,7 +7470,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many continents are commonly listed? Context tag: Madrid.",
+    "question": "Geography: How many continents are commonly listed?",
     "options": [
       "3",
       "9",
@@ -7496,7 +7496,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many oceans are commonly named? Context tag: Lisbon.",
+    "question": "Geography: How many oceans are commonly named?",
     "options": [
       "2",
       "9",
@@ -7522,7 +7522,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many countries are in the EU (2026)? Context tag: Vienna.",
+    "question": "Geography: How many countries are in the EU (2026)?",
     "options": [
       "27",
       "25",
@@ -7548,7 +7548,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many US states are there? Context tag: Prague.",
+    "question": "Geography: How many US states are there?",
     "options": [
       "60",
       "58",
@@ -7574,7 +7574,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many time zones does China use? Context tag: Warsaw.",
+    "question": "Geography: How many time zones does China use?",
     "options": [
       "18",
       "2",
@@ -7600,7 +7600,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many degrees in a full circle? Context tag: Budapest.",
+    "question": "Geography: How many degrees in a full circle?",
     "options": [
       "360",
       "370",
@@ -7626,7 +7626,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many continents are commonly listed? Context tag: Athens.",
+    "question": "Geography: How many continents are commonly listed?",
     "options": [
       "8",
       "12",
@@ -7652,7 +7652,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many oceans are commonly named? Context tag: Dublin.",
+    "question": "Geography: How many oceans are commonly named?",
     "options": [
       "8",
       "10",
@@ -7678,7 +7678,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many countries are in the EU (2026)? Context tag: Canberra.",
+    "question": "Geography: How many countries are in the EU (2026)?",
     "options": [
       "25",
       "39",
@@ -7704,7 +7704,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many US states are there? Context tag: Ottawa.",
+    "question": "Geography: How many US states are there?",
     "options": [
       "48",
       "52",
@@ -7730,7 +7730,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many time zones does China use? Context tag: Tokyo.",
+    "question": "Geography: How many time zones does China use?",
     "options": [
       "12",
       "18",
@@ -7756,7 +7756,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many degrees in a full circle? Context tag: Seoul.",
+    "question": "Geography: How many degrees in a full circle?",
     "options": [
       "350",
       "355",
@@ -7782,7 +7782,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many continents are commonly listed? Context tag: Beijing.",
+    "question": "Geography: How many continents are commonly listed?",
     "options": [
       "10",
       "4",
@@ -7808,7 +7808,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many oceans are commonly named? Context tag: New Delhi.",
+    "question": "Geography: How many oceans are commonly named?",
     "options": [
       "10",
       "4",
@@ -7834,7 +7834,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many countries are in the EU (2026)? Context tag: Nile.",
+    "question": "Geography: How many countries are in the EU (2026)?",
     "options": [
       "35",
       "19",
@@ -7860,7 +7860,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many US states are there? Context tag: Amazon.",
+    "question": "Geography: How many US states are there?",
     "options": [
       "42",
       "55",
@@ -7886,7 +7886,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many time zones does China use? Context tag: Danube.",
+    "question": "Geography: How many time zones does China use?",
     "options": [
       "7",
       "9",
@@ -7912,7 +7912,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "en",
-    "question": "Geography: How many degrees in a full circle? Context tag: Rhine.",
+    "question": "Geography: How many degrees in a full circle?",
     "options": [
       "390",
       "330",
@@ -7938,7 +7938,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many strings on a violin? Context tag: Mona Lisa.",
+    "question": "Culture: How many strings on a violin?",
     "options": [
       "7",
       "3",
@@ -7964,7 +7964,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many books in LOTR trilogy? Context tag: Starry Night.",
+    "question": "Culture: How many books in LOTR trilogy?",
     "options": [
       "3",
       "15",
@@ -7990,7 +7990,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many Oscars in EGOT acronym? Context tag: Hamlet.",
+    "question": "Culture: How many Oscars in EGOT acronym?",
     "options": [
       "3",
       "2",
@@ -8016,7 +8016,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many Harry Potter books exist? Context tag: Macbeth.",
+    "question": "Culture: How many Harry Potter books exist?",
     "options": [
       "3",
       "10",
@@ -8042,7 +8042,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many acts in a classical drama? Context tag: The Odyssey.",
+    "question": "Culture: How many acts in a classical drama?",
     "options": [
       "5",
       "4",
@@ -8068,7 +8068,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many lines in a Shakespeare sonnet? Context tag: The Iliad.",
+    "question": "Culture: How many lines in a Shakespeare sonnet?",
     "options": [
       "16",
       "17",
@@ -8094,7 +8094,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many strings on a violin? Context tag: Don Quixote.",
+    "question": "Culture: How many strings on a violin?",
     "options": [
       "6",
       "11",
@@ -8120,7 +8120,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many books in LOTR trilogy? Context tag: The Great Gatsby.",
+    "question": "Culture: How many books in LOTR trilogy?",
     "options": [
       "3",
       "2",
@@ -8146,7 +8146,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many Oscars in EGOT acronym? Context tag: Pride and Prejudice.",
+    "question": "Culture: How many Oscars in EGOT acronym?",
     "options": [
       "8",
       "4",
@@ -8172,7 +8172,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many Harry Potter books exist? Context tag: War and Peace.",
+    "question": "Culture: How many Harry Potter books exist?",
     "options": [
       "8",
       "10",
@@ -8198,7 +8198,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many acts in a classical drama? Context tag: The Godfather.",
+    "question": "Culture: How many acts in a classical drama?",
     "options": [
       "9",
       "8",
@@ -8224,7 +8224,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many lines in a Shakespeare sonnet? Context tag: Casablanca.",
+    "question": "Culture: How many lines in a Shakespeare sonnet?",
     "options": [
       "12",
       "10",
@@ -8250,7 +8250,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many strings on a violin? Context tag: Citizen Kane.",
+    "question": "Culture: How many strings on a violin?",
     "options": [
       "4",
       "9",
@@ -8276,7 +8276,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many books in LOTR trilogy? Context tag: The Beatles.",
+    "question": "Culture: How many books in LOTR trilogy?",
     "options": [
       "8",
       "3",
@@ -8302,7 +8302,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many Oscars in EGOT acronym? Context tag: Mozart.",
+    "question": "Culture: How many Oscars in EGOT acronym?",
     "options": [
       "9",
       "8",
@@ -8328,7 +8328,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many Harry Potter books exist? Context tag: Beethoven.",
+    "question": "Culture: How many Harry Potter books exist?",
     "options": [
       "5",
       "3",
@@ -8354,7 +8354,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many acts in a classical drama? Context tag: Bach.",
+    "question": "Culture: How many acts in a classical drama?",
     "options": [
       "1",
       "8",
@@ -8380,7 +8380,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many lines in a Shakespeare sonnet? Context tag: Chopin.",
+    "question": "Culture: How many lines in a Shakespeare sonnet?",
     "options": [
       "12",
       "10",
@@ -8406,7 +8406,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many strings on a violin? Context tag: Picasso.",
+    "question": "Culture: How many strings on a violin?",
     "options": [
       "3",
       "5",
@@ -8432,7 +8432,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many books in LOTR trilogy? Context tag: Van Gogh.",
+    "question": "Culture: How many books in LOTR trilogy?",
     "options": [
       "10",
       "6",
@@ -8458,7 +8458,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many Oscars in EGOT acronym? Context tag: Michelangelo.",
+    "question": "Culture: How many Oscars in EGOT acronym?",
     "options": [
       "9",
       "2",
@@ -8484,7 +8484,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many Harry Potter books exist? Context tag: Da Vinci.",
+    "question": "Culture: How many Harry Potter books exist?",
     "options": [
       "10",
       "12",
@@ -8510,7 +8510,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many acts in a classical drama? Context tag: Shakespeare.",
+    "question": "Culture: How many acts in a classical drama?",
     "options": [
       "8",
       "9",
@@ -8536,7 +8536,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many lines in a Shakespeare sonnet? Context tag: Jane Austen.",
+    "question": "Culture: How many lines in a Shakespeare sonnet?",
     "options": [
       "17",
       "13",
@@ -8562,7 +8562,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many strings on a violin? Context tag: Tolstoy.",
+    "question": "Culture: How many strings on a violin?",
     "options": [
       "4",
       "1",
@@ -8588,7 +8588,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many books in LOTR trilogy? Context tag: Dostoevsky.",
+    "question": "Culture: How many books in LOTR trilogy?",
     "options": [
       "8",
       "1",
@@ -8614,7 +8614,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many Oscars in EGOT acronym? Context tag: Homer.",
+    "question": "Culture: How many Oscars in EGOT acronym?",
     "options": [
       "2",
       "7",
@@ -8640,7 +8640,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many Harry Potter books exist? Context tag: Sculpture.",
+    "question": "Culture: How many Harry Potter books exist?",
     "options": [
       "8",
       "11",
@@ -8666,7 +8666,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many acts in a classical drama? Context tag: Opera.",
+    "question": "Culture: How many acts in a classical drama?",
     "options": [
       "9",
       "2",
@@ -8692,7 +8692,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "en",
-    "question": "Culture: How many lines in a Shakespeare sonnet? Context tag: Ballet.",
+    "question": "Culture: How many lines in a Shakespeare sonnet?",
     "options": [
       "16",
       "15",
@@ -8718,7 +8718,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many planets in Solar System? Context tag: Atom.",
+    "question": "Science: How many planets in Solar System?",
     "options": [
       "11",
       "6",
@@ -8744,7 +8744,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many bones in adult human body? Context tag: Molecule.",
+    "question": "Science: How many bones in adult human body?",
     "options": [
       "246",
       "196",
@@ -8770,7 +8770,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many elements in periodic table? Context tag: Electron.",
+    "question": "Science: How many elements in periodic table?",
     "options": [
       "118",
       "113",
@@ -8796,7 +8796,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many DNA bases are canonical? Context tag: Proton.",
+    "question": "Science: How many DNA bases are canonical?",
     "options": [
       "4",
       "3",
@@ -8822,7 +8822,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many minutes in one day? Context tag: Neutron.",
+    "question": "Science: How many minutes in one day?",
     "options": [
       "1450",
       "1445",
@@ -8848,7 +8848,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many protons does carbon have? Context tag: Photon.",
+    "question": "Science: How many protons does carbon have?",
     "options": [
       "2",
       "5",
@@ -8874,7 +8874,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many planets in Solar System? Context tag: Gravity.",
+    "question": "Science: How many planets in Solar System?",
     "options": [
       "12",
       "5",
@@ -8900,7 +8900,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many bones in adult human body? Context tag: Velocity.",
+    "question": "Science: How many bones in adult human body?",
     "options": [
       "201",
       "206",
@@ -8926,7 +8926,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many elements in periodic table? Context tag: Acceleration.",
+    "question": "Science: How many elements in periodic table?",
     "options": [
       "123",
       "116",
@@ -8952,7 +8952,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many DNA bases are canonical? Context tag: Momentum.",
+    "question": "Science: How many DNA bases are canonical?",
     "options": [
       "11",
       "7",
@@ -8978,7 +8978,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many minutes in one day? Context tag: Energy.",
+    "question": "Science: How many minutes in one day?",
     "options": [
       "1410",
       "1420",
@@ -9004,7 +9004,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many protons does carbon have? Context tag: Entropy.",
+    "question": "Science: How many protons does carbon have?",
     "options": [
       "6",
       "10",
@@ -9030,7 +9030,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many planets in Solar System? Context tag: Oxygen.",
+    "question": "Science: How many planets in Solar System?",
     "options": [
       "10",
       "6",
@@ -9056,7 +9056,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many bones in adult human body? Context tag: Hydrogen.",
+    "question": "Science: How many bones in adult human body?",
     "options": [
       "206",
       "196",
@@ -9082,7 +9082,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many elements in periodic table? Context tag: Nitrogen.",
+    "question": "Science: How many elements in periodic table?",
     "options": [
       "128",
       "126",
@@ -9108,7 +9108,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many DNA bases are canonical? Context tag: Carbon.",
+    "question": "Science: How many DNA bases are canonical?",
     "options": [
       "5",
       "2",
@@ -9134,7 +9134,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many minutes in one day? Context tag: Helium.",
+    "question": "Science: How many minutes in one day?",
     "options": [
       "1430",
       "1480",
@@ -9160,7 +9160,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many protons does carbon have? Context tag: Neon.",
+    "question": "Science: How many protons does carbon have?",
     "options": [
       "4",
       "6",
@@ -9186,7 +9186,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many planets in Solar System? Context tag: Sodium.",
+    "question": "Science: How many planets in Solar System?",
     "options": [
       "12",
       "11",
@@ -9212,7 +9212,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many bones in adult human body? Context tag: Potassium.",
+    "question": "Science: How many bones in adult human body?",
     "options": [
       "246",
       "186",
@@ -9238,7 +9238,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many elements in periodic table? Context tag: Calcium.",
+    "question": "Science: How many elements in periodic table?",
     "options": [
       "130",
       "118",
@@ -9264,7 +9264,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many DNA bases are canonical? Context tag: Iron.",
+    "question": "Science: How many DNA bases are canonical?",
     "options": [
       "1",
       "4",
@@ -9290,7 +9290,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many minutes in one day? Context tag: Copper.",
+    "question": "Science: How many minutes in one day?",
     "options": [
       "1440",
       "1470",
@@ -9316,7 +9316,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many protons does carbon have? Context tag: Silver.",
+    "question": "Science: How many protons does carbon have?",
     "options": [
       "8",
       "10",
@@ -9342,7 +9342,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many planets in Solar System? Context tag: Gold.",
+    "question": "Science: How many planets in Solar System?",
     "options": [
       "6",
       "12",
@@ -9368,7 +9368,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many bones in adult human body? Context tag: Mercury.",
+    "question": "Science: How many bones in adult human body?",
     "options": [
       "186",
       "226",
@@ -9394,7 +9394,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many elements in periodic table? Context tag: Venus.",
+    "question": "Science: How many elements in periodic table?",
     "options": [
       "130",
       "110",
@@ -9420,7 +9420,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many DNA bases are canonical? Context tag: Earth.",
+    "question": "Science: How many DNA bases are canonical?",
     "options": [
       "5",
       "9",
@@ -9446,7 +9446,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many minutes in one day? Context tag: Mars.",
+    "question": "Science: How many minutes in one day?",
     "options": [
       "1460",
       "1450",
@@ -9472,7 +9472,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "en",
-    "question": "Science: How many protons does carbon have? Context tag: Jupiter.",
+    "question": "Science: How many protons does carbon have?",
     "options": [
       "9",
       "5",
@@ -9498,7 +9498,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many days in leap year? Context tag: Calendar.",
+    "question": "Varia: How many days in leap year?",
     "options": [
       "396",
       "406",
@@ -9524,7 +9524,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many months in one year? Context tag: Compass.",
+    "question": "Varia: How many months in one year?",
     "options": [
       "16",
       "15",
@@ -9550,7 +9550,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many hours in one day? Context tag: Keyboard.",
+    "question": "Varia: How many hours in one day?",
     "options": [
       "22",
       "32",
@@ -9576,7 +9576,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many minutes in one hour? Context tag: Notebook.",
+    "question": "Varia: How many minutes in one hour?",
     "options": [
       "62",
       "70",
@@ -9602,7 +9602,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many letters in English alphabet? Context tag: Backpack.",
+    "question": "Varia: How many letters in English alphabet?",
     "options": [
       "24",
       "31",
@@ -9628,7 +9628,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many days in one week? Context tag: Umbrella.",
+    "question": "Varia: How many days in one week?",
     "options": [
       "3",
       "9",
@@ -9654,7 +9654,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many days in leap year? Context tag: Clock.",
+    "question": "Varia: How many days in leap year?",
     "options": [
       "346",
       "376",
@@ -9680,7 +9680,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many months in one year? Context tag: Watch.",
+    "question": "Varia: How many months in one year?",
     "options": [
       "12",
       "14",
@@ -9706,7 +9706,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many hours in one day? Context tag: Bicycle.",
+    "question": "Varia: How many hours in one day?",
     "options": [
       "14",
       "36",
@@ -9732,7 +9732,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many minutes in one hour? Context tag: Scooter.",
+    "question": "Varia: How many minutes in one hour?",
     "options": [
       "62",
       "70",
@@ -9758,7 +9758,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many letters in English alphabet? Context tag: Elevator.",
+    "question": "Varia: How many letters in English alphabet?",
     "options": [
       "21",
       "18",
@@ -9784,7 +9784,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many days in one week? Context tag: Subway.",
+    "question": "Varia: How many days in one week?",
     "options": [
       "8",
       "5",
@@ -9810,7 +9810,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many days in leap year? Context tag: Airport.",
+    "question": "Varia: How many days in leap year?",
     "options": [
       "336",
       "396",
@@ -9836,7 +9836,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many months in one year? Context tag: Library.",
+    "question": "Varia: How many months in one year?",
     "options": [
       "9",
       "8",
@@ -9862,7 +9862,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many hours in one day? Context tag: Museum.",
+    "question": "Varia: How many hours in one day?",
     "options": [
       "14",
       "26",
@@ -9888,7 +9888,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many minutes in one hour? Context tag: Restaurant.",
+    "question": "Varia: How many minutes in one hour?",
     "options": [
       "55",
       "62",
@@ -9914,7 +9914,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many letters in English alphabet? Context tag: Recipe.",
+    "question": "Varia: How many letters in English alphabet?",
     "options": [
       "26",
       "16",
@@ -9940,7 +9940,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many days in one week? Context tag: Sandwich.",
+    "question": "Varia: How many days in one week?",
     "options": [
       "6",
       "9",
@@ -9966,7 +9966,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many days in leap year? Context tag: Pasta.",
+    "question": "Varia: How many days in leap year?",
     "options": [
       "366",
       "346",
@@ -9992,7 +9992,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many months in one year? Context tag: Chocolate.",
+    "question": "Varia: How many months in one year?",
     "options": [
       "8",
       "16",
@@ -10018,7 +10018,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many hours in one day? Context tag: Coffee.",
+    "question": "Varia: How many hours in one day?",
     "options": [
       "34",
       "14",
@@ -10044,7 +10044,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many minutes in one hour? Context tag: Tea.",
+    "question": "Varia: How many minutes in one hour?",
     "options": [
       "72",
       "50",
@@ -10070,7 +10070,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many letters in English alphabet? Context tag: Orange.",
+    "question": "Varia: How many letters in English alphabet?",
     "options": [
       "31",
       "36",
@@ -10096,7 +10096,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many days in one week? Context tag: Banana.",
+    "question": "Varia: How many days in one week?",
     "options": [
       "6",
       "7",
@@ -10122,7 +10122,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many days in leap year? Context tag: Apple.",
+    "question": "Varia: How many days in leap year?",
     "options": [
       "356",
       "346",
@@ -10148,7 +10148,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many months in one year? Context tag: Laptop.",
+    "question": "Varia: How many months in one year?",
     "options": [
       "11",
       "17",
@@ -10174,7 +10174,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many hours in one day? Context tag: Smartphone.",
+    "question": "Varia: How many hours in one day?",
     "options": [
       "29",
       "26",
@@ -10200,7 +10200,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many minutes in one hour? Context tag: Headphones.",
+    "question": "Varia: How many minutes in one hour?",
     "options": [
       "55",
       "70",
@@ -10226,7 +10226,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many letters in English alphabet? Context tag: Camera.",
+    "question": "Varia: How many letters in English alphabet?",
     "options": [
       "26",
       "21",
@@ -10252,7 +10252,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "en",
-    "question": "Varia: How many days in one week? Context tag: Printer.",
+    "question": "Varia: How many days in one week?",
     "options": [
       "9",
       "8",
@@ -10278,7 +10278,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these events in chronological order, earliest first. Theme: Ancient Rome.",
+    "question": "History: Put these events in chronological order, earliest first.",
     "options": [
       "WWI begins",
       "WWII begins",
@@ -10314,7 +10314,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these eras in chronological order, oldest first. Theme: Viking Age.",
+    "question": "History: Put these eras in chronological order, oldest first.",
     "options": [
       "Middle Ages",
       "Industrial Revolution",
@@ -10350,7 +10350,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these years in chronological order, earliest first. Theme: Renaissance.",
+    "question": "History: Put these years in chronological order, earliest first.",
     "options": [
       "1215",
       "1989",
@@ -10386,7 +10386,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these events in chronological order, earliest first. Theme: Industrial Revolution.",
+    "question": "History: Put these events in chronological order, earliest first.",
     "options": [
       "WWII begins",
       "Columbus reaches Americas",
@@ -10422,7 +10422,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these eras in chronological order, oldest first. Theme: French Revolution.",
+    "question": "History: Put these eras in chronological order, oldest first.",
     "options": [
       "Enlightenment",
       "Iron Age",
@@ -10458,7 +10458,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these years in chronological order, earliest first. Theme: Silk Road.",
+    "question": "History: Put these years in chronological order, earliest first.",
     "options": [
       "1776",
       "1989",
@@ -10494,7 +10494,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these events in chronological order, earliest first. Theme: Magna Carta.",
+    "question": "History: Put these events in chronological order, earliest first.",
     "options": [
       "Columbus reaches Americas",
       "Apollo 11 landing",
@@ -10530,7 +10530,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these eras in chronological order, oldest first. Theme: Ottoman Empire.",
+    "question": "History: Put these eras in chronological order, oldest first.",
     "options": [
       "Middle Ages",
       "Renaissance",
@@ -10566,7 +10566,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these years in chronological order, earliest first. Theme: Ming Dynasty.",
+    "question": "History: Put these years in chronological order, earliest first.",
     "options": [
       "1776",
       "1492",
@@ -10602,7 +10602,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these events in chronological order, earliest first. Theme: Norman Conquest.",
+    "question": "History: Put these events in chronological order, earliest first.",
     "options": [
       "Berlin Wall falls",
       "Columbus reaches Americas",
@@ -10638,7 +10638,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these eras in chronological order, oldest first. Theme: Napoleon.",
+    "question": "History: Put these eras in chronological order, oldest first.",
     "options": [
       "Middle Ages",
       "Classical Antiquity",
@@ -10674,7 +10674,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these years in chronological order, earliest first. Theme: Julius Caesar.",
+    "question": "History: Put these years in chronological order, earliest first.",
     "options": [
       "1215",
       "1939",
@@ -10710,7 +10710,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these events in chronological order, earliest first. Theme: Alexander the Great.",
+    "question": "History: Put these events in chronological order, earliest first.",
     "options": [
       "Apollo 11 landing",
       "Berlin Wall falls",
@@ -10746,7 +10746,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these eras in chronological order, oldest first. Theme: Gutenberg Press.",
+    "question": "History: Put these eras in chronological order, oldest first.",
     "options": [
       "Enlightenment",
       "Middle Ages",
@@ -10782,7 +10782,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these years in chronological order, earliest first. Theme: Roman Republic.",
+    "question": "History: Put these years in chronological order, earliest first.",
     "options": [
       "1789",
       "1989",
@@ -10818,7 +10818,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these events in chronological order, earliest first. Theme: Cold War.",
+    "question": "History: Put these events in chronological order, earliest first.",
     "options": [
       "French Revolution starts",
       "USSR dissolves",
@@ -10854,7 +10854,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these eras in chronological order, oldest first. Theme: Berlin Wall.",
+    "question": "History: Put these eras in chronological order, oldest first.",
     "options": [
       "Industrial Revolution",
       "Enlightenment",
@@ -10890,7 +10890,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these years in chronological order, earliest first. Theme: Apollo 11.",
+    "question": "History: Put these years in chronological order, earliest first.",
     "options": [
       "1939",
       "1989",
@@ -10926,7 +10926,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these events in chronological order, earliest first. Theme: Treaty of Versailles.",
+    "question": "History: Put these events in chronological order, earliest first.",
     "options": [
       "USSR dissolves",
       "WWII begins",
@@ -10962,7 +10962,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these eras in chronological order, oldest first. Theme: Byzantine Empire.",
+    "question": "History: Put these eras in chronological order, oldest first.",
     "options": [
       "World War II",
       "Renaissance",
@@ -10998,7 +10998,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these years in chronological order, earliest first. Theme: Meiji Restoration.",
+    "question": "History: Put these years in chronological order, earliest first.",
     "options": [
       "1215",
       "1989",
@@ -11034,7 +11034,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these events in chronological order, earliest first. Theme: Age of Exploration.",
+    "question": "History: Put these events in chronological order, earliest first.",
     "options": [
       "Apollo 11 landing",
       "French Revolution starts",
@@ -11070,7 +11070,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these eras in chronological order, oldest first. Theme: Bronze Age.",
+    "question": "History: Put these eras in chronological order, oldest first.",
     "options": [
       "Classical Antiquity",
       "Middle Ages",
@@ -11106,7 +11106,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these years in chronological order, earliest first. Theme: Iron Age.",
+    "question": "History: Put these years in chronological order, earliest first.",
     "options": [
       "1776",
       "1969",
@@ -11142,7 +11142,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these events in chronological order, earliest first. Theme: Harlem Renaissance.",
+    "question": "History: Put these events in chronological order, earliest first.",
     "options": [
       "Apollo 11 landing",
       "Battle of Waterloo",
@@ -11178,7 +11178,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these eras in chronological order, oldest first. Theme: Printing Press.",
+    "question": "History: Put these eras in chronological order, oldest first.",
     "options": [
       "Enlightenment",
       "Classical Antiquity",
@@ -11214,7 +11214,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these years in chronological order, earliest first. Theme: Han Dynasty.",
+    "question": "History: Put these years in chronological order, earliest first.",
     "options": [
       "1066",
       "1215",
@@ -11250,7 +11250,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these events in chronological order, earliest first. Theme: Pax Romana.",
+    "question": "History: Put these events in chronological order, earliest first.",
     "options": [
       "French Revolution starts",
       "WWII ends",
@@ -11286,7 +11286,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these eras in chronological order, oldest first. Theme: Persian Empire.",
+    "question": "History: Put these eras in chronological order, oldest first.",
     "options": [
       "Industrial Revolution",
       "Classical Antiquity",
@@ -11322,7 +11322,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "en",
-    "question": "History: Put these years in chronological order, earliest first. Theme: Maya Civilization.",
+    "question": "History: Put these years in chronological order, earliest first.",
     "options": [
       "1492",
       "1939",
@@ -11358,7 +11358,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these race distances in order, shortest first. Theme: Football.",
+    "question": "Sports: Put these race distances in order, shortest first.",
     "options": [
       "Half marathon",
       "400m sprint",
@@ -11394,7 +11394,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these event durations in order, shortest first. Theme: Basketball.",
+    "question": "Sports: Put these event durations in order, shortest first.",
     "options": [
       "Tennis set",
       "Baseball game",
@@ -11430,7 +11430,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these team sizes in order, lowest first. Theme: Tennis.",
+    "question": "Sports: Put these team sizes in order, lowest first.",
     "options": [
       "Water polo",
       "Volleyball",
@@ -11466,7 +11466,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these race distances in order, shortest first. Theme: Cricket.",
+    "question": "Sports: Put these race distances in order, shortest first.",
     "options": [
       "Marathon",
       "400m sprint",
@@ -11502,7 +11502,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these event durations in order, shortest first. Theme: Rugby.",
+    "question": "Sports: Put these event durations in order, shortest first.",
     "options": [
       "Boxing round",
       "Rugby half",
@@ -11538,7 +11538,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these team sizes in order, lowest first. Theme: Volleyball.",
+    "question": "Sports: Put these team sizes in order, lowest first.",
     "options": [
       "Baseball",
       "Volleyball",
@@ -11574,7 +11574,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these race distances in order, shortest first. Theme: Handball.",
+    "question": "Sports: Put these race distances in order, shortest first.",
     "options": [
       "400m sprint",
       "50km race walk",
@@ -11610,7 +11610,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these event durations in order, shortest first. Theme: Baseball.",
+    "question": "Sports: Put these event durations in order, shortest first.",
     "options": [
       "Baseball game",
       "Rugby half",
@@ -11646,7 +11646,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these team sizes in order, lowest first. Theme: Hockey.",
+    "question": "Sports: Put these team sizes in order, lowest first.",
     "options": [
       "Basketball",
       "Cricket",
@@ -11682,7 +11682,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these race distances in order, shortest first. Theme: Badminton.",
+    "question": "Sports: Put these race distances in order, shortest first.",
     "options": [
       "1500m run",
       "Marathon",
@@ -11718,7 +11718,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these event durations in order, shortest first. Theme: Table Tennis.",
+    "question": "Sports: Put these event durations in order, shortest first.",
     "options": [
       "Tennis set",
       "Rugby half",
@@ -11754,7 +11754,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these team sizes in order, lowest first. Theme: Athletics.",
+    "question": "Sports: Put these team sizes in order, lowest first.",
     "options": [
       "Tennis singles",
       "Football",
@@ -11790,7 +11790,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these race distances in order, shortest first. Theme: Swimming.",
+    "question": "Sports: Put these race distances in order, shortest first.",
     "options": [
       "5000m run",
       "200m sprint",
@@ -11826,7 +11826,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these event durations in order, shortest first. Theme: Cycling.",
+    "question": "Sports: Put these event durations in order, shortest first.",
     "options": [
       "Baseball game",
       "Tennis set",
@@ -11862,7 +11862,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these team sizes in order, lowest first. Theme: Boxing.",
+    "question": "Sports: Put these team sizes in order, lowest first.",
     "options": [
       "Aussie rules football",
       "Volleyball",
@@ -11898,7 +11898,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these race distances in order, shortest first. Theme: Fencing.",
+    "question": "Sports: Put these race distances in order, shortest first.",
     "options": [
       "5000m run",
       "800m run",
@@ -11934,7 +11934,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these event durations in order, shortest first. Theme: Judo.",
+    "question": "Sports: Put these event durations in order, shortest first.",
     "options": [
       "Test cricket day",
       "Table tennis rally",
@@ -11970,7 +11970,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these team sizes in order, lowest first. Theme: Karate.",
+    "question": "Sports: Put these team sizes in order, lowest first.",
     "options": [
       "Baseball",
       "Beach volleyball",
@@ -12006,7 +12006,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these race distances in order, shortest first. Theme: Golf.",
+    "question": "Sports: Put these race distances in order, shortest first.",
     "options": [
       "Marathon",
       "100m sprint",
@@ -12042,7 +12042,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these event durations in order, shortest first. Theme: Snooker.",
+    "question": "Sports: Put these event durations in order, shortest first.",
     "options": [
       "Cricket T20 match",
       "100m sprint race",
@@ -12078,7 +12078,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these team sizes in order, lowest first. Theme: Formula One.",
+    "question": "Sports: Put these team sizes in order, lowest first.",
     "options": [
       "Tennis singles",
       "Volleyball",
@@ -12114,7 +12114,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these race distances in order, shortest first. Theme: MotoGP.",
+    "question": "Sports: Put these race distances in order, shortest first.",
     "options": [
       "100m sprint",
       "Half marathon",
@@ -12150,7 +12150,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these event durations in order, shortest first. Theme: Marathon.",
+    "question": "Sports: Put these event durations in order, shortest first.",
     "options": [
       "Table tennis rally",
       "Basketball quarter",
@@ -12186,7 +12186,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these team sizes in order, lowest first. Theme: Triathlon.",
+    "question": "Sports: Put these team sizes in order, lowest first.",
     "options": [
       "Cricket",
       "Tennis singles",
@@ -12222,7 +12222,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these race distances in order, shortest first. Theme: Decathlon.",
+    "question": "Sports: Put these race distances in order, shortest first.",
     "options": [
       "Half marathon",
       "5000m run",
@@ -12258,7 +12258,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these event durations in order, shortest first. Theme: Wimbledon.",
+    "question": "Sports: Put these event durations in order, shortest first.",
     "options": [
       "Baseball game",
       "Tennis set",
@@ -12294,7 +12294,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these team sizes in order, lowest first. Theme: Olympics.",
+    "question": "Sports: Put these team sizes in order, lowest first.",
     "options": [
       "Tennis singles",
       "Water polo",
@@ -12330,7 +12330,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these race distances in order, shortest first. Theme: World Cup.",
+    "question": "Sports: Put these race distances in order, shortest first.",
     "options": [
       "200m sprint",
       "50km race walk",
@@ -12366,7 +12366,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these event durations in order, shortest first. Theme: UEFA Champions League.",
+    "question": "Sports: Put these event durations in order, shortest first.",
     "options": [
       "100m sprint race",
       "Table tennis rally",
@@ -12402,7 +12402,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "en",
-    "question": "Sports: Put these team sizes in order, lowest first. Theme: NBA Finals.",
+    "question": "Sports: Put these team sizes in order, lowest first.",
     "options": [
       "Tennis singles",
       "Beach volleyball",
@@ -12438,7 +12438,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these countries in order by area, smallest first. Theme: Tallinn.",
+    "question": "Geography: Put these countries in order by area, smallest first.",
     "options": [
       "Argentina",
       "Kazakhstan",
@@ -12474,7 +12474,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these cities in order from south to north. Theme: Riga.",
+    "question": "Geography: Put these cities in order from south to north.",
     "options": [
       "Canberra",
       "Reykjavik",
@@ -12510,7 +12510,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Vilnius.",
+    "question": "Geography: Put these mountains in order by height, lowest first.",
     "options": [
       "Mont Blanc",
       "Kangchenjunga",
@@ -12546,7 +12546,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these countries in order by area, smallest first. Theme: Helsinki.",
+    "question": "Geography: Put these countries in order by area, smallest first.",
     "options": [
       "Ukraine",
       "Iceland",
@@ -12582,7 +12582,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these cities in order from south to north. Theme: Stockholm.",
+    "question": "Geography: Put these cities in order from south to north.",
     "options": [
       "Cape Town",
       "Buenos Aires",
@@ -12618,7 +12618,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Oslo.",
+    "question": "Geography: Put these mountains in order by height, lowest first.",
     "options": [
       "Vinson Massif",
       "Kilimanjaro",
@@ -12654,7 +12654,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these countries in order by area, smallest first. Theme: Copenhagen.",
+    "question": "Geography: Put these countries in order by area, smallest first.",
     "options": [
       "China",
       "Russia",
@@ -12690,7 +12690,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these cities in order from south to north. Theme: Reykjavik.",
+    "question": "Geography: Put these cities in order from south to north.",
     "options": [
       "Stockholm",
       "Athens",
@@ -12726,7 +12726,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these mountains in order by height, lowest first. Theme: London.",
+    "question": "Geography: Put these mountains in order by height, lowest first.",
     "options": [
       "Vinson Massif",
       "Kilimanjaro",
@@ -12762,7 +12762,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these countries in order by area, smallest first. Theme: Paris.",
+    "question": "Geography: Put these countries in order by area, smallest first.",
     "options": [
       "United Kingdom",
       "Kazakhstan",
@@ -12798,7 +12798,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these cities in order from south to north. Theme: Berlin.",
+    "question": "Geography: Put these cities in order from south to north.",
     "options": [
       "Nairobi",
       "Cairo",
@@ -12834,7 +12834,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Rome.",
+    "question": "Geography: Put these mountains in order by height, lowest first.",
     "options": [
       "Denali",
       "Mont Blanc",
@@ -12870,7 +12870,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these countries in order by area, smallest first. Theme: Madrid.",
+    "question": "Geography: Put these countries in order by area, smallest first.",
     "options": [
       "Kazakhstan",
       "France",
@@ -12906,7 +12906,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these cities in order from south to north. Theme: Lisbon.",
+    "question": "Geography: Put these cities in order from south to north.",
     "options": [
       "Nairobi",
       "Cape Town",
@@ -12942,7 +12942,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Vienna.",
+    "question": "Geography: Put these mountains in order by height, lowest first.",
     "options": [
       "Everest",
       "Kangchenjunga",
@@ -12978,7 +12978,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these countries in order by area, smallest first. Theme: Prague.",
+    "question": "Geography: Put these countries in order by area, smallest first.",
     "options": [
       "Iceland",
       "Kazakhstan",
@@ -13014,7 +13014,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these cities in order from south to north. Theme: Warsaw.",
+    "question": "Geography: Put these cities in order from south to north.",
     "options": [
       "Athens",
       "Nairobi",
@@ -13050,7 +13050,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Budapest.",
+    "question": "Geography: Put these mountains in order by height, lowest first.",
     "options": [
       "Kangchenjunga",
       "Aconcagua",
@@ -13086,7 +13086,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these countries in order by area, smallest first. Theme: Athens.",
+    "question": "Geography: Put these countries in order by area, smallest first.",
     "options": [
       "France",
       "Canada",
@@ -13122,7 +13122,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these cities in order from south to north. Theme: Dublin.",
+    "question": "Geography: Put these cities in order from south to north.",
     "options": [
       "Cairo",
       "Nairobi",
@@ -13158,7 +13158,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Canberra.",
+    "question": "Geography: Put these mountains in order by height, lowest first.",
     "options": [
       "Vinson Massif",
       "K2",
@@ -13194,7 +13194,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these countries in order by area, smallest first. Theme: Ottawa.",
+    "question": "Geography: Put these countries in order by area, smallest first.",
     "options": [
       "Kazakhstan",
       "India",
@@ -13230,7 +13230,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these cities in order from south to north. Theme: Tokyo.",
+    "question": "Geography: Put these cities in order from south to north.",
     "options": [
       "Nairobi",
       "Cape Town",
@@ -13266,7 +13266,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Seoul.",
+    "question": "Geography: Put these mountains in order by height, lowest first.",
     "options": [
       "Mont Blanc",
       "Kangchenjunga",
@@ -13302,7 +13302,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these countries in order by area, smallest first. Theme: Beijing.",
+    "question": "Geography: Put these countries in order by area, smallest first.",
     "options": [
       "Ukraine",
       "Kazakhstan",
@@ -13338,7 +13338,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these cities in order from south to north. Theme: New Delhi.",
+    "question": "Geography: Put these cities in order from south to north.",
     "options": [
       "Reykjavik",
       "Nairobi",
@@ -13374,7 +13374,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Nile.",
+    "question": "Geography: Put these mountains in order by height, lowest first.",
     "options": [
       "Aconcagua",
       "K2",
@@ -13410,7 +13410,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these countries in order by area, smallest first. Theme: Amazon.",
+    "question": "Geography: Put these countries in order by area, smallest first.",
     "options": [
       "France",
       "Canada",
@@ -13446,7 +13446,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these cities in order from south to north. Theme: Danube.",
+    "question": "Geography: Put these cities in order from south to north.",
     "options": [
       "Singapore",
       "Stockholm",
@@ -13482,7 +13482,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "en",
-    "question": "Geography: Put these mountains in order by height, lowest first. Theme: Rhine.",
+    "question": "Geography: Put these mountains in order by height, lowest first.",
     "options": [
       "Lhotse",
       "Everest",
@@ -13518,7 +13518,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Mona Lisa.",
+    "question": "Culture: Put these art periods in chronological order, earliest first.",
     "options": [
       "Baroque",
       "Cubism",
@@ -13554,7 +13554,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these releases in chronological order, earliest first. Theme: Starry Night.",
+    "question": "Culture: Put these releases in chronological order, earliest first.",
     "options": [
       "Blade Runner",
       "The Godfather",
@@ -13590,7 +13590,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Hamlet.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first.",
     "options": [
       "Modernism",
       "Realism",
@@ -13626,7 +13626,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Macbeth.",
+    "question": "Culture: Put these art periods in chronological order, earliest first.",
     "options": [
       "Pop art",
       "Neoclassicism",
@@ -13662,7 +13662,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these releases in chronological order, earliest first. Theme: The Odyssey.",
+    "question": "Culture: Put these releases in chronological order, earliest first.",
     "options": [
       "Pulp Fiction",
       "The Godfather",
@@ -13698,7 +13698,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: The Iliad.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first.",
     "options": [
       "Romanticism",
       "Epic poetry age",
@@ -13734,7 +13734,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Don Quixote.",
+    "question": "Culture: Put these art periods in chronological order, earliest first.",
     "options": [
       "Surrealism",
       "Neoclassicism",
@@ -13770,7 +13770,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these releases in chronological order, earliest first. Theme: The Great Gatsby.",
+    "question": "Culture: Put these releases in chronological order, earliest first.",
     "options": [
       "Jaws",
       "Pulp Fiction",
@@ -13806,7 +13806,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Pride and Prejudice.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first.",
     "options": [
       "Renaissance literature",
       "Classical drama",
@@ -13842,7 +13842,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: War and Peace.",
+    "question": "Culture: Put these art periods in chronological order, earliest first.",
     "options": [
       "Surrealism",
       "Classical art",
@@ -13878,7 +13878,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these releases in chronological order, earliest first. Theme: The Godfather.",
+    "question": "Culture: Put these releases in chronological order, earliest first.",
     "options": [
       "Blade Runner",
       "Inception",
@@ -13914,7 +13914,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Casablanca.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first.",
     "options": [
       "Romanticism",
       "Enlightenment writing",
@@ -13950,7 +13950,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Citizen Kane.",
+    "question": "Culture: Put these art periods in chronological order, earliest first.",
     "options": [
       "Romanticism",
       "Classical art",
@@ -13986,7 +13986,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these releases in chronological order, earliest first. Theme: The Beatles.",
+    "question": "Culture: Put these releases in chronological order, earliest first.",
     "options": [
       "The Matrix",
       "Casablanca",
@@ -14022,7 +14022,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Mozart.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first.",
     "options": [
       "Renaissance literature",
       "Romanticism",
@@ -14058,7 +14058,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Beethoven.",
+    "question": "Culture: Put these art periods in chronological order, earliest first.",
     "options": [
       "Neoclassicism",
       "Romanticism",
@@ -14094,7 +14094,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these releases in chronological order, earliest first. Theme: Bach.",
+    "question": "Culture: Put these releases in chronological order, earliest first.",
     "options": [
       "Pulp Fiction",
       "Star Wars",
@@ -14130,7 +14130,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Chopin.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first.",
     "options": [
       "Enlightenment writing",
       "Postmodernism",
@@ -14166,7 +14166,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Picasso.",
+    "question": "Culture: Put these art periods in chronological order, earliest first.",
     "options": [
       "Neoclassicism",
       "Romanticism",
@@ -14202,7 +14202,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these releases in chronological order, earliest first. Theme: Van Gogh.",
+    "question": "Culture: Put these releases in chronological order, earliest first.",
     "options": [
       "Blade Runner",
       "Jaws",
@@ -14238,7 +14238,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Michelangelo.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first.",
     "options": [
       "Contemporary fiction",
       "Romanticism",
@@ -14274,7 +14274,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Da Vinci.",
+    "question": "Culture: Put these art periods in chronological order, earliest first.",
     "options": [
       "Baroque",
       "Cubism",
@@ -14310,7 +14310,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these releases in chronological order, earliest first. Theme: Shakespeare.",
+    "question": "Culture: Put these releases in chronological order, earliest first.",
     "options": [
       "Star Wars",
       "The Godfather",
@@ -14346,7 +14346,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Jane Austen.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first.",
     "options": [
       "Enlightenment writing",
       "Postmodernism",
@@ -14382,7 +14382,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Tolstoy.",
+    "question": "Culture: Put these art periods in chronological order, earliest first.",
     "options": [
       "Medieval art",
       "Pop art",
@@ -14418,7 +14418,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these releases in chronological order, earliest first. Theme: Dostoevsky.",
+    "question": "Culture: Put these releases in chronological order, earliest first.",
     "options": [
       "Casablanca",
       "Pulp Fiction",
@@ -14454,7 +14454,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Homer.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first.",
     "options": [
       "Epic poetry age",
       "Renaissance literature",
@@ -14490,7 +14490,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these art periods in chronological order, earliest first. Theme: Sculpture.",
+    "question": "Culture: Put these art periods in chronological order, earliest first.",
     "options": [
       "Renaissance",
       "Surrealism",
@@ -14526,7 +14526,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these releases in chronological order, earliest first. Theme: Opera.",
+    "question": "Culture: Put these releases in chronological order, earliest first.",
     "options": [
       "Citizen Kane",
       "The Godfather",
@@ -14562,7 +14562,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "en",
-    "question": "Culture: Put these literary periods in chronological order, earliest first. Theme: Ballet.",
+    "question": "Culture: Put these literary periods in chronological order, earliest first.",
     "options": [
       "Postmodernism",
       "Renaissance literature",
@@ -14598,7 +14598,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these planets in order from the Sun outward. Theme: Atom.",
+    "question": "Science: Put these planets in order from the Sun outward.",
     "options": [
       "Jupiter",
       "Eris",
@@ -14634,7 +14634,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Molecule.",
+    "question": "Science: Put these SI prefixes in order, smallest first.",
     "options": [
       "hecto",
       "centi",
@@ -14670,7 +14670,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these scales in order, smallest first. Theme: Electron.",
+    "question": "Science: Put these scales in order, smallest first.",
     "options": [
       "cell",
       "bacterium",
@@ -14706,7 +14706,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these planets in order from the Sun outward. Theme: Proton.",
+    "question": "Science: Put these planets in order from the Sun outward.",
     "options": [
       "Mercury",
       "Mars",
@@ -14742,7 +14742,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Neutron.",
+    "question": "Science: Put these SI prefixes in order, smallest first.",
     "options": [
       "micro",
       "base unit",
@@ -14778,7 +14778,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these scales in order, smallest first. Theme: Photon.",
+    "question": "Science: Put these scales in order, smallest first.",
     "options": [
       "cell",
       "organ",
@@ -14814,7 +14814,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these planets in order from the Sun outward. Theme: Gravity.",
+    "question": "Science: Put these planets in order from the Sun outward.",
     "options": [
       "Mercury",
       "Saturn",
@@ -14850,7 +14850,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Velocity.",
+    "question": "Science: Put these SI prefixes in order, smallest first.",
     "options": [
       "milli",
       "base unit",
@@ -14886,7 +14886,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these scales in order, smallest first. Theme: Acceleration.",
+    "question": "Science: Put these scales in order, smallest first.",
     "options": [
       "tissue",
       "cell",
@@ -14922,7 +14922,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these planets in order from the Sun outward. Theme: Momentum.",
+    "question": "Science: Put these planets in order from the Sun outward.",
     "options": [
       "Pluto",
       "Saturn",
@@ -14958,7 +14958,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Energy.",
+    "question": "Science: Put these SI prefixes in order, smallest first.",
     "options": [
       "hecto",
       "nano",
@@ -14994,7 +14994,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these scales in order, smallest first. Theme: Entropy.",
+    "question": "Science: Put these scales in order, smallest first.",
     "options": [
       "ecosystem",
       "atom",
@@ -15030,7 +15030,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these planets in order from the Sun outward. Theme: Oxygen.",
+    "question": "Science: Put these planets in order from the Sun outward.",
     "options": [
       "Venus",
       "Uranus",
@@ -15066,7 +15066,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Hydrogen.",
+    "question": "Science: Put these SI prefixes in order, smallest first.",
     "options": [
       "base unit",
       "kilo",
@@ -15102,7 +15102,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these scales in order, smallest first. Theme: Nitrogen.",
+    "question": "Science: Put these scales in order, smallest first.",
     "options": [
       "molecule",
       "organ",
@@ -15138,7 +15138,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these planets in order from the Sun outward. Theme: Carbon.",
+    "question": "Science: Put these planets in order from the Sun outward.",
     "options": [
       "Eris",
       "Venus",
@@ -15174,7 +15174,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Helium.",
+    "question": "Science: Put these SI prefixes in order, smallest first.",
     "options": [
       "deca",
       "hecto",
@@ -15210,7 +15210,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these scales in order, smallest first. Theme: Neon.",
+    "question": "Science: Put these scales in order, smallest first.",
     "options": [
       "molecule",
       "tissue",
@@ -15246,7 +15246,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these planets in order from the Sun outward. Theme: Sodium.",
+    "question": "Science: Put these planets in order from the Sun outward.",
     "options": [
       "Saturn",
       "Uranus",
@@ -15282,7 +15282,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Potassium.",
+    "question": "Science: Put these SI prefixes in order, smallest first.",
     "options": [
       "mega",
       "centi",
@@ -15318,7 +15318,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these scales in order, smallest first. Theme: Calcium.",
+    "question": "Science: Put these scales in order, smallest first.",
     "options": [
       "molecule",
       "tissue",
@@ -15354,7 +15354,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these planets in order from the Sun outward. Theme: Iron.",
+    "question": "Science: Put these planets in order from the Sun outward.",
     "options": [
       "Pluto",
       "Neptune",
@@ -15390,7 +15390,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Copper.",
+    "question": "Science: Put these SI prefixes in order, smallest first.",
     "options": [
       "nano",
       "centi",
@@ -15426,7 +15426,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these scales in order, smallest first. Theme: Silver.",
+    "question": "Science: Put these scales in order, smallest first.",
     "options": [
       "virus",
       "tissue",
@@ -15462,7 +15462,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these planets in order from the Sun outward. Theme: Gold.",
+    "question": "Science: Put these planets in order from the Sun outward.",
     "options": [
       "Earth",
       "Venus",
@@ -15498,7 +15498,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Mercury.",
+    "question": "Science: Put these SI prefixes in order, smallest first.",
     "options": [
       "mega",
       "deci",
@@ -15534,7 +15534,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these scales in order, smallest first. Theme: Venus.",
+    "question": "Science: Put these scales in order, smallest first.",
     "options": [
       "ecosystem",
       "molecule",
@@ -15570,7 +15570,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these planets in order from the Sun outward. Theme: Earth.",
+    "question": "Science: Put these planets in order from the Sun outward.",
     "options": [
       "Saturn",
       "Mars",
@@ -15606,7 +15606,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these SI prefixes in order, smallest first. Theme: Mars.",
+    "question": "Science: Put these SI prefixes in order, smallest first.",
     "options": [
       "kilo",
       "deca",
@@ -15642,7 +15642,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "en",
-    "question": "Science: Put these scales in order, smallest first. Theme: Jupiter.",
+    "question": "Science: Put these scales in order, smallest first.",
     "options": [
       "ecosystem",
       "molecule",
@@ -15678,7 +15678,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these time units in order, shortest first. Theme: Calendar.",
+    "question": "Varia: Put these time units in order, shortest first.",
     "options": [
       "second",
       "day",
@@ -15714,7 +15714,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these file sizes in order, smallest first. Theme: Compass.",
+    "question": "Varia: Put these file sizes in order, smallest first.",
     "options": [
       "gigabyte",
       "kilobyte",
@@ -15750,7 +15750,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these money amounts in order, lowest first. Theme: Keyboard.",
+    "question": "Varia: Put these money amounts in order, lowest first.",
     "options": [
       "10 cents",
       "1 dollar",
@@ -15786,7 +15786,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these time units in order, shortest first. Theme: Notebook.",
+    "question": "Varia: Put these time units in order, shortest first.",
     "options": [
       "month",
       "hour",
@@ -15822,7 +15822,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these file sizes in order, smallest first. Theme: Backpack.",
+    "question": "Varia: Put these file sizes in order, smallest first.",
     "options": [
       "petabyte",
       "exabyte",
@@ -15858,7 +15858,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these money amounts in order, lowest first. Theme: Umbrella.",
+    "question": "Varia: Put these money amounts in order, lowest first.",
     "options": [
       "50 cents",
       "1 dollar",
@@ -15894,7 +15894,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these time units in order, shortest first. Theme: Clock.",
+    "question": "Varia: Put these time units in order, shortest first.",
     "options": [
       "millennium",
       "century",
@@ -15930,7 +15930,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these file sizes in order, smallest first. Theme: Watch.",
+    "question": "Varia: Put these file sizes in order, smallest first.",
     "options": [
       "megabyte",
       "bit",
@@ -15966,7 +15966,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these money amounts in order, lowest first. Theme: Bicycle.",
+    "question": "Varia: Put these money amounts in order, lowest first.",
     "options": [
       "50 cents",
       "1 cent",
@@ -16002,7 +16002,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these time units in order, shortest first. Theme: Scooter.",
+    "question": "Varia: Put these time units in order, shortest first.",
     "options": [
       "minute",
       "millennium",
@@ -16038,7 +16038,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these file sizes in order, smallest first. Theme: Elevator.",
+    "question": "Varia: Put these file sizes in order, smallest first.",
     "options": [
       "petabyte",
       "gigabyte",
@@ -16074,7 +16074,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these money amounts in order, lowest first. Theme: Subway.",
+    "question": "Varia: Put these money amounts in order, lowest first.",
     "options": [
       "1 dollar",
       "50 cents",
@@ -16110,7 +16110,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these time units in order, shortest first. Theme: Airport.",
+    "question": "Varia: Put these time units in order, shortest first.",
     "options": [
       "hour",
       "year",
@@ -16146,7 +16146,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these file sizes in order, smallest first. Theme: Library.",
+    "question": "Varia: Put these file sizes in order, smallest first.",
     "options": [
       "petabyte",
       "kilobyte",
@@ -16182,7 +16182,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these money amounts in order, lowest first. Theme: Museum.",
+    "question": "Varia: Put these money amounts in order, lowest first.",
     "options": [
       "5 cents",
       "10 dollars",
@@ -16218,7 +16218,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these time units in order, shortest first. Theme: Restaurant.",
+    "question": "Varia: Put these time units in order, shortest first.",
     "options": [
       "hour",
       "day",
@@ -16254,7 +16254,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these file sizes in order, smallest first. Theme: Recipe.",
+    "question": "Varia: Put these file sizes in order, smallest first.",
     "options": [
       "zettabyte",
       "kilobyte",
@@ -16290,7 +16290,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these money amounts in order, lowest first. Theme: Sandwich.",
+    "question": "Varia: Put these money amounts in order, lowest first.",
     "options": [
       "5 cents",
       "10 dollars",
@@ -16326,7 +16326,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these time units in order, shortest first. Theme: Pasta.",
+    "question": "Varia: Put these time units in order, shortest first.",
     "options": [
       "day",
       "decade",
@@ -16362,7 +16362,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these file sizes in order, smallest first. Theme: Chocolate.",
+    "question": "Varia: Put these file sizes in order, smallest first.",
     "options": [
       "exabyte",
       "terabyte",
@@ -16398,7 +16398,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these money amounts in order, lowest first. Theme: Coffee.",
+    "question": "Varia: Put these money amounts in order, lowest first.",
     "options": [
       "20 dollars",
       "10 dollars",
@@ -16434,7 +16434,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these time units in order, shortest first. Theme: Tea.",
+    "question": "Varia: Put these time units in order, shortest first.",
     "options": [
       "month",
       "decade",
@@ -16470,7 +16470,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these file sizes in order, smallest first. Theme: Orange.",
+    "question": "Varia: Put these file sizes in order, smallest first.",
     "options": [
       "byte",
       "terabyte",
@@ -16506,7 +16506,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these money amounts in order, lowest first. Theme: Banana.",
+    "question": "Varia: Put these money amounts in order, lowest first.",
     "options": [
       "5 cents",
       "20 dollars",
@@ -16542,7 +16542,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these time units in order, shortest first. Theme: Apple.",
+    "question": "Varia: Put these time units in order, shortest first.",
     "options": [
       "hour",
       "minute",
@@ -16578,7 +16578,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these file sizes in order, smallest first. Theme: Laptop.",
+    "question": "Varia: Put these file sizes in order, smallest first.",
     "options": [
       "megabyte",
       "byte",
@@ -16614,7 +16614,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these money amounts in order, lowest first. Theme: Smartphone.",
+    "question": "Varia: Put these money amounts in order, lowest first.",
     "options": [
       "10 dollars",
       "2 dollars",
@@ -16650,7 +16650,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these time units in order, shortest first. Theme: Headphones.",
+    "question": "Varia: Put these time units in order, shortest first.",
     "options": [
       "year",
       "millennium",
@@ -16686,7 +16686,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these file sizes in order, smallest first. Theme: Camera.",
+    "question": "Varia: Put these file sizes in order, smallest first.",
     "options": [
       "byte",
       "bit",
@@ -16722,7 +16722,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "en",
-    "question": "Varia: Put these money amounts in order, lowest first. Theme: Printer.",
+    "question": "Varia: Put these money amounts in order, lowest first.",
     "options": [
       "10 dollars",
       "1 cent",
