@@ -26659,22 +26659,24 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Select statements that are true. Topic clue: Football.",
+    "question": "Sports: Which statements about football are true?",
     "options": [
-      "Rugby uses an oval ball.",
-      "Hat trick means five goals.",
-      "Olympics happen every year.",
-      "Tennis is only indoor sport.",
-      "Rugby uses a ping-pong ball.",
-      "Tour de France is a swim race.",
-      "Marathon length is 12 km.",
-      "Offside is a tennis rule.",
-      "Cricket has no bat.",
-      "Marathon length is 42.195 km."
+      "Football uses a round ball.",
+      "Football is played on ice.",
+      "Players score with rackets.",
+      "A hoop decides every score.",
+      "Cricket wickets are used in football.",
+      "A match has nine innings.",
+      "Football has no goalkeeper.",
+      "A team fields eleven players.",
+      "Offside is part of football.",
+      "The FIFA World Cup is football."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        7,
+        8,
         9
       ]
     },
@@ -26687,24 +26689,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Which statements are correct? Topic clue: Basketball.",
+    "question": "Sports: Which statements about basketball are true?",
     "options": [
-      "Free throw is from baseball.",
-      "Rugby uses a ping-pong ball.",
-      "Olympics happen every year.",
-      "Tour de France is a swim race.",
-      "Wimbledon is a tennis tournament.",
-      "A hat trick means three goals.",
-      "Wimbledon is a golf major.",
-      "Offside is a tennis rule.",
-      "Hat trick means five goals.",
-      "Tennis can be played on clay."
+      "Teams usually field five players.",
+      "Basketball uses wickets.",
+      "Basketball is played with dribbling.",
+      "Offside decides every attack in basketball.",
+      "The hoop is ten feet high in pro play.",
+      "A three-point line is part of basketball.",
+      "Players shoot into a football goal.",
+      "A scrum restarts basketball.",
+      "Matches are played in innings.",
+      "Basketball is played with clubs."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        2,
         4,
-        5,
-        9
+        5
       ]
     },
     "difficulty": "2",
@@ -26716,25 +26719,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Pick all true statements. Topic clue: Tennis.",
+    "question": "Sports: Which statements about tennis are true?",
     "options": [
-      "Olympics are held every four years.",
-      "Free throw is from baseball.",
-      "Rugby uses a ping-pong ball.",
-      "Basketball has no hoops.",
-      "Tour de France is a swim race.",
-      "Cricket has no bat.",
-      "Offside is a football rule.",
-      "Free throw is from basketball.",
-      "Marathon length is 42.195 km.",
-      "Wimbledon is a golf major."
+      "Tennis can be played in singles.",
+      "Love means zero in tennis.",
+      "Wimbledon is a Grand Slam event.",
+      "Tennis uses an oval ball.",
+      "A tennis match has quarters like basketball.",
+      "Tennis is played on ice by default.",
+      "A wicket stands behind each tennis player.",
+      "Tennis uses clubs and tees.",
+      "Offside is a core tennis rule.",
+      "A net divides the tennis court."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        6,
-        7,
-        8
+        1,
+        2,
+        9
       ]
     },
     "difficulty": "2",
@@ -26746,26 +26749,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Identify factual statements. Topic clue: Cricket.",
+    "question": "Sports: Which statements about cricket are true?",
     "options": [
-      "Offside is a tennis rule.",
-      "Stanley Cup is for basketball.",
-      "Rugby uses an oval ball.",
-      "Tennis is only indoor sport.",
-      "Marathon length is 42.195 km.",
-      "Cricket uses wickets.",
-      "Rugby uses a ping-pong ball.",
-      "Stanley Cup is for ice hockey.",
-      "Basketball has no hoops.",
-      "Olympics are held every four years."
+      "A cricket course has eighteen holes.",
+      "Test cricket can last five days.",
+      "Wickets are central in cricket.",
+      "A cricket match always has four quarters.",
+      "Cricket is played with a shuttlecock.",
+      "Cricket goals hang from a crossbar.",
+      "Cricket is an ice sport.",
+      "Cricket is played with bat and ball.",
+      "An over has six legal balls.",
+      "Cricket uses fencing masks to score."
     ],
     "correct": {
       "correctIndexes": [
+        1,
         2,
-        4,
-        5,
         7,
-        9
+        8
       ]
     },
     "difficulty": "2",
@@ -26777,23 +26779,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Which options are accurate? Topic clue: Rugby.",
+    "question": "Sports: Which statements about rugby are true?",
     "options": [
-      "Wimbledon is a golf major.",
-      "Basketball has no hoops.",
-      "Free throw is from baseball.",
-      "Tennis is only indoor sport.",
-      "Tennis can be played on clay.",
-      "Offside is a tennis rule.",
-      "Rugby uses a ping-pong ball.",
-      "Marathon length is 12 km.",
-      "Marathon length is 42.195 km.",
-      "Tour de France is a swim race."
+      "Rugby uses an oval ball.",
+      "Scrums are part of rugby.",
+      "Rugby is played on a golf green.",
+      "A try scores points in rugby.",
+      "A basket rim decides every score in rugby.",
+      "Rugby matches use wickets behind the line.",
+      "Rugby is played with a shuttlecock.",
+      "Rugby has no contact at all.",
+      "Rugby uses only helmets and bats.",
+      "Tackling is allowed in rugby."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        8
+        0,
+        1,
+        3,
+        9
       ]
     },
     "difficulty": "2",
@@ -26805,24 +26809,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Select all valid statements. Topic clue: Volleyball.",
+    "question": "Sports: Which statements about volleyball are true?",
     "options": [
-      "Stanley Cup is for ice hockey.",
-      "Wimbledon is a golf major.",
-      "Cricket has no bat.",
-      "Offside is a tennis rule.",
-      "Marathon length is 12 km.",
-      "Stanley Cup is for basketball.",
-      "Basketball has no hoops.",
-      "Marathon length is 42.195 km.",
-      "Tennis can be played on clay.",
-      "Rugby uses a ping-pong ball."
+      "Volleyball is played on ice skates.",
+      "Indoor volleyball has six players per side.",
+      "Beach volleyball is an Olympic discipline.",
+      "A wicket stands in each corner of the court.",
+      "Volleyball has offside like football.",
+      "Volleyball is played with bats.",
+      "A net separates the two sides.",
+      "Rally scoring is used in modern volleyball.",
+      "A volleyball match has innings.",
+      "Volleyball is fought in a boxing ring."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        7,
-        8
+        1,
+        2,
+        6,
+        7
       ]
     },
     "difficulty": "2",
@@ -26834,25 +26839,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Select statements that are true. Topic clue: Handball.",
+    "question": "Sports: Which statements about handball are true?",
     "options": [
-      "A hat trick means three goals.",
-      "Marathon length is 42.195 km.",
-      "Stanley Cup is for basketball.",
-      "Cricket has no bat.",
-      "Basketball uses a hoop.",
-      "Tour de France is a swim race.",
-      "Free throw is from basketball.",
-      "Olympics happen every year.",
-      "Offside is a tennis rule.",
-      "Rugby uses a ping-pong ball."
+      "The six-meter goal area is important in handball.",
+      "A handball game has nine innings.",
+      "Handball goals are scored by throwing the ball.",
+      "Handball is played only in water.",
+      "The net is waist-high through the center.",
+      "A standard team has seven players including the keeper.",
+      "Handball is played on horseback.",
+      "Handball uses a cue and reds.",
+      "Handball uses rackets.",
+      "Fast breaks are common in handball."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
-        4,
-        6
+        2,
+        5,
+        9
       ]
     },
     "difficulty": "2",
@@ -26864,25 +26869,24 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Which statements are correct? Topic clue: Baseball.",
+    "question": "Sports: Which statements about baseball are true?",
     "options": [
-      "A hat trick means three goals.",
-      "Cricket has no bat.",
-      "Tennis is only indoor sport.",
-      "Olympics happen every year.",
-      "Tennis can be played on clay.",
-      "Cricket uses wickets.",
-      "Offside is a football rule.",
-      "Offside is a tennis rule.",
-      "Basketball uses a hoop.",
-      "Hat trick means five goals."
+      "Baseball has an offside trap.",
+      "A home run can clear the fence.",
+      "A regulation game has nine innings.",
+      "Baseball uses a scrum to restart play.",
+      "Baseball uses a bat and bases.",
+      "A hoop stands above home plate.",
+      "Baseball uses cue sticks.",
+      "Baseball is played with an oval ball.",
+      "A pitcher throws to a batter.",
+      "Baseball is played on ice."
     ],
     "correct": {
       "correctIndexes": [
-        0,
+        1,
+        2,
         4,
-        5,
-        6,
         8
       ]
     },
@@ -26895,23 +26899,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Pick all true statements. Topic clue: Hockey.",
+    "question": "Sports: Which statements about ice hockey are true?",
     "options": [
-      "Olympics happen every year.",
-      "Offside is a tennis rule.",
-      "Cricket uses wickets.",
-      "Tennis is only indoor sport.",
-      "Cricket has no bat.",
-      "Tour de France is a swim race.",
-      "Free throw is from basketball.",
-      "Stanley Cup is for basketball.",
-      "Free throw is from baseball.",
-      "Rugby uses a ping-pong ball."
+      "Ice hockey is played on clay courts.",
+      "Ice hockey is a water-only sport.",
+      "A match is decided by golf par.",
+      "Players serve over a net like tennis.",
+      "Ice hockey uses boxing gloves to score.",
+      "Ice hockey uses wickets and overs.",
+      "A standard side has six players including the goalie.",
+      "Teams skate on ice in hockey.",
+      "Ice hockey is played with a puck.",
+      "A power play follows some penalties."
     ],
     "correct": {
       "correctIndexes": [
-        2,
-        6
+        6,
+        7,
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -26923,23 +26929,24 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Identify factual statements. Topic clue: Badminton.",
+    "question": "Sports: Which statements about badminton are true?",
     "options": [
-      "Tour de France is a cycling race.",
-      "Offside is a tennis rule.",
-      "Cricket has no bat.",
-      "Tour de France is a swim race.",
-      "Marathon length is 12 km.",
-      "Free throw is from basketball.",
-      "Wimbledon is a golf major.",
-      "Free throw is from baseball.",
-      "Olympics happen every year.",
-      "Olympics are held every four years."
+      "Badminton uses a shuttlecock.",
+      "Badminton is played with cue sticks.",
+      "Badminton is scored in innings.",
+      "Badminton uses wickets.",
+      "Badminton holes are numbered one to eighteen.",
+      "Badminton uses a leather football.",
+      "Badminton is played only on ice.",
+      "Players strike with rackets.",
+      "A net divides the court.",
+      "Badminton is an Olympic sport."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        5,
+        7,
+        8,
         9
       ]
     },
@@ -26952,25 +26959,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Which options are accurate? Topic clue: Table Tennis.",
+    "question": "Sports: Which statements about table tennis are true?",
     "options": [
-      "Tour de France is a swim race.",
-      "Basketball uses a hoop.",
-      "Tennis can be played on clay.",
-      "Cricket has no bat.",
-      "Marathon length is 12 km.",
-      "Tour de France is a cycling race.",
-      "Wimbledon is a golf major.",
-      "Olympics happen every year.",
-      "Free throw is from basketball.",
-      "Stanley Cup is for basketball."
+      "Games are often played to eleven points.",
+      "Table tennis uses wickets.",
+      "Table tennis is played on a table with a net.",
+      "A boxing bell starts each table tennis round.",
+      "Table tennis is an Olympic sport.",
+      "Players use paddles and a light ball.",
+      "Table tennis has offsides on every rally.",
+      "A horse is part of table tennis equipment.",
+      "Table tennis is played in a swimming pool.",
+      "Table tennis uses golf clubs."
     ],
     "correct": {
       "correctIndexes": [
-        1,
+        0,
         2,
-        5,
-        8
+        4,
+        5
       ]
     },
     "difficulty": "2",
@@ -26982,25 +26989,24 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Select all valid statements. Topic clue: Athletics.",
+    "question": "Sports: Which statements about athletics are true?",
     "options": [
-      "Basketball has no hoops.",
-      "Marathon length is 12 km.",
-      "Hat trick means five goals.",
-      "Offside is a tennis rule.",
-      "Rugby uses an oval ball.",
-      "Wimbledon is a tennis tournament.",
-      "Wimbledon is a golf major.",
-      "Marathon length is 42.195 km.",
-      "Offside is a football rule.",
-      "A hat trick means three goals."
+      "Athletics includes running events.",
+      "Shot put is an athletics event.",
+      "Long jump belongs to athletics.",
+      "Athletics uses a puck and skates.",
+      "Athletics is played with a bat and wicket.",
+      "Athletics is only an indoor cue sport.",
+      "Athletics has a goalkeeper in each event.",
+      "Athletics requires a net across the field.",
+      "Athletics is scored by golf par.",
+      "Athletics is central to the Olympics."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        5,
-        7,
-        8,
+        0,
+        1,
+        2,
         9
       ]
     },
@@ -27013,23 +27019,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Select statements that are true. Topic clue: Swimming.",
+    "question": "Sports: Which statements about swimming are true?",
     "options": [
-      "Free throw is from baseball.",
-      "Basketball has no hoops.",
-      "Hat trick means five goals.",
-      "Rugby uses an oval ball.",
-      "Offside is a football rule.",
-      "Olympics happen every year.",
-      "Tennis is only indoor sport.",
-      "Cricket has no bat.",
-      "Offside is a tennis rule.",
-      "Wimbledon is a golf major."
+      "A cue stick is the main swimming tool.",
+      "Pool turns are important in many races.",
+      "Swimming is an Olympic sport.",
+      "Swimming has an offside rule.",
+      "Swimming uses a bat and bases.",
+      "Swimming is scored with hoops.",
+      "Swimming is played on grass courts.",
+      "Swimming races are held in water.",
+      "Freestyle, backstroke and breaststroke are swimming strokes.",
+      "Swimming uses wickets and overs."
     ],
     "correct": {
       "correctIndexes": [
-        3,
-        4
+        1,
+        2,
+        7,
+        8
       ]
     },
     "difficulty": "2",
@@ -27041,24 +27049,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Which statements are correct? Topic clue: Cycling.",
+    "question": "Sports: Which statements about cycling are true?",
     "options": [
-      "Cricket uses wickets.",
-      "Tour de France is a swim race.",
-      "Free throw is from baseball.",
-      "Hat trick means five goals.",
-      "Wimbledon is a tennis tournament.",
-      "Olympics happen every year.",
-      "Cricket has no bat.",
-      "Marathon length is 12 km.",
-      "Marathon length is 42.195 km.",
-      "Tennis is only indoor sport."
+      "Cycling includes road and track events.",
+      "Helmets are common in competitive cycling.",
+      "Cycling always happens in a swimming pool.",
+      "The Tour de France is a cycling race.",
+      "Cycling is judged by boxing rounds only.",
+      "Cycling is played on horseback.",
+      "Cycling is played with a net and shuttlecock.",
+      "Cycling uses wickets.",
+      "A cue ball starts cycling races.",
+      "Drafting matters in many cycling events."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        8
+        1,
+        3,
+        9
       ]
     },
     "difficulty": "2",
@@ -27070,25 +27079,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Pick all true statements. Topic clue: Boxing.",
+    "question": "Sports: Which statements about boxing are true?",
     "options": [
-      "Hat trick means five goals.",
-      "Wimbledon is a golf major.",
-      "Rugby uses an oval ball.",
-      "Marathon length is 12 km.",
-      "Tennis can be played on clay.",
-      "Offside is a tennis rule.",
-      "Tour de France is a cycling race.",
-      "Cricket has no bat.",
-      "Olympics are held every four years.",
-      "Basketball has no hoops."
+      "Boxing is a water race.",
+      "Boxing bouts take place in a ring.",
+      "A knockout can end a boxing match.",
+      "Boxing uses a net across the court.",
+      "Boxing is scored by putting a ball in a hoop.",
+      "Boxing uses wickets and a bat.",
+      "Boxers wear gloves.",
+      "Professional boxing is fought in rounds.",
+      "Boxing is played on ice with skates.",
+      "Boxing requires a cue stick."
     ],
     "correct": {
       "correctIndexes": [
+        1,
         2,
-        4,
         6,
-        8
+        7
       ]
     },
     "difficulty": "2",
@@ -27100,26 +27109,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Identify factual statements. Topic clue: Fencing.",
+    "question": "Sports: Which statements about fencing are true?",
     "options": [
-      "Tour de France is a swim race.",
-      "Wimbledon is a golf major.",
-      "Tennis can be played on clay.",
-      "Free throw is from basketball.",
-      "Marathon length is 42.195 km.",
-      "Olympics are held every four years.",
-      "Tennis is only indoor sport.",
-      "Free throw is from baseball.",
-      "Basketball uses a hoop.",
-      "Cricket has no bat."
+      "Touches score points in fencing.",
+      "A wicket stands behind each fencer.",
+      "Foil, epee and sabre are fencing weapons.",
+      "Fencing is a marathon road race.",
+      "Fencing is scored by goals into a net.",
+      "Fencers wear protective masks.",
+      "Fencing is played in a swimming lane.",
+      "Fencing uses golf clubs.",
+      "Fencing uses a shuttlecock.",
+      "Fencing is an Olympic sport."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         2,
-        3,
-        4,
         5,
-        8
+        9
       ]
     },
     "difficulty": "2",
@@ -27131,23 +27139,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Which options are accurate? Topic clue: Judo.",
+    "question": "Sports: Which statements about judo are true?",
     "options": [
-      "Tour de France is a swim race.",
-      "Rugby uses an oval ball.",
-      "Hat trick means five goals.",
-      "Offside is a tennis rule.",
-      "Free throw is from baseball.",
-      "Rugby uses a ping-pong ball.",
-      "Basketball has no hoops.",
-      "Marathon length is 12 km.",
-      "Cricket has no bat.",
-      "Olympics are held every four years."
+      "Judoka score by sinking putts.",
+      "Judo originated in Japan.",
+      "Judoka wear a gi.",
+      "Judo uses a puck on ice.",
+      "Judo features throws and grappling.",
+      "Judo is played over a high net.",
+      "Judo is a cycling stage race.",
+      "Judo is played with rackets.",
+      "An ippon ends the contest immediately.",
+      "Wickets are part of judo."
     ],
     "correct": {
       "correctIndexes": [
         1,
-        9
+        2,
+        4,
+        8
       ]
     },
     "difficulty": "2",
@@ -27159,24 +27169,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Select all valid statements. Topic clue: Karate.",
+    "question": "Sports: Which statements about karate are true?",
     "options": [
-      "Tour de France is a cycling race.",
-      "Wimbledon is a golf major.",
-      "Tour de France is a swim race.",
-      "Free throw is from basketball.",
-      "Offside is a tennis rule.",
-      "Basketball has no hoops.",
-      "Stanley Cup is for basketball.",
-      "Rugby uses an oval ball.",
-      "Hat trick means five goals.",
-      "Free throw is from baseball."
+      "Karate is played with bats.",
+      "Karate is played with an oval rugby ball.",
+      "Karate is an equestrian discipline.",
+      "Karate is scored by holes under par.",
+      "Karate requires a net and shuttlecock.",
+      "Karate uses a cue ball.",
+      "Karate developed in Okinawa and Japan.",
+      "Kata is part of karate.",
+      "Karate includes punches and kicks.",
+      "Belts are used in karate grading."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        3,
-        7
+        6,
+        7,
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -27188,25 +27199,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Select statements that are true. Topic clue: Golf.",
+    "question": "Sports: Which statements about golf are true?",
     "options": [
-      "Rugby uses an oval ball.",
-      "Offside is a tennis rule.",
-      "Cricket has no bat.",
-      "Wimbledon is a golf major.",
-      "Marathon length is 42.195 km.",
-      "Tour de France is a cycling race.",
-      "Marathon length is 12 km.",
-      "Tour de France is a swim race.",
-      "Olympics are held every four years.",
-      "Olympics happen every year."
+      "A standard course often has eighteen holes.",
+      "Putting happens on the green.",
+      "Golf uses a puck and skates.",
+      "Golf is played across a net.",
+      "Golf is played with clubs and a ball.",
+      "Par describes the target score on a hole.",
+      "Golf is played in a swimming pool.",
+      "Golf uses wickets and overs.",
+      "A scrum restarts golf play.",
+      "Golf is scored by knockouts in rounds."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        1,
         4,
-        5,
-        8
+        5
       ]
     },
     "difficulty": "2",
@@ -27218,26 +27229,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Which statements are correct? Topic clue: Snooker.",
+    "question": "Sports: Which statements about snooker are true?",
     "options": [
-      "Olympics happen every year.",
-      "Wimbledon is a tennis tournament.",
-      "Stanley Cup is for ice hockey.",
-      "Tour de France is a cycling race.",
-      "Stanley Cup is for basketball.",
-      "Tennis can be played on clay.",
-      "A hat trick means three goals.",
-      "Tennis is only indoor sport.",
-      "Basketball has no hoops.",
-      "Cricket has no bat."
+      "A full rack starts with fifteen reds.",
+      "Snooker is played with rackets.",
+      "Snooker is a cue sport.",
+      "Snooker is played with an oval ball.",
+      "A maximum break is 147.",
+      "Snooker is played on a large baize table.",
+      "Snooker is an ice race.",
+      "Snooker matches have innings.",
+      "Snooker uses a football goal.",
+      "Snooker uses hurdles and sand pits."
     ],
     "correct": {
       "correctIndexes": [
-        1,
+        0,
         2,
-        3,
-        5,
-        6
+        4,
+        5
       ]
     },
     "difficulty": "2",
@@ -27249,23 +27259,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Pick all true statements. Topic clue: Formula One.",
+    "question": "Sports: Which statements about Formula One are true?",
     "options": [
-      "Hat trick means five goals.",
-      "A hat trick means three goals.",
-      "Olympics are held every four years.",
-      "Stanley Cup is for basketball.",
-      "Cricket has no bat.",
-      "Free throw is from baseball.",
-      "Olympics happen every year.",
-      "Wimbledon is a golf major.",
-      "Offside is a tennis rule.",
-      "Marathon length is 12 km."
+      "Formula One uses single-seater race cars.",
+      "Pit stops matter in many races.",
+      "Grands Prix make up the Formula One season.",
+      "Formula One is raced on motorcycles.",
+      "Formula One uses wickets and overs.",
+      "Formula One is scored by goals into a net.",
+      "Formula One is a cue sport.",
+      "Formula One uses rackets.",
+      "Formula One is played in a pool.",
+      "Pole position comes from qualifying."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        2
+        2,
+        9
       ]
     },
     "difficulty": "2",
@@ -27277,24 +27289,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Identify factual statements. Topic clue: MotoGP.",
+    "question": "Sports: Which statements about MotoGP are true?",
     "options": [
-      "Hat trick means five goals.",
-      "Offside is a football rule.",
-      "Wimbledon is a golf major.",
-      "Free throw is from baseball.",
-      "Cricket has no bat.",
-      "Cricket uses wickets.",
-      "Olympics happen every year.",
-      "Marathon length is 42.195 km.",
-      "Tennis is only indoor sport.",
-      "Stanley Cup is for basketball."
+      "MotoGP is a fencing discipline.",
+      "Race starts are critical in MotoGP.",
+      "MotoGP is a world championship series.",
+      "MotoGP is played on ice.",
+      "MotoGP uses open-wheel cars.",
+      "MotoGP uses wickets and bats.",
+      "MotoGP is a net sport.",
+      "MotoGP is motorcycle road racing.",
+      "Riders lean heavily through corners.",
+      "MotoGP is judged by golf par."
     ],
     "correct": {
       "correctIndexes": [
         1,
-        5,
-        7
+        2,
+        7,
+        8
       ]
     },
     "difficulty": "2",
@@ -27306,24 +27319,24 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Which options are accurate? Topic clue: Marathon.",
+    "question": "Sports: Which statements about the marathon are true?",
     "options": [
-      "Rugby uses an oval ball.",
-      "A hat trick means three goals.",
-      "Marathon length is 12 km.",
-      "Cricket has no bat.",
-      "Hat trick means five goals.",
-      "Marathon length is 42.195 km.",
-      "Tennis is only indoor sport.",
-      "Wimbledon is a golf major.",
-      "Rugby uses a ping-pong ball.",
-      "Wimbledon is a tennis tournament."
+      "A marathon is 42.195 km long.",
+      "The Olympic program includes a marathon.",
+      "A marathon is a best-of-seven series.",
+      "The marathon is a road running event.",
+      "A marathon is played with clubs.",
+      "A marathon requires a net across the course.",
+      "A marathon is swum in a pool.",
+      "A marathon has wickets and overs.",
+      "A marathon uses a puck on ice.",
+      "Its name comes from ancient Greece."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        5,
+        3,
         9
       ]
     },
@@ -27336,25 +27349,24 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Select all valid statements. Topic clue: Triathlon.",
+    "question": "Sports: Which statements about triathlon are true?",
     "options": [
-      "Cricket uses wickets.",
-      "Marathon length is 42.195 km.",
-      "Tour de France is a swim race.",
-      "Olympics are held every four years.",
-      "Wimbledon is a golf major.",
-      "Free throw is from basketball.",
-      "Olympics happen every year.",
-      "Stanley Cup is for ice hockey.",
-      "Tennis is only indoor sport.",
-      "Offside is a tennis rule."
+      "Triathlon is played on horseback.",
+      "Triathlon combines swimming, cycling and running.",
+      "Triathlon is not a single-sport event.",
+      "Triathlon is decided by penalty shootout.",
+      "Triathlon uses wickets and a crease.",
+      "Triathlon is played with a bat.",
+      "Transitions matter in triathlon.",
+      "There is an Olympic-distance triathlon.",
+      "Triathlon is only an indoor sport.",
+      "Triathlon is a cue sport."
     ],
     "correct": {
       "correctIndexes": [
-        0,
         1,
-        3,
-        5,
+        2,
+        6,
         7
       ]
     },
@@ -27367,22 +27379,24 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Select statements that are true. Topic clue: Decathlon.",
+    "question": "Sports: Which statements about the decathlon are true?",
     "options": [
-      "Cricket has no bat.",
-      "Rugby uses a ping-pong ball.",
-      "Wimbledon is a golf major.",
-      "Olympics happen every year.",
-      "Free throw is from baseball.",
-      "Stanley Cup is for basketball.",
-      "Stanley Cup is for ice hockey.",
-      "Marathon length is 12 km.",
-      "Tour de France is a swim race.",
-      "Free throw is from basketball."
+      "Pole vault belongs to the decathlon.",
+      "The decathlon is swum in lanes.",
+      "The decathlon has ten events.",
+      "The decathlon is a motorcycle series.",
+      "The decathlon uses wickets and a bat.",
+      "The 100 meters is part of the decathlon.",
+      "The decathlon has eighteen holes.",
+      "The decathlon uses a puck and goal cage.",
+      "The decathlon is a team ball sport.",
+      "Points across all events decide the winner."
     ],
     "correct": {
       "correctIndexes": [
-        6,
+        0,
+        2,
+        5,
         9
       ]
     },
@@ -27395,24 +27409,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Which statements are correct? Topic clue: Wimbledon.",
+    "question": "Sports: Which statements about Wimbledon are true?",
     "options": [
-      "Cricket uses wickets.",
-      "Rugby uses an oval ball.",
-      "Hat trick means five goals.",
-      "Marathon length is 42.195 km.",
-      "Tour de France is a swim race.",
-      "Rugby uses a ping-pong ball.",
-      "Tennis is only indoor sport.",
-      "Free throw is from baseball.",
-      "Basketball has no hoops.",
-      "Cricket has no bat."
+      "Wimbledon is played by national football teams.",
+      "White clothing is a Wimbledon tradition.",
+      "Wimbledon is played on grass.",
+      "Wimbledon is a golf major.",
+      "Wimbledon is a Grand Slam tournament.",
+      "Wimbledon uses cue sticks.",
+      "Wimbledon is played on ice.",
+      "Wimbledon is a clay-court event.",
+      "Wimbledon takes place in London.",
+      "Wimbledon is raced on motorcycles."
     ],
     "correct": {
       "correctIndexes": [
-        0,
         1,
-        3
+        2,
+        4,
+        8
       ]
     },
     "difficulty": "2",
@@ -27424,24 +27439,24 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Pick all true statements. Topic clue: Olympics.",
+    "question": "Sports: Which statements about the Olympics are true?",
     "options": [
-      "Free throw is from basketball.",
-      "A hat trick means three goals.",
-      "Basketball has no hoops.",
-      "Wimbledon is a golf major.",
-      "Rugby uses an oval ball.",
-      "Olympics happen every year.",
-      "Rugby uses a ping-pong ball.",
-      "Tour de France is a swim race.",
-      "Free throw is from baseball.",
-      "Basketball uses a hoop."
+      "The Olympics happen every year in one city.",
+      "The Olympics are a best-of-seven series.",
+      "The Olympics use wickets and overs.",
+      "The Olympics are a cue-sport league.",
+      "The Olympics are played only on grass courts.",
+      "The Olympics are only for football clubs.",
+      "Athletes compete for medals at the Olympics.",
+      "Host cities are chosen years in advance.",
+      "The Olympics are a multi-sport event.",
+      "Summer Olympics are held every four years."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        1,
-        4,
+        6,
+        7,
+        8,
         9
       ]
     },
@@ -27454,26 +27469,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Identify factual statements. Topic clue: World Cup.",
+    "question": "Sports: Which statements about the FIFA World Cup are true?",
     "options": [
-      "Hat trick means five goals.",
-      "Marathon length is 12 km.",
-      "Rugby uses a ping-pong ball.",
-      "Cricket uses wickets.",
-      "Stanley Cup is for ice hockey.",
-      "Tennis can be played on clay.",
-      "Stanley Cup is for basketball.",
-      "Marathon length is 42.195 km.",
-      "Olympics are held every four years.",
-      "Wimbledon is a golf major."
+      "The tournament is held every four years.",
+      "Selected countries host the World Cup.",
+      "The World Cup is a club-only event.",
+      "The World Cup is played on clay courts.",
+      "The FIFA World Cup is for national teams.",
+      "The winner is decided in the final.",
+      "The World Cup is a one-lap car race.",
+      "The World Cup uses cue sticks.",
+      "The World Cup is a golf tournament.",
+      "The World Cup uses wickets and overs."
     ],
     "correct": {
       "correctIndexes": [
-        3,
+        0,
+        1,
         4,
-        5,
-        7,
-        8
+        5
       ]
     },
     "difficulty": "2",
@@ -27485,23 +27499,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Which options are accurate? Topic clue: UEFA Champions League.",
+    "question": "Sports: Which statements about the UEFA Champions League are true?",
     "options": [
-      "Tennis is only indoor sport.",
-      "Rugby uses a ping-pong ball.",
-      "Basketball uses a hoop.",
-      "Basketball has no hoops.",
-      "Stanley Cup is for basketball.",
-      "Cricket has no bat.",
-      "Tour de France is a swim race.",
-      "Offside is a football rule.",
-      "Hat trick means five goals.",
-      "Wimbledon is a golf major."
+      "The Champions League is only for national teams.",
+      "Clubs qualify mainly through domestic leagues.",
+      "UEFA organizes the Champions League.",
+      "The Champions League uses a best-of-five set format.",
+      "The Champions League is a European club competition.",
+      "The Champions League is a golf major.",
+      "The Champions League is played on ice skates.",
+      "The Champions League uses cue balls.",
+      "The Champions League is a cricket tournament.",
+      "The competition ends with a yearly final."
     ],
     "correct": {
       "correctIndexes": [
+        1,
         2,
-        7
+        4,
+        9
       ]
     },
     "difficulty": "2",
@@ -27513,24 +27529,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "en",
-    "question": "Sports: Select all valid statements. Topic clue: NBA Finals.",
+    "question": "Sports: Which statements about the NBA Finals are true?",
     "options": [
-      "Olympics happen every year.",
-      "Tennis can be played on clay.",
-      "Free throw is from baseball.",
-      "Basketball has no hoops.",
-      "Tour de France is a cycling race.",
-      "Wimbledon is a golf major.",
-      "Cricket has no bat.",
-      "Free throw is from basketball.",
-      "Stanley Cup is for basketball.",
-      "Marathon length is 12 km."
+      "The NBA Finals decide the NBA champion.",
+      "The Eastern and Western champions meet in the Finals.",
+      "The series is best-of-seven.",
+      "The NBA Finals are a one-match football final.",
+      "The NBA Finals use wickets and overs.",
+      "The NBA Finals are played on clay with rackets.",
+      "The NBA Finals are a motorcycle race.",
+      "The NBA Finals are a cue-sport tournament.",
+      "The NBA Finals use a golf scorecard.",
+      "The winner receives the Larry O'Brien Trophy."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        4,
-        7
+        2,
+        9
       ]
     },
     "difficulty": "2",

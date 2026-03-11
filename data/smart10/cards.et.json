@@ -26659,22 +26659,24 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali tõesed vaited. Teemavihe: Football.",
+    "question": "Sport: Millised väited jalgpalli kohta peavad paika?",
     "options": [
-      "Rugby uses an oval ball.",
-      "Hat trick means five goals.",
-      "Olympics happen every year.",
-      "Tennis is only indoor sport.",
-      "Rugby uses a ping-pong ball.",
-      "Tour de France is a swim race.",
-      "Marathon length is 12 km.",
-      "Offside is a tennis rule.",
-      "Cricket has no bat.",
-      "Marathon length is 42.195 km."
+      "Jalgpallis kasutatakse ümmargust palli.",
+      "Punkte saadakse reketiga.",
+      "Võistkonnas on väljakul üksteist mängijat.",
+      "Jalgpallis pole väravavahti.",
+      "Jalgpalli mängitakse jääl.",
+      "Mäng koosneb üheksast vahetusest.",
+      "Suluseis kuulub jalgpalli juurde.",
+      "Iga korv otsustab seisu.",
+      "Jalgpallis kasutatakse kriketi väravaid.",
+      "FIFA maailmameistrivõistlused on jalgpallis."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        2,
+        6,
         9
       ]
     },
@@ -26687,24 +26689,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Millised vaited on oiged? Teemavihe: Basketball.",
+    "question": "Sport: Millised väited korvpalli kohta peavad paika?",
     "options": [
-      "Free throw is from baseball.",
-      "Rugby uses a ping-pong ball.",
-      "Olympics happen every year.",
-      "Tour de France is a swim race.",
-      "Wimbledon is a tennis tournament.",
-      "A hat trick means three goals.",
-      "Wimbledon is a golf major.",
-      "Offside is a tennis rule.",
-      "Hat trick means five goals.",
-      "Tennis can be played on clay."
+      "Iga rünnaku otsustab suluseis.",
+      "Profikorvpallis on korv kümne jala kõrgusel.",
+      "Kolmepunktijoon kuulub korvpalli juurde.",
+      "Mäng peetakse vahetuste kaupa nagu pesapallis.",
+      "Punkte visatakse jalgpalliväravasse.",
+      "Korvpallis liigutakse palli põrgatades.",
+      "Korvpalli jätkatakse scrum'iga.",
+      "Korvpallis kasutatakse kriketi väravaid.",
+      "Väljakul mängib tavaliselt viis mängijat.",
+      "Korvpalli mängitakse golfikepiga."
     ],
     "correct": {
       "correctIndexes": [
-        4,
+        1,
+        2,
         5,
-        9
+        8
       ]
     },
     "difficulty": "2",
@@ -26716,25 +26719,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali koik tõesed vaited. Teemavihe: Tennis.",
+    "question": "Sport: Millised väited tennise kohta peavad paika?",
     "options": [
-      "Olympics are held every four years.",
-      "Free throw is from baseball.",
-      "Rugby uses a ping-pong ball.",
-      "Basketball has no hoops.",
-      "Tour de France is a swim race.",
-      "Cricket has no bat.",
-      "Offside is a football rule.",
-      "Free throw is from basketball.",
-      "Marathon length is 42.195 km.",
-      "Wimbledon is a golf major."
+      "Tennises tähendab love nulli.",
+      "Tennisemäng koosneb veerandaegadest.",
+      "Tennises kasutatakse ovaalset palli.",
+      "Iga mängija taga seisab kriketi värav.",
+      "Tennist saab mängida üksikmänguna.",
+      "Tennist mängitakse vaikimisi jääl.",
+      "Suluseis on tennise põhireegel.",
+      "Wimbledon on suure slämmi turniir.",
+      "Tennises kasutatakse golfikeppe ja tiisid.",
+      "Tenniseväljakut jagab võrk."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        6,
+        4,
         7,
-        8
+        9
       ]
     },
     "difficulty": "2",
@@ -26746,26 +26749,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Tuvasta faktivaided. Teemavihe: Cricket.",
+    "question": "Sport: Millised väited kriketi kohta peavad paika?",
     "options": [
-      "Offside is a tennis rule.",
-      "Stanley Cup is for basketball.",
-      "Rugby uses an oval ball.",
-      "Tennis is only indoor sport.",
-      "Marathon length is 42.195 km.",
-      "Cricket uses wickets.",
-      "Rugby uses a ping-pong ball.",
-      "Stanley Cup is for ice hockey.",
-      "Basketball has no hoops.",
-      "Olympics are held every four years."
+      "Testkriket võib kesta viis päeva.",
+      "Kriketit mängitakse sulgpalliga.",
+      "Over koosneb kuuest määrustepärasest pallist.",
+      "Kriketis on väravad keskse tähtsusega.",
+      "Kriketimäng koosneb alati neljast veerandist.",
+      "Kriket on jääl mängitav ala.",
+      "Kriketit mängitakse kurika ja palliga.",
+      "Kriketiväljakul on kaheksateist rada.",
+      "Kriketis ripuvad väravad lati küljes.",
+      "Punkte saadakse vehklemismaskiga."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         2,
-        4,
-        5,
-        7,
-        9
+        3,
+        6
       ]
     },
     "difficulty": "2",
@@ -26777,23 +26779,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Millised variandid on oiged? Teemavihe: Rugby.",
+    "question": "Sport: Millised väited ragbi kohta peavad paika?",
     "options": [
-      "Wimbledon is a golf major.",
-      "Basketball has no hoops.",
-      "Free throw is from baseball.",
-      "Tennis is only indoor sport.",
-      "Tennis can be played on clay.",
-      "Offside is a tennis rule.",
-      "Rugby uses a ping-pong ball.",
-      "Marathon length is 12 km.",
-      "Marathon length is 42.195 km.",
-      "Tour de France is a swim race."
+      "Scrum kuulub ragbi juurde.",
+      "Ragbis puudub igasugune kontakt.",
+      "Iga punkt saadakse korvirõngasse visates.",
+      "Ragbit mängitakse golfiväljakul.",
+      "Ragbis kasutatakse ainult kiivreid ja kurikaid.",
+      "Katse annab ragbis punkte.",
+      "Ragbit mängitakse sulgpalliga.",
+      "Ragbis on joone taga kriketi väravad.",
+      "Ragbis kasutatakse ovaalset palli.",
+      "Ragbis on lubatud taklamine."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        8
+        0,
+        5,
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -26805,24 +26809,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali koik kehtivad vaited. Teemavihe: Volleyball.",
+    "question": "Sport: Millised väited võrkpalli kohta peavad paika?",
     "options": [
-      "Stanley Cup is for ice hockey.",
-      "Wimbledon is a golf major.",
-      "Cricket has no bat.",
-      "Offside is a tennis rule.",
-      "Marathon length is 12 km.",
-      "Stanley Cup is for basketball.",
-      "Basketball has no hoops.",
-      "Marathon length is 42.195 km.",
-      "Tennis can be played on clay.",
-      "Rugby uses a ping-pong ball."
+      "Tänapäeva võrkpallis kasutatakse rallipunktiarvestust.",
+      "Rannavõrkpall on olümpiaala.",
+      "Võrkpallimäng koosneb vahetustest.",
+      "Võrkpallis on suluseis nagu jalgpallis.",
+      "Võrkpalli mängitakse uiskudega.",
+      "Võrkpalli mängitakse kurikatega.",
+      "Pooli eraldab võrk.",
+      "Saalivõrkpallis on kummalgi poolel kuus mängijat.",
+      "Väljaku nurkades seisavad kriketi väravad.",
+      "Võrkpalli peetakse poksiringis."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        7,
-        8
+        1,
+        6,
+        7
       ]
     },
     "difficulty": "2",
@@ -26834,25 +26839,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali tõesed vaited. Teemavihe: Handball.",
+    "question": "Sport: Millised väited käsipalli kohta peavad paika?",
     "options": [
-      "A hat trick means three goals.",
-      "Marathon length is 42.195 km.",
-      "Stanley Cup is for basketball.",
-      "Cricket has no bat.",
-      "Basketball uses a hoop.",
-      "Tour de France is a swim race.",
-      "Free throw is from basketball.",
-      "Olympics happen every year.",
-      "Offside is a tennis rule.",
-      "Rugby uses a ping-pong ball."
+      "Käsipallis visatakse pall väravasse käega.",
+      "Käsipalli mängitakse ainult vees.",
+      "Kuue meetri ala on käsipallis tähtis.",
+      "Käsipallis kasutatakse reketit.",
+      "Käsipallimäng koosneb üheksast vahetusest.",
+      "Tavavõistkonnas on koos väravavahiga seitse mängijat.",
+      "Käsipallis kasutatakse kii ja punaseid palle.",
+      "Väljaku keskel on vöökõrgune võrk.",
+      "Käsipalli mängitakse hobuse seljas.",
+      "Kiirrünnakud on käsipallis tavalised."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
-        4,
-        6
+        2,
+        5,
+        9
       ]
     },
     "difficulty": "2",
@@ -26864,25 +26869,24 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Millised vaited on oiged? Teemavihe: Baseball.",
+    "question": "Sport: Millised väited pesapalli kohta peavad paika?",
     "options": [
-      "A hat trick means three goals.",
-      "Cricket has no bat.",
-      "Tennis is only indoor sport.",
-      "Olympics happen every year.",
-      "Tennis can be played on clay.",
-      "Cricket uses wickets.",
-      "Offside is a football rule.",
-      "Offside is a tennis rule.",
-      "Basketball uses a hoop.",
-      "Hat trick means five goals."
+      "Pesapallis kasutatakse ovaalset palli.",
+      "Pesapallis kasutatakse kiid.",
+      "Pesapallis kasutatakse kurikat ja pesi.",
+      "Mängu jätkatakse scrum'iga.",
+      "Tavamäng koosneb üheksast vahetusest.",
+      "Pesapallis on suluseisulõks.",
+      "Kodupesa kohal ripub korvirõngas.",
+      "Viskaja viskab lööjale.",
+      "Kodujooks võib lennata üle aia.",
+      "Pesapalli mängitakse jääl."
     ],
     "correct": {
       "correctIndexes": [
-        0,
+        2,
         4,
-        5,
-        6,
+        7,
         8
       ]
     },
@@ -26895,23 +26899,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali koik tõesed vaited. Teemavihe: Hockey.",
+    "question": "Sport: Millised väited jäähoki kohta peavad paika?",
     "options": [
-      "Olympics happen every year.",
-      "Offside is a tennis rule.",
-      "Cricket uses wickets.",
-      "Tennis is only indoor sport.",
-      "Cricket has no bat.",
-      "Tour de France is a swim race.",
-      "Free throw is from basketball.",
-      "Stanley Cup is for basketball.",
-      "Free throw is from baseball.",
-      "Rugby uses a ping-pong ball."
+      "Jäähokit mängitakse litriga.",
+      "Tavaliselt on koos väravavahiga väljakul kuus mängijat.",
+      "Jäähokit mängitakse saviväljakul.",
+      "Jäähoki on ainult vees mängitav ala.",
+      "Punkte saadakse poksikinnastega.",
+      "Jäähokis kasutatakse kriketi väravaid ja over'eid.",
+      "Seisu otsustab golfi par.",
+      "Palli servitakse üle võrgu nagu tennises.",
+      "Jäähokis uisutatakse jääl.",
+      "Mõne karistuse järel tekib ülekaal."
     ],
     "correct": {
       "correctIndexes": [
-        2,
-        6
+        0,
+        1,
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -26923,23 +26929,24 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Tuvasta faktivaided. Teemavihe: Badminton.",
+    "question": "Sport: Millised väited sulgpalli kohta peavad paika?",
     "options": [
-      "Tour de France is a cycling race.",
-      "Offside is a tennis rule.",
-      "Cricket has no bat.",
-      "Tour de France is a swim race.",
-      "Marathon length is 12 km.",
-      "Free throw is from basketball.",
-      "Wimbledon is a golf major.",
-      "Free throw is from baseball.",
-      "Olympics happen every year.",
-      "Olympics are held every four years."
+      "Sulgpallis kasutatakse sulgpalli.",
+      "Skoori peetakse vahetuste kaupa.",
+      "Mängijad löövad reketiga.",
+      "Sulgpalli mängitakse ainult jääl.",
+      "Sulgpalli mängitakse kiiga.",
+      "Sulgpallis kasutatakse nahast jalgpalli.",
+      "Väljakut jagab võrk.",
+      "Sulgpallis on kriketi väravad.",
+      "Sulgpalliradu on nummerdatud ühest kaheksateistkümneni.",
+      "Sulgpall on olümpiaala."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        5,
+        2,
+        6,
         9
       ]
     },
@@ -26952,18 +26959,18 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Millised variandid on oiged? Teemavihe: Table Tennis.",
+    "question": "Sport: Millised väited lauatennise kohta peavad paika?",
     "options": [
-      "Tour de France is a swim race.",
-      "Basketball uses a hoop.",
-      "Tennis can be played on clay.",
-      "Cricket has no bat.",
-      "Marathon length is 12 km.",
-      "Tour de France is a cycling race.",
-      "Wimbledon is a golf major.",
-      "Olympics happen every year.",
-      "Free throw is from basketball.",
-      "Stanley Cup is for basketball."
+      "Iga geimi alustab poksikell.",
+      "Lauatennis on olümpiaala.",
+      "Mängijad kasutavad reketit ja kerget palli.",
+      "Lauatennist mängitakse ujulas.",
+      "Iga pallivahetuse juures on suluseis.",
+      "Lauatennist mängitakse laual ja üle võrgu.",
+      "Varustusse kuulub hobune.",
+      "Lauatennises kasutatakse kriketi väravaid.",
+      "Geime mängitakse sageli üheteistkümne punktini.",
+      "Lauatennises kasutatakse golfikeppe."
     ],
     "correct": {
       "correctIndexes": [
@@ -26982,25 +26989,24 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali koik kehtivad vaited. Teemavihe: Athletics.",
+    "question": "Sport: Millised väited kergejõustiku kohta peavad paika?",
     "options": [
-      "Basketball has no hoops.",
-      "Marathon length is 12 km.",
-      "Hat trick means five goals.",
-      "Offside is a tennis rule.",
-      "Rugby uses an oval ball.",
-      "Wimbledon is a tennis tournament.",
-      "Wimbledon is a golf major.",
-      "Marathon length is 42.195 km.",
-      "Offside is a football rule.",
-      "A hat trick means three goals."
+      "Kuulitõuge on kergejõustikuala.",
+      "Kergejõustikku mängitakse kurika ja väravaga.",
+      "Kergejõustikus kasutatakse litrit ja uiske.",
+      "Igal alal on väravavaht.",
+      "Kergejõustikku kuuluvad jooksualad.",
+      "Kergejõustik on ainult sisehallis mängitav kiiala.",
+      "Tulemust arvestatakse golfi par'iga.",
+      "Kaugushüpe kuulub kergejõustikku.",
+      "Väljaku keskel peab olema võrk.",
+      "Kergejõustik on olümpial keskne ala."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         4,
-        5,
         7,
-        8,
         9
       ]
     },
@@ -27013,23 +27019,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali tõesed vaited. Teemavihe: Swimming.",
+    "question": "Sport: Millised väited ujumise kohta peavad paika?",
     "options": [
-      "Free throw is from baseball.",
-      "Basketball has no hoops.",
-      "Hat trick means five goals.",
-      "Rugby uses an oval ball.",
-      "Offside is a football rule.",
-      "Olympics happen every year.",
-      "Tennis is only indoor sport.",
-      "Cricket has no bat.",
-      "Offside is a tennis rule.",
-      "Wimbledon is a golf major."
+      "Pöörded on paljudes distantsides tähtsad.",
+      "Ujumises kasutatakse kurikat ja pesi.",
+      "Vaba-, selili- ja rinnuliujumine on ujumisviisid.",
+      "Ujumine on olümpiaala.",
+      "Ujumises on suluseisureegel.",
+      "Ujumist peetakse muruväljakul.",
+      "Ujumisvõistlused peetakse vees.",
+      "Peamine ujumisvahend on kii.",
+      "Punkte saadakse korvi visates.",
+      "Ujumises kasutatakse kriketi väravaid ja over'eid."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        2,
         3,
-        4
+        6
       ]
     },
     "difficulty": "2",
@@ -27041,24 +27049,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Millised vaited on oiged? Teemavihe: Cycling.",
+    "question": "Sport: Millised väited jalgrattaspordi kohta peavad paika?",
     "options": [
-      "Cricket uses wickets.",
-      "Tour de France is a swim race.",
-      "Free throw is from baseball.",
-      "Hat trick means five goals.",
-      "Wimbledon is a tennis tournament.",
-      "Olympics happen every year.",
-      "Cricket has no bat.",
-      "Marathon length is 12 km.",
-      "Marathon length is 42.195 km.",
-      "Tennis is only indoor sport."
+      "Võistlussõidus kasutatakse sageli kiivrit.",
+      "Jalgrattaspordis kasutatakse kriketi väravaid.",
+      "Jalgrattasporti hinnatakse ainult poksiringide järgi.",
+      "Jalgrattavõistlus toimub alati ujulas.",
+      "Võistluse alustab kiipall.",
+      "Tour de France on jalgrattavõistlus.",
+      "Jalgrattasporti mängitakse võrgu ja sulgpalliga.",
+      "Jalgrattasporti tehakse hobuse seljas.",
+      "Jalgrattaspordi alla kuuluvad maantee- ja rajaalad.",
+      "Paljudel aladel mõjutab tuules sõit tulemust."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        8
+        5,
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -27070,25 +27079,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali koik tõesed vaited. Teemavihe: Boxing.",
+    "question": "Sport: Millised väited poksi kohta peavad paika?",
     "options": [
-      "Hat trick means five goals.",
-      "Wimbledon is a golf major.",
-      "Rugby uses an oval ball.",
-      "Marathon length is 12 km.",
-      "Tennis can be played on clay.",
-      "Offside is a tennis rule.",
-      "Tour de France is a cycling race.",
-      "Cricket has no bat.",
-      "Olympics are held every four years.",
-      "Basketball has no hoops."
+      "Profipoks käib raundide kaupa.",
+      "Nokaut võib poksimatši lõpetada.",
+      "Poksi peetakse jääl uiskudega.",
+      "Punkte saadakse palli korvi visates.",
+      "Poks on vees peetav võidusõit.",
+      "Poksis kasutatakse kurikat ja kriketi väravaid.",
+      "Poksijad kannavad kindaid.",
+      "Poksimatš peetakse ringis.",
+      "Väljaku keskel peab olema võrk.",
+      "Poksis on vajalik kii."
     ],
     "correct": {
       "correctIndexes": [
-        2,
-        4,
+        0,
+        1,
         6,
-        8
+        7
       ]
     },
     "difficulty": "2",
@@ -27100,26 +27109,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Tuvasta faktivaided. Teemavihe: Fencing.",
+    "question": "Sport: Millised väited vehklemise kohta peavad paika?",
     "options": [
-      "Tour de France is a swim race.",
-      "Wimbledon is a golf major.",
-      "Tennis can be played on clay.",
-      "Free throw is from basketball.",
-      "Marathon length is 42.195 km.",
-      "Olympics are held every four years.",
-      "Tennis is only indoor sport.",
-      "Free throw is from baseball.",
-      "Basketball uses a hoop.",
-      "Cricket has no bat."
+      "Florett, epee ja saabel on vehklemisrelvad.",
+      "Vehklemine on maanteemaraton.",
+      "Puudutus annab vehklemises punkti.",
+      "Vehklemises kasutatakse sulgpalli.",
+      "Iga vehkleja taga seisab kriketi värav.",
+      "Vehklejad kannavad kaitsemaski.",
+      "Vehklemises kasutatakse golfikeppe.",
+      "Punkte saadakse palli võrku visates.",
+      "Vehklemist peetakse ujumisrajal.",
+      "Vehklemine on olümpiaala."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         2,
-        3,
-        4,
         5,
-        8
+        9
       ]
     },
     "difficulty": "2",
@@ -27131,23 +27139,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Millised variandid on oiged? Teemavihe: Judo.",
+    "question": "Sport: Millised väited judo kohta peavad paika?",
     "options": [
-      "Tour de France is a swim race.",
-      "Rugby uses an oval ball.",
-      "Hat trick means five goals.",
-      "Offside is a tennis rule.",
-      "Free throw is from baseball.",
-      "Rugby uses a ping-pong ball.",
-      "Basketball has no hoops.",
-      "Marathon length is 12 km.",
-      "Cricket has no bat.",
-      "Olympics are held every four years."
+      "Judot mängitakse reketiga.",
+      "Judo on mitmepäevane rattatuur.",
+      "Judos kasutatakse heiteid ja maadlust.",
+      "Judos kasutatakse jääl litrit.",
+      "Judokad kannavad gi'd.",
+      "Punkte saadakse puttidega.",
+      "Judot mängitakse üle kõrge võrgu.",
+      "Ippon lõpetab matši kohe.",
+      "Judo pärineb Jaapanist.",
+      "Judos on kriketi väravad."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        9
+        2,
+        4,
+        7,
+        8
       ]
     },
     "difficulty": "2",
@@ -27159,24 +27169,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali koik kehtivad vaited. Teemavihe: Karate.",
+    "question": "Sport: Millised väited karate kohta peavad paika?",
     "options": [
-      "Tour de France is a cycling race.",
-      "Wimbledon is a golf major.",
-      "Tour de France is a swim race.",
-      "Free throw is from basketball.",
-      "Offside is a tennis rule.",
-      "Basketball has no hoops.",
-      "Stanley Cup is for basketball.",
-      "Rugby uses an oval ball.",
-      "Hat trick means five goals.",
-      "Free throw is from baseball."
+      "Karates kasutatakse lööke ja jalalööke.",
+      "Karate kujunes Okinawal ja Jaapanis.",
+      "Karated mängitakse kurikatega.",
+      "Karates kasutatakse ovaalset ragbipalli.",
+      "Karates on vajalik võrk ja sulgpall.",
+      "Karates kasutatakse kiipalli.",
+      "Karate on ratsaspordiala.",
+      "Tulemust mõõdetakse golfi pari järgi.",
+      "Kata kuulub karate juurde.",
+      "Tasemeid näidatakse karatevöödega."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3,
-        7
+        1,
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -27188,25 +27199,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali tõesed vaited. Teemavihe: Golf.",
+    "question": "Sport: Millised väited golfi kohta peavad paika?",
     "options": [
-      "Rugby uses an oval ball.",
-      "Offside is a tennis rule.",
-      "Cricket has no bat.",
-      "Wimbledon is a golf major.",
-      "Marathon length is 42.195 km.",
-      "Tour de France is a cycling race.",
-      "Marathon length is 12 km.",
-      "Tour de France is a swim race.",
-      "Olympics are held every four years.",
-      "Olympics happen every year."
+      "Golfi jätkatakse scrum'iga.",
+      "Golfis on kriketi väravad ja over'id.",
+      "Golfi mängitakse üle võrgu.",
+      "Golfi mängitakse keppide ja palliga.",
+      "Tavalisel väljakul on sageli kaheksateist rada.",
+      "Par näitab raja sihttulemust.",
+      "Puttimine toimub griinil.",
+      "Golfis kasutatakse litrit ja uiske.",
+      "Golfi mängitakse ujulas.",
+      "Tulemus saadakse nokautidega."
     ],
     "correct": {
       "correctIndexes": [
-        0,
+        3,
         4,
         5,
-        8
+        6
       ]
     },
     "difficulty": "2",
@@ -27218,26 +27229,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Millised vaited on oiged? Teemavihe: Snooker.",
+    "question": "Sport: Millised väited snuukri kohta peavad paika?",
     "options": [
-      "Olympics happen every year.",
-      "Wimbledon is a tennis tournament.",
-      "Stanley Cup is for ice hockey.",
-      "Tour de France is a cycling race.",
-      "Stanley Cup is for basketball.",
-      "Tennis can be played on clay.",
-      "A hat trick means three goals.",
-      "Tennis is only indoor sport.",
-      "Basketball has no hoops.",
-      "Cricket has no bat."
+      "Snuukrit mängitakse ovaalse palliga.",
+      "Maksimaalne seeria on 147.",
+      "Snuukrit mängitakse suurel rohelisel laual.",
+      "Snuukris kasutatakse jalgpalliväravat.",
+      "Snuuker on jääl peetav võistlus.",
+      "Snuuker on kiiala.",
+      "Snuukrimäng koosneb vahetustest.",
+      "Snuukrit mängitakse reketitega.",
+      "Algasetis on viisteist punast palli.",
+      "Snuukris on tõkked ja liivakastid."
     ],
     "correct": {
       "correctIndexes": [
         1,
         2,
-        3,
         5,
-        6
+        8
       ]
     },
     "difficulty": "2",
@@ -27249,23 +27259,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali koik tõesed vaited. Teemavihe: Formula One.",
+    "question": "Sport: Millised väited vormel 1 kohta peavad paika?",
     "options": [
-      "Hat trick means five goals.",
-      "A hat trick means three goals.",
-      "Olympics are held every four years.",
-      "Stanley Cup is for basketball.",
-      "Cricket has no bat.",
-      "Free throw is from baseball.",
-      "Olympics happen every year.",
-      "Wimbledon is a golf major.",
-      "Offside is a tennis rule.",
-      "Marathon length is 12 km."
+      "Boksipeatused mõjutavad paljusid sõite.",
+      "Vormel 1-s kasutatakse kriketi väravaid ja over'eid.",
+      "Vormel 1 sõidetakse mootorratastega.",
+      "Vormel 1 on kiiala.",
+      "Vormel 1-s kasutatakse üheistmelisi autosid.",
+      "Punkte saadakse palli võrku lüües.",
+      "Vormel 1 toimub ujulas.",
+      "Hooaeg koosneb grand prix' etappidest.",
+      "Vormel 1-s kasutatakse reketit.",
+      "Esikoht stardis tuleb kvalifikatsioonist."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        2
+        0,
+        4,
+        7,
+        9
       ]
     },
     "difficulty": "2",
@@ -27277,24 +27289,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Tuvasta faktivaided. Teemavihe: MotoGP.",
+    "question": "Sport: Millised väited MotoGP kohta peavad paika?",
     "options": [
-      "Hat trick means five goals.",
-      "Offside is a football rule.",
-      "Wimbledon is a golf major.",
-      "Free throw is from baseball.",
-      "Cricket has no bat.",
-      "Cricket uses wickets.",
-      "Olympics happen every year.",
-      "Marathon length is 42.195 km.",
-      "Tennis is only indoor sport.",
-      "Stanley Cup is for basketball."
+      "Stardid on MotoGP-s väga tähtsad.",
+      "MotoGP-s kasutatakse lahtiste ratastega autosid.",
+      "Sõitjad kallutavad kurvides tugevalt.",
+      "MotoGP on maailmameistrivõistluste sari.",
+      "MotoGP-d peetakse jääl.",
+      "MotoGP on võrkpalliala.",
+      "MotoGP on mootorrataste ringrajasõit.",
+      "MotoGP on vehklemisala.",
+      "MotoGP-s kasutatakse kurikaid ja väravaid.",
+      "MotoGP-d hinnatakse golfi pari järgi."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        5,
-        7
+        0,
+        2,
+        3,
+        6
       ]
     },
     "difficulty": "2",
@@ -27306,24 +27319,24 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Millised variandid on oiged? Teemavihe: Marathon.",
+    "question": "Sport: Millised väited maratoni kohta peavad paika?",
     "options": [
-      "Rugby uses an oval ball.",
-      "A hat trick means three goals.",
-      "Marathon length is 12 km.",
-      "Cricket has no bat.",
-      "Hat trick means five goals.",
-      "Marathon length is 42.195 km.",
-      "Tennis is only indoor sport.",
-      "Wimbledon is a golf major.",
-      "Rugby uses a ping-pong ball.",
-      "Wimbledon is a tennis tournament."
+      "Olümpiamängudel on maraton kavas.",
+      "Maratonis on kriketi väravad ja over'id.",
+      "Maratoni mängitakse golfikeppidega.",
+      "Maraton on seitsmemänguline finaalseeria.",
+      "Maratonis kasutatakse jääl litrit.",
+      "Maraton on maanteejooksu ala.",
+      "Maratoni ujutakse basseinis.",
+      "Rajal peab olema üle tee tõmmatud võrk.",
+      "Maratoni pikkus on 42,195 km.",
+      "Maratoni nimi pärineb antiik-Kreekast."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
         5,
+        8,
         9
       ]
     },
@@ -27336,25 +27349,24 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali koik kehtivad vaited. Teemavihe: Triathlon.",
+    "question": "Sport: Millised väited triatloni kohta peavad paika?",
     "options": [
-      "Cricket uses wickets.",
-      "Marathon length is 42.195 km.",
-      "Tour de France is a swim race.",
-      "Olympics are held every four years.",
-      "Wimbledon is a golf major.",
-      "Free throw is from basketball.",
-      "Olympics happen every year.",
-      "Stanley Cup is for ice hockey.",
-      "Tennis is only indoor sport.",
-      "Offside is a tennis rule."
+      "Olemas on olümpiadistantsi triatlon.",
+      "Triatlon ei ole ühe ala võistlus.",
+      "Triatlon on ainult siseala.",
+      "Triatlonis on kriketi väravad ja crease.",
+      "Triatloni peetakse hobuse seljas.",
+      "Triatloni mängitakse kurikaga.",
+      "Vahetusalad on triatlonis tähtsad.",
+      "Triatlon ühendab ujumise, rattasõidu ja jooksu.",
+      "Triatloni otsustab penaltiseeria.",
+      "Triatlon on kiiala."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        3,
-        5,
+        6,
         7
       ]
     },
@@ -27367,22 +27379,24 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali tõesed vaited. Teemavihe: Decathlon.",
+    "question": "Sport: Millised väited kümnevõistluse kohta peavad paika?",
     "options": [
-      "Cricket has no bat.",
-      "Rugby uses a ping-pong ball.",
-      "Wimbledon is a golf major.",
-      "Olympics happen every year.",
-      "Free throw is from baseball.",
-      "Stanley Cup is for basketball.",
-      "Stanley Cup is for ice hockey.",
-      "Marathon length is 12 km.",
-      "Tour de France is a swim race.",
-      "Free throw is from basketball."
+      "Kümnevõistluses on kümme ala.",
+      "Kümnevõistlus on mootorrattasari.",
+      "Teivashüpe kuulub kümnevõistlusse.",
+      "Kümnevõistlus on võistkondlik pallimäng.",
+      "Kümnevõistlust ujutakse rajal.",
+      "100 meetri jooks kuulub kümnevõistlusse.",
+      "Kümnevõistluses kasutatakse litrit ja väravapuuri.",
+      "Kümnevõistluses on kurikas ja väravad.",
+      "Kümnevõistluses on kaheksateist rada.",
+      "Võitja selgub kõigi alade punktide summana."
     ],
     "correct": {
       "correctIndexes": [
-        6,
+        0,
+        2,
+        5,
         9
       ]
     },
@@ -27395,24 +27409,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Millised vaited on oiged? Teemavihe: Wimbledon.",
+    "question": "Sport: Millised väited Wimbledoni kohta peavad paika?",
     "options": [
-      "Cricket uses wickets.",
-      "Rugby uses an oval ball.",
-      "Hat trick means five goals.",
-      "Marathon length is 42.195 km.",
-      "Tour de France is a swim race.",
-      "Rugby uses a ping-pong ball.",
-      "Tennis is only indoor sport.",
-      "Free throw is from baseball.",
-      "Basketball has no hoops.",
-      "Cricket has no bat."
+      "Wimbledon on saviväljaku turniir.",
+      "Wimbledon toimub jääl.",
+      "Wimbledon on suure slämmi turniir.",
+      "Wimbledon on golfi major.",
+      "Wimbledon mängitakse murul.",
+      "Wimbledonit mängivad rahvuskoondised jalgpallis.",
+      "Wimbledonis kasutatakse kiid.",
+      "Wimbledon toimub Londonis.",
+      "Valged mänguriided on Wimbledoni traditsioon.",
+      "Wimbledon sõidetakse mootorratastega."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        1,
-        3
+        2,
+        4,
+        7,
+        8
       ]
     },
     "difficulty": "2",
@@ -27424,24 +27439,24 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali koik tõesed vaited. Teemavihe: Olympics.",
+    "question": "Sport: Millised väited olümpiamängude kohta peavad paika?",
     "options": [
-      "Free throw is from basketball.",
-      "A hat trick means three goals.",
-      "Basketball has no hoops.",
-      "Wimbledon is a golf major.",
-      "Rugby uses an oval ball.",
-      "Olympics happen every year.",
-      "Rugby uses a ping-pong ball.",
-      "Tour de France is a swim race.",
-      "Free throw is from baseball.",
-      "Basketball uses a hoop."
+      "Olümpiamängud on mitme ala suurvõistlus.",
+      "Sportlased võistlevad olümpial medalite nimel.",
+      "Olümpiamängud peetakse igal aastal samas linnas.",
+      "Olümpia on seitsmemänguline finaalseeria.",
+      "Olümpiat peetakse ainult muruväljakutel.",
+      "Olümpia on ainult jalgpalliklubidele.",
+      "Olümpial on kriketi väravad ja over'id.",
+      "Olümpia on kiisportlaste liiga.",
+      "Võõrustajalinn valitakse aastaid ette.",
+      "Suveolümpia toimub iga nelja aasta järel."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        4,
+        8,
         9
       ]
     },
@@ -27454,26 +27469,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Tuvasta faktivaided. Teemavihe: World Cup.",
+    "question": "Sport: Millised väited FIFA maailmameistrivõistluste kohta peavad paika?",
     "options": [
-      "Hat trick means five goals.",
-      "Marathon length is 12 km.",
-      "Rugby uses a ping-pong ball.",
-      "Cricket uses wickets.",
-      "Stanley Cup is for ice hockey.",
-      "Tennis can be played on clay.",
-      "Stanley Cup is for basketball.",
-      "Marathon length is 42.195 km.",
-      "Olympics are held every four years.",
-      "Wimbledon is a golf major."
+      "MM on golfiturniir.",
+      "MM-il kasutatakse kiid.",
+      "MM-i peetakse saviväljakul.",
+      "FIFA MM on rahvuskoondiste turniir.",
+      "Turniir toimub iga nelja aasta järel.",
+      "Võitja selgub finaalis.",
+      "MM-i võõrustavad valitud riigid.",
+      "MM on ainult klubidele mõeldud võistlus.",
+      "MM on ühe ringi autosõit.",
+      "MM-il on kriketi väravad ja over'id."
     ],
     "correct": {
       "correctIndexes": [
         3,
         4,
         5,
-        7,
-        8
+        6
       ]
     },
     "difficulty": "2",
@@ -27485,23 +27499,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Millised variandid on oiged? Teemavihe: UEFA Champions League.",
+    "question": "Sport: Millised väited UEFA Meistrite liiga kohta peavad paika?",
     "options": [
-      "Tennis is only indoor sport.",
-      "Rugby uses a ping-pong ball.",
-      "Basketball uses a hoop.",
-      "Basketball has no hoops.",
-      "Stanley Cup is for basketball.",
-      "Cricket has no bat.",
-      "Tour de France is a swim race.",
-      "Offside is a football rule.",
-      "Hat trick means five goals.",
-      "Wimbledon is a golf major."
+      "Meistrite liiga on ainult rahvuskoondistele.",
+      "Meistrite liiga on kriketiturniir.",
+      "See on golfi major-turniir.",
+      "Meistrite liigat peetakse uiskudega.",
+      "Klubid pääsevad sinna peamiselt liigatulemuste põhjal.",
+      "Seal kasutatakse kiipalle.",
+      "Meistrite liiga on Euroopa klubivõistlus.",
+      "Meistrite liigat korraldab UEFA.",
+      "Seal mängitakse parem viiest setti formaadis.",
+      "Võistlus lõpeb iga-aastase finaaliga."
     ],
     "correct": {
       "correctIndexes": [
-        2,
-        7
+        4,
+        6,
+        7,
+        9
       ]
     },
     "difficulty": "2",
@@ -27513,24 +27529,25 @@
     "topic": "Sports",
     "category": "OPEN",
     "language": "et",
-    "question": "Sport: Vali koik kehtivad vaited. Teemavihe: NBA Finals.",
+    "question": "Sport: Millised väited NBA finaalseeria kohta peavad paika?",
     "options": [
-      "Olympics happen every year.",
-      "Tennis can be played on clay.",
-      "Free throw is from baseball.",
-      "Basketball has no hoops.",
-      "Tour de France is a cycling race.",
-      "Wimbledon is a golf major.",
-      "Cricket has no bat.",
-      "Free throw is from basketball.",
-      "Stanley Cup is for basketball.",
-      "Marathon length is 12 km."
+      "Finaalis kohtuvad ida ja lääne konverentsi võitjad.",
+      "NBA finaalis on kriketi väravad ja over'id.",
+      "NBA finaal on ühe mängu jalgpallifinaal.",
+      "NBA finaal on mootorrattavõistlus.",
+      "NBA finaalseeria selgitab NBA meistri.",
+      "NBA finaali mängitakse saviväljakul reketitega.",
+      "NBA finaalis kasutatakse golfi skoorikaarti.",
+      "Seeria mängitakse parem seitsmest formaadis.",
+      "NBA finaal on kiiturniir.",
+      "Võitja saab Larry O'Brieni karika."
     ],
     "correct": {
       "correctIndexes": [
-        1,
+        0,
         4,
-        7
+        7,
+        9
       ]
     },
     "difficulty": "2",
