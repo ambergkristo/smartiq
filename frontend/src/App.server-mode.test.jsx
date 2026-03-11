@@ -311,8 +311,8 @@ describe('App server-authoritative mode', () => {
     await startServerMultiplayer();
 
     fireEvent.click(screen.getByRole('button', { name: /pass/i }));
-    await waitFor(() => expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument());
-    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /next round/i })).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /next round/i }));
 
     await waitFor(() => expect(screen.getByRole('heading', { name: /round summary/i })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /next round/i }));
@@ -342,8 +342,8 @@ describe('App server-authoritative mode', () => {
     await startServerMultiplayer();
 
     fireEvent.click(screen.getByRole('button', { name: /pass/i }));
-    await waitFor(() => expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument());
-    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /view winner/i })).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /view winner/i }));
 
     await waitFor(() => expect(screen.getByRole('heading', { name: /game summary/i })).toBeInTheDocument());
     expect(screen.getByText(/alice reached 30 points\./i)).toBeInTheDocument();

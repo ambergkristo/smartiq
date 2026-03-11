@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react';
-import { getActionHint, getPhaseLabel } from './gameplayState';
+import { getActionHint, getNextActionLabel, getPhaseLabel } from './gameplayState';
 
 export default function GameplayActionBar({
   phase,
   category,
+  nextTransition = 'none',
   selectedRank,
   controlsDisabled,
   canPass,
@@ -19,7 +20,10 @@ export default function GameplayActionBar({
   const passButtonRef = useRef(null);
   const confirmButtonRef = useRef(null);
   const nextButtonRef = useRef(null);
-  const actionHint = getActionHint(phase, currentPlayer, category, selectedRank, controlsDisabled, canPass);
+  const nextActionLabel = getNextActionLabel(nextTransition);
+  const actionHint = phase === 'RESOLVED' || phase === 'PASSED'
+    ? `Resolution ready. Press ${nextActionLabel}.`
+    : getActionHint(phase, currentPlayer, category, selectedRank, controlsDisabled, canPass);
 
   useEffect(() => {
     if (phase === 'CHOOSING') {
@@ -93,7 +97,7 @@ export default function GameplayActionBar({
             onClick={onNext}
             disabled={controlsDisabled}
           >
-            NEXT
+            {nextActionLabel}
           </button>
         ) : null}
         {phase === 'LOADING_CARD' ? (

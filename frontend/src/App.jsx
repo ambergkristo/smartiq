@@ -2801,6 +2801,7 @@ function GameApp() {
       <GameplayActionBar
         phase={engine.phase}
         category={gameplayCategory}
+        nextTransition={engine.nextTransition}
         selectedRank={engine.selectedRank}
         controlsDisabled={controlsDisabled}
         canPass={engine.canPass}
@@ -2937,6 +2938,13 @@ function GameApp() {
                     passNote={STRINGS.passNote}
                     lastAction={engine.lastAction}
                     currentPlayer={engine.currentPlayer}
+                    players={engine.players}
+                    scores={engine.scores}
+                    currentPlayerIndex={engine.currentPlayerIndex}
+                    resolutionState={engine.resolutionState}
+                    nextTransition={engine.nextTransition}
+                    eliminatedPlayers={engine.eliminatedPlayers}
+                    passedPlayers={engine.passedPlayers}
                   />
                 ) : null}
               </>

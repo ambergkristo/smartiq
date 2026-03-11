@@ -1029,7 +1029,7 @@ describe('App startup resilience', () => {
     render(<App />);
 
     await waitFor(() => expect(screen.getByTestId('room-panel')).toBeInTheDocument());
-    fireEvent.change(screen.getByLabelText(/room display name/i), { target: { value: 'Alice' } });
+    fireEvent.change(screen.getByLabelText(/your display name/i), { target: { value: 'Alice' } });
     fireEvent.change(screen.getByLabelText(/room code/i), { target: { value: 'quiz42' } });
     fireEvent.click(screen.getByRole('button', { name: /join room/i }));
 

@@ -7,6 +7,11 @@ import {
 } from '../roomRuntime';
 import JoinInfoBlock from './room/JoinInfoBlock';
 import LobbyPlayerPanel from './room/LobbyPlayerPanel';
+import JoinButton from './player/JoinButton';
+import JoinStatusPanel from './player/JoinStatusPanel';
+import PlayerNameInput from './player/PlayerNameInput';
+import RoomCodeInput from './player/RoomCodeInput';
+import WaitingRoomView from './player/WaitingRoomView';
 import QrPlaceholder from './room/QrPlaceholder';
 import RoomCodeHero from './room/RoomCodeHero';
 
@@ -63,47 +68,23 @@ export default function GameRoom({
       {error ? <p className="error" data-testid="room-error">{error}</p> : null}
 
       {isPlayerLobby ? (
-        <div className="player-lobby-card" data-testid="player-lobby-panel" style={playerLobbyStyle}>
-          <div className="player-lobby-hero">
-            <p className="player-lobby-brand">{playerLobbyAppTitle}</p>
-            <div>
-              <h3>{strings.roomPlayerLobbyTitle}</h3>
-              <p>{strings.roomPlayerLobbyWaiting}</p>
-            </div>
-            <span className="host-plan-chip room-role-chip">
-              <span>{strings.roomPlayerBadge}</span>
-              <strong>{roomSession.displayName || roomSession.playerId}</strong>
-            </span>
-          </div>
-          <div className="player-lobby-meta">
-            <strong>{roomSession.roomCode}</strong>
-            <span>{strings.roomSavedHint}</span>
-          </div>
-          <div className="room-actions">
-            <button type="button" onClick={onResumeRoom} disabled={pending}>
-              {strings.roomResumeSubmit}
-            </button>
-            <button type="button" className="secondary-action" onClick={onClearRoom} disabled={pending}>
-              {strings.roomClearSubmit}
-            </button>
-          </div>
-          <div className="room-player-list">
-            <h3>{strings.roomPlayerLobbyRosterTitle}</h3>
-            {roomPlayers.length > 0 ? (
-              <ul>
-                {roomPlayers.map((player) => (
-                  <li key={player.playerId || player.displayName}>
-                    <strong>{player.displayName || player.playerId}</strong>
-                    <span>{player.playerId}</span>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="field-hint">{strings.roomNoPlayers}</p>
-            )}
-          </div>
-          <p className="field-hint">{strings.roomPlayerLobbySwitchHint}</p>
-        </div>
+        <WaitingRoomView
+          appTitle={playerLobbyAppTitle}
+          roomCode={roomSession.roomCode}
+          playerName={roomSession.displayName || roomSession.playerId}
+          waitingLabel={strings.roomPlayerLobbyWaiting}
+          savedHint={strings.roomSavedHint}
+          playersTitle={strings.roomPlayerLobbyRosterTitle}
+          players={roomPlayers}
+          noPlayersLabel={strings.roomNoPlayers}
+          switchHint={strings.roomPlayerLobbySwitchHint}
+          primaryLabel={strings.roomResumeSubmit}
+          secondaryLabel={strings.roomClearSubmit}
+          pending={pending}
+          onPrimary={onResumeRoom}
+          onSecondary={onClearRoom}
+          style={playerLobbyStyle}
+        />
       ) : hasLobbySession ? (
         <>
           <div className="room-lobby-overview">
@@ -157,23 +138,44 @@ export default function GameRoom({
             </div>
           </section>
           <section className="room-entry-card room-entry-card--secondary">
-            <p className="section-title">Resume existing lobby</p>
-            <h3>Join with a code</h3>
-            <p>Use this only when you need to reattach this browser to an existing room.</p>
-            <label htmlFor="room-code">{strings.roomCodeLabel}</label>
-            <input
-              id="room-code"
-              type="text"
-              value={draft.roomCode}
-              onChange={(event) => onDraftChange((prev) => ({ ...prev, roomCode: normalizeRoomCodeInput(event.target.value) }))}
-              placeholder={strings.roomCodePlaceholder}
-              autoComplete="off"
-              disabled={pending}
-            />
-            <div className="room-actions">
-              <button type="button" className="secondary-action" onClick={onJoinRoom} disabled={pending}>
-                {strings.roomJoinSubmit}
-              </button>
+            <div className="player-join-card-head">
+              <div>
+                <p className="section-title">Player join</p>
+                <h3>Join a live room</h3>
+              </div>
+              <span className="player-join-chip">Simple flow</span>
+            </div>
+            <p>{strings.playerRouteHint}</p>
+            <div className="player-join-form player-join-form--compact">
+              <RoomCodeInput
+                id="room-code"
+                label={strings.roomCodeLabel}
+                value={draft.roomCode}
+                placeholder={strings.roomCodePlaceholder}
+                disabled={pending}
+                onChange={(event) => onDraftChange((prev) => ({ ...prev, roomCode: normalizeRoomCodeInput(event.target.value) }))}
+              />
+              <PlayerNameInput
+                id="room-player-display-name"
+                label={strings.playerRouteDisplayNameLabel}
+                value={draft.displayName}
+                placeholder={strings.roomDisplayNamePlaceholder}
+                disabled={pending}
+                onChange={(event) => onDraftChange((prev) => ({ ...prev, displayName: event.target.value }))}
+              />
+              <JoinStatusPanel
+                pending={pending}
+                pendingLabel={strings.roomPending}
+                message={message}
+                error={error}
+              />
+              <div className="player-join-actions">
+                <JoinButton
+                  label={strings.roomJoinSubmit}
+                  disabled={pending}
+                  onClick={onJoinRoom}
+                />
+              </div>
             </div>
           </section>
         </div>

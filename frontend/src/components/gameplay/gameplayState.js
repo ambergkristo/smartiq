@@ -63,3 +63,13 @@ export function getAnswerStateCounts(selectedIndexes, revealedIndexes, wrongInde
   const hidden = Math.max(optionCount - selected - correct - wrong, 0);
   return { selected, correct, wrong, hidden };
 }
+
+export function getNextActionLabel(nextTransition) {
+  if (nextTransition === 'round') {
+    return 'NEXT ROUND';
+  }
+  if (nextTransition === 'game-over') {
+    return 'VIEW WINNER';
+  }
+  return 'NEXT QUESTION';
+}

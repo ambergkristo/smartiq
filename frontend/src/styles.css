@@ -941,6 +941,263 @@ button:disabled {
   font-size: 0.82rem;
 }
 
+.player-join-screen,
+.player-waiting-room {
+  max-width: min(520px, 100%);
+  margin: 0 auto;
+  padding: 22px;
+  display: grid;
+  gap: 16px;
+  border-radius: 28px;
+  border: 1px solid color-mix(in srgb, var(--player-lobby-accent, var(--accent)) 22%, rgba(255, 255, 255, 0.08));
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--player-lobby-accent, var(--accent)) 18%, transparent), transparent 34%),
+    linear-gradient(180deg, rgba(22, 22, 28, 0.98), rgba(11, 11, 15, 0.98));
+  box-shadow: var(--panel-shadow);
+}
+
+.player-join-screen-head,
+.player-join-card-head,
+.player-waiting-room-head,
+.player-route-preview-head,
+.player-waiting-room-roster-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.player-join-brand,
+.player-waiting-room-brand {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.player-join-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 255, 123, 0.2);
+  background: rgba(0, 255, 123, 0.08);
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.player-join-hero,
+.player-waiting-room-hero {
+  display: grid;
+  gap: 10px;
+}
+
+.player-join-code-callout {
+  display: inline-grid;
+  justify-items: start;
+  gap: 4px;
+  padding: 10px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 255, 123, 0.2);
+  background: rgba(0, 255, 123, 0.08);
+}
+
+.player-join-code-callout span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.player-join-code-callout strong {
+  font-family: "Rajdhani", "Inter", sans-serif;
+  font-size: clamp(1.4rem, 5vw, 2rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.player-join-hero h1,
+.player-waiting-room-hero h2 {
+  font-size: clamp(2.1rem, 7vw, 3rem);
+  line-height: 0.94;
+  font-family: "Rajdhani", "Inter", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.player-join-hero p:last-child,
+.player-waiting-room-hero p:last-child {
+  color: var(--muted);
+  max-width: 28ch;
+}
+
+.player-join-form {
+  display: grid;
+  gap: 12px;
+}
+
+.player-join-form--compact {
+  gap: 10px;
+}
+
+.player-join-field {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.player-join-field span {
+  color: var(--muted);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.player-join-field input {
+  min-height: 64px;
+  padding: 16px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 1.1rem;
+}
+
+.player-join-field--code input {
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-family: "Rajdhani", "Inter", sans-serif;
+  font-size: clamp(1.4rem, 6vw, 2rem);
+  text-align: center;
+}
+
+.player-join-field input[readonly] {
+  border-color: rgba(0, 255, 123, 0.22);
+  background: rgba(0, 255, 123, 0.06);
+}
+
+.player-join-status-panel {
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  display: grid;
+  gap: 6px;
+}
+
+.player-join-status-line {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.player-join-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.player-join-primary-button {
+  width: 100%;
+  min-height: 58px;
+  border-radius: 18px;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.player-route-preview,
+.player-waiting-room-roster {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.player-route-preview-head strong,
+.player-waiting-room-code-block strong {
+  font-family: "Rajdhani", "Inter", sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.08em;
+}
+
+.player-route-preview-list,
+.player-waiting-room-roster ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.player-route-preview-list li,
+.player-waiting-room-roster li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.player-route-preview-list li span,
+.player-waiting-room-roster li span,
+.player-waiting-room-roster-head span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.player-waiting-room-code-block {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  min-width: 140px;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 255, 123, 0.2);
+  background: rgba(0, 255, 123, 0.08);
+  text-align: right;
+}
+
+.player-waiting-room-code-block span,
+.player-waiting-room-meta span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.player-waiting-room-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.player-waiting-room-meta article {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.player-waiting-room-meta strong {
+  font-family: "Rajdhani", "Inter", sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.06em;
+}
+
+.player-waiting-room-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
 .lobby-player-list {
   list-style: none;
   margin: 0;
@@ -2250,7 +2507,9 @@ button:disabled {
   .room-lobby-overview,
   .room-entry-grid,
   .lobby-player-list,
-  .lobby-status-summary-grid {
+  .lobby-status-summary-grid,
+  .player-waiting-room-meta,
+  .player-waiting-room-actions {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -2302,6 +2561,11 @@ button:disabled {
   .room-code-hero-head,
   .lobby-player-panel-head,
   .lobby-status-summary-head,
+  .player-join-screen-head,
+  .player-join-card-head,
+  .player-waiting-room-head,
+  .player-route-preview-head,
+  .player-waiting-room-roster-head,
   .gameplay-header,
   .question-card-head,
   .scoreboard-panel-head {
@@ -2356,11 +2620,18 @@ button:disabled {
     grid-template-columns: 1fr;
   }
 
-  .player-lobby-hero,
+  .player-join-screen,
+  .player-waiting-room,
+  .player-join-hero,
+  .player-waiting-room-hero,
   .room-session-header,
   .room-player-list li,
+  .player-route-preview-list li,
+  .player-waiting-room-roster li,
   .room-actions,
-  .host-session-actions {
+  .host-session-actions,
+  .player-waiting-room-actions,
+  .player-waiting-room-meta {
     display: grid;
     grid-template-columns: 1fr;
   }

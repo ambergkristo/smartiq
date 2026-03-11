@@ -235,6 +235,30 @@ describe('GameBoard layout', () => {
     expect(screen.getAllByText('◎')).toHaveLength(1);
   });
 
+  test('renders a distinct reveal panel for resolved answers', () => {
+    const props = makeProps();
+    render(
+      <GameBoard
+        {...props}
+        phase="RESOLVED"
+        resolutionState={{
+          outcome: 'correct',
+          actingPlayer: 'Player 1',
+          selectedOption: 'A',
+          revealedOptions: ['A'],
+          lastAction: 'Player 1 scored'
+        }}
+      />
+    );
+
+    expect(screen.getByTestId('reveal-panel')).toBeInTheDocument();
+    expect(screen.getByTestId('correct-answer-display')).toHaveTextContent(/correct answer/i);
+    expect(screen.getByTestId('resolution-summary')).toHaveTextContent(/correct answer locked/i);
+    expect(screen.getByTestId('player-result-list')).toHaveTextContent(/correct/i);
+    expect(screen.getByTestId('next-step-action-area')).toHaveTextContent(/next question/i);
+    expect(screen.queryByTestId('wheel-board')).not.toBeInTheDocument();
+  });
+
   test('supports keyboard flow for action buttons and announces state', async () => {
     globalThis.__setResizeObserverWidth(1024);
     const props = makeProps();
@@ -245,6 +269,7 @@ describe('GameBoard layout', () => {
         <GameplayActionBar
           phase={props.phase}
           category={props.card.category}
+          nextTransition="turn"
           selectedRank={props.selectedRank}
           controlsDisabled={false}
           canPass
@@ -275,6 +300,7 @@ describe('GameBoard layout', () => {
         <GameplayActionBar
           phase={props.phase}
           category={props.card.category}
+          nextTransition="turn"
           selectedRank={props.selectedRank}
           controlsDisabled={false}
           canPass
@@ -295,10 +321,11 @@ describe('GameBoard layout', () => {
 
     rerender(
       <>
-        <GameBoard {...props} phase="CONFIRMING" />
+        <GameBoard {...props} phase="CONFIRMING" selectedIndexes={new Set([0])} />
         <GameplayActionBar
           phase="CONFIRMING"
           category={props.card.category}
+          nextTransition="turn"
           selectedRank={props.selectedRank}
           controlsDisabled={false}
           canPass
@@ -320,10 +347,21 @@ describe('GameBoard layout', () => {
 
     rerender(
       <>
-        <GameBoard {...props} phase="RESOLVED" />
+        <GameBoard
+          {...props}
+          phase="RESOLVED"
+          resolutionState={{
+            outcome: 'correct',
+            actingPlayer: 'Player 1',
+            selectedOption: 'A',
+            revealedOptions: ['A'],
+            lastAction: 'Player 1 scored'
+          }}
+        />
         <GameplayActionBar
           phase="RESOLVED"
           category={props.card.category}
+          nextTransition="turn"
           selectedRank={props.selectedRank}
           controlsDisabled={false}
           canPass
@@ -337,7 +375,7 @@ describe('GameBoard layout', () => {
         />
       </>
     );
-    const nextButton = screen.getByRole('button', { name: 'NEXT' });
+    const nextButton = screen.getByRole('button', { name: 'NEXT QUESTION' });
     await waitFor(() => expect(nextButton).toHaveFocus());
     await user.keyboard('{Enter}');
     expect(props.onNext).toHaveBeenCalledTimes(1);

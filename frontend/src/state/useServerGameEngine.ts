@@ -229,6 +229,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   const [activeSnapshot, setActiveSnapshot] = useState(null);
   const [queuedSnapshot, setQueuedSnapshot] = useState(null);
   const [queuedTransition, setQueuedTransition] = useState('none');
+  const [resolutionState, setResolutionState] = useState(null);
   const [startRequest, setStartRequest] = useState(null);
   const [language, setLanguage] = useState('en');
   const [requestInFlight, setRequestInFlight] = useState(false);
@@ -260,6 +261,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setStats((prev) => mergeStats(mapped.players, prev));
     setSelectedIndexes(new Set());
     setSelectedRank(null);
+    setResolutionState(null);
 
     if (phaseOverride) {
       setPhase(phaseOverride);
@@ -317,6 +319,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setLoadTicket((value) => value + 1);
     setQueuedSnapshot(null);
     setQueuedTransition('none');
+    setResolutionState(null);
 
     try {
       const response = await createServerGameSession(request);
@@ -328,6 +331,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       setPhase(GamePhase.LOADING_CARD);
       setCard(null);
       setActionTokensByPlayerId({});
+      setResolutionState(null);
       return [];
     } finally {
       setRequestInFlight(false);
@@ -370,6 +374,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       setLastAction(message);
       setPhase(GamePhase.LOADING_CARD);
       setCard(null);
+      setResolutionState(null);
     } finally {
       setRequestInFlight(false);
     }
@@ -426,6 +431,21 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setLastAction(mappedResponse.lastAction);
     setSelectedIndexes(new Set());
     setSelectedRank(null);
+    const selectedOption = selectedIndex >= 0
+      ? mappedResponse.card.options[selectedIndex] ?? card?.options?.[selectedIndex] ?? `Peg ${selectedIndex + 1}`
+      : null;
+    const revealedOptions = mappedResponse.revealedIndexes.map((index) => (
+      mappedResponse.card.options[index] ?? card?.options?.[index] ?? `Peg ${index + 1}`
+    ));
+    const pegState = mappedResponse.pegStateByIndex.get(selectedIndex);
+    setResolutionState({
+      outcome: actionType === 'PASS' ? 'passed' : pegState === 'revealed' ? 'correct' : 'incorrect',
+      actingPlayer,
+      selectedIndex,
+      selectedOption,
+      revealedOptions,
+      lastAction: mappedResponse.lastAction
+    });
 
     setStats((prev) => {
       const seeded = mergeStats(players, prev);
@@ -443,7 +463,6 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
         };
       }
 
-      const pegState = mappedResponse.pegStateByIndex.get(selectedIndex);
       if (pegState === 'revealed') {
         return {
           ...seeded,
@@ -469,7 +488,6 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       return;
     }
 
-    const pegState = mappedResponse.pegStateByIndex.get(selectedIndex);
     if (pegState === 'revealed') {
       setRevealedIndexes((prev) => new Set(prev).add(selectedIndex));
     } else {
@@ -658,6 +676,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setActiveSnapshot(null);
     setQueuedSnapshot(null);
     setQueuedTransition('none');
+    setResolutionState(null);
     setStartRequest(null);
     setRequestInFlight(false);
     setControlledPlayer(null);
@@ -690,6 +709,8 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     canPass,
     lastAction,
     winner,
+    resolutionState,
+    nextTransition: queuedTransition,
     targetScore: effectiveTargetScore,
     errorMessage,
     clearError,
