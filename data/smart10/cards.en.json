@@ -29359,23 +29359,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Select statements that are true. Topic clue: Atom.",
+    "question": "Science: Which statements about the atom are true?",
     "options": [
-      "Plants grow without sunlight.",
-      "Water is CO2.",
-      "Electrons are positively charged.",
-      "Neurons are only in plants.",
-      "Oxygen cannot support fire.",
-      "Gravity repels all mass.",
-      "Earth orbits the Sun.",
-      "Sun orbits the Earth.",
-      "Sound travels faster than light.",
-      "DNA carries genetic information."
+      "Atoms contain a nucleus.",
+      "Different elements have different numbers of protons.",
+      "Electrons are associated with atoms.",
+      "Every atom has the same mass.",
+      "Atoms were invented by Shakespeare.",
+      "Atoms exist only in outer space.",
+      "An atom is a basic unit of matter.",
+      "An atom is larger than a galaxy.",
+      "Atoms are made only of wood.",
+      "Atoms are visible to the naked eye."
     ],
     "correct": {
       "correctIndexes": [
-        6,
-        9
+        0,
+        1,
+        2,
+        6
       ]
     },
     "difficulty": "2",
@@ -29387,22 +29389,23 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Which statements are correct? Topic clue: Molecule.",
+    "question": "Science: Which statements about the molecule are true?",
     "options": [
-      "Water is CO2.",
-      "DNA stores photos.",
-      "Sound travels faster than light.",
-      "Gravity repels all mass.",
-      "Atoms have no protons.",
-      "Plants grow without sunlight.",
-      "Water boils at 100C.",
-      "Atoms have a nucleus.",
-      "Neurons are only in plants.",
-      "Electrons have negative charge."
+      "Molecules can contain atoms of different elements.",
+      "Molecules exist only in solids.",
+      "Every molecule has exactly two atoms.",
+      "A molecule is larger than a continent.",
+      "A molecule consists of bonded atoms.",
+      "Molecules are written only in music notation.",
+      "A molecule is a type of star.",
+      "Water is a molecule.",
+      "Molecules are a kind of planet.",
+      "Chemistry studies molecules extensively."
     ],
     "correct": {
       "correctIndexes": [
-        6,
+        0,
+        4,
         7,
         9
       ]
@@ -29416,24 +29419,24 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Pick all true statements. Topic clue: Electron.",
+    "question": "Science: Which statements about the electron are true?",
     "options": [
-      "Sound travels slower than light.",
-      "Oxygen supports combustion.",
-      "Sun orbits the Earth.",
-      "Gravity repels all mass.",
-      "DNA stores photos.",
-      "Mars is the hottest planet.",
-      "Plants use photosynthesis.",
-      "Sound travels faster than light.",
-      "Mars is called the Red Planet.",
-      "Atoms have no protons."
+      "Electric current involves moving electrons.",
+      "The electron is a planet.",
+      "Electrons exist only in the Sun.",
+      "Electrons are much lighter than protons.",
+      "Electrons have positive charge only.",
+      "The electron has negative charge.",
+      "The electron is a kind of plant.",
+      "An electron is bigger than an atom.",
+      "Electrons are subatomic particles.",
+      "Electrons are made from water."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
-        6,
+        3,
+        5,
         8
       ]
     },
@@ -29446,25 +29449,24 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Identify factual statements. Topic clue: Proton.",
+    "question": "Science: Which statements about the proton are true?",
     "options": [
-      "Atoms have no protons.",
-      "Water is H2O.",
-      "Water boils at 10C.",
-      "Electrons have negative charge.",
-      "Electrons are positively charged.",
-      "Neurons transmit signals.",
-      "Plants grow without sunlight.",
-      "DNA stores photos.",
-      "Atoms have a nucleus.",
-      "Earth orbits the Sun."
+      "The proton has positive charge.",
+      "The proton is a moon of Jupiter.",
+      "The number of protons defines the element.",
+      "A proton is bigger than a mountain.",
+      "Protons are found only in liquids.",
+      "Protons are found in atomic nuclei.",
+      "Protons are negatively charged.",
+      "The proton is a type of fungus.",
+      "Protons are used as kitchen tools.",
+      "A proton is heavier than an electron."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        3,
+        0,
+        2,
         5,
-        8,
         9
       ]
     },
@@ -29477,23 +29479,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Which options are accurate? Topic clue: Neutron.",
+    "question": "Science: Which statements about the neutron are true?",
     "options": [
-      "Gravity attracts mass.",
-      "Plants use photosynthesis.",
-      "Sound travels faster than light.",
-      "Atoms have no protons.",
-      "Sun orbits the Earth.",
-      "Water boils at 10C.",
-      "Plants grow without sunlight.",
-      "Mars is the hottest planet.",
-      "Water is CO2.",
-      "Oxygen cannot support fire."
+      "Neutrons are positively charged.",
+      "The neutron is a weather front.",
+      "Different isotopes can differ in neutron count.",
+      "Neutrons are made of glass.",
+      "Neutrons are found in atomic nuclei.",
+      "The neutron is a visible beam of light.",
+      "Neutrons contribute to atomic mass.",
+      "The neutron has no electric charge.",
+      "Neutrons orbit Earth as satellites.",
+      "Every atom has zero neutrons."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        1
+        2,
+        4,
+        6,
+        7
       ]
     },
     "difficulty": "2",
@@ -29505,24 +29509,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Select all valid statements. Topic clue: Photon.",
+    "question": "Science: Which statements about the photon are true?",
     "options": [
-      "Neurons transmit signals.",
-      "Electrons have negative charge.",
-      "Oxygen cannot support fire.",
-      "Electrons are positively charged.",
-      "Plants grow without sunlight.",
-      "Sound travels faster than light.",
-      "Atoms have a nucleus.",
-      "Sun orbits the Earth.",
-      "Mars is the hottest planet.",
-      "DNA stores photos."
+      "A photon is a quantum of light.",
+      "The photon is a tectonic plate.",
+      "Photons travel at light speed in vacuum.",
+      "Photons are a type of fish.",
+      "A photon is heavier than a truck.",
+      "Photons have no rest mass.",
+      "Photons can exist only underwater.",
+      "Photons are made of stone.",
+      "A photon is a chemical element.",
+      "Photons are central to electromagnetism."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
-        6
+        2,
+        5,
+        9
       ]
     },
     "difficulty": "2",
@@ -29534,25 +29539,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Select statements that are true. Topic clue: Gravity.",
+    "question": "Science: Which statements about gravity are true?",
     "options": [
-      "Sound travels slower than light.",
-      "Atoms have a nucleus.",
-      "Atoms have no protons.",
-      "Mars is the hottest planet.",
-      "Plants grow without sunlight.",
-      "Neurons transmit signals.",
-      "Neurons are only in plants.",
-      "Sun orbits the Earth.",
-      "Water boils at 10C.",
-      "Earth orbits the Sun."
+      "Gravity is a type of metal.",
+      "Gravity exists only inside volcanoes.",
+      "Gravity attracts masses toward each other.",
+      "Gravity pushes all objects away.",
+      "Gravity keeps planets in orbit.",
+      "Gravity is made by wind.",
+      "Gravity is weaker on the Moon than on Earth.",
+      "Gravity is stronger in cartoons only.",
+      "Objects fall because of gravity near Earth.",
+      "Gravity is a style of painting."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        1,
-        5,
-        9
+        2,
+        4,
+        6,
+        8
       ]
     },
     "difficulty": "2",
@@ -29564,26 +29569,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Which statements are correct? Topic clue: Velocity.",
+    "question": "Science: Which statements about velocity are true?",
     "options": [
-      "Oxygen cannot support fire.",
-      "Water is H2O.",
-      "Electrons are positively charged.",
-      "Atoms have a nucleus.",
-      "Earth orbits the Sun.",
-      "Plants grow without sunlight.",
-      "Electrons have negative charge.",
-      "Gravity attracts mass.",
-      "Gravity repels all mass.",
-      "DNA stores photos."
+      "Velocity exists only in sports cars.",
+      "Velocity is a chemical element.",
+      "Velocity can be measured in meters per second.",
+      "Velocity can be measured in liters.",
+      "Changing direction can change velocity.",
+      "Velocity has color but no direction.",
+      "Velocity is a type of bird.",
+      "Velocity is always the same as mass.",
+      "Velocity includes speed and direction.",
+      "Velocity is a physics quantity."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        3,
+        2,
         4,
-        6,
-        7
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -29595,23 +29599,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Pick all true statements. Topic clue: Acceleration.",
+    "question": "Science: Which statements about acceleration are true?",
     "options": [
-      "Sound travels faster than light.",
-      "Water boils at 100C.",
-      "Neurons are only in plants.",
-      "Atoms have no protons.",
-      "DNA stores photos.",
-      "Sun orbits the Earth.",
-      "DNA carries genetic information.",
-      "Oxygen cannot support fire.",
-      "Electrons are positively charged.",
-      "Water is CO2."
+      "Acceleration can be positive or negative.",
+      "Acceleration is measured in meters per second squared.",
+      "Acceleration is measured in kilograms.",
+      "Acceleration is the rate of change of velocity.",
+      "Acceleration never changes speed.",
+      "Falling objects accelerate near Earth.",
+      "Acceleration is the same as temperature.",
+      "Acceleration is a planet.",
+      "Acceleration exists only in rockets.",
+      "Acceleration is a kind of tree."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        6
+        3,
+        5
       ]
     },
     "difficulty": "2",
@@ -29623,24 +29629,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Identify factual statements. Topic clue: Momentum.",
+    "question": "Science: Which statements about momentum are true?",
     "options": [
-      "Atoms have a nucleus.",
-      "Sound travels faster than light.",
-      "Water boils at 10C.",
-      "Neurons are only in plants.",
-      "Mars is called the Red Planet.",
-      "Gravity repels all mass.",
-      "Plants grow without sunlight.",
-      "Oxygen supports combustion.",
-      "Mars is the hottest planet.",
-      "Oxygen cannot support fire."
+      "A moving truck has momentum.",
+      "Momentum is a physics concept.",
+      "Momentum is conserved in isolated systems.",
+      "A stationary object always has enormous momentum.",
+      "Momentum is a style of poetry.",
+      "Momentum is measured in degrees Celsius.",
+      "Momentum depends on mass and velocity.",
+      "Momentum is a chemical reaction only.",
+      "Momentum exists only in liquids.",
+      "Momentum is a planet ring."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        7
+        1,
+        2,
+        6
       ]
     },
     "difficulty": "2",
@@ -29652,25 +29659,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Which options are accurate? Topic clue: Energy.",
+    "question": "Science: Which statements about energy are true?",
     "options": [
-      "Electrons have negative charge.",
-      "Water is H2O.",
-      "Electrons are positively charged.",
-      "Earth orbits the Sun.",
-      "Water is CO2.",
-      "Gravity repels all mass.",
-      "Water boils at 100C.",
-      "Neurons are only in plants.",
-      "Sun orbits the Earth.",
-      "Atoms have no protons."
+      "Chemical energy is stored in bonds.",
+      "Energy can be created from nothing in ordinary physics.",
+      "Energy exists only in batteries.",
+      "Energy is a type of insect.",
+      "Energy is the capacity to do work.",
+      "Energy is measured in kilometers.",
+      "Energy is a color of paint.",
+      "Energy exists in many forms.",
+      "Energy is the same as volume.",
+      "Energy conservation is a key principle."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
-        3,
-        6
+        4,
+        7,
+        9
       ]
     },
     "difficulty": "2",
@@ -29682,26 +29689,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Select all valid statements. Topic clue: Entropy.",
+    "question": "Science: Which statements about entropy are true?",
     "options": [
-      "Atoms have no protons.",
-      "Atoms have a nucleus.",
-      "Electrons are positively charged.",
-      "Neurons transmit signals.",
-      "DNA carries genetic information.",
-      "Mars is the hottest planet.",
-      "Oxygen cannot support fire.",
-      "Oxygen supports combustion.",
-      "DNA stores photos.",
-      "Plants use photosynthesis."
+      "Entropy helps describe energy distribution.",
+      "Entropy is a metal.",
+      "Entropy exists only in fiction.",
+      "Entropy tends to increase in isolated systems.",
+      "Entropy is the same as gravity.",
+      "Entropy is a concept in thermodynamics.",
+      "Entropy is a shape of cloud.",
+      "Entropy is measured in liters only.",
+      "Entropy is often linked to disorder.",
+      "Entropy is a species of bird."
     ],
     "correct": {
       "correctIndexes": [
-        1,
+        0,
         3,
-        4,
-        7,
-        9
+        5,
+        8
       ]
     },
     "difficulty": "2",
@@ -29713,22 +29719,24 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Select statements that are true. Topic clue: Oxygen.",
+    "question": "Science: Which statements about oxygen are true?",
     "options": [
-      "Water boils at 10C.",
-      "Water is CO2.",
-      "Neurons are only in plants.",
-      "Plants grow without sunlight.",
-      "Water boils at 100C.",
-      "Atoms have no protons.",
-      "Oxygen cannot support fire.",
-      "Electrons are positively charged.",
-      "Sun orbits the Earth.",
-      "Mars is called the Red Planet."
+      "Oxygen is a chemical element.",
+      "Oxygen is a planet.",
+      "Oxygen is part of water molecules.",
+      "Oxygen has the symbol Au.",
+      "Oxygen exists only in stars.",
+      "Humans need oxygen for respiration.",
+      "Oxygen is a precious metal.",
+      "Oxygen is made of sand.",
+      "Oxygen is a genre of music.",
+      "Oxygen has the symbol O."
     ],
     "correct": {
       "correctIndexes": [
-        4,
+        0,
+        2,
+        5,
         9
       ]
     },
@@ -29741,24 +29749,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Which statements are correct? Topic clue: Hydrogen.",
+    "question": "Science: Which statements about hydrogen are true?",
     "options": [
-      "Plants grow without sunlight.",
-      "Plants use photosynthesis.",
-      "Atoms have a nucleus.",
-      "Water boils at 10C.",
-      "Electrons are positively charged.",
-      "Neurons transmit signals.",
-      "DNA stores photos.",
-      "Water is CO2.",
-      "Sound travels faster than light.",
-      "Atoms have no protons."
+      "Hydrogen has the symbol Fe.",
+      "Hydrogen is made only in factories.",
+      "Water contains hydrogen.",
+      "Hydrogen is a moon of Saturn.",
+      "Hydrogen has the symbol H.",
+      "Hydrogen is a heavy metal.",
+      "Hydrogen is abundant in the universe.",
+      "Hydrogen is the lightest element.",
+      "Hydrogen exists only underground.",
+      "Hydrogen is a painting style."
     ],
     "correct": {
       "correctIndexes": [
-        1,
         2,
-        5
+        4,
+        6,
+        7
       ]
     },
     "difficulty": "2",
@@ -29770,24 +29779,24 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Pick all true statements. Topic clue: Nitrogen.",
+    "question": "Science: Which statements about nitrogen are true?",
     "options": [
-      "Oxygen cannot support fire.",
-      "Gravity repels all mass.",
-      "Atoms have no protons.",
-      "Plants grow without sunlight.",
-      "Sound travels faster than light.",
-      "Water is CO2.",
-      "Electrons have negative charge.",
-      "Mars is called the Red Planet.",
-      "Earth orbits the Sun.",
-      "Oxygen supports combustion."
+      "Nitrogen is a chemical element.",
+      "Nitrogen is a Roman emperor.",
+      "Nitrogen has the symbol N.",
+      "Nitrogen is a kind of mountain.",
+      "Nitrogen exists only in oceans.",
+      "Much of Earth's atmosphere is nitrogen.",
+      "Nitrogen has the symbol Ag.",
+      "Nitrogen is the heaviest noble gas.",
+      "Nitrogen is a gemstone.",
+      "Nitrogen is important in biology."
     ],
     "correct": {
       "correctIndexes": [
-        6,
-        7,
-        8,
+        0,
+        2,
+        5,
         9
       ]
     },
@@ -29800,26 +29809,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Identify factual statements. Topic clue: Carbon.",
+    "question": "Science: Which statements about carbon are true?",
     "options": [
-      "Water boils at 10C.",
-      "Water boils at 100C.",
-      "Oxygen cannot support fire.",
-      "Sound travels slower than light.",
-      "Sound travels faster than light.",
-      "Plants grow without sunlight.",
-      "Mars is called the Red Planet.",
-      "Earth orbits the Sun.",
-      "Gravity repels all mass.",
-      "Water is H2O."
+      "Carbon is a planet.",
+      "Carbon has the symbol Ca.",
+      "Carbon is a chemical element.",
+      "Carbon exists only as coal.",
+      "Carbon is central to organic chemistry.",
+      "Carbon is a style of dance.",
+      "Carbon has the symbol C.",
+      "Carbon is made only by volcanoes.",
+      "Diamond and graphite are forms of carbon.",
+      "Carbon is lighter than photons."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        3,
+        2,
+        4,
         6,
-        7,
-        9
+        8
       ]
     },
     "difficulty": "2",
@@ -29831,23 +29839,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Which options are accurate? Topic clue: Helium.",
+    "question": "Science: Which statements about helium are true?",
     "options": [
-      "Electrons are positively charged.",
-      "Gravity repels all mass.",
-      "Neurons are only in plants.",
-      "DNA stores photos.",
-      "Sun orbits the Earth.",
-      "Water is H2O.",
-      "Gravity attracts mass.",
-      "Atoms have no protons.",
-      "Sound travels faster than light.",
-      "Plants grow without sunlight."
+      "Helium has the symbol Hg.",
+      "Helium is a liquid metal.",
+      "Helium is a noble gas.",
+      "Helium is black in its natural state.",
+      "Helium is lighter than air.",
+      "Helium is the same as oxygen.",
+      "Helium is a bird species.",
+      "Helium exists only on Mars.",
+      "Helium is a chemical element.",
+      "Helium has the symbol He."
     ],
     "correct": {
       "correctIndexes": [
-        5,
-        6
+        2,
+        4,
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -29859,24 +29869,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Select all valid statements. Topic clue: Neon.",
+    "question": "Science: Which statements about neon are true?",
     "options": [
-      "Atoms have no protons.",
-      "Electrons have negative charge.",
-      "Sun orbits the Earth.",
-      "Sound travels slower than light.",
-      "Plants grow without sunlight.",
-      "Water boils at 10C.",
-      "DNA stores photos.",
-      "Sound travels faster than light.",
-      "Earth orbits the Sun.",
-      "Electrons are positively charged."
+      "Neon is a noble gas.",
+      "Neon has the symbol Ne.",
+      "Neon has the symbol Na.",
+      "Neon is a chemical element.",
+      "Neon is a kind of acid rain.",
+      "Neon signs are named after it.",
+      "Neon is the same as copper.",
+      "Neon is a planet.",
+      "Neon exists only in oceans.",
+      "Neon is a species of tree."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         3,
-        8
+        5
       ]
     },
     "difficulty": "2",
@@ -29888,25 +29899,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Select statements that are true. Topic clue: Sodium.",
+    "question": "Science: Which statements about sodium are true?",
     "options": [
-      "Neurons transmit signals.",
-      "Oxygen supports combustion.",
-      "Sun orbits the Earth.",
-      "Plants use photosynthesis.",
-      "DNA stores photos.",
-      "Water is CO2.",
-      "Electrons are positively charged.",
-      "Electrons have negative charge.",
-      "Atoms have no protons.",
-      "Plants grow without sunlight."
+      "Sodium is a noble gas.",
+      "Sodium is a film genre.",
+      "Sodium is a chemical element.",
+      "Sodium is a moon of Jupiter.",
+      "Table salt contains sodium.",
+      "Sodium is a weather pattern.",
+      "Sodium exists only as pure metal in kitchens.",
+      "Sodium has the symbol Na.",
+      "Sodium has the symbol S.",
+      "Sodium is an alkali metal."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        1,
-        3,
-        7
+        2,
+        4,
+        7,
+        9
       ]
     },
     "difficulty": "2",
@@ -29918,26 +29929,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Which statements are correct? Topic clue: Potassium.",
+    "question": "Science: Which statements about potassium are true?",
     "options": [
-      "Electrons are positively charged.",
-      "Earth orbits the Sun.",
-      "DNA stores photos.",
-      "Plants use photosynthesis.",
-      "Plants grow without sunlight.",
-      "Gravity attracts mass.",
-      "Water boils at 100C.",
-      "Mars is the hottest planet.",
-      "Sound travels slower than light.",
-      "Sun orbits the Earth."
+      "Potassium is important in biology.",
+      "Potassium has the symbol P.",
+      "Potassium is only found on comets.",
+      "Potassium is a style of sculpture.",
+      "Potassium is a chemical element.",
+      "Potassium is a Roman road.",
+      "Potassium is a noble gas.",
+      "Potassium has the symbol K.",
+      "Potassium is made of glass.",
+      "Potassium belongs to the alkali metals."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        3,
-        5,
-        6,
-        8
+        0,
+        4,
+        7,
+        9
       ]
     },
     "difficulty": "2",
@@ -29949,21 +29959,23 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Pick all true statements. Topic clue: Calcium.",
+    "question": "Science: Which statements about calcium are true?",
     "options": [
-      "Sun orbits the Earth.",
-      "Electrons are positively charged.",
-      "Water is CO2.",
-      "Atoms have no protons.",
-      "Sound travels faster than light.",
-      "Plants use photosynthesis.",
-      "Neurons are only in plants.",
-      "DNA stores photos.",
-      "Sound travels slower than light.",
-      "Gravity repels all mass."
+      "Calcium compounds occur in rocks and shells.",
+      "Calcium is a noble gas.",
+      "Calcium is a style of music.",
+      "Calcium has the symbol Ca.",
+      "Calcium has the symbol Cl.",
+      "Calcium is a chemical element.",
+      "Calcium is heavier than a mountain range.",
+      "Calcium exists only in stars.",
+      "Calcium helps build bones.",
+      "Calcium is a giant ocean current."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        3,
         5,
         8
       ]
@@ -29977,24 +29989,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Identify factual statements. Topic clue: Iron.",
+    "question": "Science: Which statements about iron are true?",
     "options": [
-      "Water boils at 100C.",
-      "Gravity repels all mass.",
-      "Mars is the hottest planet.",
-      "Mars is called the Red Planet.",
-      "Oxygen cannot support fire.",
-      "Electrons are positively charged.",
-      "Water is CO2.",
-      "Atoms have a nucleus.",
-      "Sun orbits the Earth.",
-      "Plants grow without sunlight."
+      "Iron is a chemical element.",
+      "Iron is a noble gas.",
+      "Steel often contains iron.",
+      "Iron is a moon of Neptune.",
+      "Iron exists only as rust.",
+      "Iron has the symbol Fe.",
+      "Iron has the symbol Ir.",
+      "Iron is made only by artists.",
+      "Iron is a style of poetry.",
+      "Iron is important in Earth's core and in blood chemistry."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3,
-        7
+        2,
+        5,
+        9
       ]
     },
     "difficulty": "2",
@@ -30006,25 +30019,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Which options are accurate? Topic clue: Copper.",
+    "question": "Science: Which statements about copper are true?",
     "options": [
-      "Oxygen cannot support fire.",
-      "Neurons are only in plants.",
-      "Mars is the hottest planet.",
-      "Water is CO2.",
-      "DNA carries genetic information.",
-      "Atoms have no protons.",
-      "Oxygen supports combustion.",
-      "Sound travels slower than light.",
-      "Water boils at 10C.",
-      "Water is H2O."
+      "Copper has the symbol Co.",
+      "Copper is lighter than air.",
+      "Copper is used in wires and alloys.",
+      "Copper is a style of dance.",
+      "Copper has the symbol Cu.",
+      "Copper is a noble gas.",
+      "Copper conducts electricity well.",
+      "Copper is a chemical element.",
+      "Copper exists only in liquid form.",
+      "Copper is a crater on the Moon only."
     ],
     "correct": {
       "correctIndexes": [
+        2,
         4,
         6,
-        7,
-        9
+        7
       ]
     },
     "difficulty": "2",
@@ -30036,26 +30049,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Select all valid statements. Topic clue: Silver.",
+    "question": "Science: Which statements about silver are true?",
     "options": [
-      "Electrons have negative charge.",
-      "Neurons transmit signals.",
-      "Mars is the hottest planet.",
-      "Water boils at 100C.",
-      "DNA carries genetic information.",
-      "Water boils at 10C.",
-      "Neurons are only in plants.",
-      "Gravity repels all mass.",
-      "Plants use photosynthesis.",
-      "Oxygen cannot support fire."
+      "Silver is a chemical element.",
+      "Silver is softer than light.",
+      "Silver is a precious metal.",
+      "Silver is a weather system.",
+      "Silver is a species of fish only.",
+      "Silver has the symbol Ag.",
+      "Silver exists only in stars.",
+      "Silver has the symbol Si.",
+      "Silver is a noble gas.",
+      "Silver is used in jewelry and industry."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
-        3,
-        4,
-        8
+        2,
+        5,
+        9
       ]
     },
     "difficulty": "2",
@@ -30067,23 +30079,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Select statements that are true. Topic clue: Gold.",
+    "question": "Science: Which statements about gold are true?",
     "options": [
-      "Neurons transmit signals.",
-      "Neurons are only in plants.",
-      "Sun orbits the Earth.",
-      "Electrons are positively charged.",
-      "Atoms have no protons.",
-      "Sound travels faster than light.",
-      "Mars is the hottest planet.",
-      "Plants grow without sunlight.",
-      "Water boils at 10C.",
-      "Gravity attracts mass."
+      "Gold is a noble gas.",
+      "Gold exists only in the Sun.",
+      "Gold is a chemical element.",
+      "Gold has the symbol Gd.",
+      "Gold has the symbol Au.",
+      "Gold is a mountain range.",
+      "Gold is valued in jewelry and finance.",
+      "Gold is the same as brass.",
+      "Gold is a precious metal.",
+      "Gold is a species of flower."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        9
+        2,
+        4,
+        6,
+        8
       ]
     },
     "difficulty": "2",
@@ -30095,24 +30109,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Which statements are correct? Topic clue: Mercury.",
+    "question": "Science: Which statements about mercury are true?",
     "options": [
-      "Oxygen cannot support fire.",
-      "Neurons transmit signals.",
-      "Water boils at 10C.",
-      "Water is CO2.",
-      "Neurons are only in plants.",
-      "Sound travels faster than light.",
-      "Electrons have negative charge.",
-      "Mars is called the Red Planet.",
-      "DNA stores photos.",
-      "Atoms have no protons."
+      "Mercury exists only as a planet.",
+      "Mercury has the symbol Mc.",
+      "Mercury has the symbol Hg.",
+      "Mercury is a kind of cloud.",
+      "Mercury is liquid at room temperature.",
+      "Mercury is a noble gas.",
+      "Mercury is made of wood.",
+      "Mercury is a bird species.",
+      "Mercury is a chemical element.",
+      "Mercury is also the name of a planet."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        6,
-        7
+        2,
+        4,
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -30124,25 +30139,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Pick all true statements. Topic clue: Venus.",
+    "question": "Science: Which statements about Venus are true?",
     "options": [
-      "Plants use photosynthesis.",
-      "Neurons are only in plants.",
-      "Oxygen cannot support fire.",
-      "Mars is the hottest planet.",
-      "Gravity attracts mass.",
-      "DNA stores photos.",
-      "Sound travels slower than light.",
-      "Gravity repels all mass.",
-      "Water is H2O.",
-      "Sun orbits the Earth."
+      "Venus is the second planet from the Sun.",
+      "Venus is similar in size to Earth.",
+      "Venus is made of ice only.",
+      "Venus is a planet.",
+      "Venus is the outermost planet.",
+      "Venus has a very dense atmosphere.",
+      "Venus orbits Earth.",
+      "Venus is a moon of Jupiter.",
+      "Venus is a chemical element.",
+      "Venus is a kind of bacteria."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        6,
-        8
+        1,
+        3,
+        5
       ]
     },
     "difficulty": "2",
@@ -30154,26 +30169,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Identify factual statements. Topic clue: Earth.",
+    "question": "Science: Which statements about Earth are true?",
     "options": [
-      "Water boils at 100C.",
-      "DNA carries genetic information.",
-      "Atoms have no protons.",
-      "Oxygen cannot support fire.",
-      "Plants use photosynthesis.",
-      "Sound travels slower than light.",
-      "Mars is called the Red Planet.",
-      "Mars is the hottest planet.",
-      "Sun orbits the Earth.",
-      "Gravity repels all mass."
+      "Earth is the Sun.",
+      "Earth has no atmosphere.",
+      "Earth is a planet.",
+      "Earth has rings like Saturn.",
+      "Liquid water is abundant on Earth's surface.",
+      "Earth orbits Jupiter.",
+      "Earth is a chemical element.",
+      "Earth is the third planet from the Sun.",
+      "Earth is the largest planet.",
+      "Earth has one natural moon."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        1,
+        2,
         4,
-        5,
-        6
+        7,
+        9
       ]
     },
     "difficulty": "2",
@@ -30185,23 +30199,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Which options are accurate? Topic clue: Mars.",
+    "question": "Science: Which statements about Mars are true?",
     "options": [
-      "Oxygen cannot support fire.",
-      "Neurons transmit signals.",
-      "Water boils at 10C.",
-      "Plants grow without sunlight.",
-      "Neurons are only in plants.",
-      "Electrons are positively charged.",
-      "Sound travels faster than light.",
-      "Gravity repels all mass.",
-      "Water boils at 100C.",
-      "Mars is the hottest planet."
+      "Mars has two small moons.",
+      "Mars is a noble gas.",
+      "Mars is often called the red planet.",
+      "Mars is a star.",
+      "Mars is the fourth planet from the Sun.",
+      "Mars is a planet.",
+      "Mars is the hottest planet.",
+      "Mars is made only of water.",
+      "Mars orbits Venus as a moon.",
+      "Mars has twenty rings."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        8
+        0,
+        2,
+        4,
+        5
       ]
     },
     "difficulty": "2",
@@ -30213,24 +30229,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "en",
-    "question": "Science: Select all valid statements. Topic clue: Jupiter.",
+    "question": "Science: Which statements about Jupiter are true?",
     "options": [
-      "Oxygen cannot support fire.",
-      "DNA stores photos.",
-      "Atoms have no protons.",
-      "Neurons are only in plants.",
-      "Mars is the hottest planet.",
-      "Water is CO2.",
-      "Gravity repels all mass.",
-      "Neurons transmit signals.",
-      "Water boils at 100C.",
-      "Water is H2O."
+      "The Great Red Spot is linked to Jupiter.",
+      "Jupiter is Earth's moon.",
+      "Jupiter is a chemical element.",
+      "Jupiter is a gas giant.",
+      "Jupiter is the smallest planet.",
+      "Jupiter is a planet.",
+      "Jupiter orbits Mars as a satellite.",
+      "Jupiter is made only of iron.",
+      "Jupiter is the largest planet in the Solar System.",
+      "Jupiter has no moons."
     ],
     "correct": {
       "correctIndexes": [
-        7,
-        8,
-        9
+        0,
+        3,
+        5,
+        8
       ]
     },
     "difficulty": "2",
@@ -30242,23 +30259,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Select statements that are true. Topic clue: Calendar.",
+    "question": "Varia: Which statements about a calendar are true?",
     "options": [
-      "Keyboard is a cooking tool.",
-      "Wallet is footwear.",
-      "Recipe is a tax document.",
-      "Clock shows time.",
-      "Passport is travel ID.",
-      "Umbrella is for underwater use.",
-      "Libraries sell cars.",
-      "Airport is only for trains.",
-      "Passport is a house key.",
-      "Coffee is made from plastic."
+      "A calendar boils water.",
+      "A calendar is a species of bird.",
+      "A calendar is a kind of bicycle.",
+      "A calendar is always edible.",
+      "A calendar helps track dates.",
+      "A calendar is a musical instrument.",
+      "A calendar can help plan events.",
+      "Months and weeks appear on calendars.",
+      "A calendar is used to cut wood.",
+      "Many calendars mark holidays."
     ],
     "correct": {
       "correctIndexes": [
-        3,
-        4
+        4,
+        6,
+        7,
+        9
       ]
     },
     "difficulty": "2",
@@ -30270,21 +30289,22 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Which statements are correct? Topic clue: Compass.",
+    "question": "Varia: Which statements about a compass are true?",
     "options": [
-      "Recipe is a tax document.",
-      "Passport is a house key.",
-      "A week has seven days.",
-      "Wallet holds cash or cards.",
-      "Keyboard is a cooking tool.",
-      "Airport serves air travel.",
-      "Clock writes emails.",
-      "Ticket is always free money.",
-      "Libraries sell cars.",
-      "A week has nine days."
+      "A compass can be useful outdoors.",
+      "A compass is a cooking pot.",
+      "A magnetic compass points toward north.",
+      "Compasses are used in navigation.",
+      "A compass is a species of fish.",
+      "A compass can show direction.",
+      "A compass is a kind of fruit.",
+      "A compass is worn as a shoe.",
+      "A compass prints photos.",
+      "A compass only measures temperature."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         2,
         3,
         5
@@ -30299,25 +30319,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Pick all true statements. Topic clue: Keyboard.",
+    "question": "Varia: Which statements about a keyboard are true?",
     "options": [
-      "Library lends books.",
-      "Clock shows time.",
-      "A week has seven days.",
-      "Ticket is always free money.",
-      "Wallet is footwear.",
-      "Umbrella helps in rain.",
-      "Keyboard is a cooking tool.",
-      "Passport is a house key.",
-      "Clock writes emails.",
-      "Airport is only for trains."
+      "A keyboard is used to fry eggs.",
+      "Keyboards often connect to computers.",
+      "A keyboard has keys.",
+      "A keyboard is a river.",
+      "A keyboard is used for typing.",
+      "A keyboard has bicycle pedals instead of keys.",
+      "A keyboard is always made of glass only.",
+      "A keyboard is a weather system.",
+      "A keyboard is a type of mountain.",
+      "Keyboards can be physical or virtual."
     ],
     "correct": {
       "correctIndexes": [
-        0,
         1,
         2,
-        5
+        4,
+        9
       ]
     },
     "difficulty": "2",
@@ -30329,26 +30349,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Identify factual statements. Topic clue: Notebook.",
+    "question": "Varia: Which statements about a notebook are true?",
     "options": [
-      "Wallet holds cash or cards.",
-      "Recipe is a tax document.",
-      "Coffee contains caffeine.",
-      "Coffee is made from plastic.",
-      "Compass points north.",
-      "Clock shows time.",
-      "Umbrella helps in rain.",
-      "Ticket is always free money.",
-      "Wallet is footwear.",
-      "Passport is a house key."
+      "A notebook is a species of tree.",
+      "A notebook may have lines or blank pages.",
+      "Students often use notebooks.",
+      "A notebook is a submarine.",
+      "A notebook is used to bake bread.",
+      "A notebook is a kind of shoe.",
+      "A notebook must be powered by gasoline.",
+      "A notebook can be used for writing notes.",
+      "Many notebooks contain paper pages.",
+      "A notebook is a tropical storm."
     ],
     "correct": {
       "correctIndexes": [
-        0,
+        1,
         2,
-        4,
-        5,
-        6
+        7,
+        8
       ]
     },
     "difficulty": "2",
@@ -30360,22 +30379,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Which options are accurate? Topic clue: Backpack.",
+    "question": "Varia: Which statements about a backpack are true?",
     "options": [
-      "Airport is only for trains.",
-      "A week has nine days.",
-      "Umbrella is for underwater use.",
-      "Libraries sell cars.",
-      "Clock shows time.",
-      "Ticket is always free money.",
-      "Clock writes emails.",
-      "Recipe is a tax document.",
-      "Coffee is made from plastic.",
-      "Coffee contains caffeine."
+      "A backpack is worn on the back.",
+      "Backpacks often have shoulder straps.",
+      "A backpack is a kind of cloud.",
+      "A backpack is a type of ocean current.",
+      "A backpack is used only underwater.",
+      "Backpacks can carry books or gear.",
+      "A backpack is a dessert.",
+      "A backpack is worn on one finger.",
+      "A backpack is a metal element.",
+      "People use backpacks for travel and school."
     ],
     "correct": {
       "correctIndexes": [
-        4,
+        0,
+        1,
+        5,
         9
       ]
     },
@@ -30388,24 +30409,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Select all valid statements. Topic clue: Umbrella.",
+    "question": "Varia: Which statements about an umbrella are true?",
     "options": [
-      "Recipe is a tax document.",
-      "Coffee is made from plastic.",
-      "Ticket is always free money.",
-      "Ticket can grant entry.",
-      "Passport is travel ID.",
-      "Compass measures temperature.",
-      "Libraries sell cars.",
-      "Keyboard is a cooking tool.",
-      "A week has nine days.",
-      "Compass points north."
+      "An umbrella is a musical scale.",
+      "An umbrella can protect from rain.",
+      "Umbrellas can also provide shade.",
+      "An umbrella is a species of reptile.",
+      "An umbrella runs on electricity.",
+      "An umbrella is used to boil pasta.",
+      "Many umbrellas fold shut.",
+      "An umbrella is often carried by hand.",
+      "An umbrella is worn as a helmet.",
+      "An umbrella is always made of stone."
     ],
     "correct": {
       "correctIndexes": [
-        3,
-        4,
-        9
+        1,
+        2,
+        6,
+        7
       ]
     },
     "difficulty": "2",
@@ -30417,24 +30439,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Select statements that are true. Topic clue: Clock.",
+    "question": "Varia: Which statements about a clock are true?",
     "options": [
-      "Coffee contains caffeine.",
-      "Airport is only for trains.",
-      "Passport is travel ID.",
-      "Wallet is footwear.",
-      "Keyboard is an input device.",
-      "A week has nine days.",
-      "Keyboard is a cooking tool.",
-      "Umbrella is for underwater use.",
-      "Ticket is always free money.",
-      "Airport serves air travel."
+      "Many clocks have hour and minute hands.",
+      "A clock is a species of whale.",
+      "A clock shows time.",
+      "A clock is a style of dance.",
+      "A clock can only work underwater.",
+      "A wall clock can hang on a wall.",
+      "A clock is a kind of forest.",
+      "A clock is used to plant trees.",
+      "A clock is eaten for lunch.",
+      "Digital clocks show numbers."
     ],
     "correct": {
       "correctIndexes": [
         0,
         2,
-        4,
+        5,
         9
       ]
     },
@@ -30447,25 +30469,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Which statements are correct? Topic clue: Watch.",
+    "question": "Varia: Which statements about a watch are true?",
     "options": [
-      "Passport is a house key.",
-      "Recipe is a tax document.",
-      "Wallet holds cash or cards.",
-      "Library lends books.",
-      "Compass points north.",
-      "A week has nine days.",
-      "Clock shows time.",
-      "Umbrella is for underwater use.",
-      "Umbrella helps in rain.",
-      "Keyboard is a cooking tool."
+      "A watch is used to paint walls.",
+      "Some watches can track fitness data.",
+      "A watch is always bigger than a suitcase.",
+      "A watch is worn on the wrist.",
+      "A watch shows time.",
+      "A watch is worn on a bicycle tire.",
+      "A watch is a form of soup.",
+      "A watch is a kind of vegetable.",
+      "Some watches are digital.",
+      "A watch is a bird species."
     ],
     "correct": {
       "correctIndexes": [
-        2,
+        1,
         3,
         4,
-        6,
         8
       ]
     },
@@ -30478,23 +30499,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Pick all true statements. Topic clue: Bicycle.",
+    "question": "Varia: Which statements about a bicycle are true?",
     "options": [
-      "Libraries sell cars.",
-      "Airport is only for trains.",
-      "Umbrella helps in rain.",
-      "Compass points north.",
-      "A week has nine days.",
-      "Recipe is a tax document.",
-      "Umbrella is for underwater use.",
-      "Compass measures temperature.",
-      "Ticket is always free money.",
-      "Wallet is footwear."
+      "A bicycle is a sea animal.",
+      "A bicycle is a painting technique.",
+      "A bicycle is a type of fruit.",
+      "A bicycle is used to print books.",
+      "Bicycles can be used for transport.",
+      "A bicycle always has four wings.",
+      "A bicycle moves by rocket fuel only.",
+      "Bicycles are powered by pedaling.",
+      "A bicycle has two wheels.",
+      "Many bicycles have handlebars and brakes."
     ],
     "correct": {
       "correctIndexes": [
-        2,
-        3
+        4,
+        7,
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -30506,23 +30529,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Identify factual statements. Topic clue: Scooter.",
+    "question": "Varia: Which statements about a scooter are true?",
     "options": [
-      "Recipe is a tax document.",
-      "Umbrella is for underwater use.",
-      "Keyboard is an input device.",
-      "Wallet is footwear.",
-      "Keyboard is a cooking tool.",
-      "Coffee is made from plastic.",
-      "A week has nine days.",
-      "Passport is a house key.",
-      "Library lends books.",
-      "Wallet holds cash or cards."
+      "A scooter is a soup ingredient only.",
+      "A scooter measures blood pressure.",
+      "A scooter is a mountain range.",
+      "A scooter is a species of owl.",
+      "A scooter can be used for short travel.",
+      "A scooter is worn as a hat.",
+      "A scooter has a handlebar.",
+      "Some scooters are electric.",
+      "A scooter always swims underwater.",
+      "Many scooters have two wheels."
     ],
     "correct": {
       "correctIndexes": [
-        2,
-        8,
+        4,
+        6,
+        7,
         9
       ]
     },
@@ -30535,25 +30559,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Which options are accurate? Topic clue: Elevator.",
+    "question": "Varia: Which statements about an elevator are true?",
     "options": [
-      "Libraries sell cars.",
-      "Compass points north.",
-      "Clock writes emails.",
-      "Wallet is footwear.",
-      "Recipe lists ingredients.",
-      "Keyboard is an input device.",
-      "Library lends books.",
-      "Coffee is made from plastic.",
-      "Keyboard is a cooking tool.",
-      "A week has nine days."
+      "Elevators travel vertically.",
+      "An elevator is used to toast bread.",
+      "Elevators are common in tall buildings.",
+      "An elevator has doors.",
+      "An elevator is used to tune guitars.",
+      "An elevator moves people between floors.",
+      "An elevator is a fruit tree.",
+      "An elevator always moves sideways only.",
+      "An elevator is a bird nest.",
+      "An elevator is a kind of river."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        4,
-        5,
-        6
+        0,
+        2,
+        3,
+        5
       ]
     },
     "difficulty": "2",
@@ -30565,26 +30589,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Select all valid statements. Topic clue: Subway.",
+    "question": "Varia: Which statements about a subway are true?",
     "options": [
-      "Passport is travel ID.",
-      "Keyboard is a cooking tool.",
-      "Wallet holds cash or cards.",
-      "Airport serves air travel.",
-      "Recipe lists ingredients.",
-      "Clock writes emails.",
-      "Umbrella is for underwater use.",
-      "Umbrella helps in rain.",
-      "Recipe is a tax document.",
-      "Airport is only for trains."
+      "A subway is a kind of sandwich only.",
+      "Subways often run underground.",
+      "Subways can carry many passengers.",
+      "A subway is powered by sails.",
+      "A subway is a rail transit system.",
+      "A subway is a species of insect.",
+      "A subway grows in gardens.",
+      "A subway is a weather balloon.",
+      "A subway is a painting frame.",
+      "Large cities often have subway networks."
     ],
     "correct": {
       "correctIndexes": [
-        0,
+        1,
         2,
-        3,
         4,
-        7
+        9
       ]
     },
     "difficulty": "2",
@@ -30596,23 +30619,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Select statements that are true. Topic clue: Airport.",
+    "question": "Varia: Which statements about an airport are true?",
     "options": [
-      "Passport is a house key.",
-      "Compass measures temperature.",
-      "Clock writes emails.",
-      "Airport is only for trains.",
-      "Libraries sell cars.",
-      "Ticket is always free money.",
-      "Wallet holds cash or cards.",
-      "Recipe lists ingredients.",
-      "Umbrella is for underwater use.",
-      "A week has nine days."
+      "An airport is used to sharpen pencils only.",
+      "Passengers check in at airports.",
+      "Airports link cities by air travel.",
+      "An airport is a kind of soup.",
+      "An airport grows bananas.",
+      "An airport is worn on the wrist.",
+      "An airport is always underwater.",
+      "Airports handle arriving and departing aircraft.",
+      "Airports have runways.",
+      "An airport is a species of coral."
     ],
     "correct": {
       "correctIndexes": [
-        6,
-        7
+        1,
+        2,
+        7,
+        8
       ]
     },
     "difficulty": "2",
@@ -30624,24 +30649,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Which statements are correct? Topic clue: Library.",
+    "question": "Varia: Which statements about a library are true?",
     "options": [
-      "Wallet is footwear.",
-      "Passport is a house key.",
-      "Ticket can grant entry.",
-      "Compass points north.",
-      "Clock writes emails.",
-      "Compass measures temperature.",
-      "Airport serves air travel.",
-      "Recipe is a tax document.",
-      "Keyboard is a cooking tool.",
-      "A week has nine days."
+      "Libraries lend books.",
+      "Libraries organize information collections.",
+      "A library is a kind of cloud.",
+      "A library always has a runway.",
+      "A library is a bird species.",
+      "Libraries can offer quiet study space.",
+      "A library is a type of volcano.",
+      "A library is used to fry potatoes.",
+      "A library is only for storing bicycles.",
+      "Public libraries serve communities."
     ],
     "correct": {
       "correctIndexes": [
-        2,
-        3,
-        6
+        0,
+        1,
+        5,
+        9
       ]
     },
     "difficulty": "2",
@@ -30653,25 +30679,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Pick all true statements. Topic clue: Museum.",
+    "question": "Varia: Which statements about a museum are true?",
     "options": [
-      "A week has nine days.",
-      "Recipe is a tax document.",
-      "Wallet is footwear.",
-      "Airport is only for trains.",
-      "Clock shows time.",
-      "Wallet holds cash or cards.",
-      "Passport is a house key.",
-      "Umbrella helps in rain.",
-      "Coffee contains caffeine.",
-      "Umbrella is for underwater use."
+      "A museum is used to bake cakes.",
+      "Museums display objects or exhibitions.",
+      "Museums often welcome visitors.",
+      "A museum is a type of storm.",
+      "A museum grows only underwater.",
+      "A museum is a breed of horse.",
+      "Museums can preserve historical artifacts.",
+      "Art museums show visual art.",
+      "A museum is always a moving train.",
+      "A museum is a fruit juice."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        5,
-        7,
-        8
+        1,
+        2,
+        6,
+        7
       ]
     },
     "difficulty": "2",
@@ -30683,25 +30709,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Identify factual statements. Topic clue: Restaurant.",
+    "question": "Varia: Which statements about a restaurant are true?",
     "options": [
-      "Umbrella is for underwater use.",
-      "Coffee is made from plastic.",
-      "Ticket can grant entry.",
-      "A week has seven days.",
-      "Passport is a house key.",
-      "Wallet is footwear.",
-      "Umbrella helps in rain.",
-      "Airport is only for trains.",
-      "Compass points north.",
-      "Airport serves air travel."
+      "Menus are common in restaurants.",
+      "A restaurant is a style of poetry.",
+      "Restaurants prepare or serve food.",
+      "A restaurant is made only of ice.",
+      "A restaurant always has a swimming pool.",
+      "Restaurants can offer tables for diners.",
+      "A restaurant is used to fix bicycles only.",
+      "A restaurant is a species of reptile.",
+      "A restaurant is a planet.",
+      "Restaurants can range from casual to formal."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         2,
-        3,
-        6,
-        8,
+        5,
         9
       ]
     },
@@ -30714,23 +30739,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Which options are accurate? Topic clue: Recipe.",
+    "question": "Varia: Which statements about a recipe are true?",
     "options": [
-      "A week has nine days.",
-      "Ticket is always free money.",
-      "Coffee is made from plastic.",
-      "Libraries sell cars.",
-      "Ticket can grant entry.",
-      "Keyboard is a cooking tool.",
-      "Airport serves air travel.",
-      "Clock writes emails.",
-      "Umbrella is for underwater use.",
-      "Compass measures temperature."
+      "A recipe is a mountain peak.",
+      "A recipe helps repeat a dish.",
+      "A recipe is a species of cat.",
+      "A recipe gives cooking instructions.",
+      "Recipes list ingredients.",
+      "A recipe always needs electricity.",
+      "A recipe can only be spoken, never written.",
+      "A recipe is a kind of shoe.",
+      "Recipes can include measurements.",
+      "A recipe is a train station."
     ],
     "correct": {
       "correctIndexes": [
+        1,
+        3,
         4,
-        6
+        8
       ]
     },
     "difficulty": "2",
@@ -30742,23 +30769,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Select all valid statements. Topic clue: Sandwich.",
+    "question": "Varia: Which statements about a sandwich are true?",
     "options": [
-      "Airport is only for trains.",
-      "Clock shows time.",
-      "A week has seven days.",
-      "A week has nine days.",
-      "Coffee is made from plastic.",
-      "Ticket is always free money.",
-      "Clock writes emails.",
-      "Wallet is footwear.",
-      "Keyboard is a cooking tool.",
-      "Compass points north."
+      "A sandwich grows on trees.",
+      "A sandwich powers a car engine.",
+      "A sandwich is a weather map.",
+      "A sandwich is always liquid.",
+      "Sandwiches are often eaten by hand.",
+      "A sandwich is a species of whale.",
+      "A sandwich is a metal element.",
+      "A sandwich can have fillings.",
+      "A sandwich usually includes bread.",
+      "A sandwich can be served cold or hot."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        2,
+        4,
+        7,
+        8,
         9
       ]
     },
@@ -30771,25 +30799,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Select statements that are true. Topic clue: Pasta.",
+    "question": "Varia: Which statements about pasta are true?",
     "options": [
-      "Airport serves air travel.",
-      "Passport is a house key.",
-      "Compass measures temperature.",
-      "Airport is only for trains.",
-      "Ticket can grant entry.",
-      "Umbrella is for underwater use.",
-      "Passport is travel ID.",
-      "Coffee is made from plastic.",
-      "Keyboard is a cooking tool.",
-      "Clock shows time."
+      "Pasta is often boiled in water.",
+      "Pasta is a branch of mathematics.",
+      "Pasta is a food.",
+      "Pasta is a kind of telescope.",
+      "Pasta is always eaten frozen.",
+      "Pasta comes in many shapes.",
+      "Pasta can be served with sauce.",
+      "Pasta is a bird species.",
+      "Pasta is a weather front.",
+      "Pasta is used to charge phones."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        6,
-        9
+        2,
+        5,
+        6
       ]
     },
     "difficulty": "2",
@@ -30801,26 +30829,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Which statements are correct? Topic clue: Chocolate.",
+    "question": "Varia: Which statements about chocolate are true?",
     "options": [
-      "Compass points north.",
-      "Passport is travel ID.",
-      "Recipe lists ingredients.",
-      "Coffee is made from plastic.",
-      "Keyboard is a cooking tool.",
-      "Clock writes emails.",
-      "Ticket is always free money.",
-      "Airport serves air travel.",
-      "A week has nine days.",
-      "Wallet holds cash or cards."
+      "Chocolate is used in desserts and candy.",
+      "Chocolate is a kind of airplane.",
+      "Chocolate often contains cocoa.",
+      "Chocolate can be dark, milk, or white.",
+      "Chocolate is used to pave roads.",
+      "Chocolate is a food product.",
+      "Chocolate is always salty soup.",
+      "Chocolate is a city in Japan.",
+      "Chocolate grows as metal bars in mines.",
+      "Chocolate is a species of fern."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
         2,
-        7,
-        9
+        3,
+        5
       ]
     },
     "difficulty": "2",
@@ -30832,22 +30859,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Pick all true statements. Topic clue: Coffee.",
+    "question": "Varia: Which statements about coffee are true?",
     "options": [
-      "Compass measures temperature.",
-      "Clock writes emails.",
-      "Ticket is always free money.",
-      "Ticket can grant entry.",
-      "Wallet is footwear.",
-      "Coffee is made from plastic.",
-      "Libraries sell cars.",
-      "Passport is a house key.",
-      "A week has nine days.",
-      "Keyboard is an input device."
+      "Coffee is a type of mountain.",
+      "Coffee is often made from roasted beans.",
+      "Many people drink coffee hot.",
+      "Coffee is always eaten with a fork.",
+      "Coffee is a beverage.",
+      "Coffee is a reptile species.",
+      "Coffee is used to inflate tires.",
+      "Coffee is a planet ring.",
+      "Coffee is a style of architecture.",
+      "Coffee can contain caffeine."
     ],
     "correct": {
       "correctIndexes": [
-        3,
+        1,
+        2,
+        4,
         9
       ]
     },
@@ -30860,24 +30889,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Identify factual statements. Topic clue: Tea.",
+    "question": "Varia: Which statements about tea are true?",
     "options": [
-      "Clock shows time.",
-      "A week has nine days.",
-      "Umbrella is for underwater use.",
-      "Compass measures temperature.",
-      "Ticket is always free money.",
-      "Recipe lists ingredients.",
-      "Ticket can grant entry.",
-      "Coffee is made from plastic.",
-      "Wallet is footwear.",
-      "Libraries sell cars."
+      "Tea is a form of concrete.",
+      "Tea is often brewed in water.",
+      "Tea can contain caffeine, though not always much.",
+      "Tea is a kind of submarine.",
+      "Tea is always made from milk only.",
+      "Tea is a species of tree frog.",
+      "Tea is used to sharpen knives.",
+      "Tea is a beverage.",
+      "Tea can be served hot or cold.",
+      "Tea is a railway tunnel."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        5,
-        6
+        1,
+        2,
+        7,
+        8
       ]
     },
     "difficulty": "2",
@@ -30889,24 +30919,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Which options are accurate? Topic clue: Orange.",
+    "question": "Varia: Which statements about an orange are true?",
     "options": [
-      "Umbrella helps in rain.",
-      "Keyboard is an input device.",
-      "Airport is only for trains.",
-      "A week has nine days.",
-      "Ticket is always free money.",
-      "Umbrella is for underwater use.",
-      "Ticket can grant entry.",
-      "Keyboard is a cooking tool.",
-      "Compass measures temperature.",
-      "Clock shows time."
+      "An orange is a fruit.",
+      "Orange fruit grows on trees.",
+      "An orange is a legal document only.",
+      "An orange is always blue inside.",
+      "An orange is used as a bicycle tire.",
+      "An orange contains vitamin C.",
+      "An orange is a metal.",
+      "An orange is a fish species.",
+      "An orange is a moon of Saturn.",
+      "An orange has a peel."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        6,
+        5,
         9
       ]
     },
@@ -30919,26 +30949,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Select all valid statements. Topic clue: Banana.",
+    "question": "Varia: Which statements about a banana are true?",
     "options": [
-      "Airport serves air travel.",
-      "Library lends books.",
-      "Coffee contains caffeine.",
-      "Umbrella is for underwater use.",
-      "Passport is travel ID.",
-      "Clock writes emails.",
-      "A week has nine days.",
-      "Libraries sell cars.",
-      "Compass measures temperature.",
-      "Ticket can grant entry."
+      "A banana is a type of hammer.",
+      "A banana is a fruit.",
+      "Bananas can be eaten raw.",
+      "Bananas grow from snowdrifts.",
+      "A banana is made of iron.",
+      "A banana is a gemstone.",
+      "Bananas often have yellow peels when ripe.",
+      "Bananas grow in bunches.",
+      "Bananas are always square.",
+      "A banana is a weather satellite."
     ],
     "correct": {
       "correctIndexes": [
-        0,
         1,
         2,
-        4,
-        9
+        6,
+        7
       ]
     },
     "difficulty": "2",
@@ -30950,23 +30979,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Select statements that are true. Topic clue: Apple.",
+    "question": "Varia: Which statements about an apple are true?",
     "options": [
-      "Recipe lists ingredients.",
-      "Recipe is a tax document.",
-      "Compass measures temperature.",
-      "Libraries sell cars.",
-      "Coffee is made from plastic.",
-      "Airport is only for trains.",
-      "Passport is a house key.",
-      "Clock writes emails.",
-      "Umbrella helps in rain.",
-      "Umbrella is for underwater use."
+      "Apples can be eaten fresh or cooked.",
+      "An apple is a sea current.",
+      "An apple is a fruit.",
+      "An apple is made of concrete.",
+      "Apples are always purple with no seeds.",
+      "Apples grow on trees.",
+      "An apple is a train engine.",
+      "An apple is used to repair shoes.",
+      "An apple is a reptile.",
+      "Apple varieties differ in color and taste."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        8
+        2,
+        5,
+        9
       ]
     },
     "difficulty": "2",
@@ -30978,22 +31009,23 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Which statements are correct? Topic clue: Laptop.",
+    "question": "Varia: Which statements about a laptop are true?",
     "options": [
-      "Libraries sell cars.",
-      "Passport is a house key.",
-      "Coffee contains caffeine.",
-      "Compass measures temperature.",
-      "A week has seven days.",
-      "Wallet is footwear.",
-      "Umbrella is for underwater use.",
-      "Ticket is always free money.",
-      "Keyboard is an input device.",
-      "Recipe is a tax document."
+      "A laptop is a species of bird.",
+      "Laptops usually include a keyboard.",
+      "A laptop is a kind of soup bowl.",
+      "A laptop is a portable computer.",
+      "Laptops often have built-in screens.",
+      "A laptop is powered by coal directly.",
+      "A laptop is a desert plant.",
+      "A laptop is worn on the foot.",
+      "Laptops can run on battery power.",
+      "A laptop is always larger than a car."
     ],
     "correct": {
       "correctIndexes": [
-        2,
+        1,
+        3,
         4,
         8
       ]
@@ -31007,25 +31039,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Pick all true statements. Topic clue: Smartphone.",
+    "question": "Varia: Which statements about a smartphone are true?",
     "options": [
-      "Coffee contains caffeine.",
-      "Airport serves air travel.",
-      "Ticket is always free money.",
-      "Keyboard is a cooking tool.",
-      "Wallet holds cash or cards.",
-      "Clock shows time.",
-      "Wallet is footwear.",
-      "Compass measures temperature.",
-      "Libraries sell cars.",
-      "Recipe is a tax document."
+      "A smartphone grows on vines.",
+      "A smartphone is a kind of volcano.",
+      "A smartphone is a kitchen knife.",
+      "A smartphone is a species of moth.",
+      "Smartphones usually have touchscreens.",
+      "A smartphone is a river delta.",
+      "A smartphone is always made of wood only.",
+      "Smartphones can make calls and run apps.",
+      "A smartphone is a mobile device.",
+      "Smartphones can connect to the internet."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        1,
         4,
-        5
+        7,
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -31037,25 +31069,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Identify factual statements. Topic clue: Headphones.",
+    "question": "Varia: Which statements about headphones are true?",
     "options": [
-      "Passport is travel ID.",
-      "Coffee contains caffeine.",
-      "A week has seven days.",
-      "Compass measures temperature.",
-      "Library lends books.",
-      "Umbrella is for underwater use.",
-      "Wallet holds cash or cards.",
-      "Wallet is footwear.",
-      "A week has nine days.",
-      "Clock writes emails."
+      "Headphones can connect by wire or wirelessly.",
+      "Headphones are used as bicycle brakes.",
+      "Headphones are used for listening to audio.",
+      "Headphones are used to fry food.",
+      "Headphones are a type of fruit.",
+      "Headphones cover or sit on the ears.",
+      "Headphones are common with phones and computers.",
+      "Headphones are always filled with water.",
+      "Headphones are a species of lizard.",
+      "Headphones are a style of bridge."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
         2,
-        4,
+        5,
         6
       ]
     },
@@ -31068,23 +31099,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Which options are accurate? Topic clue: Camera.",
+    "question": "Varia: Which statements about a camera are true?",
     "options": [
-      "Ticket is always free money.",
-      "Libraries sell cars.",
-      "Airport is only for trains.",
-      "Wallet is footwear.",
-      "Umbrella is for underwater use.",
-      "Clock writes emails.",
-      "Keyboard is an input device.",
-      "Compass points north.",
-      "Coffee is made from plastic.",
-      "A week has nine days."
+      "A camera only works underground.",
+      "A camera is a kind of sandwich.",
+      "A camera is a type of volcano.",
+      "A camera is a bird species.",
+      "Cameras can take photos or video.",
+      "A camera is used to boil tea.",
+      "A camera captures images.",
+      "A camera is made only of paper.",
+      "Many cameras use lenses.",
+      "Smartphones often include cameras."
     ],
     "correct": {
       "correctIndexes": [
+        4,
         6,
-        7
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -31096,24 +31129,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "en",
-    "question": "Varia: Select all valid statements. Topic clue: Printer.",
+    "question": "Varia: Which statements about a printer are true?",
     "options": [
-      "Clock shows time.",
-      "Coffee contains caffeine.",
-      "Coffee is made from plastic.",
-      "Clock writes emails.",
-      "Airport is only for trains.",
-      "Ticket can grant entry.",
-      "Recipe is a tax document.",
-      "Wallet is footwear.",
-      "Ticket is always free money.",
-      "Compass measures temperature."
+      "A printer is a species of deer.",
+      "Printers are used in homes and offices.",
+      "A printer can connect to a computer.",
+      "A printer is eaten as dessert.",
+      "A printer produces text or images on paper.",
+      "A printer is always powered by wind.",
+      "A printer is a kind of ladder.",
+      "A printer grows in the ocean.",
+      "A printer is a musical scale.",
+      "Some printers use ink while others use toner."
     ],
     "correct": {
       "correctIndexes": [
-        0,
         1,
-        5
+        2,
+        4,
+        9
       ]
     },
     "difficulty": "2",

@@ -29359,23 +29359,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali tõesed vaited. Teemavihe: Atom.",
+    "question": "Teadus: Millised väited aatomi kohta peavad paika?",
     "options": [
-      "Plants grow without sunlight.",
-      "Water is CO2.",
-      "Electrons are positively charged.",
-      "Neurons are only in plants.",
-      "Oxygen cannot support fire.",
-      "Gravity repels all mass.",
-      "Earth orbits the Sun.",
-      "Sun orbits the Earth.",
-      "Sound travels faster than light.",
-      "DNA carries genetic information."
+      "Erinevatel elementidel on erinev prootonite arv.",
+      "Aatom koosneb ainult puidust.",
+      "Aatom on galaktikast suurem.",
+      "Iga aatom on sama massiga.",
+      "Aatomid leiutas Shakespeare.",
+      "Aatomid eksisteerivad vaid kosmoses.",
+      "Aatom on aine põhiühik.",
+      "Elektronid seostuvad aatomiga.",
+      "Aatomil on tuum.",
+      "Aatomeid näeb palja silmaga."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         6,
-        9
+        7,
+        8
       ]
     },
     "difficulty": "2",
@@ -29387,23 +29389,24 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Millised vaited on oiged? Teemavihe: Molecule.",
+    "question": "Teadus: Millised väited molekuli kohta peavad paika?",
     "options": [
-      "Water is CO2.",
-      "DNA stores photos.",
-      "Sound travels faster than light.",
-      "Gravity repels all mass.",
-      "Atoms have no protons.",
-      "Plants grow without sunlight.",
-      "Water boils at 100C.",
-      "Atoms have a nucleus.",
-      "Neurons are only in plants.",
-      "Electrons have negative charge."
+      "Molekul koosneb seotud aatomitest.",
+      "Igas molekulis on täpselt kaks aatomit.",
+      "Molekulis võivad olla eri elementide aatomid.",
+      "Molekulid eksisteerivad ainult tahkes olekus.",
+      "Vesi on molekul.",
+      "Molekul on planeedi liik.",
+      "Molekule kirjutatakse ainult noodikirjas.",
+      "Molekul on mandrist suurem.",
+      "Molekul on tähtede liik.",
+      "Keemia uurib molekule põhjalikult."
     ],
     "correct": {
       "correctIndexes": [
-        6,
-        7,
+        0,
+        2,
+        4,
         9
       ]
     },
@@ -29416,23 +29419,23 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali koik tõesed vaited. Teemavihe: Electron.",
+    "question": "Teadus: Millised väited elektroni kohta peavad paika?",
     "options": [
-      "Sound travels slower than light.",
-      "Oxygen supports combustion.",
-      "Sun orbits the Earth.",
-      "Gravity repels all mass.",
-      "DNA stores photos.",
-      "Mars is the hottest planet.",
-      "Plants use photosynthesis.",
-      "Sound travels faster than light.",
-      "Mars is called the Red Planet.",
-      "Atoms have no protons."
+      "Elektronidel on ainult positiivne laeng.",
+      "Elektron on taimeliik.",
+      "Elektrivool seostub liikuvate elektronidega.",
+      "Elektronil on negatiivne laeng.",
+      "Elektron on aatomist suurem.",
+      "Elektronid eksisteerivad vaid Päikeses.",
+      "Elektron on subatomaarne osake.",
+      "Elektron on planeet.",
+      "Elektron on prootonist palju kergem.",
+      "Elektronid on tehtud veest."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        1,
+        2,
+        3,
         6,
         8
       ]
@@ -29446,24 +29449,23 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Tuvasta faktivaided. Teemavihe: Proton.",
+    "question": "Teadus: Millised väited prootoni kohta peavad paika?",
     "options": [
-      "Atoms have no protons.",
-      "Water is H2O.",
-      "Water boils at 10C.",
-      "Electrons have negative charge.",
-      "Electrons are positively charged.",
-      "Neurons transmit signals.",
-      "Plants grow without sunlight.",
-      "DNA stores photos.",
-      "Atoms have a nucleus.",
-      "Earth orbits the Sun."
+      "Prootoneid kasutatakse köögiriistadena.",
+      "Prooton on Jupiteri kuu.",
+      "Prooton on seeneliik.",
+      "Prootonid esinevad ainult vedelikes.",
+      "Prootonite arv määrab elemendi.",
+      "Prooton on mäest suurem.",
+      "Prootonid on negatiivse laenguga.",
+      "Prootonid asuvad aatomituumas.",
+      "Prootonil on positiivne laeng.",
+      "Prooton on elektronist raskem."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        3,
-        5,
+        4,
+        7,
         8,
         9
       ]
@@ -29477,23 +29479,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Millised variandid on oiged? Teemavihe: Neutron.",
+    "question": "Teadus: Millised väited neutroni kohta peavad paika?",
     "options": [
-      "Gravity attracts mass.",
-      "Plants use photosynthesis.",
-      "Sound travels faster than light.",
-      "Atoms have no protons.",
-      "Sun orbits the Earth.",
-      "Water boils at 10C.",
-      "Plants grow without sunlight.",
-      "Mars is the hottest planet.",
-      "Water is CO2.",
-      "Oxygen cannot support fire."
+      "Neutronid asuvad aatomituumas.",
+      "Neutronil puudub elektrilaeng.",
+      "Isotoobid võivad neutronite arvu poolest erineda.",
+      "Neutronid on positiivse laenguga.",
+      "Neutron on ilmafront.",
+      "Neutron on nähtav valguskiir.",
+      "Neutronid annavad osa aatomi massist.",
+      "Neutronid tiirlevad ümber Maa satelliitidena.",
+      "Neutronid on tehtud klaasist.",
+      "Igas aatomis on null neutronit."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1
+        1,
+        2,
+        6
       ]
     },
     "difficulty": "2",
@@ -29505,24 +29509,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali koik kehtivad vaited. Teemavihe: Photon.",
+    "question": "Teadus: Millised väited footoni kohta peavad paika?",
     "options": [
-      "Neurons transmit signals.",
-      "Electrons have negative charge.",
-      "Oxygen cannot support fire.",
-      "Electrons are positively charged.",
-      "Plants grow without sunlight.",
-      "Sound travels faster than light.",
-      "Atoms have a nucleus.",
-      "Sun orbits the Earth.",
-      "Mars is the hottest planet.",
-      "DNA stores photos."
+      "Footon on valguskvant.",
+      "Footon on keemiline element.",
+      "Footonil puudub paigumass.",
+      "Footon on veokist raskem.",
+      "Footon liigub vaakumis valguse kiirusega.",
+      "Footonid on kalaliik.",
+      "Footonid saavad eksisteerida vaid vee all.",
+      "Footon on laamtektooniline plaat.",
+      "Footonid on tehtud kivist.",
+      "Footonid on elektromagnetismi keskne osa."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
-        6
+        2,
+        4,
+        9
       ]
     },
     "difficulty": "2",
@@ -29534,25 +29539,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali tõesed vaited. Teemavihe: Gravity.",
+    "question": "Teadus: Millised väited gravitatsiooni kohta peavad paika?",
     "options": [
-      "Sound travels slower than light.",
-      "Atoms have a nucleus.",
-      "Atoms have no protons.",
-      "Mars is the hottest planet.",
-      "Plants grow without sunlight.",
-      "Neurons transmit signals.",
-      "Neurons are only in plants.",
-      "Sun orbits the Earth.",
-      "Water boils at 10C.",
-      "Earth orbits the Sun."
+      "Gravitatsioon hoiab planeete orbiidil.",
+      "Gravitatsioon eksisteerib vaid vulkaanides.",
+      "Gravitatsioon on metalli liik.",
+      "Gravitatsioon tekib tuulest.",
+      "Gravitatsioon tõukab kõiki kehi eemale.",
+      "Kehi tõmbab Maa ligi gravitatsioon.",
+      "Gravitatsioon on tugevam ainult multifilmides.",
+      "Gravitatsioon tõmbab masse teineteise poole.",
+      "Kuul on gravitatsioon nõrgem kui Maal.",
+      "Gravitatsioon on maalikunsti stiil."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
         5,
-        9
+        7,
+        8
       ]
     },
     "difficulty": "2",
@@ -29564,26 +29569,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Millised vaited on oiged? Teemavihe: Velocity.",
+    "question": "Teadus: Millised väited kiirusevektori kohta peavad paika?",
     "options": [
-      "Oxygen cannot support fire.",
-      "Water is H2O.",
-      "Electrons are positively charged.",
-      "Atoms have a nucleus.",
-      "Earth orbits the Sun.",
-      "Plants grow without sunlight.",
-      "Electrons have negative charge.",
-      "Gravity attracts mass.",
-      "Gravity repels all mass.",
-      "DNA stores photos."
+      "Suunamuutus võib kiirusvektorit muuta.",
+      "Kiirusvektor on keemiline element.",
+      "Kiirusvektor eksisteerib vaid sportautodel.",
+      "Kiirusvektor on linnuliik.",
+      "Kiirusvektorit mõõdetakse liitrites.",
+      "Kiirusvektor on alati sama mis mass.",
+      "Kiirusvektor sisaldab kiirust ja suunda.",
+      "Kiirusvektoril on värv, kuid pole suunda.",
+      "Seda saab mõõta meetrites sekundis.",
+      "Kiirusvektor on füüsikaline suurus."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        3,
-        4,
+        0,
         6,
-        7
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -29595,23 +29599,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali koik tõesed vaited. Teemavihe: Acceleration.",
+    "question": "Teadus: Millised väited kiirenduse kohta peavad paika?",
     "options": [
-      "Sound travels faster than light.",
-      "Water boils at 100C.",
-      "Neurons are only in plants.",
-      "Atoms have no protons.",
-      "DNA stores photos.",
-      "Sun orbits the Earth.",
-      "DNA carries genetic information.",
-      "Oxygen cannot support fire.",
-      "Electrons are positively charged.",
-      "Water is CO2."
+      "Kiirendust mõõdetakse kilogrammides.",
+      "Kiirendus ei muuda kunagi kiirust.",
+      "Kiirendus võib olla positiivne või negatiivne.",
+      "Kiirendus eksisteerib ainult rakettidel.",
+      "Kiirendust mõõdetakse meetrites sekundis ruudus.",
+      "Kiirendus näitab kiiruse muutumise määra.",
+      "Kiirendus on planeet.",
+      "Langevad kehad kiirenevad Maa lähedal.",
+      "Kiirendus on sama mis temperatuur.",
+      "Kiirendus on puuliik."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        6
+        2,
+        4,
+        5,
+        7
       ]
     },
     "difficulty": "2",
@@ -29623,24 +29629,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Tuvasta faktivaided. Teemavihe: Momentum.",
+    "question": "Teadus: Millised väited impulsi kohta peavad paika?",
     "options": [
-      "Atoms have a nucleus.",
-      "Sound travels faster than light.",
-      "Water boils at 10C.",
-      "Neurons are only in plants.",
-      "Mars is called the Red Planet.",
-      "Gravity repels all mass.",
-      "Plants grow without sunlight.",
-      "Oxygen supports combustion.",
-      "Mars is the hottest planet.",
-      "Oxygen cannot support fire."
+      "Impulss on füüsika mõiste.",
+      "Impulss eksisteerib vaid vedelikes.",
+      "Impulss on ainult keemiline reaktsioon.",
+      "Paigal oleval kehal on alati hiiglaslik impulss.",
+      "Impulss on luulestiil.",
+      "Impulssi mõõdetakse kraadides Celsiuse järgi.",
+      "Impulss sõltub massist ja kiirusest.",
+      "Isolatsioonis süsteemis impulss säilib.",
+      "Liikuval veokil on impulss.",
+      "Impulss on planeedirõngas."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        7
+        6,
+        7,
+        8
       ]
     },
     "difficulty": "2",
@@ -29652,25 +29659,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Millised variandid on oiged? Teemavihe: Energy.",
+    "question": "Teadus: Millised väited energia kohta peavad paika?",
     "options": [
-      "Electrons have negative charge.",
-      "Water is H2O.",
-      "Electrons are positively charged.",
-      "Earth orbits the Sun.",
-      "Water is CO2.",
-      "Gravity repels all mass.",
-      "Water boils at 100C.",
-      "Neurons are only in plants.",
-      "Sun orbits the Earth.",
-      "Atoms have no protons."
+      "Energia on töö tegemise võime.",
+      "Energia eksisteerib ainult patareides.",
+      "Keemiline energia salvestub sidemetesse.",
+      "Energiat saab tavatingimustes luua eimillestki.",
+      "Energiat on mitmel kujul.",
+      "Energia on sama mis ruumala.",
+      "Energiat mõõdetakse kilomeetrites.",
+      "Energia on putukaliik.",
+      "Energia on värvitoon.",
+      "Energia jäävus on põhialus."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
-        3,
-        6
+        2,
+        4,
+        9
       ]
     },
     "difficulty": "2",
@@ -29682,26 +29689,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali koik kehtivad vaited. Teemavihe: Entropy.",
+    "question": "Teadus: Millised väited entroopia kohta peavad paika?",
     "options": [
-      "Atoms have no protons.",
-      "Atoms have a nucleus.",
-      "Electrons are positively charged.",
-      "Neurons transmit signals.",
-      "DNA carries genetic information.",
-      "Mars is the hottest planet.",
-      "Oxygen cannot support fire.",
-      "Oxygen supports combustion.",
-      "DNA stores photos.",
-      "Plants use photosynthesis."
+      "Entroopia on sama mis gravitatsioon.",
+      "Entroopia on pilve kuju.",
+      "Entroopia aitab kirjeldada energia jaotust.",
+      "Entroopia on termodünaamika mõiste.",
+      "Entroopiat mõõdetakse ainult liitrites.",
+      "Entroopia eksisteerib vaid ulmes.",
+      "Entroopiat seostatakse sageli korratusega.",
+      "Entroopia on metall.",
+      "Isolatsioonis süsteemis entroopia kipub kasvama.",
+      "Entroopia on linnuliik."
     ],
     "correct": {
       "correctIndexes": [
-        1,
+        2,
         3,
-        4,
-        7,
-        9
+        6,
+        8
       ]
     },
     "difficulty": "2",
@@ -29713,22 +29719,24 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali tõesed vaited. Teemavihe: Oxygen.",
+    "question": "Teadus: Millised väited hapniku kohta peavad paika?",
     "options": [
-      "Water boils at 10C.",
-      "Water is CO2.",
-      "Neurons are only in plants.",
-      "Plants grow without sunlight.",
-      "Water boils at 100C.",
-      "Atoms have no protons.",
-      "Oxygen cannot support fire.",
-      "Electrons are positively charged.",
-      "Sun orbits the Earth.",
-      "Mars is called the Red Planet."
+      "Hapnik on muusikastiil.",
+      "Hapnik on planeet.",
+      "Hapnik on tehtud liivast.",
+      "Hapnik eksisteerib vaid tähtedes.",
+      "Hapnik kuulub vee molekuli koosseisu.",
+      "Hapniku tähis on Au.",
+      "Hapnik on väärismetall.",
+      "Inimesed vajavad hapnikku hingamiseks.",
+      "Hapnik on keemiline element.",
+      "Hapniku tähis on O."
     ],
     "correct": {
       "correctIndexes": [
         4,
+        7,
+        8,
         9
       ]
     },
@@ -29741,24 +29749,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Millised vaited on oiged? Teemavihe: Hydrogen.",
+    "question": "Teadus: Millised väited vesiniku kohta peavad paika?",
     "options": [
-      "Plants grow without sunlight.",
-      "Plants use photosynthesis.",
-      "Atoms have a nucleus.",
-      "Water boils at 10C.",
-      "Electrons are positively charged.",
-      "Neurons transmit signals.",
-      "DNA stores photos.",
-      "Water is CO2.",
-      "Sound travels faster than light.",
-      "Atoms have no protons."
+      "Vesiniku tähis on H.",
+      "Vesinik on kõige kergem element.",
+      "Vesi sisaldab vesinikku.",
+      "Vesiniku tähis on Fe.",
+      "Vesinikku tehakse ainult tehastes.",
+      "Vesinik on raske metall.",
+      "Vesinikku on universumis väga palju.",
+      "Vesinik eksisteerib ainult maa all.",
+      "Vesinik on Saturni kuu.",
+      "Vesinik on maalikunsti stiil."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
         2,
-        5
+        6
       ]
     },
     "difficulty": "2",
@@ -29770,24 +29779,24 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali koik tõesed vaited. Teemavihe: Nitrogen.",
+    "question": "Teadus: Millised väited lämmastiku kohta peavad paika?",
     "options": [
-      "Oxygen cannot support fire.",
-      "Gravity repels all mass.",
-      "Atoms have no protons.",
-      "Plants grow without sunlight.",
-      "Sound travels faster than light.",
-      "Water is CO2.",
-      "Electrons have negative charge.",
-      "Mars is called the Red Planet.",
-      "Earth orbits the Sun.",
-      "Oxygen supports combustion."
+      "Lämmastik on keemiline element.",
+      "Lämmastik on vääriskivi.",
+      "Suur osa Maa atmosfäärist on lämmastik.",
+      "Lämmastik eksisteerib ainult ookeanides.",
+      "Lämmastiku tähis on N.",
+      "Lämmastik on mäeliik.",
+      "Lämmastiku tähis on Ag.",
+      "Lämmastik on Rooma keiser.",
+      "Lämmastik on kõige raskem väärisgaas.",
+      "Lämmastik on bioloogias tähtis."
     ],
     "correct": {
       "correctIndexes": [
-        6,
-        7,
-        8,
+        0,
+        2,
+        4,
         9
       ]
     },
@@ -29800,26 +29809,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Tuvasta faktivaided. Teemavihe: Carbon.",
+    "question": "Teadus: Millised väited süsiniku kohta peavad paika?",
     "options": [
-      "Water boils at 10C.",
-      "Water boils at 100C.",
-      "Oxygen cannot support fire.",
-      "Sound travels slower than light.",
-      "Sound travels faster than light.",
-      "Plants grow without sunlight.",
-      "Mars is called the Red Planet.",
-      "Earth orbits the Sun.",
-      "Gravity repels all mass.",
-      "Water is H2O."
+      "Süsinik on orgaanilises keemias keskne.",
+      "Süsiniku tähis on Ca.",
+      "Süsinik on planeet.",
+      "Süsinik on tantsustiil.",
+      "Süsinik eksisteerib ainult kivisöena.",
+      "Teemant ja grafiit on süsiniku vormid.",
+      "Süsinikku tekitavad ainult vulkaanid.",
+      "Süsinik on keemiline element.",
+      "Süsiniku tähis on C.",
+      "Süsinik on footonist kergem."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        3,
-        6,
+        0,
+        5,
         7,
-        9
+        8
       ]
     },
     "difficulty": "2",
@@ -29831,23 +29839,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Millised variandid on oiged? Teemavihe: Helium.",
+    "question": "Teadus: Millised väited heeliumi kohta peavad paika?",
     "options": [
-      "Electrons are positively charged.",
-      "Gravity repels all mass.",
-      "Neurons are only in plants.",
-      "DNA stores photos.",
-      "Sun orbits the Earth.",
-      "Water is H2O.",
-      "Gravity attracts mass.",
-      "Atoms have no protons.",
-      "Sound travels faster than light.",
-      "Plants grow without sunlight."
+      "Heelium on õhust kergem.",
+      "Heelium on vedel metall.",
+      "Heeliumi tähis on Hg.",
+      "Heelium on linnuliik.",
+      "Heelium on looduslikult must.",
+      "Heelium eksisteerib ainult Marsil.",
+      "Heelium on keemiline element.",
+      "Heelium on sama mis hapnik.",
+      "Heelium on väärisgaas.",
+      "Heeliumi tähis on He."
     ],
     "correct": {
       "correctIndexes": [
-        5,
-        6
+        0,
+        6,
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -29859,24 +29869,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali koik kehtivad vaited. Teemavihe: Neon.",
+    "question": "Teadus: Millised väited neooni kohta peavad paika?",
     "options": [
-      "Atoms have no protons.",
-      "Electrons have negative charge.",
-      "Sun orbits the Earth.",
-      "Sound travels slower than light.",
-      "Plants grow without sunlight.",
-      "Water boils at 10C.",
-      "DNA stores photos.",
-      "Sound travels faster than light.",
-      "Earth orbits the Sun.",
-      "Electrons are positively charged."
+      "Neooni tähis on Na.",
+      "Neoon on happesaju liik.",
+      "Neoon on väärisgaas.",
+      "Neoon eksisteerib ainult ookeanides.",
+      "Neooni tähis on Ne.",
+      "Neoon on keemiline element.",
+      "Neoon on planeet.",
+      "Neoonsildid on saanud nime selle järgi.",
+      "Neoon on sama mis vask.",
+      "Neoon on puuliik."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        3,
-        8
+        2,
+        4,
+        5,
+        7
       ]
     },
     "difficulty": "2",
@@ -29888,25 +29899,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali tõesed vaited. Teemavihe: Sodium.",
+    "question": "Teadus: Millised väited naatriumi kohta peavad paika?",
     "options": [
-      "Neurons transmit signals.",
-      "Oxygen supports combustion.",
-      "Sun orbits the Earth.",
-      "Plants use photosynthesis.",
-      "DNA stores photos.",
-      "Water is CO2.",
-      "Electrons are positively charged.",
-      "Electrons have negative charge.",
-      "Atoms have no protons.",
-      "Plants grow without sunlight."
+      "Naatrium on keemiline element.",
+      "Naatrium on filmižanr.",
+      "Lauasool sisaldab naatriumi.",
+      "Naatrium on väärisgaas.",
+      "Naatriumi tähis on S.",
+      "Naatrium on ilmaolukord.",
+      "Naatriumi tähis on Na.",
+      "Naatrium eksisteerib köögis ainult puhta metallina.",
+      "Naatrium on Jupiteri kuu.",
+      "Naatrium on leelismetall."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
-        3,
-        7
+        2,
+        6,
+        9
       ]
     },
     "difficulty": "2",
@@ -29918,26 +29929,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Millised vaited on oiged? Teemavihe: Potassium.",
+    "question": "Teadus: Millised väited kaaliumi kohta peavad paika?",
     "options": [
-      "Electrons are positively charged.",
-      "Earth orbits the Sun.",
-      "DNA stores photos.",
-      "Plants use photosynthesis.",
-      "Plants grow without sunlight.",
-      "Gravity attracts mass.",
-      "Water boils at 100C.",
-      "Mars is the hottest planet.",
-      "Sound travels slower than light.",
-      "Sun orbits the Earth."
+      "Kaalium on keemiline element.",
+      "Kaaliumi leidub ainult komeetidel.",
+      "Kaalium on bioloogias tähtis.",
+      "Kaaliumi tähis on P.",
+      "Kaaliumi tähis on K.",
+      "Kaalium on tehtud klaasist.",
+      "Kaalium on Rooma maantee.",
+      "Kaalium on skulptuuristiil.",
+      "Kaalium on väärisgaas.",
+      "Kaalium kuulub leelismetallide hulka."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        3,
-        5,
-        6,
-        8
+        0,
+        2,
+        4,
+        9
       ]
     },
     "difficulty": "2",
@@ -29949,22 +29959,24 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali koik tõesed vaited. Teemavihe: Calcium.",
+    "question": "Teadus: Millised väited kaltsiumi kohta peavad paika?",
     "options": [
-      "Sun orbits the Earth.",
-      "Electrons are positively charged.",
-      "Water is CO2.",
-      "Atoms have no protons.",
-      "Sound travels faster than light.",
-      "Plants use photosynthesis.",
-      "Neurons are only in plants.",
-      "DNA stores photos.",
-      "Sound travels slower than light.",
-      "Gravity repels all mass."
+      "Kaltsiumi tähis on Cl.",
+      "Kaltsium on mäestikust raskem.",
+      "Kaltsiumiühendeid leidub kivimites ja kestades.",
+      "Kaltsium on keemiline element.",
+      "Kaltsium eksisteerib ainult tähtedes.",
+      "Kaltsium on muusikastiil.",
+      "Kaltsium aitab ehitada luid.",
+      "Kaltsium on väärisgaas.",
+      "Kaltsiumi tähis on Ca.",
+      "Kaltsium on suur ookeanihoovus."
     ],
     "correct": {
       "correctIndexes": [
-        5,
+        2,
+        3,
+        6,
         8
       ]
     },
@@ -29977,24 +29989,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Tuvasta faktivaided. Teemavihe: Iron.",
+    "question": "Teadus: Millised väited raua kohta peavad paika?",
     "options": [
-      "Water boils at 100C.",
-      "Gravity repels all mass.",
-      "Mars is the hottest planet.",
-      "Mars is called the Red Planet.",
-      "Oxygen cannot support fire.",
-      "Electrons are positively charged.",
-      "Water is CO2.",
-      "Atoms have a nucleus.",
-      "Sun orbits the Earth.",
-      "Plants grow without sunlight."
+      "Raud on luulestiil.",
+      "Raud on väärisgaas.",
+      "Rauda teevad ainult kunstnikud.",
+      "Raud eksisteerib ainult roostena.",
+      "Teras sisaldab sageli rauda.",
+      "Raud on Neptuuni kuu.",
+      "Raua tähis on Ir.",
+      "Raua tähis on Fe.",
+      "Raud on keemiline element.",
+      "Raud on tähtis nii Maa tuumas kui verekeemias."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        3,
-        7
+        4,
+        7,
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -30006,25 +30019,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Millised variandid on oiged? Teemavihe: Copper.",
+    "question": "Teadus: Millised väited vase kohta peavad paika?",
     "options": [
-      "Oxygen cannot support fire.",
-      "Neurons are only in plants.",
-      "Mars is the hottest planet.",
-      "Water is CO2.",
-      "DNA carries genetic information.",
-      "Atoms have no protons.",
-      "Oxygen supports combustion.",
-      "Sound travels slower than light.",
-      "Water boils at 10C.",
-      "Water is H2O."
+      "Vase tähis on Cu.",
+      "Vask on keemiline element.",
+      "Vaske kasutatakse juhtmetes ja sulamites.",
+      "Vase tähis on Co.",
+      "Vask on õhust kergem.",
+      "Vask on väärisgaas.",
+      "Vask juhib hästi elektrit.",
+      "Vask eksisteerib ainult vedelana.",
+      "Vask on tantsustiil.",
+      "Vask on ainult Kuu kraater."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        6,
-        7,
-        9
+        0,
+        1,
+        2,
+        6
       ]
     },
     "difficulty": "2",
@@ -30036,26 +30049,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali koik kehtivad vaited. Teemavihe: Silver.",
+    "question": "Teadus: Millised väited hõbeda kohta peavad paika?",
     "options": [
-      "Electrons have negative charge.",
-      "Neurons transmit signals.",
-      "Mars is the hottest planet.",
-      "Water boils at 100C.",
-      "DNA carries genetic information.",
-      "Water boils at 10C.",
-      "Neurons are only in plants.",
-      "Gravity repels all mass.",
-      "Plants use photosynthesis.",
-      "Oxygen cannot support fire."
+      "Hõbe on keemiline element.",
+      "Hõbe on väärisgaas.",
+      "Hõbeda tähis on Ag.",
+      "Hõbe on ainult kalaallik.",
+      "Hõbe on väärismetall.",
+      "Hõbe on ilmastikusüsteem.",
+      "Hõbe eksisteerib ainult tähtedes.",
+      "Hõbe on valgusest pehmem.",
+      "Hõbeda tähis on Si.",
+      "Hõbedat kasutatakse ehetes ja tööstuses."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
-        3,
+        2,
         4,
-        8
+        9
       ]
     },
     "difficulty": "2",
@@ -30067,23 +30079,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali tõesed vaited. Teemavihe: Gold.",
+    "question": "Teadus: Millised väited kulla kohta peavad paika?",
     "options": [
-      "Neurons transmit signals.",
-      "Neurons are only in plants.",
-      "Sun orbits the Earth.",
-      "Electrons are positively charged.",
-      "Atoms have no protons.",
-      "Sound travels faster than light.",
-      "Mars is the hottest planet.",
-      "Plants grow without sunlight.",
-      "Water boils at 10C.",
-      "Gravity attracts mass."
+      "Kulla tähis on Au.",
+      "Kuld eksisteerib ainult Päikeses.",
+      "Kuld on väärisgaas.",
+      "Kuld on mäestik.",
+      "Kulla tähis on Gd.",
+      "Kuld on väärismetall.",
+      "Kuld on sama mis messing.",
+      "Kuld on keemiline element.",
+      "Kulda hinnatakse ehetes ja rahanduses.",
+      "Kuld on lilleliik."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        9
+        5,
+        7,
+        8
       ]
     },
     "difficulty": "2",
@@ -30095,24 +30109,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Millised vaited on oiged? Teemavihe: Mercury.",
+    "question": "Teadus: Millised väited elavhõbeda kohta peavad paika?",
     "options": [
-      "Oxygen cannot support fire.",
-      "Neurons transmit signals.",
-      "Water boils at 10C.",
-      "Water is CO2.",
-      "Neurons are only in plants.",
-      "Sound travels faster than light.",
-      "Electrons have negative charge.",
-      "Mars is called the Red Planet.",
-      "DNA stores photos.",
-      "Atoms have no protons."
+      "Elavhõbe on toatemperatuuril vedel.",
+      "Elavhõbeda tähis on Mc.",
+      "Elavhõbe eksisteerib ainult planeedina.",
+      "Elavhõbe on tehtud puidust.",
+      "Elavhõbe on pilveliik.",
+      "Elavhõbe on linnuliik.",
+      "Elavhõbe on keemiline element.",
+      "Elavhõbe on väärisgaas.",
+      "Elavhõbeda tähis on Hg.",
+      "Merkuur on ka planeedi nimi."
     ],
     "correct": {
       "correctIndexes": [
-        1,
+        0,
         6,
-        7
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -30124,25 +30139,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali koik tõesed vaited. Teemavihe: Venus.",
+    "question": "Teadus: Millised väited Veenuse kohta peavad paika?",
     "options": [
-      "Plants use photosynthesis.",
-      "Neurons are only in plants.",
-      "Oxygen cannot support fire.",
-      "Mars is the hottest planet.",
-      "Gravity attracts mass.",
-      "DNA stores photos.",
-      "Sound travels slower than light.",
-      "Gravity repels all mass.",
-      "Water is H2O.",
-      "Sun orbits the Earth."
+      "Veenus koosneb ainult jääst.",
+      "Veenus on kõige kaugem planeet.",
+      "Veenus on Päikesest teine planeet.",
+      "Veenus on keemiline element.",
+      "Veenus on suuruselt Maaga sarnane.",
+      "Veenus on planeet.",
+      "Veenus on Jupiteri kuu.",
+      "Veenusel on väga tihe atmosfäär.",
+      "Veenus tiirleb ümber Maa.",
+      "Veenus on bakteriliik."
     ],
     "correct": {
       "correctIndexes": [
-        0,
+        2,
         4,
-        6,
-        8
+        5,
+        7
       ]
     },
     "difficulty": "2",
@@ -30154,26 +30169,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Tuvasta faktivaided. Teemavihe: Earth.",
+    "question": "Teadus: Millised väited Maa kohta peavad paika?",
     "options": [
-      "Water boils at 100C.",
-      "DNA carries genetic information.",
-      "Atoms have no protons.",
-      "Oxygen cannot support fire.",
-      "Plants use photosynthesis.",
-      "Sound travels slower than light.",
-      "Mars is called the Red Planet.",
-      "Mars is the hottest planet.",
-      "Sun orbits the Earth.",
-      "Gravity repels all mass."
+      "Maa on planeet.",
+      "Maal puudub atmosfäär.",
+      "Maa pinnal leidub palju vedelat vett.",
+      "Maa on Päike.",
+      "Maa on suurim planeet.",
+      "Maa tiirleb ümber Jupiteri.",
+      "Maa on Päikesest kolmas planeet.",
+      "Maa on keemiline element.",
+      "Maal on rõngad nagu Saturnil.",
+      "Maal on üks looduslik kaaslane."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
-        4,
-        5,
-        6
+        2,
+        6,
+        9
       ]
     },
     "difficulty": "2",
@@ -30185,23 +30199,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Millised variandid on oiged? Teemavihe: Mars.",
+    "question": "Teadus: Millised väited Marsi kohta peavad paika?",
     "options": [
-      "Oxygen cannot support fire.",
-      "Neurons transmit signals.",
-      "Water boils at 10C.",
-      "Plants grow without sunlight.",
-      "Neurons are only in plants.",
-      "Electrons are positively charged.",
-      "Sound travels faster than light.",
-      "Gravity repels all mass.",
-      "Water boils at 100C.",
-      "Mars is the hottest planet."
+      "Marssi kutsutakse sageli punaseks planeediks.",
+      "Marss on Päikesest neljas planeet.",
+      "Marss on väärisgaas.",
+      "Marss koosneb ainult veest.",
+      "Marsil on kaks väikest kuud.",
+      "Marss on planeet.",
+      "Marss on kõige kuumem planeet.",
+      "Marss tiirleb Veenuse ümber kuuna.",
+      "Marss on täht.",
+      "Marsil on kakskümmend rõngast."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        8
+        4,
+        5
       ]
     },
     "difficulty": "2",
@@ -30213,24 +30229,25 @@
     "topic": "Science",
     "category": "OPEN",
     "language": "et",
-    "question": "Teadus: Vali koik kehtivad vaited. Teemavihe: Jupiter.",
+    "question": "Teadus: Millised väited Jupiteri kohta peavad paika?",
     "options": [
-      "Oxygen cannot support fire.",
-      "DNA stores photos.",
-      "Atoms have no protons.",
-      "Neurons are only in plants.",
-      "Mars is the hottest planet.",
-      "Water is CO2.",
-      "Gravity repels all mass.",
-      "Neurons transmit signals.",
-      "Water boils at 100C.",
-      "Water is H2O."
+      "Jupiter on väikseim planeet.",
+      "Jupiter tiirleb Marsi ümber satelliidina.",
+      "Suur punane laik seostub Jupiteriga.",
+      "Jupiter on planeet.",
+      "Jupiter koosneb ainult rauast.",
+      "Jupiter on keemiline element.",
+      "Jupiter on Päikesesüsteemi suurim planeet.",
+      "Jupiter on Maa kuu.",
+      "Jupiter on hiidgaasplaneet.",
+      "Jupiteril pole ühtki kuud."
     ],
     "correct": {
       "correctIndexes": [
-        7,
-        8,
-        9
+        2,
+        3,
+        6,
+        8
       ]
     },
     "difficulty": "2",
@@ -30242,23 +30259,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali tõesed vaited. Teemavihe: Calendar.",
+    "question": "Varia: Millised väited kalendri kohta peavad paika?",
     "options": [
-      "Keyboard is a cooking tool.",
-      "Wallet is footwear.",
-      "Recipe is a tax document.",
-      "Clock shows time.",
-      "Passport is travel ID.",
-      "Umbrella is for underwater use.",
-      "Libraries sell cars.",
-      "Airport is only for trains.",
-      "Passport is a house key.",
-      "Coffee is made from plastic."
+      "Kalender aitab kuupäevi jälgida.",
+      "Kalender aitab sündmusi planeerida.",
+      "Kalender ajab vee keema.",
+      "Kalender on muusikainstrument.",
+      "Kalendris on kuud ja nädalad.",
+      "Kalender on alati söödav.",
+      "Kalender on jalgratta liik.",
+      "Kalendrit kasutatakse puidu lõikamiseks.",
+      "Kalender on linnuliik.",
+      "Paljud kalendrid märgivad pühi."
     ],
     "correct": {
       "correctIndexes": [
-        3,
-        4
+        0,
+        1,
+        4,
+        9
       ]
     },
     "difficulty": "2",
@@ -30270,24 +30289,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Millised vaited on oiged? Teemavihe: Compass.",
+    "question": "Varia: Millised väited kompassi kohta peavad paika?",
     "options": [
-      "Recipe is a tax document.",
-      "Passport is a house key.",
-      "A week has seven days.",
-      "Wallet holds cash or cards.",
-      "Keyboard is a cooking tool.",
-      "Airport serves air travel.",
-      "Clock writes emails.",
-      "Ticket is always free money.",
-      "Libraries sell cars.",
-      "A week has nine days."
+      "Kompass on puuvilja liik.",
+      "Kompassi kasutatakse navigeerimisel.",
+      "Kompassi kantakse kingana.",
+      "Kompass prindib fotosid.",
+      "Kompass on kalaallik.",
+      "Kompass aitab suunda leida.",
+      "Kompass on õues kasulik abivahend.",
+      "Kompass on keedupott.",
+      "Magnetkompass osutab põhja suunas.",
+      "Kompass mõõdab ainult temperatuuri."
     ],
     "correct": {
       "correctIndexes": [
-        2,
-        3,
-        5
+        1,
+        5,
+        6,
+        8
       ]
     },
     "difficulty": "2",
@@ -30299,25 +30319,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali koik tõesed vaited. Teemavihe: Keyboard.",
+    "question": "Varia: Millised väited klaviatuuri kohta peavad paika?",
     "options": [
-      "Library lends books.",
-      "Clock shows time.",
-      "A week has seven days.",
-      "Ticket is always free money.",
-      "Wallet is footwear.",
-      "Umbrella helps in rain.",
-      "Keyboard is a cooking tool.",
-      "Passport is a house key.",
-      "Clock writes emails.",
-      "Airport is only for trains."
+      "Klaviatuuril on klahvide asemel pedaalid.",
+      "Klaviatuuril on klahvid.",
+      "Klaviatuur on jõgi.",
+      "Klaviatuur on ilmastikusüsteem.",
+      "Klaviatuur on alati ainult klaasist.",
+      "Klaviatuur on mäeliik.",
+      "Klaviatuuri kasutatakse kirjutamiseks.",
+      "Klaviatuur ühendub sageli arvutiga.",
+      "Klaviatuuriga praetakse mune.",
+      "Klaviatuur võib olla füüsiline või virtuaalne."
     ],
     "correct": {
       "correctIndexes": [
-        0,
         1,
-        2,
-        5
+        6,
+        7,
+        9
       ]
     },
     "difficulty": "2",
@@ -30329,26 +30349,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Tuvasta faktivaided. Teemavihe: Notebook.",
+    "question": "Varia: Millised väited märkmiku kohta peavad paika?",
     "options": [
-      "Wallet holds cash or cards.",
-      "Recipe is a tax document.",
-      "Coffee contains caffeine.",
-      "Coffee is made from plastic.",
-      "Compass points north.",
-      "Clock shows time.",
-      "Umbrella helps in rain.",
-      "Ticket is always free money.",
-      "Wallet is footwear.",
-      "Passport is a house key."
+      "Märkmikuga küpsetatakse leiba.",
+      "Märkmikku saab kasutada märkmete tegemiseks.",
+      "Õpilased kasutavad sageli märkmikke.",
+      "Märkmik on puuliik.",
+      "Paljudes märkmikes on paberlehed.",
+      "Märkmik töötab ainult bensiiniga.",
+      "Märkmik on allveelaev.",
+      "Märkmik on kinga liik.",
+      "Märkmikul võivad olla joonelised või tühjad lehed.",
+      "Märkmik on troopiline torm."
     ],
     "correct": {
       "correctIndexes": [
-        0,
+        1,
         2,
         4,
-        5,
-        6
+        8
       ]
     },
     "difficulty": "2",
@@ -30360,22 +30379,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Millised variandid on oiged? Teemavihe: Backpack.",
+    "question": "Varia: Millised väited seljakoti kohta peavad paika?",
     "options": [
-      "Airport is only for trains.",
-      "A week has nine days.",
-      "Umbrella is for underwater use.",
-      "Libraries sell cars.",
-      "Clock shows time.",
-      "Ticket is always free money.",
-      "Clock writes emails.",
-      "Recipe is a tax document.",
-      "Coffee is made from plastic.",
-      "Coffee contains caffeine."
+      "Seljakott on magustoit.",
+      "Seljakotti kantakse ühel sõrmel.",
+      "Seljakott on metalliline element.",
+      "Seljakotti kasutatakse ainult vee all.",
+      "Seljakotil on sageli õlarihmad.",
+      "Seljakott on ookeanihoovuse liik.",
+      "Seljakott võib kanda raamatuid või varustust.",
+      "Seljakott on pilveliik.",
+      "Seljakotti kantakse seljas.",
+      "Seljakotti kasutatakse reisil ja koolis."
     ],
     "correct": {
       "correctIndexes": [
         4,
+        6,
+        8,
         9
       ]
     },
@@ -30388,24 +30409,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali koik kehtivad vaited. Teemavihe: Umbrella.",
+    "question": "Varia: Millised väited vihmavarju kohta peavad paika?",
     "options": [
-      "Recipe is a tax document.",
-      "Coffee is made from plastic.",
-      "Ticket is always free money.",
-      "Ticket can grant entry.",
-      "Passport is travel ID.",
-      "Compass measures temperature.",
-      "Libraries sell cars.",
-      "Keyboard is a cooking tool.",
-      "A week has nine days.",
-      "Compass points north."
+      "Vihmavarju kantakse kiivrina.",
+      "Vihmavari võib anda ka varju päikese eest.",
+      "Paljud vihmavarjud käivad kokku.",
+      "Vihmavari töötab elektriga.",
+      "Vihmavarju kantakse sageli käes.",
+      "Vihmavarjuga keedetakse pastat.",
+      "Vihmavari on muusikaline helirida.",
+      "Vihmavari kaitseb vihma eest.",
+      "Vihmavari on roomajaliik.",
+      "Vihmavari on alati kivist."
     ],
     "correct": {
       "correctIndexes": [
-        3,
+        1,
+        2,
         4,
-        9
+        7
       ]
     },
     "difficulty": "2",
@@ -30417,23 +30439,23 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali tõesed vaited. Teemavihe: Clock.",
+    "question": "Varia: Millised väited kella kohta peavad paika?",
     "options": [
-      "Coffee contains caffeine.",
-      "Airport is only for trains.",
-      "Passport is travel ID.",
-      "Wallet is footwear.",
-      "Keyboard is an input device.",
-      "A week has nine days.",
-      "Keyboard is a cooking tool.",
-      "Umbrella is for underwater use.",
-      "Ticket is always free money.",
-      "Airport serves air travel."
+      "Kell näitab aega.",
+      "Kell on tantsustiil.",
+      "Kella süüakse lõunaks.",
+      "Seinakell võib rippuda seinal.",
+      "Paljudel kelladel on tunni- ja minutiosuti.",
+      "Kell saab töötada ainult vee all.",
+      "Kella kasutatakse puude istutamiseks.",
+      "Kell on vaalaliik.",
+      "Kell on metsatüüp.",
+      "Digitaalsed kellad näitavad numbreid."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        2,
+        3,
         4,
         9
       ]
@@ -30447,25 +30469,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Millised vaited on oiged? Teemavihe: Watch.",
+    "question": "Varia: Millised väited käekella kohta peavad paika?",
     "options": [
-      "Passport is a house key.",
-      "Recipe is a tax document.",
-      "Wallet holds cash or cards.",
-      "Library lends books.",
-      "Compass points north.",
-      "A week has nine days.",
-      "Clock shows time.",
-      "Umbrella is for underwater use.",
-      "Umbrella helps in rain.",
-      "Keyboard is a cooking tool."
+      "Käekell näitab aega.",
+      "Käekell on supivorm.",
+      "Käekella kantakse randmel.",
+      "Käekell on köögivilja liik.",
+      "Käekella kasutatakse seinte värvimiseks.",
+      "Käekella kantakse jalgrattarehvil.",
+      "Käekell on alati kohvrist suurem.",
+      "Mõned käekellad on digitaalsed.",
+      "Mõni käekell jälgib ka treeninguandmeid.",
+      "Käekell on linnuliik."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         2,
-        3,
-        4,
-        6,
+        7,
         8
       ]
     },
@@ -30478,23 +30499,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali koik tõesed vaited. Teemavihe: Bicycle.",
+    "question": "Varia: Millised väited jalgratta kohta peavad paika?",
     "options": [
-      "Libraries sell cars.",
-      "Airport is only for trains.",
-      "Umbrella helps in rain.",
-      "Compass points north.",
-      "A week has nine days.",
-      "Recipe is a tax document.",
-      "Umbrella is for underwater use.",
-      "Compass measures temperature.",
-      "Ticket is always free money.",
-      "Wallet is footwear."
+      "Jalgrattal on kaks ratast.",
+      "Jalgratast saab kasutada liikumiseks.",
+      "Jalgratas on mereloom.",
+      "Jalgratas on puuvilja liik.",
+      "Jalgratas on maalimistehnika.",
+      "Jalgrattal on alati neli tiiba.",
+      "Jalgratas liigub ainult raketikütusega.",
+      "Jalgratast kasutatakse raamatute trükkimiseks.",
+      "Jalgratast liigutatakse väntamisega.",
+      "Paljudel jalgratastel on lenks ja pidurid."
     ],
     "correct": {
       "correctIndexes": [
-        2,
-        3
+        0,
+        1,
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -30506,23 +30529,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Tuvasta faktivaided. Teemavihe: Scooter.",
+    "question": "Varia: Millised väited tõukeratta kohta peavad paika?",
     "options": [
-      "Recipe is a tax document.",
-      "Umbrella is for underwater use.",
-      "Keyboard is an input device.",
-      "Wallet is footwear.",
-      "Keyboard is a cooking tool.",
-      "Coffee is made from plastic.",
-      "A week has nine days.",
-      "Passport is a house key.",
-      "Library lends books.",
-      "Wallet holds cash or cards."
+      "Tõukeratast saab kasutada lühikesteks sõitudeks.",
+      "Tõukerattal on lenks.",
+      "Tõukeratas on ainult supi koostisosa.",
+      "Tõukeratast kantakse mütsina.",
+      "Mõned tõukerattad on elektrilised.",
+      "Tõukeratas on öökulli liik.",
+      "Tõukeratas on mäestik.",
+      "Tõukeratas ujub alati vee all.",
+      "Tõukeratas mõõdab vererõhku.",
+      "Paljudel tõukeratastel on kaks ratast."
     ],
     "correct": {
       "correctIndexes": [
-        2,
-        8,
+        0,
+        1,
+        4,
         9
       ]
     },
@@ -30535,25 +30559,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Millised variandid on oiged? Teemavihe: Elevator.",
+    "question": "Varia: Millised väited lifti kohta peavad paika?",
     "options": [
-      "Libraries sell cars.",
-      "Compass points north.",
-      "Clock writes emails.",
-      "Wallet is footwear.",
-      "Recipe lists ingredients.",
-      "Keyboard is an input device.",
-      "Library lends books.",
-      "Coffee is made from plastic.",
-      "Keyboard is a cooking tool.",
-      "A week has nine days."
+      "Lift on viljapuu.",
+      "Liftidel on uksed.",
+      "Lift liigub alati ainult külgsuunas.",
+      "Lift on linnupesa.",
+      "Lifti kasutatakse kitarride häälestamiseks.",
+      "Lift viib inimesi korruste vahel.",
+      "Lift liigub püstsuunas.",
+      "Lifti kasutatakse saia röstimiseks.",
+      "Liftid on tavalised kõrgetes hoonetes.",
+      "Lift on jõe liik."
     ],
     "correct": {
       "correctIndexes": [
         1,
-        4,
         5,
-        6
+        6,
+        8
       ]
     },
     "difficulty": "2",
@@ -30565,26 +30589,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali koik kehtivad vaited. Teemavihe: Subway.",
+    "question": "Varia: Millised väited metroo kohta peavad paika?",
     "options": [
-      "Passport is travel ID.",
-      "Keyboard is a cooking tool.",
-      "Wallet holds cash or cards.",
-      "Airport serves air travel.",
-      "Recipe lists ingredients.",
-      "Clock writes emails.",
-      "Umbrella is for underwater use.",
-      "Umbrella helps in rain.",
-      "Recipe is a tax document.",
-      "Airport is only for trains."
+      "Metroo on putukaliik.",
+      "Metroo võib vedada palju reisijaid.",
+      "Metroo töötab purjede jõul.",
+      "Metroo on ilmavaatlusõhupall.",
+      "Metroo kasvab aias.",
+      "Metroo on pildiraam.",
+      "Metroo on rööbastranspordi süsteem.",
+      "Metroo liigub sageli maa all.",
+      "Metroo on ainult võileiva liik.",
+      "Suurtel linnadel on tihti metroovõrk."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        2,
-        3,
-        4,
-        7
+        1,
+        6,
+        7,
+        9
       ]
     },
     "difficulty": "2",
@@ -30596,23 +30619,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali tõesed vaited. Teemavihe: Airport.",
+    "question": "Varia: Millised väited lennujaama kohta peavad paika?",
     "options": [
-      "Passport is a house key.",
-      "Compass measures temperature.",
-      "Clock writes emails.",
-      "Airport is only for trains.",
-      "Libraries sell cars.",
-      "Ticket is always free money.",
-      "Wallet holds cash or cards.",
-      "Recipe lists ingredients.",
-      "Umbrella is for underwater use.",
-      "A week has nine days."
+      "Lennujaam kasvatab banaane.",
+      "Lennujaam teenindab saabuvaid ja väljuvaid lennukeid.",
+      "Lennujaamad ühendavad linnu õhureisidega.",
+      "Lennujaama kasutatakse ainult pliiatsite teritamiseks.",
+      "Lennujaamal on lennurajad.",
+      "Lennujaam on alati vee all.",
+      "Lennujaam on supiliik.",
+      "Lennujaama kantakse randmel.",
+      "Reisijad teevad lennujaamas check-in'i.",
+      "Lennujaam on koralliliik."
     ],
     "correct": {
       "correctIndexes": [
-        6,
-        7
+        1,
+        2,
+        4,
+        8
       ]
     },
     "difficulty": "2",
@@ -30624,24 +30649,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Millised vaited on oiged? Teemavihe: Library.",
+    "question": "Varia: Millised väited raamatukogu kohta peavad paika?",
     "options": [
-      "Wallet is footwear.",
-      "Passport is a house key.",
-      "Ticket can grant entry.",
-      "Compass points north.",
-      "Clock writes emails.",
-      "Compass measures temperature.",
-      "Airport serves air travel.",
-      "Recipe is a tax document.",
-      "Keyboard is a cooking tool.",
-      "A week has nine days."
+      "Raamatukogu on vulkaani liik.",
+      "Raamatukogu kasutatakse kartulite praadimiseks.",
+      "Raamatukogu on ainult jalgrataste hoidmiseks.",
+      "Raamatukogu on linnuliik.",
+      "Raamatukogu korraldab teabekogusid.",
+      "Raamatukogul on alati lennurada.",
+      "Raamatukogu võib pakkuda vaikset õppimisruumi.",
+      "Raamatukogu on pilveliik.",
+      "Raamatukogud laenutavad raamatuid.",
+      "Rahvaraamatukogud teenindavad kogukonda."
     ],
     "correct": {
       "correctIndexes": [
-        2,
-        3,
-        6
+        4,
+        6,
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -30653,25 +30679,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali koik tõesed vaited. Teemavihe: Museum.",
+    "question": "Varia: Millised väited muuseumi kohta peavad paika?",
     "options": [
-      "A week has nine days.",
-      "Recipe is a tax document.",
-      "Wallet is footwear.",
-      "Airport is only for trains.",
-      "Clock shows time.",
-      "Wallet holds cash or cards.",
-      "Passport is a house key.",
-      "Umbrella helps in rain.",
-      "Coffee contains caffeine.",
-      "Umbrella is for underwater use."
+      "Muuseum on alati liikuv rong.",
+      "Muuseumid võtavad tavaliselt külastajaid vastu.",
+      "Muuseumid võivad säilitada ajaloolisi esemeid.",
+      "Muuseum kasvab ainult vee all.",
+      "Kunstimuuseumid näitavad visuaalset kunsti.",
+      "Muuseum on hobusetõug.",
+      "Muuseumi kasutatakse kookide küpsetamiseks.",
+      "Muuseumid näitavad eksponaate ja väljapanekuid.",
+      "Muuseum on tormiliik.",
+      "Muuseum on puuviljamahl."
     ],
     "correct": {
       "correctIndexes": [
+        1,
+        2,
         4,
-        5,
-        7,
-        8
+        7
       ]
     },
     "difficulty": "2",
@@ -30683,25 +30709,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Tuvasta faktivaided. Teemavihe: Restaurant.",
+    "question": "Varia: Millised väited restorani kohta peavad paika?",
     "options": [
-      "Umbrella is for underwater use.",
-      "Coffee is made from plastic.",
-      "Ticket can grant entry.",
-      "A week has seven days.",
-      "Passport is a house key.",
-      "Wallet is footwear.",
-      "Umbrella helps in rain.",
-      "Airport is only for trains.",
-      "Compass points north.",
-      "Airport serves air travel."
+      "Restoranid valmistavad või serveerivad toitu.",
+      "Restoran on tehtud ainult jääst.",
+      "Restoran on planeet.",
+      "Restoranides võivad olla lauad sööjatele.",
+      "Menüüd on restoranides tavalised.",
+      "Restoranil on alati bassein.",
+      "Restoran on roomajaliik.",
+      "Restoran on luulestiil.",
+      "Restorani kasutatakse ainult jalgrataste parandamiseks.",
+      "Restoranid võivad olla lihtsad või pidulikud."
     ],
     "correct": {
       "correctIndexes": [
-        2,
+        0,
         3,
-        6,
-        8,
+        4,
         9
       ]
     },
@@ -30714,23 +30739,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Millised variandid on oiged? Teemavihe: Recipe.",
+    "question": "Varia: Millised väited retsepti kohta peavad paika?",
     "options": [
-      "A week has nine days.",
-      "Ticket is always free money.",
-      "Coffee is made from plastic.",
-      "Libraries sell cars.",
-      "Ticket can grant entry.",
-      "Keyboard is a cooking tool.",
-      "Airport serves air travel.",
-      "Clock writes emails.",
-      "Umbrella is for underwater use.",
-      "Compass measures temperature."
+      "Retseptis on kirjas koostisosad.",
+      "Retsepti saab ainult rääkida, mitte kirjutada.",
+      "Retsept annab toidu valmistamise juhised.",
+      "Retsept on kinga liik.",
+      "Retsept on mäetipp.",
+      "Retsept vajab alati elektrit.",
+      "Retsept on kassiliik.",
+      "Retsept võib sisaldada mõõtühikuid.",
+      "Retsept aitab rooga korrata.",
+      "Retsept on raudteejaam."
     ],
     "correct": {
       "correctIndexes": [
-        4,
-        6
+        0,
+        2,
+        7,
+        8
       ]
     },
     "difficulty": "2",
@@ -30742,23 +30769,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali koik kehtivad vaited. Teemavihe: Sandwich.",
+    "question": "Varia: Millised väited võileiva kohta peavad paika?",
     "options": [
-      "Airport is only for trains.",
-      "Clock shows time.",
-      "A week has seven days.",
-      "A week has nine days.",
-      "Coffee is made from plastic.",
-      "Ticket is always free money.",
-      "Clock writes emails.",
-      "Wallet is footwear.",
-      "Keyboard is a cooking tool.",
-      "Compass points north."
+      "Võileivas on tavaliselt leib või sai.",
+      "Võileiba süüakse sageli käega.",
+      "Võileib kasvab puu otsas.",
+      "Võileib on ilmakaart.",
+      "Võileib paneb auto mootori tööle.",
+      "Võileib on vaalaliik.",
+      "Võileib on metalliline element.",
+      "Võileib on alati vedel.",
+      "Võileival võivad olla täidised.",
+      "Võileiba võib serveerida külmalt või soojalt."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         1,
-        2,
+        8,
         9
       ]
     },
@@ -30771,25 +30799,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali tõesed vaited. Teemavihe: Pasta.",
+    "question": "Varia: Millised väited pasta kohta peavad paika?",
     "options": [
-      "Airport serves air travel.",
-      "Passport is a house key.",
-      "Compass measures temperature.",
-      "Airport is only for trains.",
-      "Ticket can grant entry.",
-      "Umbrella is for underwater use.",
-      "Passport is travel ID.",
-      "Coffee is made from plastic.",
-      "Keyboard is a cooking tool.",
-      "Clock shows time."
+      "Pastat keedetakse sageli vees.",
+      "Pasta on ilmafront.",
+      "Pastal on palju eri kujusid.",
+      "Pastat süüakse alati külmunult.",
+      "Pasta on linnuliik.",
+      "Pasta on toit.",
+      "Pastat võib serveerida kastmega.",
+      "Pasta on teleskoobi liik.",
+      "Pasta on matemaatika haru.",
+      "Pastat kasutatakse telefonide laadimiseks."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        4,
-        6,
-        9
+        2,
+        5,
+        6
       ]
     },
     "difficulty": "2",
@@ -30801,26 +30829,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Millised vaited on oiged? Teemavihe: Chocolate.",
+    "question": "Varia: Millised väited šokolaadi kohta peavad paika?",
     "options": [
-      "Compass points north.",
-      "Passport is travel ID.",
-      "Recipe lists ingredients.",
-      "Coffee is made from plastic.",
-      "Keyboard is a cooking tool.",
-      "Clock writes emails.",
-      "Ticket is always free money.",
-      "Airport serves air travel.",
-      "A week has nine days.",
-      "Wallet holds cash or cards."
+      "Šokolaad on alati soolane supp.",
+      "Šokolaad võib olla tume, piima- või valge.",
+      "Šokolaad on linn Jaapanis.",
+      "Šokolaad kasvab kaevanduses metallkangidena.",
+      "Šokolaadi kasutatakse teede sillutamiseks.",
+      "Šokolaad on toiduaine.",
+      "Šokolaadi kasutatakse magustoitudes ja kommides.",
+      "Šokolaad on lennuki liik.",
+      "Šokolaad sisaldab sageli kakaod.",
+      "Šokolaad on sõnajalaliik."
     ],
     "correct": {
       "correctIndexes": [
-        0,
         1,
-        2,
-        7,
-        9
+        5,
+        6,
+        8
       ]
     },
     "difficulty": "2",
@@ -30832,22 +30859,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali koik tõesed vaited. Teemavihe: Coffee.",
+    "question": "Varia: Millised väited kohvi kohta peavad paika?",
     "options": [
-      "Compass measures temperature.",
-      "Clock writes emails.",
-      "Ticket is always free money.",
-      "Ticket can grant entry.",
-      "Wallet is footwear.",
-      "Coffee is made from plastic.",
-      "Libraries sell cars.",
-      "Passport is a house key.",
-      "A week has nine days.",
-      "Keyboard is an input device."
+      "Kohv on roomajaliik.",
+      "Paljud inimesed joovad kohvi kuumalt.",
+      "Kohvi süüakse alati kahvliga.",
+      "Kohv on planeedirõngas.",
+      "Kohvi kasutatakse rehvide täitmiseks.",
+      "Kohv on arhitektuuristiil.",
+      "Kohv on jook.",
+      "Kohvi tehakse sageli röstitud ubadest.",
+      "Kohv on mäeliik.",
+      "Kohv võib sisaldada kofeiini."
     ],
     "correct": {
       "correctIndexes": [
-        3,
+        1,
+        6,
+        7,
         9
       ]
     },
@@ -30860,24 +30889,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Tuvasta faktivaided. Teemavihe: Tea.",
+    "question": "Varia: Millised väited teejoogi kohta peavad paika?",
     "options": [
-      "Clock shows time.",
-      "A week has nine days.",
-      "Umbrella is for underwater use.",
-      "Compass measures temperature.",
-      "Ticket is always free money.",
-      "Recipe lists ingredients.",
-      "Ticket can grant entry.",
-      "Coffee is made from plastic.",
-      "Wallet is footwear.",
-      "Libraries sell cars."
+      "Tee tehakse alati ainult piimast.",
+      "Tee on jook.",
+      "Tee võib sisaldada kofeiini, kuigi mitte alati palju.",
+      "Tee on betooni vorm.",
+      "Teed võib serveerida kuumalt või külmalt.",
+      "Teed kasutatakse nugade teritamiseks.",
+      "Tee on allveelaeva liik.",
+      "Tee on puukonna liik.",
+      "Teed tõmmatakse sageli vees.",
+      "Tee on raudteetunnel."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        5,
-        6
+        1,
+        2,
+        4,
+        8
       ]
     },
     "difficulty": "2",
@@ -30889,24 +30919,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Millised variandid on oiged? Teemavihe: Orange.",
+    "question": "Varia: Millised väited apelsini kohta peavad paika?",
     "options": [
-      "Umbrella helps in rain.",
-      "Keyboard is an input device.",
-      "Airport is only for trains.",
-      "A week has nine days.",
-      "Ticket is always free money.",
-      "Umbrella is for underwater use.",
-      "Ticket can grant entry.",
-      "Keyboard is a cooking tool.",
-      "Compass measures temperature.",
-      "Clock shows time."
+      "Apelsin on metall.",
+      "Apelsin on kalaallik.",
+      "Apelsin on Saturni kuu.",
+      "Apelsini kasutatakse jalgrattarehvina.",
+      "Apelsin kasvab puu otsas.",
+      "Apelsin on seest alati sinine.",
+      "Apelsin sisaldab C-vitamiini.",
+      "Apelsin on ainult juriidiline dokument.",
+      "Apelsin on puuvili.",
+      "Apelsinil on koor."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        1,
+        4,
         6,
+        8,
         9
       ]
     },
@@ -30919,26 +30949,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali koik kehtivad vaited. Teemavihe: Banana.",
+    "question": "Varia: Millised väited banaani kohta peavad paika?",
     "options": [
-      "Airport serves air travel.",
-      "Library lends books.",
-      "Coffee contains caffeine.",
-      "Umbrella is for underwater use.",
-      "Passport is travel ID.",
-      "Clock writes emails.",
-      "A week has nine days.",
-      "Libraries sell cars.",
-      "Compass measures temperature.",
-      "Ticket can grant entry."
+      "Banaanid on alati kandilised.",
+      "Banaani võib süüa toorelt.",
+      "Küpsel banaanil on sageli kollane koor.",
+      "Banaan on tehtud rauast.",
+      "Banaanid kasvavad kobaratena.",
+      "Banaan on vääriskivi.",
+      "Banaan on haamri liik.",
+      "Banaan on puuvili.",
+      "Banaanid kasvavad lumehangedest.",
+      "Banaan on ilmasatelliit."
     ],
     "correct": {
       "correctIndexes": [
-        0,
         1,
         2,
         4,
-        9
+        7
       ]
     },
     "difficulty": "2",
@@ -30950,23 +30979,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali tõesed vaited. Teemavihe: Apple.",
+    "question": "Varia: Millised väited õuna kohta peavad paika?",
     "options": [
-      "Recipe lists ingredients.",
-      "Recipe is a tax document.",
-      "Compass measures temperature.",
-      "Libraries sell cars.",
-      "Coffee is made from plastic.",
-      "Airport is only for trains.",
-      "Passport is a house key.",
-      "Clock writes emails.",
-      "Umbrella helps in rain.",
-      "Umbrella is for underwater use."
+      "Õun on puuvili.",
+      "Õun on tehtud betoonist.",
+      "Õun on roomajaliik.",
+      "Õunad kasvavad puu otsas.",
+      "Õunu võib süüa värskelt või küpsetatult.",
+      "Õunad on alati lillad ja seemneteta.",
+      "Õuna kasutatakse kingade parandamiseks.",
+      "Õun on merehoovus.",
+      "Õun on vedur.",
+      "Õunasortidel on eri värv ja maitse."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        8
+        3,
+        4,
+        9
       ]
     },
     "difficulty": "2",
@@ -30978,23 +31009,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Millised vaited on oiged? Teemavihe: Laptop.",
+    "question": "Varia: Millised väited sülearvuti kohta peavad paika?",
     "options": [
-      "Libraries sell cars.",
-      "Passport is a house key.",
-      "Coffee contains caffeine.",
-      "Compass measures temperature.",
-      "A week has seven days.",
-      "Wallet is footwear.",
-      "Umbrella is for underwater use.",
-      "Ticket is always free money.",
-      "Keyboard is an input device.",
-      "Recipe is a tax document."
+      "Sülearvutil on sageli sisseehitatud ekraan.",
+      "Sülearvuti on kõrbetaim.",
+      "Sülearvuti on kaasaskantav arvuti.",
+      "Sülearvutit kantakse jalas.",
+      "Sülearvuti on linnuliik.",
+      "Sülearvuti töötab otse söe jõul.",
+      "Sülearvuti on supikauss.",
+      "Sülearvuti võib töötada akuga.",
+      "Sülearvutil on tavaliselt klaviatuur.",
+      "Sülearvuti on alati autost suurem."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         2,
-        4,
+        7,
         8
       ]
     },
@@ -31007,25 +31039,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali koik tõesed vaited. Teemavihe: Smartphone.",
+    "question": "Varia: Millised väited nutitelefoni kohta peavad paika?",
     "options": [
-      "Coffee contains caffeine.",
-      "Airport serves air travel.",
-      "Ticket is always free money.",
-      "Keyboard is a cooking tool.",
-      "Wallet holds cash or cards.",
-      "Clock shows time.",
-      "Wallet is footwear.",
-      "Compass measures temperature.",
-      "Libraries sell cars.",
-      "Recipe is a tax document."
+      "Nutitelefon on mobiilne seade.",
+      "Nutitelefonidel on tavaliselt puuteekraan.",
+      "Nutitelefon kasvab väädidel.",
+      "Nutitelefon on kööginuga.",
+      "Nutitelefon on vulkaani liik.",
+      "Nutitelefon on jõesuue.",
+      "Nutitelefon on alati ainult puidust.",
+      "Nutitelefon on ööliblika liik.",
+      "Nutitelefoniga saab helistada ja rakendusi kasutada.",
+      "Nutitelefon saab internetiga ühendada."
     ],
     "correct": {
       "correctIndexes": [
         0,
         1,
-        4,
-        5
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -31037,25 +31069,24 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Tuvasta faktivaided. Teemavihe: Headphones.",
+    "question": "Varia: Millised väited kõrvaklappide kohta peavad paika?",
     "options": [
-      "Passport is travel ID.",
-      "Coffee contains caffeine.",
-      "A week has seven days.",
-      "Compass measures temperature.",
-      "Library lends books.",
-      "Umbrella is for underwater use.",
-      "Wallet holds cash or cards.",
-      "Wallet is footwear.",
-      "A week has nine days.",
-      "Clock writes emails."
+      "Kõrvaklapid võivad olla juhtmega või juhtmevabad.",
+      "Kõrvaklapid on sisaliku liik.",
+      "Kõrvaklapid katavad või puudutavad kõrvu.",
+      "Kõrvaklapid on puuvilja liik.",
+      "Kõrvaklapid on alati vett täis.",
+      "Kõrvaklappe kasutatakse heli kuulamiseks.",
+      "Kõrvaklapid on tavalised telefonide ja arvutite juures.",
+      "Kõrvaklappe kasutatakse toidu praadimiseks.",
+      "Kõrvaklappe kasutatakse jalgratta piduritena.",
+      "Kõrvaklapid on sillatüüp."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
         2,
-        4,
+        5,
         6
       ]
     },
@@ -31068,23 +31099,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Millised variandid on oiged? Teemavihe: Camera.",
+    "question": "Varia: Millised väited kaamera kohta peavad paika?",
     "options": [
-      "Ticket is always free money.",
-      "Libraries sell cars.",
-      "Airport is only for trains.",
-      "Wallet is footwear.",
-      "Umbrella is for underwater use.",
-      "Clock writes emails.",
-      "Keyboard is an input device.",
-      "Compass points north.",
-      "Coffee is made from plastic.",
-      "A week has nine days."
+      "Kaamera võib teha fotosid või videot.",
+      "Kaamera on võileiva liik.",
+      "Kaamera on vulkaani liik.",
+      "Kaameraga keedetakse teed.",
+      "Kaamera on linnuliik.",
+      "Kaamera on tehtud ainult paberist.",
+      "Kaamera jäädvustab pilte.",
+      "Paljudel kaameratel on objektiiv.",
+      "Kaamera töötab ainult maa all.",
+      "Nutitelefonidel on sageli kaamera."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         6,
-        7
+        7,
+        9
       ]
     },
     "difficulty": "2",
@@ -31096,24 +31129,25 @@
     "topic": "Varia",
     "category": "OPEN",
     "language": "et",
-    "question": "Varia: Vali koik kehtivad vaited. Teemavihe: Printer.",
+    "question": "Varia: Millised väited printeri kohta peavad paika?",
     "options": [
-      "Clock shows time.",
-      "Coffee contains caffeine.",
-      "Coffee is made from plastic.",
-      "Clock writes emails.",
-      "Airport is only for trains.",
-      "Ticket can grant entry.",
-      "Recipe is a tax document.",
-      "Wallet is footwear.",
-      "Ticket is always free money.",
-      "Compass measures temperature."
+      "Printer töötab alati tuule jõul.",
+      "Printeri saab ühendada arvutiga.",
+      "Printerit süüakse magustoiduks.",
+      "Printer kasvab ookeanis.",
+      "Printer on redeli liik.",
+      "Printer on helirea tüüp.",
+      "Printer trükib paberile teksti või pilte.",
+      "Prinereid kasutatakse kodus ja kontoris.",
+      "Printer on hirveliik.",
+      "Mõni printer kasutab tinti, mõni toonerit."
     ],
     "correct": {
       "correctIndexes": [
-        0,
         1,
-        5
+        6,
+        7,
+        9
       ]
     },
     "difficulty": "2",
