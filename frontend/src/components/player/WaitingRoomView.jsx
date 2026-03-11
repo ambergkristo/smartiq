@@ -37,7 +37,7 @@ export default function WaitingRoomView({
           <strong>{waitingLabel}</strong>
         </article>
         <article>
-          <span>Players</span>
+          <span>Players joined</span>
           <strong>{players.length}</strong>
         </article>
       </div>

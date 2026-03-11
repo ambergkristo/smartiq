@@ -1,7 +1,4 @@
-import JoinButton from '../player/JoinButton';
-import JoinStatusPanel from '../player/JoinStatusPanel';
-import PlayerNameInput from '../player/PlayerNameInput';
-import RoomCodeInput from '../player/RoomCodeInput';
+import PlayerJoinFlow from '../player/PlayerJoinFlow';
 
 export default function JoinGameScreen({
   roomCode,
@@ -15,46 +12,32 @@ export default function JoinGameScreen({
   onBack
 }) {
   return (
-    <section className="player-join-screen board-surface home-join-screen" data-testid="home-join-panel">
-      <div className="player-join-screen-head">
-        <p className="player-join-brand">SmartIQ</p>
-        <span className="player-join-chip">Join game</span>
-      </div>
-      <div className="player-join-hero">
-        <p className="section-title">Player entry</p>
-        <h1>Join live room</h1>
-        <p>Enter the room code and your name. Then wait for the host to start.</p>
-      </div>
-      <div className="player-join-form">
-        <RoomCodeInput
-          id="home-join-room-code"
-          label="Room code"
-          value={roomCode}
-          placeholder="ABC123"
-          disabled={pending}
-          onChange={onRoomCodeChange}
-        />
-        <PlayerNameInput
-          id="home-join-display-name"
-          label="Your display name"
-          value={displayName}
-          placeholder="Player name"
-          disabled={pending}
-          onChange={onDisplayNameChange}
-        />
-        <JoinStatusPanel
-          pending={pending}
-          pendingLabel="Joining room..."
-          message={message}
-          error={error}
-        />
-        <div className="player-join-actions">
-          <JoinButton label="Join room" disabled={pending} onClick={onJoin} />
-          <button type="button" className="secondary-action" onClick={onBack} disabled={pending}>
-            Back to home
-          </button>
-        </div>
-      </div>
-    </section>
+    <PlayerJoinFlow
+      screenTestId="home-join-panel"
+      brandTitle="SmartIQ"
+      chipLabel="Join game"
+      title="Join live room"
+      roomCode={roomCode}
+      roomCodeLabel="Room code"
+      roomCodePlaceholder="ABC123"
+      displayName={displayName}
+      displayNameLabel="Your display name"
+      displayNamePlaceholder="Player name"
+      pending={pending}
+      message={message}
+      error={error}
+      previewMissingLabel="Enter a room code to continue."
+      introCopy="Enter the code from the host screen to move into the join flow."
+      roomStepCopy="Enter the room code shown by the host."
+      nameStepCopy="Enter your display name, then join the waiting room."
+      statusPendingLabel="Joining room..."
+      nextLabel="Next"
+      joinLabel="Join game"
+      backLabel="Back to home"
+      onRoomCodeChange={onRoomCodeChange}
+      onDisplayNameChange={onDisplayNameChange}
+      onJoin={onJoin}
+      onBack={onBack}
+    />
   );
 }

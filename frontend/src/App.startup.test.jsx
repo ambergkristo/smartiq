@@ -254,11 +254,31 @@ describe('App startup resilience', () => {
     await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /join game/i }));
     await waitFor(() => expect(screen.getByTestId('home-join-panel')).toBeInTheDocument());
+    expect(screen.getByLabelText(/^room code$/i)).toBeInTheDocument();
+    expect(screen.queryByLabelText(/your display name/i)).not.toBeInTheDocument();
 
     window.location.hash = '';
     await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /practice/i }));
     await waitFor(() => expect(screen.getByTestId('practice-panel')).toBeInTheDocument());
+  });
+
+  test('home join screen uses room-code then name steps', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /join game/i }));
+    await waitFor(() => expect(screen.getByTestId('home-join-panel')).toBeInTheDocument());
+
+    expect(screen.getByLabelText(/^room code$/i)).toBeInTheDocument();
+    expect(screen.queryByLabelText(/your display name/i)).not.toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText(/^room code$/i), { target: { value: 'quiz42' } });
+    fireEvent.click(screen.getByRole('button', { name: /^next$/i }));
+
+    expect(screen.getByLabelText(/your display name/i)).toBeInTheDocument();
+    expect(screen.getByText('QUIZ42')).toBeInTheDocument();
   });
 
   test('persists audio controls state between renders', async () => {
@@ -1093,8 +1113,9 @@ describe('App startup resilience', () => {
     await waitFor(() => expect(screen.getByTestId('player-route-panel')).toBeInTheDocument());
     await waitFor(() => expect(fetchRoomPreview).toHaveBeenCalledWith('QUIZ42'));
     expect(screen.getByTestId('player-route-panel')).toHaveTextContent('Northwind Quiz');
-    expect(screen.getByTestId('player-route-panel')).toHaveTextContent('QUIZ42');
+    expect(screen.getByLabelText(/^room code$/i)).toHaveValue('QUIZ42');
     expect(screen.getByTestId('player-route-preview')).toHaveTextContent('Host One');
+    expect(screen.queryByLabelText(/your display name/i)).not.toBeInTheDocument();
     expect(screen.queryByTestId('room-panel')).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /start game/i })).not.toBeInTheDocument();
 
@@ -1134,6 +1155,7 @@ describe('App startup resilience', () => {
     render(<App />);
 
     await waitFor(() => expect(screen.getByTestId('player-route-panel')).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /^next$/i }));
     fireEvent.change(screen.getByLabelText(/your display name/i), { target: { value: 'Alice' } });
     fireEvent.click(screen.getByRole('button', { name: /^join room$/i }));
 

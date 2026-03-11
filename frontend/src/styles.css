@@ -1050,6 +1050,12 @@ button:disabled {
   box-shadow: var(--panel-shadow);
 }
 
+.home-join-screen,
+.player-join-screen {
+  min-height: min(760px, calc(100dvh - 48px));
+  align-content: start;
+}
+
 .player-join-screen-head,
 .player-join-card-head,
 .player-waiting-room-head,
@@ -1083,6 +1089,37 @@ button:disabled {
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.player-join-step-indicator {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.player-join-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.player-join-step.is-current,
+.player-join-step.is-complete {
+  border-color: rgba(0, 255, 123, 0.24);
+  background: rgba(0, 255, 123, 0.08);
+}
+
+.player-join-step.is-current {
+  color: var(--text);
 }
 
 .player-join-hero,
@@ -1133,6 +1170,33 @@ button:disabled {
 .player-join-form {
   display: grid;
   gap: 12px;
+}
+
+.player-join-support-card {
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.player-join-support-card span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.player-join-support-card strong {
+  font-family: "Rajdhani", "Inter", sans-serif;
+  font-size: clamp(1.8rem, 6vw, 2.4rem);
+  letter-spacing: 0.08em;
+}
+
+.player-join-support-card p {
+  color: var(--muted);
+  max-width: 28ch;
 }
 
 .player-join-form--compact {
