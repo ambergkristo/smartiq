@@ -24,6 +24,7 @@ import java.util.UUID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -51,7 +52,7 @@ class RoomControllerTest {
 
     @BeforeEach
     void setUp() {
-        when(authContextResolver.resolveOptional(any())).thenReturn(null);
+        lenient().when(authContextResolver.resolveOptional(any())).thenReturn(null);
         mockMvc = MockMvcBuilders.standaloneSetup(new RoomController(roomService, roomWsGateway, authContextResolver, tenantService))
                 .setControllerAdvice(new ApiExceptionHandler(false))
                 .build();
@@ -68,6 +69,16 @@ class RoomControllerTest {
                 .andExpect(jsonPath("$.roomCode").value("ABC123"))
                 .andExpect(jsonPath("$.playerId").value("p1"))
                 .andExpect(jsonPath("$.authToken").value("rt_host"));
+    }
+
+    @Test
+    void getRoomsCollectionWithoutMappingReturnsMethodNotAllowed() throws Exception {
+        mockMvc.perform(get("/api/rooms"))
+                .andExpect(status().isMethodNotAllowed())
+                .andExpect(jsonPath("$.code").value("INVALID_ACTION"))
+                .andExpect(jsonPath("$.error").value("Request method 'GET' is not supported"))
+                .andExpect(jsonPath("$.status").value(405))
+                .andExpect(jsonPath("$.path").value("/api/rooms"));
     }
 
     @Test

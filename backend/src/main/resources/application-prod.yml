@@ -12,7 +12,7 @@ smartiq:
     session-retention-minutes: ${SMARTIQ_GAME_SESSION_RETENTION_MINUTES:180}
     session-max: ${SMARTIQ_GAME_SESSION_MAX:50000}
   room:
-    session-store: ${SMARTIQ_ROOM_SESSION_STORE:redis}
+    session-store: ${SMARTIQ_ROOM_SESSION_STORE:memory}
     room-retention-minutes: ${SMARTIQ_ROOM_RETENTION_MINUTES:180}
     room-max: ${SMARTIQ_ROOM_MAX:20000}
   language:
