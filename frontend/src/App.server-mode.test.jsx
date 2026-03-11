@@ -185,6 +185,37 @@ describe('App server-authoritative mode', () => {
     );
   });
 
+  test('keeps the answer board interactive after turn advances to the next player', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({ gameId: 'game-turn-fix' }));
+    sendServerGameAction.mockResolvedValue(
+      makeServerSnapshot({
+        gameId: 'game-turn-fix',
+        activePlayerIndex: 1,
+        pegStateByIndex: { 0: 'revealed' },
+        lastAction: 'Bob turn'
+      })
+    );
+
+    render(<App />);
+    await startServerMultiplayer();
+
+    fireEvent.click(screen.getByRole('button', { name: /^answer-1\b/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /^answer$/i })).toBeEnabled());
+    fireEvent.click(screen.getByRole('button', { name: /^answer$/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /lock in/i })).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
+
+    await waitFor(() => expect(screen.getByRole('button', { name: /next question/i })).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /next question/i }));
+
+    await waitFor(() => expect(screen.getByTestId('action-hint')).toHaveTextContent(/bob: reveal a correct answer before pass is available/i));
+    expect(screen.getByRole('button', { name: /^answer-2\b/i })).toBeEnabled();
+
+    fireEvent.click(screen.getByRole('button', { name: /^answer-2\b/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /^answer$/i })).toBeEnabled());
+  });
+
   test('uses server path for single-player start when server engine is enabled', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
     createServerGameSession.mockResolvedValue(
@@ -251,7 +282,7 @@ describe('App server-authoritative mode', () => {
     await waitFor(() => expect(screen.getByRole('button', { name: /pass/i })).toBeInTheDocument());
   });
 
-  test('disables controls when active player is not local player', async () => {
+  test('keeps host controls enabled when snapshot starts on another player turn', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
     createServerGameSession.mockResolvedValue(
       makeServerSnapshot({
@@ -266,11 +297,11 @@ describe('App server-authoritative mode', () => {
 
     const passButton = screen.getByRole('button', { name: /pass/i });
     expect(passButton).toBeDisabled();
-    expect(screen.getByRole('button', { name: /^answer-1\b/i })).toBeDisabled();
-    expect(screen.getByTestId('action-hint')).toHaveTextContent(/waiting for active player bob/i);
+    expect(screen.getByRole('button', { name: /^answer-1\b/i })).toBeEnabled();
+    expect(screen.getByTestId('action-hint')).toHaveTextContent(/bob: reveal a correct answer before pass is available/i);
 
-    fireEvent.click(passButton);
-    expect(sendServerGameAction).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: /^answer-1\b/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /^answer$/i })).toBeEnabled());
   });
 
   test('keeps PASS disabled until active player has at least one correct answer', async () => {

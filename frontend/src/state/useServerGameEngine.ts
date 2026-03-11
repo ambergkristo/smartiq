@@ -288,8 +288,8 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setActionTokensByPlayerId(resolvedActionTokens);
     const mapped = mapSnapshot(snapshot, request.language, targetScore);
     setStats(initialStats(mapped.players));
-    const normalizedPlayers = normalizePlayers(request.players);
-    setControlledPlayer(normalizedPlayers[0] || mapped.players[0] || null);
+    // The desktop host console drives every turn in the current product flow.
+    setControlledPlayer(null);
     setStartRequest({
       players: mapped.players,
       language: request.language || mapped.card.language,
@@ -365,12 +365,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     try {
       const snapshot = await fetchServerGameSession(activeSnapshot.gameId);
       const mapped = mapSnapshot(snapshot, language, targetScore);
-      setControlledPlayer((prev) => {
-        if (prev && mapped.players.includes(prev)) {
-          return prev;
-        }
-        return mapped.players[0] || null;
-      });
+      setControlledPlayer(null);
       applyMappedSnapshot(snapshot, mapped);
       setQueuedSnapshot(null);
       setQueuedTransition('none');
@@ -690,7 +685,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   }, [targetScore]);
 
   const roundPoints = useMemo(() => initialScores(players), [players]);
-  const isLocalTurn = !controlledPlayer || currentPlayer === controlledPlayer;
+  const isLocalTurn = true;
 
   return {
     phase,
