@@ -80,6 +80,12 @@ async function delay(ms) {
   });
 }
 
+const TOPICS_WARMUP_DELAYS_MS = [5000, 10000, 20000];
+
+function isBackendWarmupCandidate(error) {
+  return error?.code === 'TIMEOUT' || error?.code === 'NETWORK_ERROR';
+}
+
 async function fetchJson(url, {
   timeoutMs = 8000,
   method = 'GET',
@@ -573,15 +579,65 @@ export function buildServerActionPayload({ type, tileIndex, rank, actorPlayerId,
   return payload;
 }
 
-export async function fetchTopics() {
+async function fetchBackendHealth() {
+  return fetchJson(`${API_BASE}/health`);
+}
+
+export async function fetchTopics({ onWarmupChange } = {}) {
   requireApiBase();
   if (USE_SAMPLE_MODE) {
     return SAMPLE_TOPICS;
   }
-  return fetchJson(`${API_BASE}/api/topics`);
+
+  const topicsUrl = `${API_BASE}/api/topics`;
+
+  try {
+    return await fetchJson(topicsUrl);
+  } catch (error) {
+    if (!isBackendWarmupCandidate(error)) {
+      throw error;
+    }
+
+    let lastError = error;
+    for (let attempt = 0; attempt < TOPICS_WARMUP_DELAYS_MS.length; attempt += 1) {
+      const delayMs = TOPICS_WARMUP_DELAYS_MS[attempt];
+      onWarmupChange?.({
+        attempt: attempt + 1,
+        totalAttempts: TOPICS_WARMUP_DELAYS_MS.length,
+        nextDelayMs: delayMs
+      });
+
+      try {
+        await fetchBackendHealth();
+        return await fetchJson(topicsUrl);
+      } catch (retryError) {
+        lastError = retryError;
+        if (!isBackendWarmupCandidate(retryError)) {
+          throw retryError;
+        }
+        if (attempt < TOPICS_WARMUP_DELAYS_MS.length - 1) {
+          await delay(delayMs);
+        }
+      }
+    }
+
+    throw new ApiError(
+      lastError?.message || 'Backend unavailable after warm-up retries',
+      0,
+      'WARMUP_FAILED'
+    );
+  }
 }
 
 export function resolveTopicsErrorState(error) {
+  if (error?.code === 'WARMUP_FAILED') {
+    return {
+      title: 'Backend unavailable.',
+      detail: 'Backend did not wake up after multiple attempts. Retry in a moment.',
+      kind: 'backend-unreachable'
+    };
+  }
+
   if (error?.code === 'TIMEOUT') {
     return {
       title: 'Backend request timed out.',

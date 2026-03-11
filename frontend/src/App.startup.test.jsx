@@ -217,6 +217,24 @@ describe('App startup resilience', () => {
     expect(screen.getByRole('link', { name: /open health/i })).toBeInTheDocument();
   });
 
+  test('shows warm-up state while backend is waking up', async () => {
+    fetchTopics.mockImplementation(({ onWarmupChange } = {}) => {
+      onWarmupChange?.({
+        attempt: 1,
+        totalAttempts: 3,
+        nextDelayMs: 5000
+      });
+      return new Promise(() => {});
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('startup-warming-panel')).toBeInTheDocument());
+    expect(screen.getByText(/waking up backend/i)).toBeInTheDocument();
+    expect(screen.getByTestId('startup-warming-attempt')).toHaveTextContent(/retry 1 of 3/i);
+    expect(screen.getByRole('link', { name: /open health/i })).toBeInTheDocument();
+  });
+
   test('shows empty topics state', async () => {
     fetchTopics.mockResolvedValue([]);
 
@@ -250,6 +268,7 @@ describe('App startup resilience', () => {
     fireEvent.click(screen.getByRole('button', { name: /start game/i }));
     await waitFor(() => expect(screen.getByRole('radiogroup', { name: /topic options/i })).toBeInTheDocument());
     expect(screen.getAllByText(/host setup/i).length).toBeGreaterThan(0);
+    expect(screen.getByTestId('host-setup-summary')).toBeInTheDocument();
     expect(screen.queryByText(/launch console/i)).not.toBeInTheDocument();
 
     window.location.hash = '';

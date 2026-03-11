@@ -60,7 +60,7 @@ import { DEFAULT_LANGS, GamePhase } from './state/types';
 
 const STRINGS = {
   title: 'SmartIQ',
-  subtitle: 'Choose a topic, set your players, and open the lobby for the live game.',
+  subtitle: 'Pick a topic, add players, then open a room or start the live game.',
   homeTagline: 'Fast entry for live quiz hosts, players, and quick solo practice.',
   loadingTopics: 'Loading topics...',
   noTopics: 'No topics yet.',
@@ -70,6 +70,8 @@ const STRINGS = {
   retry: 'Retry',
   checkBackendUrl: 'Check backend URL:',
   openHealth: 'Open health',
+  backendWarmupTitle: 'Waking up backend...',
+  backendWarmupDetail: 'Render free instances can take a while to start. SmartIQ is retrying automatically.',
   passNote: 'Pass keeps points and skips your turn for this round (after at least one correct answer).',
   cardErrorFallback: 'Could not load card from backend. Retry to continue.',
   deckExhausted: 'No playable cards for this filter.',
@@ -276,6 +278,7 @@ const ROOM_SELECTION_STORAGE_PREFIX = 'smartiq.roomSelection.';
 const SESSION_REVIEW_NOTE_STORAGE_PREFIX = 'smartiq.sessionReviewNote.';
 const STARTUP_PHASE = {
   LOADING: 'loading',
+  WARMING: 'warming',
   BACKEND_UNREACHABLE: 'backend-unreachable',
   FORBIDDEN: 'forbidden',
   SERVER_ERROR: 'server-error',
@@ -794,6 +797,7 @@ function StartScreen({
   const draftPlayers = parsePlayers(playerDraft);
   const activeTopic = config.topic || 'Any Topic';
   const activeLanguage = String(config.lang || 'en').toUpperCase();
+  const activeDifficulty = DIFFICULTY_OPTIONS.find((entry) => entry.value === config.difficulty)?.label || 'Medium';
   const tenantId = runtimeSnapshot?.me?.selectedTenantId || '';
   const planCode = runtimeSnapshot?.subscription?.planCode || '';
   const capabilities = runtimeSnapshot?.capabilities || null;
@@ -825,6 +829,20 @@ function StartScreen({
       {runtimeWarning ? (
         <p className="field-hint runtime-warning" data-testid="tenant-runtime-warning">{runtimeWarning}</p>
       ) : null}
+      <div className="host-setup-summary" data-testid="host-setup-summary">
+        <div className="host-setup-summary-card">
+          <span>Topic</span>
+          <strong>{activeTopic}</strong>
+        </div>
+        <div className="host-setup-summary-card">
+          <span>Difficulty</span>
+          <strong>{activeDifficulty}</strong>
+        </div>
+        <div className="host-setup-summary-card">
+          <span>Players</span>
+          <strong>{mergedPlayerCount}</strong>
+        </div>
+      </div>
 
       <h2 className="section-title">Topic</h2>
       <div className="topic-grid" role="radiogroup" aria-label="Topic options">
@@ -1060,6 +1078,31 @@ function StartupStatePanel({ startup, onRetry, appTitle }) {
     return <SetupSkeleton appTitle={appTitle} />;
   }
 
+  if (startup.phase === STARTUP_PHASE.WARMING) {
+    return (
+      <section className="setup-panel board-surface startup-panel" data-testid="startup-warming-panel">
+        <h1>{appTitle}</h1>
+        <div className="error-panel error-panel--warming">
+          <p className="error">{startup.error?.title ?? STRINGS.backendWarmupTitle}</p>
+          <p>{startup.error?.detail ?? STRINGS.backendWarmupDetail}</p>
+        </div>
+        {startup.warmup?.attempt ? (
+          <p className="startup-hint" data-testid="startup-warming-attempt">
+            Retry {startup.warmup.attempt} of {startup.warmup.totalAttempts}
+          </p>
+        ) : null}
+        <p className="startup-hint">
+          {STRINGS.checkBackendUrl} <code>{API_BASE || '(missing VITE_API_BASE_URL)'}</code>
+        </p>
+        {API_BASE ? (
+          <a className="inline-link" href={`${API_BASE}/health`} target="_blank" rel="noreferrer">
+            {STRINGS.openHealth}
+          </a>
+        ) : null}
+      </section>
+    );
+  }
+
   if (startup.phase === STARTUP_PHASE.TOPICS_EMPTY) {
     return (
       <section className="setup-panel board-surface startup-panel">
@@ -1247,7 +1290,8 @@ function GameApp() {
   const [topics, setTopics] = useState([]);
   const [startup, setStartup] = useState({
     phase: STARTUP_PHASE.LOADING,
-    error: null
+    error: null,
+    warmup: null
   });
   const [config, setConfig] = useState({
     topic: storedConfig?.topic ?? '',
@@ -1363,16 +1407,33 @@ function GameApp() {
   const loadTopics = useCallback(async () => {
     setStartup({
       phase: STARTUP_PHASE.LOADING,
-      error: null
+      error: null,
+      warmup: null
     });
 
     try {
-      const data = await fetchTopics();
+      const data = await fetchTopics({
+        onWarmupChange: ({ attempt, totalAttempts, nextDelayMs }) => {
+          setStartup({
+            phase: STARTUP_PHASE.WARMING,
+            error: {
+              title: STRINGS.backendWarmupTitle,
+              detail: STRINGS.backendWarmupDetail
+            },
+            warmup: {
+              attempt,
+              totalAttempts,
+              nextDelayMs
+            }
+          });
+        }
+      });
       setTopics(data);
       if (data.length > 0) {
         setStartup({
           phase: STARTUP_PHASE.READY,
-          error: null
+          error: null,
+          warmup: null
         });
         setConfig((prev) => {
           const topicExists = data.some((entry) => entry.topic === prev.topic);
@@ -1383,7 +1444,8 @@ function GameApp() {
 
       setStartup({
         phase: STARTUP_PHASE.TOPICS_EMPTY,
-        error: null
+        error: null,
+        warmup: null
       });
     } catch (error) {
       const resolved = resolveTopicsErrorState(error);
@@ -1396,7 +1458,8 @@ function GameApp() {
               : resolved.kind === 'not-found'
                 ? STARTUP_PHASE.NOT_FOUND
               : STARTUP_PHASE.BACKEND_UNREACHABLE,
-        error: resolved
+        error: resolved,
+        warmup: null
       });
     }
   }, []);

@@ -8,6 +8,7 @@ import {
   createServerGameSession,
   deleteRuntimeSessionReviewNote,
   deleteRuntimeSessionTemplate,
+  fetchTopics,
   fetchTenantRuntimeSnapshot,
   removeRoomPlayerFromSession,
   upsertRuntimeSessionReviewNote,
@@ -48,6 +49,12 @@ describe('api error mapping', () => {
     const state = resolveTopicsErrorState({ code: 'CONFIG_ERROR' });
     expect(state.kind).toBe('config-error');
     expect(state.title.toLowerCase()).toContain('not configured');
+  });
+
+  test('maps exhausted warm-up retries to backend unavailable', () => {
+    const state = resolveTopicsErrorState({ code: 'WARMUP_FAILED' });
+    expect(state.kind).toBe('backend-unreachable');
+    expect(state.title.toLowerCase()).toContain('backend unavailable');
   });
 
   test('maps card conflict status', () => {
@@ -550,5 +557,27 @@ describe('api error mapping', () => {
     expect(snapshot?.capabilities?.planTier).toBe('pro_host');
     expect(snapshot?.capabilities?.maxHostedPlayers).toBe(MAX_PLAYERS_PER_ROOM);
     expect(snapshot?.capabilities?.analyticsHistoryEnabled).toBe(true);
+  });
+
+  test('retries topics while backend wakes up and eventually succeeds', async () => {
+    vi.useFakeTimers();
+    globalThis.fetch = vi.fn()
+      .mockRejectedValueOnce(Object.assign(new Error('timeout'), { name: 'AbortError' }))
+      .mockRejectedValueOnce(Object.assign(new Error('timeout'), { name: 'AbortError' }))
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ status: 'UP' })
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ([{ topic: 'History', count: 12 }])
+      });
+
+    const promise = fetchTopics({ onWarmupChange: vi.fn() });
+    await vi.advanceTimersByTimeAsync(5000);
+
+    await expect(promise).resolves.toEqual([{ topic: 'History', count: 12 }]);
+    expect(globalThis.fetch).toHaveBeenCalledTimes(4);
+    vi.useRealTimers();
   });
 });

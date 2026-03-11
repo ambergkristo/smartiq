@@ -40,6 +40,13 @@ export default function ScoreBoard({
   const outCount = players.filter((player) => eliminatedPlayers.has(player)).length;
   const passedCount = players.filter((player) => !eliminatedPlayers.has(player) && passedPlayers.has(player)).length;
   const activeCount = players.length - outCount - passedCount;
+  const leadingPlayer = players.reduce((leader, player) => {
+    if (!leader) {
+      return player;
+    }
+    return (scores[player] ?? 0) > (scores[leader] ?? 0) ? player : leader;
+  }, '');
+  const leadingScore = leadingPlayer ? scores[leadingPlayer] ?? 0 : 0;
 
   return (
     <aside className="scoreboard-panel board-surface" data-testid="score-board">
@@ -61,10 +68,16 @@ export default function ScoreBoard({
       </div>
 
       <div className="scoreboard-status-card">
-        <p><span>Turn</span><strong>{currentPlayer}</strong></p>
-        <p><span>Starter</span><strong>{starterPlayer}</strong></p>
-        <p><span>Phase</span><strong>{phaseLabel}</strong></p>
-        <p><span>Last</span><strong>{lastAction}</strong></p>
+        <div className="scoreboard-turn-spotlight">
+          <span>Current turn</span>
+          <strong>{currentPlayer}</strong>
+          <em>{phaseLabel}</em>
+        </div>
+        <div className="scoreboard-status-grid">
+          <p><span>Starter</span><strong>{starterPlayer}</strong></p>
+          <p><span>Leading</span><strong>{leadingPlayer ? `${leadingPlayer} • ${leadingScore}` : 'n/a'}</strong></p>
+          <p><span>Last call</span><strong>{lastAction || 'Waiting for host action'}</strong></p>
+        </div>
       </div>
 
       <ul className="scoreboard-player-list" aria-label="Player scoreboard">

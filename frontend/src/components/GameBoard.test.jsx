@@ -220,6 +220,9 @@ describe('GameBoard layout', () => {
     expect(screen.getByRole('button', { name: /answer-1 correct/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /answer-2 wrong/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /answer-3 selected/i })).toBeInTheDocument();
+    expect(screen.getByText('CORRECT')).toBeInTheDocument();
+    expect(screen.getByText('WRONG')).toBeInTheDocument();
+    expect(screen.getByText('SELECTED')).toBeInTheDocument();
     expect(screen.getAllByText('✓')).toHaveLength(1);
     expect(screen.getAllByText('✗')).toHaveLength(1);
     expect(screen.getAllByText('◎')).toHaveLength(1);
@@ -253,6 +256,7 @@ describe('GameBoard layout', () => {
     expect(screen.getByTestId('reveal-panel')).toBeInTheDocument();
     expect(screen.getByTestId('correct-answer-display')).toHaveTextContent(/correct answer/i);
     expect(screen.getByTestId('resolution-summary')).toHaveTextContent(/correct answer locked/i);
+    expect(screen.getByTestId('resolution-summary')).toHaveTextContent(/last call/i);
     expect(screen.getByTestId('player-result-list')).toHaveTextContent(/correct/i);
     expect(screen.getByTestId('next-step-action-area')).toHaveTextContent(/next question/i);
     expect(screen.queryByTestId('answer-grid')).not.toBeInTheDocument();

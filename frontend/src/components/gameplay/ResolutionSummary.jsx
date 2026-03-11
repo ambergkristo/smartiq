@@ -6,7 +6,12 @@ export default function ResolutionSummary({ phaseTitle, question, lastAction, to
         <h3>{phaseTitle}</h3>
       </div>
       <p className="resolution-summary-question">{question}</p>
-      {lastAction ? <p className="resolution-summary-last">{lastAction}</p> : null}
+      {lastAction ? (
+        <p className="resolution-summary-last">
+          <span>Last call</span>
+          <strong>{lastAction}</strong>
+        </p>
+      ) : null}
     </section>
   );
 }
