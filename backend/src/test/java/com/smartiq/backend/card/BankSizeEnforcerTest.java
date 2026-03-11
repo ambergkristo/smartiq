@@ -76,7 +76,7 @@ class BankSizeEnforcerTest {
                     assertThat(event.getLevel()).isEqualTo(Level.INFO);
                     assertThat(event.getFormattedMessage()).contains("bank_validation_start");
                     assertThat(event.getFormattedMessage()).contains("activeProfiles=prod");
-                    assertThat(event.getFormattedMessage()).contains("countedSources=[smartiq-v2, smartiq-human, smartiq-verified, flyway-seed-core]");
+                    assertThat(event.getFormattedMessage()).contains("countedSources=[smartiq-v2, smartiq-human, smartiq-verified]");
                 })
                 .anySatisfy(event -> {
                     assertThat(event.getLevel()).isEqualTo(Level.WARN);

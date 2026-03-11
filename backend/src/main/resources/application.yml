@@ -10,7 +10,7 @@ spring:
   flyway:
     enabled: true
     placeholders:
-      seed_core_enabled: true
+      seed_core_enabled: false
   h2:
     console:
       enabled: true
@@ -34,7 +34,7 @@ smartiq:
     time: ${SMARTIQ_BUILD_TIME:unknown}
   import:
     enabled: ${SMARTIQ_IMPORT_ENABLED:true}
-    path: ${SMARTIQ_IMPORT_PATH:../data/smart10}
+    path: ${SMARTIQ_IMPORT_PATH:../data/smart10/cards.en.json,../data/smart10/cards.et.json,classpath:data/runtime/cards.en.json}
     fail-on-category-threshold: ${STRICT_DATASET_VALIDATION:${SMARTIQ_IMPORT_FAIL_ON_CATEGORY_THRESHOLD:false}}
   pool:
     enabled: ${SMARTIQ_POOL_ENABLED:true}

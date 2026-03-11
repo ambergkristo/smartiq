@@ -43,7 +43,7 @@ export default function GameBoard({
 
   const isLongQuestion = card.question.length > 180;
   const selectedIndex = selectedIndexes.size > 0 ? [...selectedIndexes][0] : null;
-  const selectedOption = selectedIndex != null ? card.options[selectedIndex] ?? `Answer ${selectedIndex + 1}` : 'Choose an answer';
+  const selectedOption = selectedIndex != null ? card.options[selectedIndex] ?? '' : 'Choose an answer';
   const nextActionLabel = getNextActionLabel(nextTransition);
   const isResolutionPhase = phase === 'RESOLVED' || phase === 'PASSED';
   const isConfirmPhase = phase === 'CONFIRMING';

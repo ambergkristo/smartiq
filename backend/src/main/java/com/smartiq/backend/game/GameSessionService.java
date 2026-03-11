@@ -1111,7 +1111,7 @@ public class GameSessionService {
                 .map(peg -> new PegSnapshot(
                         peg.index(),
                         peg.state(),
-                        PEG_HIDDEN.equals(peg.state()) ? null : state.card.options().get(peg.index())
+                        state.card.options().get(peg.index())
                 ))
                 .toList();
 

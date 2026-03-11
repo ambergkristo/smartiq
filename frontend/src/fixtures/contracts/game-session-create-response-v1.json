@@ -26,14 +26,14 @@
       "category": "OPEN",
       "topic": "History",
       "pegs": [
-        { "index": 0, "state": "hidden", "value": null },
-        { "index": 1, "state": "hidden", "value": null },
-        { "index": 2, "state": "hidden", "value": null },
-        { "index": 3, "state": "hidden", "value": null },
-        { "index": 4, "state": "hidden", "value": null },
-        { "index": 5, "state": "hidden", "value": null },
-        { "index": 6, "state": "hidden", "value": null },
-        { "index": 7, "state": "hidden", "value": null }
+        { "index": 0, "state": "hidden", "value": "Option 1" },
+        { "index": 1, "state": "hidden", "value": "Option 2" },
+        { "index": 2, "state": "hidden", "value": "Option 3" },
+        { "index": 3, "state": "hidden", "value": "Option 4" },
+        { "index": 4, "state": "hidden", "value": "Option 5" },
+        { "index": 5, "state": "hidden", "value": "Option 6" },
+        { "index": 6, "state": "hidden", "value": "Option 7" },
+        { "index": 7, "state": "hidden", "value": "Option 8" }
       ]
     },
     "totalScores": {

@@ -14,10 +14,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
@@ -77,7 +80,7 @@ public class CardImportRunner implements ApplicationRunner {
         if (importProperties.enabled()) {
             cleanupDeprecatedSources();
             resolveImportPaths(importProperties.path())
-                    .forEach(this::importPath);
+                    .forEach(this::importLocation);
         }
 
         logDatasetSummary();
@@ -152,6 +155,33 @@ public class CardImportRunner implements ApplicationRunner {
         return map;
     }
 
+    private void importLocation(String importLocation) {
+        if (!StringUtils.hasText(importLocation)) {
+            return;
+        }
+        String trimmed = importLocation.trim();
+        if (trimmed.startsWith("classpath:")) {
+            importClasspathResource(trimmed);
+            return;
+        }
+
+        importPath(Path.of(trimmed).normalize());
+    }
+
+    private void importClasspathResource(String importLocation) {
+        String resourcePath = importLocation.substring("classpath:".length()).trim();
+        if (!StringUtils.hasText(resourcePath)) {
+            return;
+        }
+
+        Resource resource = new ClassPathResource(resourcePath);
+        if (!resource.exists()) {
+            return;
+        }
+
+        importResource(resource, importLocation);
+    }
+
     private void importPath(Path importPath) {
         if (!Files.exists(importPath)) {
             return;
@@ -174,24 +204,40 @@ public class CardImportRunner implements ApplicationRunner {
         }
     }
 
-    private List<Path> resolveImportPaths(String importPathRaw) {
+    private List<String> resolveImportPaths(String importPathRaw) {
         if (!StringUtils.hasText(importPathRaw)) {
             return List.of();
         }
 
-        List<Path> paths = new ArrayList<>();
+        List<String> paths = new ArrayList<>();
         for (String part : importPathRaw.split(",")) {
             if (!StringUtils.hasText(part)) {
                 continue;
             }
-            paths.add(Path.of(part.trim()).normalize());
+            paths.add(part.trim());
         }
         return paths;
     }
 
     private void importFile(Path path) {
+        try (InputStream inputStream = Files.newInputStream(path)) {
+            importSeedStream(inputStream, path.getFileName().toString());
+        } catch (IOException ex) {
+            throw new IllegalStateException("Failed to import cards from " + path, ex);
+        }
+    }
+
+    private void importResource(Resource resource, String sourceLabel) {
+        try (InputStream inputStream = resource.getInputStream()) {
+            importSeedStream(inputStream, sourceLabel);
+        } catch (IOException ex) {
+            throw new IllegalStateException("Failed to import cards from " + sourceLabel, ex);
+        }
+    }
+
+    private void importSeedStream(InputStream inputStream, String sourceLabel) {
         try {
-            SeedReadResult readResult = readSeeds(path);
+            SeedReadResult readResult = readSeeds(inputStream);
             List<CardSeed> seeds = readResult.seeds();
             int inserted = 0;
             int duplicates = 0;
@@ -208,19 +254,19 @@ public class CardImportRunner implements ApplicationRunner {
                 } catch (IllegalArgumentException ex) {
                     invalid++;
                     log.warn("Skipping invalid card id={} sourceFile={} reason={}",
-                            seed.id(), path.getFileName(), ex.getMessage());
+                            seed.id(), sourceLabel, ex.getMessage());
                 }
             }
 
             log.info("Card import completed file={} total={} inserted={} duplicates={} invalid={}",
-                    path.getFileName(), seeds.size(), inserted, duplicates, invalid);
+                    sourceLabel, seeds.size(), inserted, duplicates, invalid);
         } catch (IOException ex) {
-            throw new IllegalStateException("Failed to import cards from " + path, ex);
+            throw new IllegalStateException("Failed to import cards from " + sourceLabel, ex);
         }
     }
 
-    private SeedReadResult readSeeds(Path path) throws IOException {
-        JsonNode root = objectMapper.readTree(path.toFile());
+    private SeedReadResult readSeeds(InputStream inputStream) throws IOException {
+        JsonNode root = objectMapper.readTree(inputStream);
         if (!root.isArray() || root.isEmpty()) {
             return new SeedReadResult(List.of(), 0);
         }

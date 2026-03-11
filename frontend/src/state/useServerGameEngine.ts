@@ -157,14 +157,13 @@ function mapSnapshot(snapshot, languageFallback, targetScoreFallback) {
     } else if (state === 'wrong' && pegIndex < BOARD_ANSWER_COUNT) {
       wrongIndexes.push(pegIndex);
     }
-    return typeof peg?.value === 'string' && peg.value.trim().length > 0
-      ? peg.value
-      : `Answer ${pegIndex + 1}`;
+    return typeof peg?.value === 'string' ? peg.value.trim() : '';
   });
 
-  const fallbackAnswers = answers.length === BOARD_ANSWER_COUNT
-    ? answers
-    : Array.from({ length: BOARD_ANSWER_COUNT }, (_, index) => `Answer ${index + 1}`);
+  const fallbackAnswers = Array.from(
+    { length: BOARD_ANSWER_COUNT },
+    (_, index) => answers[index] ?? ''
+  );
   const correctAnswerIndex = revealedIndexes.length === 1 ? revealedIndexes[0] : null;
   const difficulty = snapshot?.boardState?.difficulty ?? '1';
 

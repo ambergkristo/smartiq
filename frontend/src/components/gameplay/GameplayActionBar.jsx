@@ -14,6 +14,8 @@ export default function GameplayActionBar({
   onCancelConfirm,
   onPass,
   onNext,
+  onBackToLobby,
+  backLabel = '← Back to lobby',
   currentPlayer
 }) {
   const answerButtonRef = useRef(null);
@@ -46,6 +48,13 @@ export default function GameplayActionBar({
         <strong>{actionHint}</strong>
       </div>
       <div className="gameplay-action-buttons" data-phase={phase} data-testid="gameplay-action-buttons">
+        <button
+          type="button"
+          className="secondary-action gameplay-back-button"
+          onClick={onBackToLobby}
+        >
+          {backLabel}
+        </button>
         {phase === 'CHOOSING' ? (
           <>
             <button

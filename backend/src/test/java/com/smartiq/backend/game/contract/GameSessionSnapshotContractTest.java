@@ -30,8 +30,8 @@ class GameSessionSnapshotContractTest {
                         "OPEN",
                         "Science",
                         List.of(
-                                new PegSnapshot(0, "hidden", null),
-                                new PegSnapshot(1, "selected", null)
+                                new PegSnapshot(0, "hidden", "Mercury"),
+                                new PegSnapshot(1, "selected", "Mars")
                         )
                 ),
                 Map.of("p1", 0, "p2", 0),
@@ -51,6 +51,7 @@ class GameSessionSnapshotContractTest {
         assertThat(node.path("roundState").path("phase").asText()).isEqualTo("CHOOSING");
         assertThat(node.path("boardState").path("question").asText()).isEqualTo("Question text?");
         assertThat(node.path("boardState").path("pegs").get(1).path("state").asText()).isEqualTo("selected");
+        assertThat(node.path("boardState").path("pegs").get(0).path("value").asText()).isEqualTo("Mercury");
         assertThat(node.at("/statuses/p1").asText()).isEqualTo("ACTIVE");
         assertThat(node.at("/statuses/p2").asText()).isEqualTo("PASSED");
     }

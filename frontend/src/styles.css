@@ -1897,10 +1897,10 @@ button:disabled {
 .gameplay-stage {
   height: 100%;
   min-height: 0;
-  padding: clamp(14px, 1.8vw, 20px);
+  padding: clamp(12px, 1.5vw, 18px);
   display: grid;
-  grid-template-rows: auto auto auto auto auto minmax(0, 1fr);
-  gap: 12px;
+  grid-template-rows: auto auto auto auto minmax(0, 1fr);
+  gap: 10px;
   overflow: hidden;
   position: relative;
   animation: scene-in 240ms ease-out;
@@ -1994,9 +1994,9 @@ button:disabled {
 }
 
 .question-card {
-  padding: 18px 20px;
+  padding: 16px 18px;
   display: grid;
-  gap: 14px;
+  gap: 12px;
   overflow: hidden;
   background:
     linear-gradient(180deg, rgba(0, 255, 123, 0.08), rgba(255, 255, 255, 0.01)),
@@ -2025,10 +2025,10 @@ button:disabled {
 .question-card-text {
   position: relative;
   z-index: 1;
-  font-size: clamp(1.35rem, 2vw, 2rem);
-  line-height: 1.08;
+  font-size: clamp(1.18rem, 1.65vw, 1.72rem);
+  line-height: 1.12;
   font-weight: 700;
-  max-width: 24ch;
+  max-width: 30ch;
 }
 
 .question-card-text.is-clamped {
@@ -2142,8 +2142,8 @@ button:disabled {
 
 .board-status-bar {
   display: grid;
-  gap: 12px;
-  padding: 14px 16px;
+  gap: 10px;
+  padding: 12px 14px;
   border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background:
@@ -2160,21 +2160,22 @@ button:disabled {
   width: 100%;
   min-height: 0;
   display: grid;
-  gap: 12px;
+  height: 100%;
+  align-content: stretch;
 }
 
 .answer-grid {
   display: grid;
+  height: 100%;
+  min-height: 0;
   gap: 10px;
-}
-
-.answer-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
 }
 
 .answer-tile {
-  min-height: 98px;
-  padding: 12px 14px;
+  min-height: clamp(72px, 10vh, 94px);
+  padding: 10px 12px;
   border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: linear-gradient(180deg, rgba(24, 26, 32, 0.98), rgba(12, 13, 18, 0.98));
@@ -2214,12 +2215,12 @@ button:disabled {
   width: 100%;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
   text-align: left;
-  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  font-size: clamp(0.9rem, 1.02vw, 1rem);
   line-height: 1.15;
 }
 
@@ -2391,16 +2392,22 @@ button:disabled {
 
 .gameplay-action-buttons {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: auto repeat(2, minmax(0, 1fr));
   gap: 10px;
+  align-items: stretch;
 }
 
-.gameplay-action-buttons button:last-child:only-child {
+.gameplay-action-buttons button:last-child:only-child,
+.gameplay-action-buttons .gameplay-back-button:only-child {
   grid-column: 1 / -1;
 }
 
 .gameplay-action-buttons button {
   min-height: 52px;
+}
+
+.gameplay-back-button {
+  min-width: 180px;
 }
 
 .gameplay-stage[data-phase='CHOOSING'] .phase-status-chip {

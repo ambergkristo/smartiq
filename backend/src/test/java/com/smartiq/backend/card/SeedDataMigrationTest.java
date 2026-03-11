@@ -17,9 +17,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(properties = {
-        "smartiq.import.enabled=false",
+        "smartiq.import.enabled=true",
+        "smartiq.import.path=classpath:data/runtime/cards.en.json",
         "smartiq.pool.enabled=false",
         "smartiq.session.enabled=false",
+        "spring.flyway.placeholders.seed_core_enabled=false",
         "spring.datasource.url=jdbc:h2:mem:smartiq_seed_test;MODE=PostgreSQL;DB_CLOSE_DELAY=-1",
         "spring.datasource.username=sa",
         "spring.datasource.password="
@@ -31,16 +33,16 @@ class SeedDataMigrationTest {
     private MockMvc mockMvc;
 
     @Test
-    void topicsEndpointReturnsSeededTopics() throws Exception {
+    void topicsEndpointReturnsBundledRuntimeTopics() throws Exception {
         mockMvc.perform(get("/api/topics"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(greaterThanOrEqualTo(6)))
+                .andExpect(jsonPath("$.length()").value(greaterThanOrEqualTo(1)))
                 .andExpect(jsonPath("$[*].topic").value(hasItem("History")))
-                .andExpect(jsonPath("$[?(@.topic=='History')].count").value(hasItem(60)));
+                .andExpect(jsonPath("$[?(@.topic=='History')].count").value(hasItem(8)));
     }
 
     @Test
-    void nextRandomServesSeededFallbackCards() throws Exception {
+    void nextRandomServesBundledRuntimeCards() throws Exception {
         mockMvc.perform(get("/api/cards/nextRandom")
                         .param("language", "en")
                         .param("gameId", "seed-fallback-1")
@@ -48,12 +50,13 @@ class SeedDataMigrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.topic").value("History"))
                 .andExpect(jsonPath("$.language").value("en"))
-                .andExpect(jsonPath("$.source").value("flyway-seed-core"))
+                .andExpect(jsonPath("$.source").value("smartiq-v2"))
+                .andExpect(jsonPath("$.question").value(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("seed question"))))
                 .andExpect(jsonPath("$.options.length()").value(8));
     }
 
     @Test
-    void seededFallbackDeckAvoidsImmediateTopicAndCategoryRepeats() throws Exception {
+    void runtimeDeckAvoidsImmediateCardRepeats() throws Exception {
         MvcResult first = mockMvc.perform(get("/api/cards/nextRandom")
                         .param("language", "en")
                         .param("gameId", "seed-fallback-global"))
@@ -66,12 +69,9 @@ class SeedDataMigrationTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        String firstTopic = JsonPath.read(first.getResponse().getContentAsString(), "$.topic");
-        String secondTopic = JsonPath.read(second.getResponse().getContentAsString(), "$.topic");
-        String firstCategory = JsonPath.read(first.getResponse().getContentAsString(), "$.category");
-        String secondCategory = JsonPath.read(second.getResponse().getContentAsString(), "$.category");
+        String firstCardId = JsonPath.read(first.getResponse().getContentAsString(), "$.cardId");
+        String secondCardId = JsonPath.read(second.getResponse().getContentAsString(), "$.cardId");
 
-        assertThat(secondTopic).isNotEqualTo(firstTopic);
-        assertThat(secondCategory).isNotEqualTo(firstCategory);
+        assertThat(secondCardId).isNotEqualTo(firstCardId);
     }
 }

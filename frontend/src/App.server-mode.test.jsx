@@ -95,7 +95,7 @@ function makeServerSnapshot({
         return {
           index,
           state,
-          value: state === 'hidden' ? null : `Option ${index + 1}`
+          value: `Option ${index + 1}`
         };
       })
     },

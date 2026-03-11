@@ -1,0 +1,202 @@
+[
+  {
+    "id": "history-true_false-001",
+    "cardId": "history-true_false-001",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "History: Which statements about Ancient Rome are true?",
+    "options": [
+      "Augustus became Rome's first emperor.",
+      "Caesar was assassinated in 44 BC.",
+      "Punic Wars were fought with Carthage.",
+      "The Colosseum stands in Rome.",
+      "The Republic followed the Empire.",
+      "Hadrian's Wall was built in Egypt.",
+      "The Senate met in Tokyo.",
+      "Napoleon founded Constantinople.",
+      "Vesuvius destroyed Carthage.",
+      "Latin was invented in the 1800s."
+    ],
+    "correct": {
+      "correctIndexes": [0, 1, 2, 3]
+    },
+    "difficulty": "2",
+    "source": "smartiq-v2"
+  },
+  {
+    "id": "history-true_false-002",
+    "cardId": "history-true_false-002",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "History: Which statements about the Viking Age are true?",
+    "options": [
+      "Norse sailors reached North America.",
+      "Longships used sails and oars.",
+      "The Danelaw was in England.",
+      "Leif Erikson is linked to Vinland.",
+      "Viking Age began after 1400.",
+      "Early raids used gunpowder cannons.",
+      "Only Denmark produced settlers.",
+      "Reykjavik was Rome's capital.",
+      "Raids began after the Black Death.",
+      "Harald Bluetooth ruled Ming China."
+    ],
+    "correct": {
+      "correctIndexes": [0, 1, 2, 3]
+    },
+    "difficulty": "2",
+    "source": "smartiq-v2"
+  },
+  {
+    "id": "history-true_false-003",
+    "cardId": "history-true_false-003",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "History: Which statements about the Renaissance are true?",
+    "options": [
+      "Renaissance began in Italian cities.",
+      "Humanism renewed interest in classics.",
+      "Leonardo was a Renaissance artist.",
+      "Michelangelo painted the Sistine ceiling.",
+      "Renaissance began in Australia.",
+      "Caesar invented the printing press.",
+      "Florence was minor in Renaissance art.",
+      "Raphael was a Viking explorer.",
+      "The Medici ruled the Aztec Empire.",
+      "Copernicus wrote in cuneiform."
+    ],
+    "correct": {
+      "correctIndexes": [0, 1, 2, 3]
+    },
+    "difficulty": "2",
+    "source": "smartiq-v2"
+  },
+  {
+    "id": "history-true_false-004",
+    "cardId": "history-true_false-004",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "History: Which statements about Ancient Egypt are true?",
+    "options": [
+      "The Nile shaped Egyptian agriculture.",
+      "Pharaohs were linked to divine rule.",
+      "Hieroglyphs were used in writing.",
+      "Pyramids were built in Egypt.",
+      "Ancient Egypt formed in Antarctica.",
+      "Cleopatra invented steam engines.",
+      "The Sphinx guarded Tokyo Harbor.",
+      "Papyrus was a metal alloy.",
+      "Tutankhamun ruled in the 1900s.",
+      "The Rosetta Stone was written in Java."
+    ],
+    "correct": {
+      "correctIndexes": [0, 1, 2, 3]
+    },
+    "difficulty": "2",
+    "source": "smartiq-v2"
+  },
+  {
+    "id": "history-true_false-005",
+    "cardId": "history-true_false-005",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "History: Which statements about the Industrial Revolution are true?",
+    "options": [
+      "Factories expanded during the period.",
+      "Steam power transformed transport.",
+      "Textile production changed rapidly.",
+      "Urbanization accelerated in many regions.",
+      "It began after the Moon landing.",
+      "Roman legions managed coal mines.",
+      "Electric guitars drove early weaving.",
+      "The revolution started in Atlantis.",
+      "Computers were common in 1750.",
+      "Airplanes dominated 18th-century freight."
+    ],
+    "correct": {
+      "correctIndexes": [0, 1, 2, 3]
+    },
+    "difficulty": "2",
+    "source": "smartiq-v2"
+  },
+  {
+    "id": "history-true_false-006",
+    "cardId": "history-true_false-006",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "History: Which statements about World War II are true?",
+    "options": [
+      "The conflict began in 1939 in Europe.",
+      "D-Day landings took place in Normandy.",
+      "The war ended in 1945.",
+      "The Holocaust occurred during the war.",
+      "The war was fought only in South America.",
+      "The internet decided battlefield strategy.",
+      "Dinosaurs served in armored divisions.",
+      "Apollo missions supplied the Allies.",
+      "Berlin was located in Brazil.",
+      "The League of Nations won the World Cup."
+    ],
+    "correct": {
+      "correctIndexes": [0, 1, 2, 3]
+    },
+    "difficulty": "2",
+    "source": "smartiq-v2"
+  },
+  {
+    "id": "history-true_false-007",
+    "cardId": "history-true_false-007",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "History: Which statements about the Cold War are true?",
+    "options": [
+      "It featured rivalry between the US and USSR.",
+      "The space race was part of the period.",
+      "NATO formed during the Cold War era.",
+      "The Berlin Wall became a major symbol.",
+      "It began after 2010.",
+      "Steamships carried nuclear codes to Mars.",
+      "It was fought only with medieval swords.",
+      "The Soviet Union was based in Australia.",
+      "Sputnik was a Roman emperor.",
+      "The Wall Street Crash ended the moon race."
+    ],
+    "correct": {
+      "correctIndexes": [0, 1, 2, 3]
+    },
+    "difficulty": "2",
+    "source": "smartiq-v2"
+  },
+  {
+    "id": "history-true_false-008",
+    "cardId": "history-true_false-008",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "History: Which statements about the Age of Exploration are true?",
+    "options": [
+      "Ocean voyages linked more continents.",
+      "Columbus sailed across the Atlantic.",
+      "Magellan's expedition completed a circumnavigation.",
+      "Navigation tools improved seafaring.",
+      "The era began with jet aircraft.",
+      "GPS satellites guided 15th-century fleets.",
+      "Explorers mapped only the Moon.",
+      "Portugal was located in the Arctic Ocean.",
+      "The compass was invented in Silicon Valley.",
+      "Steam turbines powered Columbus's ships."
+    ],
+    "correct": {
+      "correctIndexes": [0, 1, 2, 3]
+    },
+    "difficulty": "2",
+    "source": "smartiq-v2"
+  }
+]

@@ -60,7 +60,7 @@ import { DEFAULT_LANGS, GamePhase } from './state/types';
 
 const STRINGS = {
   title: 'SmartIQ',
-  subtitle: 'Start a Smart10-style random deck game. Topic filter is optional.',
+  subtitle: 'Choose a topic, set your players, and open the lobby for the live game.',
   homeTagline: 'Fast entry for live quiz hosts, players, and quick solo practice.',
   loadingTopics: 'Loading topics...',
   noTopics: 'No topics yet.',
@@ -808,12 +808,12 @@ function StartScreen({
     <section className="setup-panel board-surface host-launch-panel" data-testid="host-launch-panel">
       <div className="host-launch-panel-header">
         <div>
-          <p className="section-title">Launch Console</p>
+          <p className="section-title">Host setup</p>
           <h2>{appTitle}</h2>
         </div>
         <div className="host-launch-stat">
-          <span>Mode</span>
-          <strong>{tenantId ? 'Hosted runtime' : 'Guest prep'}</strong>
+          <span>Session</span>
+          <strong>{tenantId ? 'Hosted runtime' : 'Quick start'}</strong>
         </div>
       </div>
       <p>{STRINGS.subtitle}</p>
@@ -2572,8 +2572,8 @@ function GameApp() {
         : 'Pre-show'
     : `Round ${engine.roundNumber}`;
   const shellEyebrow = engine.phase === GamePhase.SETUP
-    ? 'SmartIQ host control console'
-    : 'Live host console';
+    ? 'Host setup'
+    : 'Live game';
   const gameplayCategory = getCardCategory(engine.card);
   const gameplayPhaseLabel = getPhaseLabel(engine.phase);
   const gameplayCanAnswer = getCanAnswer(
@@ -2871,6 +2871,8 @@ function GameApp() {
         onCancelConfirm={engine.cancelConfirm}
         onPass={engine.passTurn}
         onNext={engine.nextStep}
+        onBackToLobby={handleRestart}
+        backLabel={hostRoomSession ? '← Back to lobby' : '← Back to setup'}
         currentPlayer={engine.currentPlayer}
       />
     </PrimaryActionBar>

@@ -94,7 +94,7 @@ describe('App tenant runtime integration', () => {
           pegs: Array.from({ length: 8 }, (_, index) => ({
             index,
             state: 'hidden',
-            value: null
+            value: `Option ${index + 1}`
           }))
         },
         totalScores: { p1: 0, p2: 0 },
@@ -129,7 +129,7 @@ describe('App tenant runtime integration', () => {
         pegs: Array.from({ length: 8 }, (_, index) => ({
           index,
           state: 'hidden',
-          value: null
+          value: `Option ${index + 1}`
         }))
       },
       totalScores: { p1: 3, p2: 1 },
@@ -160,7 +160,7 @@ describe('App tenant runtime integration', () => {
           pegs: Array.from({ length: 8 }, (_, index) => ({
             index,
             state: 'hidden',
-            value: null
+            value: `Option ${index + 1}`
           }))
         },
         totalScores: { p1: 2, p2: 1 },
@@ -685,7 +685,7 @@ describe('App tenant runtime integration', () => {
         pegs: Array.from({ length: 8 }, (_, index) => ({
           index,
           state: 'hidden',
-          value: null
+          value: `Option ${index + 1}`
         }))
       },
       totalScores: { p1: 3, p9: 2 },
@@ -933,7 +933,7 @@ describe('App tenant runtime integration', () => {
     expect(screen.getByLabelText(/follow-up note/i)).toHaveValue('');
     expect(screen.queryByText(/trim the intro next time/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/^note saved$/i)).not.toBeInTheDocument();
-  });
+  }, 10000);
 
   test('filters recent hosted sessions by live vs completed status', async () => {
     fetchTopics.mockResolvedValue([

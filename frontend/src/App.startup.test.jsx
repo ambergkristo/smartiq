@@ -97,7 +97,7 @@ function makeServerSnapshot({
       pegs: Array.from({ length: 8 }, (_, index) => ({
         index,
         state: 'hidden',
-        value: null
+        value: `Option ${index + 1}`
       }))
     },
     totalScores: Object.fromEntries(normalizedPlayers.map((player) => [player.playerId, 0])),
@@ -249,6 +249,8 @@ describe('App startup resilience', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /start game/i }));
     await waitFor(() => expect(screen.getByRole('radiogroup', { name: /topic options/i })).toBeInTheDocument());
+    expect(screen.getAllByText(/host setup/i).length).toBeGreaterThan(0);
+    expect(screen.queryByText(/launch console/i)).not.toBeInTheDocument();
 
     window.location.hash = '';
     await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());

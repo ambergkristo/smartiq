@@ -71,6 +71,7 @@ class GameSessionServiceTest {
         assertThat(snapshot.players().get(0).displayName()).isEqualTo("Alice");
         assertThat(snapshot.boardState().pegs()).hasSize(8);
         assertThat(snapshot.boardState().pegs().get(0).state()).isEqualTo("hidden");
+        assertThat(snapshot.boardState().pegs().get(0).value()).isEqualTo("A");
         assertThat(snapshot.statuses().get("p1")).isEqualTo(PlayerRoundStatus.ACTIVE);
         assertThat(snapshot.statuses().get("p2")).isEqualTo(PlayerRoundStatus.ACTIVE);
         assertThat(created.actionTokens()).containsKeys("p1", "p2");
@@ -233,6 +234,7 @@ class GameSessionServiceTest {
         assertThat(afterAnswer.statuses().get("p1")).isEqualTo(PlayerRoundStatus.OUT);
         assertThat(afterAnswer.roundState().currentPlayerId()).isEqualTo("p2");
         assertThat(afterAnswer.boardState().pegs().get(1).state()).isEqualTo("wrong");
+        assertThat(afterAnswer.boardState().pegs().get(1).value()).isEqualTo("B");
     }
 
     @Test
@@ -764,6 +766,7 @@ class GameSessionServiceTest {
         assertThat(restoredSnapshot.roundState().currentPlayerId()).isEqualTo("p2");
         assertThat(restoredSnapshot.roundScores().get("p1")).isEqualTo(1);
         assertThat(restoredSnapshot.boardState().pegs().get(0).state()).isEqualTo("revealed");
+        assertThat(restoredSnapshot.boardState().pegs().get(0).value()).isEqualTo("A");
 
         assertThatThrownBy(() -> restartedInstance.applyAction(
                 gameId,
