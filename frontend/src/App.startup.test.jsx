@@ -856,13 +856,16 @@ describe('App startup resilience', () => {
       playerId: 'p1',
       authToken: 'rt_room_1'
     });
-    await waitFor(() => expect(screen.getByTestId('room-session-card')).toBeInTheDocument());
-    expect(screen.getByText('QUIZ42')).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByTestId('room-code-hero')).toBeInTheDocument());
+    expect(screen.getByTestId('join-info-block')).toBeInTheDocument();
+    expect(screen.getByTestId('room-qr-placeholder')).toBeInTheDocument();
+    expect(screen.getByTestId('lobby-status-summary')).toBeInTheDocument();
+    expect(screen.getByTestId('room-code-hero')).toHaveTextContent('QUIZ42');
     expect(screen.getByText(/room ready: QUIZ42/i)).toBeInTheDocument();
     expect(screen.getAllByText('Host One').length).toBeGreaterThan(0);
     fireEvent.click(screen.getAllByRole('checkbox', { name: /include in launch/i })[1]);
     fireEvent.click(screen.getByRole('button', { name: /use selected players/i }));
-    await waitFor(() => expect(screen.getByRole('button', { name: /start selected room/i })).toBeEnabled());
+    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeEnabled());
     expect(screen.getByTestId('room-selected-roster-hint')).toHaveTextContent(/host one/i);
     expect(screen.getByTestId('room-selected-roster-hint')).not.toHaveTextContent(/alice/i);
     expect(screen.getAllByText('Host One').length).toBeGreaterThan(0);
@@ -894,9 +897,9 @@ describe('App startup resilience', () => {
     fireEvent.change(screen.getByLabelText(/room display name/i), { target: { value: 'Host One' } });
     fireEvent.click(screen.getByRole('button', { name: /create room/i }));
 
-    await waitFor(() => expect(screen.getByTestId('room-session-card')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByTestId('room-code-hero')).toBeInTheDocument());
     fireEvent.click(screen.getAllByRole('checkbox', { name: /include in launch/i })[1]);
-    fireEvent.click(screen.getByRole('button', { name: /start selected room/i }));
+    fireEvent.click(screen.getByRole('button', { name: /start game/i }));
 
     await waitFor(() => expect(createServerGameSession).toHaveBeenCalledWith(expect.objectContaining({
       players: ['Host One', 'Bob'],

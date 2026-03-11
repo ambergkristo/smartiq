@@ -5,6 +5,10 @@ import {
   normalizePlayerName,
   normalizeRoomCodeInput
 } from '../roomRuntime';
+import JoinInfoBlock from './room/JoinInfoBlock';
+import LobbyPlayerPanel from './room/LobbyPlayerPanel';
+import QrPlaceholder from './room/QrPlaceholder';
+import RoomCodeHero from './room/RoomCodeHero';
 
 export default function GameRoom({
   strings,
@@ -30,7 +34,6 @@ export default function GameRoom({
   const roomPlayers = Array.isArray(roomSession?.roomState?.players) ? roomSession.roomState.players : [];
   const roomPlayerNames = getRoomPlayerNames(roomSession);
   const selectedPlayers = getSelectedRoomPlayerNames(roomSession, selectedRoomPlayerNames);
-  const canUseRoomPlayers = roomSession?.role === 'host' && roomPlayerNames.length > 0;
   const removableSelectedGap = roomPlayers.filter((player) => (
     roomSession?.playerId !== player.playerId
       && !selectedPlayers.includes(normalizePlayerName(player.displayName || player.playerId || ''))
@@ -47,13 +50,15 @@ export default function GameRoom({
     }
     : undefined;
   const playerJoinLink = roomSession?.roomCode ? buildPlayerJoinUrl(roomSession.roomCode) : '';
+  const hasLobbySession = Boolean(roomSession) && !isPlayerLobby;
+  const canUseRoomPlayers = roomSession?.role === 'host' && roomPlayerNames.length > 0;
 
   return (
-    <section className="setup-panel board-surface room-panel" data-testid="room-panel">
-      <h2>{strings.roomPanelTitle}</h2>
-      <p>{isPlayerLobby ? strings.roomPlayerLobbyHint : strings.roomPanelHint}</p>
+    <section className={`setup-panel board-surface room-panel${hasLobbySession ? ' room-panel--lobby' : ''}`} data-testid="room-panel">
+      {!hasLobbySession ? <h2>{strings.roomPanelTitle}</h2> : null}
+      {!hasLobbySession ? <p>{isPlayerLobby ? strings.roomPlayerLobbyHint : strings.roomPanelHint}</p> : null}
 
-      {pending ? <p className="field-hint">{strings.roomPending}</p> : null}
+      {pending ? <p className="field-hint" data-testid="room-pending">{strings.roomPending}</p> : null}
       {message ? <p className="field-hint" data-testid="room-message">{message}</p> : null}
       {error ? <p className="error" data-testid="room-error">{error}</p> : null}
 
@@ -99,135 +104,85 @@ export default function GameRoom({
           </div>
           <p className="field-hint">{strings.roomPlayerLobbySwitchHint}</p>
         </div>
-      ) : (
+      ) : hasLobbySession ? (
         <>
-          <label htmlFor="room-display-name">{strings.roomDisplayNameLabel}</label>
-          <input
-            id="room-display-name"
-            type="text"
-            value={draft.displayName}
-            onChange={(event) => onDraftChange((prev) => ({ ...prev, displayName: event.target.value }))}
-            placeholder={strings.roomDisplayNamePlaceholder}
-            autoComplete="nickname"
-            disabled={pending}
-          />
-
-          <label htmlFor="room-code">{strings.roomCodeLabel}</label>
-          <input
-            id="room-code"
-            type="text"
-            value={draft.roomCode}
-            onChange={(event) => onDraftChange((prev) => ({ ...prev, roomCode: normalizeRoomCodeInput(event.target.value) }))}
-            placeholder={strings.roomCodePlaceholder}
-            autoComplete="off"
-            disabled={pending}
-          />
-
-          <div className="room-actions">
-            <button type="button" onClick={onCreateRoom} disabled={pending}>
-              {strings.roomCreateSubmit}
-            </button>
-            <button type="button" onClick={onJoinRoom} disabled={pending}>
-              {strings.roomJoinSubmit}
-            </button>
-            {roomSession ? (
-              <>
-                <button type="button" onClick={onResumeRoom} disabled={pending}>
-                  {strings.roomResumeSubmit}
-                </button>
-                <button type="button" className="secondary-action" onClick={onClearRoom} disabled={pending}>
-                  {strings.roomClearSubmit}
-                </button>
-              </>
-            ) : null}
+          <div className="room-lobby-overview">
+            <RoomCodeHero
+              roomCode={roomSession.roomCode}
+              connectedCount={roomPlayers.length}
+              readyCount={selectedPlayers.length}
+              hostLabel={roomSession.displayName || roomSession.playerId}
+            />
+            <div className="room-lobby-side-stack">
+              <JoinInfoBlock roomCode={roomSession.roomCode} joinLink={playerJoinLink} />
+              <QrPlaceholder roomCode={roomSession.roomCode} />
+            </div>
+          </div>
+          <div data-testid="room-session-card">
+            <LobbyPlayerPanel
+              strings={strings}
+              roomPlayers={roomPlayers}
+              roomSession={roomSession}
+              pending={pending}
+              selectedPlayers={selectedPlayers}
+              removableSelectedGap={removableSelectedGap}
+              onSelectAllRoomPlayers={onSelectAllRoomPlayers}
+              onUseRoomPlayers={onUseRoomPlayers}
+              onTrimRoomToSelectedPlayers={onTrimRoomToSelectedPlayers}
+              onToggleRoomPlayer={onToggleRoomPlayer}
+              onRemoveRoomPlayer={onRemoveRoomPlayer}
+            />
           </div>
         </>
+      ) : (
+        <div className="room-entry-grid">
+          <section className="room-entry-card">
+            <p className="section-title">Create host lobby</p>
+            <h3>Launch a new room</h3>
+            <p>{strings.roomPanelHint}</p>
+            <label htmlFor="room-display-name">{strings.roomDisplayNameLabel}</label>
+            <input
+              id="room-display-name"
+              type="text"
+              value={draft.displayName}
+              onChange={(event) => onDraftChange((prev) => ({ ...prev, displayName: event.target.value }))}
+              placeholder={strings.roomDisplayNamePlaceholder}
+              autoComplete="nickname"
+              disabled={pending}
+            />
+            <div className="room-actions">
+              <button type="button" onClick={onCreateRoom} disabled={pending}>
+                {strings.roomCreateSubmit}
+              </button>
+            </div>
+          </section>
+          <section className="room-entry-card room-entry-card--secondary">
+            <p className="section-title">Resume existing lobby</p>
+            <h3>Join with a code</h3>
+            <p>Use this only when you need to reattach this browser to an existing room.</p>
+            <label htmlFor="room-code">{strings.roomCodeLabel}</label>
+            <input
+              id="room-code"
+              type="text"
+              value={draft.roomCode}
+              onChange={(event) => onDraftChange((prev) => ({ ...prev, roomCode: normalizeRoomCodeInput(event.target.value) }))}
+              placeholder={strings.roomCodePlaceholder}
+              autoComplete="off"
+              disabled={pending}
+            />
+            <div className="room-actions">
+              <button type="button" className="secondary-action" onClick={onJoinRoom} disabled={pending}>
+                {strings.roomJoinSubmit}
+              </button>
+            </div>
+          </section>
+        </div>
       )}
 
-      {roomSession && !isPlayerLobby ? (
-        <div className="room-session-card" data-testid="room-session-card">
-          <div className="room-session-header">
-            <div>
-              <strong>{roomSession.roomCode}</strong>
-              <span className="field-hint">{strings.roomSavedHint}</span>
-            </div>
-            <span className="host-plan-chip room-role-chip">
-              <span>{roomSession.role === 'host' ? strings.roomHostBadge : strings.roomPlayerBadge}</span>
-              <strong>{roomSession.displayName || roomSession.playerId}</strong>
-            </span>
-          </div>
-          <div className="room-player-list">
-            <h3>{strings.roomPlayersTitle}</h3>
-            {roomSession?.role === 'host' && playerJoinLink ? (
-              <p className="field-hint">
-                {strings.roomJoinLinkLabel}:{' '}
-                <a className="inline-link" href={playerJoinLink}>
-                  {playerJoinLink}
-                </a>
-              </p>
-            ) : null}
-            {canUseRoomPlayers ? (
-              <>
-                <div className="room-actions">
-                  <button type="button" onClick={onSelectAllRoomPlayers} disabled={pending}>
-                    {strings.roomSelectAllPlayersSubmit}
-                  </button>
-                  <button type="button" onClick={onUseRoomPlayers} disabled={pending || selectedPlayers.length === 0}>
-                    {strings.roomUseSelectedPlayersSubmit}
-                  </button>
-                  <button
-                    type="button"
-                    className="secondary-action"
-                    onClick={onTrimRoomToSelectedPlayers}
-                    disabled={pending || selectedPlayers.length === 0 || removableSelectedGap === 0}
-                  >
-                    {strings.roomTrimSelectedPlayersSubmit}
-                  </button>
-                  <button type="button" onClick={onStartRoomSession} disabled={pending || selectedPlayers.length === 0}>
-                    {strings.roomStartSelectedLiveSubmit}
-                  </button>
-                </div>
-                <p className="field-hint" data-testid="room-selected-roster-hint">
-                  {strings.roomSelectedRosterTitle}: {selectedPlayers.length > 0 ? selectedPlayers.join(', ') : strings.roomSelectedRosterEmpty}
-                </p>
-              </>
-            ) : null}
-            {roomPlayers.length > 0 ? (
-              <ul>
-                {roomPlayers.map((player) => (
-                  <li key={player.playerId || player.displayName}>
-                    <strong>{player.displayName || player.playerId}</strong>
-                    <span>{player.playerId}</span>
-                    {canUseRoomPlayers ? (
-                      <div className="room-player-row-actions">
-                        <label className="room-player-toggle">
-                          <input
-                            type="checkbox"
-                            checked={selectedPlayers.includes(normalizePlayerName(player.displayName || player.playerId || ''))}
-                            onChange={() => onToggleRoomPlayer(normalizePlayerName(player.displayName || player.playerId || ''))}
-                          />
-                          <span>Include in launch</span>
-                        </label>
-                        {roomSession?.playerId !== player.playerId ? (
-                          <button
-                            type="button"
-                            className="secondary-action room-player-remove-action"
-                            onClick={() => onRemoveRoomPlayer(player)}
-                            disabled={pending}
-                          >
-                            {strings.roomRemovePlayerSubmit}
-                          </button>
-                        ) : null}
-                      </div>
-                    ) : null}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="field-hint">{strings.roomNoPlayers}</p>
-            )}
-          </div>
-        </div>
+      {hasLobbySession && canUseRoomPlayers && typeof onStartRoomSession === 'function' ? (
+        <span className="sr-only" aria-live="polite">
+          {strings.roomStartSelectedLiveSubmit}
+        </span>
       ) : null}
     </section>
   );

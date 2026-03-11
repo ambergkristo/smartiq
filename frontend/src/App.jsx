@@ -34,6 +34,7 @@ import GameRoom from './components/GameRoom';
 import HostDashboard from './components/HostDashboard';
 import PlayerJoin from './components/PlayerJoin';
 import RoundSummary from './components/RoundSummary';
+import LobbyStatusSummary from './components/room/LobbyStatusSummary';
 import AppHeader from './components/shell/AppHeader';
 import AppShell from './components/shell/AppShell';
 import MainStage from './components/shell/MainStage';
@@ -2471,6 +2472,9 @@ function GameApp() {
   const setupPlayers = parsePlayers(config.playersText);
   const setupDraftPlayers = parsePlayers(setupPlayerDraft);
   const setupMergedPlayerCount = Array.from(new Set([...setupPlayers, ...setupDraftPlayers])).length;
+  const hostRoomSession = roomSession?.role === 'host' ? roomSession : null;
+  const selectedRoomPlayers = hostRoomSession ? getSelectedRoomPlayerNames(hostRoomSession, selectedRoomPlayerNames) : [];
+  const roomPlayerCount = Array.isArray(roomSession?.roomState?.players) ? roomSession.roomState.players.length : 0;
   const tenantId = runtimeSnapshot?.me?.selectedTenantId || '';
   const planCode = runtimeSnapshot?.subscription?.planCode || '';
   const planStatus = runtimeSnapshot?.subscription?.status || '';
@@ -2599,43 +2603,75 @@ function GameApp() {
         {STRINGS.startRound}
       </button>
     </PrimaryActionBar>
+  ) : hostRoomSession ? (
+    <PrimaryActionBar>
+      <div className="app-shell-action-copy">
+        <span>Launch roster</span>
+        <strong>{`${selectedRoomPlayers.length} of ${roomPlayerCount} ready`}</strong>
+      </div>
+      <button
+        type="button"
+        className="app-shell-primary-button"
+        onClick={handleStartRoomSession}
+        disabled={roomPending || selectedRoomPlayers.length === 0 || hostLaunchBlocked}
+      >
+        {STRINGS.startRound}
+      </button>
+    </PrimaryActionBar>
   ) : (
     <PrimaryActionBar>
       <div className="app-shell-action-copy">
-        <span>Lobby status</span>
-        <strong>{roomSession.roomCode ? `Room ${roomSession.roomCode}` : 'Room active'}</strong>
+        <span>Player lobby</span>
+        <strong>{roomSession?.roomCode ? `Room ${roomSession.roomCode}` : 'Room active'}</strong>
       </div>
     </PrimaryActionBar>
   );
+  const lobbyStatusPanel = hostRoomSession ? (
+    <LobbyStatusSummary
+      roomCode={hostRoomSession.roomCode}
+      topicLabel={config.topic || 'Any Topic'}
+      languageLabel={String(config.lang || 'en').toUpperCase()}
+      connectedCount={roomPlayerCount}
+      readyCount={selectedRoomPlayers.length}
+      hostName={hostRoomSession.displayName || hostRoomSession.playerId || 'Host'}
+      hostLaunchBlocked={hostLaunchBlocked}
+      hostLaunchMessage={hostLaunchMessage}
+      pending={roomPending}
+      onResumeRoom={handleResumeRoom}
+      onClearRoom={handleClearRoom}
+    />
+  ) : null;
   const setupSideStack = (
     <div className="host-shell-stack">
-      {roomSession ? launchConsolePanel : sharedRoomPanel}
+      {hostRoomSession ? lobbyStatusPanel : !roomSession ? sharedRoomPanel : null}
       {!runtimeSnapshot ? (
-        <>
-          <PublicLaunchPanel
-            onStartTrial={focusOnboardingWorkspace}
-            onSignIn={focusSignInEmail}
-          />
-          <OnboardingPanel
-            draft={onboardingDraft}
-            pending={onboardingPending}
-            success={onboardingSuccess}
-            error={onboardingError}
-            onDraftChange={setOnboardingDraft}
-            onSubmit={handleOnboardingBootstrap}
-            workspaceInputRef={onboardingWorkspaceInputRef}
-          />
-          <SignInPanel
-            draft={signInDraft}
-            pending={signInPending}
-            success={signInSuccess}
-            error={signInError}
-            onDraftChange={setSignInDraft}
-            onSubmit={handleSignIn}
-            emailInputRef={signInEmailInputRef}
-          />
-        </>
-      ) : (
+        roomSession ? null : (
+          <>
+            <PublicLaunchPanel
+              onStartTrial={focusOnboardingWorkspace}
+              onSignIn={focusSignInEmail}
+            />
+            <OnboardingPanel
+              draft={onboardingDraft}
+              pending={onboardingPending}
+              success={onboardingSuccess}
+              error={onboardingError}
+              onDraftChange={setOnboardingDraft}
+              onSubmit={handleOnboardingBootstrap}
+              workspaceInputRef={onboardingWorkspaceInputRef}
+            />
+            <SignInPanel
+              draft={signInDraft}
+              pending={signInPending}
+              success={signInSuccess}
+              error={signInError}
+              onDraftChange={setSignInDraft}
+              onSubmit={handleSignIn}
+              emailInputRef={signInEmailInputRef}
+            />
+          </>
+        )
+      ) : roomSession?.role === 'player' ? null : (
         <>
           <section className="setup-panel board-surface host-console-status-card" data-testid="host-console-status-card">
             <div className="host-console-status-head">

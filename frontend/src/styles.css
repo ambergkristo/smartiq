@@ -663,6 +663,51 @@ button:disabled {
   max-width: 1060px;
 }
 
+.room-panel--lobby {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: 12px;
+  overflow: hidden;
+  padding: 16px;
+}
+
+.room-lobby-overview {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.82fr);
+  gap: 14px;
+}
+
+.room-lobby-side-stack {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 14px;
+}
+
+.room-entry-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.room-entry-card {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+  border-radius: 20px;
+  border: 1px solid var(--stroke);
+  background:
+    radial-gradient(circle at top left, rgba(0, 255, 123, 0.12), transparent 34%),
+    rgba(255, 255, 255, 0.03);
+}
+
+.room-entry-card--secondary {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.02);
+}
+
 .room-actions {
   display: flex;
   flex-wrap: wrap;
@@ -674,30 +719,191 @@ button:disabled {
   background: rgba(255, 255, 255, 0.08);
 }
 
-.room-session-card {
-  display: grid;
-  gap: 16px;
-  padding: 18px;
-  border-radius: 18px;
-  border: 1px solid var(--stroke);
-  background: rgba(255, 255, 255, 0.03);
+.room-role-chip {
+  min-width: 150px;
 }
 
-.room-session-header {
+.room-role-chip--hero {
+  min-width: 180px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.room-code-hero,
+.room-join-info,
+.room-qr-placeholder,
+.lobby-player-panel,
+.lobby-status-summary {
+  display: grid;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
+    rgba(22, 22, 28, 0.92);
+  box-shadow: var(--panel-shadow);
+}
+
+.room-code-hero {
+  grid-template-rows: auto minmax(0, auto) auto auto;
+  gap: 12px;
+  padding: 22px;
+  background:
+    radial-gradient(circle at top left, rgba(0, 255, 123, 0.22), transparent 30%),
+    radial-gradient(circle at 100% 100%, rgba(0, 255, 123, 0.12), transparent 28%),
+    rgba(17, 18, 24, 0.96);
+}
+
+.room-code-hero-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+}
+
+.room-code-hero-head .section-title,
+.room-join-info .section-title,
+.room-qr-placeholder .section-title,
+.lobby-player-panel .section-title,
+.lobby-status-summary .section-title {
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.room-code-hero-code {
+  font-family: "Rajdhani", "Inter", sans-serif;
+  font-size: clamp(4.4rem, 7vw, 6.4rem);
+  line-height: 0.9;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-shadow: 0 0 26px rgba(0, 255, 123, 0.18);
+}
+
+.room-code-hero-copy {
+  max-width: 34ch;
+  color: var(--muted);
+}
+
+.room-code-hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.room-code-hero-metrics article,
+.lobby-status-metric {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.room-code-hero-metrics span,
+.lobby-status-metric span,
+.room-join-link-card span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.room-code-hero-metrics strong {
+  font-family: "Rajdhani", "Inter", sans-serif;
+  font-size: 1.55rem;
+  letter-spacing: 0.06em;
+}
+
+.room-join-info,
+.room-qr-placeholder {
+  gap: 10px;
+  padding: 18px;
+}
+
+.room-join-info h3,
+.lobby-player-panel h3,
+.lobby-status-summary h2 {
+  margin: 0;
+  font-family: "Rajdhani", "Inter", sans-serif;
+  letter-spacing: 0.04em;
+}
+
+.room-join-link-card {
+  display: grid;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.room-join-link-card a {
+  word-break: break-all;
+}
+
+.room-qr-placeholder {
+  justify-items: center;
+  text-align: center;
+}
+
+.room-qr-placeholder-box {
+  position: relative;
+  width: min(100%, 178px);
+  aspect-ratio: 1;
+  border-radius: 24px;
+  border: 1px solid rgba(0, 255, 123, 0.28);
+  background:
+    linear-gradient(135deg, rgba(0, 255, 123, 0.1), rgba(255, 255, 255, 0.02)),
+    rgba(11, 11, 15, 0.84);
+  overflow: hidden;
+}
+
+.room-qr-placeholder-grid,
+.room-qr-placeholder-grid--overlay {
+  position: absolute;
+  inset: 18px;
+  border-radius: 12px;
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.room-qr-placeholder-grid--overlay {
+  inset: 34px;
+  background-size: 12px 12px;
+  opacity: 0.66;
+}
+
+.room-qr-placeholder strong {
+  font-family: "Rajdhani", "Inter", sans-serif;
+  font-size: 1.55rem;
+  letter-spacing: 0.16em;
+}
+
+.lobby-player-panel {
+  min-height: 0;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: 12px;
+  padding: 18px;
+  overflow: hidden;
+}
+
+.lobby-player-panel-head {
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  align-items: flex-start;
+  align-items: start;
 }
 
-.room-session-header strong {
-  display: block;
-  font-size: 1.6rem;
-  letter-spacing: 0.1em;
+.lobby-player-panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
 }
 
-.room-role-chip {
-  min-width: 150px;
+.room-selected-roster-hint {
+  margin: 0;
 }
 
 .room-player-list {
@@ -731,30 +937,133 @@ button:disabled {
   font-size: 0.82rem;
 }
 
-.room-player-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--muted);
-  font-size: 0.78rem;
+.lobby-player-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
 }
 
-.room-player-toggle input {
+.lobby-player-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.lobby-player-list li.is-selected {
+  border-color: rgba(0, 255, 123, 0.28);
+  background: rgba(0, 255, 123, 0.08);
+}
+
+.lobby-player-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.lobby-player-toggle input {
   width: auto;
   min-height: auto;
+  accent-color: var(--accent);
 }
 
-.room-player-row-actions {
+.lobby-player-meta {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.lobby-player-meta strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lobby-player-meta small {
+  color: var(--muted);
+}
+
+.lobby-player-actions {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  flex-wrap: wrap;
+}
+
+.lobby-player-state,
+.lobby-player-host-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--muted);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lobby-player-state.is-selected,
+.lobby-player-host-badge {
+  color: var(--accent);
+  border-color: rgba(0, 255, 123, 0.28);
+  background: rgba(0, 255, 123, 0.08);
 }
 
 .room-player-remove-action {
   width: auto;
   min-height: 34px;
   padding: 6px 10px;
+}
+
+.lobby-status-summary {
+  height: 100%;
+  grid-template-rows: auto auto minmax(0, auto) auto;
+  gap: 14px;
+}
+
+.lobby-status-summary-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: start;
+}
+
+.lobby-status-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.lobby-status-metric strong {
+  font-family: "Rajdhani", "Inter", sans-serif;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+}
+
+.lobby-status-summary-copy {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.lobby-status-summary-copy p {
+  margin: 0;
+}
+
+.lobby-status-summary-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .player-lobby-card {
@@ -1762,6 +2071,21 @@ button:disabled {
     align-items: stretch;
   }
 
+  .room-lobby-overview,
+  .room-entry-grid,
+  .lobby-player-list,
+  .lobby-status-summary-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .room-panel--lobby {
+    overflow: auto;
+  }
+
+  .room-lobby-side-stack {
+    grid-template-rows: repeat(2, minmax(180px, auto));
+  }
+
   main[data-phase='game'] {
     height: auto;
     min-height: 100dvh;
@@ -1801,6 +2125,13 @@ button:disabled {
 
   .setup-panel {
     padding: 24px;
+  }
+
+  .room-code-hero-head,
+  .lobby-player-panel-head,
+  .lobby-status-summary-head {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 
   .launch-panel-hero,
