@@ -141,7 +141,7 @@ Options:
 - Bucket: `cross_category`
 - Card: `sports-number-024`
 - Topic/category: `Sports/NUMBER`
-- Question: Sports: Minutes in one football half? Context tag: Triathlon.
+- Question: Sports: Minutes in one football half?
 - Expected correct: `4`
 
 Options:
@@ -161,7 +161,7 @@ Options:
 - Bucket: `cross_category`
 - Card: `geography-order-022`
 - Topic/category: `Geography/ORDER`
-- Question: Geography: Put these countries in order by area, smallest first. Theme: Ottawa.
+- Question: Geography: Put these countries in order by area, smallest first.
 - Expected correct: `7, 5, 1, 10, 2, 4, 8, 3, 6, 9`
 
 Options:
@@ -343,7 +343,7 @@ Options:
 - Bucket: `cross_category`
 - Card: `sports-number-028-et`
 - Topic/category: `Sports/NUMBER`
-- Question: Sport: Mitu setti on vaja meeste Grand Slami voitmiseks? Kontekst: World Cup.
+- Question: Sport: Mitu setti on vaja meeste Grand Slami voitmiseks?
 - Expected correct: `6`
 
 Options:
@@ -363,7 +363,7 @@ Options:
 - Bucket: `cross_category`
 - Card: `geography-order-014-et`
 - Topic/category: `Geography/ORDER`
-- Question: Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Lissabon.
+- Question: Geograafia: Pane need linnad lõunast põhja järjekorda.
 - Expected correct: `4, 2, 8, 5, 9, 7, 1, 3, 10, 6`
 
 Options:

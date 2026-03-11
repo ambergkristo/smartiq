@@ -142,7 +142,7 @@
         "cardId": "sports-number-024",
         "topic": "Sports",
         "category": "NUMBER",
-        "question": "Sports: Minutes in one football half? Context tag: Triathlon.",
+        "question": "Sports: Minutes in one football half?",
         "options": [
           "50",
           "40",
@@ -164,7 +164,7 @@
         "cardId": "geography-order-022",
         "topic": "Geography",
         "category": "ORDER",
-        "question": "Geography: Put these countries in order by area, smallest first. Theme: Ottawa.",
+        "question": "Geography: Put these countries in order by area, smallest first.",
         "options": [
           "Kazakhstan",
           "India",
@@ -364,7 +364,7 @@
         "cardId": "sports-number-028-et",
         "topic": "Sports",
         "category": "NUMBER",
-        "question": "Sport: Mitu setti on vaja meeste Grand Slami voitmiseks? Kontekst: World Cup.",
+        "question": "Sport: Mitu setti on vaja meeste Grand Slami voitmiseks?",
         "options": [
           "2",
           "7",
@@ -386,7 +386,7 @@
         "cardId": "geography-order-014-et",
         "topic": "Geography",
         "category": "ORDER",
-        "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Lissabon.",
+        "question": "Geograafia: Pane need linnad lõunast põhja järjekorda.",
         "options": [
           "Nairobi",
           "Kaplinn",
