@@ -11,6 +11,12 @@ Monorepo for SmartIQ services and tooling.
 - `data/smart10/`
 - `tools/`
 
+## Product Strategy
+
+- Product doctrine: `docs/product/SMARTIQ_PRODUCT_DOCTRINE.md`
+- Masterplan: `docs/product/SMARTIQ_MASTERPLAN.md`
+- Roadmap: `docs/product/SMARTIQ_ROADMAP.md`
+
 ## Prerequisites
 
 - JDK 21
