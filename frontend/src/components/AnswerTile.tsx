@@ -1,5 +1,5 @@
 const STATE_MARKERS = {
-  hidden: '',
+  default: '',
   selected: '\u25ce',
   correct: '\u2713',
   wrong: '\u2717'
@@ -8,8 +8,7 @@ const STATE_MARKERS = {
 export default function AnswerTile({ index, option, state, onClick, disabled }) {
   const className = ['answer-tile', `is-${state}`].join(' ');
   const marker = STATE_MARKERS[state] ?? '';
-  const isHidden = state === 'hidden';
-  const a11yState = state === 'hidden' ? 'unrevealed' : state;
+  const a11yState = state === 'default' ? 'available' : state;
 
   return (
     <button
@@ -17,10 +16,10 @@ export default function AnswerTile({ index, option, state, onClick, disabled }) 
       onClick={onClick}
       disabled={disabled}
       type="button"
-      aria-label={`peg-${index + 1} ${a11yState}`}
+      aria-label={`answer-${index + 1} ${a11yState}`}
     >
       <span className="slot-index">{index + 1}</span>
-      <span className="slot-text">{isHidden ? 'Hidden peg' : option}</span>
+      <span className="slot-text">{option}</span>
       <span className="slot-marker" aria-hidden>
         {marker}
       </span>

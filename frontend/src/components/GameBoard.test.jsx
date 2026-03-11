@@ -43,32 +43,24 @@ function makeProps() {
 }
 
 describe('GameBoard layout', () => {
-  test('renders radial wheel layout by default', () => {
-    globalThis.__setResizeObserverWidth(1024);
+  test('renders direct answer grid by default', () => {
     render(<GameBoard {...makeProps()} />);
 
-    const shell = screen.getByTestId('wheel-board').closest('.answers-shell');
-    expect(shell).toHaveAttribute('data-layout', 'wheel');
-    const wheel = screen.getByTestId('wheel-board');
-    expect(wheel).toBeInTheDocument();
-    expect(within(wheel).getAllByRole('button')).toHaveLength(10);
+    const grid = screen.getByTestId('answer-grid');
+    expect(grid).toBeInTheDocument();
+    expect(within(grid).getAllByRole('button')).toHaveLength(8);
+    expect(screen.getByTestId('answer-grid-extra')).toBeInTheDocument();
+    expect(within(screen.getByTestId('answer-grid-extra')).getAllByRole('button')).toHaveLength(2);
     expect(screen.getByTestId('question-card')).toHaveTextContent('Question?');
+    expect(screen.getByTestId('board-status-bar')).toBeInTheDocument();
     expect(screen.getByTestId('answer-state-row')).toBeInTheDocument();
-    expect(screen.getByTestId('action-hint')).toHaveTextContent(/reveal one peg/i);
+    expect(screen.getByTestId('action-hint')).toHaveTextContent(/choose one answer/i);
     expect(screen.getByTestId('phase-pill')).toHaveTextContent('CHOOSING');
-  });
-
-  test('falls back to grid on narrow container', () => {
-    globalThis.__setResizeObserverWidth(640);
-    render(<GameBoard {...makeProps()} />);
-
-    const fallback = screen.getByTestId('fallback-grid');
-    expect(fallback).toBeInTheDocument();
-    expect(fallback.closest('.answers-shell')).toHaveAttribute('data-layout', 'fallback');
     expect(screen.queryByTestId('wheel-board')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('fallback-grid')).not.toBeInTheDocument();
   });
 
-  test('disables ANSWER until a peg is selected for non-ORDER categories', () => {
+  test('disables ANSWER until an answer is selected for non-ORDER categories', () => {
     const props = makeProps();
     const { rerender } = render(
       <GameplayActionBar
@@ -108,7 +100,7 @@ describe('GameBoard layout', () => {
     expect(screen.getByRole('button', { name: 'ANSWER' })).toBeEnabled();
   });
 
-  test('requires both rank and peg selection to enable ANSWER for ORDER', () => {
+  test('requires both rank and answer selection to enable ANSWER for ORDER', () => {
     const props = makeProps();
     const orderCard = { ...props.card, category: 'ORDER' };
     const { rerender } = render(
@@ -215,8 +207,7 @@ describe('GameBoard layout', () => {
     expect(screen.getByText('Out 1')).toBeInTheDocument();
   });
 
-  test('shows marker symbols and aria state labels for revealed pegs', () => {
-    globalThis.__setResizeObserverWidth(1024);
+  test('shows marker symbols and aria state labels for revealed answers', () => {
     const props = makeProps();
     render(
       <GameBoard
@@ -227,9 +218,9 @@ describe('GameBoard layout', () => {
       />
     );
 
-    expect(screen.getByRole('button', { name: /peg-1 correct/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /peg-2 wrong/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /peg-3 selected/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /answer-1 correct/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /answer-2 wrong/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /answer-3 selected/i })).toBeInTheDocument();
     expect(screen.getAllByText('✓')).toHaveLength(1);
     expect(screen.getAllByText('✗')).toHaveLength(1);
     expect(screen.getAllByText('◎')).toHaveLength(1);
@@ -256,11 +247,10 @@ describe('GameBoard layout', () => {
     expect(screen.getByTestId('resolution-summary')).toHaveTextContent(/correct answer locked/i);
     expect(screen.getByTestId('player-result-list')).toHaveTextContent(/correct/i);
     expect(screen.getByTestId('next-step-action-area')).toHaveTextContent(/next question/i);
-    expect(screen.queryByTestId('wheel-board')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('answer-grid')).not.toBeInTheDocument();
   });
 
   test('supports keyboard flow for action buttons and announces state', async () => {
-    globalThis.__setResizeObserverWidth(1024);
     const props = makeProps();
     const user = userEvent.setup();
     const { rerender } = render(
@@ -285,7 +275,7 @@ describe('GameBoard layout', () => {
     );
 
     const liveRegion = screen.getByTestId('board-live-region');
-    expect(liveRegion).toHaveTextContent(/reveal one peg/i);
+    expect(liveRegion).toHaveTextContent(/choose one answer/i);
     expect(liveRegion).toHaveTextContent(/pass keeps score/i);
     expect(liveRegion).toHaveTextContent(/ready/i);
 

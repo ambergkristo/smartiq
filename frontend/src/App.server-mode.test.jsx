@@ -145,7 +145,7 @@ describe('App server-authoritative mode', () => {
       )
     );
     expect(fetchNextCard).not.toHaveBeenCalled();
-    expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^answer$/i })).toBeInTheDocument();
   }, 15000);
 
   test('sends ANSWER action through server action API', async () => {
@@ -167,10 +167,10 @@ describe('App server-authoritative mode', () => {
     fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
     fireEvent.click(screen.getByRole('button', { name: /start game/i }));
 
-    await waitFor(() => expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument());
-    fireEvent.click(screen.getByRole('button', { name: /^peg-1\b/i }));
-    await waitFor(() => expect(screen.getByRole('button', { name: /answer/i })).toBeEnabled());
-    fireEvent.click(screen.getByRole('button', { name: /answer/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /^answer$/i })).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /^answer-1\b/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /^answer$/i })).toBeEnabled());
+    fireEvent.click(screen.getByRole('button', { name: /^answer$/i }));
     await waitFor(() => expect(screen.getByRole('button', { name: /lock in/i })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
 
@@ -266,7 +266,7 @@ describe('App server-authoritative mode', () => {
 
     const passButton = screen.getByRole('button', { name: /pass/i });
     expect(passButton).toBeDisabled();
-    expect(screen.getByRole('button', { name: /^peg-1\b/i })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /^answer-1\b/i })).toBeDisabled();
     expect(screen.getByTestId('action-hint')).toHaveTextContent(/waiting for active player bob/i);
 
     fireEvent.click(passButton);
@@ -320,7 +320,7 @@ describe('App server-authoritative mode', () => {
     fireEvent.click(screen.getByRole('button', { name: /next round/i }));
 
     await waitFor(() => expect(screen.getByText(/server round 2 question/i)).toBeInTheDocument());
-    expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^answer$/i })).toBeInTheDocument();
   });
 
   test('shows game summary when server snapshot reports game over', async () => {
@@ -359,7 +359,7 @@ describe('App server-authoritative mode', () => {
     await startServerMultiplayer();
 
     await waitFor(() => expect(screen.getByText(/contract fixture question\?/i)).toBeInTheDocument());
-    expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^answer$/i })).toBeInTheDocument();
   });
 
   test('shows contract mismatch error for unsupported snapshot version', async () => {

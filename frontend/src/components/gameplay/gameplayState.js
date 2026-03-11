@@ -15,7 +15,7 @@ export function getTileState(index, selectedIndexes, revealedIndexes, wrongIndex
   if (revealedIndexes.has(index)) return 'correct';
   if (wrongIndexes.has(index)) return 'wrong';
   if (selectedIndexes.has(index)) return 'selected';
-  return 'hidden';
+  return 'default';
 }
 
 export function getPhaseLabel(phase) {
@@ -28,15 +28,15 @@ export function getActionHint(phase, currentPlayer, category, selectedRank, cont
   }
 
   if (category === 'ORDER' && phase === 'CHOOSING') {
-    return `${currentPlayer}: choose rank ${selectedRank ?? '(1-10)'} and a peg, then ANSWER.`;
+    return `${currentPlayer}: choose rank ${selectedRank ?? '(1-10)'} and an answer, then ANSWER.`;
   }
 
   switch (phase) {
     case 'CHOOSING':
       if (!canPass) {
-        return `${currentPlayer}: reveal a correct peg before PASS is available.`;
+        return `${currentPlayer}: reveal a correct answer before PASS is available.`;
       }
-      return `${currentPlayer}: reveal one peg, then ANSWER or PASS.`;
+      return `${currentPlayer}: choose one answer, then ANSWER or PASS.`;
     case 'CONFIRMING':
       return `${currentPlayer}: LOCK IN or go BACK.`;
     case 'RESOLVED':
@@ -52,16 +52,16 @@ export function getActionHint(phase, currentPlayer, category, selectedRank, cont
 
 export function getCanAnswer(category, selectedIndexes, selectedRank, controlsDisabled) {
   const requiresRank = category === 'ORDER';
-  const hasSelectedPeg = selectedIndexes.size > 0;
-  return hasSelectedPeg && (!requiresRank || selectedRank != null) && !controlsDisabled;
+  const hasSelectedAnswer = selectedIndexes.size > 0;
+  return hasSelectedAnswer && (!requiresRank || selectedRank != null) && !controlsDisabled;
 }
 
 export function getAnswerStateCounts(selectedIndexes, revealedIndexes, wrongIndexes, optionCount) {
   const selected = selectedIndexes.size;
   const correct = revealedIndexes.size;
   const wrong = wrongIndexes.size;
-  const hidden = Math.max(optionCount - selected - correct - wrong, 0);
-  return { selected, correct, wrong, hidden };
+  const available = Math.max(optionCount - selected - correct - wrong, 0);
+  return { selected, correct, wrong, available };
 }
 
 export function getNextActionLabel(nextTransition) {

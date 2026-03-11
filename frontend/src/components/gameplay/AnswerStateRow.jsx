@@ -23,7 +23,7 @@ export default function AnswerStateRow({
       <StatePill label="Selected" value={counts.selected} tone="selected" />
       <StatePill label="Correct" value={counts.correct} tone="correct" />
       <StatePill label="Wrong" value={counts.wrong} tone="wrong" />
-      <StatePill label="Hidden" value={counts.hidden} />
+      <StatePill label="Available" value={counts.available} />
       <StatePill label="Pass" value={canPass ? 'Ready' : 'Locked'} tone={canPass ? 'correct' : 'muted'} />
     </div>
   );

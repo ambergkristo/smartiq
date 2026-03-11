@@ -1,14 +1,14 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import AnswerTile from './AnswerTile';
-import AnswerStateRow from './gameplay/AnswerStateRow';
+import { useEffect, useState } from 'react';
+import AnswerGrid from './gameplay/AnswerGrid';
+import BoardStatusBar from './gameplay/BoardStatusBar';
 import CorrectAnswerDisplay from './gameplay/CorrectAnswerDisplay';
 import GameplayHeader from './gameplay/GameplayHeader';
 import NextStepActionArea from './gameplay/NextStepActionArea';
 import PlayerResultList from './gameplay/PlayerResultList';
-import QuestionCard from './gameplay/QuestionCard';
+import QuestionPrompt from './gameplay/QuestionPrompt';
 import ResolutionSummary from './gameplay/ResolutionSummary';
 import RevealPanel from './gameplay/RevealPanel';
-import { CATEGORY_COLORS, getActionHint, getCardCategory, getNextActionLabel, getTileState } from './gameplay/gameplayState';
+import { CATEGORY_COLORS, getActionHint, getCardCategory, getNextActionLabel } from './gameplay/gameplayState';
 
 export default function GameBoard({
   card,
@@ -35,48 +35,15 @@ export default function GameBoard({
 }) {
   const category = getCardCategory(card);
   const canChoose = (phase === 'CHOOSING' || phase === 'CONFIRMING') && !controlsDisabled;
-  const layoutRef = useRef(null);
-  const [isFallbackLayout, setIsFallbackLayout] = useState(false);
-  const [wheelSize, setWheelSize] = useState(560);
   const [questionExpanded, setQuestionExpanded] = useState(false);
 
   useEffect(() => {
     setQuestionExpanded(false);
   }, [card.cardId, card.id]);
 
-  useEffect(() => {
-    const target = layoutRef.current;
-    if (!target || typeof ResizeObserver === 'undefined') {
-      return undefined;
-    }
-
-    const observer = new ResizeObserver(([entry]) => {
-      const width = entry.contentRect.width;
-      const height = entry.contentRect.height;
-      const maxDiameter = Math.max(320, Math.min(width - 16, height - 16, 760));
-      setIsFallbackLayout(width < 720 || height < 460);
-      setWheelSize(maxDiameter);
-    });
-    observer.observe(target);
-
-    return () => observer.disconnect();
-  }, []);
-
-  const wheelPositions = useMemo(() => {
-    const radius = wheelSize * 0.36;
-    const step = 360 / Math.max(card.options.length, 1);
-    return card.options.map((_, index) => {
-      const angle = (step * index - 90) * (Math.PI / 180);
-      return {
-        x: Math.cos(angle) * radius,
-        y: Math.sin(angle) * radius
-      };
-    });
-  }, [card.options, wheelSize]);
-
   const isLongQuestion = card.question.length > 180;
   const selectedIndex = selectedIndexes.size > 0 ? [...selectedIndexes][0] : null;
-  const selectedOption = selectedIndex != null ? card.options[selectedIndex] ?? `Peg ${selectedIndex + 1}` : 'Choose a peg';
+  const selectedOption = selectedIndex != null ? card.options[selectedIndex] ?? `Answer ${selectedIndex + 1}` : 'Choose an answer';
   const nextActionLabel = getNextActionLabel(nextTransition);
   const isResolutionPhase = phase === 'RESOLVED' || phase === 'PASSED';
   const isConfirmPhase = phase === 'CONFIRMING';
@@ -168,7 +135,7 @@ export default function GameBoard({
         </RevealPanel>
       ) : (
         <>
-          <QuestionCard
+          <QuestionPrompt
             question={card.question}
             categoryColor={CATEGORY_COLORS[category] || '#53bde0'}
             isLongQuestion={isLongQuestion}
@@ -198,58 +165,23 @@ export default function GameBoard({
               </div>
             </div>
           ) : null}
-          <p className="action-hint" data-testid="action-hint">
-            {getActionHint(phase, currentPlayer, category, selectedRank, controlsDisabled, canPass)}
-          </p>
-          <p className="pass-note">{passNote}</p>
-          <AnswerStateRow
+          <BoardStatusBar
+            actionHint={getActionHint(phase, currentPlayer, category, selectedRank, controlsDisabled, canPass)}
+            passNote={passNote}
             selectedIndexes={selectedIndexes}
             revealedIndexes={revealedIndexes}
             wrongIndexes={wrongIndexes}
             optionCount={card.options.length}
             canPass={canPass}
           />
-          <div className="answers-shell" data-layout={isFallbackLayout ? 'fallback' : 'wheel'} ref={layoutRef}>
-            {isFallbackLayout ? (
-              <div className="tile-grid" data-testid="fallback-grid">
-                {card.options.map((option, index) => (
-                  <AnswerTile
-                    key={`${card.cardId || card.id}-${index}`}
-                    index={index}
-                    option={option}
-                    state={getTileState(index, selectedIndexes, revealedIndexes, wrongIndexes)}
-                    onClick={() => toggleIndex(index)}
-                    disabled={!canChoose}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="wheel-board" data-testid="wheel-board" style={{ width: `${wheelSize}px`, height: `${wheelSize}px` }}>
-                <div className="wheel-hub-ring" style={{ borderColor: CATEGORY_COLORS[category] || '#53bde0' }}>
-                  <div className="wheel-hub">
-                    <p className="wheel-hub-label">Active turn</p>
-                    <p className="wheel-hub-focus">{currentPlayer}</p>
-                    <p className="wheel-hub-meta">{category.replace(/_/g, ' ')} live pick</p>
-                  </div>
-                </div>
-                {card.options.map((option, index) => (
-                  <div
-                    className="wheel-slot"
-                    key={`${card.cardId || card.id}-${index}`}
-                    style={{ transform: `translate(calc(-50% + ${wheelPositions[index].x}px), calc(-50% + ${wheelPositions[index].y}px))` }}
-                  >
-                    <AnswerTile
-                      index={index}
-                      option={option}
-                      state={getTileState(index, selectedIndexes, revealedIndexes, wrongIndexes)}
-                      onClick={() => toggleIndex(index)}
-                      disabled={!canChoose}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          <AnswerGrid
+            card={card}
+            selectedIndexes={selectedIndexes}
+            revealedIndexes={revealedIndexes}
+            wrongIndexes={wrongIndexes}
+            toggleIndex={toggleIndex}
+            disabled={!canChoose}
+          />
         </>
       )}
       <p className="sr-only" aria-live="polite" aria-atomic="true" data-testid="board-live-region">

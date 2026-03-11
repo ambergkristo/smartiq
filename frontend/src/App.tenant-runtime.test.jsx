@@ -421,7 +421,7 @@ describe('App tenant runtime integration', () => {
 
     await waitFor(() => expect(duplicateServerGameSession).toHaveBeenCalledWith('game-99'));
     await waitFor(() => expect(screen.getByText(/duplicate question/i)).toBeInTheDocument());
-    expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^answer$/i })).toBeInTheDocument();
   });
 
   test('resumes live hosted session from recent host history', async () => {
@@ -481,7 +481,7 @@ describe('App tenant runtime integration', () => {
 
     await waitFor(() => expect(resumeServerGameSession).toHaveBeenCalledWith('game-resume'));
     await waitFor(() => expect(screen.getByText(/resume question/i)).toBeInTheDocument());
-    expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^answer$/i })).toBeInTheDocument();
   });
 
   test('reviews recent hosted session state from host history', async () => {
