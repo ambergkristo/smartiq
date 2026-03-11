@@ -1,0 +1,145 @@
+{
+  "date": "2026-03-11",
+  "repairCommit": "5ec07c7",
+  "sampleRule": {
+    "type": "fixed_bucket_first_card_id",
+    "buckets": [
+      [
+        "History",
+        "NUMBER"
+      ],
+      [
+        "Sports",
+        "NUMBER"
+      ],
+      [
+        "Geography",
+        "ORDER"
+      ],
+      [
+        "Culture",
+        "NUMBER"
+      ],
+      [
+        "Science",
+        "ORDER"
+      ]
+    ]
+  },
+  "samplesByLocale": {
+    "EN": [
+      {
+        "locale": "EN",
+        "cardId": "history-number-001",
+        "topic": "History",
+        "category": "NUMBER",
+        "previousSuffixType": "Context tag:",
+        "repairedQuestion": "History: In which year did WWII end?",
+        "previousQuestion": "History: In which year did WWII end? Context tag: Ancient Rome.",
+        "reviewOutcome": "PENDING",
+        "reviewNote": ""
+      },
+      {
+        "locale": "EN",
+        "cardId": "sports-number-001",
+        "topic": "Sports",
+        "category": "NUMBER",
+        "previousSuffixType": "Context tag:",
+        "repairedQuestion": "Sports: Players on football team on field?",
+        "previousQuestion": "Sports: Players on football team on field? Context tag: Football.",
+        "reviewOutcome": "PENDING",
+        "reviewNote": ""
+      },
+      {
+        "locale": "EN",
+        "cardId": "geography-order-001",
+        "topic": "Geography",
+        "category": "ORDER",
+        "previousSuffixType": "Theme:",
+        "repairedQuestion": "Geography: Put these countries in order by area, smallest first.",
+        "previousQuestion": "Geography: Put these countries in order by area, smallest first. Theme: Tallinn.",
+        "reviewOutcome": "PENDING",
+        "reviewNote": ""
+      },
+      {
+        "locale": "EN",
+        "cardId": "culture-number-001",
+        "topic": "Culture",
+        "category": "NUMBER",
+        "previousSuffixType": "Context tag:",
+        "repairedQuestion": "Culture: How many strings on a violin?",
+        "previousQuestion": "Culture: How many strings on a violin? Context tag: Mona Lisa.",
+        "reviewOutcome": "PENDING",
+        "reviewNote": ""
+      },
+      {
+        "locale": "EN",
+        "cardId": "science-order-001",
+        "topic": "Science",
+        "category": "ORDER",
+        "previousSuffixType": "Theme:",
+        "repairedQuestion": "Science: Put these planets in order from the Sun outward.",
+        "previousQuestion": "Science: Put these planets in order from the Sun outward. Theme: Atom.",
+        "reviewOutcome": "PENDING",
+        "reviewNote": ""
+      }
+    ],
+    "ET": [
+      {
+        "locale": "ET",
+        "cardId": "history-number-001-et",
+        "topic": "History",
+        "category": "NUMBER",
+        "previousSuffixType": "Kontekst:",
+        "repairedQuestion": "Ajalugu: Mis aastal lõppes Teine maailmasõda?",
+        "previousQuestion": "Ajalugu: Mis aastal lõppes Teine maailmasõda? Kontekst: Vana-Rooma.",
+        "reviewOutcome": "PENDING",
+        "reviewNote": ""
+      },
+      {
+        "locale": "ET",
+        "cardId": "sports-number-001-et",
+        "topic": "Sports",
+        "category": "NUMBER",
+        "previousSuffixType": "Kontekst:",
+        "repairedQuestion": "Sport: Mitu mangijat on jalgpallitiimis valjakul?",
+        "previousQuestion": "Sport: Mitu mangijat on jalgpallitiimis valjakul? Kontekst: Football.",
+        "reviewOutcome": "PENDING",
+        "reviewNote": ""
+      },
+      {
+        "locale": "ET",
+        "cardId": "geography-order-001-et",
+        "topic": "Geography",
+        "category": "ORDER",
+        "previousSuffixType": "Teema:",
+        "repairedQuestion": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette.",
+        "previousQuestion": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Tallinn.",
+        "reviewOutcome": "PENDING",
+        "reviewNote": ""
+      },
+      {
+        "locale": "ET",
+        "cardId": "culture-number-001-et",
+        "topic": "Culture",
+        "category": "NUMBER",
+        "previousSuffixType": "Kontekst:",
+        "repairedQuestion": "Kultuur: Mitu keelt on viiulil?",
+        "previousQuestion": "Kultuur: Mitu keelt on viiulil? Kontekst: Mona Lisa.",
+        "reviewOutcome": "PENDING",
+        "reviewNote": ""
+      },
+      {
+        "locale": "ET",
+        "cardId": "science-order-001-et",
+        "topic": "Science",
+        "category": "ORDER",
+        "previousSuffixType": "Teema:",
+        "repairedQuestion": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole.",
+        "previousQuestion": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Aatom.",
+        "reviewOutcome": "PENDING",
+        "reviewNote": ""
+      }
+    ]
+  }
+}
