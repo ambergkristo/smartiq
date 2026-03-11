@@ -27559,23 +27559,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali tõesed vaited. Teemavihe: Tallinn.",
+    "question": "Geograafia: Millised väited Tallinna kohta peavad paika?",
     "options": [
-      "Tokyo is in South Korea.",
-      "Iceland is in the tropics.",
-      "Everest is in the Alps.",
-      "Canberra is in New Zealand.",
-      "Sahara is a rainforest.",
-      "Lisbon is in Spain.",
-      "Himalayas include Mount Everest.",
-      "Andes are in Africa.",
-      "Greenland is near equator.",
-      "Tokyo is in Japan."
+      "Tallinn asub Soome lahe ääres.",
+      "Tallinn asub Seine'i ääres.",
+      "Tallinn on Läänemere sadam.",
+      "Tallinn paikneb Vahemere ääres.",
+      "Tallinn on Eesti pealinn.",
+      "Tallinn on Läti pealinn.",
+      "Tallinnal on keskaegne vanalinn.",
+      "Tallinn on Lõuna-Ameerikas.",
+      "Tallinn jääb Riiast lõuna poole.",
+      "Tallinnas kasutatakse jeeni."
     ],
     "correct": {
       "correctIndexes": [
-        6,
-        9
+        0,
+        2,
+        4,
+        6
       ]
     },
     "difficulty": "2",
@@ -27587,24 +27589,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Millised vaited on oiged? Teemavihe: Riga.",
+    "question": "Geograafia: Millised väited Riia kohta peavad paika?",
     "options": [
-      "Danube flows through Australia.",
-      "Greenland is near equator.",
-      "Lisbon is in Portugal.",
-      "Everest is in the Alps.",
-      "Tokyo is in South Korea.",
-      "Ottawa is Canada's capital.",
-      "Lisbon is in Spain.",
-      "Nile flows through Brazil.",
-      "Pacific is the largest ocean.",
-      "Atlantic is the largest ocean."
+      "Riia kuulub Baltikumi.",
+      "Riia on Leedu pealinn.",
+      "Riia on Läti pealinn.",
+      "Riia on Portugali pealinn.",
+      "Riia asub Doonau ääres.",
+      "Riia asub Daugava ääres.",
+      "Riia asub Vaikse ookeani ääres.",
+      "Riia on Stockholmist lääne pool.",
+      "Riia on Alpides.",
+      "Riia jääb Liivi lahe lähedale."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         2,
         5,
-        8
+        9
       ]
     },
     "difficulty": "2",
@@ -27616,25 +27619,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali koik tõesed vaited. Teemavihe: Vilnius.",
+    "question": "Geograafia: Millised väited Vilniuse kohta peavad paika?",
     "options": [
-      "Sahara is a rainforest.",
-      "Ottawa is US capital.",
-      "Lisbon is in Portugal.",
-      "Atlantic is the largest ocean.",
-      "Sahara is a desert.",
-      "Tokyo is in Japan.",
-      "Greenland is near equator.",
-      "Danube flows through Australia.",
-      "Canberra is Australia's capital.",
-      "Tokyo is in South Korea."
+      "Neris voolab läbi Vilniuse.",
+      "Vilnius paikneb Reini ääres.",
+      "Vilnius on Läti pealinn.",
+      "Vilnius on Põhja-Aafrikas.",
+      "Vilnius on sisemaa linn.",
+      "Vilnius on Atlandi rannikul.",
+      "Vilnius kuulub Baltikumi.",
+      "Vilnius on Leedu pealinn.",
+      "Vilnius asub Läänemere rannikul.",
+      "Vilnius on Islandi pealinn."
     ],
     "correct": {
       "correctIndexes": [
-        2,
+        0,
         4,
-        5,
-        8
+        6,
+        7
       ]
     },
     "difficulty": "2",
@@ -27646,25 +27649,24 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Tuvasta faktivaided. Teemavihe: Helsinki.",
+    "question": "Geograafia: Millised väited Helsingi kohta peavad paika?",
     "options": [
-      "Greenland is near equator.",
-      "Lisbon is in Spain.",
-      "Ottawa is US capital.",
-      "Canberra is Australia's capital.",
-      "Nile flows through Egypt.",
-      "Sahara is a desert.",
-      "Tokyo is in South Korea.",
-      "Danube flows through Europe.",
-      "Danube flows through Australia.",
-      "Ottawa is Canada's capital."
+      "Helsingi paikneb Vahemere ääres.",
+      "Helsingi on kõrbelinn.",
+      "Helsingi on Taani pealinn.",
+      "Helsingi on Rootsi pealinn.",
+      "Helsingi asub Soome lahe ääres.",
+      "Helsingi on Lõuna-Ameerikas.",
+      "Helsingi on Soome pealinn.",
+      "Helsingi asub Thamesi ääres.",
+      "Praamid ühendavad Helsingit ja Tallinna.",
+      "Helsingi on Põhjamaa pealinn."
     ],
     "correct": {
       "correctIndexes": [
-        3,
         4,
-        5,
-        7,
+        6,
+        8,
         9
       ]
     },
@@ -27677,23 +27679,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Millised variandid on oiged? Teemavihe: Stockholm.",
+    "question": "Geograafia: Millised väited Stockholmi kohta peavad paika?",
     "options": [
-      "Greenland is mostly ice-covered.",
-      "Atlantic is the largest ocean.",
-      "Greenland is near equator.",
-      "Tokyo is in South Korea.",
-      "Nile flows through Egypt.",
-      "Danube flows through Australia.",
-      "Lisbon is in Spain.",
-      "Everest is in the Alps.",
-      "Ottawa is US capital.",
-      "Sahara is a rainforest."
+      "Stockholm on Norra pealinn.",
+      "Stockholm on Põhjamaa pealinn.",
+      "Stockholm on Aasias.",
+      "Stockholm asub Tiberi ääres.",
+      "Stockholm paikneb mitmel saarel.",
+      "Stockholm paikneb Musta mere ääres.",
+      "Stockholm asub Saharas.",
+      "Stockholm asub Läänemere ääres.",
+      "Stockholm on Rootsi pealinn.",
+      "Stockholm on Soome pealinn."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        4
+        1,
+        4,
+        7,
+        8
       ]
     },
     "difficulty": "2",
@@ -27705,23 +27709,24 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali koik kehtivad vaited. Teemavihe: Oslo.",
+    "question": "Geograafia: Millised väited Oslo kohta peavad paika?",
     "options": [
-      "Andes are in Africa.",
-      "Canberra is in New Zealand.",
-      "Tokyo is in South Korea.",
-      "Lisbon is in Spain.",
-      "Sahara is a desert.",
-      "Ottawa is US capital.",
-      "Sahara is a rainforest.",
-      "Danube flows through Europe.",
-      "Greenland is near equator.",
-      "Greenland is mostly ice-covered."
+      "Oslo on Norra pealinn.",
+      "Oslo paikneb Vaikse ookeani ääres.",
+      "Oslo asub Oslo fjordi ääres.",
+      "Oslo on Islandi pealinn.",
+      "Oslo on Skandinaavias.",
+      "Oslo asub Doonau ääres.",
+      "Oslo on Taani pealinn.",
+      "Oslo on Lõuna-Aafrikas.",
+      "Oslo on Läänemere rannikul.",
+      "Oslo on Põhjamaa pealinn."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        2,
         4,
-        7,
         9
       ]
     },
@@ -27734,25 +27739,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali tõesed vaited. Teemavihe: Copenhagen.",
+    "question": "Geograafia: Millised väited Kopenhaageni kohta peavad paika?",
     "options": [
-      "Andes are in South America.",
-      "Andes are in Africa.",
-      "Lisbon is in Spain.",
-      "Atlantic is the largest ocean.",
-      "Everest is in the Alps.",
-      "Iceland is an island nation.",
-      "Danube flows through Europe.",
-      "Canberra is in New Zealand.",
-      "Sahara is a rainforest.",
-      "Lisbon is in Portugal."
+      "Kopenhaagen on Austraalias.",
+      "Kopenhaagen on Põhjamaa pealinn.",
+      "Kopenhaagen on Alpide linn.",
+      "Kopenhaagen asub Musta mere ääres.",
+      "Kopenhaagen jääb Oresundi äärde.",
+      "Kopenhaagen on Taani pealinn.",
+      "Kopenhaagen asub rannikusaartel.",
+      "Kopenhaagen on Rootsi pealinn.",
+      "Kopenhaagen asub Niiluse ääres.",
+      "Kopenhaagen on Portugali pealinn."
     ],
     "correct": {
       "correctIndexes": [
-        0,
+        1,
+        4,
         5,
-        6,
-        9
+        6
       ]
     },
     "difficulty": "2",
@@ -27764,23 +27769,22 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Millised vaited on oiged? Teemavihe: Reykjavik.",
+    "question": "Geograafia: Millised väited Reykjaviki kohta peavad paika?",
     "options": [
-      "Tokyo is in Japan.",
-      "Ottawa is US capital.",
-      "Iceland is an island nation.",
-      "Nile flows through Brazil.",
-      "Lisbon is in Portugal.",
-      "Lisbon is in Spain.",
-      "Andes are in Africa.",
-      "Ottawa is Canada's capital.",
-      "Canberra is in New Zealand.",
-      "Danube flows through Europe."
+      "Reykjavik on Islandi pealinn.",
+      "Reykjavik asub Mandri-Euroopas.",
+      "Reykjavik paikneb Doonau ääres.",
+      "Reykjavik on troopikas.",
+      "Geotermaalenergia on seal tähtis.",
+      "Reykjavik asub Vahemere ääres.",
+      "Reykjavik on Norra pealinn.",
+      "Reykjavik asub Islandi edelaosas.",
+      "Reykjavik on Kanada pealinn.",
+      "Reykjavik on Põhjamaa pealinn."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        2,
         4,
         7,
         9
@@ -27795,23 +27799,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali koik tõesed vaited. Teemavihe: London.",
+    "question": "Geograafia: Millised väited Londoni kohta peavad paika?",
     "options": [
-      "Sahara is a rainforest.",
-      "Nile flows through Brazil.",
-      "Nile flows through Egypt.",
-      "Danube flows through Australia.",
-      "Ottawa is US capital.",
-      "Iceland is in the tropics.",
-      "Greenland is near equator.",
-      "Lisbon is in Spain.",
-      "Andes are in Africa.",
-      "Ottawa is Canada's capital."
+      "Thames voolab läbi Londoni.",
+      "London asub Seine'i ääres.",
+      "London on üks Euroopa suurimaid linnu.",
+      "London on Prantsusmaa pealinn.",
+      "London on Lõuna-Ameerikas.",
+      "London on Ühendkuningriigi pealinn.",
+      "Greenwich kuulub Londoni alla.",
+      "London asub Himaalajas.",
+      "London paikneb Musta mere ääres.",
+      "London on Iirimaa pealinn."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         2,
-        9
+        5,
+        6
       ]
     },
     "difficulty": "2",
@@ -27823,24 +27829,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Tuvasta faktivaided. Teemavihe: Paris.",
+    "question": "Geograafia: Millised väited Pariisi kohta peavad paika?",
     "options": [
-      "Ottawa is Canada's capital.",
-      "Pacific is the largest ocean.",
-      "Greenland is near equator.",
-      "Nile flows through Brazil.",
-      "Canberra is in New Zealand.",
-      "Andes are in Africa.",
-      "Sahara is a rainforest.",
-      "Iceland is in the tropics.",
-      "Danube flows through Europe.",
-      "Tokyo is in South Korea."
+      "Seine voolab läbi Pariisi.",
+      "Pariis asub Doonau ääres.",
+      "Louvre on Pariisis.",
+      "Pariis on Põhja-Ameerikas.",
+      "Pariis on Prantsusmaa pealinn.",
+      "Pariis on Saksamaa pealinn.",
+      "Eiffeli torn asub Pariisis.",
+      "Pariis paikneb Läänemere ääres.",
+      "Pariis on fjordi ümber ehitatud.",
+      "Pariis on Hispaania pealinn."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
-        8
+        2,
+        4,
+        6
       ]
     },
     "difficulty": "2",
@@ -27852,24 +27859,24 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Millised variandid on oiged? Teemavihe: Berlin.",
+    "question": "Geograafia: Millised väited Berliini kohta peavad paika?",
     "options": [
-      "Sahara is a desert.",
-      "Danube flows through Australia.",
-      "Andes are in Africa.",
-      "Tokyo is in Japan.",
-      "Greenland is near equator.",
-      "Sahara is a rainforest.",
-      "Canberra is in New Zealand.",
-      "Tokyo is in South Korea.",
-      "Danube flows through Europe.",
-      "Andes are in South America."
+      "Berliin on sisemaa linn.",
+      "Berliin on Austria pealinn.",
+      "Berliin on Saksamaa pealinn.",
+      "Berliin on Lõuna-Aasias.",
+      "Berliin asub Atlandi ääres.",
+      "Spree voolab läbi Berliini.",
+      "Berliin on Poola pealinn.",
+      "Berliin on Amazonase ääres.",
+      "Berliin paikneb Tiberi ääres.",
+      "Berliinist sai taasühinenud Saksamaa pealinn."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        3,
-        8,
+        2,
+        5,
         9
       ]
     },
@@ -27882,26 +27889,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali koik kehtivad vaited. Teemavihe: Rome.",
+    "question": "Geograafia: Millised väited Rooma kohta peavad paika?",
     "options": [
-      "Lisbon is in Portugal.",
-      "Danube flows through Europe.",
-      "Greenland is near equator.",
-      "Nile flows through Brazil.",
-      "Everest is in the Alps.",
-      "Lisbon is in Spain.",
-      "Atlantic is the largest ocean.",
-      "Tokyo is in Japan.",
-      "Andes are in South America.",
-      "Sahara is a desert."
+      "Colosseum asub Roomas.",
+      "Rooma paikneb Thamesi ääres.",
+      "Rooma asub Läänemere ääres.",
+      "Rooma on Lõuna-Ameerikas.",
+      "Tiber voolab läbi Rooma.",
+      "Rooma asub Saharas.",
+      "Vatikan jääb Rooma sisse.",
+      "Rooma on Itaalia pealinn.",
+      "Rooma on Hispaania pealinn.",
+      "Rooma on Kreeka pealinn."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        1,
-        7,
-        8,
-        9
+        4,
+        6,
+        7
       ]
     },
     "difficulty": "2",
@@ -27913,23 +27919,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali tõesed vaited. Teemavihe: Madrid.",
+    "question": "Geograafia: Millised väited Madridi kohta peavad paika?",
     "options": [
-      "Sahara is a rainforest.",
-      "Tokyo is in South Korea.",
-      "Greenland is near equator.",
-      "Danube flows through Australia.",
-      "Ottawa is US capital.",
-      "Tokyo is in Japan.",
-      "Iceland is in the tropics.",
-      "Nile flows through Egypt.",
-      "Nile flows through Brazil.",
-      "Canberra is in New Zealand."
+      "Madrid paikneb Seine'i ääres.",
+      "Madrid asub Niiluse ääres.",
+      "Madrid on Itaalia pealinn.",
+      "Madrid on Portugali pealinn.",
+      "Madrid on sisemaal, mitte rannikul.",
+      "Madrid on Skandinaavias.",
+      "Madrid on Hispaania pealinn.",
+      "Madrid asub Vahemere ääres.",
+      "Madrid asub Pürenee poolsaarel.",
+      "Madrid paikneb Hispaania keskosas."
     ],
     "correct": {
       "correctIndexes": [
-        5,
-        7
+        4,
+        6,
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -27941,24 +27949,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Millised vaited on oiged? Teemavihe: Lisbon.",
+    "question": "Geograafia: Millised väited Lissaboni kohta peavad paika?",
     "options": [
-      "Everest is in the Alps.",
-      "Iceland is in the tropics.",
-      "Danube flows through Australia.",
-      "Nile flows through Brazil.",
-      "Himalayas include Mount Everest.",
-      "Tokyo is in South Korea.",
-      "Greenland is mostly ice-covered.",
-      "Andes are in Africa.",
-      "Ottawa is US capital.",
-      "Danube flows through Europe."
+      "Lissabon on Hispaania pealinn.",
+      "Lissabon on Lääne-Euroopas.",
+      "Lissabon on Alpide linn.",
+      "Lissabon asub Musta mere ääres.",
+      "Lissabon asub Atlandi ääres.",
+      "Lissabon paikneb Doonau ääres.",
+      "Lissabon on Prantsusmaa pealinn.",
+      "Tejo jõgi jõuab Lissabonini.",
+      "Lissabon on Portugali pealinn.",
+      "Lissabon on Austraalias."
     ],
     "correct": {
       "correctIndexes": [
+        1,
         4,
-        6,
-        9
+        7,
+        8
       ]
     },
     "difficulty": "2",
@@ -27970,24 +27979,24 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali koik tõesed vaited. Teemavihe: Vienna.",
+    "question": "Geograafia: Millised väited Viini kohta peavad paika?",
     "options": [
-      "Everest is in the Alps.",
-      "Lisbon is in Spain.",
-      "Atlantic is the largest ocean.",
-      "Greenland is near equator.",
-      "Sahara is a desert.",
-      "Iceland is in the tropics.",
-      "Iceland is an island nation.",
-      "Nile flows through Brazil.",
-      "Greenland is mostly ice-covered.",
-      "Pacific is the largest ocean."
+      "Viin on Austria pealinn.",
+      "Viin paikneb Visla ääres.",
+      "Doonau voolab läbi Viini.",
+      "Viin asub Vaikse ookeani ääres.",
+      "Viin on Kesk-Euroopas.",
+      "Viin asub Atlandi ääres.",
+      "Viin on Ungari pealinn.",
+      "Viin on Saksamaa pealinn.",
+      "Viin on Lõuna-Ameerikas.",
+      "Viin oli Habsburgide keskusi."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        2,
         4,
-        6,
-        8,
         9
       ]
     },
@@ -28000,26 +28009,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Tuvasta faktivaided. Teemavihe: Prague.",
+    "question": "Geograafia: Millised väited Praha kohta peavad paika?",
     "options": [
-      "Danube flows through Australia.",
-      "Sahara is a rainforest.",
-      "Tokyo is in South Korea.",
-      "Ottawa is US capital.",
-      "Nile flows through Egypt.",
-      "Pacific is the largest ocean.",
-      "Andes are in South America.",
-      "Sahara is a desert.",
-      "Iceland is in the tropics.",
-      "Danube flows through Europe."
+      "Praha paikneb Reini ääres.",
+      "Karli sild on Prahas.",
+      "Praha on Põhja-Aafrikas.",
+      "Praha asub Niiluse deltas.",
+      "Praha on Kesk-Euroopas.",
+      "Praha on Tšehhi pealinn.",
+      "Vltava voolab läbi Praha.",
+      "Praha on Slovakkia pealinn.",
+      "Praha asub Läänemere ääres.",
+      "Praha on Poola pealinn."
     ],
     "correct": {
       "correctIndexes": [
+        1,
         4,
         5,
-        6,
-        7,
-        9
+        6
       ]
     },
     "difficulty": "2",
@@ -28031,23 +28039,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Millised variandid on oiged? Teemavihe: Warsaw.",
+    "question": "Geograafia: Millised väited Varssavi kohta peavad paika?",
     "options": [
-      "Sahara is a rainforest.",
-      "Iceland is an island nation.",
-      "Everest is in the Alps.",
-      "Andes are in Africa.",
-      "Atlantic is the largest ocean.",
-      "Lisbon is in Spain.",
-      "Danube flows through Australia.",
-      "Canberra is Australia's capital.",
-      "Nile flows through Brazil.",
-      "Tokyo is in South Korea."
+      "Varssavi on Poola pealinn.",
+      "Varssavi on Ungari pealinn.",
+      "Varssavi paikneb Vahemere ääres.",
+      "Varssavi on Lõuna-Ameerikas.",
+      "Varssavi ehitati pärast sõda uuesti üles.",
+      "Varssavi on Saksamaa pealinn.",
+      "Varssavi asub Seine'i ääres.",
+      "Visla voolab läbi Varssavi.",
+      "Varssavi on Amazonase ääres.",
+      "Varssavi on Kesk- ja Ida-Euroopas."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        7
+        0,
+        4,
+        7,
+        9
       ]
     },
     "difficulty": "2",
@@ -28059,24 +28069,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali koik kehtivad vaited. Teemavihe: Budapest.",
+    "question": "Geograafia: Millised väited Budapesti kohta peavad paika?",
     "options": [
-      "Nile flows through Brazil.",
-      "Tokyo is in South Korea.",
-      "Atlantic is the largest ocean.",
-      "Ottawa is US capital.",
-      "Andes are in Africa.",
-      "Andes are in South America.",
-      "Danube flows through Australia.",
-      "Everest is in the Alps.",
-      "Greenland is mostly ice-covered.",
-      "Lisbon is in Portugal."
+      "Doonau eraldab Budat ja Pesti.",
+      "Budapest asub Atlandi ääres.",
+      "Budapest on Kesk-Euroopas.",
+      "Budapest on Rumeenia pealinn.",
+      "Budapest on Lõuna-Aasias.",
+      "Budapest on Ungari pealinn.",
+      "Budapest asub merepiirita riigis.",
+      "Budapest asub Amazonase deltas.",
+      "Budapest paikneb Thamesi ääres.",
+      "Budapest on Austria pealinn."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        2,
         5,
-        8,
-        9
+        6
       ]
     },
     "difficulty": "2",
@@ -28088,24 +28099,24 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali tõesed vaited. Teemavihe: Athens.",
+    "question": "Geograafia: Millised väited Ateena kohta peavad paika?",
     "options": [
-      "Ottawa is Canada's capital.",
-      "Atlantic is the largest ocean.",
-      "Everest is in the Alps.",
-      "Danube flows through Australia.",
-      "Andes are in Africa.",
-      "Greenland is mostly ice-covered.",
-      "Tokyo is in South Korea.",
-      "Iceland is in the tropics.",
-      "Sahara is a desert.",
-      "Pacific is the largest ocean."
+      "Ateena jääb Egeuse mere lähedale.",
+      "Ateena asub Atlandi ääres.",
+      "Ateena on Kreeka pealinn.",
+      "Ateena on Küprose pealinn.",
+      "Ateena on Skandinaavias.",
+      "Akropol asub Ateenas.",
+      "Ateena paikneb Reini ääres.",
+      "Ateena asub Himaalajas.",
+      "Ateena on Itaalia pealinn.",
+      "Ateena on üks Euroopa vanu pealinnu."
     ],
     "correct": {
       "correctIndexes": [
         0,
+        2,
         5,
-        8,
         9
       ]
     },
@@ -28118,25 +28129,24 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Millised vaited on oiged? Teemavihe: Dublin.",
+    "question": "Geograafia: Millised väited Dublini kohta peavad paika?",
     "options": [
-      "Iceland is in the tropics.",
-      "Canberra is in New Zealand.",
-      "Atlantic is the largest ocean.",
-      "Danube flows through Australia.",
-      "Andes are in Africa.",
-      "Ottawa is Canada's capital.",
-      "Greenland is mostly ice-covered.",
-      "Canberra is Australia's capital.",
-      "Nile flows through Egypt.",
-      "Sahara is a desert."
+      "Dublin asub Iirimaa idarannikul.",
+      "Dublin on Ühendkuningriigi pealinn.",
+      "Dublin on Iirimaa pealinn.",
+      "Dublin paikneb Vaikse ookeani ääres.",
+      "Dublin asub Doonau ääres.",
+      "Liffey voolab läbi Dublini.",
+      "Dublin on Portugali pealinn.",
+      "Dublin asub Saharas.",
+      "Dublin on Austraalias.",
+      "Dublinis kasutatakse eurot."
     ],
     "correct": {
       "correctIndexes": [
+        0,
+        2,
         5,
-        6,
-        7,
-        8,
         9
       ]
     },
@@ -28149,23 +28159,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali koik tõesed vaited. Teemavihe: Canberra.",
+    "question": "Geograafia: Millised väited Canberra kohta peavad paika?",
     "options": [
-      "Tokyo is in South Korea.",
-      "Lisbon is in Spain.",
-      "Sahara is a rainforest.",
-      "Nile flows through Brazil.",
-      "Danube flows through Australia.",
-      "Greenland is near equator.",
-      "Iceland is in the tropics.",
-      "Andes are in South America.",
-      "Canberra is Australia's capital.",
-      "Everest is in the Alps."
+      "Canberra rajati planeeritud pealinnana.",
+      "Canberra on Uus-Meremaa pealinn.",
+      "Canberra asub Vaikse ookeani rannikul.",
+      "Canberra paikneb Thamesi ääres.",
+      "Canberra on sisemaal, mitte rannikul.",
+      "Canberra asub Niiluse ääres.",
+      "Canberra jääb Sydney ja Melbourne'i vahele.",
+      "Canberra on Austraalia pealinn.",
+      "Canberra on Austraalia suurim linn.",
+      "Canberra on Euroopas."
     ],
     "correct": {
       "correctIndexes": [
-        7,
-        8
+        0,
+        4,
+        6,
+        7
       ]
     },
     "difficulty": "2",
@@ -28177,24 +28189,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Tuvasta faktivaided. Teemavihe: Ottawa.",
+    "question": "Geograafia: Millised väited Ottawa kohta peavad paika?",
     "options": [
-      "Danube flows through Europe.",
-      "Canberra is in New Zealand.",
-      "Canberra is Australia's capital.",
-      "Andes are in Africa.",
-      "Tokyo is in South Korea.",
-      "Danube flows through Australia.",
-      "Ottawa is US capital.",
-      "Sahara is a desert.",
-      "Iceland is in the tropics.",
-      "Lisbon is in Spain."
+      "Ottawa paikneb Seine'i ääres.",
+      "Ottawa on Alpides.",
+      "Ottawa on Kanada suurim linn.",
+      "Ottawa on USA pealinn.",
+      "Ottawa jõgi jõuab selle linnani.",
+      "Ottawa on Lõuna-Ameerikas.",
+      "Ottawa on Kanada pealinn.",
+      "Ottawa asub Vaikse ookeani ääres.",
+      "Seal asuvad Kanada föderaalsed asutused.",
+      "Ottawa ei ole Kanada suurim linn."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        2,
-        7
+        4,
+        6,
+        8,
+        9
       ]
     },
     "difficulty": "2",
@@ -28206,25 +28219,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Millised variandid on oiged? Teemavihe: Tokyo.",
+    "question": "Geograafia: Millised väited Tokyo kohta peavad paika?",
     "options": [
-      "Ottawa is Canada's capital.",
-      "Canberra is Australia's capital.",
-      "Sahara is a desert.",
-      "Iceland is in the tropics.",
-      "Danube flows through Australia.",
-      "Tokyo is in South Korea.",
-      "Greenland is near equator.",
-      "Greenland is mostly ice-covered.",
-      "Atlantic is the largest ocean.",
-      "Ottawa is US capital."
+      "Tokyo on Hiina pealinn.",
+      "Tokyos kasutatakse jeeni.",
+      "Tokyo paikneb Doonau ääres.",
+      "Tokyo asub Korea poolsaarel.",
+      "Tokyo asub Honshu saarel.",
+      "Tokyo on Euroopas.",
+      "Tokyo asub Atlandi ääres.",
+      "Tokyo on üks maailma suurimaid suurlinnu.",
+      "Tokyo on Jaapani pealinn.",
+      "Tokyo on Lõuna-Korea pealinn."
     ],
     "correct": {
       "correctIndexes": [
-        0,
         1,
-        2,
-        7
+        4,
+        7,
+        8
       ]
     },
     "difficulty": "2",
@@ -28236,25 +28249,24 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali koik kehtivad vaited. Teemavihe: Seoul.",
+    "question": "Geograafia: Millised väited Souli kohta peavad paika?",
     "options": [
-      "Nile flows through Brazil.",
-      "Greenland is near equator.",
-      "Himalayas include Mount Everest.",
-      "Iceland is in the tropics.",
-      "Tokyo is in South Korea.",
-      "Everest is in the Alps.",
-      "Lisbon is in Portugal.",
-      "Canberra is Australia's capital.",
-      "Ottawa is Canada's capital.",
-      "Sahara is a desert."
+      "Seoul on Lõuna-Korea pealinn.",
+      "Seoul on Euroopas.",
+      "Han voolab läbi Souli.",
+      "Seoul on Atlandi rannikul.",
+      "Seoul asub Lõuna-Korea loodeosas.",
+      "Seoul asub Niiluse ääres.",
+      "Seoul on Põhja-Korea pealinn.",
+      "Seoul paikneb Amazonase ääres.",
+      "Seoul on Jaapani pealinn.",
+      "Seoul on üks Ida-Aasia suurlinnu."
     ],
     "correct": {
       "correctIndexes": [
+        0,
         2,
-        6,
-        7,
-        8,
+        4,
         9
       ]
     },
@@ -28267,23 +28279,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali tõesed vaited. Teemavihe: Beijing.",
+    "question": "Geograafia: Millised väited Pekingi kohta peavad paika?",
     "options": [
-      "Canberra is Australia's capital.",
-      "Danube flows through Australia.",
-      "Iceland is in the tropics.",
-      "Everest is in the Alps.",
-      "Sahara is a rainforest.",
-      "Nile flows through Brazil.",
-      "Canberra is in New Zealand.",
-      "Greenland is mostly ice-covered.",
-      "Lisbon is in Spain.",
-      "Ottawa is US capital."
+      "Peking paikneb Doonau ääres.",
+      "Peking on üks Hiina suurimaid linnu.",
+      "Peking on Lõuna-Ameerikas.",
+      "Peking asub Vahemere ääres.",
+      "Seal asuvad paljud riigi asutused.",
+      "Peking on Hiina pealinn.",
+      "Peking asub Põhja-Hiinas.",
+      "Peking on Hiina Jangtse finantskeskus.",
+      "Peking on India pealinn.",
+      "Peking on Taiwani pealinn."
     ],
     "correct": {
       "correctIndexes": [
-        0,
-        7
+        1,
+        4,
+        5,
+        6
       ]
     },
     "difficulty": "2",
@@ -28295,24 +28309,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Millised vaited on oiged? Teemavihe: New Delhi.",
+    "question": "Geograafia: Millised väited New Delhi kohta peavad paika?",
     "options": [
-      "Ottawa is US capital.",
-      "Lisbon is in Portugal.",
-      "Ottawa is Canada's capital.",
-      "Andes are in Africa.",
-      "Canberra is in New Zealand.",
-      "Sahara is a rainforest.",
-      "Nile flows through Brazil.",
-      "Atlantic is the largest ocean.",
-      "Tokyo is in Japan.",
-      "Greenland is near equator."
+      "New Delhi on India pealinna tuum.",
+      "New Delhi on Pakistani pealinn.",
+      "New Delhi paikneb Reini ääres.",
+      "New Delhi on Lõuna-Ameerikas.",
+      "Seal paiknevad valitsusasutused.",
+      "New Delhi on Nepali pealinn.",
+      "New Delhi asub Atlandi ääres.",
+      "New Delhi asub Põhja-Indias.",
+      "New Delhi on Austraalias.",
+      "Laiemat suurlinna kutsutakse Delhiks."
     ],
     "correct": {
       "correctIndexes": [
-        1,
-        2,
-        8
+        0,
+        4,
+        7,
+        9
       ]
     },
     "difficulty": "2",
@@ -28324,25 +28339,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali koik tõesed vaited. Teemavihe: Nile.",
+    "question": "Geograafia: Millised väited Niiluse kohta peavad paika?",
     "options": [
-      "Tokyo is in Japan.",
-      "Atlantic is the largest ocean.",
-      "Tokyo is in South Korea.",
-      "Danube flows through Australia.",
-      "Sahara is a rainforest.",
-      "Canberra is in New Zealand.",
-      "Iceland is in the tropics.",
-      "Ottawa is Canada's capital.",
-      "Danube flows through Europe.",
-      "Nile flows through Egypt."
+      "Niilus suubub Vahemerre.",
+      "Niilus suubub Atlandi ookeani.",
+      "Valge ja Sinine Niilus on tähtsad harud.",
+      "Niilus on Lõuna-Ameerika suurim jõgi.",
+      "Niilus on Euroopa pikim jõgi.",
+      "Niilus voolab läbi Kirde-Aafrika.",
+      "Niilus voolab üldiselt põhja poole.",
+      "Niilus algab Islandilt.",
+      "Niilus voolab Põhjamerre.",
+      "Niilus läbib Austraaliat."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        7,
-        8,
-        9
+        2,
+        5,
+        6
       ]
     },
     "difficulty": "2",
@@ -28354,26 +28369,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Tuvasta faktivaided. Teemavihe: Amazon.",
+    "question": "Geograafia: Millised väited Amazonase kohta peavad paika?",
     "options": [
-      "Himalayas include Mount Everest.",
-      "Tokyo is in South Korea.",
-      "Greenland is mostly ice-covered.",
-      "Danube flows through Australia.",
-      "Nile flows through Brazil.",
-      "Lisbon is in Spain.",
-      "Pacific is the largest ocean.",
-      "Danube flows through Europe.",
-      "Iceland is an island nation.",
-      "Greenland is near equator."
+      "Selle valglas on suur vihmamets.",
+      "Amazonas suubub Musta merre.",
+      "Amazonas voolab läbi Lõuna-Ameerika.",
+      "Amazonas asub ainult Kanadas.",
+      "Amazonas läbib Islandit.",
+      "Amazonas suubub Atlandi ookeani.",
+      "Amazonas on Aafrika pikim jõgi.",
+      "Amazonas algab Alpides.",
+      "Amazonas voolab läbi Euroopa.",
+      "Amazonasel on maailma suurim vooluhulk."
     ],
     "correct": {
       "correctIndexes": [
         0,
         2,
-        6,
-        7,
-        8
+        5,
+        9
       ]
     },
     "difficulty": "2",
@@ -28385,23 +28399,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Millised variandid on oiged? Teemavihe: Danube.",
+    "question": "Geograafia: Millised väited Doonau kohta peavad paika?",
     "options": [
-      "Atlantic is the largest ocean.",
-      "Everest is in the Alps.",
-      "Iceland is in the tropics.",
-      "Greenland is mostly ice-covered.",
-      "Nile flows through Brazil.",
-      "Andes are in Africa.",
-      "Tokyo is in South Korea.",
-      "Ottawa is US capital.",
-      "Sahara is a rainforest.",
-      "Ottawa is Canada's capital."
+      "Doonau lõpeb Vahemeres.",
+      "Doonau suubub Atlandi ookeani.",
+      "Doonau suubub Musta merre.",
+      "Doonau on Aafrika pikim jõgi.",
+      "Doonau voolab läbi Austraalia.",
+      "Doonau on Lõuna-Ameerikas.",
+      "Doonau läbib paljusid riike.",
+      "Doonau voolab läbi Kesk- ja Ida-Euroopa.",
+      "Viin ja Budapest asuvad Doonau ääres.",
+      "Doonau läbib New Yorki."
     ],
     "correct": {
       "correctIndexes": [
-        3,
-        9
+        2,
+        6,
+        7,
+        8
       ]
     },
     "difficulty": "2",
@@ -28413,24 +28429,25 @@
     "topic": "Geography",
     "category": "OPEN",
     "language": "et",
-    "question": "Geograafia: Vali koik kehtivad vaited. Teemavihe: Rhine.",
+    "question": "Geograafia: Millised väited Reini kohta peavad paika?",
     "options": [
-      "Iceland is an island nation.",
-      "Andes are in Africa.",
-      "Lisbon is in Portugal.",
-      "Tokyo is in South Korea.",
-      "Iceland is in the tropics.",
-      "Sahara is a desert.",
-      "Atlantic is the largest ocean.",
-      "Ottawa is US capital.",
-      "Canberra is in New Zealand.",
-      "Sahara is a rainforest."
+      "Rein on tähtis Saksamaale ja Hollandile.",
+      "Rein on Aafrika pikim jõgi.",
+      "Rein voolab läbi Lõuna-Ameerika.",
+      "Rein läbib Indiat.",
+      "Rein suubub Põhjamerre.",
+      "Rein algab Islandilt.",
+      "Rein on üks Euroopa suuri jõgesid.",
+      "Rein voolab läbi Lääne-Euroopa.",
+      "Rein suubub Musta merre.",
+      "Rein on Austraalia pealinna jõgi."
     ],
     "correct": {
       "correctIndexes": [
         0,
-        2,
-        5
+        4,
+        6,
+        7
       ]
     },
     "difficulty": "2",
