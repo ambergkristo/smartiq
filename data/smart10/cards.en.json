@@ -26694,7 +26694,7 @@
       "Teams usually field five players.",
       "Basketball uses wickets.",
       "Basketball is played with dribbling.",
-      "Offside decides every attack in basketball.",
+      "Offside decides basketball attacks.",
       "The hoop is ten feet high in pro play.",
       "A three-point line is part of basketball.",
       "Players shoot into a football goal.",
@@ -26725,7 +26725,7 @@
       "Love means zero in tennis.",
       "Wimbledon is a Grand Slam event.",
       "Tennis uses an oval ball.",
-      "A tennis match has quarters like basketball.",
+      "Tennis matches do not have quarters.",
       "Tennis is played on ice by default.",
       "A wicket stands behind each tennis player.",
       "Tennis uses clubs and tees.",
@@ -26812,13 +26812,13 @@
     "question": "Sports: Which statements about volleyball are true?",
     "options": [
       "Volleyball is played on ice skates.",
-      "Indoor volleyball has six players per side.",
+      "Indoor volleyball has six per side.",
       "Beach volleyball is an Olympic discipline.",
-      "A wicket stands in each corner of the court.",
+      "A wicket stands in each court corner.",
       "Volleyball has offside like football.",
       "Volleyball is played with bats.",
       "A net separates the two sides.",
-      "Rally scoring is used in modern volleyball.",
+      "Rally scoring is used in volleyball.",
       "A volleyball match has innings.",
       "Volleyball is fought in a boxing ring."
     ],
@@ -26841,12 +26841,12 @@
     "language": "en",
     "question": "Sports: Which statements about handball are true?",
     "options": [
-      "The six-meter goal area is important in handball.",
+      "The six-meter area matters in handball.",
       "A handball game has nine innings.",
-      "Handball goals are scored by throwing the ball.",
+      "Handball goals are scored by throws.",
       "Handball is played only in water.",
       "The net is waist-high through the center.",
-      "A standard team has seven players including the keeper.",
+      "A team has seven players with keeper.",
       "Handball is played on horseback.",
       "Handball uses a cue and reds.",
       "Handball uses rackets.",
@@ -26907,7 +26907,7 @@
       "Players serve over a net like tennis.",
       "Ice hockey uses boxing gloves to score.",
       "Ice hockey uses wickets and overs.",
-      "A standard side has six players including the goalie.",
+      "A side has six players with goalie.",
       "Teams skate on ice in hockey.",
       "Ice hockey is played with a puck.",
       "A power play follows some penalties."
@@ -26935,7 +26935,7 @@
       "Badminton is played with cue sticks.",
       "Badminton is scored in innings.",
       "Badminton uses wickets.",
-      "Badminton holes are numbered one to eighteen.",
+      "Badminton holes are numbered 1 to 18.",
       "Badminton uses a leather football.",
       "Badminton is played only on ice.",
       "Players strike with rackets.",
@@ -26963,8 +26963,8 @@
     "options": [
       "Games are often played to eleven points.",
       "Table tennis uses wickets.",
-      "Table tennis is played on a table with a net.",
-      "A boxing bell starts each table tennis round.",
+      "Table tennis uses a table and net.",
+      "A boxing bell starts table tennis rounds.",
       "Table tennis is an Olympic sport.",
       "Players use paddles and a light ball.",
       "Table tennis has offsides on every rally.",
@@ -27029,7 +27029,7 @@
       "Swimming is scored with hoops.",
       "Swimming is played on grass courts.",
       "Swimming races are held in water.",
-      "Freestyle, backstroke and breaststroke are swimming strokes.",
+      "Freestyle, backstroke and breaststroke.",
       "Swimming uses wickets and overs."
     ],
     "correct": {
@@ -27057,7 +27057,7 @@
       "The Tour de France is a cycling race.",
       "Cycling is judged by boxing rounds only.",
       "Cycling is played on horseback.",
-      "Cycling is played with a net and shuttlecock.",
+      "Cycling uses a net and shuttlecock.",
       "Cycling uses wickets.",
       "A cue ball starts cycling races.",
       "Drafting matters in many cycling events."
@@ -27085,7 +27085,7 @@
       "Boxing bouts take place in a ring.",
       "A knockout can end a boxing match.",
       "Boxing uses a net across the court.",
-      "Boxing is scored by putting a ball in a hoop.",
+      "Boxing is scored with a hoop and ball.",
       "Boxing uses wickets and a bat.",
       "Boxers wear gloves.",
       "Professional boxing is fought in rounds.",
@@ -27201,7 +27201,7 @@
     "language": "en",
     "question": "Sports: Which statements about golf are true?",
     "options": [
-      "A standard course often has eighteen holes.",
+      "A standard course often has 18 holes.",
       "Putting happens on the green.",
       "Golf uses a puck and skates.",
       "Golf is played across a net.",
@@ -27263,7 +27263,7 @@
     "options": [
       "Formula One uses single-seater race cars.",
       "Pit stops matter in many races.",
-      "Grands Prix make up the Formula One season.",
+      "Grands Prix form the Formula One season.",
       "Formula One is raced on motorcycles.",
       "Formula One uses wickets and overs.",
       "Formula One is scored by goals into a net.",
@@ -27326,7 +27326,7 @@
       "A marathon is a best-of-seven series.",
       "The marathon is a road running event.",
       "A marathon is played with clubs.",
-      "A marathon requires a net across the course.",
+      "A marathon needs a net on the course.",
       "A marathon is swum in a pool.",
       "A marathon has wickets and overs.",
       "A marathon uses a puck on ice.",
@@ -27352,7 +27352,7 @@
     "question": "Sports: Which statements about triathlon are true?",
     "options": [
       "Triathlon is played on horseback.",
-      "Triathlon combines swimming, cycling and running.",
+      "Triathlon combines swim, bike and run.",
       "Triathlon is not a single-sport event.",
       "Triathlon is decided by penalty shootout.",
       "Triathlon uses wickets and a crease.",
@@ -27390,7 +27390,7 @@
       "The decathlon has eighteen holes.",
       "The decathlon uses a puck and goal cage.",
       "The decathlon is a team ball sport.",
-      "Points across all events decide the winner."
+      "The winner is decided by total points."
     ],
     "correct": {
       "correctIndexes": [
@@ -27411,7 +27411,7 @@
     "language": "en",
     "question": "Sports: Which statements about Wimbledon are true?",
     "options": [
-      "Wimbledon is played by national football teams.",
+      "Wimbledon is played by football teams.",
       "White clothing is a Wimbledon tradition.",
       "Wimbledon is played on grass.",
       "Wimbledon is a golf major.",
@@ -27441,13 +27441,13 @@
     "language": "en",
     "question": "Sports: Which statements about the Olympics are true?",
     "options": [
-      "The Olympics happen every year in one city.",
+      "The Olympics are held every year.",
       "The Olympics are a best-of-seven series.",
       "The Olympics use wickets and overs.",
       "The Olympics are a cue-sport league.",
-      "The Olympics are played only on grass courts.",
+      "The Olympics are played only on grass.",
       "The Olympics are only for football clubs.",
-      "Athletes compete for medals at the Olympics.",
+      "Athletes compete for Olympic medals.",
       "Host cities are chosen years in advance.",
       "The Olympics are a multi-sport event.",
       "Summer Olympics are held every four years."
@@ -27501,15 +27501,15 @@
     "language": "en",
     "question": "Sports: Which statements about the UEFA Champions League are true?",
     "options": [
-      "The Champions League is only for national teams.",
-      "Clubs qualify mainly through domestic leagues.",
+      "Champions League is only for nations.",
+      "Clubs qualify mostly through leagues.",
       "UEFA organizes the Champions League.",
-      "The Champions League uses a best-of-five set format.",
-      "The Champions League is a European club competition.",
+      "Champions League uses best-of-five sets.",
+      "Champions League is a European club cup.",
       "The Champions League is a golf major.",
-      "The Champions League is played on ice skates.",
+      "Champions League is played on ice skates.",
       "The Champions League uses cue balls.",
-      "The Champions League is a cricket tournament.",
+      "Champions League is a cricket event.",
       "The competition ends with a yearly final."
     ],
     "correct": {
@@ -27532,15 +27532,15 @@
     "question": "Sports: Which statements about the NBA Finals are true?",
     "options": [
       "The NBA Finals decide the NBA champion.",
-      "The Eastern and Western champions meet in the Finals.",
+      "East and West meet in the NBA Finals.",
       "The series is best-of-seven.",
-      "The NBA Finals are a one-match football final.",
+      "NBA Finals are a one-match football final.",
       "The NBA Finals use wickets and overs.",
-      "The NBA Finals are played on clay with rackets.",
+      "NBA Finals are played on clay courts.",
       "The NBA Finals are a motorcycle race.",
       "The NBA Finals are a cue-sport tournament.",
       "The NBA Finals use a golf scorecard.",
-      "The winner receives the Larry O'Brien Trophy."
+      "The winner gets the Larry O'Brien Trophy."
     ],
     "correct": {
       "correctIndexes": [
@@ -27870,7 +27870,7 @@
       "Berlin is an inland city.",
       "Berlin is Poland's capital.",
       "Berlin lies on the Atlantic.",
-      "Berlin became the capital of reunified Germany."
+      "Berlin became reunified Germany's capital."
     ],
     "correct": {
       "correctIndexes": [
@@ -28169,7 +28169,7 @@
       "Canberra is Australia's largest city.",
       "Canberra is New Zealand's capital.",
       "Canberra was planned as a capital.",
-      "Canberra lies between Sydney and Melbourne.",
+      "Canberra is between Sydney and Melbourne.",
       "Canberra is in Europe."
     ],
     "correct": {
@@ -28226,7 +28226,7 @@
       "Tokyo lies on Honshu.",
       "Tokyo is in Europe.",
       "Tokyo stands on the Danube.",
-      "Tokyo is one of the world's largest metros.",
+      "Tokyo is one of the largest metro areas.",
       "Tokyo is Japan's capital.",
       "Tokyo is China's capital.",
       "Tokyo lies on the Atlantic.",
@@ -28343,7 +28343,7 @@
     "options": [
       "The Nile is South America's largest river.",
       "The Nile flows into the North Sea.",
-      "The White and Blue Nile are major branches.",
+      "The White and Blue Nile are major arms.",
       "The Nile begins in Iceland.",
       "The Nile empties into the Mediterranean.",
       "The Nile is Europe's longest river.",
@@ -28380,7 +28380,7 @@
       "The Amazon is Africa's longest river.",
       "The Amazon empties into the Black Sea.",
       "The Amazon begins in the Alps.",
-      "The Amazon has the world's largest discharge."
+      "The Amazon has the world's top discharge."
     ],
     "correct": {
       "correctIndexes": [
@@ -28402,7 +28402,7 @@
     "question": "Geography: Which statements about the Danube are true?",
     "options": [
       "The Danube ends in the Mediterranean.",
-      "The Danube flows through central and eastern Europe.",
+      "The Danube flows through central Europe.",
       "The Danube flows through Australia.",
       "The Danube empties into the Atlantic.",
       "The Danube is Africa's longest river.",
@@ -28438,7 +28438,7 @@
       "The Rhine flows through western Europe.",
       "The Rhine empties into the Black Sea.",
       "The Rhine is Africa's longest river.",
-      "The Rhine matters to Germany and the Netherlands.",
+      "Rhine matters to German and Dutch trade.",
       "The Rhine is one of Europe's major rivers.",
       "The Rhine is Australia's capital river."
     ],

@@ -26670,7 +26670,7 @@
       "Suluseis kuulub jalgpalli juurde.",
       "Iga korv otsustab seisu.",
       "Jalgpallis kasutatakse kriketi väravaid.",
-      "FIFA maailmameistrivõistlused on jalgpallis."
+      "FIFA MM-võistlused käivad jalgpallis."
     ],
     "correct": {
       "correctIndexes": [
@@ -26692,9 +26692,9 @@
     "question": "Sport: Millised väited korvpalli kohta peavad paika?",
     "options": [
       "Iga rünnaku otsustab suluseis.",
-      "Profikorvpallis on korv kümne jala kõrgusel.",
+      "Profikorvpalli korv on 10 jala kõrgusel.",
       "Kolmepunktijoon kuulub korvpalli juurde.",
-      "Mäng peetakse vahetuste kaupa nagu pesapallis.",
+      "Mäng käib vahetuste, nagu pesapallis.",
       "Punkte visatakse jalgpalliväravasse.",
       "Korvpallis liigutakse palli põrgatades.",
       "Korvpalli jätkatakse scrum'iga.",
@@ -26753,9 +26753,9 @@
     "options": [
       "Testkriket võib kesta viis päeva.",
       "Kriketit mängitakse sulgpalliga.",
-      "Over koosneb kuuest määrustepärasest pallist.",
+      "Over koosneb kuuest lubatud pallist.",
       "Kriketis on väravad keskse tähtsusega.",
-      "Kriketimäng koosneb alati neljast veerandist.",
+      "Kriketis on alati neli veerandit.",
       "Kriket on jääl mängitav ala.",
       "Kriketit mängitakse kurika ja palliga.",
       "Kriketiväljakul on kaheksateist rada.",
@@ -26785,7 +26785,7 @@
       "Ragbis puudub igasugune kontakt.",
       "Iga punkt saadakse korvirõngasse visates.",
       "Ragbit mängitakse golfiväljakul.",
-      "Ragbis kasutatakse ainult kiivreid ja kurikaid.",
+      "Ragbis kasutatakse kiivreid ja kurikaid.",
       "Katse annab ragbis punkte.",
       "Ragbit mängitakse sulgpalliga.",
       "Ragbis on joone taga kriketi väravad.",
@@ -26811,14 +26811,14 @@
     "language": "et",
     "question": "Sport: Millised väited võrkpalli kohta peavad paika?",
     "options": [
-      "Tänapäeva võrkpallis kasutatakse rallipunktiarvestust.",
+      "Võrkpallis käib rallipunktiarvestus.",
       "Rannavõrkpall on olümpiaala.",
       "Võrkpallimäng koosneb vahetustest.",
       "Võrkpallis on suluseis nagu jalgpallis.",
       "Võrkpalli mängitakse uiskudega.",
       "Võrkpalli mängitakse kurikatega.",
       "Pooli eraldab võrk.",
-      "Saalivõrkpallis on kummalgi poolel kuus mängijat.",
+      "Saalivõrkpallis on poolel kuus mängijat.",
       "Väljaku nurkades seisavad kriketi väravad.",
       "Võrkpalli peetakse poksiringis."
     ],
@@ -26846,8 +26846,8 @@
       "Kuue meetri ala on käsipallis tähtis.",
       "Käsipallis kasutatakse reketit.",
       "Käsipallimäng koosneb üheksast vahetusest.",
-      "Tavavõistkonnas on koos väravavahiga seitse mängijat.",
-      "Käsipallis kasutatakse kii ja punaseid palle.",
+      "Koos väravavahiga on seitse mängijat.",
+      "Käsipallis kasutatakse kiid ja punapalle.",
       "Väljaku keskel on vöökõrgune võrk.",
       "Käsipalli mängitakse hobuse seljas.",
       "Kiirrünnakud on käsipallis tavalised."
@@ -26902,11 +26902,11 @@
     "question": "Sport: Millised väited jäähoki kohta peavad paika?",
     "options": [
       "Jäähokit mängitakse litriga.",
-      "Tavaliselt on koos väravavahiga väljakul kuus mängijat.",
+      "Koos väravavahiga on väljakul kuus.",
       "Jäähokit mängitakse saviväljakul.",
       "Jäähoki on ainult vees mängitav ala.",
       "Punkte saadakse poksikinnastega.",
-      "Jäähokis kasutatakse kriketi väravaid ja over'eid.",
+      "Jäähokis on kriketi väravad ja over'id.",
       "Seisu otsustab golfi par.",
       "Palli servitakse üle võrgu nagu tennises.",
       "Jäähokis uisutatakse jääl.",
@@ -26939,7 +26939,7 @@
       "Sulgpallis kasutatakse nahast jalgpalli.",
       "Väljakut jagab võrk.",
       "Sulgpallis on kriketi väravad.",
-      "Sulgpalliradu on nummerdatud ühest kaheksateistkümneni.",
+      "Sulgpalliradu on nummerdatud 1 kuni 18.",
       "Sulgpall on olümpiaala."
     ],
     "correct": {
@@ -26963,13 +26963,13 @@
     "options": [
       "Iga geimi alustab poksikell.",
       "Lauatennis on olümpiaala.",
-      "Mängijad kasutavad reketit ja kerget palli.",
+      "Mängitakse reketi ja kerge palliga.",
       "Lauatennist mängitakse ujulas.",
       "Iga pallivahetuse juures on suluseis.",
       "Lauatennist mängitakse laual ja üle võrgu.",
       "Varustusse kuulub hobune.",
       "Lauatennises kasutatakse kriketi väravaid.",
-      "Geime mängitakse sageli üheteistkümne punktini.",
+      "Geim käib sageli 11 punktini.",
       "Lauatennises kasutatakse golfikeppe."
     ],
     "correct": {
@@ -26992,11 +26992,11 @@
     "question": "Sport: Millised väited kergejõustiku kohta peavad paika?",
     "options": [
       "Kuulitõuge on kergejõustikuala.",
-      "Kergejõustikku mängitakse kurika ja väravaga.",
-      "Kergejõustikus kasutatakse litrit ja uiske.",
+      "Kergejõustikus on kurikas ja värav.",
+      "Kergejõustikus on litter ja uisud.",
       "Igal alal on väravavaht.",
       "Kergejõustikku kuuluvad jooksualad.",
-      "Kergejõustik on ainult sisehallis mängitav kiiala.",
+      "Kergejõustik käib ainult sisehallis.",
       "Tulemust arvestatakse golfi par'iga.",
       "Kaugushüpe kuulub kergejõustikku.",
       "Väljaku keskel peab olema võrk.",
@@ -27023,14 +27023,14 @@
     "options": [
       "Pöörded on paljudes distantsides tähtsad.",
       "Ujumises kasutatakse kurikat ja pesi.",
-      "Vaba-, selili- ja rinnuliujumine on ujumisviisid.",
+      "Vaba-, selili- ja rinnuliujumine.",
       "Ujumine on olümpiaala.",
       "Ujumises on suluseisureegel.",
       "Ujumist peetakse muruväljakul.",
       "Ujumisvõistlused peetakse vees.",
       "Peamine ujumisvahend on kii.",
       "Punkte saadakse korvi visates.",
-      "Ujumises kasutatakse kriketi väravaid ja over'eid."
+      "Ujumises on kriketi väravad ja over'id."
     ],
     "correct": {
       "correctIndexes": [
@@ -27052,15 +27052,15 @@
     "question": "Sport: Millised väited jalgrattaspordi kohta peavad paika?",
     "options": [
       "Võistlussõidus kasutatakse sageli kiivrit.",
-      "Jalgrattaspordis kasutatakse kriketi väravaid.",
-      "Jalgrattasporti hinnatakse ainult poksiringide järgi.",
+      "Jalgrattaspordis on kriketi väravad.",
+      "Jalgrattasport käib poksiringide järgi.",
       "Jalgrattavõistlus toimub alati ujulas.",
       "Võistluse alustab kiipall.",
       "Tour de France on jalgrattavõistlus.",
-      "Jalgrattasporti mängitakse võrgu ja sulgpalliga.",
+      "Jalgrattasport käib võrgu ja sulgpalliga.",
       "Jalgrattasporti tehakse hobuse seljas.",
-      "Jalgrattaspordi alla kuuluvad maantee- ja rajaalad.",
-      "Paljudel aladel mõjutab tuules sõit tulemust."
+      "Sinna kuuluvad maantee- ja rajaalad.",
+      "Paljudel aladel mõjutab tuules sõit."
     ],
     "correct": {
       "correctIndexes": [
@@ -27086,7 +27086,7 @@
       "Poksi peetakse jääl uiskudega.",
       "Punkte saadakse palli korvi visates.",
       "Poks on vees peetav võidusõit.",
-      "Poksis kasutatakse kurikat ja kriketi väravaid.",
+      "Poksis kasutatakse kurikat ja väravaid.",
       "Poksijad kannavad kindaid.",
       "Poksimatš peetakse ringis.",
       "Väljaku keskel peab olema võrk.",
@@ -27111,7 +27111,7 @@
     "language": "et",
     "question": "Sport: Millised väited vehklemise kohta peavad paika?",
     "options": [
-      "Florett, epee ja saabel on vehklemisrelvad.",
+      "Florett, epee ja saabel on relvad.",
       "Vehklemine on maanteemaraton.",
       "Puudutus annab vehklemises punkti.",
       "Vehklemises kasutatakse sulgpalli.",
@@ -27205,7 +27205,7 @@
       "Golfis on kriketi väravad ja over'id.",
       "Golfi mängitakse üle võrgu.",
       "Golfi mängitakse keppide ja palliga.",
-      "Tavalisel väljakul on sageli kaheksateist rada.",
+      "Tavalisel väljakul on sageli 18 rada.",
       "Par näitab raja sihttulemust.",
       "Puttimine toimub griinil.",
       "Golfis kasutatakse litrit ja uiske.",
@@ -27233,7 +27233,7 @@
     "options": [
       "Snuukrit mängitakse ovaalse palliga.",
       "Maksimaalne seeria on 147.",
-      "Snuukrit mängitakse suurel rohelisel laual.",
+      "Snuukrit mängitakse rohelisel laual.",
       "Snuukris kasutatakse jalgpalliväravat.",
       "Snuuker on jääl peetav võistlus.",
       "Snuuker on kiiala.",
@@ -27262,10 +27262,10 @@
     "question": "Sport: Millised väited vormel 1 kohta peavad paika?",
     "options": [
       "Boksipeatused mõjutavad paljusid sõite.",
-      "Vormel 1-s kasutatakse kriketi väravaid ja over'eid.",
+      "Vormel 1-s on kriketi väravad ja over'id.",
       "Vormel 1 sõidetakse mootorratastega.",
       "Vormel 1 on kiiala.",
-      "Vormel 1-s kasutatakse üheistmelisi autosid.",
+      "Vormel 1-s sõidetakse üheistmelistega.",
       "Punkte saadakse palli võrku lüües.",
       "Vormel 1 toimub ujulas.",
       "Hooaeg koosneb grand prix' etappidest.",
@@ -27292,7 +27292,7 @@
     "question": "Sport: Millised väited MotoGP kohta peavad paika?",
     "options": [
       "Stardid on MotoGP-s väga tähtsad.",
-      "MotoGP-s kasutatakse lahtiste ratastega autosid.",
+      "MotoGP on lahtiste ratastega autode sari.",
       "Sõitjad kallutavad kurvides tugevalt.",
       "MotoGP on maailmameistrivõistluste sari.",
       "MotoGP-d peetakse jääl.",
@@ -27358,7 +27358,7 @@
       "Triatloni peetakse hobuse seljas.",
       "Triatloni mängitakse kurikaga.",
       "Vahetusalad on triatlonis tähtsad.",
-      "Triatlon ühendab ujumise, rattasõidu ja jooksu.",
+      "Triatlon ühendab ujumise, ratta ja jooksu.",
       "Triatloni otsustab penaltiseeria.",
       "Triatlon on kiiala."
     ],
@@ -27387,10 +27387,10 @@
       "Kümnevõistlus on võistkondlik pallimäng.",
       "Kümnevõistlust ujutakse rajal.",
       "100 meetri jooks kuulub kümnevõistlusse.",
-      "Kümnevõistluses kasutatakse litrit ja väravapuuri.",
+      "Kümnevõistluses on litter ja väravapuur.",
       "Kümnevõistluses on kurikas ja väravad.",
       "Kümnevõistluses on kaheksateist rada.",
-      "Võitja selgub kõigi alade punktide summana."
+      "Võitja selgub punktide kogusummaga."
     ],
     "correct": {
       "correctIndexes": [
@@ -27416,10 +27416,10 @@
       "Wimbledon on suure slämmi turniir.",
       "Wimbledon on golfi major.",
       "Wimbledon mängitakse murul.",
-      "Wimbledonit mängivad rahvuskoondised jalgpallis.",
+      "Wimbledonit mängivad jalgpallikoondised.",
       "Wimbledonis kasutatakse kiid.",
       "Wimbledon toimub Londonis.",
-      "Valged mänguriided on Wimbledoni traditsioon.",
+      "Valged riided on Wimbledoni traditsioon.",
       "Wimbledon sõidetakse mootorratastega."
     ],
     "correct": {
@@ -27442,8 +27442,8 @@
     "question": "Sport: Millised väited olümpiamängude kohta peavad paika?",
     "options": [
       "Olümpiamängud on mitme ala suurvõistlus.",
-      "Sportlased võistlevad olümpial medalite nimel.",
-      "Olümpiamängud peetakse igal aastal samas linnas.",
+      "Olümpial võisteldakse medalite nimel.",
+      "Olümpia toimub igal aastal samas linnas.",
       "Olümpia on seitsmemänguline finaalseeria.",
       "Olümpiat peetakse ainult muruväljakutel.",
       "Olümpia on ainult jalgpalliklubidele.",
@@ -27501,15 +27501,15 @@
     "language": "et",
     "question": "Sport: Millised väited UEFA Meistrite liiga kohta peavad paika?",
     "options": [
-      "Meistrite liiga on ainult rahvuskoondistele.",
+      "Meistrite liiga on vaid koondistele.",
       "Meistrite liiga on kriketiturniir.",
       "See on golfi major-turniir.",
       "Meistrite liigat peetakse uiskudega.",
-      "Klubid pääsevad sinna peamiselt liigatulemuste põhjal.",
+      "Sinna pääseb peamiselt liigatulemusega.",
       "Seal kasutatakse kiipalle.",
       "Meistrite liiga on Euroopa klubivõistlus.",
       "Meistrite liigat korraldab UEFA.",
-      "Seal mängitakse parem viiest setti formaadis.",
+      "Seal käib parem viiest setist formaat.",
       "Võistlus lõpeb iga-aastase finaaliga."
     ],
     "correct": {
@@ -27531,14 +27531,14 @@
     "language": "et",
     "question": "Sport: Millised väited NBA finaalseeria kohta peavad paika?",
     "options": [
-      "Finaalis kohtuvad ida ja lääne konverentsi võitjad.",
-      "NBA finaalis on kriketi väravad ja over'id.",
+      "Finaalis kohtuvad ida ja lääne võitjad.",
+      "NBA finaalis on kriketi väravad ja overid.",
       "NBA finaal on ühe mängu jalgpallifinaal.",
       "NBA finaal on mootorrattavõistlus.",
       "NBA finaalseeria selgitab NBA meistri.",
-      "NBA finaali mängitakse saviväljakul reketitega.",
-      "NBA finaalis kasutatakse golfi skoorikaarti.",
-      "Seeria mängitakse parem seitsmest formaadis.",
+      "NBA finaal käib savil reketitega.",
+      "NBA finaalis kasutatakse golfi skoori.",
+      "Seeria käib parem seitsmest formaadis.",
       "NBA finaal on kiiturniir.",
       "Võitja saab Larry O'Brieni karika."
     ],
@@ -27870,7 +27870,7 @@
       "Berliin on Poola pealinn.",
       "Berliin on Amazonase ääres.",
       "Berliin paikneb Tiberi ääres.",
-      "Berliinist sai taasühinenud Saksamaa pealinn."
+      "Berliinist sai ühendatud Saksamaa pealinn."
     ],
     "correct": {
       "correctIndexes": [
@@ -28167,7 +28167,7 @@
       "Canberra paikneb Thamesi ääres.",
       "Canberra on sisemaal, mitte rannikul.",
       "Canberra asub Niiluse ääres.",
-      "Canberra jääb Sydney ja Melbourne'i vahele.",
+      "Canberra on Sydney ja Melbourne'i vahel.",
       "Canberra on Austraalia pealinn.",
       "Canberra on Austraalia suurim linn.",
       "Canberra on Euroopas."
