@@ -1,0 +1,450 @@
+{
+  "date": "2026-03-11",
+  "seed": "smartiq-sprint-2.5-editorial-review",
+  "samplesByLocale": {
+    "EN": [
+      {
+        "sampleKey": "EN-01",
+        "bucket": "priority_open",
+        "locale": "EN",
+        "cardId": "sports-open-009",
+        "topic": "Sports",
+        "category": "OPEN",
+        "question": "Sports: Which statements about ice hockey are true?",
+        "options": [
+          "Ice hockey is played on clay courts.",
+          "Ice hockey is a water-only sport.",
+          "A match is decided by golf par.",
+          "Players serve over a net like tennis.",
+          "Ice hockey uses boxing gloves to score.",
+          "Ice hockey uses wickets and overs.",
+          "A side has six players with goalie.",
+          "Teams skate on ice in hockey.",
+          "Ice hockey is played with a puck.",
+          "A power play follows some penalties."
+        ],
+        "correct": "6, 7, 8, 9"
+      },
+      {
+        "sampleKey": "EN-02",
+        "bucket": "priority_open",
+        "locale": "EN",
+        "cardId": "geography-open-030",
+        "topic": "Geography",
+        "category": "OPEN",
+        "question": "Geography: Which statements about the Rhine are true?",
+        "options": [
+          "The Rhine empties into the North Sea.",
+          "The Rhine flows through South America.",
+          "The Rhine begins in Iceland.",
+          "The Rhine runs through India.",
+          "The Rhine flows through western Europe.",
+          "The Rhine empties into the Black Sea.",
+          "The Rhine is Africa's longest river.",
+          "Rhine matters to German and Dutch trade.",
+          "The Rhine is one of Europe's major rivers.",
+          "The Rhine is Australia's capital river."
+        ],
+        "correct": "0, 4, 7, 8"
+      },
+      {
+        "sampleKey": "EN-03",
+        "bucket": "priority_open",
+        "locale": "EN",
+        "cardId": "culture-open-020",
+        "topic": "Culture",
+        "category": "OPEN",
+        "question": "Culture: Which statements about Van Gogh are true?",
+        "options": [
+          "Van Gogh was a painter.",
+          "Van Gogh was a Roman senator.",
+          "Van Gogh was a novelist.",
+          "He wrote Macbeth.",
+          "Van Gogh was Dutch.",
+          "Van Gogh came from Portugal.",
+          "He directed Citizen Kane.",
+          "He composed The Magic Flute.",
+          "Sunflowers is linked to Van Gogh.",
+          "Starry Night is one of his famous works."
+        ],
+        "correct": "0, 4, 8, 9"
+      },
+      {
+        "sampleKey": "EN-04",
+        "bucket": "priority_open",
+        "locale": "EN",
+        "cardId": "science-open-010",
+        "topic": "Science",
+        "category": "OPEN",
+        "question": "Science: Which statements about momentum are true?",
+        "options": [
+          "A moving truck has momentum.",
+          "Momentum is a physics concept.",
+          "Momentum is conserved in isolated systems.",
+          "Still objects do not have huge momentum.",
+          "Momentum is a style of poetry.",
+          "Momentum is measured in degrees Celsius.",
+          "Momentum depends on mass and velocity.",
+          "Momentum is a chemical reaction only.",
+          "Momentum exists only in liquids.",
+          "Momentum is a planet ring."
+        ],
+        "correct": "0, 1, 2, 6"
+      },
+      {
+        "sampleKey": "EN-05",
+        "bucket": "priority_open",
+        "locale": "EN",
+        "cardId": "varia-open-029",
+        "topic": "Varia",
+        "category": "OPEN",
+        "question": "Varia: Which statements about a camera are true?",
+        "options": [
+          "A camera only works underground.",
+          "A camera is a kind of sandwich.",
+          "A camera is a type of volcano.",
+          "A camera is a bird species.",
+          "Cameras can take photos or video.",
+          "A camera is used to boil tea.",
+          "A camera captures images.",
+          "A camera is made only of paper.",
+          "Many cameras use lenses.",
+          "Smartphones often include cameras."
+        ],
+        "correct": "4, 6, 8, 9"
+      },
+      {
+        "sampleKey": "EN-06",
+        "bucket": "cross_category",
+        "locale": "EN",
+        "cardId": "history-true_false-030",
+        "topic": "History",
+        "category": "TRUE_FALSE",
+        "question": "History: Which statements about the Maya civilization are true?",
+        "options": [
+          "Maya cities rose in Mesoamerica.",
+          "Maya writing used glyphs.",
+          "They tracked time with complex calendars.",
+          "Chichen Itza is tied to Maya history.",
+          "Maya civilization centered in Scandinavia.",
+          "Steel railways built their empire.",
+          "They landed on the Moon.",
+          "Maize was central to Maya life.",
+          "Maya used only Latin script.",
+          "Their cities vanished in one night."
+        ],
+        "correct": "0, 1, 2, 3, 7"
+      },
+      {
+        "sampleKey": "EN-07",
+        "bucket": "cross_category",
+        "locale": "EN",
+        "cardId": "sports-number-024",
+        "topic": "Sports",
+        "category": "NUMBER",
+        "question": "Sports: Minutes in one football half? Context tag: Triathlon.",
+        "options": [
+          "50",
+          "40",
+          "37",
+          "53",
+          "45",
+          "43",
+          "35",
+          "55",
+          "57",
+          "47"
+        ],
+        "correct": "4"
+      },
+      {
+        "sampleKey": "EN-08",
+        "bucket": "cross_category",
+        "locale": "EN",
+        "cardId": "geography-order-022",
+        "topic": "Geography",
+        "category": "ORDER",
+        "question": "Geography: Put these countries in order by area, smallest first. Theme: Ottawa.",
+        "options": [
+          "Kazakhstan",
+          "India",
+          "Iceland",
+          "Russia",
+          "United Kingdom",
+          "Ukraine",
+          "China",
+          "France",
+          "Argentina",
+          "Canada"
+        ],
+        "correct": "7, 5, 1, 10, 2, 4, 8, 3, 6, 9"
+      },
+      {
+        "sampleKey": "EN-09",
+        "bucket": "cross_category",
+        "locale": "EN",
+        "cardId": "culture-century_decade-007",
+        "topic": "Culture",
+        "category": "CENTURY_DECADE",
+        "question": "Culture: Which decade includes 1647?",
+        "options": [
+          "1600s",
+          "1660s",
+          "1650s",
+          "1610s",
+          "1690s",
+          "1630s",
+          "1640s",
+          "1670s",
+          "1620s",
+          "1680s"
+        ],
+        "correct": "6"
+      },
+      {
+        "sampleKey": "EN-10",
+        "bucket": "cross_category",
+        "locale": "EN",
+        "cardId": "science-color-015",
+        "topic": "Science",
+        "category": "COLOR",
+        "question": "Science: Which hue belongs with 'silver coin'?",
+        "options": [
+          "Navy",
+          "White",
+          "Gold",
+          "Mint Green",
+          "Orange",
+          "Black",
+          "Green",
+          "Silver",
+          "Gray",
+          "Blue"
+        ],
+        "correct": "7"
+      }
+    ],
+    "ET": [
+      {
+        "sampleKey": "ET-01",
+        "bucket": "priority_open",
+        "locale": "ET",
+        "cardId": "sports-open-023-et",
+        "topic": "Sports",
+        "category": "OPEN",
+        "question": "Sport: Millised väited maratoni kohta peavad paika?",
+        "options": [
+          "Olümpiamängudel on maraton kavas.",
+          "Maratonis on kriketi väravad ja over'id.",
+          "Maratoni mängitakse golfikeppidega.",
+          "Maraton on seitsmemänguline finaalseeria.",
+          "Maratonis kasutatakse jääl litrit.",
+          "Maraton on maanteejooksu ala.",
+          "Maratoni ujutakse basseinis.",
+          "Rajal peab olema üle tee tõmmatud võrk.",
+          "Maratoni pikkus on 42,195 km.",
+          "Maratoni nimi pärineb antiik-Kreekast."
+        ],
+        "correct": "0, 5, 8, 9"
+      },
+      {
+        "sampleKey": "ET-02",
+        "bucket": "priority_open",
+        "locale": "ET",
+        "cardId": "geography-open-006-et",
+        "topic": "Geography",
+        "category": "OPEN",
+        "question": "Geograafia: Millised väited Oslo kohta peavad paika?",
+        "options": [
+          "Oslo on Norra pealinn.",
+          "Oslo paikneb Vaikse ookeani ääres.",
+          "Oslo asub Oslo fjordi ääres.",
+          "Oslo on Islandi pealinn.",
+          "Oslo on Skandinaavias.",
+          "Oslo asub Doonau ääres.",
+          "Oslo on Taani pealinn.",
+          "Oslo on Lõuna-Aafrikas.",
+          "Oslo on Läänemere rannikul.",
+          "Oslo on Põhjamaa pealinn."
+        ],
+        "correct": "0, 2, 4, 9"
+      },
+      {
+        "sampleKey": "ET-03",
+        "bucket": "priority_open",
+        "locale": "ET",
+        "cardId": "culture-open-026-et",
+        "topic": "Culture",
+        "category": "OPEN",
+        "question": "Kultuur: Millised väited Dostojevski kohta peavad paika?",
+        "options": [
+          "The Brothers Karamazov on tema teos.",
+          "Dostojevski maalis Sixtuse kabeli lae.",
+          "Ta juhtis The Beatlesit.",
+          "Dostojevski oli Hollywoodi monteerija.",
+          "Ta kirjutas Pride and Prejudice'i.",
+          "Crime and Punishment on Dostojevski teos.",
+          "Dostojevski kavandas Eiffeli torni.",
+          "Dostojevski sündis Mexico Citys.",
+          "Dostojevski oli romaanikirjanik.",
+          "Dostojevski kuulub vene kirjandusse."
+        ],
+        "correct": "0, 5, 8, 9"
+      },
+      {
+        "sampleKey": "ET-04",
+        "bucket": "priority_open",
+        "locale": "ET",
+        "cardId": "science-open-010-et",
+        "topic": "Science",
+        "category": "OPEN",
+        "question": "Teadus: Millised väited impulsi kohta peavad paika?",
+        "options": [
+          "Impulss on füüsika mõiste.",
+          "Impulss eksisteerib vaid vedelikes.",
+          "Impulss on ainult keemiline reaktsioon.",
+          "Paigal kehal on alati hiiglaslik impulss.",
+          "Impulss on luulestiil.",
+          "Impulssi mõõdetakse Celsiuse kraadides.",
+          "Impulss sõltub massist ja kiirusest.",
+          "Isolatsioonis süsteemis impulss säilib.",
+          "Liikuval veokil on impulss.",
+          "Impulss on planeedirõngas."
+        ],
+        "correct": "0, 6, 7, 8"
+      },
+      {
+        "sampleKey": "ET-05",
+        "bucket": "priority_open",
+        "locale": "ET",
+        "cardId": "varia-open-001-et",
+        "topic": "Varia",
+        "category": "OPEN",
+        "question": "Varia: Millised väited kalendri kohta peavad paika?",
+        "options": [
+          "Kalender aitab kuupäevi jälgida.",
+          "Kalender aitab sündmusi planeerida.",
+          "Kalender ajab vee keema.",
+          "Kalender on muusikainstrument.",
+          "Kalendris on kuud ja nädalad.",
+          "Kalender on alati söödav.",
+          "Kalender on jalgratta liik.",
+          "Kalendrit kasutatakse puidu lõikamiseks.",
+          "Kalender on linnuliik.",
+          "Paljud kalendrid märgivad pühi."
+        ],
+        "correct": "0, 1, 4, 9"
+      },
+      {
+        "sampleKey": "ET-06",
+        "bucket": "cross_category",
+        "locale": "ET",
+        "cardId": "history-true_false-028-et",
+        "topic": "History",
+        "category": "TRUE_FALSE",
+        "question": "Ajalugu: Millised väited Pax Romana kohta peavad paika?",
+        "options": [
+          "Pax Romana tähendab Rooma rahu.",
+          "See algas Augustuse ajal.",
+          "Kaubandus ja teed õitsesid siis.",
+          "Impeerium püsis üldiselt stabiilne.",
+          "See algas pärast Rooma langemist.",
+          "See oli Jaapani šogunaat.",
+          "Hannibal valitses Pax Romana ajal.",
+          "See kuulus Rooma keisririiki.",
+          "See lõppes enne Caesari sündi.",
+          "Gladiaatorid leiutasid siis püssirohu."
+        ],
+        "correct": "0, 1, 2, 3, 7"
+      },
+      {
+        "sampleKey": "ET-07",
+        "bucket": "cross_category",
+        "locale": "ET",
+        "cardId": "sports-number-028-et",
+        "topic": "Sports",
+        "category": "NUMBER",
+        "question": "Sport: Mitu setti on vaja meeste Grand Slami voitmiseks? Kontekst: World Cup.",
+        "options": [
+          "2",
+          "7",
+          "27",
+          "5",
+          "6",
+          "25",
+          "3",
+          "4",
+          "8",
+          "1"
+        ],
+        "correct": "6"
+      },
+      {
+        "sampleKey": "ET-08",
+        "bucket": "cross_category",
+        "locale": "ET",
+        "cardId": "geography-order-014-et",
+        "topic": "Geography",
+        "category": "ORDER",
+        "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Lissabon.",
+        "options": [
+          "Nairobi",
+          "Kaplinn",
+          "Pariis",
+          "Singapur",
+          "Stockholm",
+          "Ateena",
+          "Canberra",
+          "Buenos Aires",
+          "Reykjavik",
+          "Kairo"
+        ],
+        "correct": "4, 2, 8, 5, 9, 7, 1, 3, 10, 6"
+      },
+      {
+        "sampleKey": "ET-09",
+        "bucket": "cross_category",
+        "locale": "ET",
+        "cardId": "culture-century_decade-011-et",
+        "topic": "Culture",
+        "category": "CENTURY_DECADE",
+        "question": "Kultuur: Vali kumnend aasta jaoks 1675.",
+        "options": [
+          "1630s",
+          "1660s",
+          "1690s",
+          "1680s",
+          "1640s",
+          "1700s",
+          "1670s",
+          "1650s",
+          "1710s",
+          "1720s"
+        ],
+        "correct": "6"
+      },
+      {
+        "sampleKey": "ET-10",
+        "bucket": "cross_category",
+        "locale": "ET",
+        "cardId": "science-color-029-et",
+        "topic": "Science",
+        "category": "COLOR",
+        "question": "Teadus: Mis värvile jääksid pidama vihje 'kuldmedal' puhul?",
+        "options": [
+          "Mündiroheline",
+          "Sinine",
+          "Roheline",
+          "Hall",
+          "Punane",
+          "Oranž",
+          "Kuldne",
+          "Tumesinine",
+          "Pruun",
+          "Hõbedane"
+        ],
+        "correct": "6"
+      }
+    ]
+  }
+}

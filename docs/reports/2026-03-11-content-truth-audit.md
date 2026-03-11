@@ -2,19 +2,25 @@
 
 ## Metadata
 
-- Generated: 2026-03-11T08:31:10.376Z
+- Generated: 2026-03-11T08:58:44.482Z
 - Scope: EN, ET SmartIQ locale packs
+- Editorial spot-check report: `docs/reports/2026-03-11-editorial-spot-check.md`
 
 ## Executive Summary
 
-- EN: CONDITIONAL - semantic blockers cleared; structural/manual review still required | score 1.000 | total issues 0
-- ET: CONDITIONAL - semantic blockers cleared; structural/manual review still required | score 1.000 | total issues 0
+- EN: validator-clean PASS | editorial spot-check PENDING | launch-trust CONDITIONAL - editorial verification pending | score 1.000 | total issues 0
+- ET: validator-clean PASS | editorial spot-check PENDING | launch-trust CONDITIONAL - editorial verification pending | score 1.000 | total issues 0
 
 ## EN Findings
 
 - Dataset: `data/smart10/cards.en.json`
 - Semantic content score: 1.000
-- Launch readiness: CONDITIONAL - semantic blockers cleared; structural/manual review still required
+- Structural hard errors: 0
+- Structural warning count: 0
+- Validator-clean status: PASS
+- Editorial spot-check: PENDING
+- Launch-trust status: CONDITIONAL - editorial verification pending
+- Launch readiness: CONDITIONAL - editorial verification pending
 - Total issue hits: 0
 - Warning count: 0
 
@@ -45,7 +51,12 @@
 
 - Dataset: `data/smart10/cards.et.json`
 - Semantic content score: 1.000
-- Launch readiness: CONDITIONAL - semantic blockers cleared; structural/manual review still required
+- Structural hard errors: 0
+- Structural warning count: 0
+- Validator-clean status: PASS
+- Editorial spot-check: PENDING
+- Launch-trust status: CONDITIONAL - editorial verification pending
+- Launch readiness: CONDITIONAL - editorial verification pending
 - Total issue hits: 0
 - Warning count: 0
 
