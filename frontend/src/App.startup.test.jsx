@@ -218,7 +218,8 @@ describe('App startup resilience', () => {
     render(<App />);
 
     await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
-    expect(screen.getByLabelText(/theme/i)).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: /host language/i })).toBeInTheDocument();
+    expect(screen.getByText(/single theme/i)).toBeInTheDocument();
     expect(screen.getByRole('radiogroup', { name: /topic options/i })).toBeInTheDocument();
     expect(screen.getByTestId('active-filter')).toHaveTextContent(/any topic \| en/i);
   });
@@ -269,15 +270,13 @@ describe('App startup resilience', () => {
     expect(screen.getByLabelText(/volume/i)).toHaveValue('30');
   });
 
-  test('applies selected theme to document root', async () => {
+  test('keeps the single host theme applied to document root', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
 
     render(<App />);
 
     await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
-    fireEvent.change(screen.getByLabelText(/theme/i), { target: { value: 'ocean' } });
-
-    expect(document.documentElement).toHaveAttribute('data-theme', 'ocean');
+    expect(document.documentElement).toHaveAttribute('data-theme', 'classic');
   });
 
   test('maps forbidden state with explicit message', async () => {
@@ -368,7 +367,7 @@ describe('App startup resilience', () => {
       userEmail: 'owner@northwind.test',
       tenantId: 'tenant-northwind'
     });
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Northwind Quiz' })).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByRole('heading', { level: 1, name: 'Northwind Quiz' })).toBeInTheDocument());
     expect(screen.getByTestId('tenant-runtime-hint')).toHaveTextContent('tenant-northwind');
     expect(screen.queryByTestId('onboarding-panel')).not.toBeInTheDocument();
   });
@@ -421,7 +420,7 @@ describe('App startup resilience', () => {
       userEmail: 'owner@northwind.test',
       tenantId: 'tenant-signin'
     });
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Signin Quiz' })).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByRole('heading', { level: 1, name: 'Signin Quiz' })).toBeInTheDocument());
   });
 
   test('clears invalid stored session and shows recovery warning', async () => {
@@ -593,7 +592,7 @@ describe('App startup resilience', () => {
       primaryColor: '#101820',
       secondaryColor: '#FEE715'
     }));
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Late Night Quiz' })).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByRole('heading', { level: 1, name: 'Late Night Quiz' })).toBeInTheDocument());
     expect(screen.getByTestId('branding-message')).toHaveTextContent(/branding updated/i);
     expect(document.title).toBe('Late Night Quiz');
     expect(document.documentElement.style.getPropertyValue('--accent')).toBe('#101820');
@@ -863,7 +862,7 @@ describe('App startup resilience', () => {
     expect(screen.getAllByText('Host One').length).toBeGreaterThan(0);
     fireEvent.click(screen.getAllByRole('checkbox', { name: /include in launch/i })[1]);
     fireEvent.click(screen.getByRole('button', { name: /use selected players/i }));
-    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeEnabled());
+    await waitFor(() => expect(screen.getByRole('button', { name: /start selected room/i })).toBeEnabled());
     expect(screen.getByTestId('room-selected-roster-hint')).toHaveTextContent(/host one/i);
     expect(screen.getByTestId('room-selected-roster-hint')).not.toHaveTextContent(/alice/i);
     expect(screen.getAllByText('Host One').length).toBeGreaterThan(0);

@@ -217,7 +217,7 @@ describe('App tenant runtime integration', () => {
     await screen.findByRole('button', { name: /start game/i });
 
     await waitFor(() => {
-      expect(screen.getByRole('heading', { name: 'Northwind Quiz' })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 1, name: 'Northwind Quiz' })).toBeInTheDocument();
     });
     expect(screen.getByTestId('tenant-runtime-hint')).toHaveTextContent('tenant-northwind');
     expect(screen.getByTestId('tenant-runtime-hint')).toHaveTextContent('pilot-monthly');

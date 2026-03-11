@@ -34,6 +34,11 @@ import GameRoom from './components/GameRoom';
 import HostDashboard from './components/HostDashboard';
 import PlayerJoin from './components/PlayerJoin';
 import RoundSummary from './components/RoundSummary';
+import AppHeader from './components/shell/AppHeader';
+import AppShell from './components/shell/AppShell';
+import MainStage from './components/shell/MainStage';
+import PrimaryActionBar from './components/shell/PrimaryActionBar';
+import SidePanel from './components/shell/SidePanel';
 import { useAudioFeedback } from './audio/useAudioFeedback';
 import { MAX_PLAYERS_PER_ROOM } from './constants/runtime';
 import {
@@ -684,22 +689,26 @@ function PublicLaunchPanel({ onStartTrial, onSignIn }) {
   );
 }
 
-function BuildBadge() {
+function BuildBadge({ inline = false }) {
   if (!SHOW_BUILD_BADGE) {
     return null;
   }
 
   const badgeText = BUILD_SHA ? `DEV BUILD ${BUILD_SHA.slice(0, 7)}` : 'DEV BUILD';
   return (
-    <p className="build-badge" data-testid="build-badge">
+    <p className={`build-badge${inline ? ' build-badge--inline' : ''}`} data-testid="build-badge">
       {badgeText}
     </p>
   );
 }
 
-function AudioControls({ muted, volume, onToggleMute, onVolumeChange }) {
+function AudioControls({ muted, volume, onToggleMute, onVolumeChange, inline = false }) {
   return (
-    <section className="audio-controls board-surface" data-testid="audio-controls" aria-label="Audio controls">
+    <section
+      className={`audio-controls board-surface${inline ? ' audio-controls--inline' : ''}`}
+      data-testid="audio-controls"
+      aria-label="Audio controls"
+    >
       <button
         type="button"
         className="audio-toggle"
@@ -734,138 +743,39 @@ function StartScreen({
   appTitle,
   runtimeSnapshot,
   runtimeWarning,
-  onUpgrade,
-  onLogout,
-  upgradePending,
-  upgradeMessage,
-  checkoutUrl,
-  workspaceInsights,
-  workspacePending,
-  workspaceError,
   hostLaunchBlocked,
-  hostLaunchMessage,
-  workspaceMessage,
-  brandingDraft,
-  brandingPending,
-  brandingMessage,
-  brandingError,
-  sessionTemplates,
-  sessionTemplateDraft,
-  sessionTemplatePending,
-  sessionTemplateMessage,
-  sessionTemplateError,
-  sessionReviewNotes,
-  onBrandingDraftChange,
-  onSaveBranding,
-  onSessionTemplateDraftChange,
-  onSaveSessionTemplate,
-  onApplySessionTemplate,
-  onDeleteSessionTemplate,
-  reviewedHostedSession,
-  reviewedHostedSessionNote,
-  reviewedHostedSessionNoteMessage,
-  onReviewedHostedSessionNoteChange,
-  onSaveReviewedHostedSessionNote,
-  onClearReviewedHostedSessionNote,
-  activeHostedSession,
-  hostedSessionFilter,
-  onHostedSessionFilterChange,
-  onUseRecentHostedSession,
-  onReviewRecentHostedSession,
-  onResumeRecentHostedSession,
-  onLaunchRecentHostedSession,
-  onSaveRecentHostedSessionAsTemplate,
-  canLaunchRecentHostedSessions
+  playerDraft,
+  onPlayerDraftChange,
+  onCommitPlayerDraft,
+  onRemovePlayer,
+  showStartButton = true
 }) {
-  const [playerDraft, setPlayerDraft] = useState('');
   const players = parsePlayers(config.playersText);
   const draftPlayers = parsePlayers(playerDraft);
   const activeTopic = config.topic || 'Any Topic';
   const activeLanguage = String(config.lang || 'en').toUpperCase();
   const tenantId = runtimeSnapshot?.me?.selectedTenantId || '';
   const planCode = runtimeSnapshot?.subscription?.planCode || '';
-  const planStatus = runtimeSnapshot?.subscription?.status || '';
   const capabilities = runtimeSnapshot?.capabilities || null;
-  const planLimit = resolvePlanLimit(planCode);
   const maxHostedPlayers = Number.isInteger(capabilities?.maxHostedPlayers)
     ? Math.min(capabilities.maxHostedPlayers, MAX_PLAYERS_PER_ROOM)
     : null;
-  const analyticsHistoryEnabled = capabilities?.analyticsHistoryEnabled === true;
-  const sessionTemplatesEnabled = capabilities?.sessionTemplatesEnabled === true;
-  const customBrandingEnabled = capabilities?.customBrandingEnabled === true;
-  const selectedRole = String(runtimeSnapshot?.me?.selectedRole || '').trim().toLowerCase();
-  const canManageBrandingRole = selectedRole === 'owner' || selectedRole === 'admin';
-  const canEditBranding = customBrandingEnabled && canManageBrandingRole;
   const mergedPlayerCount = Array.from(new Set([...players, ...draftPlayers])).length;
   const overHostedPlayerCap = maxHostedPlayers != null && mergedPlayerCount > maxHostedPlayers;
   const canStart = (players.length > 0 || draftPlayers.length > 0) && !overHostedPlayerCap;
-  const usageRow = Array.isArray(workspaceInsights?.usageSummary)
-    ? workspaceInsights.usageSummary.find((entry) => String(entry?.eventType || '').toLowerCase() === 'game.round.completed')
-    : null;
-  const canUpgrade = Boolean(tenantId) && typeof onUpgrade === 'function';
-  const recentHostedSessions = deriveRecentHostedSessions(workspaceInsights?.auditEvents);
-  const hostWorkspaceAnalytics = buildHostWorkspaceAnalytics(recentHostedSessions, sessionTemplates.length, sessionReviewNotes);
-  const visibleHostedSessions = recentHostedSessions.filter((entry) => {
-    const hasSavedNote = Boolean(resolveSessionReviewNote(sessionReviewNotes, entry.gameId));
-    if (hostedSessionFilter === 'completed') {
-      return entry.status === 'completed';
-    }
-    if (hostedSessionFilter === 'live') {
-      return entry.status !== 'completed';
-    }
-    if (hostedSessionFilter === 'notes') {
-      return hasSavedNote;
-    }
-    return true;
-  });
-
-  function addPlayers(rawValue) {
-    const incoming = parsePlayers(rawValue);
-    if (incoming.length === 0) {
-      return players;
-    }
-    const merged = Array.from(new Set([...players, ...incoming]));
-    setConfig((prev) => ({ ...prev, playersText: merged.join(', ') }));
-    return merged;
-  }
-
-  function removePlayer(player) {
-    const next = players.filter((entry) => entry !== player);
-    setConfig((prev) => ({ ...prev, playersText: next.join(', ') }));
-  }
-
-  function handleStartClick() {
-    const merged = draftPlayers.length > 0 ? addPlayers(playerDraft) : players;
-    const normalizedPlayers = Array.isArray(merged) ? merged : players;
-    if (normalizedPlayers.length === 0) {
-      return;
-    }
-    setPlayerDraft('');
-    onStart(normalizedPlayers.join(', '));
-  }
-
-  function handleSaveTemplateClick() {
-    if (typeof onSaveSessionTemplate !== 'function') {
-      return;
-    }
-    const merged = draftPlayers.length > 0 ? addPlayers(playerDraft) : players;
-    const normalizedPlayers = Array.isArray(merged) ? merged : players;
-    if (normalizedPlayers.length === 0) {
-      return;
-    }
-    setPlayerDraft('');
-    onSaveSessionTemplate({
-      name: sessionTemplateDraft.name,
-      topic: config.topic,
-      language: config.lang,
-      theme: config.theme,
-      players: normalizedPlayers
-    });
-  }
 
   return (
-    <section className="setup-panel board-surface">
-      <h1>{appTitle}</h1>
+    <section className="setup-panel board-surface host-launch-panel" data-testid="host-launch-panel">
+      <div className="host-launch-panel-header">
+        <div>
+          <p className="section-title">Launch Console</p>
+          <h2>{appTitle}</h2>
+        </div>
+        <div className="host-launch-stat">
+          <span>Mode</span>
+          <strong>{tenantId ? 'Hosted runtime' : 'Guest prep'}</strong>
+        </div>
+      </div>
       <p>{STRINGS.subtitle}</p>
       {tenantId ? (
         <p className="field-hint tenant-runtime-hint" data-testid="tenant-runtime-hint">
@@ -875,120 +785,6 @@ function StartScreen({
       {runtimeWarning ? (
         <p className="field-hint runtime-warning" data-testid="tenant-runtime-warning">{runtimeWarning}</p>
       ) : null}
-      {tenantId ? (
-        <HostDashboard
-          strings={STRINGS}
-          appTitle={appTitle}
-          planCode={planCode}
-          planStatus={planStatus}
-          billingCycle={runtimeSnapshot?.subscription?.billingCycle}
-          maxHostedPlayers={maxHostedPlayers}
-          planLimit={planLimit}
-          analyticsHistoryEnabled={analyticsHistoryEnabled}
-          usageRow={usageRow}
-          workspacePending={workspacePending}
-          workspaceError={workspaceError}
-          workspaceMessage={workspaceMessage}
-          hostLaunchBlocked={hostLaunchBlocked}
-          hostLaunchMessage={hostLaunchMessage}
-          hostWorkspaceAnalytics={hostWorkspaceAnalytics}
-          customBrandingEnabled={customBrandingEnabled}
-          brandingDraft={brandingDraft}
-          brandingPending={brandingPending}
-          brandingMessage={brandingMessage}
-          brandingError={brandingError}
-          sessionReviewNotes={sessionReviewNotes}
-          sessionTemplatesEnabled={sessionTemplatesEnabled}
-          sessionTemplateDraft={sessionTemplateDraft}
-          sessionTemplatePending={sessionTemplatePending}
-          sessionTemplateMessage={sessionTemplateMessage}
-          sessionTemplateError={sessionTemplateError}
-          sessionTemplates={sessionTemplates}
-          visibleHostedSessions={visibleHostedSessions}
-          auditEvents={workspaceInsights?.auditEvents}
-          activeHostedSession={activeHostedSession}
-          hostedSessionFilter={hostedSessionFilter}
-          reviewedHostedSession={reviewedHostedSession}
-          reviewedHostedSessionNote={reviewedHostedSessionNote}
-          reviewedHostedSessionNoteMessage={reviewedHostedSessionNoteMessage}
-          canUpgrade={canUpgrade}
-          canSaveTemplate={players.length > 0 || draftPlayers.length > 0}
-          upgradePending={upgradePending}
-          canManageBrandingRole={canManageBrandingRole}
-          onUpgrade={onUpgrade}
-          onBrandingDraftChange={onBrandingDraftChange}
-          onSaveBranding={onSaveBranding}
-          onSessionTemplateDraftChange={onSessionTemplateDraftChange}
-          onSaveTemplate={handleSaveTemplateClick}
-          onApplySessionTemplate={onApplySessionTemplate}
-          onDeleteSessionTemplate={onDeleteSessionTemplate}
-          onHostedSessionFilterChange={onHostedSessionFilterChange}
-          onUseRecentHostedSession={onUseRecentHostedSession}
-          onReviewRecentHostedSession={onReviewRecentHostedSession}
-          onResumeRecentHostedSession={onResumeRecentHostedSession}
-          onLaunchRecentHostedSession={onLaunchRecentHostedSession}
-          onSaveRecentHostedSessionAsTemplate={onSaveRecentHostedSessionAsTemplate}
-          onReviewedHostedSessionNoteChange={onReviewedHostedSessionNoteChange}
-          onSaveReviewedHostedSessionNote={onSaveReviewedHostedSessionNote}
-          onClearReviewedHostedSessionNote={onClearReviewedHostedSessionNote}
-          canLaunchRecentHostedSessions={canLaunchRecentHostedSessions}
-          formatSubscriptionStatus={formatSubscriptionStatus}
-          formatAuditAction={formatAuditAction}
-          resolveSessionReviewNote={resolveSessionReviewNote}
-          formatSessionReviewNotePreview={formatSessionReviewNotePreview}
-        />
-      ) : null}
-      {tenantId && typeof onLogout === 'function' ? (
-        <div className="upgrade-row">
-          <button type="button" onClick={onLogout}>
-            {STRINGS.signOutSubmit}
-          </button>
-        </div>
-      ) : null}
-      {canUpgrade ? (
-        <div className="upgrade-row">
-          <button type="button" onClick={onUpgrade} disabled={upgradePending}>
-            {upgradePending ? STRINGS.upgradeSubmitting : hostLaunchBlocked ? STRINGS.upgradeRecoverySubmit : STRINGS.upgradeSubmit}
-          </button>
-          {upgradeMessage ? <p className="field-hint" data-testid="upgrade-message">{upgradeMessage}</p> : null}
-          {checkoutUrl ? (
-            <a className="inline-link" data-testid="checkout-link" href={checkoutUrl}>
-              {STRINGS.upgradeContinueSubmit}
-            </a>
-          ) : null}
-        </div>
-      ) : null}
-
-      <div className="setup-toolbar">
-        <div className="setup-toolbar-group">
-          <label htmlFor="theme">Theme</label>
-          <select
-            id="theme"
-            value={config.theme}
-            onChange={(event) => setConfig((prev) => ({ ...prev, theme: event.target.value }))}
-          >
-            {THEME_OPTIONS.map((theme) => (
-              <option key={theme.value} value={theme.value}>
-                {theme.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="setup-toolbar-group">
-          <label htmlFor="lang">Language</label>
-          <select
-            id="lang"
-            value={config.lang}
-            onChange={(event) => setConfig((prev) => ({ ...prev, lang: event.target.value }))}
-          >
-            {DEFAULT_LANGS.map((lang) => (
-              <option key={lang} value={lang}>
-                {lang.toUpperCase()}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
 
       <h2 className="section-title">Topic</h2>
       <div className="topic-grid" role="radiogroup" aria-label="Topic options">
@@ -1044,23 +840,21 @@ function StartScreen({
         id="players"
         type="text"
         value={playerDraft}
-        onChange={(event) => setPlayerDraft(event.target.value)}
+        onChange={(event) => onPlayerDraftChange(event.target.value)}
         onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === ',') {
             event.preventDefault();
-            addPlayers(event.currentTarget.value);
-            setPlayerDraft('');
+            onCommitPlayerDraft(event.currentTarget.value);
           }
         }}
         onBlur={(event) => {
-          addPlayers(event.currentTarget.value);
-          setPlayerDraft('');
+          onCommitPlayerDraft(event.currentTarget.value);
         }}
         placeholder={STRINGS.playersPlaceholder}
       />
       <div className="players-chips">
         {players.map((player) => (
-          <button key={player} className="player-token" type="button" onClick={() => removePlayer(player)}>
+          <button key={player} className="player-token" type="button" onClick={() => onRemovePlayer(player)}>
             <span>{player}</span>
             <span aria-hidden>x</span>
           </button>
@@ -1073,9 +867,11 @@ function StartScreen({
       ) : null}
       {players.length === 0 ? <p className="field-hint">{STRINGS.addPlayerHint}</p> : null}
 
-      <button className="start-cta" onClick={handleStartClick} disabled={!canStart || hostLaunchBlocked} type="button">
-        {STRINGS.startRound}
-      </button>
+      {showStartButton ? (
+        <button className="start-cta" onClick={onStart} disabled={!canStart || hostLaunchBlocked} type="button">
+          {STRINGS.startRound}
+        </button>
+      ) : null}
     </section>
   );
 }
@@ -1419,6 +1215,7 @@ function GameApp() {
     theme: storedConfig?.theme ?? 'classic',
     playersText: storedConfig?.playersText ?? ''
   });
+  const [setupPlayerDraft, setSetupPlayerDraft] = useState('');
   const [runtimeSnapshot, setRuntimeSnapshot] = useState(null);
   const [runtimeWarning, setRuntimeWarning] = useState('');
   const [onboardingDraft, setOnboardingDraft] = useState({
@@ -2029,6 +1826,46 @@ function GameApp() {
     }
   }
 
+  function commitSetupPlayers(rawValue = setupPlayerDraft) {
+    const existingPlayers = parsePlayers(config.playersText);
+    const incomingPlayers = parsePlayers(rawValue);
+    const mergedPlayers = Array.from(new Set([...existingPlayers, ...incomingPlayers]));
+    setConfig((prev) => ({ ...prev, playersText: mergedPlayers.join(', ') }));
+    setSetupPlayerDraft('');
+    return mergedPlayers;
+  }
+
+  function handleRemoveSetupPlayer(player) {
+    const nextPlayers = parsePlayers(config.playersText).filter((entry) => entry !== player);
+    setConfig((prev) => ({ ...prev, playersText: nextPlayers.join(', ') }));
+  }
+
+  function handleStartSetupRound() {
+    const mergedPlayers = commitSetupPlayers();
+    if (mergedPlayers.length === 0) {
+      return;
+    }
+    launchRound({
+      playersText: mergedPlayers.join(', '),
+      topic: config.topic,
+      language: config.lang
+    });
+  }
+
+  async function handleSaveCurrentSetupTemplate() {
+    const mergedPlayers = commitSetupPlayers();
+    if (mergedPlayers.length === 0) {
+      return;
+    }
+    await handleSaveSessionTemplate({
+      name: sessionTemplateDraft.name,
+      topic: config.topic,
+      language: config.lang,
+      theme: config.theme,
+      players: mergedPlayers
+    });
+  }
+
   function handleApplySessionTemplate(template) {
     setConfig((prev) => ({
       ...prev,
@@ -2631,40 +2468,290 @@ function GameApp() {
 
   const activeError = serverEngine.errorMessage;
   const controlsDisabled = !serverEngine.isLocalTurn;
-
-  return (
-    <main data-phase={engine.phase === GamePhase.SETUP ? 'setup' : 'game'}>
-      <BuildBadge />
+  const setupPlayers = parsePlayers(config.playersText);
+  const setupDraftPlayers = parsePlayers(setupPlayerDraft);
+  const setupMergedPlayerCount = Array.from(new Set([...setupPlayers, ...setupDraftPlayers])).length;
+  const tenantId = runtimeSnapshot?.me?.selectedTenantId || '';
+  const planCode = runtimeSnapshot?.subscription?.planCode || '';
+  const planStatus = runtimeSnapshot?.subscription?.status || '';
+  const selectedRole = String(runtimeSnapshot?.me?.selectedRole || '').trim().toLowerCase();
+  const capabilities = runtimeSnapshot?.capabilities || null;
+  const analyticsHistoryEnabled = capabilities?.analyticsHistoryEnabled === true;
+  const sessionTemplatesEnabled = capabilities?.sessionTemplatesEnabled === true;
+  const customBrandingEnabled = capabilities?.customBrandingEnabled === true;
+  const canManageBrandingRole = selectedRole === 'owner' || selectedRole === 'admin';
+  const maxHostedPlayers = Number.isInteger(capabilities?.maxHostedPlayers)
+    ? Math.min(capabilities.maxHostedPlayers, MAX_PLAYERS_PER_ROOM)
+    : null;
+  const setupOverHostedPlayerCap = maxHostedPlayers != null && setupMergedPlayerCount > maxHostedPlayers;
+  const planLimit = resolvePlanLimit(planCode);
+  const usageRow = Array.isArray(workspaceInsights?.usageSummary)
+    ? workspaceInsights.usageSummary.find((entry) => String(entry?.eventType || '').toLowerCase() === 'game.round.completed')
+    : null;
+  const recentHostedSessions = deriveRecentHostedSessions(workspaceInsights?.auditEvents);
+  const hostWorkspaceAnalytics = buildHostWorkspaceAnalytics(recentHostedSessions, sessionTemplates.length, sessionReviewNotes);
+  const visibleHostedSessions = recentHostedSessions.filter((entry) => {
+    const hasSavedNote = Boolean(resolveSessionReviewNote(sessionReviewNotes, entry.gameId));
+    if (hostedSessionFilter === 'completed') {
+      return entry.status === 'completed';
+    }
+    if (hostedSessionFilter === 'live') {
+      return entry.status !== 'completed';
+    }
+    if (hostedSessionFilter === 'notes') {
+      return hasSavedNote;
+    }
+    return true;
+  });
+  const canUpgrade = Boolean(tenantId) && typeof handleUpgradeCheckout === 'function';
+  const shellStatus = engine.phase === GamePhase.SETUP
+    ? roomSession?.roomCode
+      ? `Lobby ${roomSession.roomCode}`
+      : tenantId
+        ? 'Host setup'
+        : 'Pre-show'
+    : `Round ${engine.roundNumber}`;
+  const shellEyebrow = engine.phase === GamePhase.SETUP
+    ? 'SmartIQ host control console'
+    : 'Live host console';
+  const languageControl = (
+    <div className="host-language-switch" role="group" aria-label="Host language">
+      {DEFAULT_LANGS.map((lang) => {
+        const selected = config.lang === lang;
+        return (
+          <button
+            key={lang}
+            type="button"
+            className={`host-language-chip${selected ? ' is-selected' : ''}`}
+            aria-pressed={selected}
+            onClick={() => setConfig((prev) => ({ ...prev, lang: lang }))}
+          >
+            {lang.toUpperCase()}
+          </button>
+        );
+      })}
+    </div>
+  );
+  const utilityArea = (
+    <div className="host-utility-strip">
       <AudioControls
         muted={audioMuted}
         volume={audioVolume}
         onToggleMute={toggleAudioMute}
         onVolumeChange={setAudioVolume}
+        inline
       />
+      <span className="host-settings-chip">Single theme</span>
+    </div>
+  );
+  const sharedRoomPanel = (
+    <GameRoom
+      strings={STRINGS}
+      appTitle={appTitle}
+      draft={roomDraft}
+      pending={roomPending}
+      message={roomMessage}
+      error={roomError}
+      roomSession={roomSession}
+      selectedRoomPlayerNames={selectedRoomPlayerNames}
+      onDraftChange={setRoomDraft}
+      onCreateRoom={handleCreateRoom}
+      onJoinRoom={handleJoinRoom}
+      onResumeRoom={handleResumeRoom}
+      onClearRoom={handleClearRoom}
+      onSelectAllRoomPlayers={handleSelectAllRoomPlayers}
+      onToggleRoomPlayer={handleToggleRoomPlayer}
+      onUseRoomPlayers={handleUseRoomPlayers}
+      onStartRoomSession={handleStartRoomSession}
+      onRemoveRoomPlayer={handleRemoveRoomPlayer}
+      onTrimRoomToSelectedPlayers={handleTrimRoomToSelectedPlayers}
+    />
+  );
+  const launchConsolePanel = (
+    <StartScreen
+      topics={topics}
+      config={config}
+      setConfig={setConfig}
+      onStart={handleStartSetupRound}
+      appTitle={appTitle}
+      runtimeSnapshot={runtimeSnapshot}
+      runtimeWarning={runtimeWarning}
+      hostLaunchBlocked={hostLaunchBlocked}
+      playerDraft={setupPlayerDraft}
+      onPlayerDraftChange={setSetupPlayerDraft}
+      onCommitPlayerDraft={commitSetupPlayers}
+      onRemovePlayer={handleRemoveSetupPlayer}
+      showStartButton={false}
+    />
+  );
+  const setupActionBar = !roomSession ? (
+    <PrimaryActionBar>
+      <div className="app-shell-action-copy">
+        <span>Primary action</span>
+        <strong>{`${setupMergedPlayerCount} queued for launch`}</strong>
+      </div>
+      <button
+        type="button"
+        className="app-shell-primary-button"
+        onClick={handleStartSetupRound}
+        disabled={setupMergedPlayerCount === 0 || hostLaunchBlocked || setupOverHostedPlayerCap}
+      >
+        {STRINGS.startRound}
+      </button>
+    </PrimaryActionBar>
+  ) : (
+    <PrimaryActionBar>
+      <div className="app-shell-action-copy">
+        <span>Lobby status</span>
+        <strong>{roomSession.roomCode ? `Room ${roomSession.roomCode}` : 'Room active'}</strong>
+      </div>
+    </PrimaryActionBar>
+  );
+  const setupSideStack = (
+    <div className="host-shell-stack">
+      {roomSession ? launchConsolePanel : sharedRoomPanel}
+      {!runtimeSnapshot ? (
+        <>
+          <PublicLaunchPanel
+            onStartTrial={focusOnboardingWorkspace}
+            onSignIn={focusSignInEmail}
+          />
+          <OnboardingPanel
+            draft={onboardingDraft}
+            pending={onboardingPending}
+            success={onboardingSuccess}
+            error={onboardingError}
+            onDraftChange={setOnboardingDraft}
+            onSubmit={handleOnboardingBootstrap}
+            workspaceInputRef={onboardingWorkspaceInputRef}
+          />
+          <SignInPanel
+            draft={signInDraft}
+            pending={signInPending}
+            success={signInSuccess}
+            error={signInError}
+            onDraftChange={setSignInDraft}
+            onSubmit={handleSignIn}
+            emailInputRef={signInEmailInputRef}
+          />
+        </>
+      ) : (
+        <>
+          <section className="setup-panel board-surface host-console-status-card" data-testid="host-console-status-card">
+            <div className="host-console-status-head">
+              <div>
+                <p className="section-title">Console status</p>
+                <h2>{appTitle}</h2>
+              </div>
+              <div className="host-plan-chip">
+                <span>{planCode || 'trial'}</span>
+                <strong>{formatSubscriptionStatus(planStatus)}</strong>
+              </div>
+            </div>
+            <div className="host-console-status-actions">
+              {typeof handleLogout === 'function' ? (
+                <button type="button" className="secondary-action" onClick={handleLogout}>
+                  {STRINGS.signOutSubmit}
+                </button>
+              ) : null}
+              {canUpgrade ? (
+                <button type="button" onClick={handleUpgradeCheckout} disabled={checkoutPending}>
+                  {checkoutPending ? STRINGS.upgradeSubmitting : hostLaunchBlocked ? STRINGS.upgradeRecoverySubmit : STRINGS.upgradeSubmit}
+                </button>
+              ) : null}
+            </div>
+            {checkoutMessage ? <p className="field-hint" data-testid="upgrade-message">{checkoutMessage}</p> : null}
+            {checkoutUrl ? (
+              <a className="inline-link" data-testid="checkout-link" href={checkoutUrl}>
+                {STRINGS.upgradeContinueSubmit}
+              </a>
+            ) : null}
+          </section>
+          <HostDashboard
+            strings={STRINGS}
+            appTitle={appTitle}
+            planCode={planCode}
+            planStatus={planStatus}
+            billingCycle={runtimeSnapshot?.subscription?.billingCycle}
+            maxHostedPlayers={maxHostedPlayers}
+            planLimit={planLimit}
+            analyticsHistoryEnabled={analyticsHistoryEnabled}
+            usageRow={usageRow}
+            workspacePending={workspacePending}
+            workspaceError={workspaceError}
+            workspaceMessage={workspaceMessage}
+            hostLaunchBlocked={hostLaunchBlocked}
+            hostLaunchMessage={hostLaunchMessage}
+            hostWorkspaceAnalytics={hostWorkspaceAnalytics}
+            customBrandingEnabled={customBrandingEnabled}
+            brandingDraft={brandingDraft}
+            brandingPending={brandingPending}
+            brandingMessage={brandingMessage}
+            brandingError={brandingError}
+            sessionReviewNotes={sessionReviewNotes}
+            sessionTemplatesEnabled={sessionTemplatesEnabled}
+            sessionTemplateDraft={sessionTemplateDraft}
+            sessionTemplatePending={sessionTemplatePending}
+            sessionTemplateMessage={sessionTemplateMessage}
+            sessionTemplateError={sessionTemplateError}
+            sessionTemplates={sessionTemplates}
+            visibleHostedSessions={visibleHostedSessions}
+            auditEvents={workspaceInsights?.auditEvents}
+            activeHostedSession={activeHostedSession}
+            hostedSessionFilter={hostedSessionFilter}
+            reviewedHostedSession={reviewedHostedSession}
+            reviewedHostedSessionNote={reviewedHostedSessionNote}
+            reviewedHostedSessionNoteMessage={reviewedHostedSessionNoteMessage}
+            canUpgrade={canUpgrade}
+            canSaveTemplate={setupMergedPlayerCount > 0}
+            upgradePending={checkoutPending}
+            canManageBrandingRole={canManageBrandingRole}
+            onUpgrade={handleUpgradeCheckout}
+            onBrandingDraftChange={handleBrandingDraftChange}
+            onSaveBranding={handleSaveBranding}
+            onSessionTemplateDraftChange={handleSessionTemplateDraftChange}
+            onSaveTemplate={handleSaveCurrentSetupTemplate}
+            onApplySessionTemplate={handleApplySessionTemplate}
+            onDeleteSessionTemplate={handleDeleteSessionTemplate}
+            onHostedSessionFilterChange={setHostedSessionFilter}
+            onUseRecentHostedSession={handleUseRecentHostedSession}
+            onReviewRecentHostedSession={handleReviewRecentHostedSession}
+            onResumeRecentHostedSession={handleResumeRecentHostedSession}
+            onLaunchRecentHostedSession={handleLaunchRecentHostedSession}
+            onSaveRecentHostedSessionAsTemplate={handleSaveRecentHostedSessionAsTemplate}
+            onReviewedHostedSessionNoteChange={handleReviewedHostedSessionNoteChange}
+            onSaveReviewedHostedSessionNote={handleSaveReviewedHostedSessionNote}
+            onClearReviewedHostedSessionNote={handleClearReviewedHostedSessionNote}
+            canLaunchRecentHostedSessions={canLaunchRecentHostedSessions}
+            formatSubscriptionStatus={formatSubscriptionStatus}
+            formatAuditAction={formatAuditAction}
+            resolveSessionReviewNote={resolveSessionReviewNote}
+            formatSessionReviewNotePreview={formatSessionReviewNotePreview}
+          />
+        </>
+      )}
+    </div>
+  );
+
+  return (
+    <main className="host-app" data-phase={engine.phase === GamePhase.SETUP ? 'setup' : 'game'}>
+      <BuildBadge />
       {engine.phase === GamePhase.SETUP ? (
         <>
           {activePlayerRouteRoomCode ? (
             playerRouteMatchesSavedPlayerSession ? (
-              <GameRoom
-                strings={STRINGS}
-                appTitle={String(playerRoutePreview?.branding?.appName || appTitle).trim() || appTitle}
-                draft={roomDraft}
-                pending={roomPending}
-                message={roomMessage}
-                error={roomError}
-                roomSession={roomSession}
-                selectedRoomPlayerNames={selectedRoomPlayerNames}
-                onDraftChange={setRoomDraft}
-                onCreateRoom={handleCreateRoom}
-                onJoinRoom={handleJoinRoom}
-                onResumeRoom={handleResumeRoom}
-                onClearRoom={handleClearRoom}
-                onSelectAllRoomPlayers={handleSelectAllRoomPlayers}
-                onToggleRoomPlayer={handleToggleRoomPlayer}
-                onUseRoomPlayers={handleUseRoomPlayers}
-                onStartRoomSession={handleStartRoomSession}
-                onRemoveRoomPlayer={handleRemoveRoomPlayer}
-                onTrimRoomToSelectedPlayers={handleTrimRoomToSelectedPlayers}
+              <AppShell
+                mode="setup"
+                header={(
+                  <AppHeader
+                    title={String(playerRoutePreview?.branding?.appName || appTitle).trim() || appTitle}
+                    eyebrow={shellEyebrow}
+                    status={shellStatus}
+                    languageControl={languageControl}
+                    utilityArea={utilityArea}
+                  />
+                )}
+                main={<MainStage>{sharedRoomPanel}</MainStage>}
               />
             ) : (
               <PlayerJoin
@@ -2683,186 +2770,137 @@ function GameApp() {
             )
           ) : startup.phase !== STARTUP_PHASE.READY ? <StartupStatePanel startup={startup} onRetry={loadTopics} appTitle={appTitle} /> : null}
           {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 ? (
-            <>
-              {!runtimeSnapshot ? (
-                <>
-                  <PublicLaunchPanel
-                    onStartTrial={focusOnboardingWorkspace}
-                    onSignIn={focusSignInEmail}
-                  />
-                  <OnboardingPanel
-                    draft={onboardingDraft}
-                    pending={onboardingPending}
-                    success={onboardingSuccess}
-                    error={onboardingError}
-                    onDraftChange={setOnboardingDraft}
-                    onSubmit={handleOnboardingBootstrap}
-                    workspaceInputRef={onboardingWorkspaceInputRef}
-                  />
-                  <SignInPanel
-                    draft={signInDraft}
-                    pending={signInPending}
-                    success={signInSuccess}
-                    error={signInError}
-                    onDraftChange={setSignInDraft}
-                    onSubmit={handleSignIn}
-                    emailInputRef={signInEmailInputRef}
-                  />
-                </>
-              ) : null}
-              <GameRoom
-                strings={STRINGS}
-                appTitle={appTitle}
-                draft={roomDraft}
-                pending={roomPending}
-                message={roomMessage}
-                error={roomError}
-                roomSession={roomSession}
-                selectedRoomPlayerNames={selectedRoomPlayerNames}
-                onDraftChange={setRoomDraft}
-                onCreateRoom={handleCreateRoom}
-                onJoinRoom={handleJoinRoom}
-                onResumeRoom={handleResumeRoom}
-                onClearRoom={handleClearRoom}
-                onSelectAllRoomPlayers={handleSelectAllRoomPlayers}
-                onToggleRoomPlayer={handleToggleRoomPlayer}
-                onUseRoomPlayers={handleUseRoomPlayers}
-                onStartRoomSession={handleStartRoomSession}
-                onRemoveRoomPlayer={handleRemoveRoomPlayer}
-                onTrimRoomToSelectedPlayers={handleTrimRoomToSelectedPlayers}
-              />
-              <StartScreen
-                topics={topics}
-                config={config}
-                setConfig={setConfig}
-                onStart={handleStartRound}
-                appTitle={appTitle}
-                runtimeSnapshot={runtimeSnapshot}
-                runtimeWarning={runtimeWarning}
-                onUpgrade={handleUpgradeCheckout}
-                onLogout={handleLogout}
-                upgradePending={checkoutPending}
-                upgradeMessage={checkoutMessage}
-                checkoutUrl={checkoutUrl}
-                workspaceInsights={workspaceInsights}
-                workspacePending={workspacePending}
-                workspaceError={workspaceError}
-                hostLaunchBlocked={hostLaunchBlocked}
-                hostLaunchMessage={hostLaunchMessage}
-                workspaceMessage={workspaceMessage}
-                brandingDraft={brandingDraft}
-                brandingPending={brandingPending}
-                brandingMessage={brandingMessage}
-                brandingError={brandingError}
-                sessionTemplates={sessionTemplates}
-                sessionTemplateDraft={sessionTemplateDraft}
-                sessionTemplatePending={sessionTemplatePending}
-                sessionTemplateMessage={sessionTemplateMessage}
-                sessionTemplateError={sessionTemplateError}
-                sessionReviewNotes={sessionReviewNotes}
-                onBrandingDraftChange={handleBrandingDraftChange}
-                onSaveBranding={handleSaveBranding}
-                onSessionTemplateDraftChange={handleSessionTemplateDraftChange}
-                onSaveSessionTemplate={handleSaveSessionTemplate}
-                onApplySessionTemplate={handleApplySessionTemplate}
-                onDeleteSessionTemplate={handleDeleteSessionTemplate}
-                reviewedHostedSession={reviewedHostedSession}
-                reviewedHostedSessionNote={reviewedHostedSessionNote}
-                reviewedHostedSessionNoteMessage={reviewedHostedSessionNoteMessage}
-                onReviewedHostedSessionNoteChange={handleReviewedHostedSessionNoteChange}
-                onSaveReviewedHostedSessionNote={handleSaveReviewedHostedSessionNote}
-                onClearReviewedHostedSessionNote={handleClearReviewedHostedSessionNote}
-                activeHostedSession={activeHostedSession}
-                hostedSessionFilter={hostedSessionFilter}
-                onHostedSessionFilterChange={setHostedSessionFilter}
-                onUseRecentHostedSession={handleUseRecentHostedSession}
-                onReviewRecentHostedSession={handleReviewRecentHostedSession}
-                onResumeRecentHostedSession={handleResumeRecentHostedSession}
-                onLaunchRecentHostedSession={handleLaunchRecentHostedSession}
-                onSaveRecentHostedSessionAsTemplate={handleSaveRecentHostedSessionAsTemplate}
-                canLaunchRecentHostedSessions={canLaunchRecentHostedSessions}
-              />
-            </>
-          ) : null}
-        </>
-      ) : null}
-
-      {engine.phase !== GamePhase.SETUP && engine.phase !== GamePhase.ROUND_SUMMARY && engine.phase !== GamePhase.GAME_OVER ? (
-        <>
-          {engine.phase === GamePhase.LOADING_CARD ? (
-            <section className="board-surface card-loading-panel" data-testid="card-loading-panel">
-              <p>{STRINGS.loadingCard}</p>
-              <div className="card-loading-skeleton" aria-hidden />
-            </section>
-          ) : null}
-          {activeError ? (
-            <div className="error-panel">
-              {isDeckExhaustedMessage(activeError) ? (
-                <>
-                  <p className="error">{STRINGS.deckExhausted}</p>
-                  <p>{STRINGS.deckExhaustedHint}</p>
-                  <div className="row-actions">
-                    <button type="button" onClick={handleRestart}>
-                      {STRINGS.changeFilters}
-                    </button>
-                    <button type="button" onClick={handlePlayAgain}>
-                      {STRINGS.restartGame}
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <p className="error">{activeError}</p>
-                  <button type="button" onClick={engine.beginCardLoad}>
-                    {STRINGS.retry}
-                  </button>
-                </>
+            <AppShell
+              mode="setup"
+              header={(
+                <AppHeader
+                  title={appTitle}
+                  eyebrow={shellEyebrow}
+                  status={shellStatus}
+                  languageControl={languageControl}
+                  utilityArea={utilityArea}
+                />
               )}
-            </div>
-          ) : null}
-          {engine.card ? (
-            <GameBoard
-              card={engine.card}
-              selectedIndexes={engine.selectedIndexes}
-              selectedRank={engine.selectedRank}
-              revealedIndexes={engine.revealedIndexes}
-              wrongIndexes={engine.wrongIndexes}
-              toggleIndex={engine.toggleOption}
-              onRankSelect={engine.chooseRank}
-              phase={engine.phase}
-              onAnswer={engine.requestConfirm}
-              onConfirm={engine.confirmAnswer}
-              onCancelConfirm={engine.cancelConfirm}
-              onPass={engine.passTurn}
-              onNext={engine.nextStep}
-              canPass={engine.canPass}
-              players={engine.players}
-              scores={engine.scores}
-              currentPlayerIndex={engine.currentPlayerIndex}
-              controlsDisabled={controlsDisabled}
-              roundNumber={engine.roundNumber}
-              passNote={STRINGS.passNote}
-              lastAction={engine.lastAction}
-              currentPlayer={engine.currentPlayer}
-              targetScore={engine.targetScore}
-              eliminatedPlayers={engine.eliminatedPlayers}
-              passedPlayers={engine.passedPlayers}
-              starterPlayer={engine.players[engine.starterIndex] ?? engine.currentPlayer}
+              main={(
+                <MainStage>
+                  {roomSession ? sharedRoomPanel : launchConsolePanel}
+                </MainStage>
+              )}
+              side={<SidePanel>{setupSideStack}</SidePanel>}
+              actionBar={setupActionBar}
             />
           ) : null}
         </>
       ) : null}
 
+      {engine.phase !== GamePhase.SETUP && engine.phase !== GamePhase.ROUND_SUMMARY && engine.phase !== GamePhase.GAME_OVER ? (
+        <AppShell
+          mode="game"
+          header={(
+            <AppHeader
+              title={appTitle}
+              eyebrow={shellEyebrow}
+              status={shellStatus}
+              languageControl={languageControl}
+              utilityArea={utilityArea}
+            />
+          )}
+          main={(
+            <MainStage>
+              <>
+                {engine.phase === GamePhase.LOADING_CARD ? (
+                  <section className="board-surface card-loading-panel" data-testid="card-loading-panel">
+                    <p>{STRINGS.loadingCard}</p>
+                    <div className="card-loading-skeleton" aria-hidden />
+                  </section>
+                ) : null}
+                {activeError ? (
+                  <div className="error-panel">
+                    {isDeckExhaustedMessage(activeError) ? (
+                      <>
+                        <p className="error">{STRINGS.deckExhausted}</p>
+                        <p>{STRINGS.deckExhaustedHint}</p>
+                        <div className="row-actions">
+                          <button type="button" onClick={handleRestart}>
+                            {STRINGS.changeFilters}
+                          </button>
+                          <button type="button" onClick={handlePlayAgain}>
+                            {STRINGS.restartGame}
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <p className="error">{activeError}</p>
+                        <button type="button" onClick={engine.beginCardLoad}>
+                          {STRINGS.retry}
+                        </button>
+                      </>
+                    )}
+                  </div>
+                ) : null}
+                {engine.card ? (
+                  <GameBoard
+                    card={engine.card}
+                    selectedIndexes={engine.selectedIndexes}
+                    selectedRank={engine.selectedRank}
+                    revealedIndexes={engine.revealedIndexes}
+                    wrongIndexes={engine.wrongIndexes}
+                    toggleIndex={engine.toggleOption}
+                    onRankSelect={engine.chooseRank}
+                    phase={engine.phase}
+                    onAnswer={engine.requestConfirm}
+                    onConfirm={engine.confirmAnswer}
+                    onCancelConfirm={engine.cancelConfirm}
+                    onPass={engine.passTurn}
+                    onNext={engine.nextStep}
+                    canPass={engine.canPass}
+                    players={engine.players}
+                    scores={engine.scores}
+                    currentPlayerIndex={engine.currentPlayerIndex}
+                    controlsDisabled={controlsDisabled}
+                    roundNumber={engine.roundNumber}
+                    passNote={STRINGS.passNote}
+                    lastAction={engine.lastAction}
+                    currentPlayer={engine.currentPlayer}
+                    targetScore={engine.targetScore}
+                    eliminatedPlayers={engine.eliminatedPlayers}
+                    passedPlayers={engine.passedPlayers}
+                    starterPlayer={engine.players[engine.starterIndex] ?? engine.currentPlayer}
+                  />
+                ) : null}
+              </>
+            </MainStage>
+          )}
+        />
+      ) : null}
+
       {engine.phase === GamePhase.ROUND_SUMMARY || engine.phase === GamePhase.GAME_OVER ? (
-        <RoundSummary
-          players={engine.players}
-          scores={engine.scores}
-          stats={engine.stats}
-          roundNumber={engine.roundNumber}
-          onNextRound={engine.nextStep}
-          onRestart={handleRestart}
-          onPlayAgain={handlePlayAgain}
-          winner={engine.winner}
+        <AppShell
+          mode="game"
+          header={(
+            <AppHeader
+              title={appTitle}
+              eyebrow={shellEyebrow}
+              status={shellStatus}
+              languageControl={languageControl}
+              utilityArea={utilityArea}
+            />
+          )}
+          main={(
+            <MainStage>
+              <RoundSummary
+                players={engine.players}
+                scores={engine.scores}
+                stats={engine.stats}
+                roundNumber={engine.roundNumber}
+                onNextRound={engine.nextStep}
+                onRestart={handleRestart}
+                onPlayAgain={handlePlayAgain}
+                winner={engine.winner}
+              />
+            </MainStage>
+          )}
         />
       ) : null}
     </main>
