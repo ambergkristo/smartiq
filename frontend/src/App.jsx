@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   API_BASE,
+  buildRoomWebSocketUrl,
   bootstrapOnboardingTenant,
   clearRuntimeAuthContext,
   completeRuntimeAuth,
@@ -55,6 +56,7 @@ import {
   normalizePlayerName,
   normalizeRoomCodeInput
 } from './roomRuntime';
+import { extractRoomStateFromRealtimeEvent, normalizeRoomStateSnapshot } from './roomRealtime';
 import { useServerGameEngine } from './state/useServerGameEngine';
 import { DEFAULT_LANGS, GamePhase } from './state/types';
 
@@ -274,6 +276,7 @@ const STRINGS = {
 };
 const CONFIG_STORAGE_KEY = 'smartiq.roundConfig';
 const ROOM_SESSION_STORAGE_KEY = 'smartiq.roomSession';
+const LIVE_GAME_SESSION_STORAGE_KEY = 'smartiq.liveGameSession';
 const ROOM_SELECTION_STORAGE_PREFIX = 'smartiq.roomSelection.';
 const SESSION_REVIEW_NOTE_STORAGE_PREFIX = 'smartiq.sessionReviewNote.';
 const STARTUP_PHASE = {
@@ -1148,20 +1151,53 @@ function loadStoredRoomSession() {
       authToken,
       displayName: String(parsed.displayName || '').trim(),
       role: String(parsed.role || '').trim().toLowerCase() === 'host' ? 'host' : 'player',
-      roomState: Array.isArray(parsed.roomState?.players)
-        ? {
-          roomCode,
-          branding: parsed.roomState?.branding && typeof parsed.roomState.branding === 'object'
-            ? {
-              appName: String(parsed.roomState.branding.appName || '').trim(),
-              logoUrl: String(parsed.roomState.branding.logoUrl || '').trim(),
-              primaryColor: String(parsed.roomState.branding.primaryColor || '').trim(),
-              secondaryColor: String(parsed.roomState.branding.secondaryColor || '').trim()
-            }
-            : null,
-          players: parsed.roomState.players
+      roomState: normalizeRoomStateSnapshot(parsed.roomState, roomCode)
+    };
+  } catch {
+    return null;
+  }
+}
+
+function loadStoredLiveGameSession() {
+  try {
+    const raw = localStorage.getItem(LIVE_GAME_SESSION_STORAGE_KEY);
+    if (!raw) {
+      return null;
+    }
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object') {
+      return null;
+    }
+    const gameId = String(parsed.gameId || '').trim();
+    if (!gameId) {
+      return null;
+    }
+    const actionTokens = parsed.actionTokens && typeof parsed.actionTokens === 'object'
+      ? Object.entries(parsed.actionTokens).reduce((acc, [playerId, token]) => {
+        const normalizedPlayerId = String(playerId || '').trim();
+        const normalizedToken = String(token || '').trim();
+        if (normalizedPlayerId && normalizedToken) {
+          acc[normalizedPlayerId] = normalizedToken;
         }
-        : null
+        return acc;
+      }, {})
+      : {};
+    if (Object.keys(actionTokens).length === 0) {
+      return null;
+    }
+    const request = parsed.request && typeof parsed.request === 'object'
+      ? {
+        players: Array.isArray(parsed.request.players) ? parsed.request.players.map((entry) => String(entry || '').trim()).filter(Boolean) : [],
+        language: String(parsed.request.language || '').trim().toLowerCase() || 'en',
+        topic: String(parsed.request.topic || '').trim() || undefined,
+        roomCode: normalizeRoomCodeInput(parsed.request.roomCode || ''),
+        winCondition: Number.isInteger(parsed.request.winCondition) ? parsed.request.winCondition : 30
+      }
+      : null;
+    return {
+      gameId,
+      actionTokens,
+      request
     };
   } catch {
     return null;
@@ -1241,6 +1277,14 @@ function persistRoomSession(session) {
   localStorage.setItem(ROOM_SESSION_STORAGE_KEY, JSON.stringify(session));
 }
 
+function persistLiveGameSession(session) {
+  if (!session) {
+    localStorage.removeItem(LIVE_GAME_SESSION_STORAGE_KEY);
+    return;
+  }
+  localStorage.setItem(LIVE_GAME_SESSION_STORAGE_KEY, JSON.stringify(session));
+}
+
 function persistRoomSelection(roomCode, selectedPlayerNames) {
   const key = buildRoomSelectionStorageKey(roomCode);
   if (!key) {
@@ -1265,6 +1309,7 @@ function isAdminConsoleRoute() {
 function GameApp() {
   const storedConfig = loadStoredConfig();
   const storedRoomSession = loadStoredRoomSession();
+  const storedLiveGameSession = loadStoredLiveGameSession();
   const [entryRoute, setEntryRoute] = useState(resolveEntryRoute());
   const [playerJoinRoute, setPlayerJoinRoute] = useState(resolvePlayerJoinRoute());
   const billingReturnState = resolveBillingReturnState();
@@ -1356,6 +1401,7 @@ function GameApp() {
   const billingReturnHandledRef = useRef(false);
   const onboardingWorkspaceInputRef = useRef(null);
   const signInEmailInputRef = useRef(null);
+  const liveGameRestoreAttemptedRef = useRef(false);
   const activePlayerRouteRoomCode = String(playerJoinRoute || '').trim();
   const playerRouteMatchesSavedPlayerSession = roomSession?.role === 'player'
     && normalizeRoomCodeInput(roomSession?.roomCode) === activePlayerRouteRoomCode;
@@ -1537,6 +1583,78 @@ function GameApp() {
   }, [activePlayerRouteRoomCode]);
 
   useEffect(() => {
+    const hasActiveSnapshot = serverEngine.phase !== GamePhase.SETUP
+      && serverEngine.activeSnapshot?.gameId
+      && Object.keys(serverEngine.actionTokensByPlayerId || {}).length > 0;
+    if (!hasActiveSnapshot) {
+      const pendingRestore = Boolean(storedLiveGameSession?.gameId)
+        && !liveGameRestoreAttemptedRef.current
+        && serverEngine.phase === GamePhase.SETUP;
+      if (!pendingRestore) {
+        persistLiveGameSession(null);
+      }
+      return;
+    }
+    persistLiveGameSession({
+      gameId: serverEngine.activeSnapshot.gameId,
+      actionTokens: serverEngine.actionTokensByPlayerId,
+      request: serverEngine.startRequest || {
+        players: serverEngine.players,
+        language: config.lang,
+        topic: config.topic || undefined,
+        roomCode: roomSession?.role === 'host' ? roomSession.roomCode : undefined,
+        winCondition: serverEngine.targetScore
+      }
+    });
+  }, [
+    config.lang,
+    config.topic,
+    roomSession?.role,
+    roomSession?.roomCode,
+    serverEngine.actionTokensByPlayerId,
+    serverEngine.activeSnapshot,
+    serverEngine.phase,
+    serverEngine.players,
+    serverEngine.startRequest,
+    serverEngine.targetScore,
+    storedLiveGameSession
+  ]);
+
+  useEffect(() => {
+    if (startup.phase !== STARTUP_PHASE.READY || liveGameRestoreAttemptedRef.current) {
+      return;
+    }
+    if (!storedLiveGameSession?.gameId || serverEngine.phase !== GamePhase.SETUP) {
+      liveGameRestoreAttemptedRef.current = true;
+      return;
+    }
+
+    liveGameRestoreAttemptedRef.current = true;
+    let cancelled = false;
+
+    fetchServerGameSession(storedLiveGameSession.gameId)
+      .then((snapshot) => {
+        if (cancelled) {
+          return;
+        }
+        serverEngine.clearError();
+        serverEngine.adoptCreatedSession({
+          snapshot,
+          actionTokens: storedLiveGameSession.actionTokens
+        }, storedLiveGameSession.request || {});
+      })
+      .catch(() => {
+        if (!cancelled) {
+          persistLiveGameSession(null);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [serverEngine, startup.phase, storedLiveGameSession]);
+
+  useEffect(() => {
     localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(config));
   }, [config]);
 
@@ -1603,6 +1721,107 @@ function GameApp() {
       }));
     }
   }, []);
+
+  const applyRoomStateUpdate = useCallback((nextRoomState) => {
+    const normalizedRoomState = normalizeRoomStateSnapshot(nextRoomState, roomSession?.roomCode);
+    if (!normalizedRoomState) {
+      return;
+    }
+    setRoomSession((prev) => {
+      if (!prev) {
+        return prev;
+      }
+      const nextSession = {
+        ...prev,
+        roomCode: normalizedRoomState.roomCode || prev.roomCode,
+        roomState: normalizedRoomState
+      };
+      persistRoomSession(nextSession);
+      return nextSession;
+    });
+    if (normalizeRoomCodeInput(activePlayerRouteRoomCode) === normalizedRoomState.roomCode) {
+      setPlayerRoutePreview(normalizedRoomState);
+    }
+  }, [activePlayerRouteRoomCode, roomSession?.roomCode]);
+
+  useEffect(() => {
+    if (typeof WebSocket !== 'function') {
+      return undefined;
+    }
+    if (!roomSession?.roomCode || !roomSession?.playerId || !roomSession?.authToken) {
+      return undefined;
+    }
+
+    let cancelled = false;
+    let socket = null;
+    let reconnectTimer = null;
+    let reconnectAttempts = 0;
+
+    const scheduleReconnect = () => {
+      if (cancelled) {
+        return;
+      }
+      reconnectAttempts += 1;
+      const delayMs = Math.min(5000, 1000 * reconnectAttempts);
+      reconnectTimer = window.setTimeout(connect, delayMs);
+    };
+
+    const connect = () => {
+      if (cancelled) {
+        return;
+      }
+      try {
+        socket = new WebSocket(buildRoomWebSocketUrl({
+          roomCode: roomSession.roomCode,
+          playerId: roomSession.playerId,
+          authToken: roomSession.authToken
+        }));
+      } catch {
+        scheduleReconnect();
+        return;
+      }
+
+      socket.onopen = () => {
+        reconnectAttempts = 0;
+      };
+
+      socket.onmessage = (event) => {
+        try {
+          const payload = JSON.parse(String(event.data || '{}'));
+          const nextRoomState = extractRoomStateFromRealtimeEvent(payload, roomSession.roomCode);
+          if (nextRoomState) {
+            applyRoomStateUpdate(nextRoomState);
+          }
+        } catch {
+          // Ignore malformed realtime payloads and wait for the next authoritative snapshot.
+        }
+      };
+
+      socket.onclose = () => {
+        if (!cancelled) {
+          scheduleReconnect();
+        }
+      };
+
+      socket.onerror = () => {
+        if (socket && socket.readyState === WebSocket.OPEN) {
+          socket.close();
+        }
+      };
+    };
+
+    connect();
+
+    return () => {
+      cancelled = true;
+      if (reconnectTimer != null) {
+        window.clearTimeout(reconnectTimer);
+      }
+      if (socket && (socket.readyState === WebSocket.OPEN || socket.readyState === WebSocket.CONNECTING)) {
+        socket.close();
+      }
+    };
+  }, [applyRoomStateUpdate, roomSession?.authToken, roomSession?.playerId, roomSession?.roomCode]);
 
   useEffect(() => {
     let cancelled = false;
@@ -2543,6 +2762,7 @@ function GameApp() {
       players: parsedPlayers,
       language,
       topic: topic || undefined,
+      roomCode: roomSession?.role === 'host' ? roomSession.roomCode : undefined,
       winCondition: 30
     });
   }

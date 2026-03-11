@@ -223,6 +223,17 @@ public class RoomService {
         }
     }
 
+    public synchronized RoomSnapshot upsertActiveGame(String roomCode,
+                                                      RoomActiveGameSnapshot activeGame,
+                                                      UUID tenantIdContext) {
+        evictExpiredRooms();
+        RoomState room = requireRoom(roomCode, tenantIdContext);
+        room.activeGame = activeGame;
+        room.lastTouchedAtMillis = nowMillis();
+        persistRoom(room);
+        return toSnapshot(room);
+    }
+
     private RoomResumeResponse resumeRoom(String roomCode, RejoinRoomRequest request, UUID tenantIdContext, boolean rotateToken) {
         try {
             evictExpiredRooms();
@@ -365,6 +376,7 @@ public class RoomService {
                 room.hostUserEmail,
                 players,
                 Map.copyOf(room.playerTokens),
+                room.activeGame,
                 room.lastTouchedAtMillis
         );
     }
@@ -394,6 +406,7 @@ public class RoomService {
         if (stored.playerTokens() != null) {
             room.playerTokens.putAll(stored.playerTokens());
         }
+        room.activeGame = stored.activeGame();
         room.lastTouchedAtMillis = stored.lastTouchedAtMillis();
         return room;
     }
@@ -615,7 +628,7 @@ public class RoomService {
         List<RoomPlayerSnapshot> players = room.players.stream()
                 .map(player -> new RoomPlayerSnapshot(player.playerId(), player.displayName()))
                 .toList();
-        return new RoomSnapshot(room.code, room.tenantId, null, players);
+        return new RoomSnapshot(room.code, room.tenantId, null, room.activeGame, players);
     }
 
     private static final class RoomState {
@@ -624,6 +637,7 @@ public class RoomService {
         private String hostUserEmail;
         private final List<PlayerState> players = new ArrayList<>();
         private final Map<String, String> playerTokens = new ConcurrentHashMap<>();
+        private RoomActiveGameSnapshot activeGame;
         private long lastTouchedAtMillis;
 
         private RoomState(String code) {
@@ -667,6 +681,7 @@ public class RoomService {
             String hostUserEmail,
             List<StoredRoomPlayer> players,
             Map<String, String> playerTokens,
+            RoomActiveGameSnapshot activeGame,
             long lastTouchedAtMillis
     ) {
     }

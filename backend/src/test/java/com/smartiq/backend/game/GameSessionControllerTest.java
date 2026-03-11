@@ -9,6 +9,9 @@ import com.smartiq.backend.game.contract.PegSnapshot;
 import com.smartiq.backend.game.contract.PlayerRoundStatus;
 import com.smartiq.backend.game.contract.PlayerSnapshot;
 import com.smartiq.backend.game.contract.RoundStateSnapshot;
+import com.smartiq.backend.room.RoomService;
+import com.smartiq.backend.room.RoomSnapshot;
+import com.smartiq.backend.room.ws.RoomWsGateway;
 import com.smartiq.backend.tenant.ForbiddenTenantAccessException;
 import com.smartiq.backend.tenant.TenantService;
 import com.smartiq.backend.web.ApiExceptionHandler;
@@ -48,13 +51,25 @@ class GameSessionControllerTest {
     @Mock
     private TenantService tenantService;
 
+    @Mock
+    private RoomService roomService;
+
+    @Mock
+    private RoomWsGateway roomWsGateway;
+
     private final ObjectMapper objectMapper = new ObjectMapper();
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
         when(authContextResolver.resolveOptional(any())).thenReturn(null);
-        mockMvc = MockMvcBuilders.standaloneSetup(new GameSessionController(gameSessionService, authContextResolver, tenantService))
+        mockMvc = MockMvcBuilders.standaloneSetup(new GameSessionController(
+                gameSessionService,
+                authContextResolver,
+                tenantService,
+                roomService,
+                roomWsGateway
+        ))
                 .setControllerAdvice(new ApiExceptionHandler(false))
                 .build();
     }
@@ -75,6 +90,29 @@ class GameSessionControllerTest {
                 .andExpect(jsonPath("$.snapshot.gameId").value("game-1"))
                 .andExpect(jsonPath("$.snapshot.roundState.phase").value("CHOOSING"))
                 .andExpect(jsonPath("$.actionTokens.p1").value("at_1"));
+    }
+
+    @Test
+    void createGameWithRoomCodeValidatesAndPublishesRoomSnapshot() throws Exception {
+        when(roomService.getRoomSnapshot(eq("ABC234"), isNull())).thenReturn(new RoomSnapshot("ABC234", null, null, List.of()));
+        when(gameSessionService.createGameWithControl(any(), isNull(), isNull())).thenReturn(
+                new GameSessionCreateResponse(
+                        snapshot("game-1", "ABC234", "CHOOSING"),
+                        Map.of("p1", "at_1", "p2", "at_2")
+                )
+        );
+        when(roomService.upsertActiveGame(eq("ABC234"), any(), isNull()))
+                .thenReturn(new RoomSnapshot("ABC234", null, null, List.of()));
+
+        mockMvc.perform(post("/api/game")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30, "ABC234"))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.snapshot.roomCode").value("ABC234"));
+
+        verify(roomService).getRoomSnapshot("ABC234", null);
+        verify(roomService).upsertActiveGame(eq("ABC234"), any(), isNull());
+        verify(roomWsGateway).sendRoomState(eq("ABC234"), any(RoomSnapshot.class));
     }
 
     @Test
@@ -188,6 +226,23 @@ class GameSessionControllerTest {
     }
 
     @Test
+    void applyActionPublishesUpdatedRoomSnapshotWhenGameIsRoomBound() throws Exception {
+        when(gameSessionService.applyAction(eq("game-1"), any(), isNull()))
+                .thenReturn(snapshot("game-1", "ROOM42", "CHOOSING"));
+        when(roomService.upsertActiveGame(eq("ROOM42"), any(), isNull()))
+                .thenReturn(new RoomSnapshot("ROOM42", null, null, List.of()));
+
+        mockMvc.perform(post("/api/game/game-1/action")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new GameActionRequest("PASS", null, null, "p1", "at_1", "req-1"))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.roomCode").value("ROOM42"));
+
+        verify(roomService).upsertActiveGame(eq("ROOM42"), any(), isNull());
+        verify(roomWsGateway).sendRoomState(eq("ROOM42"), any(RoomSnapshot.class));
+    }
+
+    @Test
     void applyActionRecordsCompletionAuditWhenTenantGameEnds() throws Exception {
         UUID tenantId = UUID.randomUUID();
         when(authContextResolver.resolveOptional(any()))
@@ -269,9 +324,14 @@ class GameSessionControllerTest {
     }
 
     private static GameSessionSnapshot snapshot(String gameId, String phase) {
+        return snapshot(gameId, null, phase);
+    }
+
+    private static GameSessionSnapshot snapshot(String gameId, String roomCode, String phase) {
         return new GameSessionSnapshot(
                 GameSessionSnapshot.CURRENT_API_VERSION,
                 gameId,
+                roomCode,
                 30,
                 0,
                 List.of(

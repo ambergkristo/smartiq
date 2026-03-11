@@ -5,6 +5,7 @@ import gameSessionCreateResponseV1 from './fixtures/contracts/game-session-creat
 vi.mock('./api', () => {
   return {
     API_BASE: 'http://localhost:8080',
+    buildRoomWebSocketUrl: vi.fn(({ roomCode = 'ABC123' } = {}) => `ws://localhost:8080/ws/rooms/${roomCode}`),
     bootstrapOnboardingTenant: vi.fn(),
     clearRuntimeAuthContext: vi.fn(),
     completeRuntimeAuth: vi.fn(),

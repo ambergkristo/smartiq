@@ -119,6 +119,7 @@ public class RoomController {
                         branding.branding().primaryColor(),
                         branding.branding().secondaryColor()
                 ),
+                snapshot.activeGame(),
                 snapshot.players()
         );
     }

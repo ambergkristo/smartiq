@@ -42,6 +42,9 @@ export default function GameRoom({
   const roomBranding = roomSession?.roomState?.branding && typeof roomSession.roomState.branding === 'object'
     ? roomSession.roomState.branding
     : null;
+  const activeGame = roomSession?.roomState?.activeGame && typeof roomSession.roomState.activeGame === 'object'
+    ? roomSession.roomState.activeGame
+    : null;
   const playerLobbyAppTitle = String(roomBranding?.appName || appTitle || strings.title).trim() || strings.title;
   const playerLobbyStyle = roomBranding?.primaryColor || roomBranding?.secondaryColor
     ? {
@@ -70,6 +73,7 @@ export default function GameRoom({
           savedHint={strings.roomSavedHint}
           playersTitle={strings.roomPlayerLobbyRosterTitle}
           players={roomPlayers}
+          activeGame={activeGame}
           noPlayersLabel={strings.roomNoPlayers}
           switchHint={strings.roomPlayerLobbySwitchHint}
           primaryLabel={strings.roomResumeSubmit}

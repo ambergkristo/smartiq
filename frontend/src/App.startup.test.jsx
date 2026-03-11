@@ -5,6 +5,7 @@ import { MAX_PLAYERS_PER_ROOM } from './constants/runtime';
 vi.mock('./api', () => {
   return {
     API_BASE: 'http://localhost:8080',
+    buildRoomWebSocketUrl: vi.fn(({ roomCode = 'ABC123' } = {}) => `ws://localhost:8080/ws/rooms/${roomCode}`),
     bootstrapOnboardingTenant: vi.fn(),
     clearRuntimeAuthContext: vi.fn(),
     completeRuntimeAuth: vi.fn(),
@@ -50,6 +51,7 @@ import {
   createRoomSession,
   deleteRuntimeSessionTemplate,
   fetchRoomPreview,
+  fetchServerGameSession,
   fetchTenantAuditEvents,
   fetchTenantRuntimeSnapshot,
   fetchTopics,
@@ -65,6 +67,43 @@ import {
   upsertRuntimeSessionTemplate,
   updateRuntimeTenantBranding
 } from './api';
+
+class MockWebSocket {
+  static CONNECTING = 0;
+  static OPEN = 1;
+  static CLOSED = 3;
+  static instances = [];
+
+  constructor(url) {
+    this.url = url;
+    this.readyState = MockWebSocket.CONNECTING;
+    this.onopen = null;
+    this.onmessage = null;
+    this.onclose = null;
+    this.onerror = null;
+    MockWebSocket.instances.push(this);
+    Promise.resolve().then(() => {
+      if (this.readyState !== MockWebSocket.CONNECTING) {
+        return;
+      }
+      this.readyState = MockWebSocket.OPEN;
+      this.onopen?.();
+    });
+  }
+
+  close() {
+    this.readyState = MockWebSocket.CLOSED;
+    this.onclose?.();
+  }
+
+  emitMessage(payload) {
+    this.onmessage?.({ data: JSON.stringify(payload) });
+  }
+
+  static reset() {
+    MockWebSocket.instances = [];
+  }
+}
 
 function makeServerSnapshot({
   gameId = 'game-ready',
@@ -124,6 +163,8 @@ describe('App startup resilience', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     localStorage.clear();
+    MockWebSocket.reset();
+    globalThis.WebSocket = MockWebSocket;
     window.location.hash = '';
     window.history.pushState({}, '', '/');
     document.documentElement.removeAttribute('data-theme');
@@ -1252,6 +1293,122 @@ describe('App startup resilience', () => {
     expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('Saved Quiz');
     expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent(/waiting for the host/i);
     expect(screen.getAllByText('Saved Player').length).toBeGreaterThan(0);
+  });
+
+  test('updates player waiting room from realtime room snapshots', async () => {
+    localStorage.setItem('smartiq.roomSession', JSON.stringify({
+      roomCode: 'SAVE42',
+      playerId: 'p3',
+      authToken: 'rt_saved',
+      displayName: 'Saved Player',
+      role: 'player',
+      roomState: {
+        roomCode: 'SAVE42',
+        branding: {
+          appName: 'Saved Quiz',
+          primaryColor: '#114455',
+          secondaryColor: '#22aacc'
+        },
+        players: [{ playerId: 'p3', displayName: 'Saved Player' }]
+      }
+    }));
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('player-lobby-panel')).toBeInTheDocument());
+    await waitFor(() => expect(MockWebSocket.instances.length).toBe(1));
+
+    MockWebSocket.instances[0].emitMessage({
+      type: 'ROOM_STATE',
+      payload: {
+        roomCode: 'SAVE42',
+        branding: {
+          appName: 'Saved Quiz',
+          primaryColor: '#114455',
+          secondaryColor: '#22aacc'
+        },
+        activeGame: {
+          gameId: 'game-live',
+          roomCode: 'SAVE42',
+          winCondition: 30,
+          roundNumber: 2,
+          phase: 'CHOOSING',
+          topic: 'Science',
+          question: 'Live reconnect question',
+          lastAction: 'Host One answered correctly (+1)',
+          starterPlayerId: 'p1',
+          currentPlayerId: 'p2',
+          currentPlayerDisplayName: 'Bob',
+          playerDisplayNames: {
+            p1: 'Host One',
+            p2: 'Bob',
+            p3: 'Saved Player'
+          },
+          pegs: [
+            { index: 0, state: 'revealed', value: 'A' },
+            { index: 1, state: 'wrong', value: 'B' }
+          ],
+          totalScores: {
+            p1: 1,
+            p2: 0,
+            p3: 0
+          },
+          roundScores: {
+            p1: 1,
+            p2: 0,
+            p3: 0
+          },
+          statuses: {
+            p1: 'ACTIVE',
+            p2: 'ACTIVE',
+            p3: 'ACTIVE'
+          }
+        },
+        players: [
+          { playerId: 'p1', displayName: 'Host One' },
+          { playerId: 'p2', displayName: 'Bob' },
+          { playerId: 'p3', displayName: 'Saved Player' }
+        ]
+      }
+    });
+
+    await waitFor(() => expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('Host One'));
+    expect(screen.getByTestId('player-lobby-active-game')).toHaveTextContent(/live reconnect question/i);
+    expect(screen.getByTestId('player-lobby-active-game')).toHaveTextContent(/current turn:\s*bob/i);
+    expect(screen.getByTestId('player-lobby-active-game')).toHaveTextContent(/host one answered correctly/i);
+    expect(screen.getByTestId('player-lobby-active-game')).toHaveTextContent(/board state:\s*1 revealed \| 1 wrong/i);
+  });
+
+  test('restores an in-progress live game from saved local control session after refresh', async () => {
+    localStorage.setItem('smartiq.liveGameSession', JSON.stringify({
+      gameId: 'game-saved',
+      actionTokens: {
+        p1: 'at_saved_1',
+        p2: 'at_saved_2'
+      },
+      request: {
+        players: ['Host One', 'Bob'],
+        language: 'en',
+        topic: 'Science',
+        roomCode: 'QUIZ42',
+        winCondition: 30
+      }
+    }));
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    fetchServerGameSession.mockResolvedValue(makeServerSnapshot({
+      gameId: 'game-saved',
+      question: 'Resume question',
+      topic: 'Science',
+      players: ['Host One', 'Bob']
+    }));
+
+    render(<App />);
+
+    await waitFor(() => expect(fetchServerGameSession).toHaveBeenCalledWith('game-saved'));
+    await waitFor(() => expect(screen.getByText(/resume question/i)).toBeInTheDocument());
+    expect(screen.getAllByText('Host One').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Bob').length).toBeGreaterThan(0);
   });
 
   test('restores saved host room launch roster selection from local storage', async () => {

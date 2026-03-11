@@ -6,6 +6,7 @@ export default function WaitingRoomView({
   savedHint,
   playersTitle,
   players,
+  activeGame = null,
   noPlayersLabel,
   switchHint,
   primaryLabel,
@@ -15,6 +16,13 @@ export default function WaitingRoomView({
   onSecondary,
   style
 }) {
+  const revealedCount = Array.isArray(activeGame?.pegs)
+    ? activeGame.pegs.filter((peg) => peg?.state === 'revealed').length
+    : 0;
+  const wrongCount = Array.isArray(activeGame?.pegs)
+    ? activeGame.pegs.filter((peg) => peg?.state === 'wrong').length
+    : 0;
+
   return (
     <section className="player-waiting-room" data-testid="player-lobby-panel" style={style}>
       <div className="player-waiting-room-head">
@@ -34,13 +42,41 @@ export default function WaitingRoomView({
       <div className="player-waiting-room-meta">
         <article>
           <span>Status</span>
-          <strong>{waitingLabel}</strong>
+          <strong>{activeGame?.phase === 'GAME_OVER' ? 'Game finished' : activeGame ? 'Game in progress' : waitingLabel}</strong>
         </article>
         <article>
           <span>Players joined</span>
           <strong>{players.length}</strong>
         </article>
       </div>
+
+      {activeGame ? (
+        <section className="player-waiting-room-roster" data-testid="player-lobby-active-game">
+          <div className="player-waiting-room-roster-head">
+            <p className="section-title">Live game</p>
+            <span>{activeGame.phase === 'GAME_OVER' ? 'Finished' : `Round ${activeGame.roundNumber}`}</span>
+          </div>
+          <p className="field-hint">{activeGame.topic || 'Any topic'}</p>
+          <p className="field-hint">{activeGame.question}</p>
+          <p className="field-hint">
+            Current turn: <strong>{activeGame.currentPlayerDisplayName || activeGame.currentPlayerId || 'n/a'}</strong>
+          </p>
+          <p className="field-hint">{activeGame.lastAction}</p>
+          <p className="field-hint">
+            Board state: {revealedCount} revealed | {wrongCount} wrong
+          </p>
+          <ul>
+            {Object.entries(activeGame.playerDisplayNames || {})
+              .sort((left, right) => ((activeGame.totalScores?.[right[0]] || 0) - (activeGame.totalScores?.[left[0]] || 0)))
+              .map(([playerId, displayName]) => (
+                <li key={playerId}>
+                  <strong>{displayName || playerId}</strong>
+                  <span>{activeGame.totalScores?.[playerId] || 0} pts</span>
+                </li>
+              ))}
+          </ul>
+        </section>
+      ) : null}
 
       <div className="player-waiting-room-actions">
         <button type="button" onClick={onPrimary} disabled={pending}>

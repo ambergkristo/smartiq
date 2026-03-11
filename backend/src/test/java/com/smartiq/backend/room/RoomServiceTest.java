@@ -10,6 +10,7 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -392,6 +393,60 @@ class RoomServiceTest {
                 new RejoinRoomRequest(created.playerId(), created.authToken())
         );
         assertThat(resumed.authToken()).isEqualTo(created.authToken());
+    }
+
+    @Test
+    void persistsActiveGameSnapshotAcrossRoomServiceRestart() {
+        InMemoryRoomSessionStore store = new InMemoryRoomSessionStore();
+        ObjectMapper objectMapper = new ObjectMapper();
+        RoomService firstInstance = new RoomService(
+                meterRegistry,
+                new RoomProperties(180, 20000),
+                store,
+                objectMapper,
+                testClock
+        );
+        RoomParticipantResponse created = firstInstance.createRoom(new CreateRoomRequest("Alice"));
+        firstInstance.joinRoom(created.roomCode(), new JoinRoomRequest("Bob"));
+        firstInstance.upsertActiveGame(
+                created.roomCode(),
+                new RoomActiveGameSnapshot(
+                        "game-live",
+                        created.roomCode(),
+                        30,
+                        2,
+                        "CHOOSING",
+                        "Science",
+                        "Reconnect question",
+                        "Alice answered correctly (+1)",
+                        "p1",
+                        "p2",
+                        "Bob",
+                        Map.of("p1", "Alice", "p2", "Bob"),
+                        java.util.List.of(
+                                new RoomActiveGamePegSnapshot(0, "revealed", "A"),
+                                new RoomActiveGamePegSnapshot(1, "hidden", "B")
+                        ),
+                        Map.of("p1", 1, "p2", 0),
+                        Map.of("p1", 1, "p2", 0),
+                        Map.of("p1", com.smartiq.backend.game.contract.PlayerRoundStatus.ACTIVE, "p2", com.smartiq.backend.game.contract.PlayerRoundStatus.ACTIVE)
+                ),
+                null
+        );
+
+        RoomService restartedInstance = new RoomService(
+                meterRegistry,
+                new RoomProperties(180, 20000),
+                store,
+                objectMapper,
+                testClock
+        );
+
+        RoomSnapshot restored = restartedInstance.getRoomSnapshot(created.roomCode());
+        assertThat(restored.activeGame()).isNotNull();
+        assertThat(restored.activeGame().gameId()).isEqualTo("game-live");
+        assertThat(restored.activeGame().currentPlayerDisplayName()).isEqualTo("Bob");
+        assertThat(restored.activeGame().totalScores()).containsEntry("p1", 1);
     }
 
     private double counterValue(String name, String... tags) {

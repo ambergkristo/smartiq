@@ -294,7 +294,8 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       players: mapped.players,
       language: request.language || mapped.card.language,
       topic: mapped.card.topic || undefined,
-      winCondition: mapped.targetScore
+      winCondition: mapped.targetScore,
+      roomCode: request.roomCode
     });
     applyMappedSnapshot(snapshot, mapped, mapped.backendPhase === GamePhase.GAME_OVER ? GamePhase.GAME_OVER : GamePhase.CHOOSING);
     return mapped.players;
@@ -310,6 +311,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       players: normalizedPlayers,
       language: input.language,
       topic: input.topic,
+      roomCode: input.roomCode,
       winCondition: Number.isInteger(input.winCondition) ? input.winCondition : targetScore
     };
 
@@ -727,6 +729,9 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     confirmAnswer,
     passTurn,
     nextStep,
-    resetToSetup
+    resetToSetup,
+    activeSnapshot,
+    startRequest,
+    actionTokensByPlayerId
   };
 }

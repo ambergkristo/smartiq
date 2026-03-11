@@ -78,6 +78,18 @@ class GameSessionServiceTest {
     }
 
     @Test
+    void createGamePersistsOptionalRoomCode() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(openCard("card-1", 0, "Question 1"));
+
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30, "ABC234")
+        );
+
+        assertThat(created.snapshot().roomCode()).isEqualTo("ABC234");
+    }
+
+    @Test
     void createGameFallsBackToDefaultLanguageForUnsupportedTag() {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
                 .thenReturn(openCard("card-1", 0, "Question 1"));

@@ -4,6 +4,7 @@ import { MAX_PLAYERS_PER_ROOM } from './constants/runtime';
 
 vi.mock('./api', () => ({
   API_BASE: 'http://localhost:8080',
+  buildRoomWebSocketUrl: vi.fn(({ roomCode = 'ABC123' } = {}) => `ws://localhost:8080/ws/rooms/${roomCode}`),
   bootstrapOnboardingTenant: vi.fn(),
   clearRuntimeAuthContext: vi.fn(),
   completeRuntimeAuth: vi.fn(),

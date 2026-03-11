@@ -512,7 +512,7 @@ function normalizeLanguage(lang) {
   return 'en';
 }
 
-export function buildServerGamePayload({ players, language, topic, winCondition } = {}) {
+export function buildServerGamePayload({ players, language, topic, winCondition, roomCode } = {}) {
   const payload = {};
 
   if (Array.isArray(players)) {
@@ -532,6 +532,11 @@ export function buildServerGamePayload({ players, language, topic, winCondition 
 
   if (Number.isInteger(winCondition) && winCondition > 0) {
     payload.winCondition = winCondition;
+  }
+
+  const normalizedRoomCode = String(roomCode || '').trim().toUpperCase();
+  if (normalizedRoomCode) {
+    payload.roomCode = normalizedRoomCode;
   }
 
   return payload;

@@ -62,6 +62,8 @@ public class GameSessionService {
     private static final int MAX_ACTION_TOKEN_LENGTH = 128;
     private static final int MAX_ACTION_REQUEST_ID_LENGTH = 128;
     private static final int MAX_TOPIC_LENGTH = 128;
+    private static final int ROOM_CODE_LENGTH = 6;
+    private static final String ROOM_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     private static final Pattern ACTOR_PLAYER_ID_PATTERN = Pattern.compile("^p[1-9][0-9]*$");
     private static final Pattern ACTION_TOKEN_PATTERN = Pattern.compile("^at_[a-f0-9]{32}$");
     private static final Pattern ACTION_REQUEST_ID_PATTERN = Pattern.compile("^[A-Za-z0-9_-]+$");
@@ -186,6 +188,7 @@ public class GameSessionService {
         int winCondition = resolveWinCondition(request == null ? null : request.winCondition());
         String language = normalizeLanguage(request == null ? null : request.language());
         String topic = normalizeTopic(request == null ? null : request.topic());
+        String roomCode = normalizeRoomCode(request == null ? null : request.roomCode());
         long nowMillis = nowMillis();
 
         String gameId = allocateUniqueGameId();
@@ -202,6 +205,7 @@ public class GameSessionService {
                 normalizeOptionalHostUserEmail(hostUserEmail),
                 language,
                 topic,
+                roomCode,
                 winCondition,
                 players,
                 totals,
@@ -635,6 +639,22 @@ public class GameSessionService {
         return normalized;
     }
 
+    private static String normalizeRoomCode(String roomCode) {
+        if (roomCode == null || roomCode.isBlank()) {
+            return null;
+        }
+        String normalized = roomCode.trim().toUpperCase(Locale.ROOT);
+        if (normalized.length() != ROOM_CODE_LENGTH) {
+            throw new IllegalArgumentException("roomCode format is invalid");
+        }
+        for (int index = 0; index < normalized.length(); index += 1) {
+            if (ROOM_CODE_ALPHABET.indexOf(normalized.charAt(index)) < 0) {
+                throw new IllegalArgumentException("roomCode format is invalid");
+            }
+        }
+        return normalized;
+    }
+
     private static String normalizeRequiredField(String value, String fieldName, int maxLength) {
         if (value == null || value.isBlank()) {
             throw new IllegalArgumentException(fieldName + " is required");
@@ -879,6 +899,7 @@ public class GameSessionService {
                 state.hostUserEmail,
                 state.language,
                 state.topic,
+                state.roomCode,
                 state.winCondition,
                 players,
                 new LinkedHashMap<>(state.totalScores),
@@ -921,6 +942,7 @@ public class GameSessionService {
 
         String language = normalizeLanguage(stored.language());
         String topic = normalizeTopic(stored.topic());
+        String roomCode = normalizeRoomCode(stored.roomCode());
         int winCondition = stored.winCondition() == null || stored.winCondition() < 1
                 ? DEFAULT_WIN_CONDITION
                 : stored.winCondition();
@@ -945,6 +967,7 @@ public class GameSessionService {
                 normalizeOptionalHostUserEmail(stored.hostUserEmail()),
                 language,
                 topic,
+                roomCode,
                 winCondition,
                 players,
                 totalScores,
@@ -1122,6 +1145,7 @@ public class GameSessionService {
         return new GameSessionSnapshot(
                 GameSessionSnapshot.CURRENT_API_VERSION,
                 state.gameId,
+                state.roomCode,
                 state.winCondition,
                 state.activePlayerIndex,
                 players,
@@ -1150,6 +1174,7 @@ public class GameSessionService {
         private final String hostUserEmail;
         private final String language;
         private final String topic;
+        private final String roomCode;
         private final int winCondition;
         private final List<PlayerState> players;
         private final Map<String, Integer> totalScores;
@@ -1173,6 +1198,7 @@ public class GameSessionService {
                              String hostUserEmail,
                              String language,
                              String topic,
+                             String roomCode,
                              int winCondition,
                              List<PlayerState> players,
                              Map<String, Integer> totalScores,
@@ -1187,6 +1213,7 @@ public class GameSessionService {
                     hostUserEmail,
                     language,
                     topic,
+                    roomCode,
                     winCondition,
                     players,
                     totalScores,
@@ -1212,6 +1239,7 @@ public class GameSessionService {
                              String hostUserEmail,
                              String language,
                              String topic,
+                             String roomCode,
                              int winCondition,
                              List<PlayerState> players,
                              Map<String, Integer> totalScores,
@@ -1234,6 +1262,7 @@ public class GameSessionService {
             this.hostUserEmail = hostUserEmail;
             this.language = language;
             this.topic = topic;
+            this.roomCode = roomCode;
             this.winCondition = winCondition;
             this.players = players;
             this.totalScores = totalScores;
@@ -1274,6 +1303,7 @@ public class GameSessionService {
             String hostUserEmail,
             String language,
             String topic,
+            String roomCode,
             Integer winCondition,
             List<StoredPlayerState> players,
             Map<String, Integer> totalScores,

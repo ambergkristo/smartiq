@@ -86,6 +86,7 @@ describe('api error mapping', () => {
       players: [' Alice ', 'Bob', ''],
       language: 'et',
       topic: '  Science ',
+      roomCode: ' quiz42 ',
       winCondition: 30
     });
 
@@ -93,6 +94,7 @@ describe('api error mapping', () => {
       players: ['Alice', 'Bob'],
       language: 'et',
       topic: 'Science',
+      roomCode: 'QUIZ42',
       winCondition: 30
     });
   });
