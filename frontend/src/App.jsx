@@ -34,6 +34,9 @@ import GameRoom from './components/GameRoom';
 import HostDashboard from './components/HostDashboard';
 import PlayerJoin from './components/PlayerJoin';
 import RoundSummary from './components/RoundSummary';
+import HomeScreen from './components/home/HomeScreen';
+import JoinGameScreen from './components/home/JoinGameScreen';
+import PracticePlaceholder from './components/home/PracticePlaceholder';
 import GameplayActionBar from './components/gameplay/GameplayActionBar';
 import ScoreBoard from './components/gameplay/ScoreBoard';
 import { getCanAnswer, getCardCategory, getPhaseLabel } from './components/gameplay/gameplayState';
@@ -57,6 +60,7 @@ import { DEFAULT_LANGS, GamePhase } from './state/types';
 const STRINGS = {
   title: 'SmartIQ',
   subtitle: 'Start a Smart10-style random deck game. Topic filter is optional.',
+  homeTagline: 'Fast entry for live quiz hosts, players, and quick solo practice.',
   loadingTopics: 'Loading topics...',
   noTopics: 'No topics yet.',
   noTopicsHint: 'Import clean cards to populate topics and retry.',
@@ -277,6 +281,14 @@ const STARTUP_PHASE = {
   NOT_FOUND: 'not-found',
   TOPICS_EMPTY: 'topics-empty',
   READY: 'ready'
+};
+const ENTRY_ROUTE = {
+  HOME: 'home',
+  START: 'start',
+  JOIN: 'join',
+  PRACTICE: 'practice',
+  HOST_TRIAL: 'host-trial',
+  HOST_SIGNIN: 'host-signin'
 };
 const SHOW_BUILD_BADGE = import.meta.env.DEV
   || String(import.meta.env.VITE_SHOW_BUILD_BADGE || '').toLowerCase() === 'true';
@@ -598,6 +610,29 @@ function resolvePlayerJoinRoute() {
     return null;
   }
   return normalizeRoomCodeInput(match[1]);
+}
+
+function resolveEntryRoute() {
+  if (typeof window === 'undefined') {
+    return ENTRY_ROUTE.HOME;
+  }
+  const hash = String(window.location?.hash || '').trim().toLowerCase();
+  if (hash === '#/start') {
+    return ENTRY_ROUTE.START;
+  }
+  if (hash === '#/join') {
+    return ENTRY_ROUTE.JOIN;
+  }
+  if (hash === '#/practice') {
+    return ENTRY_ROUTE.PRACTICE;
+  }
+  if (hash === '#/host/trial') {
+    return ENTRY_ROUTE.HOST_TRIAL;
+  }
+  if (hash === '#/host/signin') {
+    return ENTRY_ROUTE.HOST_SIGNIN;
+  }
+  return ENTRY_ROUTE.HOME;
 }
 
 function resolveBillingReturnState() {
@@ -1200,6 +1235,7 @@ function isAdminConsoleRoute() {
 function GameApp() {
   const storedConfig = loadStoredConfig();
   const storedRoomSession = loadStoredRoomSession();
+  const [entryRoute, setEntryRoute] = useState(resolveEntryRoute());
   const [playerJoinRoute, setPlayerJoinRoute] = useState(resolvePlayerJoinRoute());
   const billingReturnState = resolveBillingReturnState();
   const [playerRoutePreview, setPlayerRoutePreview] = useState(null);
@@ -1369,6 +1405,7 @@ function GameApp() {
       return undefined;
     }
     function handleHashChange() {
+      setEntryRoute(resolveEntryRoute());
       setPlayerJoinRoute(resolvePlayerJoinRoute());
     }
     window.addEventListener('hashchange', handleHashChange);
@@ -2076,10 +2113,41 @@ function GameApp() {
     if (typeof window !== 'undefined') {
       window.location.hash = '';
     }
+    setEntryRoute(ENTRY_ROUTE.HOME);
     setPlayerJoinRoute(null);
     setPlayerRoutePreview(null);
     setPlayerRouteError('');
     setPlayerRouteMessage('');
+  }
+
+  function handleNavigateEntry(nextRoute) {
+    if (typeof window === 'undefined') {
+      setEntryRoute(nextRoute);
+      return;
+    }
+    if (nextRoute === ENTRY_ROUTE.HOME) {
+      window.location.hash = '';
+      return;
+    }
+    if (nextRoute === ENTRY_ROUTE.START) {
+      window.location.hash = '#/start';
+      return;
+    }
+    if (nextRoute === ENTRY_ROUTE.JOIN) {
+      window.location.hash = '#/join';
+      return;
+    }
+    if (nextRoute === ENTRY_ROUTE.PRACTICE) {
+      window.location.hash = '#/practice';
+      return;
+    }
+    if (nextRoute === ENTRY_ROUTE.HOST_TRIAL) {
+      window.location.hash = '#/host/trial';
+      return;
+    }
+    if (nextRoute === ENTRY_ROUTE.HOST_SIGNIN) {
+      window.location.hash = '#/host/signin';
+    }
   }
 
   async function handleResumeRoom() {
@@ -2599,6 +2667,39 @@ function GameApp() {
       showStartButton={false}
     />
   );
+  const showProductHome = !runtimeSnapshot && !roomSession;
+  const homeEntryPanel = showProductHome ? (
+    <HomeScreen
+      appTitle={appTitle}
+      tagline={STRINGS.homeTagline}
+      warning={runtimeWarning}
+      onStartGame={() => handleNavigateEntry(ENTRY_ROUTE.START)}
+      onJoinGame={() => handleNavigateEntry(ENTRY_ROUTE.JOIN)}
+      onPractice={() => handleNavigateEntry(ENTRY_ROUTE.PRACTICE)}
+    />
+  ) : null;
+  const joinEntryPanel = (
+    <JoinGameScreen
+      roomCode={roomDraft.roomCode}
+      displayName={roomDraft.displayName}
+      pending={roomPending}
+      message={roomMessage}
+      error={roomError}
+      onRoomCodeChange={(event) => setRoomDraft((prev) => ({
+        ...prev,
+        roomCode: normalizeRoomCodeInput(event.target.value)
+      }))}
+      onDisplayNameChange={(event) => setRoomDraft((prev) => ({
+        ...prev,
+        displayName: event.target.value
+      }))}
+      onJoin={handleJoinRoom}
+      onBack={() => handleNavigateEntry(ENTRY_ROUTE.HOME)}
+    />
+  );
+  const practiceEntryPanel = (
+    <PracticePlaceholder onBack={() => handleNavigateEntry(ENTRY_ROUTE.HOME)} />
+  );
   const setupActionBar = !roomSession ? (
     <PrimaryActionBar>
       <div className="app-shell-action-copy">
@@ -2655,34 +2756,7 @@ function GameApp() {
   const setupSideStack = (
     <div className="host-shell-stack">
       {hostRoomSession ? lobbyStatusPanel : !roomSession ? sharedRoomPanel : null}
-      {!runtimeSnapshot ? (
-        roomSession ? null : (
-          <>
-            <PublicLaunchPanel
-              onStartTrial={focusOnboardingWorkspace}
-              onSignIn={focusSignInEmail}
-            />
-            <OnboardingPanel
-              draft={onboardingDraft}
-              pending={onboardingPending}
-              success={onboardingSuccess}
-              error={onboardingError}
-              onDraftChange={setOnboardingDraft}
-              onSubmit={handleOnboardingBootstrap}
-              workspaceInputRef={onboardingWorkspaceInputRef}
-            />
-            <SignInPanel
-              draft={signInDraft}
-              pending={signInPending}
-              success={signInSuccess}
-              error={signInError}
-              onDraftChange={setSignInDraft}
-              onSubmit={handleSignIn}
-              emailInputRef={signInEmailInputRef}
-            />
-          </>
-        )
-      ) : roomSession?.role === 'player' ? null : (
+      {!runtimeSnapshot ? null : roomSession?.role === 'player' ? null : (
         <>
           <section className="setup-panel board-surface host-console-status-card" data-testid="host-console-status-card">
             <div className="host-console-status-head">
@@ -2852,7 +2926,38 @@ function GameApp() {
               />
             )
           ) : startup.phase !== STARTUP_PHASE.READY ? <StartupStatePanel startup={startup} onRetry={loadTopics} appTitle={appTitle} /> : null}
-          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 ? (
+          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && showProductHome && entryRoute === ENTRY_ROUTE.HOME ? (
+            homeEntryPanel
+          ) : null}
+          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && showProductHome && entryRoute === ENTRY_ROUTE.JOIN ? (
+            joinEntryPanel
+          ) : null}
+          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && showProductHome && entryRoute === ENTRY_ROUTE.PRACTICE ? (
+            practiceEntryPanel
+          ) : null}
+          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && showProductHome && entryRoute === ENTRY_ROUTE.HOST_TRIAL ? (
+            <OnboardingPanel
+              draft={onboardingDraft}
+              pending={onboardingPending}
+              success={onboardingSuccess}
+              error={onboardingError}
+              onDraftChange={setOnboardingDraft}
+              onSubmit={handleOnboardingBootstrap}
+              workspaceInputRef={onboardingWorkspaceInputRef}
+            />
+          ) : null}
+          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && showProductHome && entryRoute === ENTRY_ROUTE.HOST_SIGNIN ? (
+            <SignInPanel
+              draft={signInDraft}
+              pending={signInPending}
+              success={signInSuccess}
+              error={signInError}
+              onDraftChange={setSignInDraft}
+              onSubmit={handleSignIn}
+              emailInputRef={signInEmailInputRef}
+            />
+          ) : null}
+          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && (!showProductHome || entryRoute === ENTRY_ROUTE.START) ? (
             <AppShell
               mode="setup"
               header={(

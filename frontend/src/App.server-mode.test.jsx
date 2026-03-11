@@ -120,9 +120,11 @@ describe('App server-authoritative mode', () => {
     vi.clearAllMocks();
     vi.stubEnv('VITE_USE_SERVER_GAME_ENGINE', 'true');
     localStorage.clear();
+    window.location.hash = '#/start';
   });
 
   afterEach(() => {
+    window.location.hash = '';
     vi.unstubAllEnvs();
   });
 

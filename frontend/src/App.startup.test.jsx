@@ -106,6 +106,12 @@ function makeServerSnapshot({
   };
 }
 
+async function openStartSelection() {
+  await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
+  fireEvent.click(screen.getByRole('button', { name: /start game/i }));
+  await waitFor(() => expect(screen.getByRole('radiogroup', { name: /topic options/i })).toBeInTheDocument());
+}
+
 describe('App startup resilience', () => {
   let consoleErrorSpy;
 
@@ -130,6 +136,7 @@ describe('App startup resilience', () => {
     });
     fetchTenantAuditEvents.mockResolvedValue([]);
     fetchTenantUsageSummary.mockResolvedValue([]);
+    hasRuntimeAuthContext.mockReturnValue(false);
     createServerGameSession.mockResolvedValue(makeServerSnapshot());
     updateRuntimeTenantBranding.mockResolvedValue({
       tenantId: 'tenant-branding',
@@ -212,41 +219,40 @@ describe('App startup resilience', () => {
     await waitFor(() => expect(screen.getByText(/no topics yet/i)).toBeInTheDocument());
   });
 
-  test('renders setup screen when topics are available', async () => {
+  test('renders the simplified home screen when topics are available', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
 
     render(<App />);
 
-    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
-    expect(screen.getByRole('group', { name: /host language/i })).toBeInTheDocument();
-    expect(screen.getByText(/single theme/i)).toBeInTheDocument();
-    expect(screen.getByRole('radiogroup', { name: /topic options/i })).toBeInTheDocument();
-    expect(screen.getByTestId('active-filter')).toHaveTextContent(/any topic \| en/i);
+    await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
+    expect(screen.getByRole('heading', { level: 1, name: 'SmartIQ' })).toBeInTheDocument();
+    expect(screen.getByText(/fast entry for live quiz hosts, players, and quick solo practice/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /join game/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /practice/i })).toBeInTheDocument();
+    expect(screen.queryByText(/workspace name/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/host email/i)).not.toBeInTheDocument();
   });
 
-  test('shows public launch panel before host onboarding', async () => {
+  test('home actions navigate to start, join, and practice entry screens', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
 
     render(<App />);
 
-    await waitFor(() => expect(screen.getByTestId('launch-panel')).toBeInTheDocument());
-    expect(screen.getByText(/narrow launch for recurring live quiz hosts/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /start free host trial/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /sign in to existing workspace/i })).toBeInTheDocument();
-  });
+    await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
 
-  test('launch panel ctas focus onboarding and sign-in inputs', async () => {
-    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    fireEvent.click(screen.getByRole('button', { name: /start game/i }));
+    await waitFor(() => expect(screen.getByRole('radiogroup', { name: /topic options/i })).toBeInTheDocument());
 
-    render(<App />);
+    window.location.hash = '';
+    await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /join game/i }));
+    await waitFor(() => expect(screen.getByTestId('home-join-panel')).toBeInTheDocument());
 
-    await waitFor(() => expect(screen.getByTestId('launch-panel')).toBeInTheDocument());
-
-    fireEvent.click(screen.getByRole('button', { name: /start free host trial/i }));
-    expect(screen.getByLabelText(/workspace name/i)).toHaveFocus();
-
-    fireEvent.click(screen.getByRole('button', { name: /sign in to existing workspace/i }));
-    expect(screen.getByLabelText(/host email/i)).toHaveFocus();
+    window.location.hash = '';
+    await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /practice/i }));
+    await waitFor(() => expect(screen.getByTestId('practice-panel')).toBeInTheDocument());
   });
 
   test('persists audio controls state between renders', async () => {
@@ -254,7 +260,7 @@ describe('App startup resilience', () => {
 
     const { unmount } = render(<App />);
 
-    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
+    await openStartSelection();
     const muteToggle = screen.getByRole('button', { name: /sound on/i });
     const volumeSlider = screen.getByLabelText(/volume/i);
 
@@ -263,9 +269,10 @@ describe('App startup resilience', () => {
     expect(screen.getByRole('button', { name: /muted/i })).toBeInTheDocument();
 
     unmount();
+    window.location.hash = '#/start';
     render(<App />);
 
-    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByRole('radiogroup', { name: /topic options/i })).toBeInTheDocument());
     expect(screen.getByRole('button', { name: /muted/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/volume/i)).toHaveValue('30');
   });
@@ -320,6 +327,7 @@ describe('App startup resilience', () => {
   });
 
   test('bootstraps onboarding workspace and applies tenant runtime snapshot', async () => {
+    window.location.hash = '#/host/trial';
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
     bootstrapOnboardingTenant.mockResolvedValue({
       runtimeAuth: {
@@ -351,7 +359,7 @@ describe('App startup resilience', () => {
 
     render(<App />);
 
-    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByLabelText(/workspace name/i)).toBeInTheDocument());
     fireEvent.change(screen.getByLabelText(/workspace name/i), { target: { value: 'Northwind Quiz Night' } });
     fireEvent.change(screen.getByLabelText(/owner email/i), { target: { value: 'owner@northwind.test' } });
     fireEvent.change(screen.getByLabelText(/display name \(optional\)/i), { target: { value: 'Northwind Owner' } });
@@ -373,6 +381,7 @@ describe('App startup resilience', () => {
   });
 
   test('restores host session through sign-in flow', async () => {
+    window.location.hash = '#/host/signin';
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
     requestRuntimeAuthLink.mockResolvedValue({
       challengeToken: 'ml_token_1'
@@ -432,7 +441,7 @@ describe('App startup resilience', () => {
 
     render(<App />);
 
-    await waitFor(() => expect(screen.getByText(/host session expired or is invalid/i)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByTestId('home-screen')).toHaveTextContent(/host session expired or is invalid/i));
     expect(clearRuntimeAuthContext).toHaveBeenCalled();
   });
 
@@ -831,6 +840,7 @@ describe('App startup resilience', () => {
   });
 
   test('creates a shareable room and shows saved room session state', async () => {
+    window.location.hash = '#/start';
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
     rejoinRoomSession.mockResolvedValue({
       roomCode: 'QUIZ42',
@@ -872,6 +882,7 @@ describe('App startup resilience', () => {
   });
 
   test('starts live session from selected room roster only', async () => {
+    window.location.hash = '#/start';
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
     createServerGameSession.mockResolvedValue(makeServerSnapshot({
       gameId: 'game-room-start',
@@ -914,6 +925,7 @@ describe('App startup resilience', () => {
   });
 
   test('host can remove a room player before launch', async () => {
+    window.location.hash = '#/start';
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
     rejoinRoomSession.mockResolvedValue({
       roomCode: 'QUIZ42',
@@ -957,6 +969,7 @@ describe('App startup resilience', () => {
   });
 
   test('host can trim room down to selected launch roster', async () => {
+    window.location.hash = '#/start';
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
     rejoinRoomSession.mockResolvedValue({
       roomCode: 'QUIZ42',
@@ -1002,6 +1015,7 @@ describe('App startup resilience', () => {
   });
 
   test('joins a room into a dedicated player lobby surface', async () => {
+    window.location.hash = '#/start';
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
     joinRoomSession.mockResolvedValue({
       roomCode: 'QUIZ42',
@@ -1059,9 +1073,9 @@ describe('App startup resilience', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /back to smartiq/i }));
 
-    await waitFor(() => expect(screen.getByTestId('room-panel')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
     expect(window.location.hash).toBe('');
-    expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /join game/i })).toBeInTheDocument();
   });
 
   test('joins through dedicated player route and switches into branded player lobby', async () => {
