@@ -45,11 +45,19 @@ function ensureDir(filePath) {
 }
 
 function formatReadiness(summary, locale) {
-  if (locale === 'et') {
-    return 'BLOCKED - ET is not launch-ready';
+  const totalIssues = issueTotal(summary);
+  if (totalIssues === 0) {
+    return 'CONDITIONAL - semantic blockers cleared; structural/manual review still required';
   }
-  if (summary.semanticContentScore >= 0.95 && summary.issueCounts.languageLeakageCards === 0 && summary.issueCounts.brokenGrammarCards === 0) {
+  if (
+    summary.semanticContentScore >= 0.95 &&
+    summary.issueCounts.languageLeakageCards === 0 &&
+    summary.issueCounts.brokenGrammarCards === 0
+  ) {
     return 'CONDITIONAL - editorial cleanup still required';
+  }
+  if (locale === 'et' && (summary.issueCounts.languageLeakageCards > 0 || summary.issueCounts.brokenGrammarCards > 0)) {
+    return 'BLOCKED - ET localization is not launch-ready';
   }
   return 'NOT READY - editorial cleanup required before launch trust';
 }
