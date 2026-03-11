@@ -167,7 +167,9 @@ describe('App server-authoritative mode', () => {
 
     await waitFor(() => expect(screen.getByRole('button', { name: /answer/i })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /^peg-1\b/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /answer/i })).toBeEnabled());
     fireEvent.click(screen.getByRole('button', { name: /answer/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /lock in/i })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
 
     await waitFor(() =>

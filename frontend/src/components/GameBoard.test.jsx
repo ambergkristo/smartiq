@@ -1,6 +1,8 @@
 import { render, screen, within, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import GameBoard from './GameBoard';
+import GameplayActionBar from './gameplay/GameplayActionBar';
+import ScoreBoard from './gameplay/ScoreBoard';
 
 function makeProps() {
   return {
@@ -50,6 +52,8 @@ describe('GameBoard layout', () => {
     const wheel = screen.getByTestId('wheel-board');
     expect(wheel).toBeInTheDocument();
     expect(within(wheel).getAllByRole('button')).toHaveLength(10);
+    expect(screen.getByTestId('question-card')).toHaveTextContent('Question?');
+    expect(screen.getByTestId('answer-state-row')).toBeInTheDocument();
     expect(screen.getByTestId('action-hint')).toHaveTextContent(/reveal one peg/i);
     expect(screen.getByTestId('phase-pill')).toHaveTextContent('CHOOSING');
   });
@@ -65,55 +69,148 @@ describe('GameBoard layout', () => {
   });
 
   test('disables ANSWER until a peg is selected for non-ORDER categories', () => {
-    globalThis.__setResizeObserverWidth(1024);
     const props = makeProps();
-    const { rerender } = render(<GameBoard {...props} />);
+    const { rerender } = render(
+      <GameplayActionBar
+        phase={props.phase}
+        category={props.card.category}
+        selectedRank={props.selectedRank}
+        controlsDisabled={false}
+        canPass
+        canAnswer={false}
+        onAnswer={props.onAnswer}
+        onConfirm={props.onConfirm}
+        onCancelConfirm={props.onCancelConfirm}
+        onPass={props.onPass}
+        onNext={props.onNext}
+        currentPlayer={props.currentPlayer}
+      />
+    );
 
     expect(screen.getByRole('button', { name: 'ANSWER' })).toBeDisabled();
 
-    rerender(<GameBoard {...props} selectedIndexes={new Set([0])} />);
+    rerender(
+      <GameplayActionBar
+        phase={props.phase}
+        category={props.card.category}
+        selectedRank={props.selectedRank}
+        controlsDisabled={false}
+        canPass
+        canAnswer
+        onAnswer={props.onAnswer}
+        onConfirm={props.onConfirm}
+        onCancelConfirm={props.onCancelConfirm}
+        onPass={props.onPass}
+        onNext={props.onNext}
+        currentPlayer={props.currentPlayer}
+      />
+    );
     expect(screen.getByRole('button', { name: 'ANSWER' })).toBeEnabled();
   });
 
   test('requires both rank and peg selection to enable ANSWER for ORDER', () => {
-    globalThis.__setResizeObserverWidth(1024);
     const props = makeProps();
     const orderCard = { ...props.card, category: 'ORDER' };
-    const { rerender } = render(<GameBoard {...props} card={orderCard} selectedIndexes={new Set([0])} selectedRank={null} />);
+    const { rerender } = render(
+      <GameplayActionBar
+        phase={props.phase}
+        category={orderCard.category}
+        selectedRank={null}
+        controlsDisabled={false}
+        canPass
+        canAnswer={false}
+        onAnswer={props.onAnswer}
+        onConfirm={props.onConfirm}
+        onCancelConfirm={props.onCancelConfirm}
+        onPass={props.onPass}
+        onNext={props.onNext}
+        currentPlayer={props.currentPlayer}
+      />
+    );
 
     expect(screen.getByRole('button', { name: 'ANSWER' })).toBeDisabled();
 
-    rerender(<GameBoard {...props} card={orderCard} selectedIndexes={new Set([0])} selectedRank={3} />);
+    rerender(
+      <GameplayActionBar
+        phase={props.phase}
+        category={orderCard.category}
+        selectedRank={3}
+        controlsDisabled={false}
+        canPass
+        canAnswer
+        onAnswer={props.onAnswer}
+        onConfirm={props.onConfirm}
+        onCancelConfirm={props.onCancelConfirm}
+        onPass={props.onPass}
+        onNext={props.onNext}
+        currentPlayer={props.currentPlayer}
+      />
+    );
     expect(screen.getByRole('button', { name: 'ANSWER' })).toBeEnabled();
   });
 
   test('disables PASS until pass eligibility is true', () => {
-    globalThis.__setResizeObserverWidth(1024);
     const props = makeProps();
-    const { rerender } = render(<GameBoard {...props} canPass={false} />);
+    const { rerender } = render(
+      <GameplayActionBar
+        phase={props.phase}
+        category={props.card.category}
+        selectedRank={props.selectedRank}
+        controlsDisabled={false}
+        canPass={false}
+        canAnswer={false}
+        onAnswer={props.onAnswer}
+        onConfirm={props.onConfirm}
+        onCancelConfirm={props.onCancelConfirm}
+        onPass={props.onPass}
+        onNext={props.onNext}
+        currentPlayer={props.currentPlayer}
+      />
+    );
 
     expect(screen.getByRole('button', { name: 'PASS' })).toBeDisabled();
-    expect(screen.getByTestId('action-hint')).toHaveTextContent(/before pass is available/i);
+    expect(screen.getByText(/before pass is available/i)).toBeInTheDocument();
 
-    rerender(<GameBoard {...props} canPass={true} />);
+    rerender(
+      <GameplayActionBar
+        phase={props.phase}
+        category={props.card.category}
+        selectedRank={props.selectedRank}
+        controlsDisabled={false}
+        canPass
+        canAnswer={false}
+        onAnswer={props.onAnswer}
+        onConfirm={props.onConfirm}
+        onCancelConfirm={props.onCancelConfirm}
+        onPass={props.onPass}
+        onNext={props.onNext}
+        currentPlayer={props.currentPlayer}
+      />
+    );
     expect(screen.getByRole('button', { name: 'PASS' })).toBeEnabled();
   });
 
   test('shows clear player status chips for turn, passed and out', () => {
-    globalThis.__setResizeObserverWidth(1024);
     const props = makeProps();
     render(
-      <GameBoard
-        {...props}
+      <ScoreBoard
+        players={props.players}
+        scores={props.scores}
         currentPlayerIndex={1}
+        roundNumber={props.roundNumber}
+        lastAction={props.lastAction}
+        phaseLabel="choosing"
+        currentPlayer="Player 2"
+        targetScore={props.targetScore}
         eliminatedPlayers={new Set(['Player 1'])}
         passedPlayers={new Set()}
+        starterPlayer={props.starterPlayer}
       />
     );
 
     expect(screen.getByText('TURN')).toBeInTheDocument();
     expect(screen.getByText('OUT')).toBeInTheDocument();
-    expect(screen.queryByText('WAITING')).not.toBeInTheDocument();
+    expect(screen.queryByText('READY')).not.toBeInTheDocument();
     expect(screen.getByText('Active 1')).toBeInTheDocument();
     expect(screen.getByText('Out 1')).toBeInTheDocument();
   });
@@ -142,7 +239,25 @@ describe('GameBoard layout', () => {
     globalThis.__setResizeObserverWidth(1024);
     const props = makeProps();
     const user = userEvent.setup();
-    const { rerender } = render(<GameBoard {...props} />);
+    const { rerender } = render(
+      <>
+        <GameBoard {...props} />
+        <GameplayActionBar
+          phase={props.phase}
+          category={props.card.category}
+          selectedRank={props.selectedRank}
+          controlsDisabled={false}
+          canPass
+          canAnswer={false}
+          onAnswer={props.onAnswer}
+          onConfirm={props.onConfirm}
+          onCancelConfirm={props.onCancelConfirm}
+          onPass={props.onPass}
+          onNext={props.onNext}
+          currentPlayer={props.currentPlayer}
+        />
+      </>
+    );
 
     const liveRegion = screen.getByTestId('board-live-region');
     expect(liveRegion).toHaveTextContent(/reveal one peg/i);
@@ -154,20 +269,74 @@ describe('GameBoard layout', () => {
     await user.keyboard('{Enter}');
     expect(props.onPass).toHaveBeenCalledTimes(1);
 
-    rerender(<GameBoard {...props} selectedIndexes={new Set([0])} />);
+    rerender(
+      <>
+        <GameBoard {...props} selectedIndexes={new Set([0])} />
+        <GameplayActionBar
+          phase={props.phase}
+          category={props.card.category}
+          selectedRank={props.selectedRank}
+          controlsDisabled={false}
+          canPass
+          canAnswer
+          onAnswer={props.onAnswer}
+          onConfirm={props.onConfirm}
+          onCancelConfirm={props.onCancelConfirm}
+          onPass={props.onPass}
+          onNext={props.onNext}
+          currentPlayer={props.currentPlayer}
+        />
+      </>
+    );
     const answerButton = screen.getByRole('button', { name: 'ANSWER' });
     answerButton.focus();
     await user.keyboard('{Enter}');
     expect(props.onAnswer).toHaveBeenCalledTimes(1);
 
-    rerender(<GameBoard {...props} phase="CONFIRMING" />);
+    rerender(
+      <>
+        <GameBoard {...props} phase="CONFIRMING" />
+        <GameplayActionBar
+          phase="CONFIRMING"
+          category={props.card.category}
+          selectedRank={props.selectedRank}
+          controlsDisabled={false}
+          canPass
+          canAnswer
+          onAnswer={props.onAnswer}
+          onConfirm={props.onConfirm}
+          onCancelConfirm={props.onCancelConfirm}
+          onPass={props.onPass}
+          onNext={props.onNext}
+          currentPlayer={props.currentPlayer}
+        />
+      </>
+    );
     expect(screen.getByTestId('phase-pill')).toHaveTextContent('CONFIRMING');
     const lockInButton = screen.getByRole('button', { name: 'LOCK IN' });
     await waitFor(() => expect(lockInButton).toHaveFocus());
     await user.keyboard('{Enter}');
     expect(props.onConfirm).toHaveBeenCalledTimes(1);
 
-    rerender(<GameBoard {...props} phase="RESOLVED" />);
+    rerender(
+      <>
+        <GameBoard {...props} phase="RESOLVED" />
+        <GameplayActionBar
+          phase="RESOLVED"
+          category={props.card.category}
+          selectedRank={props.selectedRank}
+          controlsDisabled={false}
+          canPass
+          canAnswer
+          onAnswer={props.onAnswer}
+          onConfirm={props.onConfirm}
+          onCancelConfirm={props.onCancelConfirm}
+          onPass={props.onPass}
+          onNext={props.onNext}
+          currentPlayer={props.currentPlayer}
+        />
+      </>
+    );
     const nextButton = screen.getByRole('button', { name: 'NEXT' });
     await waitFor(() => expect(nextButton).toHaveFocus());
     await user.keyboard('{Enter}');

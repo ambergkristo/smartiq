@@ -34,6 +34,9 @@ import GameRoom from './components/GameRoom';
 import HostDashboard from './components/HostDashboard';
 import PlayerJoin from './components/PlayerJoin';
 import RoundSummary from './components/RoundSummary';
+import GameplayActionBar from './components/gameplay/GameplayActionBar';
+import ScoreBoard from './components/gameplay/ScoreBoard';
+import { getCanAnswer, getCardCategory, getPhaseLabel } from './components/gameplay/gameplayState';
 import LobbyStatusSummary from './components/room/LobbyStatusSummary';
 import AppHeader from './components/shell/AppHeader';
 import AppShell from './components/shell/AppShell';
@@ -2518,6 +2521,14 @@ function GameApp() {
   const shellEyebrow = engine.phase === GamePhase.SETUP
     ? 'SmartIQ host control console'
     : 'Live host console';
+  const gameplayCategory = getCardCategory(engine.card);
+  const gameplayPhaseLabel = getPhaseLabel(engine.phase);
+  const gameplayCanAnswer = getCanAnswer(
+    gameplayCategory,
+    engine.selectedIndexes,
+    engine.selectedRank,
+    controlsDisabled
+  );
   const languageControl = (
     <div className="host-language-switch" role="group" aria-label="Host language">
       {DEFAULT_LANGS.map((lang) => {
@@ -2768,6 +2779,41 @@ function GameApp() {
       )}
     </div>
   );
+  const gameplaySidePanel = (
+    <SidePanel>
+      <ScoreBoard
+        players={engine.players}
+        scores={engine.scores}
+        currentPlayerIndex={engine.currentPlayerIndex}
+        roundNumber={engine.roundNumber}
+        lastAction={activeError ? '' : engine.lastAction}
+        phaseLabel={gameplayPhaseLabel}
+        currentPlayer={engine.currentPlayer}
+        targetScore={engine.targetScore}
+        eliminatedPlayers={engine.eliminatedPlayers}
+        passedPlayers={engine.passedPlayers}
+        starterPlayer={engine.players[engine.starterIndex] ?? engine.currentPlayer}
+      />
+    </SidePanel>
+  );
+  const gameplayActionBar = (
+    <PrimaryActionBar>
+      <GameplayActionBar
+        phase={engine.phase}
+        category={gameplayCategory}
+        selectedRank={engine.selectedRank}
+        controlsDisabled={controlsDisabled}
+        canPass={engine.canPass}
+        canAnswer={gameplayCanAnswer}
+        onAnswer={engine.requestConfirm}
+        onConfirm={engine.confirmAnswer}
+        onCancelConfirm={engine.cancelConfirm}
+        onPass={engine.passTurn}
+        onNext={engine.nextStep}
+        currentPlayer={engine.currentPlayer}
+      />
+    </PrimaryActionBar>
+  );
 
   return (
     <main className="host-app" data-phase={engine.phase === GamePhase.SETUP ? 'setup' : 'game'}>
@@ -2885,29 +2931,19 @@ function GameApp() {
                     toggleIndex={engine.toggleOption}
                     onRankSelect={engine.chooseRank}
                     phase={engine.phase}
-                    onAnswer={engine.requestConfirm}
-                    onConfirm={engine.confirmAnswer}
-                    onCancelConfirm={engine.cancelConfirm}
-                    onPass={engine.passTurn}
-                    onNext={engine.nextStep}
                     canPass={engine.canPass}
-                    players={engine.players}
-                    scores={engine.scores}
-                    currentPlayerIndex={engine.currentPlayerIndex}
                     controlsDisabled={controlsDisabled}
                     roundNumber={engine.roundNumber}
                     passNote={STRINGS.passNote}
                     lastAction={engine.lastAction}
                     currentPlayer={engine.currentPlayer}
-                    targetScore={engine.targetScore}
-                    eliminatedPlayers={engine.eliminatedPlayers}
-                    passedPlayers={engine.passedPlayers}
-                    starterPlayer={engine.players[engine.starterIndex] ?? engine.currentPlayer}
                   />
                 ) : null}
               </>
             </MainStage>
           )}
+          side={gameplaySidePanel}
+          actionBar={gameplayActionBar}
         />
       ) : null}
 
