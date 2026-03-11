@@ -12,13 +12,12 @@
     "Echo",
     "Foxtrot",
     "Golf",
-    "Hotel",
-    "India",
-    "Juliet"
+    "Hotel"
   ],
   "correct": {
-    "rankByIndex": [1, 0, 2, 3, 4, 5, 6, 7, 8, 9]
+    "rankByIndex": [1, 0, 2, 3, 4, 5, 6, 7]
   },
+  "difficulty": "2",
   "source": "smartiq-v2",
   "explanation": null
 }

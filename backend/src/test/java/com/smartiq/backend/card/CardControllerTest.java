@@ -274,7 +274,7 @@ class CardControllerTest {
                 .andExpect(jsonPath("$.language").value("en"))
                 .andExpect(jsonPath("$.source").value("smartiq-v2"))
                 .andExpect(jsonPath("$.correct").exists())
-                .andExpect(jsonPath("$.options.length()").value(10));
+                .andExpect(jsonPath("$.options.length()").value(8));
     }
 
     @Test
@@ -570,7 +570,7 @@ class CardControllerTest {
                         .param("v", "2"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.difficulty").value(2))
-                .andExpect(jsonPath("$.options.length()").value(10))
+                .andExpect(jsonPath("$.options.length()").value(8))
                 .andExpect(jsonPath("$.options[0].id").value(0))
                 .andExpect(jsonPath("$.options[0].text").value("A"));
     }

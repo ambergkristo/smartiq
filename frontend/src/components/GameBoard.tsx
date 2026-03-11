@@ -146,7 +146,7 @@ export default function GameBoard({
             <div className="rank-selector-card board-surface">
               <p className="rank-selector-label">Choose the rank before you lock an answer.</p>
               <div className="rank-selector" role="radiogroup" aria-label="Rank selector">
-                {Array.from({ length: 10 }).map((_, idx) => {
+                {Array.from({ length: card.options.length }).map((_, idx) => {
                   const rank = idx + 1;
                   const active = selectedRank === rank;
                   return (
@@ -179,6 +179,7 @@ export default function GameBoard({
             selectedIndexes={selectedIndexes}
             revealedIndexes={revealedIndexes}
             wrongIndexes={wrongIndexes}
+            phase={phase}
             toggleIndex={toggleIndex}
             disabled={!canChoose}
           />

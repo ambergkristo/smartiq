@@ -69,7 +69,7 @@ class GameSessionServiceTest {
         assertThat(snapshot.players()).hasSize(2);
         assertThat(snapshot.players().get(0).playerId()).isEqualTo("p1");
         assertThat(snapshot.players().get(0).displayName()).isEqualTo("Alice");
-        assertThat(snapshot.boardState().pegs()).hasSize(10);
+        assertThat(snapshot.boardState().pegs()).hasSize(8);
         assertThat(snapshot.boardState().pegs().get(0).state()).isEqualTo("hidden");
         assertThat(snapshot.statuses().get("p1")).isEqualTo(PlayerRoundStatus.ACTIVE);
         assertThat(snapshot.statuses().get("p2")).isEqualTo(PlayerRoundStatus.ACTIVE);
@@ -814,6 +814,7 @@ class GameSessionServiceTest {
                 question,
                 options(),
                 Map.of("correctIndexes", List.of(correctIndex)),
+                "2",
                 "smartiq-v2",
                 null
         );
@@ -828,6 +829,7 @@ class GameSessionServiceTest {
                 question,
                 options(),
                 Map.of("correctIndexes", correctIndexes),
+                "2",
                 "smartiq-v2",
                 null
         );
@@ -841,14 +843,15 @@ class GameSessionServiceTest {
                 "en",
                 "Order timeline",
                 options(),
-                Map.of("rankByIndex", List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)),
+                Map.of("rankByIndex", List.of(1, 2, 3, 4, 5, 6, 7, 8)),
+                "2",
                 "smartiq-v2",
                 null
         );
     }
 
     private static List<String> options() {
-        return List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
+        return List.of("A", "B", "C", "D", "E", "F", "G", "H");
     }
 
     private static final class MutableClock extends Clock {

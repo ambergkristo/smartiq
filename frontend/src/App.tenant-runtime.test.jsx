@@ -91,7 +91,7 @@ describe('App tenant runtime integration', () => {
           question: 'Duplicate question',
           category: 'OPEN',
           topic: 'Science',
-          pegs: Array.from({ length: 10 }, (_, index) => ({
+          pegs: Array.from({ length: 8 }, (_, index) => ({
             index,
             state: 'hidden',
             value: null
@@ -126,7 +126,7 @@ describe('App tenant runtime integration', () => {
         question: 'History review question',
         category: 'OPEN',
         topic: 'History',
-        pegs: Array.from({ length: 10 }, (_, index) => ({
+        pegs: Array.from({ length: 8 }, (_, index) => ({
           index,
           state: 'hidden',
           value: null
@@ -157,7 +157,7 @@ describe('App tenant runtime integration', () => {
           question: 'Resume question',
           category: 'OPEN',
           topic: 'Science',
-          pegs: Array.from({ length: 10 }, (_, index) => ({
+          pegs: Array.from({ length: 8 }, (_, index) => ({
             index,
             state: 'hidden',
             value: null
@@ -682,7 +682,7 @@ describe('App tenant runtime integration', () => {
         question: 'History review question',
         category: 'OPEN',
         topic: 'History',
-        pegs: Array.from({ length: 10 }, (_, index) => ({
+        pegs: Array.from({ length: 8 }, (_, index) => ({
           index,
           state: 'hidden',
           value: null

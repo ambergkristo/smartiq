@@ -12,13 +12,12 @@
     "Echo",
     "Foxtrot",
     "Golf",
-    "Hotel",
-    "India",
-    "Juliet"
+    "Hotel"
   ],
   "correct": {
     "correctIndex": 4
   },
+  "difficulty": "2",
   "source": "smartiq-v2",
   "explanation": null
 }

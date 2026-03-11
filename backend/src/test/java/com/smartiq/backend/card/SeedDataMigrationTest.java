@@ -49,7 +49,7 @@ class SeedDataMigrationTest {
                 .andExpect(jsonPath("$.topic").value("History"))
                 .andExpect(jsonPath("$.language").value("en"))
                 .andExpect(jsonPath("$.source").value("flyway-seed-core"))
-                .andExpect(jsonPath("$.options.length()").value(10));
+                .andExpect(jsonPath("$.options.length()").value(8));
     }
 
     @Test

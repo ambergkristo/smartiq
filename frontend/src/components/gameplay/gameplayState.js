@@ -11,10 +11,10 @@ export function getCardCategory(card) {
   return String(card?.category || card?.subtopic || 'OPEN').toUpperCase();
 }
 
-export function getTileState(index, selectedIndexes, revealedIndexes, wrongIndexes) {
+export function getTileState(index, selectedIndexes, revealedIndexes, wrongIndexes, phase = 'CHOOSING') {
   if (revealedIndexes.has(index)) return 'correct';
   if (wrongIndexes.has(index)) return 'wrong';
-  if (selectedIndexes.has(index)) return 'selected';
+  if (selectedIndexes.has(index)) return phase === 'CONFIRMING' ? 'locked' : 'selected';
   return 'default';
 }
 

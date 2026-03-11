@@ -90,7 +90,7 @@ function makeServerSnapshot({
       question,
       category,
       topic: 'History',
-      pegs: Array.from({ length: 10 }, (_, index) => {
+      pegs: Array.from({ length: 8 }, (_, index) => {
         const state = pegStateByIndex[index] || 'hidden';
         return {
           index,

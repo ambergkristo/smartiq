@@ -33,9 +33,7 @@
         { "index": 4, "state": "hidden", "value": null },
         { "index": 5, "state": "hidden", "value": null },
         { "index": 6, "state": "hidden", "value": null },
-        { "index": 7, "state": "hidden", "value": null },
-        { "index": 8, "state": "hidden", "value": null },
-        { "index": 9, "state": "hidden", "value": null }
+        { "index": 7, "state": "hidden", "value": null }
       ]
     },
     "totalScores": {

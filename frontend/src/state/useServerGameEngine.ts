@@ -10,6 +10,7 @@ import { DEFAULT_PLAYERS, GamePhase } from './types';
 const TARGET_SCORE_DEFAULT = 30;
 const READY_LABEL = 'Ready';
 const SUPPORTED_GAME_SNAPSHOT_API_VERSION = '1';
+const BOARD_ANSWER_COUNT = 8;
 
 function initialScores(players) {
   return players.reduce((acc, player) => {
@@ -147,23 +148,25 @@ function mapSnapshot(snapshot, languageFallback, targetScoreFallback) {
   const revealedIndexes = [];
   const wrongIndexes = [];
   const pegStateByIndex = new Map();
-  const options = pegs.map((peg, idx) => {
+  const answers = pegs.slice(0, BOARD_ANSWER_COUNT).map((peg, idx) => {
     const pegIndex = safeNumber(peg?.index, idx);
     const state = String(peg?.state || 'hidden').toLowerCase();
     pegStateByIndex.set(pegIndex, state);
-    if (state === 'revealed') {
+    if (state === 'revealed' && pegIndex < BOARD_ANSWER_COUNT) {
       revealedIndexes.push(pegIndex);
-    } else if (state === 'wrong') {
+    } else if (state === 'wrong' && pegIndex < BOARD_ANSWER_COUNT) {
       wrongIndexes.push(pegIndex);
     }
     return typeof peg?.value === 'string' && peg.value.trim().length > 0
       ? peg.value
-      : `Peg ${pegIndex + 1}`;
+      : `Answer ${pegIndex + 1}`;
   });
 
-  const fallbackOptions = options.length > 0
-    ? options
-    : Array.from({ length: 10 }, (_, index) => `Peg ${index + 1}`);
+  const fallbackAnswers = answers.length === BOARD_ANSWER_COUNT
+    ? answers
+    : Array.from({ length: BOARD_ANSWER_COUNT }, (_, index) => `Answer ${index + 1}`);
+  const correctAnswerIndex = revealedIndexes.length === 1 ? revealedIndexes[0] : null;
+  const difficulty = snapshot?.boardState?.difficulty ?? '1';
 
   const roundNumber = safeNumber(snapshot?.roundState?.roundNumber, 1);
   const targetScore = safeNumber(snapshot?.winCondition, targetScoreFallback);
@@ -191,8 +194,12 @@ function mapSnapshot(snapshot, languageFallback, targetScoreFallback) {
       category: String(snapshot?.boardState?.category || 'OPEN'),
       language: String(languageFallback || 'en'),
       question: String(snapshot?.boardState?.question || ''),
-      options: fallbackOptions,
-      correct: {}
+      questionText: String(snapshot?.boardState?.question || ''),
+      options: fallbackAnswers,
+      answers: fallbackAnswers,
+      correctAnswerIndex,
+      difficulty,
+      correct: Number.isInteger(correctAnswerIndex) ? { correctIndex: correctAnswerIndex } : {}
     },
     revealedIndexes,
     wrongIndexes,
@@ -432,10 +439,10 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setSelectedIndexes(new Set());
     setSelectedRank(null);
     const selectedOption = selectedIndex >= 0
-      ? mappedResponse.card.options[selectedIndex] ?? card?.options?.[selectedIndex] ?? `Peg ${selectedIndex + 1}`
+      ? mappedResponse.card.options[selectedIndex] ?? card?.options?.[selectedIndex] ?? `Answer ${selectedIndex + 1}`
       : null;
     const revealedOptions = mappedResponse.revealedIndexes.map((index) => (
-      mappedResponse.card.options[index] ?? card?.options?.[index] ?? `Peg ${index + 1}`
+      mappedResponse.card.options[index] ?? card?.options?.[index] ?? `Answer ${index + 1}`
     ));
     const pegState = mappedResponse.pegStateByIndex.get(selectedIndex);
     setResolutionState({

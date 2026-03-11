@@ -29,7 +29,7 @@ function sampleCard({ topic, language }) {
     subtopic: 'SAMPLE',
     language: normalizedLanguage,
     question: `${normalizedTopic} sample question (${normalizedLanguage.toUpperCase()})`,
-    options: Array.from({ length: 10 }, (_, index) => `${normalizedTopic} option ${index + 1}`),
+    options: Array.from({ length: 8 }, (_, index) => `${normalizedTopic} option ${index + 1}`),
     category: 'OPEN',
     correct: { correctIndex: 0 },
     difficulty: '1',
@@ -42,7 +42,9 @@ function normalizeCardPayload(raw) {
   if (!raw || typeof raw !== 'object') return raw;
   const options = Array.isArray(raw.options)
     ? raw.options.map((entry) => (entry && typeof entry === 'object' && 'text' in entry ? entry.text : String(entry)))
-    : [];
+    : Array.isArray(raw.answers)
+      ? raw.answers.map((entry) => String(entry))
+      : [];
 
   let correct = raw.correct;
   if (!correct || typeof correct !== 'object') {
@@ -59,8 +61,15 @@ function normalizeCardPayload(raw) {
     ...raw,
     id: raw.id || raw.cardId,
     cardId: raw.cardId || raw.id,
+    questionText: raw.questionText || raw.question || '',
     category: raw.category || raw.subtopic || 'OPEN',
     options,
+    answers: options,
+    correctAnswerIndex: Number.isInteger(raw.correctAnswerIndex)
+      ? raw.correctAnswerIndex
+      : Number.isInteger(correct?.correctIndex)
+        ? correct.correctIndex
+        : null,
     correct
   };
 }

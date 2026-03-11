@@ -1,6 +1,7 @@
 const STATE_MARKERS = {
   default: '',
   selected: '\u25ce',
+  locked: '\u25cf',
   correct: '\u2713',
   wrong: '\u2717'
 };

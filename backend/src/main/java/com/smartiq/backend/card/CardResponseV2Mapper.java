@@ -16,13 +16,15 @@ final class CardResponseV2Mapper {
     }
 
     static CardNextResponseV2 toV2(CardResponse source) {
-        if (source.options() == null || source.options().size() != 10) {
-            throw new InvalidCardContractException("Card must contain exactly 10 options: " + source.cardId());
+        if (source.options() == null || source.options().size() < AnswerOptionNormalizer.BOARD_ANSWER_COUNT) {
+            throw new InvalidCardContractException("Card must contain at least 8 options: " + source.cardId());
         }
 
         int difficulty = parseDifficulty(source);
         String category = parseCategory(source.category());
-        List<Integer> correctIndexes = resolveCorrectIndexes(source);
+        List<Integer> sourceCorrectIndexes = resolveCorrectIndexes(source);
+        AnswerOptionNormalizer.Projection projection = AnswerOptionNormalizer.normalize(source.options(), sourceCorrectIndexes, source.cardId());
+        List<Integer> correctIndexes = projection.normalizedIndexes(sourceCorrectIndexes, source.cardId());
         if (correctIndexes.isEmpty()) {
             throw new InvalidCardContractException("Card has no valid correct answers: " + source.cardId());
         }
@@ -31,9 +33,9 @@ final class CardResponseV2Mapper {
         boolean multiCorrect = correctIndexes.size() > 1;
         Integer correctIndex = multiCorrect ? null : correctIndexes.get(0);
 
-        List<CardOptionResponseV2> options = new ArrayList<>(source.options().size());
-        for (int i = 0; i < source.options().size(); i++) {
-            options.add(new CardOptionResponseV2(i, source.options().get(i)));
+        List<CardOptionResponseV2> options = new ArrayList<>(projection.options().size());
+        for (int i = 0; i < projection.options().size(); i++) {
+            options.add(new CardOptionResponseV2(i, projection.options().get(i)));
         }
 
         return new CardNextResponseV2(
@@ -141,22 +143,48 @@ final class CardResponseV2Mapper {
         return indexes;
     }
 
-    private static Map<String, Object> resolveCorrect(CardResponse source, String category, List<Integer> correctIndexes) {
+    private static Map<String, Object> resolveCorrect(CardResponse source,
+                                                      String category,
+                                                      List<Integer> normalizedCorrectIndexes) {
         if (source.correctMeta() != null && !source.correctMeta().isBlank()) {
             try {
-                return OBJECT_MAPPER.readValue(source.correctMeta(), new TypeReference<>() {
+                Map<String, Object> parsed = OBJECT_MAPPER.readValue(source.correctMeta(), new TypeReference<>() {
                 });
+                if ("ORDER".equals(category)) {
+                    List<Integer> rankByIndex = asIntegerList(parsed.get("rankByIndex"));
+                    if (rankByIndex.size() < AnswerOptionNormalizer.BOARD_ANSWER_COUNT) {
+                        throw new InvalidCardContractException("ORDER card must provide at least 8 ranks: " + source.cardId());
+                    }
+                    return Map.of("rankByIndex", List.copyOf(rankByIndex.subList(0, AnswerOptionNormalizer.BOARD_ANSWER_COUNT)));
+                }
+                return parsed;
             } catch (Exception ex) {
                 throw new InvalidCardContractException("Card correctMeta is invalid JSON");
             }
         }
 
         if ("TRUE_FALSE".equals(category)) {
-            return Map.of("correctIndexes", correctIndexes);
+            return Map.of("correctIndexes", normalizedCorrectIndexes);
         }
         if (source.correctIndex() != null) {
-            return Map.of("correctIndex", source.correctIndex());
+            if (normalizedCorrectIndexes.isEmpty()) {
+                throw new InvalidCardContractException("Card has no valid correct answers: " + source.cardId());
+            }
+            return Map.of("correctIndex", normalizedCorrectIndexes.get(0));
         }
-        return Map.of("correctIndexes", correctIndexes);
+        return Map.of("correctIndexes", normalizedCorrectIndexes);
+    }
+
+    private static List<Integer> asIntegerList(Object value) {
+        if (!(value instanceof List<?> list)) {
+            return List.of();
+        }
+        List<Integer> indexes = new ArrayList<>();
+        for (Object item : list) {
+            if (item instanceof Number num) {
+                indexes.add(num.intValue());
+            }
+        }
+        return List.copyOf(indexes);
     }
 }

@@ -94,7 +94,7 @@ function makeServerSnapshot({
       question,
       category: 'OPEN',
       topic,
-      pegs: Array.from({ length: 10 }, (_, index) => ({
+      pegs: Array.from({ length: 8 }, (_, index) => ({
         index,
         state: 'hidden',
         value: null

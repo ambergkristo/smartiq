@@ -2163,27 +2163,13 @@ button:disabled {
   gap: 12px;
 }
 
-.answer-grid,
-.answer-grid-extra-list {
+.answer-grid {
   display: grid;
   gap: 10px;
 }
 
 .answer-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.answer-grid-extra {
-  display: grid;
-  gap: 10px;
-  padding: 12px 14px;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.answer-grid-extra-list {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .answer-tile {
@@ -2258,8 +2244,17 @@ button:disabled {
   background: linear-gradient(180deg, rgba(0, 255, 123, 0.22), rgba(10, 76, 43, 0.4));
 }
 
+.answer-tile.is-locked {
+  border-color: var(--warning);
+  background: linear-gradient(180deg, rgba(255, 212, 0, 0.26), rgba(114, 88, 6, 0.5));
+}
+
 .answer-tile.is-default .slot-marker {
   opacity: 0;
+}
+
+.answer-tile.is-locked .slot-marker {
+  color: var(--warning);
 }
 
 .answer-tile.is-correct {

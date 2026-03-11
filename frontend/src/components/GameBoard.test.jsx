@@ -14,7 +14,7 @@ function makeProps() {
       difficulty: '2',
       language: 'en',
       question: 'Question?',
-      options: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+      options: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
     },
     selectedIndexes: new Set(),
     selectedRank: null,
@@ -49,8 +49,6 @@ describe('GameBoard layout', () => {
     const grid = screen.getByTestId('answer-grid');
     expect(grid).toBeInTheDocument();
     expect(within(grid).getAllByRole('button')).toHaveLength(8);
-    expect(screen.getByTestId('answer-grid-extra')).toBeInTheDocument();
-    expect(within(screen.getByTestId('answer-grid-extra')).getAllByRole('button')).toHaveLength(2);
     expect(screen.getByTestId('question-card')).toHaveTextContent('Question?');
     expect(screen.getByTestId('board-status-bar')).toBeInTheDocument();
     expect(screen.getByTestId('answer-state-row')).toBeInTheDocument();
@@ -58,6 +56,7 @@ describe('GameBoard layout', () => {
     expect(screen.getByTestId('phase-pill')).toHaveTextContent('CHOOSING');
     expect(screen.queryByTestId('wheel-board')).not.toBeInTheDocument();
     expect(screen.queryByTestId('fallback-grid')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('answer-grid-extra')).not.toBeInTheDocument();
   });
 
   test('disables ANSWER until an answer is selected for non-ORDER categories', () => {
@@ -226,6 +225,15 @@ describe('GameBoard layout', () => {
     expect(screen.getAllByText('◎')).toHaveLength(1);
   });
 
+  test('uses the confirm panel while answer is awaiting confirmation', () => {
+    const props = makeProps();
+    render(<GameBoard {...props} phase="CONFIRMING" selectedIndexes={new Set([0])} />);
+
+    expect(screen.getByTestId('reveal-panel')).toBeInTheDocument();
+    expect(screen.getByTestId('resolution-summary')).toHaveTextContent(/lock answer/i);
+    expect(screen.getByTestId('player-result-list')).toHaveTextContent(/locked/i);
+  });
+
   test('renders a distinct reveal panel for resolved answers', () => {
     const props = makeProps();
     render(
@@ -330,6 +338,7 @@ describe('GameBoard layout', () => {
       </>
     );
     expect(screen.getByTestId('phase-pill')).toHaveTextContent('CONFIRMING');
+    expect(screen.getByTestId('reveal-panel')).toBeInTheDocument();
     const lockInButton = screen.getByRole('button', { name: 'LOCK IN' });
     await waitFor(() => expect(lockInButton).toHaveFocus());
     await user.keyboard('{Enter}');

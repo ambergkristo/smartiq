@@ -11,6 +11,7 @@ public record CardDeckResponse(
         String question,
         List<String> options,
         Map<String, Object> correct,
+        String difficulty,
         String source,
         String explanation
 ) {

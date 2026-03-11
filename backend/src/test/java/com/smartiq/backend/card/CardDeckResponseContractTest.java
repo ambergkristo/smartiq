@@ -20,16 +20,14 @@ class CardDeckResponseContractTest {
             "Echo",
             "Foxtrot",
             "Golf",
-            "Hotel",
-            "India",
-            "Juliet"
+            "Hotel"
     );
 
     @Test
     void deckResponseMatchesContractForAllCategories() throws Exception {
         assertContract("OPEN", cardWithCorrectIndex("OPEN", 0));
-        assertContract("TRUE_FALSE", cardWithFlags("TRUE_FALSE", "true,false,false,true,false,false,false,false,false,false"));
-        assertContract("ORDER", cardWithCorrectMeta("ORDER", "{\"rankByIndex\":[1,0,2,3,4,5,6,7,8,9]}"));
+        assertContract("TRUE_FALSE", cardWithFlags("TRUE_FALSE", "true,false,false,true,false,false,false,false"));
+        assertContract("ORDER", cardWithCorrectMeta("ORDER", "{\"rankByIndex\":[1,0,2,3,4,5,6,7]}"));
         assertContract("NUMBER", cardWithCorrectIndex("NUMBER", 1));
         assertContract("COLOR", cardWithCorrectIndex("COLOR", 4));
         assertContract("CENTURY_DECADE", cardWithCorrectIndex("CENTURY_DECADE", 7));
