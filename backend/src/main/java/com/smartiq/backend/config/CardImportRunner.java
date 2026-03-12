@@ -189,14 +189,17 @@ public class CardImportRunner implements ApplicationRunner {
 
         Resource resource = new ClassPathResource(resourcePath);
         if (!resource.exists()) {
+            log.warn("Runtime dataset resource missing location={}", importLocation);
             return;
         }
 
+        log.info("Runtime dataset resource found location={}", importLocation);
         importResource(resource, importLocation);
     }
 
     private void importPath(Path importPath) {
         if (!Files.exists(importPath)) {
+            log.warn("Runtime dataset path missing location={}", importPath);
             return;
         }
 
@@ -255,6 +258,7 @@ public class CardImportRunner implements ApplicationRunner {
             int inserted = 0;
             int duplicates = 0;
             int invalid = readResult.invalidCount();
+            Set<String> importedTopics = new LinkedHashSet<>();
 
             for (CardSeed seed : seeds) {
                 if (cardRepository.existsById(seed.id())) {
@@ -264,6 +268,7 @@ public class CardImportRunner implements ApplicationRunner {
                 try {
                     cardRepository.save(toEntity(seed));
                     inserted++;
+                    importedTopics.add(seed.topic());
                 } catch (IllegalArgumentException ex) {
                     invalid++;
                     log.warn("Skipping invalid card id={} sourceFile={} reason={}",
@@ -271,6 +276,8 @@ public class CardImportRunner implements ApplicationRunner {
                 }
             }
 
+            log.info("Runtime dataset import ready source={} found=true imported={} topicsCreated={}",
+                    sourceLabel, inserted, importedTopics.size());
             log.info("Card import completed file={} total={} inserted={} duplicates={} invalid={}",
                     sourceLabel, seeds.size(), inserted, duplicates, invalid);
         } catch (IOException ex) {

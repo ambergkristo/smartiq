@@ -34,7 +34,7 @@ smartiq:
     time: ${SMARTIQ_BUILD_TIME:unknown}
   import:
     enabled: ${SMARTIQ_IMPORT_ENABLED:true}
-    path: ${SMARTIQ_IMPORT_PATH:../data/smart10/cards.en.json}
+    path: ${SMARTIQ_IMPORT_PATH:classpath:data/cards.en.json}
     fail-on-category-threshold: ${STRICT_DATASET_VALIDATION:${SMARTIQ_IMPORT_FAIL_ON_CATEGORY_THRESHOLD:false}}
   pool:
     enabled: ${SMARTIQ_POOL_ENABLED:true}

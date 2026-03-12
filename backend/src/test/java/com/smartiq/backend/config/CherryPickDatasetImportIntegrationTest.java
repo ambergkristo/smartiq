@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.card.Card;
 import com.smartiq.backend.card.CardRepository;
+import com.smartiq.backend.card.TopicCountView;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.DefaultApplicationArguments;
@@ -62,6 +63,9 @@ class CherryPickDatasetImportIntegrationTest {
         assertThat(multiCard.getCorrectIndex()).isNull();
         assertThat(multiCard.getCorrectFlags()).isEqualTo("false,true,false,true,false,false,false,true");
         assertThat(readMeta(multiCard)).containsEntry("correctIndexes", List.of(1, 3, 7));
+        assertThat(cardRepository.findTopicCounts())
+                .extracting(TopicCountView::getTopic)
+                .containsExactlyInAnyOrder("Science", "History");
     }
 
     @Test

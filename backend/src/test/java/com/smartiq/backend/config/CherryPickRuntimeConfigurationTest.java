@@ -1,6 +1,7 @@
 package com.smartiq.backend.config;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,9 +20,16 @@ class CherryPickRuntimeConfigurationTest {
         String applicationYaml = Files.readString(applicationPath);
 
         assertThat(applicationYaml)
-                .contains("path: ${SMARTIQ_IMPORT_PATH:../data/smart10/cards.en.json}")
+                .contains("path: ${SMARTIQ_IMPORT_PATH:classpath:data/cards.en.json}")
                 .contains("et-enabled: ${SMARTIQ_LANGUAGE_ET_ENABLED:false}")
                 .doesNotContain("../data/smart10/cards.et.json")
                 .doesNotContain("classpath:data/runtime/cards.en.json");
+    }
+
+    @Test
+    void canonicalDatasetExistsOnClasspath() {
+        ClassPathResource resource = new ClassPathResource("data/cards.en.json");
+
+        assertThat(resource.exists()).isTrue();
     }
 }

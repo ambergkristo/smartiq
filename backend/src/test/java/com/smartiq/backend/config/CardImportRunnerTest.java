@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.card.CardRepository;
 import com.smartiq.backend.card.CardSourcePolicy;
 import com.smartiq.backend.card.LabelCountView;
+import com.smartiq.backend.card.TopicCountView;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import org.slf4j.LoggerFactory;
 
@@ -103,6 +105,42 @@ class CardImportRunnerTest {
                 });
     }
 
+    @Test
+    void logsRuntimeDatasetStartupConfirmationForClasspathImport() throws Exception {
+        when(cardRepository.countBySourcesLower(CardSourcePolicy.DEPRECATED_SOURCES)).thenReturn(0L);
+        when(cardRepository.deleteBySourcesLower(any())).thenReturn(0);
+        when(cardRepository.existsById(any())).thenReturn(false);
+        when(cardRepository.count()).thenReturn(1L);
+        when(cardRepository.findCategoryCounts()).thenReturn(List.of(new SimpleLabelCount("OPEN", 1L)));
+        when(cardRepository.findTopicCounts()).thenReturn(List.of(new SimpleTopicCount("History", 1L)));
+        when(cardRepository.findLanguageCounts()).thenReturn(List.of(new SimpleLabelCount("en", 1L)));
+        when(cardRepository.countBySourcesLower(CardSourcePolicy.ALLOWED_SOURCES)).thenReturn(1L);
+
+        CardImportRunner runner = new CardImportRunner(
+                cardRepository,
+                new ImportProperties(true, "classpath:import/cherrypick/cards.en.json", false),
+                objectMapper,
+                meterRegistry,
+                0
+        );
+
+        Logger logger = (Logger) LoggerFactory.getLogger(CardImportRunner.class);
+        ListAppender<ILoggingEvent> appender = new ListAppender<>();
+        appender.start();
+        logger.addAppender(appender);
+        try {
+            runner.run(new DefaultApplicationArguments());
+        } finally {
+            logger.detachAppender(appender);
+        }
+
+        assertThat(appender.list)
+                .anySatisfy(event -> assertThat(event.getFormattedMessage())
+                        .contains("Runtime dataset resource found location=classpath:import/cherrypick/cards.en.json"))
+                .anySatisfy(event -> assertThat(event.getFormattedMessage())
+                        .contains("Runtime dataset import ready source=classpath:import/cherrypick/cards.en.json found=true imported=2 topicsCreated=2"));
+    }
+
     private static final class SimpleLabelCount implements LabelCountView {
         private final String label;
         private final long count;
@@ -115,6 +153,26 @@ class CardImportRunnerTest {
         @Override
         public String getLabel() {
             return label;
+        }
+
+        @Override
+        public long getCount() {
+            return count;
+        }
+    }
+
+    private static final class SimpleTopicCount implements TopicCountView {
+        private final String topic;
+        private final long count;
+
+        private SimpleTopicCount(String topic, long count) {
+            this.topic = topic;
+            this.count = count;
+        }
+
+        @Override
+        public String getTopic() {
+            return topic;
         }
 
         @Override
