@@ -53,4 +53,11 @@ describe('CherryPick action payloads', () => {
       message: 'roomCode is required'
     })).toBe('Enter a valid game code.');
   });
+
+  test('maps host room validation errors to clean create copy', () => {
+    expect(resolveRoomSessionErrorMessage({
+      code: 'VALIDATION_ERROR',
+      message: 'displayName is required'
+    }, { action: 'create' })).toBe('Enter a host name.');
+  });
 });

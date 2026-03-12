@@ -207,6 +207,9 @@ const STRINGS = {
   roomCreatedPrefix: 'Room ready:',
   roomJoinedPrefix: 'Joined room:',
   roomResumedPrefix: 'Resumed room:',
+  hostTopicRequired: 'Choose a topic before creating a host game.',
+  hostStartTopicRequired: 'Choose a topic before starting the game.',
+  hostRoomRequired: 'Create a host room before starting the game.',
   roomPlayerLobbyRefreshSubmit: 'Refresh lobby',
   roomPlayerLobbyBackHomeSubmit: 'Back to home',
   roomPlayersTitle: 'Players in room',
@@ -2105,6 +2108,7 @@ function GameApp() {
     setRoomMessage('');
     try {
       const fallbackDisplayName = runtimeSnapshot?.me?.displayName
+        || playerProfile.displayName
         || onboardingDraft.ownerDisplayName
         || 'Host';
       const displayName = String(roomDraft.displayName || fallbackDisplayName).trim();
@@ -2122,13 +2126,20 @@ function GameApp() {
         roomState: resumed.roomState
       }, `${STRINGS.roomCreatedPrefix} ${resumed.roomCode}`);
     } catch (error) {
-      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
-        ? error.detail
-        : error?.message || 'Could not create room.';
-      setRoomError(detail);
+      setRoomError(resolveRoomSessionErrorMessage(error, { action: 'create' }));
     } finally {
       setRoomPending(false);
     }
+  }
+
+  async function handleCreateHostRoom() {
+    if (!String(config.topic || '').trim()) {
+      setRoomError(STRINGS.hostTopicRequired);
+      setRoomMessage('');
+      return;
+    }
+    serverEngine.clearError();
+    await handleCreateRoom();
   }
 
   async function handleJoinRoom() {
@@ -2323,6 +2334,36 @@ function GameApp() {
       topic: config.topic,
       language: config.lang
     });
+  }
+
+  function handleStartHostedGame() {
+    if (roomPending) {
+      return;
+    }
+    if (!hostRoomSession?.roomCode) {
+      setRoomError(STRINGS.hostRoomRequired);
+      return;
+    }
+    if (!String(config.topic || '').trim()) {
+      setRoomError(STRINGS.hostStartTopicRequired);
+      return;
+    }
+    serverEngine.clearError();
+    setRoomError('');
+    handleStartRoomSession();
+  }
+
+  function handleExitHostMode() {
+    serverEngine.clearError();
+    if (roomSession?.role === 'host') {
+      persistRoomSelection(roomSession?.roomCode, []);
+      setRoomSession(null);
+      persistRoomSession(null);
+      setSelectedRoomPlayerNames([]);
+      setRoomMessage('');
+      setRoomError('');
+    }
+    handleNavigateEntry(ENTRY_ROUTE.HOME);
   }
 
   async function handleRemoveRoomPlayer(player) {
@@ -2904,7 +2945,27 @@ function GameApp() {
     />
   ) : null;
   const hostEntryPanel = (
-    <HostGameScreen onBack={() => handleNavigateEntry(ENTRY_ROUTE.HOME)} />
+    <HostGameScreen
+      topics={topics}
+      selectedTopic={config.topic}
+      hostName={roomDraft.displayName || playerProfile.displayName}
+      roomSession={hostRoomSession}
+      pending={roomPending}
+      message={roomMessage}
+      error={roomError || (entryRoute === ENTRY_ROUTE.HOST ? activeError : '')}
+      onTopicChange={(topic) => {
+        setConfig((prev) => ({ ...prev, topic }));
+        setRoomError('');
+        serverEngine.clearError();
+      }}
+      onHostNameChange={(value) => {
+        setRoomDraft((prev) => ({ ...prev, displayName: value }));
+        setRoomError('');
+      }}
+      onCreateRoom={handleCreateHostRoom}
+      onStartGame={handleStartHostedGame}
+      onBack={handleExitHostMode}
+    />
   );
   const setupActionBar = !roomSession ? (
     <PrimaryActionBar>
@@ -3138,7 +3199,7 @@ function GameApp() {
           {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && showProductHome && entryRoute === ENTRY_ROUTE.PLAY ? (
             practiceEntryPanel
           ) : null}
-          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && showProductHome && entryRoute === ENTRY_ROUTE.HOST ? (
+          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && entryRoute === ENTRY_ROUTE.HOST && (!roomSession || roomSession.role === 'host') ? (
             hostEntryPanel
           ) : null}
           {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && showProductHome && entryRoute === ENTRY_ROUTE.HOST_TRIAL ? (
@@ -3166,7 +3227,7 @@ function GameApp() {
           {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && roomSession?.role === 'player' ? (
             playerWaitingShell
           ) : null}
-          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && roomSession?.role !== 'player' && (!showProductHome || entryRoute === ENTRY_ROUTE.START) ? (
+          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && roomSession?.role !== 'player' && entryRoute !== ENTRY_ROUTE.HOST && (!showProductHome || entryRoute === ENTRY_ROUTE.START) ? (
             <AppShell
               mode="setup"
               header={(

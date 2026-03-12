@@ -482,6 +482,65 @@ h1 {
   gap: 10px;
 }
 
+.host-mode-form,
+.host-mode-roster {
+  display: grid;
+  gap: 12px;
+  text-align: left;
+}
+
+.host-mode-field {
+  display: grid;
+  gap: 8px;
+}
+
+.host-mode-field span {
+  color: var(--muted);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.host-mode-field select,
+.host-mode-field input {
+  min-height: 48px;
+  border-radius: 16px;
+}
+
+.host-mode-roster {
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.host-mode-roster-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.host-mode-roster ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.host-mode-roster li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.host-mode-roster li span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
 .host-launch-panel {
   align-content: start;
 }

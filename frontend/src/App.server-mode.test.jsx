@@ -25,17 +25,20 @@ vi.mock('./api', () => {
     rejoinRoomSession: vi.fn(),
     resumeServerGameSession: vi.fn(),
     requestRuntimeAuthLink: vi.fn(),
-    resolveRoomSessionErrorMessage: vi.fn((error) => {
+    resolveRoomSessionErrorMessage: vi.fn((error, options = {}) => {
+      const action = String(options?.action || 'join');
       if (error?.code === 'ROOM_NOT_FOUND' || error?.status === 404) {
         return 'Game code not found. Check the code and try again.';
       }
       if (error?.code === 'VALIDATION_ERROR' && /displayname/i.test(String(error?.message || ''))) {
-        return 'Enter your display name.';
+        return action === 'create' ? 'Enter a host name.' : 'Enter your display name.';
       }
       if (error?.code === 'VALIDATION_ERROR' && /roomcode/i.test(String(error?.message || ''))) {
         return 'Enter a valid game code.';
       }
-      return 'Could not join this game. Retry in a moment.';
+      return action === 'create'
+        ? 'Could not create the host room. Retry in a moment.'
+        : 'Could not join this game. Retry in a moment.';
     }),
     setRuntimeAuthContext: vi.fn(),
     upsertRuntimeSessionReviewNote: vi.fn(),
@@ -55,6 +58,7 @@ vi.mock('./api', () => {
 });
 
 import {
+  createRoomSession,
   createServerGameSession,
   fetchTopics,
   joinRoomSession,
@@ -141,6 +145,17 @@ async function openJoinFlow({ roomCode = 'ABC123', displayName } = {}) {
     fireEvent.change(displayNameInput, { target: { value: displayName } });
   }
   return displayNameInput;
+}
+
+async function openHostFlow({ topic = 'History', hostName } = {}) {
+  fireEvent.click(await screen.findByRole('button', { name: /host game/i }));
+  const topicSelect = await screen.findByLabelText(/topic/i);
+  fireEvent.change(topicSelect, { target: { value: topic } });
+  const hostNameInput = await screen.findByLabelText(/host name/i);
+  if (typeof hostName === 'string') {
+    fireEvent.change(hostNameInput, { target: { value: hostName } });
+  }
+  return { topicSelect, hostNameInput };
 }
 
 describe('App server-authoritative mode', () => {
@@ -526,15 +541,99 @@ describe('App server-authoritative mode', () => {
     expect(await screen.findByTestId('player-route-error')).toHaveTextContent('Game code not found. Check the code and try again.');
   });
 
-  test('renders the Host Game shell and navigates back home', async () => {
+  test('Host Game creates a room with a topic and shows the join code', async () => {
+    window.location.hash = '';
+    createRoomSession.mockResolvedValue({
+      roomCode: 'HOST88',
+      playerId: 'host-1',
+      authToken: 'host-auth'
+    });
+    rejoinRoomSession.mockResolvedValue({
+      roomCode: 'HOST88',
+      playerId: 'host-1',
+      authToken: 'host-auth',
+      roomState: {
+        players: [{ playerId: 'host-1', displayName: 'Hosty' }]
+      }
+    });
+
+    render(<App />);
+
+    const { hostNameInput } = await openHostFlow({ topic: 'History', hostName: 'Hosty' });
+    expect(hostNameInput).toHaveValue('Hosty');
+
+    fireEvent.click(screen.getByRole('button', { name: /create room/i }));
+
+    await waitFor(() => expect(createRoomSession).toHaveBeenCalledWith({ displayName: 'Hosty' }));
+    expect(await screen.findByTestId('host-game-panel')).toBeInTheDocument();
+    expect(screen.getByTestId('host-room-code')).toHaveTextContent('HOST88');
+    expect(screen.getByTestId('host-topic-display')).toHaveTextContent('History');
+  });
+
+  test('joined players appear in the host view and the host can start the game', async () => {
+    window.location.hash = '';
+    createRoomSession.mockResolvedValue({
+      roomCode: 'HOST99',
+      playerId: 'host-2',
+      authToken: 'host-auth-2'
+    });
+    rejoinRoomSession.mockResolvedValue({
+      roomCode: 'HOST99',
+      playerId: 'host-2',
+      authToken: 'host-auth-2',
+      roomState: {
+        players: [
+          { playerId: 'host-2', displayName: 'Hosty' },
+          { playerId: 'player-3', displayName: 'Mia' }
+        ]
+      }
+    });
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({
+      gameId: 'host-game',
+      players: [
+        { playerId: 'host-2', displayName: 'Hosty' },
+        { playerId: 'player-3', displayName: 'Mia' }
+      ],
+      question: 'Hosted round question',
+      correctAnswerIndexes: [0]
+    }));
+
+    render(<App />);
+
+    await openHostFlow({ topic: 'History', hostName: 'Hosty' });
+    fireEvent.click(screen.getByRole('button', { name: /create room/i }));
+
+    expect(await screen.findByTestId('host-player-list')).toBeInTheDocument();
+    expect(screen.getByTestId('host-player-list')).toHaveTextContent('Hosty');
+    expect(screen.getByTestId('host-player-list')).toHaveTextContent('Mia');
+
+    fireEvent.click(screen.getByRole('button', { name: /start game/i }));
+
+    await waitFor(() => expect(createServerGameSession).toHaveBeenCalledWith(expect.objectContaining({
+      players: ['Hosty', 'Mia'],
+      topic: 'History',
+      language: 'en'
+    })));
+    expect(await screen.findByText(/hosted round question/i)).toBeInTheDocument();
+  });
+
+  test('Host Game shows a clean error when topic is missing', async () => {
     window.location.hash = '';
 
     render(<App />);
 
-    fireEvent.click(await screen.findByRole('button', { name: /host game/i }));
-    expect(await screen.findByTestId('host-game-panel')).toBeInTheDocument();
-    expect(screen.getByText(/host cherrypick/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /host mode coming next/i })).toBeDisabled();
+    await openHostFlow({ topic: '' });
+    fireEvent.click(screen.getByRole('button', { name: /create room/i }));
+
+    expect(await screen.findByTestId('host-game-error')).toHaveTextContent('Choose a topic before creating a host game.');
+  });
+
+  test('Host Game navigates back home cleanly', async () => {
+    window.location.hash = '';
+
+    render(<App />);
+
+    await openHostFlow({ topic: 'History' });
 
     fireEvent.click(screen.getByRole('button', { name: /back to home/i }));
     expect(await screen.findByTestId('home-screen')).toBeInTheDocument();

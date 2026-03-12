@@ -1042,7 +1042,11 @@ export function resolveGameSessionErrorMessage(error) {
 
 export function resolveRoomSessionErrorMessage(error, { action = 'join' } = {}) {
   const normalizedAction = String(action || 'join').trim().toLowerCase();
-  const waitingLabel = normalizedAction === 'resume' ? 'restore the joined game' : 'join this game';
+  const waitingLabel = normalizedAction === 'resume'
+    ? 'restore the joined game'
+    : normalizedAction === 'create'
+      ? 'create the host room'
+      : 'join this game';
 
   if (error?.code === 'CONFIG_ERROR') {
     return 'Frontend API is not configured. Set VITE_API_BASE_URL and retry.';
@@ -1054,7 +1058,7 @@ export function resolveRoomSessionErrorMessage(error, { action = 'join' } = {}) 
       return 'Enter a valid game code.';
     }
     if (message.includes('displayname')) {
-      return 'Enter your display name.';
+      return normalizedAction === 'create' ? 'Enter a host name.' : 'Enter your display name.';
     }
     return `Could not ${waitingLabel}. Check the code and player name.`;
   }
@@ -1079,7 +1083,9 @@ export function resolveRoomSessionErrorMessage(error, { action = 'join' } = {}) 
   }
 
   if (error?.status === 409) {
-    return 'This game is not open for joining right now.';
+    return normalizedAction === 'create'
+      ? 'Could not create a host room right now.'
+      : 'This game is not open for joining right now.';
   }
 
   if (error?.status >= 500) {
