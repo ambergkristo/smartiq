@@ -56,6 +56,13 @@ import {
   normalizeRoomCodeInput
 } from './roomRuntime';
 import { useServerGameEngine } from './state/useServerGameEngine';
+import {
+  loadOrCreatePlayerProfile,
+  recordSoloGameStarted,
+  recordSoloRoundResult,
+  savePlayerProfile,
+  updatePlayerProfileDisplayName
+} from './state/playerProfile';
 import { DEFAULT_LANGS, GamePhase } from './state/types';
 
 const STRINGS = {
@@ -294,6 +301,8 @@ const ENTRY_ROUTE = {
   HOST_TRIAL: 'host-trial',
   HOST_SIGNIN: 'host-signin'
 };
+const SOLO_PLAYER_NAME = 'Solo Player';
+const SOLO_WIN_CONDITION = 1_000_000;
 const SHOW_BUILD_BADGE = import.meta.env.DEV
   || String(import.meta.env.VITE_SHOW_BUILD_BADGE || '').toLowerCase() === 'true';
 const BUILD_SHA = String(import.meta.env.VITE_BUILD_SHA || '').trim();
@@ -1301,6 +1310,7 @@ function GameApp() {
     playersText: storedConfig?.playersText ?? ''
   });
   const [setupPlayerDraft, setSetupPlayerDraft] = useState('');
+  const [playerProfile, setPlayerProfile] = useState(() => loadOrCreatePlayerProfile());
   const [runtimeSnapshot, setRuntimeSnapshot] = useState(null);
   const [runtimeWarning, setRuntimeWarning] = useState('');
   const [onboardingDraft, setOnboardingDraft] = useState({
@@ -1368,6 +1378,8 @@ function GameApp() {
   const lastAudioCardRef = useRef('');
   const lastRevealedCountRef = useRef(0);
   const lastWrongCountRef = useRef(0);
+  const soloLaunchAttemptedRef = useRef(false);
+  const processedSoloResolutionRef = useRef('');
   const billingReturnHandledRef = useRef(false);
   const onboardingWorkspaceInputRef = useRef(null);
   const signInEmailInputRef = useRef(null);
@@ -1475,6 +1487,12 @@ function GameApp() {
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
+
+  useEffect(() => {
+    if (entryRoute !== ENTRY_ROUTE.PRACTICE) {
+      soloLaunchAttemptedRef.current = false;
+    }
+  }, [entryRoute]);
 
   useEffect(() => {
     const roomPlayerNames = getRoomPlayerNames(roomSession);
@@ -2511,10 +2529,15 @@ function GameApp() {
   const appTitle = String(runtimeSnapshot?.branding?.branding?.appName || STRINGS.title).trim() || STRINGS.title;
   const hostLaunchMessage = resolveHostedRuntimeBlockMessage(runtimeSnapshot?.subscription);
   const hostLaunchBlocked = Boolean(runtimeSnapshot?.me?.selectedTenantId) && Boolean(hostLaunchMessage);
+  const resolvedSoloPlayerName = String(playerProfile?.displayName || SOLO_PLAYER_NAME).trim() || SOLO_PLAYER_NAME;
 
   useEffect(() => {
     document.title = appTitle;
   }, [appTitle]);
+
+  useEffect(() => {
+    savePlayerProfile(playerProfile);
+  }, [playerProfile]);
 
   useEffect(() => {
     const cardId = engine.card?.cardId || engine.card?.id || '';
@@ -2547,7 +2570,13 @@ function GameApp() {
     lastWrongCountRef.current = wrongCount;
   }, [engine.card, engine.phase, engine.revealedIndexes, engine.wrongIndexes, playCorrect, playRoundIntro, playWrong]);
 
-  function launchRound({ playersText = config.playersText, topic = config.topic, language = config.lang } = {}) {
+  function launchRound({
+    playersText = config.playersText,
+    topic = config.topic,
+    language = config.lang,
+    mode = 'standard',
+    winCondition = 30
+  } = {}) {
     if (hostLaunchBlocked) {
       setRuntimeWarning(hostLaunchMessage || STRINGS.hostedRuntimeBlocked);
       return;
@@ -2558,7 +2587,8 @@ function GameApp() {
       players: parsedPlayers,
       language,
       topic: topic || undefined,
-      winCondition: 30
+      winCondition,
+      mode
     });
   }
 
@@ -2571,6 +2601,18 @@ function GameApp() {
   }
 
   function handlePlayAgain() {
+    if (serverEngine.gameMode === 'solo') {
+      processedSoloResolutionRef.current = '';
+      setPlayerProfile((prev) => recordSoloGameStarted(prev));
+      launchRound({
+        playersText: resolvedSoloPlayerName,
+        topic: '',
+        language: 'en',
+        mode: 'solo',
+        winCondition: SOLO_WIN_CONDITION
+      });
+      return;
+    }
     launchRound({
       playersText: config.playersText,
       topic: config.topic,
@@ -2581,12 +2623,90 @@ function GameApp() {
   function handleRestart() {
     serverEngine.resetToSetup();
     serverEngine.clearError();
+    processedSoloResolutionRef.current = '';
+    if (serverEngine.gameMode === 'solo') {
+      handleNavigateEntry(ENTRY_ROUTE.HOME);
+      return;
+    }
     if (runtimeSnapshot?.me?.selectedTenantId) {
       refreshWorkspaceInsights();
     }
   }
 
+  function handleStartSoloMode() {
+    processedSoloResolutionRef.current = '';
+    setPlayerProfile((prev) => recordSoloGameStarted(prev));
+    launchRound({
+      playersText: resolvedSoloPlayerName,
+      topic: '',
+      language: 'en',
+      mode: 'solo',
+      winCondition: SOLO_WIN_CONDITION
+    });
+  }
+
+  function handleExitSoloMode() {
+    serverEngine.resetToSetup();
+    serverEngine.clearError();
+    processedSoloResolutionRef.current = '';
+    handleNavigateEntry(ENTRY_ROUTE.HOME);
+  }
+
+  function handlePlayerProfileNameChange(nextName) {
+    setPlayerProfile((prev) => updatePlayerProfileDisplayName(prev, nextName));
+  }
+
+  useEffect(() => {
+    if (entryRoute !== ENTRY_ROUTE.PRACTICE) {
+      return;
+    }
+    if (startup.phase !== STARTUP_PHASE.READY) {
+      return;
+    }
+    if (soloLaunchAttemptedRef.current) {
+      return;
+    }
+    if (serverEngine.phase !== GamePhase.SETUP) {
+      return;
+    }
+    if (roomSession || activePlayerRouteRoomCode) {
+      return;
+    }
+    soloLaunchAttemptedRef.current = true;
+    handleStartSoloMode();
+  }, [activePlayerRouteRoomCode, entryRoute, roomSession, serverEngine.phase, startup.phase]);
+
+  useEffect(() => {
+    if (serverEngine.gameMode !== 'solo') {
+      return;
+    }
+    if (serverEngine.phase !== GamePhase.ROUND_SUCCESS && serverEngine.phase !== GamePhase.ROUND_FAIL) {
+      return;
+    }
+    if (!serverEngine.resolutionState) {
+      return;
+    }
+
+    const resolutionKey = [
+      serverEngine.roundNumber,
+      serverEngine.phase,
+      serverEngine.resolutionState.selectedIndex,
+      serverEngine.resolutionState.lastAction
+    ].join(':');
+
+    if (processedSoloResolutionRef.current === resolutionKey) {
+      return;
+    }
+
+    processedSoloResolutionRef.current = resolutionKey;
+    setPlayerProfile((prev) => recordSoloRoundResult(prev, {
+      xpGained: serverEngine.resolutionState?.xpGained ?? 0,
+      wasSuccessful: serverEngine.phase === GamePhase.ROUND_SUCCESS
+    }));
+  }, [serverEngine.gameMode, serverEngine.phase, serverEngine.resolutionState, serverEngine.roundNumber]);
+
   const activeError = serverEngine.errorMessage;
+  const soloModeActive = serverEngine.gameMode === 'solo';
   const controlsDisabled = !serverEngine.isLocalTurn;
   const setupPlayers = parsePlayers(config.playersText);
   const setupDraftPlayers = parsePlayers(setupPlayerDraft);
@@ -2639,12 +2759,7 @@ function GameApp() {
     : 'Live game';
   const gameplayCategory = getCardCategory(engine.card);
   const gameplayPhaseLabel = getPhaseLabel(engine.phase);
-  const gameplayCanAnswer = getCanAnswer(
-    gameplayCategory,
-    engine.selectedIndexes,
-    engine.selectedRank,
-    controlsDisabled
-  );
+  const gameplayCanAnswer = getCanAnswer(engine.selectedIndexes, controlsDisabled);
   const languageControl = (
     <div className="host-language-switch" role="group" aria-label="Host language">
       {DEFAULT_LANGS.map((lang) => {
@@ -2719,6 +2834,10 @@ function GameApp() {
       appTitle={appTitle}
       tagline={STRINGS.homeTagline}
       warning={runtimeWarning}
+      profileName={playerProfile.displayName}
+      profileLevel={playerProfile.level}
+      profileXp={playerProfile.totalXp}
+      onProfileNameChange={handlePlayerProfileNameChange}
       onStartGame={() => handleNavigateEntry(ENTRY_ROUTE.START)}
       onJoinGame={() => handleNavigateEntry(ENTRY_ROUTE.JOIN)}
       onPractice={() => handleNavigateEntry(ENTRY_ROUTE.PRACTICE)}
@@ -2914,8 +3033,15 @@ function GameApp() {
         currentPlayer={engine.currentPlayer}
         targetScore={engine.targetScore}
         eliminatedPlayers={engine.eliminatedPlayers}
-        passedPlayers={engine.passedPlayers}
         starterPlayer={engine.players[engine.starterIndex] ?? engine.currentPlayer}
+        mode={soloModeActive ? 'solo' : 'standard'}
+        sessionXp={engine.sessionXp}
+        lastRoundXp={engine.lastRoundXp}
+        profileName={playerProfile.displayName}
+        profileLevel={playerProfile.level}
+        profileXp={playerProfile.totalXp}
+        profileGamesPlayed={playerProfile.gamesPlayed}
+        profileRoundsWon={playerProfile.roundsWon}
       />
     </SidePanel>
   );
@@ -2925,14 +3051,11 @@ function GameApp() {
         phase={engine.phase}
         category={gameplayCategory}
         nextTransition={engine.nextTransition}
-        selectedRank={engine.selectedRank}
         controlsDisabled={controlsDisabled}
-        canPass={engine.canPass}
         canAnswer={gameplayCanAnswer}
         onAnswer={engine.requestConfirm}
         onConfirm={engine.confirmAnswer}
         onCancelConfirm={engine.cancelConfirm}
-        onPass={engine.passTurn}
         onNext={engine.nextStep}
         onBackToLobby={handleRestart}
         backLabel={hostRoomSession ? '← Back to lobby' : '← Back to setup'}
@@ -3032,7 +3155,7 @@ function GameApp() {
         </>
       ) : null}
 
-      {engine.phase !== GamePhase.SETUP && engine.phase !== GamePhase.ROUND_SUMMARY && engine.phase !== GamePhase.GAME_OVER ? (
+      {engine.phase !== GamePhase.SETUP && engine.phase !== GamePhase.GAME_OVER ? (
         <AppShell
           mode="game"
           header={(
@@ -3082,16 +3205,12 @@ function GameApp() {
                   <GameBoard
                     card={engine.card}
                     selectedIndexes={engine.selectedIndexes}
-                    selectedRank={engine.selectedRank}
                     revealedIndexes={engine.revealedIndexes}
                     wrongIndexes={engine.wrongIndexes}
                     toggleIndex={engine.toggleOption}
-                    onRankSelect={engine.chooseRank}
                     phase={engine.phase}
-                    canPass={engine.canPass}
                     controlsDisabled={controlsDisabled}
                     roundNumber={engine.roundNumber}
-                    passNote={STRINGS.passNote}
                     lastAction={engine.lastAction}
                     currentPlayer={engine.currentPlayer}
                     players={engine.players}
@@ -3100,7 +3219,7 @@ function GameApp() {
                     resolutionState={engine.resolutionState}
                     nextTransition={engine.nextTransition}
                     eliminatedPlayers={engine.eliminatedPlayers}
-                    passedPlayers={engine.passedPlayers}
+                    mode={soloModeActive ? 'solo' : 'standard'}
                   />
                 ) : null}
               </>
@@ -3111,7 +3230,7 @@ function GameApp() {
         />
       ) : null}
 
-      {engine.phase === GamePhase.ROUND_SUMMARY || engine.phase === GamePhase.GAME_OVER ? (
+      {engine.phase === GamePhase.GAME_OVER ? (
         <AppShell
           mode="game"
           header={(

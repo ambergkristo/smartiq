@@ -14,7 +14,7 @@ class GameSessionSnapshotContractTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
-    void serializesStableContractShape() throws Exception {
+    void serializesCherryPickContractShape() throws Exception {
         GameSessionSnapshot snapshot = new GameSessionSnapshot(
                 GameSessionSnapshot.CURRENT_API_VERSION,
                 "game-1",
@@ -24,19 +24,20 @@ class GameSessionSnapshotContractTest {
                         new PlayerSnapshot("p1", "Player 1"),
                         new PlayerSnapshot("p2", "Player 2")
                 ),
-                new RoundStateSnapshot(1, "CHOOSING", "p1", "p1", "Round started"),
+                new RoundStateSnapshot(1, "QUESTION_ACTIVE", "p1", "p1", "Round started"),
                 new BoardStateSnapshot(
                         "Question text?",
                         "OPEN",
                         "Science",
                         List.of(
                                 new PegSnapshot(0, "hidden", "Mercury"),
-                                new PegSnapshot(1, "selected", "Mars")
-                        )
+                                new PegSnapshot(1, "revealed", "Mars")
+                        ),
+                        List.of(1, 3)
                 ),
                 Map.of("p1", 0, "p2", 0),
                 Map.of("p1", 0, "p2", 0),
-                Map.of("p1", PlayerRoundStatus.ACTIVE, "p2", PlayerRoundStatus.PASSED)
+                Map.of("p1", PlayerRoundStatus.ACTIVE, "p2", PlayerRoundStatus.OUT)
         );
 
         JsonNode node = objectMapper.readTree(objectMapper.writeValueAsString(snapshot));
@@ -48,11 +49,13 @@ class GameSessionSnapshotContractTest {
         assertThat(node.path("players")).hasSize(2);
         assertThat(node.path("players").get(0).path("playerId").asText()).isEqualTo("p1");
         assertThat(node.path("players").get(1).path("displayName").asText()).isEqualTo("Player 2");
-        assertThat(node.path("roundState").path("phase").asText()).isEqualTo("CHOOSING");
+        assertThat(node.path("roundState").path("phase").asText()).isEqualTo("QUESTION_ACTIVE");
         assertThat(node.path("boardState").path("question").asText()).isEqualTo("Question text?");
-        assertThat(node.path("boardState").path("pegs").get(1).path("state").asText()).isEqualTo("selected");
+        assertThat(node.path("boardState").path("pegs").get(1).path("state").asText()).isEqualTo("revealed");
         assertThat(node.path("boardState").path("pegs").get(0).path("value").asText()).isEqualTo("Mercury");
+        assertThat(node.path("boardState").path("correctAnswerIndexes")).hasSize(2);
+        assertThat(node.path("boardState").path("correctAnswerIndexes").get(0).asInt()).isEqualTo(1);
         assertThat(node.at("/statuses/p1").asText()).isEqualTo("ACTIVE");
-        assertThat(node.at("/statuses/p2").asText()).isEqualTo("PASSED");
+        assertThat(node.at("/statuses/p2").asText()).isEqualTo("OUT");
     }
 }

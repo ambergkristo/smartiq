@@ -43,7 +43,7 @@ public class NextRandomCardService {
     public NextRandomCardService(CardRepository cardRepository,
                                  GameHistoryStore gameHistoryStore,
                                  MeterRegistry meterRegistry,
-                                 @Value("${smartiq.language.et-enabled:true}") boolean etEnabled) {
+                                 @Value("${smartiq.language.et-enabled:false}") boolean etEnabled) {
         this.cardRepository = cardRepository;
         this.gameHistoryStore = gameHistoryStore;
         this.meterRegistry = meterRegistry;

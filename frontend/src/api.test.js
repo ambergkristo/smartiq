@@ -97,20 +97,19 @@ describe('api error mapping', () => {
     });
   });
 
-  test('builds PASS action payload', () => {
-    expect(buildServerActionPayload({ type: 'pass', actorPlayerId: 'p1', actionToken: 'at_1', actionRequestId: 'req-1' })).toEqual({
-      type: 'PASS',
+  test('builds ADVANCE action payload', () => {
+    expect(buildServerActionPayload({ type: 'advance', actorPlayerId: 'p1', actionToken: 'at_1', actionRequestId: 'req-1' })).toEqual({
+      type: 'ADVANCE',
       actorPlayerId: 'p1',
       actionToken: 'at_1',
       actionRequestId: 'req-1'
     });
   });
 
-  test('builds ANSWER action payload with tile and optional rank', () => {
+  test('builds ANSWER action payload with tile index', () => {
     expect(buildServerActionPayload({
       type: 'answer',
       tileIndex: 2,
-      rank: 3,
       actorPlayerId: 'p1',
       actionToken: 'at_1',
       actionRequestId: 'req-2'
@@ -119,8 +118,7 @@ describe('api error mapping', () => {
       actorPlayerId: 'p1',
       actionToken: 'at_1',
       actionRequestId: 'req-2',
-      tileIndex: 2,
-      rank: 3
+      tileIndex: 2
     });
   });
 
@@ -134,15 +132,20 @@ describe('api error mapping', () => {
   });
 
   test('rejects action payload without actorPlayerId', () => {
-    expect(() => buildServerActionPayload({ type: 'PASS', actionToken: 'at_1', actionRequestId: 'req-4' })).toThrow('actorPlayerId is required');
+    expect(() => buildServerActionPayload({ type: 'ADVANCE', actionToken: 'at_1', actionRequestId: 'req-4' })).toThrow('actorPlayerId is required');
   });
 
   test('rejects action payload without actionToken', () => {
-    expect(() => buildServerActionPayload({ type: 'PASS', actorPlayerId: 'p1', actionRequestId: 'req-5' })).toThrow('actionToken is required');
+    expect(() => buildServerActionPayload({ type: 'ADVANCE', actorPlayerId: 'p1', actionRequestId: 'req-5' })).toThrow('actionToken is required');
   });
 
   test('rejects action payload without actionRequestId', () => {
-    expect(() => buildServerActionPayload({ type: 'PASS', actorPlayerId: 'p1', actionToken: 'at_1' })).toThrow('actionRequestId is required');
+    expect(() => buildServerActionPayload({ type: 'ADVANCE', actorPlayerId: 'p1', actionToken: 'at_1' })).toThrow('actionRequestId is required');
+  });
+
+  test('rejects PASS action payload because CherryPick removes pass', () => {
+    expect(() => buildServerActionPayload({ type: 'PASS', actorPlayerId: 'p1', actionToken: 'at_1', actionRequestId: 'req-6' }))
+      .toThrow('Unsupported action type: PASS');
   });
 
   test('builds room rejoin payload with trimmed fields', () => {

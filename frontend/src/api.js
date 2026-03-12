@@ -538,12 +538,12 @@ export function buildServerGamePayload({ players, language, topic, winCondition 
   return payload;
 }
 
-export function buildServerActionPayload({ type, tileIndex, rank, actorPlayerId, actionToken, actionRequestId } = {}) {
+export function buildServerActionPayload({ type, tileIndex, actorPlayerId, actionToken, actionRequestId } = {}) {
   const actionType = String(type || '').trim().toUpperCase();
   if (!actionType) {
     throw new ApiError('Action type is required', 0, 'VALIDATION_ERROR');
   }
-  if (actionType !== 'ANSWER' && actionType !== 'PASS') {
+  if (actionType !== 'ANSWER' && actionType !== 'ADVANCE') {
     throw new ApiError(`Unsupported action type: ${actionType}`, 0, 'VALIDATION_ERROR');
   }
 
@@ -571,9 +571,6 @@ export function buildServerActionPayload({ type, tileIndex, rank, actorPlayerId,
       throw new ApiError('tileIndex is required for ANSWER', 0, 'VALIDATION_ERROR');
     }
     payload.tileIndex = tileIndex;
-    if (Number.isInteger(rank)) {
-      payload.rank = rank;
-    }
   }
 
   return payload;

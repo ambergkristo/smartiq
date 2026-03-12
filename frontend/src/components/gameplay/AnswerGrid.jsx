@@ -13,7 +13,7 @@ export default function AnswerGrid({
   return (
     <div className="answer-grid-shell">
       <div className="answer-grid" data-testid="answer-grid">
-        {card.options.map((option, index) => (
+        {card.options.slice(0, 8).map((option, index) => (
           <AnswerTile
             key={`${card.cardId || card.id}-${index}`}
             index={index}

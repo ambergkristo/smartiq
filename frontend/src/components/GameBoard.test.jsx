@@ -17,171 +17,138 @@ function makeProps() {
       options: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
     },
     selectedIndexes: new Set(),
-    selectedRank: null,
     revealedIndexes: new Set(),
     wrongIndexes: new Set(),
     toggleIndex: vi.fn(),
-    onRankSelect: vi.fn(),
-    phase: 'CHOOSING',
+    phase: 'QUESTION_ACTIVE',
     onAnswer: vi.fn(),
     onConfirm: vi.fn(),
     onCancelConfirm: vi.fn(),
-    onPass: vi.fn(),
     onNext: vi.fn(),
     players: ['Player 1', 'Player 2'],
     scores: { 'Player 1': 0, 'Player 2': 0 },
     currentPlayerIndex: 0,
     roundNumber: 1,
-    passNote: 'Pass keeps score',
     lastAction: 'Ready',
     currentPlayer: 'Player 1',
     targetScore: 30,
     eliminatedPlayers: new Set(),
-    passedPlayers: new Set(),
     starterPlayer: 'Player 1'
   };
 }
 
 describe('GameBoard layout', () => {
-  test('renders direct answer grid by default', () => {
+  test('renders a fixed 8-answer board', () => {
     render(<GameBoard {...makeProps()} />);
 
     const grid = screen.getByTestId('answer-grid');
-    expect(grid).toBeInTheDocument();
     expect(within(grid).getAllByRole('button')).toHaveLength(8);
-    expect(screen.getByTestId('question-card')).toHaveTextContent('Question?');
+    expect(screen.getByTestId('phase-pill')).toHaveTextContent('QUESTION ACTIVE');
+  });
+
+  test('answer bar requires an answer selection and offers no PASS action', () => {
+    const props = makeProps();
+    const { rerender } = render(
+      <GameplayActionBar
+        phase={props.phase}
+        category={props.card.category}
+        controlsDisabled={false}
+        canAnswer={false}
+        onAnswer={props.onAnswer}
+        onConfirm={props.onConfirm}
+        onCancelConfirm={props.onCancelConfirm}
+        onNext={props.onNext}
+        currentPlayer={props.currentPlayer}
+      />
+    );
+
+    expect(screen.getByRole('button', { name: 'ANSWER' })).toBeDisabled();
+    expect(screen.queryByRole('button', { name: 'PASS' })).not.toBeInTheDocument();
+
+    rerender(
+      <GameplayActionBar
+        phase={props.phase}
+        category={props.card.category}
+        controlsDisabled={false}
+        canAnswer
+        onAnswer={props.onAnswer}
+        onConfirm={props.onConfirm}
+        onCancelConfirm={props.onCancelConfirm}
+        onNext={props.onNext}
+        currentPlayer={props.currentPlayer}
+      />
+    );
+
+    expect(screen.getByRole('button', { name: 'ANSWER' })).toBeEnabled();
+  });
+
+  test('shows lock-in panel when an answer is selected', () => {
+    render(<GameBoard {...makeProps()} phase="ANSWER_SELECTED" selectedIndexes={new Set([0])} />);
+
+    expect(screen.getByTestId('reveal-panel')).toBeInTheDocument();
+    expect(screen.getByTestId('resolution-summary')).toHaveTextContent(/lock answer/i);
+    expect(screen.getByTestId('player-result-list')).toHaveTextContent(/locked/i);
+  });
+
+  test('shows fail resolution with the submitted answer text', () => {
+    render(
+      <GameBoard
+        {...makeProps()}
+        phase="ROUND_FAIL"
+        resolutionState={{
+          outcome: 'fail',
+          actingPlayer: 'Player 1',
+          selectedOption: 'B',
+          revealedOptions: ['A'],
+          lastAction: 'Player 1 ended the round with a wrong answer'
+        }}
+      />
+    );
+
+    expect(screen.getByTestId('correct-answer-display')).toHaveTextContent(/submitted answer/i);
+    expect(screen.getByTestId('correct-answer-display')).toHaveTextContent('B');
+    expect(screen.getByTestId('resolution-summary')).toHaveTextContent(/round failed/i);
+    expect(screen.getByTestId('player-result-list')).toHaveTextContent(/fail/i);
+  });
+
+  test('shows solo round XP and correct answers after resolution', () => {
+    render(
+      <GameBoard
+        {...makeProps()}
+        phase="ROUND_SUCCESS"
+        mode="solo"
+        roundNumber={10}
+        resolutionState={{
+          outcome: 'success',
+          actingPlayer: 'Player 1',
+          selectedOption: 'A',
+          correctOptions: ['A', 'C'],
+          roundLabel: 'Double Cherry',
+          xpMultiplier: 3,
+          xpMultiplierLabel: 'XP x3',
+          xpGained: 600,
+          totalXp: 900,
+          lastAction: 'Board cleared'
+        }}
+      />
+    );
+
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent(/success/i);
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Double Cherry');
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent('XP x3');
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent('600');
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent('900');
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent('A, C');
+  });
+
+  test('shows Cherry round designation before answering begins', () => {
+    render(<GameBoard {...makeProps()} mode="solo" roundNumber={5} />);
+
+    expect(screen.getByText('Cherry')).toBeInTheDocument();
     expect(screen.getByTestId('board-status-bar')).toBeInTheDocument();
-    expect(screen.getByTestId('answer-state-row')).toBeInTheDocument();
-    expect(screen.getByTestId('action-hint')).toHaveTextContent(/choose one answer/i);
-    expect(screen.getByTestId('phase-pill')).toHaveTextContent('CHOOSING');
-    expect(screen.queryByTestId('wheel-board')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('fallback-grid')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('answer-grid-extra')).not.toBeInTheDocument();
   });
 
-  test('disables ANSWER until an answer is selected for non-ORDER categories', () => {
-    const props = makeProps();
-    const { rerender } = render(
-      <GameplayActionBar
-        phase={props.phase}
-        category={props.card.category}
-        selectedRank={props.selectedRank}
-        controlsDisabled={false}
-        canPass
-        canAnswer={false}
-        onAnswer={props.onAnswer}
-        onConfirm={props.onConfirm}
-        onCancelConfirm={props.onCancelConfirm}
-        onPass={props.onPass}
-        onNext={props.onNext}
-        currentPlayer={props.currentPlayer}
-      />
-    );
-
-    expect(screen.getByRole('button', { name: 'ANSWER' })).toBeDisabled();
-
-    rerender(
-      <GameplayActionBar
-        phase={props.phase}
-        category={props.card.category}
-        selectedRank={props.selectedRank}
-        controlsDisabled={false}
-        canPass
-        canAnswer
-        onAnswer={props.onAnswer}
-        onConfirm={props.onConfirm}
-        onCancelConfirm={props.onCancelConfirm}
-        onPass={props.onPass}
-        onNext={props.onNext}
-        currentPlayer={props.currentPlayer}
-      />
-    );
-    expect(screen.getByRole('button', { name: 'ANSWER' })).toBeEnabled();
-  });
-
-  test('requires both rank and answer selection to enable ANSWER for ORDER', () => {
-    const props = makeProps();
-    const orderCard = { ...props.card, category: 'ORDER' };
-    const { rerender } = render(
-      <GameplayActionBar
-        phase={props.phase}
-        category={orderCard.category}
-        selectedRank={null}
-        controlsDisabled={false}
-        canPass
-        canAnswer={false}
-        onAnswer={props.onAnswer}
-        onConfirm={props.onConfirm}
-        onCancelConfirm={props.onCancelConfirm}
-        onPass={props.onPass}
-        onNext={props.onNext}
-        currentPlayer={props.currentPlayer}
-      />
-    );
-
-    expect(screen.getByRole('button', { name: 'ANSWER' })).toBeDisabled();
-
-    rerender(
-      <GameplayActionBar
-        phase={props.phase}
-        category={orderCard.category}
-        selectedRank={3}
-        controlsDisabled={false}
-        canPass
-        canAnswer
-        onAnswer={props.onAnswer}
-        onConfirm={props.onConfirm}
-        onCancelConfirm={props.onCancelConfirm}
-        onPass={props.onPass}
-        onNext={props.onNext}
-        currentPlayer={props.currentPlayer}
-      />
-    );
-    expect(screen.getByRole('button', { name: 'ANSWER' })).toBeEnabled();
-  });
-
-  test('disables PASS until pass eligibility is true', () => {
-    const props = makeProps();
-    const { rerender } = render(
-      <GameplayActionBar
-        phase={props.phase}
-        category={props.card.category}
-        selectedRank={props.selectedRank}
-        controlsDisabled={false}
-        canPass={false}
-        canAnswer={false}
-        onAnswer={props.onAnswer}
-        onConfirm={props.onConfirm}
-        onCancelConfirm={props.onCancelConfirm}
-        onPass={props.onPass}
-        onNext={props.onNext}
-        currentPlayer={props.currentPlayer}
-      />
-    );
-
-    expect(screen.getByRole('button', { name: 'PASS' })).toBeDisabled();
-    expect(screen.getByText(/before pass is available/i)).toBeInTheDocument();
-
-    rerender(
-      <GameplayActionBar
-        phase={props.phase}
-        category={props.card.category}
-        selectedRank={props.selectedRank}
-        controlsDisabled={false}
-        canPass
-        canAnswer={false}
-        onAnswer={props.onAnswer}
-        onConfirm={props.onConfirm}
-        onCancelConfirm={props.onCancelConfirm}
-        onPass={props.onPass}
-        onNext={props.onNext}
-        currentPlayer={props.currentPlayer}
-      />
-    );
-    expect(screen.getByRole('button', { name: 'PASS' })).toBeEnabled();
-  });
-
-  test('shows clear player status chips for turn, passed and out', () => {
+  test('scoreboard only shows active and out states', () => {
     const props = makeProps();
     render(
       <ScoreBoard
@@ -190,195 +157,111 @@ describe('GameBoard layout', () => {
         currentPlayerIndex={1}
         roundNumber={props.roundNumber}
         lastAction={props.lastAction}
-        phaseLabel="choosing"
+        phaseLabel="question active"
         currentPlayer="Player 2"
         targetScore={props.targetScore}
         eliminatedPlayers={new Set(['Player 1'])}
-        passedPlayers={new Set()}
         starterPlayer={props.starterPlayer}
       />
     );
 
     expect(screen.getByText('TURN')).toBeInTheDocument();
     expect(screen.getByText('OUT')).toBeInTheDocument();
-    expect(screen.queryByText('READY')).not.toBeInTheDocument();
     expect(screen.getByText('Active 1')).toBeInTheDocument();
     expect(screen.getByText('Out 1')).toBeInTheDocument();
   });
 
-  test('shows marker symbols and aria state labels for revealed answers', () => {
+  test('scoreboard shows session XP in solo mode', () => {
     const props = makeProps();
     render(
-      <GameBoard
-        {...props}
-        selectedIndexes={new Set([2])}
-        revealedIndexes={new Set([0])}
-        wrongIndexes={new Set([1])}
+      <ScoreBoard
+        players={['Solo Player']}
+        scores={{ 'Solo Player': 0 }}
+        currentPlayerIndex={0}
+        roundNumber={10}
+        lastAction="Round 3 started"
+        phaseLabel="question active"
+        currentPlayer="Solo Player"
+        targetScore={props.targetScore}
+        eliminatedPlayers={new Set()}
+        starterPlayer="Solo Player"
+        mode="solo"
+        sessionXp={300}
+        lastRoundXp={100}
+        profileName="Kai"
+        profileLevel={2}
+        profileXp={650}
+        profileGamesPlayed={4}
+        profileRoundsWon={3}
       />
     );
 
-    expect(screen.getByRole('button', { name: /answer-1 correct/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /answer-2 wrong/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /answer-3 selected/i })).toBeInTheDocument();
-    expect(screen.getByText('CORRECT')).toBeInTheDocument();
-    expect(screen.getByText('WRONG')).toBeInTheDocument();
-    expect(screen.getByText('SELECTED')).toBeInTheDocument();
-    expect(screen.getAllByText('✓')).toHaveLength(1);
-    expect(screen.getAllByText('✗')).toHaveLength(1);
-    expect(screen.getAllByText('◎')).toHaveLength(1);
+    expect(screen.getAllByText('Session XP')).toHaveLength(2);
+    expect(screen.getAllByText('Double Cherry')).toHaveLength(2);
+    expect(screen.getAllByText('XP x3')).toHaveLength(2);
+    expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('Kai');
+    expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('650');
+    expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('2');
+    expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('300');
+    expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('100');
   });
 
-  test('uses the confirm panel while answer is awaiting confirmation', () => {
-    const props = makeProps();
-    render(<GameBoard {...props} phase="CONFIRMING" selectedIndexes={new Set([0])} />);
-
-    expect(screen.getByTestId('reveal-panel')).toBeInTheDocument();
-    expect(screen.getByTestId('resolution-summary')).toHaveTextContent(/lock answer/i);
-    expect(screen.getByTestId('player-result-list')).toHaveTextContent(/locked/i);
-  });
-
-  test('renders a distinct reveal panel for resolved answers', () => {
-    const props = makeProps();
-    render(
-      <GameBoard
-        {...props}
-        phase="RESOLVED"
-        resolutionState={{
-          outcome: 'correct',
-          actingPlayer: 'Player 1',
-          selectedOption: 'A',
-          revealedOptions: ['A'],
-          lastAction: 'Player 1 scored'
-        }}
-      />
-    );
-
-    expect(screen.getByTestId('reveal-panel')).toBeInTheDocument();
-    expect(screen.getByTestId('correct-answer-display')).toHaveTextContent(/correct answer/i);
-    expect(screen.getByTestId('resolution-summary')).toHaveTextContent(/correct answer locked/i);
-    expect(screen.getByTestId('resolution-summary')).toHaveTextContent(/last call/i);
-    expect(screen.getByTestId('player-result-list')).toHaveTextContent(/correct/i);
-    expect(screen.getByTestId('next-step-action-area')).toHaveTextContent(/next question/i);
-    expect(screen.queryByTestId('answer-grid')).not.toBeInTheDocument();
-  });
-
-  test('supports keyboard flow for action buttons and announces state', async () => {
+  test('supports keyboard flow for answer, lock-in and next', async () => {
     const props = makeProps();
     const user = userEvent.setup();
     const { rerender } = render(
-      <>
-        <GameBoard {...props} />
-        <GameplayActionBar
-          phase={props.phase}
-          category={props.card.category}
-          nextTransition="turn"
-          selectedRank={props.selectedRank}
-          controlsDisabled={false}
-          canPass
-          canAnswer={false}
-          onAnswer={props.onAnswer}
-          onConfirm={props.onConfirm}
-          onCancelConfirm={props.onCancelConfirm}
-          onPass={props.onPass}
-          onNext={props.onNext}
-          currentPlayer={props.currentPlayer}
-        />
-      </>
+      <GameplayActionBar
+        phase="QUESTION_ACTIVE"
+        category={props.card.category}
+        controlsDisabled={false}
+        canAnswer
+        onAnswer={props.onAnswer}
+        onConfirm={props.onConfirm}
+        onCancelConfirm={props.onCancelConfirm}
+        onNext={props.onNext}
+        currentPlayer={props.currentPlayer}
+      />
     );
 
-    const liveRegion = screen.getByTestId('board-live-region');
-    expect(liveRegion).toHaveTextContent(/choose one answer/i);
-    expect(liveRegion).toHaveTextContent(/pass keeps score/i);
-    expect(liveRegion).toHaveTextContent(/ready/i);
-
-    const passButton = screen.getByRole('button', { name: 'PASS' });
-    await waitFor(() => expect(passButton).toHaveFocus());
-    await user.keyboard('{Enter}');
-    expect(props.onPass).toHaveBeenCalledTimes(1);
-
-    rerender(
-      <>
-        <GameBoard {...props} selectedIndexes={new Set([0])} />
-        <GameplayActionBar
-          phase={props.phase}
-          category={props.card.category}
-          nextTransition="turn"
-          selectedRank={props.selectedRank}
-          controlsDisabled={false}
-          canPass
-          canAnswer
-          onAnswer={props.onAnswer}
-          onConfirm={props.onConfirm}
-          onCancelConfirm={props.onCancelConfirm}
-          onPass={props.onPass}
-          onNext={props.onNext}
-          currentPlayer={props.currentPlayer}
-        />
-      </>
-    );
     const answerButton = screen.getByRole('button', { name: 'ANSWER' });
-    answerButton.focus();
+    await waitFor(() => expect(answerButton).toHaveFocus());
     await user.keyboard('{Enter}');
     expect(props.onAnswer).toHaveBeenCalledTimes(1);
 
     rerender(
-      <>
-        <GameBoard {...props} phase="CONFIRMING" selectedIndexes={new Set([0])} />
-        <GameplayActionBar
-          phase="CONFIRMING"
-          category={props.card.category}
-          nextTransition="turn"
-          selectedRank={props.selectedRank}
-          controlsDisabled={false}
-          canPass
-          canAnswer
-          onAnswer={props.onAnswer}
-          onConfirm={props.onConfirm}
-          onCancelConfirm={props.onCancelConfirm}
-          onPass={props.onPass}
-          onNext={props.onNext}
-          currentPlayer={props.currentPlayer}
-        />
-      </>
+      <GameplayActionBar
+        phase="ANSWER_SELECTED"
+        category={props.card.category}
+        controlsDisabled={false}
+        canAnswer
+        onAnswer={props.onAnswer}
+        onConfirm={props.onConfirm}
+        onCancelConfirm={props.onCancelConfirm}
+        onNext={props.onNext}
+        currentPlayer={props.currentPlayer}
+      />
     );
-    expect(screen.getByTestId('phase-pill')).toHaveTextContent('CONFIRMING');
-    expect(screen.getByTestId('reveal-panel')).toBeInTheDocument();
+
     const lockInButton = screen.getByRole('button', { name: 'LOCK IN' });
     await waitFor(() => expect(lockInButton).toHaveFocus());
     await user.keyboard('{Enter}');
     expect(props.onConfirm).toHaveBeenCalledTimes(1);
 
     rerender(
-      <>
-        <GameBoard
-          {...props}
-          phase="RESOLVED"
-          resolutionState={{
-            outcome: 'correct',
-            actingPlayer: 'Player 1',
-            selectedOption: 'A',
-            revealedOptions: ['A'],
-            lastAction: 'Player 1 scored'
-          }}
-        />
-        <GameplayActionBar
-          phase="RESOLVED"
-          category={props.card.category}
-          nextTransition="turn"
-          selectedRank={props.selectedRank}
-          controlsDisabled={false}
-          canPass
-          canAnswer
-          onAnswer={props.onAnswer}
-          onConfirm={props.onConfirm}
-          onCancelConfirm={props.onCancelConfirm}
-          onPass={props.onPass}
-          onNext={props.onNext}
-          currentPlayer={props.currentPlayer}
-        />
-      </>
+      <GameplayActionBar
+        phase="ROUND_REVEAL"
+        category={props.card.category}
+        controlsDisabled={false}
+        canAnswer
+        onAnswer={props.onAnswer}
+        onConfirm={props.onConfirm}
+        onCancelConfirm={props.onCancelConfirm}
+        onNext={props.onNext}
+        currentPlayer={props.currentPlayer}
+      />
     );
-    const nextButton = screen.getByRole('button', { name: 'NEXT QUESTION' });
+
+    const nextButton = screen.getByRole('button', { name: 'NEXT' });
     await waitFor(() => expect(nextButton).toHaveFocus());
     await user.keyboard('{Enter}');
     expect(props.onNext).toHaveBeenCalledTimes(1);

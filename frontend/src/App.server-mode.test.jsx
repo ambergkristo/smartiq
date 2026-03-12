@@ -1,6 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import App from './App';
-import gameSessionCreateResponseV1 from './fixtures/contracts/game-session-create-response-v1.json';
 
 vi.mock('./api', () => {
   return {
@@ -45,34 +44,34 @@ vi.mock('./api', () => {
 
 import {
   createServerGameSession,
-  fetchNextCard,
   fetchTopics,
-  resolveGameSessionErrorMessage,
   sendServerGameAction
 } from './api';
-
-function cloneFixture(value) {
-  return JSON.parse(JSON.stringify(value));
-}
+import { PLAYER_PROFILE_STORAGE_KEY } from './state/playerProfile';
 
 function makeServerSnapshot({
   gameId = 'game-1',
-  winCondition = 30,
   roundNumber = 1,
-  phase = 'CHOOSING',
+  phase = 'QUESTION_ACTIVE',
   activePlayerIndex = 0,
   question = 'Server question',
-  category = 'OPEN',
+  options = null,
   lastAction = 'Server action',
-  statuses = { p1: 'ACTIVE', p2: 'ACTIVE' },
-  totalScores = { p1: 0, p2: 0 },
-  roundScores = { p1: 0, p2: 0 },
-  pegStateByIndex = {}
-} = {}) {
-  const players = [
+  players = [
     { playerId: 'p1', displayName: 'Alice' },
     { playerId: 'p2', displayName: 'Bob' }
-  ];
+  ],
+  statuses = null,
+  totalScores = null,
+  roundScores = null,
+  pegStateByIndex = {},
+  correctAnswerIndexes = [0],
+  winCondition = 30
+} = {}) {
+  const values = options || Array.from({ length: 8 }, (_, index) => `Option ${index + 1}`);
+  const normalizedStatuses = statuses || Object.fromEntries(players.map((player) => [player.playerId, 'ACTIVE']));
+  const normalizedTotalScores = totalScores || Object.fromEntries(players.map((player) => [player.playerId, 0]));
+  const normalizedRoundScores = roundScores || Object.fromEntries(players.map((player) => [player.playerId, 0]));
 
   return {
     gameId,
@@ -88,20 +87,18 @@ function makeServerSnapshot({
     },
     boardState: {
       question,
-      category,
+      category: 'OPEN',
       topic: 'History',
-      pegs: Array.from({ length: 8 }, (_, index) => {
-        const state = pegStateByIndex[index] || 'hidden';
-        return {
-          index,
-          state,
-          value: `Option ${index + 1}`
-        };
-      })
+      correctAnswerIndexes,
+      pegs: Array.from({ length: 8 }, (_, index) => ({
+        index,
+        state: pegStateByIndex[index] || 'hidden',
+        value: values[index]
+      }))
     },
-    totalScores,
-    roundScores,
-    statuses
+    totalScores: normalizedTotalScores,
+    roundScores: normalizedRoundScores,
+    statuses: normalizedStatuses
   };
 }
 
@@ -115,12 +112,19 @@ async function startServerMultiplayer(players = 'Alice, Bob') {
   await waitFor(() => expect(createServerGameSession).toHaveBeenCalled());
 }
 
+async function startSoloMode() {
+  const soloButton = await screen.findByRole('button', { name: /play solo/i });
+  fireEvent.click(soloButton);
+  await waitFor(() => expect(createServerGameSession).toHaveBeenCalled());
+}
+
 describe('App server-authoritative mode', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.stubEnv('VITE_USE_SERVER_GAME_ENGINE', 'true');
     localStorage.clear();
     window.location.hash = '#/start';
+    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
   });
 
   afterEach(() => {
@@ -129,7 +133,6 @@ describe('App server-authoritative mode', () => {
   });
 
   test('starts multiplayer rounds via server session API by default', async () => {
-    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
     createServerGameSession.mockResolvedValue(makeServerSnapshot());
 
     render(<App />);
@@ -144,58 +147,69 @@ describe('App server-authoritative mode', () => {
         })
       )
     );
-    expect(fetchNextCard).not.toHaveBeenCalled();
     expect(screen.getByRole('button', { name: /^answer$/i })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /pass/i })).not.toBeInTheDocument();
   }, 15000);
 
-  test('sends ANSWER action through server action API', async () => {
-    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
-    createServerGameSession.mockResolvedValue(makeServerSnapshot({ gameId: 'game-1' }));
+  test('keeps the board fixed to 8 answers in server mode', async () => {
+    createServerGameSession.mockResolvedValue(makeServerSnapshot());
+
+    render(<App />);
+    await startServerMultiplayer();
+
+    await waitFor(() => expect(screen.getAllByRole('button', { name: /^answer-\d/i })).toHaveLength(8));
+  });
+
+  test('shows the exact selected answer after backend resolves a fail snapshot', async () => {
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({ gameId: 'game-mismatch' }));
     sendServerGameAction.mockResolvedValue(
       makeServerSnapshot({
-        gameId: 'game-1',
-        activePlayerIndex: 1,
-        pegStateByIndex: { 0: 'revealed' }
+        gameId: 'game-mismatch',
+        phase: 'ROUND_FAIL',
+        options: Array.from({ length: 8 }, (_, index) => `Different ${index + 1}`),
+        pegStateByIndex: { 0: 'wrong' },
+        lastAction: 'Alice ended the round with a wrong answer'
       })
     );
 
     render(<App />);
+    await startServerMultiplayer();
 
-    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
-    const playersInput = screen.getByLabelText(/players/i);
-    fireEvent.change(playersInput, { target: { value: 'Alice, Bob' } });
-    fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
-    fireEvent.click(screen.getByRole('button', { name: /start game/i }));
-
-    await waitFor(() => expect(screen.getByRole('button', { name: /^answer$/i })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /^answer-1\b/i }));
     await waitFor(() => expect(screen.getByRole('button', { name: /^answer$/i })).toBeEnabled());
     fireEvent.click(screen.getByRole('button', { name: /^answer$/i }));
     await waitFor(() => expect(screen.getByRole('button', { name: /lock in/i })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
 
-    await waitFor(() =>
-      expect(sendServerGameAction).toHaveBeenCalledWith(
-        'game-1',
-        expect.objectContaining({
-          type: 'ANSWER',
-          tileIndex: 0
+    await waitFor(() => expect(sendServerGameAction).toHaveBeenCalledWith(
+      'game-mismatch',
+      expect.objectContaining({ type: 'ANSWER', tileIndex: 0 })
+    ));
+    expect(screen.getByTestId('correct-answer-display')).toHaveTextContent('Option 1');
+    expect(screen.getByTestId('correct-answer-display')).not.toHaveTextContent('Different 1');
+  });
+
+  test('advances a successful round with an ADVANCE action', async () => {
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({ gameId: 'game-success' }));
+    sendServerGameAction
+      .mockResolvedValueOnce(
+        makeServerSnapshot({
+          gameId: 'game-success',
+          phase: 'ROUND_SUCCESS',
+          pegStateByIndex: { 0: 'revealed' },
+          totalScores: { p1: 1, p2: 0 },
+          roundScores: { p1: 1, p2: 0 },
+          lastAction: 'Alice cleared the board'
         })
       )
-    );
-  });
-
-  test('keeps the answer board interactive after turn advances to the next player', async () => {
-    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
-    createServerGameSession.mockResolvedValue(makeServerSnapshot({ gameId: 'game-turn-fix' }));
-    sendServerGameAction.mockResolvedValue(
-      makeServerSnapshot({
-        gameId: 'game-turn-fix',
-        activePlayerIndex: 1,
-        pegStateByIndex: { 0: 'revealed' },
-        lastAction: 'Bob turn'
-      })
-    );
+      .mockResolvedValueOnce(
+        makeServerSnapshot({
+          gameId: 'game-success',
+          roundNumber: 2,
+          question: 'Round two question',
+          lastAction: 'Round 2 started'
+        })
+      );
 
     render(<App />);
     await startServerMultiplayer();
@@ -206,204 +220,269 @@ describe('App server-authoritative mode', () => {
     await waitFor(() => expect(screen.getByRole('button', { name: /lock in/i })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
 
-    await waitFor(() => expect(screen.getByRole('button', { name: /next question/i })).toBeInTheDocument());
-    fireEvent.click(screen.getByRole('button', { name: /next question/i }));
-
-    await waitFor(() => expect(screen.getByTestId('action-hint')).toHaveTextContent(/bob: reveal a correct answer before pass is available/i));
-    expect(screen.getByRole('button', { name: /^answer-2\b/i })).toBeEnabled();
-
-    fireEvent.click(screen.getByRole('button', { name: /^answer-2\b/i }));
-    await waitFor(() => expect(screen.getByRole('button', { name: /^answer$/i })).toBeEnabled());
-  });
-
-  test('uses server path for single-player start when server engine is enabled', async () => {
-    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
-    createServerGameSession.mockResolvedValue(
-      makeServerSnapshot({
-        gameId: 'game-single',
-        totalScores: { p1: 0, p2: 0 },
-        roundScores: { p1: 0, p2: 0 }
-      })
-    );
-
-    render(<App />);
-
-    await waitFor(() => expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument());
-    const playersInput = screen.getByLabelText(/players/i);
-    fireEvent.change(playersInput, { target: { value: 'Alice' } });
-    fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
-    fireEvent.click(screen.getByRole('button', { name: /start game/i }));
-
-    await waitFor(() => expect(createServerGameSession).toHaveBeenCalled());
-    expect(fetchNextCard).not.toHaveBeenCalled();
-  });
-
-  test('keeps multiplayer on server path in non-test runtime even with false toggle', async () => {
-    vi.stubEnv('MODE', 'production');
-    vi.stubEnv('VITE_USE_SERVER_GAME_ENGINE', 'false');
-    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
-    createServerGameSession.mockResolvedValue(makeServerSnapshot({ gameId: 'game-prod' }));
-
-    render(<App />);
-    await startServerMultiplayer();
-
-    expect(createServerGameSession).toHaveBeenCalled();
-    expect(fetchNextCard).not.toHaveBeenCalled();
-  });
-
-  test('sends PASS action through server action API', async () => {
-    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
-    createServerGameSession.mockResolvedValue(makeServerSnapshot({
-      gameId: 'game-pass',
-      roundScores: { p1: 1, p2: 0 }
-    }));
-    sendServerGameAction.mockResolvedValue(
-      makeServerSnapshot({
-        gameId: 'game-pass',
-        activePlayerIndex: 1,
-        statuses: { p1: 'PASSED', p2: 'ACTIVE' },
-        lastAction: 'Alice passed'
-      })
-    );
-
-    render(<App />);
-    await startServerMultiplayer();
-
-    fireEvent.click(screen.getByRole('button', { name: /pass/i }));
-    await waitFor(() =>
-      expect(sendServerGameAction).toHaveBeenCalledWith(
-        'game-pass',
-        expect.objectContaining({ type: 'PASS' })
-      )
-    );
-
-    expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: /next/i }));
-    await waitFor(() => expect(screen.getByRole('button', { name: /pass/i })).toBeInTheDocument());
-  });
-
-  test('keeps host controls enabled when snapshot starts on another player turn', async () => {
-    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
-    createServerGameSession.mockResolvedValue(
-      makeServerSnapshot({
-        gameId: 'game-spectator',
-        activePlayerIndex: 1,
-        lastAction: 'Bob turn'
-      })
-    );
-
-    render(<App />);
-    await startServerMultiplayer();
-
-    const passButton = screen.getByRole('button', { name: /pass/i });
-    expect(passButton).toBeDisabled();
-    expect(screen.getByRole('button', { name: /^answer-1\b/i })).toBeEnabled();
-    expect(screen.getByTestId('action-hint')).toHaveTextContent(/bob: reveal a correct answer before pass is available/i);
-
-    fireEvent.click(screen.getByRole('button', { name: /^answer-1\b/i }));
-    await waitFor(() => expect(screen.getByRole('button', { name: /^answer$/i })).toBeEnabled());
-  });
-
-  test('keeps PASS disabled until active player has at least one correct answer', async () => {
-    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
-    createServerGameSession.mockResolvedValue(makeServerSnapshot({
-      gameId: 'game-pass-locked',
-      roundScores: { p1: 0, p2: 0 }
-    }));
-
-    render(<App />);
-    await startServerMultiplayer();
-
-    const passButton = screen.getByRole('button', { name: /pass/i });
-    expect(passButton).toBeDisabled();
-    expect(screen.getByTestId('action-hint')).toHaveTextContent(/before pass is available/i);
-
-    fireEvent.click(passButton);
-    expect(sendServerGameAction).not.toHaveBeenCalled();
-  });
-
-  test('shows round summary and then advances to next round from server snapshot', async () => {
-    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
-    createServerGameSession.mockResolvedValue(makeServerSnapshot({
-      gameId: 'game-round',
-      roundScores: { p1: 1, p2: 0 }
-    }));
-    sendServerGameAction.mockResolvedValue(
-      makeServerSnapshot({
-        gameId: 'game-round',
-        roundNumber: 2,
-        question: 'Server round 2 question',
-        activePlayerIndex: 1,
-        totalScores: { p1: 1, p2: 0 },
-        statuses: { p1: 'ACTIVE', p2: 'ACTIVE' },
-        lastAction: 'Round 2 started'
-      })
-    );
-
-    render(<App />);
-    await startServerMultiplayer();
-
-    fireEvent.click(screen.getByRole('button', { name: /pass/i }));
     await waitFor(() => expect(screen.getByRole('button', { name: /next round/i })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /next round/i }));
 
-    await waitFor(() => expect(screen.getByRole('heading', { name: /round summary/i })).toBeInTheDocument());
-    fireEvent.click(screen.getByRole('button', { name: /next round/i }));
-
-    await waitFor(() => expect(screen.getByText(/server round 2 question/i)).toBeInTheDocument());
+    await waitFor(() => expect(sendServerGameAction).toHaveBeenNthCalledWith(
+      2,
+      'game-success',
+      expect.objectContaining({ type: 'ADVANCE' })
+    ));
+    await waitFor(() => expect(screen.getByText(/round two question/i)).toBeInTheDocument());
     expect(screen.getByRole('button', { name: /^answer$/i })).toBeInTheDocument();
   });
 
-  test('shows game summary when server snapshot reports game over', async () => {
-    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
+  test('starts solo mode from the home entry and applies Cherry XP on the 5th round', async () => {
+    window.location.hash = '';
     createServerGameSession.mockResolvedValue(makeServerSnapshot({
-      gameId: 'game-over',
-      roundScores: { p1: 1, p2: 0 }
+      gameId: 'solo-success',
+      roundNumber: 5,
+      players: [{ playerId: 'p1', displayName: 'Solo Player' }],
+      correctAnswerIndexes: [0]
     }));
-    sendServerGameAction.mockResolvedValue(
-      makeServerSnapshot({
-        gameId: 'game-over',
-        phase: 'GAME_OVER',
-        winCondition: 30,
-        totalScores: { p1: 30, p2: 12 },
-        statuses: { p1: 'ACTIVE', p2: 'OUT' },
-        lastAction: 'Alice reached 30 points'
+    sendServerGameAction
+      .mockResolvedValueOnce(makeServerSnapshot({
+        gameId: 'solo-success',
+        roundNumber: 5,
+        phase: 'ROUND_SUCCESS',
+        players: [{ playerId: 'p1', displayName: 'Solo Player' }],
+        correctAnswerIndexes: [0],
+        pegStateByIndex: { 0: 'revealed' },
+        lastAction: 'Solo Player cleared the board'
+      }))
+      .mockResolvedValueOnce(makeServerSnapshot({
+        gameId: 'solo-success',
+        roundNumber: 6,
+        question: 'Sixth solo question',
+        players: [{ playerId: 'p1', displayName: 'Solo Player' }],
+        correctAnswerIndexes: [2],
+        lastAction: 'Round 6 started'
+      }));
+
+    render(<App />);
+    await startSoloMode();
+
+    await waitFor(() => expect(createServerGameSession).toHaveBeenCalledWith(
+      expect.objectContaining({
+        players: ['Solo Player'],
+        language: 'en',
+        winCondition: 1000000,
+        mode: 'solo'
       })
-    );
+    ));
 
-    render(<App />);
-    await startServerMultiplayer();
+    fireEvent.click(await screen.findByRole('button', { name: /^answer-1\b/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^answer$/i }));
+    fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
 
-    fireEvent.click(screen.getByRole('button', { name: /pass/i }));
-    await waitFor(() => expect(screen.getByRole('button', { name: /view winner/i })).toBeInTheDocument());
-    fireEvent.click(screen.getByRole('button', { name: /view winner/i }));
+    await waitFor(() => expect(screen.getByTestId('solo-round-result')).toHaveTextContent('SUCCESS'));
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Cherry');
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent('XP x2');
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent('200');
+    expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('200');
 
-    await waitFor(() => expect(screen.getByRole('heading', { name: /game summary/i })).toBeInTheDocument());
-    expect(screen.getByText(/alice reached 30 points\./i)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /next round/i }));
+    await waitFor(() => expect(screen.getByText(/sixth solo question/i)).toBeInTheDocument());
   });
 
-  test('accepts v1 create-session contract fixture', async () => {
-    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
-    createServerGameSession.mockResolvedValue(cloneFixture(gameSessionCreateResponseV1));
+  test('sets round XP to zero on failed Cherry rounds and reveals the correct answers', async () => {
+    window.location.hash = '';
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({
+      gameId: 'solo-fail',
+      roundNumber: 5,
+      players: [{ playerId: 'p1', displayName: 'Solo Player' }],
+      correctAnswerIndexes: [1, 3]
+    }));
+    sendServerGameAction.mockResolvedValue(makeServerSnapshot({
+      gameId: 'solo-fail',
+      roundNumber: 5,
+      phase: 'ROUND_FAIL',
+      players: [{ playerId: 'p1', displayName: 'Solo Player' }],
+      correctAnswerIndexes: [1, 3],
+      pegStateByIndex: { 0: 'wrong' },
+      lastAction: 'Solo Player ended the round with a wrong answer'
+    }));
 
     render(<App />);
-    await startServerMultiplayer();
+    await startSoloMode();
 
-    await waitFor(() => expect(screen.getByText(/contract fixture question\?/i)).toBeInTheDocument());
-    expect(screen.getByRole('button', { name: /^answer$/i })).toBeInTheDocument();
+    fireEvent.click(await screen.findByRole('button', { name: /^answer-1\b/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^answer$/i }));
+    fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
+
+    await waitFor(() => expect(screen.getByTestId('solo-round-result')).toHaveTextContent('FAIL'));
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Cherry');
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent('XP x2');
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent('XP gained');
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent('0');
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Option 2, Option 4');
   });
 
-  test('shows contract mismatch error for unsupported snapshot version', async () => {
-    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
-    resolveGameSessionErrorMessage.mockImplementationOnce((error) => error?.message || 'Contract mismatch');
-    const response = cloneFixture(gameSessionCreateResponseV1);
-    response.snapshot.apiVersion = '2';
-    createServerGameSession.mockResolvedValue(response);
+  test('applies Double Cherry XP on the 10th round', async () => {
+    window.location.hash = '';
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({
+      gameId: 'solo-double-cherry',
+      roundNumber: 10,
+      players: [{ playerId: 'p1', displayName: 'Solo Player' }],
+      correctAnswerIndexes: [0]
+    }));
+    sendServerGameAction.mockResolvedValue(makeServerSnapshot({
+      gameId: 'solo-double-cherry',
+      roundNumber: 10,
+      phase: 'ROUND_SUCCESS',
+      players: [{ playerId: 'p1', displayName: 'Solo Player' }],
+      correctAnswerIndexes: [0],
+      pegStateByIndex: { 0: 'revealed' },
+      lastAction: 'Solo Player cleared a double cherry round'
+    }));
 
     render(<App />);
-    await startServerMultiplayer();
+    await startSoloMode();
 
-    await waitFor(() => expect(screen.getByText(/unsupported game session api version: 2/i)).toBeInTheDocument());
-    expect(screen.getByRole('button', { name: /retry/i })).toBeInTheDocument();
+    fireEvent.click(await screen.findByRole('button', { name: /^answer-1\b/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^answer$/i }));
+    fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
+
+    await waitFor(() => expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Double Cherry'));
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent('XP x3');
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent('300');
+    expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('300');
+  });
+
+  test('accumulates solo XP across rounds and resets on a new run', async () => {
+    window.location.hash = '';
+    createServerGameSession
+      .mockResolvedValueOnce(makeServerSnapshot({
+        gameId: 'solo-accumulate',
+        players: [{ playerId: 'p1', displayName: 'Solo Player' }],
+        correctAnswerIndexes: [0]
+      }))
+      .mockResolvedValueOnce(makeServerSnapshot({
+        gameId: 'solo-reset',
+        players: [{ playerId: 'p1', displayName: 'Solo Player' }],
+        correctAnswerIndexes: [4]
+      }));
+    sendServerGameAction
+      .mockResolvedValueOnce(makeServerSnapshot({
+        gameId: 'solo-accumulate',
+        phase: 'ROUND_SUCCESS',
+        players: [{ playerId: 'p1', displayName: 'Solo Player' }],
+        correctAnswerIndexes: [0],
+        pegStateByIndex: { 0: 'revealed' },
+        lastAction: 'Solo Player cleared the board'
+      }))
+      .mockResolvedValueOnce(makeServerSnapshot({
+        gameId: 'solo-accumulate',
+        roundNumber: 2,
+        question: 'Solo round two',
+        players: [{ playerId: 'p1', displayName: 'Solo Player' }],
+        correctAnswerIndexes: [1],
+        lastAction: 'Round 2 started'
+      }))
+      .mockResolvedValueOnce(makeServerSnapshot({
+        gameId: 'solo-accumulate',
+        roundNumber: 2,
+        phase: 'ROUND_SUCCESS',
+        players: [{ playerId: 'p1', displayName: 'Solo Player' }],
+        correctAnswerIndexes: [1],
+        pegStateByIndex: { 1: 'revealed' },
+        lastAction: 'Solo Player cleared the board again'
+      }));
+
+    render(<App />);
+    await startSoloMode();
+
+    fireEvent.click(await screen.findByRole('button', { name: /^answer-1\b/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^answer$/i }));
+    fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
+    await waitFor(() => expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('100'));
+
+    fireEvent.click(screen.getByRole('button', { name: /next round/i }));
+    await waitFor(() => expect(screen.getByText(/solo round two/i)).toBeInTheDocument());
+
+    fireEvent.click(screen.getByRole('button', { name: /^answer-2\b/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^answer$/i }));
+    fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
+    await waitFor(() => expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('200'));
+
+    fireEvent.click(screen.getByRole('button', { name: /back to setup/i }));
+    await startSoloMode();
+    await waitFor(() => expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('0'));
+  });
+
+  test('creates a guest profile and persists solo totals across refresh', async () => {
+    window.location.hash = '';
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({
+      gameId: 'solo-profile',
+      players: [{ playerId: 'p1', displayName: 'Solo Player' }],
+      correctAnswerIndexes: [0]
+    }));
+    sendServerGameAction.mockResolvedValue(makeServerSnapshot({
+      gameId: 'solo-profile',
+      phase: 'ROUND_SUCCESS',
+      players: [{ playerId: 'p1', displayName: 'Solo Player' }],
+      correctAnswerIndexes: [0],
+      pegStateByIndex: { 0: 'revealed' },
+      lastAction: 'Solo Player cleared the board'
+    }));
+
+    const firstRender = render(<App />);
+    expect(JSON.parse(localStorage.getItem(PLAYER_PROFILE_STORAGE_KEY))).toMatchObject({
+      displayName: 'Solo Player',
+      totalXp: 0,
+      level: 1
+    });
+
+    await startSoloMode();
+    fireEvent.click(await screen.findByRole('button', { name: /^answer-1\b/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^answer$/i }));
+    fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
+
+    await waitFor(() => expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('100'));
+    await waitFor(() => expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('1'));
+    firstRender.unmount();
+
+    window.location.hash = '';
+    render(<App />);
+    await startSoloMode();
+
+    await waitFor(() => expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('100'));
+    expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('2');
+  });
+
+  test('reuses existing guest profile name for new solo sessions', async () => {
+    window.location.hash = '';
+    localStorage.setItem(PLAYER_PROFILE_STORAGE_KEY, JSON.stringify({
+      id: 'profile_1',
+      guestToken: 'guest_1',
+      displayName: 'Kai',
+      totalXp: 500,
+      level: 2,
+      gamesPlayed: 3,
+      roundsWon: 2,
+      createdAt: '2026-03-12T10:00:00.000Z',
+      updatedAt: '2026-03-12T10:00:00.000Z'
+    }));
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({
+      gameId: 'solo-name',
+      players: [{ playerId: 'p1', displayName: 'Kai' }],
+      correctAnswerIndexes: [0]
+    }));
+
+    render(<App />);
+    await screen.findByTestId('home-screen-profile');
+    expect(screen.getByTestId('home-screen-profile')).toHaveTextContent('Level 2');
+    expect(screen.getByDisplayValue('Kai')).toBeInTheDocument();
+
+    await startSoloMode();
+
+    await waitFor(() => expect(createServerGameSession).toHaveBeenCalledWith(
+      expect.objectContaining({
+        players: ['Kai'],
+        mode: 'solo'
+      })
+    ));
+    expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('Kai');
+    expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('500');
   });
 });

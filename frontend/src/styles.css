@@ -375,6 +375,28 @@ h1 {
   font-size: 1rem;
 }
 
+.home-screen-profile {
+  display: grid;
+  gap: 8px;
+  text-align: left;
+  padding: 14px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.home-screen-profile label {
+  color: var(--muted);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.home-screen-profile input {
+  min-height: 48px;
+  border-radius: 16px;
+}
+
 .home-screen-actions {
   display: grid;
   gap: 14px;
@@ -2011,6 +2033,18 @@ button:disabled {
   background: rgba(255, 255, 255, 0.03);
 }
 
+.gameplay-header-reward.is-cherry {
+  border-color: rgba(232, 59, 117, 0.45);
+  background: rgba(232, 59, 117, 0.16);
+  color: #ffd7e5;
+}
+
+.gameplay-header-reward.is-double-cherry {
+  border-color: rgba(255, 182, 58, 0.48);
+  background: rgba(255, 182, 58, 0.18);
+  color: #ffeebf;
+}
+
 .phase-status-chip,
 .phase-pill {
   display: inline-flex;
@@ -2668,6 +2702,55 @@ button:disabled {
   display: grid;
   gap: 8px;
   min-height: 0;
+}
+
+.scoreboard-solo-recap {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.scoreboard-solo-recap p,
+.solo-round-result-grid p,
+.solo-round-result-correct {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.04);
+  display: grid;
+  gap: 0.35rem;
+}
+
+.scoreboard-solo-recap span,
+.solo-round-result-grid span,
+.solo-round-result-correct span {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.solo-round-result {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.solo-round-result-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.solo-round-result-head > div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.solo-round-result-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
 }
 
 .scoreboard-player-row {

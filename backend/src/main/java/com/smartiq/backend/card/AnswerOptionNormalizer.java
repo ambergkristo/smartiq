@@ -6,14 +6,14 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
-final class AnswerOptionNormalizer {
+public final class AnswerOptionNormalizer {
 
-    static final int BOARD_ANSWER_COUNT = 8;
+    public static final int BOARD_ANSWER_COUNT = 8;
 
     private AnswerOptionNormalizer() {
     }
 
-    static Projection normalize(List<String> sourceOptions, List<Integer> priorityIndexes, String cardId) {
+    public static Projection normalize(List<String> sourceOptions, List<Integer> priorityIndexes, String cardId) {
         if (sourceOptions == null || sourceOptions.size() < BOARD_ANSWER_COUNT) {
             throw new InvalidCardContractException("Card must contain at least 8 options: " + cardId);
         }
@@ -57,15 +57,15 @@ final class AnswerOptionNormalizer {
         return new Projection(List.copyOf(normalizedOptions), Map.copyOf(sourceToNormalized));
     }
 
-    record Projection(
+    public record Projection(
             List<String> options,
             Map<Integer, Integer> sourceToNormalized
     ) {
-        Integer normalizedIndex(Integer sourceIndex) {
+        public Integer normalizedIndex(Integer sourceIndex) {
             return sourceToNormalized.get(sourceIndex);
         }
 
-        List<Integer> normalizedIndexes(List<Integer> sourceIndexes, String cardId) {
+        public List<Integer> normalizedIndexes(List<Integer> sourceIndexes, String cardId) {
             List<Integer> normalized = new ArrayList<>();
             for (Integer sourceIndex : sourceIndexes) {
                 Integer mapped = normalizedIndex(sourceIndex);

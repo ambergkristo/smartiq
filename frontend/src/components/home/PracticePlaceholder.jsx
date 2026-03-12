@@ -1,10 +1,10 @@
 export default function PracticePlaceholder({ onBack }) {
   return (
     <section className="practice-screen board-surface" data-testid="practice-panel">
-      <p className="section-title">Practice</p>
-      <h1>Single-player practice</h1>
+      <p className="section-title">Solo run</p>
+      <h1>Starting CherryPick solo mode</h1>
       <p className="practice-screen-copy">
-        Practice mode is parked for the next milestone. This screen is a placeholder route only.
+        Loading the first question. If nothing appears, go back home and try launching Solo again.
       </p>
       <button type="button" className="secondary-action" onClick={onBack}>
         Back to home

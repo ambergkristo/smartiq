@@ -91,7 +91,7 @@ class CardImportRunnerTest {
         }
 
         assertThat(meterRegistry.get("smartiq.dataset.category.below.threshold").gauge().value())
-                .isEqualTo(5.0);
+                .isEqualTo(4.0);
         assertThat(appender.list)
                 .anySatisfy(event -> {
                     assertThat(event.getLevel()).isEqualTo(Level.WARN);

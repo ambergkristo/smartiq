@@ -8,19 +8,18 @@ import PlayerResultList from './gameplay/PlayerResultList';
 import QuestionPrompt from './gameplay/QuestionPrompt';
 import ResolutionSummary from './gameplay/ResolutionSummary';
 import RevealPanel from './gameplay/RevealPanel';
+import SoloRoundResult from './gameplay/SoloRoundResult';
+import { getCherryRoundReward } from '../state/cherryRounds';
 import { CATEGORY_COLORS, getActionHint, getCardCategory, getNextActionLabel } from './gameplay/gameplayState';
 
 export default function GameBoard({
   card,
   selectedIndexes,
-  selectedRank,
   revealedIndexes,
   wrongIndexes,
   toggleIndex,
   phase,
-  onRankSelect,
   roundNumber,
-  passNote,
   lastAction,
   currentPlayer,
   players,
@@ -29,12 +28,11 @@ export default function GameBoard({
   resolutionState,
   nextTransition = 'none',
   eliminatedPlayers,
-  passedPlayers,
   controlsDisabled = false,
-  canPass = true
+  mode = 'standard'
 }) {
   const category = getCardCategory(card);
-  const canChoose = (phase === 'CHOOSING' || phase === 'CONFIRMING') && !controlsDisabled;
+  const canChoose = (phase === 'QUESTION_ACTIVE' || phase === 'ANSWER_SELECTED') && !controlsDisabled;
   const [questionExpanded, setQuestionExpanded] = useState(false);
 
   useEffect(() => {
@@ -45,51 +43,50 @@ export default function GameBoard({
   const selectedIndex = selectedIndexes.size > 0 ? [...selectedIndexes][0] : null;
   const selectedOption = selectedIndex != null ? card.options[selectedIndex] ?? '' : 'Choose an answer';
   const nextActionLabel = getNextActionLabel(nextTransition);
-  const isResolutionPhase = phase === 'RESOLVED' || phase === 'PASSED';
-  const isConfirmPhase = phase === 'CONFIRMING';
+  const roundReward = getCherryRoundReward(roundNumber);
+  const isResolutionPhase = phase === 'ROUND_REVEAL' || phase === 'ROUND_SUCCESS' || phase === 'ROUND_FAIL';
+  const isConfirmPhase = phase === 'ANSWER_SELECTED';
   const revealTone = isConfirmPhase
     ? 'confirm'
     : resolutionState?.outcome === 'correct'
       ? 'correct'
-      : resolutionState?.outcome === 'incorrect'
-        ? 'incorrect'
-        : 'passed';
+      : resolutionState?.outcome === 'success'
+        ? 'correct'
+        : 'incorrect';
   const revealTitle = isConfirmPhase
     ? 'Selected answer'
     : resolutionState?.outcome === 'correct'
       ? 'Correct answer'
-      : resolutionState?.outcome === 'incorrect'
-        ? 'Submitted answer'
-        : 'Pass recorded';
+      : resolutionState?.outcome === 'success'
+        ? 'Round success'
+        : 'Submitted answer';
   const revealValue = isConfirmPhase
     ? selectedOption
-    : resolutionState?.outcome === 'passed'
-      ? `${resolutionState?.actingPlayer || currentPlayer} passed`
-      : resolutionState?.selectedOption || selectedOption;
+    : resolutionState?.selectedOption || selectedOption;
   const revealDetail = isConfirmPhase
     ? `Lock this answer in for ${currentPlayer}, or go back to change the pick.`
     : resolutionState?.outcome === 'correct'
       ? `${resolutionState?.actingPlayer || currentPlayer} added a correct reveal.`
-      : resolutionState?.outcome === 'incorrect'
-        ? resolutionState?.revealedOptions?.length
-          ? `Previously revealed answers: ${resolutionState.revealedOptions.join(', ')}`
-          : 'Current round state does not expose a separate correct reveal for this miss.'
+      : resolutionState?.outcome === 'success'
+        ? 'All correct answers were found. This round is eligible for XP.'
         : resolutionState?.revealedOptions?.length
-          ? `Previously revealed answers stay visible: ${resolutionState.revealedOptions.join(', ')}`
-          : 'No answer was revealed on pass.';
+          ? `Correct answers already found: ${resolutionState.revealedOptions.join(', ')}`
+          : 'The wrong answer ends the round immediately. XP for this round is zero.';
   const resolutionTitle = isConfirmPhase
     ? 'Lock answer'
     : resolutionState?.outcome === 'correct'
       ? 'Correct answer locked'
-      : resolutionState?.outcome === 'incorrect'
-        ? 'Incorrect answer'
-        : 'Pass recorded';
+      : resolutionState?.outcome === 'success'
+        ? 'Round success'
+        : 'Round failed';
   const nextActionNote = isConfirmPhase
     ? 'Use LOCK IN to resolve this answer or BACK to change it.'
-    : `Use ${nextActionLabel} to continue the live session.`;
+    : resolutionState?.outcome === 'correct'
+      ? 'Use NEXT to keep answering this board.'
+      : `Use ${nextActionLabel} to continue the live session.`;
+  const isSoloMode = mode === 'solo';
   const liveMessage = [
-    getActionHint(phase, currentPlayer, category, selectedRank, controlsDisabled, canPass),
-    passNote,
+    getActionHint(phase, currentPlayer, category, controlsDisabled),
     lastAction,
     isResolutionPhase ? `Next action ${nextActionLabel}.` : null
   ]
@@ -105,6 +102,7 @@ export default function GameBoard({
         topic={card.topic}
         language={card.language}
         currentPlayer={currentPlayer}
+        roundReward={roundReward}
       />
       {isConfirmPhase || isResolutionPhase ? (
         <RevealPanel phase={phase} tone={revealTone}>
@@ -120,14 +118,26 @@ export default function GameBoard({
             lastAction={lastAction}
             tone={revealTone}
           />
-          <PlayerResultList
-            players={players}
-            scores={scores}
-            currentPlayerIndex={currentPlayerIndex}
-            resolutionState={resolutionState || { outcome: 'locked', actingPlayer: currentPlayer }}
-            eliminatedPlayers={eliminatedPlayers}
-            passedPlayers={passedPlayers}
-          />
+          {isSoloMode && !isConfirmPhase ? (
+            <SoloRoundResult
+              outcome={resolutionState?.outcome}
+              selectedOption={resolutionState?.selectedOption || selectedOption}
+              selectedOptions={resolutionState?.selectedOptions || []}
+              correctOptions={resolutionState?.correctOptions || []}
+              roundLabel={resolutionState?.roundLabel || roundReward.label}
+              xpMultiplierLabel={resolutionState?.xpMultiplierLabel || roundReward.multiplierLabel}
+              xpGained={resolutionState?.xpGained ?? 0}
+              totalXp={resolutionState?.totalXp ?? 0}
+            />
+          ) : (
+            <PlayerResultList
+              players={players}
+              scores={scores}
+              currentPlayerIndex={currentPlayerIndex}
+              resolutionState={resolutionState || { outcome: 'locked', actingPlayer: currentPlayer }}
+              eliminatedPlayers={eliminatedPlayers}
+            />
+          )}
           <NextStepActionArea
             nextActionLabel={isConfirmPhase ? 'LOCK IN' : nextActionLabel}
             note={nextActionNote}
@@ -142,37 +152,12 @@ export default function GameBoard({
             questionExpanded={questionExpanded}
             onToggle={() => setQuestionExpanded((prev) => !prev)}
           />
-          {category === 'ORDER' ? (
-            <div className="rank-selector-card board-surface">
-              <p className="rank-selector-label">Choose the rank before you lock an answer.</p>
-              <div className="rank-selector" role="radiogroup" aria-label="Rank selector">
-                {Array.from({ length: card.options.length }).map((_, idx) => {
-                  const rank = idx + 1;
-                  const active = selectedRank === rank;
-                  return (
-                    <button
-                      key={rank}
-                      type="button"
-                      className={`rank-chip${active ? ' selected' : ''}`}
-                      onClick={() => onRankSelect(rank)}
-                      aria-pressed={active}
-                      disabled={!canChoose}
-                    >
-                      {rank}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          ) : null}
           <BoardStatusBar
-            actionHint={getActionHint(phase, currentPlayer, category, selectedRank, controlsDisabled, canPass)}
-            passNote={passNote}
+            actionHint={getActionHint(phase, currentPlayer, category, controlsDisabled)}
             selectedIndexes={selectedIndexes}
             revealedIndexes={revealedIndexes}
             wrongIndexes={wrongIndexes}
-            optionCount={card.options.length}
-            canPass={canPass}
+            optionCount={Math.min(card.options.length, 8)}
           />
           <AnswerGrid
             card={card}

@@ -39,10 +39,14 @@ import java.util.regex.Pattern;
 public class GameSessionService {
 
     private static final int DEFAULT_WIN_CONDITION = 30;
+    private static final int BOARD_ANSWER_COUNT = 8;
+    private static final int MAX_CARD_FETCH_ATTEMPTS = 24;
     private static final int MIN_PLAYERS = 1;
     private static final int MAX_PLAYERS = RuntimeLimits.MAX_PLAYERS_PER_ROOM;
     private static final String DEFAULT_LANGUAGE = "en";
-    private static final String PHASE_CHOOSING = "CHOOSING";
+    private static final String PHASE_QUESTION_ACTIVE = "QUESTION_ACTIVE";
+    private static final String PHASE_ROUND_SUCCESS = "ROUND_SUCCESS";
+    private static final String PHASE_ROUND_FAIL = "ROUND_FAIL";
     private static final String PHASE_GAME_OVER = "GAME_OVER";
     private static final String PEG_HIDDEN = "hidden";
     private static final String PEG_REVEALED = "revealed";
@@ -181,6 +185,23 @@ public class GameSessionService {
         );
     }
 
+    private CardDeckResponse loadCherryPickCard(String language, String gameId, String topic) {
+        for (int attempt = 0; attempt < MAX_CARD_FETCH_ATTEMPTS; attempt += 1) {
+            CardDeckResponse candidate = cardService.getNextRandomCard(language, gameId, topic);
+            if (isCherryPickCompatibleCard(candidate)) {
+                return candidate;
+            }
+        }
+        throw new IllegalStateException("failed to load CherryPick-compatible card");
+    }
+
+    private static boolean isCherryPickCompatibleCard(CardDeckResponse card) {
+        if (card == null || card.options() == null || card.options().size() != BOARD_ANSWER_COUNT) {
+            return false;
+        }
+        return !resolveCorrectIndexes(card.correct() == null ? Map.of() : card.correct()).isEmpty();
+    }
+
     private SessionState createSession(CreateGameRequest request, UUID tenantId, String hostUserEmail) {
         List<String> displayNames = normalizePlayers(request == null ? null : request.players());
         int winCondition = resolveWinCondition(request == null ? null : request.winCondition());
@@ -194,7 +215,7 @@ public class GameSessionService {
         Map<String, Integer> roundScores = zeroScores(players);
         Map<String, PlayerRoundStatus> statuses = activeStatuses(players);
         Map<String, String> actionTokens = issueActionTokens(players);
-        CardDeckResponse card = cardService.getNextRandomCard(language, gameId, topic);
+        CardDeckResponse card = loadCherryPickCard(language, gameId, topic);
 
         SessionState state = new SessionState(
                 gameId,
@@ -254,8 +275,8 @@ public class GameSessionService {
 
             String actionType = normalizeActionType(request.type());
             switch (actionType) {
-                case "PASS" -> applyPass(state);
-                case "ANSWER" -> applyAnswer(state, request.tileIndex(), request.rank());
+                case "ANSWER" -> applyAnswer(state, request.tileIndex());
+                case "ADVANCE" -> applyAdvance(state);
                 default -> throw new IllegalArgumentException("unsupported action type: " + actionType);
             }
             rememberActionRequestId(state, actionRequestId);
@@ -269,19 +290,10 @@ public class GameSessionService {
         }
     }
 
-    private void applyPass(SessionState state) {
-        String playerId = state.currentPlayerId();
-        requireActivePlayer(state, playerId);
-        if (state.roundScores.getOrDefault(playerId, 0) < 1) {
-            throw new IllegalArgumentException("pass requires at least one correct answer in current round");
+    private void applyAnswer(SessionState state, Integer tileIndex) {
+        if (!PHASE_QUESTION_ACTIVE.equals(state.phase)) {
+            throw new IllegalArgumentException("round is not accepting answers");
         }
-        incrementCounter(METRIC_ACTION_TOTAL, "type", "pass", "language", state.language);
-        state.statuses.put(playerId, PlayerRoundStatus.PASSED);
-        state.lastAction = state.currentPlayerName() + " passed";
-        advanceOrFinishRound(state);
-    }
-
-    private void applyAnswer(SessionState state, Integer tileIndex, Integer rank) {
         if (tileIndex == null) {
             throw new IllegalArgumentException("tileIndex is required for ANSWER");
         }
@@ -298,42 +310,40 @@ public class GameSessionService {
             throw new IllegalArgumentException("tile already opened");
         }
 
-        boolean correct = isCorrect(state.card, tileIndex, rank);
+        boolean correct = isCorrect(state.card, tileIndex);
         if (correct) {
             incrementCounter(METRIC_ANSWER_TOTAL, "outcome", "correct", "language", state.language);
             state.roundScores.put(playerId, (state.roundScores.getOrDefault(playerId, 0)) + 1);
             state.pegs.set(tileIndex, new PegState(tileIndex, PEG_REVEALED));
-            state.lastAction = state.currentPlayerName() + " answered correctly (+1)";
+            if (allCorrectAnswersRevealed(state)) {
+                commitRoundScores(state);
+                state.phase = PHASE_ROUND_SUCCESS;
+                state.lastAction = state.currentPlayerName() + " cleared the board";
+                return;
+            }
+            state.phase = PHASE_QUESTION_ACTIVE;
+            state.lastAction = state.currentPlayerName() + " found a correct answer";
         } else {
             incrementCounter(METRIC_ANSWER_TOTAL, "outcome", "wrong", "language", state.language);
             state.statuses.put(playerId, PlayerRoundStatus.OUT);
+            state.roundScores.put(playerId, 0);
             state.pegs.set(tileIndex, new PegState(tileIndex, PEG_WRONG));
-            state.lastAction = state.currentPlayerName() + " answered wrong (dropped)";
+            state.phase = PHASE_ROUND_FAIL;
+            state.lastAction = state.currentPlayerName() + " ended the round with a wrong answer";
         }
-
-        advanceOrFinishRound(state);
     }
 
-    private void advanceOrFinishRound(SessionState state) {
-        if (roundEnded(state)) {
-            finishRound(state);
-            return;
+    private void applyAdvance(SessionState state) {
+        if (!PHASE_ROUND_SUCCESS.equals(state.phase) && !PHASE_ROUND_FAIL.equals(state.phase)) {
+            throw new IllegalArgumentException("round is not ready to advance");
         }
-
-        int nextIndex = nextActiveIndex(state, state.activePlayerIndex);
-        if (nextIndex < 0) {
-            finishRound(state);
-            return;
-        }
-
-        state.activePlayerIndex = nextIndex;
-        state.phase = PHASE_CHOOSING;
+        incrementCounter(METRIC_ACTION_TOTAL, "type", "advance", "language", state.language);
+        finishRound(state);
     }
 
     private void finishRound(SessionState state) {
         recordElapsed(METRIC_ROUND_DURATION, state.roundStartedAtMillis, "language", state.language);
         incrementCounter(METRIC_ROUND_COMPLETED, "language", state.language);
-        commitRoundScores(state);
         String winnerId = resolveWinner(state);
         if (winnerId != null) {
             state.phase = PHASE_GAME_OVER;
@@ -352,9 +362,9 @@ public class GameSessionService {
         state.activePlayerIndex = state.starterPlayerIndex;
         resetRoundScores(state);
         resetStatuses(state);
-        state.card = cardService.getNextRandomCard(state.language, state.gameId, state.topic);
-        state.pegs = hiddenPegs(state.card.options().size());
-        state.phase = PHASE_CHOOSING;
+        state.card = loadCherryPickCard(state.language, state.gameId, state.topic);
+        state.pegs = hiddenPegs(BOARD_ANSWER_COUNT);
+        state.phase = PHASE_QUESTION_ACTIVE;
         state.lastAction = "Round " + state.roundNumber + " started";
         state.roundStartedAtMillis = nowMillis();
     }
@@ -379,26 +389,20 @@ public class GameSessionService {
         }
     }
 
-    private static boolean roundEnded(SessionState state) {
-        boolean allPegsResolved = state.pegs.stream().noneMatch(peg -> PEG_HIDDEN.equals(peg.state()));
-        if (allPegsResolved) {
-            return true;
+    private static boolean allCorrectAnswersRevealed(SessionState state) {
+        Set<Integer> correctIndexes = resolveCorrectIndexes(state.card.correct() == null ? Map.of() : state.card.correct());
+        if (correctIndexes.isEmpty()) {
+            throw new IllegalArgumentException("card is missing CherryPick-compatible correct answers");
         }
-        return state.players.stream().noneMatch(player -> state.statuses.get(player.playerId()) == PlayerRoundStatus.ACTIVE);
-    }
-
-    private static int nextActiveIndex(SessionState state, int fromIndex) {
-        if (state.players.isEmpty()) {
-            return -1;
-        }
-        for (int step = 1; step <= state.players.size(); step += 1) {
-            int idx = (fromIndex + step) % state.players.size();
-            String playerId = state.players.get(idx).playerId();
-            if (state.statuses.get(playerId) == PlayerRoundStatus.ACTIVE) {
-                return idx;
+        for (Integer correctIndex : correctIndexes) {
+            if (correctIndex == null || correctIndex < 0 || correctIndex >= state.pegs.size()) {
+                throw new IllegalArgumentException("card correct answer is outside 8-answer board");
+            }
+            if (!PEG_REVEALED.equals(state.pegs.get(correctIndex).state())) {
+                return false;
             }
         }
-        return -1;
+        return true;
     }
 
     private static String resolveWinner(SessionState state) {
@@ -448,34 +452,9 @@ public class GameSessionService {
         }
     }
 
-    private static boolean isCorrect(CardDeckResponse card, int tileIndex, Integer rank) {
-        String category = normalizeCategory(card.category());
+    private static boolean isCorrect(CardDeckResponse card, int tileIndex) {
         Map<String, Object> correct = card.correct() == null ? Map.of() : card.correct();
-
-        return switch (category) {
-            case "NUMBER", "CENTURY_DECADE", "COLOR" -> {
-                Integer correctIndex = asInteger(correct.get("correctIndex"));
-                if (correctIndex == null) {
-                    Set<Integer> indexes = resolveCorrectIndexes(correct);
-                    yield indexes.size() == 1 && indexes.contains(tileIndex);
-                }
-                yield correctIndex == tileIndex;
-            }
-            case "ORDER" -> {
-                List<Integer> rankByIndex = asIntegerList(correct.get("rankByIndex"));
-                if (rankByIndex.isEmpty()) {
-                    throw new IllegalArgumentException("ORDER card is missing rankByIndex metadata");
-                }
-                if (rank == null) {
-                    throw new IllegalArgumentException("rank is required for ORDER answers");
-                }
-                if (rank < 1 || rank > rankByIndex.size()) {
-                    throw new IllegalArgumentException("rank is out of range");
-                }
-                yield rankByIndex.get(tileIndex) == rank;
-            }
-            default -> resolveCorrectIndexes(correct).contains(tileIndex);
-        };
+        return resolveCorrectIndexes(correct).contains(tileIndex);
     }
 
     private static Set<Integer> resolveCorrectIndexes(Map<String, Object> correct) {
@@ -563,13 +542,6 @@ public class GameSessionService {
             throw new IllegalArgumentException("type is required");
         }
         return rawType.trim().toUpperCase(Locale.ROOT);
-    }
-
-    private static String normalizeCategory(String category) {
-        if (category == null || category.isBlank()) {
-            return "OPEN";
-        }
-        return category.trim().toUpperCase(Locale.ROOT);
     }
 
     private static List<String> normalizePlayers(List<String> rawPlayers) {
@@ -1071,13 +1043,21 @@ public class GameSessionService {
 
     private static String normalizeStoredPhase(String phase) {
         if (phase == null || phase.isBlank()) {
-            return PHASE_CHOOSING;
+            return PHASE_QUESTION_ACTIVE;
         }
         String normalized = phase.trim().toUpperCase(Locale.ROOT);
+        if ("CHOOSING".equals(normalized)) {
+            return PHASE_QUESTION_ACTIVE;
+        }
+        if (PHASE_QUESTION_ACTIVE.equals(normalized)
+                || PHASE_ROUND_SUCCESS.equals(normalized)
+                || PHASE_ROUND_FAIL.equals(normalized)) {
+            return normalized;
+        }
         if (PHASE_GAME_OVER.equals(normalized)) {
             return PHASE_GAME_OVER;
         }
-        return PHASE_CHOOSING;
+        return PHASE_QUESTION_ACTIVE;
     }
 
     private static String normalizeStoredLastAction(String lastAction) {
@@ -1136,7 +1116,10 @@ public class GameSessionService {
                         state.card.question(),
                         state.card.category(),
                         state.card.topic(),
-                        pegs
+                        pegs,
+                        resolveCorrectIndexes(state.card.correct() == null ? Map.of() : state.card.correct()).stream()
+                                .sorted()
+                                .toList()
                 ),
                 totals,
                 rounds,
@@ -1197,10 +1180,10 @@ public class GameSessionService {
                     1,
                     0,
                     0,
-                    PHASE_CHOOSING,
+                    PHASE_QUESTION_ACTIVE,
                     "Game started",
                     card,
-                    hiddenPegs(card.options().size()),
+                    hiddenPegs(BOARD_ANSWER_COUNT),
                     nowMillis,
                     nowMillis,
                     nowMillis

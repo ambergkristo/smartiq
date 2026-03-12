@@ -1,0 +1,122 @@
+[
+  {
+    "id": "science-number-1",
+    "topic": "Science",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Which planet is known as the Red Planet?",
+    "options": [
+      "Mercury",
+      "Venus",
+      "Earth",
+      "Jupiter",
+      "Saturn",
+      "Uranus",
+      "Neptune",
+      "Pluto",
+      "Ceres",
+      "Mars"
+    ],
+    "correct": {
+      "correctIndex": 9
+    },
+    "difficulty": "2",
+    "source": "smartiq-v2"
+  },
+  {
+    "id": "history-true-false-1",
+    "topic": "History",
+    "category": "TRUE_FALSE",
+    "language": "en",
+    "question": "Which statements about Ancient Rome are true?",
+    "options": [
+      "Rome used roads to move armies.",
+      "Augustus became Rome's first emperor.",
+      "The Senate met on the Moon.",
+      "Caesar was assassinated in 44 BC.",
+      "Romans wrote all laws in binary.",
+      "The Colosseum stands in Rome.",
+      "Gladiators fought in Tokyo.",
+      "Latin was created in 1980.",
+      "Punic Wars were fought with Carthage.",
+      "Hannibal invented the steam engine."
+    ],
+    "correct": {
+      "correctIndexes": [1, 3, 8]
+    },
+    "difficulty": "2",
+    "source": "smartiq-v2"
+  },
+  {
+    "id": "culture-et-1",
+    "topic": "Culture",
+    "category": "OPEN",
+    "language": "et",
+    "question": "This card must never enter the active runtime.",
+    "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+    ],
+    "correct": {
+      "correctIndexes": [0, 1]
+    },
+    "difficulty": "1",
+    "source": "smartiq-v2"
+  },
+  {
+    "id": "history-order-1",
+    "topic": "History",
+    "category": "ORDER",
+    "language": "en",
+    "question": "This card must never enter the active runtime.",
+    "options": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+    ],
+    "correct": {
+      "correctOrder": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    },
+    "difficulty": "1",
+    "source": "smartiq-v2"
+  },
+  {
+    "id": "science-number-1",
+    "topic": "Science",
+    "category": "NUMBER",
+    "language": "en",
+    "question": "Duplicate id must be rejected.",
+    "options": [
+      "One",
+      "Two",
+      "Three",
+      "Four",
+      "Five",
+      "Six",
+      "Seven",
+      "Eight",
+      "Nine",
+      "Ten"
+    ],
+    "correct": {
+      "correctIndex": 0
+    },
+    "difficulty": "2",
+    "source": "smartiq-v2"
+  }
+]

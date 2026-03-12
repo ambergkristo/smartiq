@@ -1,12 +1,11 @@
-function resolvePlayerResult(player, index, currentPlayerIndex, resolutionState, eliminatedPlayers, passedPlayers) {
+function resolvePlayerResult(player, index, currentPlayerIndex, resolutionState, eliminatedPlayers) {
   if (resolutionState?.actingPlayer === player) {
     if (resolutionState.outcome === 'correct') return 'CORRECT';
-    if (resolutionState.outcome === 'incorrect') return 'INCORRECT';
-    if (resolutionState.outcome === 'passed') return 'PASSED';
+    if (resolutionState.outcome === 'success') return 'SUCCESS';
+    if (resolutionState.outcome === 'fail') return 'FAIL';
     return 'LOCKED';
   }
   if (eliminatedPlayers.has(player)) return 'OUT';
-  if (passedPlayers.has(player)) return 'PASSED';
   if (index === currentPlayerIndex) return 'TURN';
   return 'READY';
 }
@@ -16,8 +15,7 @@ export default function PlayerResultList({
   scores,
   currentPlayerIndex,
   resolutionState,
-  eliminatedPlayers,
-  passedPlayers
+  eliminatedPlayers
 }) {
   return (
     <section className="player-result-list" data-testid="player-result-list">
@@ -32,8 +30,7 @@ export default function PlayerResultList({
             index,
             currentPlayerIndex,
             resolutionState,
-            eliminatedPlayers,
-            passedPlayers
+            eliminatedPlayers
           );
 
           return (

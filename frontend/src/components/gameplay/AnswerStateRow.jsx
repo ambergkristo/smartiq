@@ -13,8 +13,7 @@ export default function AnswerStateRow({
   selectedIndexes,
   revealedIndexes,
   wrongIndexes,
-  optionCount,
-  canPass
+  optionCount
 }) {
   const counts = getAnswerStateCounts(selectedIndexes, revealedIndexes, wrongIndexes, optionCount);
 
@@ -24,7 +23,6 @@ export default function AnswerStateRow({
       <StatePill label="Correct" value={counts.correct} tone="correct" />
       <StatePill label="Wrong" value={counts.wrong} tone="wrong" />
       <StatePill label="Available" value={counts.available} />
-      <StatePill label="Pass" value={canPass ? 'Ready' : 'Locked'} tone={canPass ? 'correct' : 'muted'} />
     </div>
   );
 }

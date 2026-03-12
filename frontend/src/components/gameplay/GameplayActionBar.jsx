@@ -5,38 +5,34 @@ export default function GameplayActionBar({
   phase,
   category,
   nextTransition = 'none',
-  selectedRank,
   controlsDisabled,
-  canPass,
   canAnswer,
   onAnswer,
   onConfirm,
   onCancelConfirm,
-  onPass,
   onNext,
   onBackToLobby,
-  backLabel = '← Back to lobby',
+  backLabel = 'ā† Back to lobby',
   currentPlayer
 }) {
   const answerButtonRef = useRef(null);
-  const passButtonRef = useRef(null);
   const confirmButtonRef = useRef(null);
   const nextButtonRef = useRef(null);
   const nextActionLabel = getNextActionLabel(nextTransition);
-  const actionHint = phase === 'RESOLVED' || phase === 'PASSED'
+  const actionHint = phase === 'ROUND_REVEAL' || phase === 'ROUND_SUCCESS' || phase === 'ROUND_FAIL'
     ? `Resolution ready. Press ${nextActionLabel}.`
-    : getActionHint(phase, currentPlayer, category, selectedRank, controlsDisabled, canPass);
+    : getActionHint(phase, currentPlayer, category, controlsDisabled);
 
   useEffect(() => {
-    if (phase === 'CHOOSING') {
-      passButtonRef.current?.focus();
+    if (phase === 'QUESTION_ACTIVE') {
+      answerButtonRef.current?.focus();
       return;
     }
-    if (phase === 'CONFIRMING') {
+    if (phase === 'ANSWER_SELECTED') {
       confirmButtonRef.current?.focus();
       return;
     }
-    if (phase === 'RESOLVED' || phase === 'PASSED') {
+    if (phase === 'ROUND_REVEAL' || phase === 'ROUND_SUCCESS' || phase === 'ROUND_FAIL') {
       nextButtonRef.current?.focus();
     }
   }, [phase]);
@@ -55,29 +51,18 @@ export default function GameplayActionBar({
         >
           {backLabel}
         </button>
-        {phase === 'CHOOSING' ? (
-          <>
-            <button
-              ref={answerButtonRef}
-              type="button"
-              className="app-shell-primary-button"
-              onClick={onAnswer}
-              disabled={!canAnswer}
-            >
-              ANSWER
-            </button>
-            <button
-              ref={passButtonRef}
-              type="button"
-              className="secondary-action"
-              onClick={onPass}
-              disabled={controlsDisabled || !canPass}
-            >
-              PASS
-            </button>
-          </>
+        {phase === 'QUESTION_ACTIVE' ? (
+          <button
+            ref={answerButtonRef}
+            type="button"
+            className="app-shell-primary-button"
+            onClick={onAnswer}
+            disabled={!canAnswer}
+          >
+            ANSWER
+          </button>
         ) : null}
-        {phase === 'CONFIRMING' ? (
+        {phase === 'ANSWER_SELECTED' ? (
           <>
             <button
               ref={confirmButtonRef}
@@ -98,7 +83,7 @@ export default function GameplayActionBar({
             </button>
           </>
         ) : null}
-        {phase === 'RESOLVED' || phase === 'PASSED' ? (
+        {phase === 'ROUND_REVEAL' || phase === 'ROUND_SUCCESS' || phase === 'ROUND_FAIL' ? (
           <button
             ref={nextButtonRef}
             type="button"

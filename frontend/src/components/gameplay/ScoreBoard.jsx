@@ -1,9 +1,10 @@
-function PlayerRow({ player, score, isActive, isOut, isPassed }) {
+import { getCherryRoundReward } from '../../state/cherryRounds';
+
+function PlayerRow({ player, score, isActive, isOut }) {
   const rowClassName = [
     'scoreboard-player-row',
     isActive ? 'is-active' : '',
-    isOut ? 'is-out' : '',
-    !isOut && isPassed ? 'is-passed' : ''
+    isOut ? 'is-out' : ''
   ]
     .filter(Boolean)
     .join(' ');
@@ -15,8 +16,7 @@ function PlayerRow({ player, score, isActive, isOut, isPassed }) {
         <div className="scoreboard-player-flags">
           {isActive ? <span className="player-chip active-chip">TURN</span> : null}
           {isOut ? <span className="player-chip out-chip">OUT</span> : null}
-          {!isOut && isPassed ? <span className="player-chip passed-chip">PASSED</span> : null}
-          {!isActive && !isOut && !isPassed ? <span className="player-chip waiting-chip">READY</span> : null}
+          {!isActive && !isOut ? <span className="player-chip waiting-chip">READY</span> : null}
         </div>
       </div>
       <span className="scoreboard-player-score">{score}</span>
@@ -34,12 +34,20 @@ export default function ScoreBoard({
   currentPlayer,
   targetScore,
   eliminatedPlayers,
-  passedPlayers,
-  starterPlayer
+  starterPlayer,
+  mode = 'standard',
+  sessionXp = 0,
+  lastRoundXp = 0,
+  profileName = 'Solo Player',
+  profileLevel = 1,
+  profileXp = 0,
+  profileGamesPlayed = 0,
+  profileRoundsWon = 0
 }) {
+  const isSoloMode = mode === 'solo';
+  const roundReward = getCherryRoundReward(roundNumber);
   const outCount = players.filter((player) => eliminatedPlayers.has(player)).length;
-  const passedCount = players.filter((player) => !eliminatedPlayers.has(player) && passedPlayers.has(player)).length;
-  const activeCount = players.length - outCount - passedCount;
+  const activeCount = players.length - outCount;
   const leadingPlayer = players.reduce((leader, player) => {
     if (!leader) {
       return player;
@@ -52,19 +60,28 @@ export default function ScoreBoard({
     <aside className="scoreboard-panel board-surface" data-testid="score-board">
       <div className="scoreboard-panel-head">
         <div>
-          <p className="section-title">Live scoreboard</p>
+          <p className="section-title">{isSoloMode ? 'Solo run' : 'Live scoreboard'}</p>
           <h2>Round {roundNumber}</h2>
         </div>
         <div className="scoreboard-target">
-          <span>Target</span>
-          <strong>{targetScore}</strong>
+          <span>{isSoloMode ? 'Session XP' : 'Target'}</span>
+          <strong>{isSoloMode ? sessionXp : targetScore}</strong>
         </div>
       </div>
 
       <div className="scoreboard-summary">
-        <span className="player-chip active-chip">Active {activeCount}</span>
-        <span className="player-chip passed-chip">Passed {passedCount}</span>
-        <span className="player-chip out-chip">Out {outCount}</span>
+        {isSoloMode ? (
+          <>
+            <span className="player-chip active-chip">{roundReward.badgeLabel}</span>
+            <span className="player-chip waiting-chip">{roundReward.multiplierLabel}</span>
+            <span className="player-chip waiting-chip">Boards cleared {Math.max(roundNumber - 1, 0)}</span>
+          </>
+        ) : (
+          <>
+            <span className="player-chip active-chip">Active {activeCount}</span>
+            <span className="player-chip out-chip">Out {outCount}</span>
+          </>
+        )}
       </div>
 
       <div className="scoreboard-status-card">
@@ -74,24 +91,36 @@ export default function ScoreBoard({
           <em>{phaseLabel}</em>
         </div>
         <div className="scoreboard-status-grid">
-          <p><span>Starter</span><strong>{starterPlayer}</strong></p>
-          <p><span>Leading</span><strong>{leadingPlayer ? `${leadingPlayer} • ${leadingScore}` : 'n/a'}</strong></p>
+          <p><span>{isSoloMode ? 'Mode' : 'Starter'}</span><strong>{isSoloMode ? 'Solo' : starterPlayer}</strong></p>
+          <p><span>{isSoloMode ? 'Round type' : 'Leading'}</span><strong>{isSoloMode ? roundReward.label : leadingPlayer ? `${leadingPlayer} - ${leadingScore}` : 'n/a'}</strong></p>
           <p><span>Last call</span><strong>{lastAction || 'Waiting for host action'}</strong></p>
         </div>
       </div>
 
-      <ul className="scoreboard-player-list" aria-label="Player scoreboard">
-        {players.map((player, index) => (
-          <PlayerRow
-            key={player}
-            player={player}
-            score={scores[player] ?? 0}
-            isActive={index === currentPlayerIndex}
-            isOut={eliminatedPlayers.has(player)}
-            isPassed={passedPlayers.has(player)}
-          />
-        ))}
-      </ul>
+      {isSoloMode ? (
+        <div className="scoreboard-solo-recap" data-testid="solo-scoreboard">
+          <p><span>Player</span><strong>{profileName || players[0] || 'Solo Player'}</strong></p>
+          <p><span>Level</span><strong>{profileLevel}</strong></p>
+          <p><span>Total XP</span><strong>{profileXp}</strong></p>
+          <p><span>Multiplier</span><strong>{roundReward.multiplierLabel}</strong></p>
+          <p><span>Session XP</span><strong>{sessionXp}</strong></p>
+          <p><span>Round XP</span><strong>{lastRoundXp}</strong></p>
+          <p><span>Games</span><strong>{profileGamesPlayed}</strong></p>
+          <p><span>Rounds won</span><strong>{profileRoundsWon}</strong></p>
+        </div>
+      ) : (
+        <ul className="scoreboard-player-list" aria-label="Player scoreboard">
+          {players.map((player, index) => (
+            <PlayerRow
+              key={player}
+              player={player}
+              score={scores[player] ?? 0}
+              isActive={index === currentPlayerIndex}
+              isOut={eliminatedPlayers.has(player)}
+            />
+          ))}
+        </ul>
+      )}
     </aside>
   );
 }

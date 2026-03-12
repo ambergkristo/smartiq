@@ -6,6 +6,7 @@ public record BoardStateSnapshot(
         String question,
         String category,
         String topic,
-        List<PegSnapshot> pegs
+        List<PegSnapshot> pegs,
+        List<Integer> correctAnswerIndexes
 ) {
 }

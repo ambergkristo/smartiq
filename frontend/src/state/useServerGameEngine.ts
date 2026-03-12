@@ -1,16 +1,19 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import {
   createServerGameSession,
   fetchServerGameSession,
   resolveGameSessionErrorMessage,
   sendServerGameAction
 } from '../api';
+import { calculateSoloRoundXp, getCherryRoundReward } from './cherryRounds';
 import { DEFAULT_PLAYERS, GamePhase } from './types';
 
 const TARGET_SCORE_DEFAULT = 30;
 const READY_LABEL = 'Ready';
 const SUPPORTED_GAME_SNAPSHOT_API_VERSION = '1';
 const BOARD_ANSWER_COUNT = 8;
+const GAME_MODE_STANDARD = 'standard';
+const GAME_MODE_SOLO = 'solo';
 
 function initialScores(players) {
   return players.reduce((acc, player) => {
@@ -21,7 +24,7 @@ function initialScores(players) {
 
 function initialStats(players) {
   return players.reduce((acc, player) => {
-    acc[player] = { correct: 0, wrong: 0, passes: 0 };
+    acc[player] = { correct: 0, wrong: 0 };
     return acc;
   }, {});
 }
@@ -30,7 +33,7 @@ function mergeStats(players, stats) {
   const merged = { ...stats };
   players.forEach((player) => {
     if (!merged[player]) {
-      merged[player] = { correct: 0, wrong: 0, passes: 0 };
+      merged[player] = { correct: 0, wrong: 0 };
     }
   });
   return merged;
@@ -97,6 +100,25 @@ function createActionRequestId() {
   return `ga_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
 }
 
+function normalizeBackendPhase(rawPhase) {
+  const normalized = String(rawPhase || GamePhase.QUESTION_ACTIVE).toUpperCase();
+  if (normalized === 'CHOOSING') {
+    return GamePhase.QUESTION_ACTIVE;
+  }
+  return normalized;
+}
+
+function resolveCardCorrectIndexes(card) {
+  const rawCorrect = card?.correct;
+  if (rawCorrect && typeof rawCorrect === 'object' && Array.isArray(rawCorrect.correctIndexes)) {
+    return rawCorrect.correctIndexes.filter((index) => Number.isInteger(index));
+  }
+  if (rawCorrect && typeof rawCorrect === 'object' && Number.isInteger(rawCorrect.correctIndex)) {
+    return [rawCorrect.correctIndex];
+  }
+  return [];
+}
+
 function mapSnapshot(snapshot, languageFallback, targetScoreFallback) {
   const snapshotApiVersion = String(snapshot?.apiVersion || SUPPORTED_GAME_SNAPSHOT_API_VERSION).trim();
   if (snapshotApiVersion !== SUPPORTED_GAME_SNAPSHOT_API_VERSION) {
@@ -129,15 +151,12 @@ function mapSnapshot(snapshot, languageFallback, targetScoreFallback) {
   });
 
   const eliminatedPlayers = [];
-  const passedPlayers = [];
   players.forEach((player) => {
     const id = String(player?.playerId || '');
     const displayName = playerById.get(id) || id;
     const status = String(statuses[id] || 'ACTIVE').toUpperCase();
     if (status === 'OUT') {
       eliminatedPlayers.push(displayName);
-    } else if (status === 'PASSED') {
-      passedPlayers.push(displayName);
     }
   });
 
@@ -164,9 +183,7 @@ function mapSnapshot(snapshot, languageFallback, targetScoreFallback) {
     { length: BOARD_ANSWER_COUNT },
     (_, index) => answers[index] ?? ''
   );
-  const correctAnswerIndex = revealedIndexes.length === 1 ? revealedIndexes[0] : null;
   const difficulty = snapshot?.boardState?.difficulty ?? '1';
-
   const roundNumber = safeNumber(snapshot?.roundState?.roundNumber, 1);
   const targetScore = safeNumber(snapshot?.winCondition, targetScoreFallback);
   const activePlayerIndex = Math.min(
@@ -178,7 +195,7 @@ function mapSnapshot(snapshot, languageFallback, targetScoreFallback) {
     0,
     players.findIndex((player) => String(player?.playerId || '') === starterPlayerId)
   );
-  const backendPhase = String(snapshot?.roundState?.phase || GamePhase.CHOOSING).toUpperCase();
+  const backendPhase = normalizeBackendPhase(snapshot?.roundState?.phase);
 
   return {
     backendPhase,
@@ -196,14 +213,14 @@ function mapSnapshot(snapshot, languageFallback, targetScoreFallback) {
       questionText: String(snapshot?.boardState?.question || ''),
       options: fallbackAnswers,
       answers: fallbackAnswers,
-      correctAnswerIndex,
       difficulty,
-      correct: Number.isInteger(correctAnswerIndex) ? { correctIndex: correctAnswerIndex } : {}
+      correct: Array.isArray(snapshot?.boardState?.correctAnswerIndexes)
+        ? { correctIndexes: snapshot.boardState.correctAnswerIndexes.filter((index) => Number.isInteger(index)) }
+        : {}
     },
     revealedIndexes,
     wrongIndexes,
     eliminatedPlayers,
-    passedPlayers,
     currentPlayerIndex: activePlayerIndex,
     starterIndex,
     lastAction: String(snapshot?.roundState?.lastAction || READY_LABEL),
@@ -220,11 +237,9 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   const [roundNumber, setRoundNumber] = useState(0);
   const [card, setCard] = useState(null);
   const [selectedIndexes, setSelectedIndexes] = useState(new Set());
-  const [selectedRank, setSelectedRank] = useState(null);
   const [revealedIndexes, setRevealedIndexes] = useState(new Set());
   const [wrongIndexes, setWrongIndexes] = useState(new Set());
   const [eliminatedPlayers, setEliminatedPlayers] = useState(new Set());
-  const [passedPlayers, setPassedPlayers] = useState(new Set());
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [starterIndex, setStarterIndex] = useState(0);
   const [lastAction, setLastAction] = useState(READY_LABEL);
@@ -241,13 +256,12 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   const [requestInFlight, setRequestInFlight] = useState(false);
   const [controlledPlayer, setControlledPlayer] = useState(null);
   const [actionTokensByPlayerId, setActionTokensByPlayerId] = useState({});
+  const [gameMode, setGameMode] = useState(GAME_MODE_STANDARD);
+  const [sessionXp, setSessionXp] = useState(0);
+  const [lastRoundXp, setLastRoundXp] = useState(0);
+  const sessionXpRef = useRef(0);
 
   const currentPlayer = players[currentPlayerIndex] ?? players[0] ?? DEFAULT_PLAYERS[0];
-  const currentActorPlayerId = String(activeSnapshot?.roundState?.currentPlayerId || '').trim();
-  const currentRoundScore = Number.isInteger(activeSnapshot?.roundScores?.[currentActorPlayerId])
-    ? activeSnapshot.roundScores[currentActorPlayerId]
-    : 0;
-  const canPass = phase === GamePhase.CHOOSING && currentRoundScore > 0;
 
   const applyMappedSnapshot = useCallback((snapshot, mapped, phaseOverride = null) => {
     setActiveSnapshot(snapshot);
@@ -258,7 +272,6 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setRevealedIndexes(new Set(mapped.revealedIndexes));
     setWrongIndexes(new Set(mapped.wrongIndexes));
     setEliminatedPlayers(new Set(mapped.eliminatedPlayers));
-    setPassedPlayers(new Set(mapped.passedPlayers));
     setCurrentPlayerIndex(mapped.currentPlayerIndex);
     setStarterIndex(mapped.starterIndex);
     setLastAction(mapped.lastAction);
@@ -266,15 +279,8 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setWinner(mapped.winner);
     setStats((prev) => mergeStats(mapped.players, prev));
     setSelectedIndexes(new Set());
-    setSelectedRank(null);
     setResolutionState(null);
-
-    if (phaseOverride) {
-      setPhase(phaseOverride);
-      return;
-    }
-
-    setPhase(mapped.backendPhase === GamePhase.GAME_OVER ? GamePhase.GAME_OVER : GamePhase.CHOOSING);
+    setPhase(phaseOverride || (mapped.backendPhase === GamePhase.GAME_OVER ? GamePhase.GAME_OVER : GamePhase.QUESTION_ACTIVE));
   }, []);
 
   const adoptCreatedSession = useCallback((response, request = {}) => {
@@ -288,15 +294,15 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setActionTokensByPlayerId(resolvedActionTokens);
     const mapped = mapSnapshot(snapshot, request.language, targetScore);
     setStats(initialStats(mapped.players));
-    // The desktop host console drives every turn in the current product flow.
     setControlledPlayer(null);
     setStartRequest({
       players: mapped.players,
       language: request.language || mapped.card.language,
       topic: mapped.card.topic || undefined,
-      winCondition: mapped.targetScore
+      winCondition: mapped.targetScore,
+      mode: request.mode === GAME_MODE_SOLO ? GAME_MODE_SOLO : GAME_MODE_STANDARD
     });
-    applyMappedSnapshot(snapshot, mapped, mapped.backendPhase === GamePhase.GAME_OVER ? GamePhase.GAME_OVER : GamePhase.CHOOSING);
+    applyMappedSnapshot(snapshot, mapped, mapped.backendPhase === GamePhase.GAME_OVER ? GamePhase.GAME_OVER : GamePhase.QUESTION_ACTIVE);
     return mapped.players;
   }, [applyMappedSnapshot, targetScore]);
 
@@ -310,11 +316,13 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       players: normalizedPlayers,
       language: input.language,
       topic: input.topic,
-      winCondition: Number.isInteger(input.winCondition) ? input.winCondition : targetScore
+      winCondition: Number.isInteger(input.winCondition) ? input.winCondition : targetScore,
+      mode: input.mode === GAME_MODE_SOLO ? GAME_MODE_SOLO : GAME_MODE_STANDARD
     };
 
     setRequestInFlight(true);
     setStartRequest(request);
+    setGameMode(request.mode);
     setLanguage(String(request.language || 'en'));
     setErrorMessage('');
     setPhase(GamePhase.LOADING_CARD);
@@ -326,6 +334,9 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setQueuedSnapshot(null);
     setQueuedTransition('none');
     setResolutionState(null);
+    sessionXpRef.current = 0;
+    setSessionXp(0);
+    setLastRoundXp(0);
 
     try {
       const response = await createServerGameSession(request);
@@ -382,7 +393,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   }, [activeSnapshot, applyMappedSnapshot, language, requestInFlight, startRequest, startRound, targetScore]);
 
   const toggleOption = useCallback((index) => {
-    if (phase !== GamePhase.CHOOSING && phase !== GamePhase.CONFIRMING) {
+    if (phase !== GamePhase.QUESTION_ACTIVE && phase !== GamePhase.ANSWER_SELECTED) {
       return;
     }
     if (revealedIndexes.has(index) || wrongIndexes.has(index)) {
@@ -395,56 +406,86 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       }
       return new Set([index]);
     });
-    setPhase(GamePhase.CHOOSING);
+    setPhase(GamePhase.QUESTION_ACTIVE);
   }, [phase, revealedIndexes, wrongIndexes]);
 
-  const chooseRank = useCallback((rank) => {
-    setSelectedRank(rank);
-  }, []);
-
   const requestConfirm = useCallback(() => {
-    if (phase !== GamePhase.CHOOSING) {
+    if (phase !== GamePhase.QUESTION_ACTIVE) {
       return;
     }
     if (selectedIndexes.size === 0) {
       return;
     }
-    setPhase(GamePhase.CONFIRMING);
+    setPhase(GamePhase.ANSWER_SELECTED);
   }, [phase, selectedIndexes]);
 
   const cancelConfirm = useCallback(() => {
-    if (phase !== GamePhase.CONFIRMING) {
+    if (phase !== GamePhase.ANSWER_SELECTED) {
       return;
     }
-    setPhase(GamePhase.CHOOSING);
+    setPhase(GamePhase.QUESTION_ACTIVE);
   }, [phase]);
 
-  const queueOutcome = useCallback((responseSnapshot, actionType, actingPlayer, selectedIndex) => {
+  const queueOutcome = useCallback((responseSnapshot, actingPlayer, selectedIndex, selectedOption) => {
     const mappedResponse = mapSnapshot(responseSnapshot, language, targetScore);
-    const prevRound = safeNumber(activeSnapshot?.roundState?.roundNumber, roundNumber || 1);
-    const roundAdvanced = mappedResponse.roundNumber > prevRound;
-    const gameOver = mappedResponse.backendPhase === GamePhase.GAME_OVER;
-    const transition = gameOver ? 'game-over' : roundAdvanced ? 'round' : 'turn';
+    const backendPhase = mappedResponse.backendPhase;
+    const roundReward = getCherryRoundReward(mappedResponse.roundNumber);
+    const transition = backendPhase === GamePhase.GAME_OVER
+      ? 'game-over'
+      : backendPhase === GamePhase.QUESTION_ACTIVE
+        ? 'reveal'
+        : 'round';
+    const revealedOptions = mappedResponse.revealedIndexes.map((index) => (
+      mappedResponse.card.options[index] ?? card?.options?.[index] ?? `Answer ${index + 1}`
+    ));
+    const pegState = mappedResponse.pegStateByIndex.get(selectedIndex);
+    const outcome = backendPhase === GamePhase.ROUND_SUCCESS
+      ? 'success'
+      : backendPhase === GamePhase.ROUND_FAIL
+        ? 'fail'
+        : pegState === 'revealed'
+          ? 'correct'
+          : 'fail';
+    const correctIndexes = resolveCardCorrectIndexes(mappedResponse.card);
+    const correctOptions = correctIndexes.map((index) => (
+      mappedResponse.card.options[index] ?? card?.options?.[index] ?? `Answer ${index + 1}`
+    ));
+    const selectedOptions = outcome === 'success'
+      ? correctOptions
+      : Array.from(new Set([...(revealedOptions || []), selectedOption].filter(Boolean)));
+    const roundXp = gameMode === GAME_MODE_SOLO
+      ? calculateSoloRoundXp(mappedResponse.roundNumber, correctIndexes.length, backendPhase === GamePhase.ROUND_SUCCESS)
+      : 0;
+    const nextSessionXp = gameMode === GAME_MODE_SOLO
+      ? sessionXpRef.current + roundXp
+      : sessionXpRef.current;
+    if (gameMode === GAME_MODE_SOLO) {
+      sessionXpRef.current = nextSessionXp;
+      setSessionXp(nextSessionXp);
+      setLastRoundXp(roundXp);
+    } else {
+      setLastRoundXp(0);
+    }
 
     setQueuedSnapshot(responseSnapshot);
     setQueuedTransition(transition);
     setErrorMessage('');
     setLastAction(mappedResponse.lastAction);
     setSelectedIndexes(new Set());
-    setSelectedRank(null);
-    const selectedOption = selectedIndex >= 0
-      ? mappedResponse.card.options[selectedIndex] ?? card?.options?.[selectedIndex] ?? `Answer ${selectedIndex + 1}`
-      : null;
-    const revealedOptions = mappedResponse.revealedIndexes.map((index) => (
-      mappedResponse.card.options[index] ?? card?.options?.[index] ?? `Answer ${index + 1}`
-    ));
-    const pegState = mappedResponse.pegStateByIndex.get(selectedIndex);
     setResolutionState({
-      outcome: actionType === 'PASS' ? 'passed' : pegState === 'revealed' ? 'correct' : 'incorrect',
+      outcome,
       actingPlayer,
       selectedIndex,
       selectedOption,
+      selectedOptions,
       revealedOptions,
+      correctOptions,
+      roundType: roundReward.type,
+      roundLabel: roundReward.label,
+      xpMultiplier: roundReward.multiplier,
+      xpMultiplierLabel: roundReward.multiplierLabel,
+      xpGained: roundXp,
+      totalXp: nextSessionXp,
       lastAction: mappedResponse.lastAction
     });
 
@@ -452,16 +493,6 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       const seeded = mergeStats(players, prev);
       if (!actingPlayer || !seeded[actingPlayer]) {
         return seeded;
-      }
-
-      if (actionType === 'PASS') {
-        return {
-          ...seeded,
-          [actingPlayer]: {
-            ...seeded[actingPlayer],
-            passes: seeded[actingPlayer].passes + 1
-          }
-        };
       }
 
       if (pegState === 'revealed') {
@@ -483,23 +514,26 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       };
     });
 
-    if (actionType === 'PASS') {
-      setPassedPlayers((prev) => new Set(prev).add(actingPlayer));
-      setPhase(GamePhase.PASSED);
-      return;
-    }
-
     if (pegState === 'revealed') {
       setRevealedIndexes((prev) => new Set(prev).add(selectedIndex));
     } else {
       setWrongIndexes((prev) => new Set(prev).add(selectedIndex));
       setEliminatedPlayers((prev) => new Set(prev).add(actingPlayer));
     }
-    setPhase(GamePhase.RESOLVED);
-  }, [activeSnapshot, language, players, roundNumber, targetScore]);
+
+    if (backendPhase === GamePhase.ROUND_SUCCESS) {
+      setPhase(GamePhase.ROUND_SUCCESS);
+      return;
+    }
+    if (backendPhase === GamePhase.ROUND_FAIL) {
+      setPhase(GamePhase.ROUND_FAIL);
+      return;
+    }
+    setPhase(GamePhase.ROUND_REVEAL);
+  }, [card?.options, gameMode, language, players, targetScore]);
 
   const confirmAnswer = useCallback(async () => {
-    if (phase !== GamePhase.CONFIRMING) {
+    if (phase !== GamePhase.ANSWER_SELECTED) {
       return;
     }
     if (!activeSnapshot?.gameId || selectedIndexes.size === 0 || requestInFlight) {
@@ -507,6 +541,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     }
 
     const selectedIndex = [...selectedIndexes][0];
+    const selectedOption = card?.options?.[selectedIndex] ?? `Answer ${selectedIndex + 1}`;
     const actingPlayer = currentPlayer;
     const actorPlayerId = String(activeSnapshot?.roundState?.currentPlayerId || '').trim();
     const actionToken = String(actionTokensByPlayerId?.[actorPlayerId] || '').trim();
@@ -514,12 +549,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       const message = 'Missing control token for active player. Restart game.';
       setErrorMessage(message);
       setLastAction(message);
-      setPhase(GamePhase.CHOOSING);
-      return;
-    }
-    const category = String(card?.category || '').toUpperCase();
-    if (category === 'ORDER' && !Number.isInteger(selectedRank)) {
-      setLastAction(`${actingPlayer}: choose rank first`);
+      setPhase(GamePhase.QUESTION_ACTIVE);
       return;
     }
     const actionRequestId = createActionRequestId();
@@ -529,126 +559,85 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       const responseSnapshot = await sendServerGameAction(activeSnapshot.gameId, {
         type: 'ANSWER',
         tileIndex: selectedIndex,
-        rank: Number.isInteger(selectedRank) ? selectedRank : undefined,
         actorPlayerId,
         actionToken,
         actionRequestId
       });
-      queueOutcome(responseSnapshot, 'ANSWER', actingPlayer, selectedIndex);
+      queueOutcome(responseSnapshot, actingPlayer, selectedIndex, selectedOption);
     } catch (error) {
       const message = resolveGameSessionErrorMessage(error);
       setErrorMessage(message);
       setLastAction(message);
-      setPhase(GamePhase.CHOOSING);
+      setPhase(GamePhase.QUESTION_ACTIVE);
     } finally {
       setRequestInFlight(false);
     }
   }, [
     activeSnapshot,
     actionTokensByPlayerId,
-    card?.category,
+    card?.options,
     currentPlayer,
     phase,
     queueOutcome,
     requestInFlight,
-    selectedIndexes,
-    selectedRank
+    selectedIndexes
   ]);
 
-  const passTurn = useCallback(async () => {
-    if (phase !== GamePhase.CHOOSING) {
-      return;
-    }
-    if (!activeSnapshot?.gameId || requestInFlight) {
-      return;
-    }
-    if (currentRoundScore < 1) {
-      const message = `${currentPlayer} must answer correctly before passing`;
-      setErrorMessage(message);
-      setLastAction(message);
-      setPhase(GamePhase.CHOOSING);
-      return;
+  const nextStep = useCallback(async () => {
+    if (phase !== GamePhase.ROUND_REVEAL && phase !== GamePhase.ROUND_SUCCESS && phase !== GamePhase.ROUND_FAIL) {
+      return { done: false };
     }
 
-    const actingPlayer = currentPlayer;
+    if (!queuedSnapshot) {
+      setPhase(GamePhase.QUESTION_ACTIVE);
+      return { done: false };
+    }
+
+    if (phase === GamePhase.ROUND_REVEAL) {
+      const mapped = mapSnapshot(queuedSnapshot, language, targetScore);
+      applyMappedSnapshot(queuedSnapshot, mapped, mapped.backendPhase === GamePhase.GAME_OVER ? GamePhase.GAME_OVER : GamePhase.QUESTION_ACTIVE);
+      setQueuedSnapshot(null);
+      setQueuedTransition('none');
+      return { done: false };
+    }
+
+    if (!activeSnapshot?.gameId || requestInFlight) {
+      return { done: false };
+    }
+
     const actorPlayerId = String(activeSnapshot?.roundState?.currentPlayerId || '').trim();
     const actionToken = String(actionTokensByPlayerId?.[actorPlayerId] || '').trim();
     if (!actorPlayerId || !actionToken) {
       const message = 'Missing control token for active player. Restart game.';
       setErrorMessage(message);
       setLastAction(message);
-      setPhase(GamePhase.CHOOSING);
-      return;
+      return { done: false };
     }
-    const actionRequestId = createActionRequestId();
+
     setRequestInFlight(true);
     try {
       const responseSnapshot = await sendServerGameAction(activeSnapshot.gameId, {
-        type: 'PASS',
+        type: 'ADVANCE',
         actorPlayerId,
         actionToken,
-        actionRequestId
+        actionRequestId: createActionRequestId()
       });
-      queueOutcome(responseSnapshot, 'PASS', actingPlayer, -1);
+      const mapped = mapSnapshot(responseSnapshot, language, targetScore);
+      applyMappedSnapshot(responseSnapshot, mapped, mapped.backendPhase === GamePhase.GAME_OVER ? GamePhase.GAME_OVER : GamePhase.QUESTION_ACTIVE);
+      setQueuedSnapshot(null);
+      setQueuedTransition('none');
+      return mapped.backendPhase === GamePhase.GAME_OVER
+        ? { done: true, winner: mapped.winner }
+        : { done: false };
     } catch (error) {
       const message = resolveGameSessionErrorMessage(error);
       setErrorMessage(message);
       setLastAction(message);
-      setPhase(GamePhase.CHOOSING);
+      return { done: false };
     } finally {
       setRequestInFlight(false);
     }
-  }, [activeSnapshot, actionTokensByPlayerId, currentPlayer, currentRoundScore, phase, queueOutcome, requestInFlight]);
-
-  const nextStep = useCallback(() => {
-    if (phase === GamePhase.ROUND_SUMMARY) {
-      if (!queuedSnapshot) {
-        setPhase(GamePhase.CHOOSING);
-        return { done: false };
-      }
-
-      const mapped = mapSnapshot(queuedSnapshot, language, targetScore);
-      applyMappedSnapshot(queuedSnapshot, mapped, mapped.backendPhase === GamePhase.GAME_OVER ? GamePhase.GAME_OVER : GamePhase.CHOOSING);
-      setQueuedSnapshot(null);
-      setQueuedTransition('none');
-      if (mapped.backendPhase === GamePhase.GAME_OVER) {
-        return { done: true, winner: mapped.winner };
-      }
-      return { done: false };
-    }
-
-    if (phase !== GamePhase.RESOLVED && phase !== GamePhase.PASSED) {
-      return { done: false };
-    }
-
-    if (!queuedSnapshot) {
-      setPhase(GamePhase.CHOOSING);
-      return { done: false };
-    }
-
-    if (queuedTransition === 'round') {
-      const mapped = mapSnapshot(queuedSnapshot, language, targetScore);
-      setScores(mapped.scores);
-      setWinner(mapped.winner);
-      setEffectiveTargetScore(mapped.targetScore);
-      setPhase(GamePhase.ROUND_SUMMARY);
-      setLastAction(`Round ${roundNumber} complete`);
-      return { done: false };
-    }
-
-    const mapped = mapSnapshot(queuedSnapshot, language, targetScore);
-    if (queuedTransition === 'game-over') {
-      applyMappedSnapshot(queuedSnapshot, mapped, GamePhase.GAME_OVER);
-      setQueuedSnapshot(null);
-      setQueuedTransition('none');
-      return { done: true, winner: mapped.winner };
-    }
-
-    applyMappedSnapshot(queuedSnapshot, mapped, mapped.backendPhase === GamePhase.GAME_OVER ? GamePhase.GAME_OVER : GamePhase.CHOOSING);
-    setQueuedSnapshot(null);
-    setQueuedTransition('none');
-    return { done: false };
-  }, [applyMappedSnapshot, language, phase, queuedSnapshot, queuedTransition, roundNumber, targetScore]);
+  }, [actionTokensByPlayerId, activeSnapshot, applyMappedSnapshot, language, phase, queuedSnapshot, requestInFlight, targetScore]);
 
   const clearError = useCallback(() => {
     setErrorMessage('');
@@ -662,11 +651,9 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setRoundNumber(0);
     setCard(null);
     setSelectedIndexes(new Set());
-    setSelectedRank(null);
     setRevealedIndexes(new Set());
     setWrongIndexes(new Set());
     setEliminatedPlayers(new Set());
-    setPassedPlayers(new Set());
     setCurrentPlayerIndex(0);
     setStarterIndex(0);
     setLastAction(READY_LABEL);
@@ -682,6 +669,10 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setRequestInFlight(false);
     setControlledPlayer(null);
     setActionTokensByPlayerId({});
+    setGameMode(GAME_MODE_STANDARD);
+    sessionXpRef.current = 0;
+    setSessionXp(0);
+    setLastRoundXp(0);
   }, [targetScore]);
 
   const roundPoints = useMemo(() => initialScores(players), [players]);
@@ -697,17 +688,17 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     card,
     loadTicket,
     selectedIndexes,
-    selectedRank,
     revealedIndexes,
     wrongIndexes,
     eliminatedPlayers,
-    passedPlayers,
     currentPlayerIndex,
     starterIndex,
     currentPlayer,
     controlledPlayer,
     isLocalTurn,
-    canPass,
+    gameMode,
+    sessionXp,
+    lastRoundXp,
     lastAction,
     winner,
     resolutionState,
@@ -721,11 +712,9 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     cardLoaded: () => {},
     cardLoadFailed: () => {},
     toggleOption,
-    chooseRank,
     requestConfirm,
     cancelConfirm,
     confirmAnswer,
-    passTurn,
     nextStep,
     resetToSetup
   };
