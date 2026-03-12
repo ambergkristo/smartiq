@@ -6,6 +6,8 @@ date: 2026-03-03
 owner: Agent 0
 ---
 
+> This document was archived after the project pivot from SmartIQ to CherryPick.
+
 # SmartIQ Masterplan Alignment Audit (2026-03-03)
 
 Scope audited against:
@@ -376,4 +378,3 @@ npm run release:check
 - Why it matters: needed for resilient authoritative multiplayer continuity.
 - Acceptance criteria: Redis-backed session/room state behind abstraction; restart continuity tests pass.
 - Blocking dependencies: task 1 recommended.
-

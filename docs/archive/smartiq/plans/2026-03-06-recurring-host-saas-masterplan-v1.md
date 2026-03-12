@@ -10,6 +10,8 @@ gates: docs/plans/2026-03-06-recurring-host-saas-gates-v1.md
 related_track: docs/plans/2026-03-06-quiz-night-saas-masterplan-v1.md
 ---
 
+> This document was archived after the project pivot from SmartIQ to CherryPick.
+
 # SmartIQ Recurring Host SaaS Masterplan v1
 
 ## Summary

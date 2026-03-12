@@ -5,6 +5,8 @@ status: active
 date: 2026-03-06
 ---
 
+> This document was archived after the project pivot from SmartIQ to CherryPick.
+
 # Recurring Host SaaS execution bridge from Quiz Night SaaS
 
 ## Overview

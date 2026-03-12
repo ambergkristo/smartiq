@@ -8,6 +8,8 @@ supersedes: docs/plans/2026-03-03-white-label-program-v1.md
 superseded_by: docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md
 ---
 
+> This document was archived after the project pivot from SmartIQ to CherryPick.
+
 # SmartIQ White-Label Masterplan v2 (Multi-Agent Lean)
 
 > Superseded by `docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md`.
