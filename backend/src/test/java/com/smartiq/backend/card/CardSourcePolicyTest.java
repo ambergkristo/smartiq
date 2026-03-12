@@ -30,4 +30,13 @@ class CardSourcePolicyTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Card source is required");
     }
+
+    @Test
+    void duplicateResolutionPrefersHigherTrustSources() {
+        assertThat(CardSourcePolicy.shouldReplaceDuplicate("smartiq-v2", "smartiq-human")).isTrue();
+        assertThat(CardSourcePolicy.shouldReplaceDuplicate("smartiq-v2", "smartiq-verified")).isTrue();
+        assertThat(CardSourcePolicy.shouldReplaceDuplicate("smartiq-human", "smartiq-verified")).isTrue();
+        assertThat(CardSourcePolicy.shouldReplaceDuplicate("smartiq-verified", "smartiq-v2")).isFalse();
+        assertThat(CardSourcePolicy.shouldReplaceDuplicate("smartiq-verified", "smartiq-verified")).isFalse();
+    }
 }

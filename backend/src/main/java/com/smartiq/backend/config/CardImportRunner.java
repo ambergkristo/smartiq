@@ -21,6 +21,8 @@ import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
@@ -241,15 +243,24 @@ public class CardImportRunner implements ApplicationRunner {
             List<CardSeed> seeds = readResult.seeds();
             int inserted = 0;
             int duplicates = 0;
+            int replaced = 0;
             int invalid = readResult.invalidCount();
 
             for (CardSeed seed : seeds) {
-                if (cardRepository.existsById(seed.id())) {
-                    duplicates++;
-                    continue;
-                }
                 try {
-                    cardRepository.save(toEntity(seed));
+                    Card incoming = toEntity(seed);
+                    Card existing = cardRepository.findById(seed.id()).orElse(null);
+                    if (existing != null) {
+                        if (CardSourcePolicy.shouldReplaceDuplicate(existing.getSource(), incoming.getSource())) {
+                            cardRepository.save(incoming);
+                            replaced++;
+                        } else {
+                            duplicates++;
+                        }
+                        continue;
+                    }
+
+                    cardRepository.save(incoming);
                     inserted++;
                 } catch (IllegalArgumentException ex) {
                     invalid++;
@@ -258,15 +269,18 @@ public class CardImportRunner implements ApplicationRunner {
                 }
             }
 
-            log.info("Card import completed file={} total={} inserted={} duplicates={} invalid={}",
-                    sourceLabel, seeds.size(), inserted, duplicates, invalid);
+            log.info("Card import completed file={} total={} inserted={} duplicates={} replaced={} invalid={}",
+                    sourceLabel, seeds.size(), inserted, duplicates, replaced, invalid);
         } catch (IOException ex) {
             throw new IllegalStateException("Failed to import cards from " + sourceLabel, ex);
         }
     }
 
     private SeedReadResult readSeeds(InputStream inputStream) throws IOException {
-        JsonNode root = objectMapper.readTree(inputStream);
+        JsonNode root;
+        try (InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
+            root = objectMapper.readTree(reader);
+        }
         if (!root.isArray() || root.isEmpty()) {
             return new SeedReadResult(List.of(), 0);
         }

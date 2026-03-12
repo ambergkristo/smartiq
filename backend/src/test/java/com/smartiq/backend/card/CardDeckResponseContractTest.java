@@ -33,6 +33,40 @@ class CardDeckResponseContractTest {
         assertContract("CENTURY_DECADE", cardWithCorrectIndex("CENTURY_DECADE", 7));
     }
 
+    @Test
+    void deckResponsePreservesOptionOrderWhenCorrectAnswerIsLastTile() {
+        List<String> estonianOptions = List.of(
+                "Filipiinid",
+                "Iirimaa",
+                "Sveits",
+                "Indoneesia",
+                "Kreeka",
+                "Ungari",
+                "Maroko",
+                "Peruu"
+        );
+
+        CardDeckResponse response = CardDeckResponseMapper.toDeckResponse(new CardResponse(
+                "id-et-open",
+                "geography-open-015-et",
+                "Geography",
+                "OPEN",
+                "OPEN",
+                "et",
+                "Millise riigi pealinn on Lima?",
+                estonianOptions,
+                7,
+                "2",
+                "smartiq-verified",
+                null,
+                null,
+                "{\"correctIndex\":7}"
+        ));
+
+        assertThat(response.options()).containsExactlyElementsOf(estonianOptions);
+        assertThat(response.correct()).containsEntry("correctIndex", 7);
+    }
+
     private static void assertContract(String category, CardResponse card) throws Exception {
         CardDeckResponse response = CardDeckResponseMapper.toDeckResponse(card);
         JsonNode actual = OBJECT_MAPPER.valueToTree(response);

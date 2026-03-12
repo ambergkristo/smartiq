@@ -355,6 +355,21 @@ describe('App server-authoritative mode', () => {
     );
   });
 
+  test('renders estonian utf8 characters from server snapshot without corruption', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({
+      gameId: 'game-et-utf8',
+      language: 'et',
+      question: 'Milline tenniseturniiri Suure slämmi võistlus peetakse murul Londonis?'
+    }));
+
+    render(<App />);
+    await startServerMultiplayer();
+
+    expect(screen.getByText('Milline tenniseturniiri Suure slämmi võistlus peetakse murul Londonis?')).toBeInTheDocument();
+    expect(screen.getByTestId('question-prompt')).toHaveTextContent('slämmi võistlus');
+  });
+
   test('shows round summary and then advances to next round from server snapshot', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
     createServerGameSession.mockResolvedValue(makeServerSnapshot({
