@@ -1,4 +1,4 @@
-import { buildServerActionPayload } from './api';
+import { buildServerActionPayload, resolveRoomSessionErrorMessage } from './api';
 
 describe('CherryPick action payloads', () => {
   test('builds ANSWER payload without rank data', () => {
@@ -38,5 +38,19 @@ describe('CherryPick action payloads', () => {
       actionToken: 'at_1',
       actionRequestId: 'req-3'
     })).toThrow('Unsupported action type: PASS');
+  });
+
+  test('maps invalid room code errors to clean join copy', () => {
+    expect(resolveRoomSessionErrorMessage({
+      code: 'ROOM_NOT_FOUND',
+      status: 404
+    })).toBe('Game code not found. Check the code and try again.');
+  });
+
+  test('maps room validation errors to clean join copy', () => {
+    expect(resolveRoomSessionErrorMessage({
+      code: 'VALIDATION_ERROR',
+      message: 'roomCode is required'
+    })).toBe('Enter a valid game code.');
   });
 });

@@ -1039,3 +1039,52 @@ export function resolveGameSessionErrorMessage(error) {
 
   return 'Could not process game action. Retry.';
 }
+
+export function resolveRoomSessionErrorMessage(error, { action = 'join' } = {}) {
+  const normalizedAction = String(action || 'join').trim().toLowerCase();
+  const waitingLabel = normalizedAction === 'resume' ? 'restore the joined game' : 'join this game';
+
+  if (error?.code === 'CONFIG_ERROR') {
+    return 'Frontend API is not configured. Set VITE_API_BASE_URL and retry.';
+  }
+
+  if (error?.code === 'VALIDATION_ERROR') {
+    const message = String(error?.message || '').trim().toLowerCase();
+    if (message.includes('roomcode')) {
+      return 'Enter a valid game code.';
+    }
+    if (message.includes('displayname')) {
+      return 'Enter your display name.';
+    }
+    return `Could not ${waitingLabel}. Check the code and player name.`;
+  }
+
+  if (error?.code === 'TIMEOUT' || error?.code === 'NETWORK_ERROR') {
+    return 'CherryPick could not reach the live game service. Retry in a moment.';
+  }
+
+  if (error?.code === 'ROOM_NOT_FOUND' || error?.status === 404) {
+    return 'Game code not found. Check the code and try again.';
+  }
+
+  if (error?.code === 'ROOM_CLOSED') {
+    return 'This game is no longer open for joining.';
+  }
+
+  if (error?.status === 400) {
+    if (typeof error?.detail === 'string' && /display.?name/i.test(error.detail)) {
+      return 'Enter a valid display name.';
+    }
+    return `Could not ${waitingLabel}. Check the code and player name.`;
+  }
+
+  if (error?.status === 409) {
+    return 'This game is not open for joining right now.';
+  }
+
+  if (error?.status >= 500) {
+    return 'Live game service error. Retry in a moment.';
+  }
+
+  return `Could not ${waitingLabel}. Retry in a moment.`;
+}

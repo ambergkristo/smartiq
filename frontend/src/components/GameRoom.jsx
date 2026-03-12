@@ -72,8 +72,8 @@ export default function GameRoom({
           players={roomPlayers}
           noPlayersLabel={strings.roomNoPlayers}
           switchHint={strings.roomPlayerLobbySwitchHint}
-          primaryLabel={strings.roomResumeSubmit}
-          secondaryLabel={strings.roomClearSubmit}
+          primaryLabel={strings.roomPlayerLobbyRefreshSubmit}
+          secondaryLabel={strings.roomPlayerLobbyBackHomeSubmit}
           pending={pending}
           onPrimary={onResumeRoom}
           onSecondary={onClearRoom}

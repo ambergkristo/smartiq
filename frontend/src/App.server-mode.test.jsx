@@ -25,6 +25,18 @@ vi.mock('./api', () => {
     rejoinRoomSession: vi.fn(),
     resumeServerGameSession: vi.fn(),
     requestRuntimeAuthLink: vi.fn(),
+    resolveRoomSessionErrorMessage: vi.fn((error) => {
+      if (error?.code === 'ROOM_NOT_FOUND' || error?.status === 404) {
+        return 'Game code not found. Check the code and try again.';
+      }
+      if (error?.code === 'VALIDATION_ERROR' && /displayname/i.test(String(error?.message || ''))) {
+        return 'Enter your display name.';
+      }
+      if (error?.code === 'VALIDATION_ERROR' && /roomcode/i.test(String(error?.message || ''))) {
+        return 'Enter a valid game code.';
+      }
+      return 'Could not join this game. Retry in a moment.';
+    }),
     setRuntimeAuthContext: vi.fn(),
     upsertRuntimeSessionReviewNote: vi.fn(),
     upsertRuntimeSessionTemplate: vi.fn(),
@@ -45,6 +57,8 @@ vi.mock('./api', () => {
 import {
   createServerGameSession,
   fetchTopics,
+  joinRoomSession,
+  rejoinRoomSession,
   sendServerGameAction
 } from './api';
 import { PLAYER_PROFILE_STORAGE_KEY } from './state/playerProfile';
@@ -116,6 +130,17 @@ async function startSoloMode() {
   const playButton = await screen.findByRole('button', { name: /play/i });
   fireEvent.click(playButton);
   await waitFor(() => expect(createServerGameSession).toHaveBeenCalled());
+}
+
+async function openJoinFlow({ roomCode = 'ABC123', displayName } = {}) {
+  fireEvent.click(await screen.findByRole('button', { name: /join game/i }));
+  fireEvent.change(await screen.findByLabelText(/game code/i), { target: { value: roomCode } });
+  fireEvent.click(screen.getByRole('button', { name: /^next$/i }));
+  const displayNameInput = await screen.findByLabelText(/your display name/i);
+  if (typeof displayName === 'string') {
+    fireEvent.change(displayNameInput, { target: { value: displayName } });
+  }
+  return displayNameInput;
 }
 
 describe('App server-authoritative mode', () => {
@@ -428,13 +453,77 @@ describe('App server-authoritative mode', () => {
 
     render(<App />);
 
-    fireEvent.click(await screen.findByRole('button', { name: /join game/i }));
+    await openJoinFlow({ roomCode: 'JOIN42' });
     expect(await screen.findByTestId('home-join-panel')).toBeInTheDocument();
     expect(screen.getByText(/join a cherrypick game/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/game code/i)).toBeInTheDocument();
+    expect(screen.getByText('JOIN42')).toBeInTheDocument();
 
+    fireEvent.click(screen.getByRole('button', { name: /^back$/i }));
     fireEvent.click(screen.getByRole('button', { name: /back to home/i }));
     expect(await screen.findByTestId('home-screen')).toBeInTheDocument();
+  });
+
+  test('reuses the guest name by default and joins into the waiting state', async () => {
+    window.location.hash = '';
+    localStorage.setItem(PLAYER_PROFILE_STORAGE_KEY, JSON.stringify({
+      id: 'profile_1',
+      guestToken: 'guest_1',
+      displayName: 'Kai',
+      totalXp: 500,
+      level: 2,
+      gamesPlayed: 3,
+      roundsWon: 2,
+      createdAt: '2026-03-12T10:00:00.000Z',
+      updatedAt: '2026-03-12T10:00:00.000Z'
+    }));
+    joinRoomSession.mockResolvedValue({
+      roomCode: 'JOIN42',
+      playerId: 'player-1',
+      authToken: 'auth-1'
+    });
+    rejoinRoomSession.mockResolvedValue({
+      roomCode: 'JOIN42',
+      playerId: 'player-1',
+      authToken: 'auth-1',
+      roomState: {
+        players: [
+          { playerId: 'player-1', displayName: 'Kai' },
+          { playerId: 'player-2', displayName: 'Robin' }
+        ]
+      }
+    });
+
+    render(<App />);
+
+    const displayNameInput = await openJoinFlow({ roomCode: 'JOIN42' });
+    expect(displayNameInput).toHaveValue('Kai');
+
+    fireEvent.click(screen.getByRole('button', { name: /join game/i }));
+
+    await waitFor(() => expect(joinRoomSession).toHaveBeenCalledWith('JOIN42', { displayName: 'Kai' }));
+    await waitFor(() => expect(rejoinRoomSession).toHaveBeenCalledWith('JOIN42', {
+      playerId: 'player-1',
+      authToken: 'auth-1'
+    }));
+    expect(await screen.findByTestId('player-lobby-panel')).toBeInTheDocument();
+    expect(screen.getByText('JOIN42')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: 'Kai' })).toBeInTheDocument();
+    expect(screen.getAllByText(/waiting for the host to launch or resume the live session/i).length).toBeGreaterThan(0);
+  });
+
+  test('shows a clean error when the game code is invalid', async () => {
+    window.location.hash = '';
+    joinRoomSession.mockRejectedValue({
+      code: 'ROOM_NOT_FOUND',
+      status: 404
+    });
+
+    render(<App />);
+
+    await openJoinFlow({ roomCode: 'BAD999', displayName: 'Mia' });
+    fireEvent.click(screen.getByRole('button', { name: /join game/i }));
+
+    expect(await screen.findByTestId('player-route-error')).toHaveTextContent('Game code not found. Check the code and try again.');
   });
 
   test('renders the Host Game shell and navigates back home', async () => {
@@ -447,6 +536,32 @@ describe('App server-authoritative mode', () => {
     expect(screen.getByText(/host cherrypick/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /host mode coming next/i })).toBeDisabled();
 
+    fireEvent.click(screen.getByRole('button', { name: /back to home/i }));
+    expect(await screen.findByTestId('home-screen')).toBeInTheDocument();
+  });
+
+  test('waiting state can navigate back home cleanly after a successful join', async () => {
+    window.location.hash = '';
+    joinRoomSession.mockResolvedValue({
+      roomCode: 'WAIT77',
+      playerId: 'player-7',
+      authToken: 'auth-7'
+    });
+    rejoinRoomSession.mockResolvedValue({
+      roomCode: 'WAIT77',
+      playerId: 'player-7',
+      authToken: 'auth-7',
+      roomState: {
+        players: [{ playerId: 'player-7', displayName: 'Nora' }]
+      }
+    });
+
+    render(<App />);
+
+    await openJoinFlow({ roomCode: 'WAIT77', displayName: 'Nora' });
+    fireEvent.click(screen.getByRole('button', { name: /join game/i }));
+
+    expect(await screen.findByTestId('player-lobby-panel')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: /back to home/i }));
     expect(await screen.findByTestId('home-screen')).toBeInTheDocument();
   });

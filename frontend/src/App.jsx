@@ -22,6 +22,7 @@ import {
   removeRoomPlayerFromSession,
   rejoinRoomSession,
   requestRuntimeAuthLink,
+  resolveRoomSessionErrorMessage,
   setRuntimeAuthContext,
   upsertRuntimeSessionReviewNote,
   upsertRuntimeSessionTemplate,
@@ -206,6 +207,8 @@ const STRINGS = {
   roomCreatedPrefix: 'Room ready:',
   roomJoinedPrefix: 'Joined room:',
   roomResumedPrefix: 'Resumed room:',
+  roomPlayerLobbyRefreshSubmit: 'Refresh lobby',
+  roomPlayerLobbyBackHomeSubmit: 'Back to home',
   roomPlayersTitle: 'Players in room',
   roomNoPlayers: 'No players visible yet.',
   roomSavedHint: 'This room session is saved locally on this browser.',
@@ -2137,7 +2140,13 @@ function GameApp() {
     setRoomMessage('');
     try {
       const roomCode = normalizeRoomCodeInput(roomDraft.roomCode);
-      const displayName = String(roomDraft.displayName || 'Player').trim() || 'Player';
+      const displayName = String(roomDraft.displayName || playerProfile.displayName || '').trim();
+      if (!roomCode) {
+        throw { code: 'VALIDATION_ERROR', message: 'roomCode is required' };
+      }
+      if (!displayName) {
+        throw { code: 'VALIDATION_ERROR', message: 'displayName is required' };
+      }
       const joined = await joinRoomSession(roomCode, { displayName });
       const resumed = await rejoinRoomSession(joined.roomCode, {
         playerId: joined.playerId,
@@ -2152,10 +2161,7 @@ function GameApp() {
         roomState: resumed.roomState
       }, `${STRINGS.roomJoinedPrefix} ${resumed.roomCode}`);
     } catch (error) {
-      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
-        ? error.detail
-        : error?.message || 'Could not join room.';
-      setRoomError(detail);
+      setRoomError(resolveRoomSessionErrorMessage(error, { action: 'join' }));
     } finally {
       setRoomPending(false);
     }
@@ -2169,7 +2175,10 @@ function GameApp() {
     setPlayerRouteError('');
     setPlayerRouteMessage('');
     try {
-      const displayName = String(playerRouteDisplayName || roomDraft.displayName || 'Player').trim() || 'Player';
+      const displayName = String(playerRouteDisplayName || roomDraft.displayName || playerProfile.displayName || '').trim();
+      if (!displayName) {
+        throw { code: 'VALIDATION_ERROR', message: 'displayName is required' };
+      }
       const joined = await joinRoomSession(activePlayerRouteRoomCode, { displayName });
       const resumed = await rejoinRoomSession(joined.roomCode, {
         playerId: joined.playerId,
@@ -2187,10 +2196,7 @@ function GameApp() {
       setPlayerRoutePreview(resumed.roomState || null);
       setRoomDraft((prev) => ({ ...prev, roomCode: resumed.roomCode, displayName }));
     } catch (error) {
-      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
-        ? error.detail
-        : error?.message || 'Could not join room.';
-      setPlayerRouteError(detail);
+      setPlayerRouteError(resolveRoomSessionErrorMessage(error, { action: 'join' }));
     } finally {
       setRoomPending(false);
     }
@@ -2269,22 +2275,23 @@ function GameApp() {
     } catch (error) {
       persistRoomSession(null);
       setRoomSession(null);
-      const detail = typeof error?.detail === 'string' && error.detail.trim().length > 0
-        ? error.detail
-        : error?.message || 'Could not resume room.';
-      setRoomError(detail);
+      setRoomError(resolveRoomSessionErrorMessage(error, { action: 'resume' }));
     } finally {
       setRoomPending(false);
     }
   }
 
   function handleClearRoom() {
+    const returningFromPlayerRoom = roomSession?.role === 'player';
     persistRoomSelection(roomSession?.roomCode, []);
     setRoomSession(null);
     persistRoomSession(null);
     setSelectedRoomPlayerNames([]);
     setRoomMessage('');
     setRoomError('');
+    if (returningFromPlayerRoom) {
+      handleNavigateEntry(ENTRY_ROUTE.HOME);
+    }
   }
 
   function handleToggleRoomPlayer(playerName) {
@@ -2870,9 +2877,9 @@ function GameApp() {
         ...prev,
         roomCode: normalizeRoomCodeInput(event.target.value)
       }))}
-      onDisplayNameChange={(event) => setRoomDraft((prev) => ({
+      onDisplayNameChange={(value) => setRoomDraft((prev) => ({
         ...prev,
-        displayName: event.target.value
+        displayName: value
       }))}
       onJoin={handleJoinRoom}
       onBack={() => handleNavigateEntry(ENTRY_ROUTE.HOME)}
@@ -2881,6 +2888,21 @@ function GameApp() {
   const practiceEntryPanel = (
     <PracticePlaceholder onBack={() => handleNavigateEntry(ENTRY_ROUTE.HOME)} />
   );
+  const playerWaitingShell = roomSession?.role === 'player' ? (
+    <AppShell
+      mode="setup"
+      header={(
+        <AppHeader
+          title={String(roomSession?.roomState?.branding?.appName || appTitle).trim() || appTitle}
+          eyebrow={shellEyebrow}
+          status={shellStatus}
+          languageControl={languageControl}
+          utilityArea={utilityArea}
+        />
+      )}
+      main={<MainStage>{sharedRoomPanel}</MainStage>}
+    />
+  ) : null;
   const hostEntryPanel = (
     <HostGameScreen onBack={() => handleNavigateEntry(ENTRY_ROUTE.HOME)} />
   );
@@ -3090,19 +3112,7 @@ function GameApp() {
         <>
           {activePlayerRouteRoomCode ? (
             playerRouteMatchesSavedPlayerSession ? (
-              <AppShell
-                mode="setup"
-                header={(
-                  <AppHeader
-                    title={String(playerRoutePreview?.branding?.appName || appTitle).trim() || appTitle}
-                    eyebrow={shellEyebrow}
-                    status={shellStatus}
-                    languageControl={languageControl}
-                    utilityArea={utilityArea}
-                  />
-                )}
-                main={<MainStage>{sharedRoomPanel}</MainStage>}
-              />
+              playerWaitingShell
             ) : (
               <PlayerJoin
                 strings={STRINGS}
@@ -3153,7 +3163,10 @@ function GameApp() {
               emailInputRef={signInEmailInputRef}
             />
           ) : null}
-          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && (!showProductHome || entryRoute === ENTRY_ROUTE.START) ? (
+          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && roomSession?.role === 'player' ? (
+            playerWaitingShell
+          ) : null}
+          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && roomSession?.role !== 'player' && (!showProductHome || entryRoute === ENTRY_ROUTE.START) ? (
             <AppShell
               mode="setup"
               header={(
