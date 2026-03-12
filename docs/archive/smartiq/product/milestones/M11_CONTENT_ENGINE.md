@@ -22,3 +22,4 @@ Build the content system required for repeat play, localization quality, and fut
 - Content depth supports recurring use
 - Editorial quality gates are defined and repeatable
 - Content operations no longer depend on fragile manual handling
+> This document was archived after the project pivot from SmartIQ to CherryPick.

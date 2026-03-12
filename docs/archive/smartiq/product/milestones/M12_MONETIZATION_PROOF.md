@@ -22,3 +22,4 @@ Validate that SmartIQ can become a real business, not just a technically capable
 - Real usage and payment signals are measurable
 - Paid pilots produce decision-grade evidence
 - Monetization strategy is based on observed host behavior
+> This document was archived after the project pivot from SmartIQ to CherryPick.

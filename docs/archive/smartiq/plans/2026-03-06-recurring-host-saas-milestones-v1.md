@@ -7,6 +7,8 @@ owner: Agent Strategy-Builder
 masterplan: docs/plans/2026-03-06-recurring-host-saas-masterplan-v1.md
 ---
 
+> This document was archived after the project pivot from SmartIQ to CherryPick.
+
 # SmartIQ Recurring Host SaaS Milestones v1
 
 ## Roadmap Frame

@@ -7,6 +7,8 @@ owner: Agent 0
 masterplan: docs/plans/2026-03-06-quiz-night-saas-masterplan-v1.md
 ---
 
+> This document was archived after the project pivot from SmartIQ to CherryPick.
+
 # SmartIQ Quiz Night SaaS Milestones v1
 
 ## Sprint System

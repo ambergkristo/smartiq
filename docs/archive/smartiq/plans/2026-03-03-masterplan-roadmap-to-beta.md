@@ -6,6 +6,8 @@ date: 2026-03-03
 owner: Agent 0
 ---
 
+> This document was archived after the project pivot from SmartIQ to CherryPick.
+
 # SmartIQ Masterplan + Roadmap (Closed Beta Go-Live, Phase-Based)
 
 ## Summary

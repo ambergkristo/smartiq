@@ -10,6 +10,8 @@ gates: docs/plans/2026-03-06-quiz-night-saas-gates-v1.md
 related_white_label_track: docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md
 ---
 
+> This document was archived after the project pivot from SmartIQ to CherryPick.
+
 # SmartIQ Quiz Night SaaS Masterplan v1
 
 ## Summary

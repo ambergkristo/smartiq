@@ -10,6 +10,8 @@ milestones: docs/plans/2026-03-05-white-label-milestones-v3.md
 gates: docs/plans/2026-03-05-white-label-gates-v3.md
 ---
 
+> This document was archived after the project pivot from SmartIQ to CherryPick.
+
 # SmartIQ White-Label Masterplan v4 (Product-First Rebaseline)
 
 ## Summary

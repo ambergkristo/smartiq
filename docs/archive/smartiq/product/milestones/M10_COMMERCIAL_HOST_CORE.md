@@ -22,3 +22,4 @@ Turn SmartIQ's host workflow into a reusable operational product instead of a on
 - Hosts can reliably run repeated sessions with low friction
 - Core host tools support real operational use
 - Paid-value host features are clearly packaged
+> This document was archived after the project pivot from SmartIQ to CherryPick.

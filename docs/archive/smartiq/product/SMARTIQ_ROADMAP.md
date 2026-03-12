@@ -1,3 +1,5 @@
+> This document was archived after the project pivot from SmartIQ to CherryPick.
+
 # SmartIQ Roadmap
 
 ## M8 — Realtime Integrity

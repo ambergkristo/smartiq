@@ -22,3 +22,4 @@ Remove structural bottlenecks that make SmartIQ harder to evolve safely.
 - Core modules have clearer ownership
 - High-risk god objects are reduced
 - Product docs and implementation boundaries no longer contradict each other
+> This document was archived after the project pivot from SmartIQ to CherryPick.
