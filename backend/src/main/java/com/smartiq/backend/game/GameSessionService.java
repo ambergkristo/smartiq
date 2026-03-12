@@ -276,9 +276,6 @@ public class GameSessionService {
     private void applyPass(SessionState state) {
         String playerId = state.currentPlayerId();
         requireActivePlayer(state, playerId);
-        if (state.roundScores.getOrDefault(playerId, 0) < 1) {
-            throw new IllegalArgumentException("pass requires at least one correct answer in current round");
-        }
         incrementCounter(METRIC_ACTION_TOTAL, "type", "pass", "language", state.language);
         state.statuses.put(playerId, PlayerRoundStatus.PASSED);
         state.lastAction = state.currentPlayerName() + " passed";
@@ -388,7 +385,26 @@ public class GameSessionService {
         if (allPegsResolved) {
             return true;
         }
+        if (allCorrectAnswersRevealed(state)) {
+            return true;
+        }
         return state.players.stream().noneMatch(player -> state.statuses.get(player.playerId()) == PlayerRoundStatus.ACTIVE);
+    }
+
+    private static boolean allCorrectAnswersRevealed(SessionState state) {
+        Set<Integer> correctIndexes = resolveCorrectIndexes(state.card.correct());
+        if (correctIndexes.isEmpty()) {
+            return false;
+        }
+        for (Integer correctIndex : correctIndexes) {
+            if (correctIndex == null || correctIndex < 0 || correctIndex >= state.pegs.size()) {
+                return false;
+            }
+            if (!PEG_REVEALED.equals(state.pegs.get(correctIndex).state())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static int nextActiveIndex(SessionState state, int fromIndex) {
@@ -1160,6 +1176,7 @@ public class GameSessionService {
                         state.card.question(),
                         state.card.category(),
                         state.card.topic(),
+                        state.language,
                         pegs
                 ),
                 totals,

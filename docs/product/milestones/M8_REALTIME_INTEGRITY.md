@@ -53,3 +53,18 @@ Stabilize SmartIQ as a live multiplayer product by making room state and gamepla
 - Room snapshots carry a summarized active game view for lobby integrity, not the full internal game session.
 - If the room no longer exists when a game action completes, gameplay continues but room publication is skipped rather than failing the game action.
 - Production-scale horizontal multiplayer reliability still needs a later infrastructure pass before claiming robust multi-instance public play.
+
+## M8A Stabilization Closure
+
+### Additional Fixes Implemented
+
+- Restored saved player room sessions automatically after refresh so the player returns to the room instead of falling back to the join flow.
+- Synced player clients from authoritative active-game snapshots after room reconnect so refresh restores board, turn, and score state instead of leaving the game usable only in the host window.
+- Added board-state language to the server snapshot contract and preserved requested ET sessions end to end.
+- Fixed round resolution when all correct answers are already revealed, including single-correct-answer cards, so the round no longer deadlocks.
+- Removed the PASS gate that required an already-unlocked correct answer. PASS is now always available during the choosing phase.
+
+### Remaining Limits After M8A
+
+- Session continuity still depends on local storage and the current room/game identifiers. Cross-device recovery was not added.
+- Distributed multi-instance mutation safety is still unresolved and remains outside M8A scope.

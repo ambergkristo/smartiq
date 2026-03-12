@@ -16,7 +16,7 @@ smartiq:
     room-retention-minutes: ${SMARTIQ_ROOM_RETENTION_MINUTES:180}
     room-max: ${SMARTIQ_ROOM_MAX:20000}
   language:
-    et-enabled: ${SMARTIQ_LANGUAGE_ET_ENABLED:false}
+    et-enabled: ${SMARTIQ_LANGUAGE_ET_ENABLED:true}
   api:
     errors:
       legacy-shape-enabled: ${SMARTIQ_API_ERRORS_LEGACY_SHAPE_ENABLED:false}

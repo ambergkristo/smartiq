@@ -109,6 +109,7 @@ function makeServerSnapshot({
   gameId = 'game-ready',
   question = 'Question ready',
   topic = 'Math',
+  language = 'en',
   players = ['Host One', 'Alice']
 } = {}) {
   const normalizedPlayers = players.map((displayName, index) => ({
@@ -133,6 +134,7 @@ function makeServerSnapshot({
       question,
       category: 'OPEN',
       topic,
+      language,
       pegs: Array.from({ length: 8 }, (_, index) => ({
         index,
         state: 'hidden',
@@ -1243,7 +1245,7 @@ describe('App startup resilience', () => {
     expect(screen.queryByTestId('player-route-panel')).not.toBeInTheDocument();
   });
 
-  test('resumes a saved room session from local storage', async () => {
+  test('restores a saved player room session from local storage after refresh', async () => {
     localStorage.setItem('smartiq.roomSession', JSON.stringify({
       roomCode: 'SAVE42',
       playerId: 'p3',
@@ -1281,18 +1283,102 @@ describe('App startup resilience', () => {
 
     render(<App />);
 
-    await waitFor(() => expect(screen.getByRole('button', { name: /resume room/i })).toBeInTheDocument());
-    fireEvent.click(screen.getByRole('button', { name: /resume room/i }));
+    await waitFor(() => expect(rejoinRoomSession).toHaveBeenCalledWith('SAVE42', {
+      playerId: 'p3',
+      authToken: 'rt_saved'
+    }));
+    await waitFor(() => expect(screen.getByTestId('player-lobby-panel')).toBeInTheDocument());
+    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('Saved Quiz');
+    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent(/waiting for the host/i);
+    expect(screen.getAllByText('Saved Player').length).toBeGreaterThan(0);
+  });
+
+  test('restores a saved player directly into active game state after refresh', async () => {
+    localStorage.setItem('smartiq.roomSession', JSON.stringify({
+      roomCode: 'SAVE42',
+      playerId: 'p3',
+      authToken: 'rt_saved',
+      displayName: 'Saved Player',
+      role: 'player',
+      roomState: {
+        roomCode: 'SAVE42',
+        branding: {
+          appName: 'Saved Quiz'
+        },
+        players: [{ playerId: 'p3', displayName: 'Saved Player' }]
+      }
+    }));
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    rejoinRoomSession.mockResolvedValue({
+      roomCode: 'SAVE42',
+      playerId: 'p3',
+      authToken: 'rt_saved_rotated',
+      roomState: {
+        roomCode: 'SAVE42',
+        branding: {
+          appName: 'Saved Quiz'
+        },
+        activeGame: {
+          gameId: 'game-live',
+          roomCode: 'SAVE42',
+          winCondition: 30,
+          roundNumber: 2,
+          phase: 'CHOOSING',
+          topic: 'Science',
+          question: 'Player refresh question',
+          lastAction: 'Bob answered correctly (+1)',
+          starterPlayerId: 'p1',
+          currentPlayerId: 'p2',
+          currentPlayerDisplayName: 'Bob',
+          playerDisplayNames: {
+            p1: 'Host One',
+            p2: 'Bob',
+            p3: 'Saved Player'
+          },
+          pegs: [
+            { index: 0, state: 'revealed', value: 'A' },
+            { index: 1, state: 'wrong', value: 'B' }
+          ],
+          totalScores: {
+            p1: 1,
+            p2: 1,
+            p3: 0
+          },
+          roundScores: {
+            p1: 1,
+            p2: 1,
+            p3: 0
+          },
+          statuses: {
+            p1: 'ACTIVE',
+            p2: 'ACTIVE',
+            p3: 'ACTIVE'
+          }
+        },
+        players: [
+          { playerId: 'p1', displayName: 'Host One' },
+          { playerId: 'p2', displayName: 'Bob' },
+          { playerId: 'p3', displayName: 'Saved Player' }
+        ]
+      }
+    });
+    fetchServerGameSession.mockResolvedValue(makeServerSnapshot({
+      gameId: 'game-live',
+      question: 'Player refresh question',
+      topic: 'Science',
+      players: ['Host One', 'Bob', 'Saved Player']
+    }));
+
+    render(<App />);
 
     await waitFor(() => expect(rejoinRoomSession).toHaveBeenCalledWith('SAVE42', {
       playerId: 'p3',
       authToken: 'rt_saved'
     }));
-    expect(screen.getByText(/resumed room: SAVE42/i)).toBeInTheDocument();
-    expect(screen.getByTestId('player-lobby-panel')).toBeInTheDocument();
-    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('Saved Quiz');
-    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent(/waiting for the host/i);
-    expect(screen.getAllByText('Saved Player').length).toBeGreaterThan(0);
+    await waitFor(() => expect(fetchServerGameSession).toHaveBeenCalledWith('game-live'));
+    await waitFor(() => expect(screen.getByText(/player refresh question/i)).toBeInTheDocument());
+    expect(screen.getByTestId('action-hint')).toHaveTextContent(/controls are disabled on this client/i);
+    expect(screen.getByRole('button', { name: /pass/i })).toBeDisabled();
   });
 
   test('updates player waiting room from realtime room snapshots', async () => {
@@ -1313,13 +1399,82 @@ describe('App startup resilience', () => {
       }
     }));
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    rejoinRoomSession.mockResolvedValue({
+      roomCode: 'SAVE42',
+      playerId: 'p3',
+      authToken: 'rt_saved_rotated',
+      displayName: 'Saved Player',
+      role: 'player',
+      roomState: {
+        roomCode: 'SAVE42',
+        branding: {
+          appName: 'Saved Quiz',
+          primaryColor: '#114455',
+          secondaryColor: '#22aacc'
+        },
+        players: [{ playerId: 'p3', displayName: 'Saved Player' }]
+      }
+    });
+    fetchServerGameSession.mockResolvedValue({
+      apiVersion: '1',
+      gameId: 'game-live',
+      winCondition: 30,
+      activePlayerIndex: 1,
+      players: [
+        { playerId: 'p1', displayName: 'Host One' },
+        { playerId: 'p2', displayName: 'Bob' },
+        { playerId: 'p3', displayName: 'Saved Player' }
+      ],
+      roundState: {
+        roundNumber: 2,
+        phase: 'CHOOSING',
+        starterPlayerId: 'p1',
+        currentPlayerId: 'p2',
+        lastAction: 'Host One answered correctly (+1)'
+      },
+      boardState: {
+        question: 'Live reconnect question',
+        category: 'OPEN',
+        topic: 'Science',
+        language: 'en',
+        pegs: [
+          { index: 0, state: 'revealed', value: 'A' },
+          { index: 1, state: 'wrong', value: 'B' },
+          { index: 2, state: 'hidden', value: 'C' },
+          { index: 3, state: 'hidden', value: 'D' },
+          { index: 4, state: 'hidden', value: 'E' },
+          { index: 5, state: 'hidden', value: 'F' },
+          { index: 6, state: 'hidden', value: 'G' },
+          { index: 7, state: 'hidden', value: 'H' }
+        ]
+      },
+      totalScores: {
+        p1: 1,
+        p2: 0,
+        p3: 0
+      },
+      roundScores: {
+        p1: 1,
+        p2: 0,
+        p3: 0
+      },
+      statuses: {
+        p1: 'ACTIVE',
+        p2: 'ACTIVE',
+        p3: 'ACTIVE'
+      }
+    });
 
     render(<App />);
 
     await waitFor(() => expect(screen.getByTestId('player-lobby-panel')).toBeInTheDocument());
-    await waitFor(() => expect(MockWebSocket.instances.length).toBe(1));
+    await waitFor(() => expect(rejoinRoomSession).toHaveBeenCalledWith('SAVE42', {
+      playerId: 'p3',
+      authToken: 'rt_saved'
+    }));
+    await waitFor(() => expect(MockWebSocket.instances.length).toBeGreaterThan(0));
 
-    MockWebSocket.instances[0].emitMessage({
+    MockWebSocket.instances.at(-1).emitMessage({
       type: 'ROOM_STATE',
       payload: {
         roomCode: 'SAVE42',
@@ -1373,11 +1528,10 @@ describe('App startup resilience', () => {
       }
     });
 
-    await waitFor(() => expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('Host One'));
-    expect(screen.getByTestId('player-lobby-active-game')).toHaveTextContent(/live reconnect question/i);
-    expect(screen.getByTestId('player-lobby-active-game')).toHaveTextContent(/current turn:\s*bob/i);
-    expect(screen.getByTestId('player-lobby-active-game')).toHaveTextContent(/host one answered correctly/i);
-    expect(screen.getByTestId('player-lobby-active-game')).toHaveTextContent(/board state:\s*1 revealed \| 1 wrong/i);
+    await waitFor(() => expect(fetchServerGameSession).toHaveBeenCalledWith('game-live'));
+    await waitFor(() => expect(screen.getByText(/live reconnect question/i)).toBeInTheDocument());
+    expect(screen.getByTestId('action-hint')).toHaveTextContent(/controls are disabled on this client/i);
+    expect(screen.queryByTestId('player-lobby-active-game')).not.toBeInTheDocument();
   });
 
   test('restores an in-progress live game from saved local control session after refresh', async () => {
@@ -1429,9 +1583,26 @@ describe('App startup resilience', () => {
     }));
     localStorage.setItem('smartiq.roomSelection.SAVE42', JSON.stringify(['Host One', 'Bob']));
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    rejoinRoomSession.mockResolvedValue({
+      roomCode: 'SAVE42',
+      playerId: 'p1',
+      authToken: 'rt_saved_host_rotated',
+      roomState: {
+        roomCode: 'SAVE42',
+        players: [
+          { playerId: 'p1', displayName: 'Host One' },
+          { playerId: 'p2', displayName: 'Alice' },
+          { playerId: 'p3', displayName: 'Bob' }
+        ]
+      }
+    });
 
     render(<App />);
 
+    await waitFor(() => expect(rejoinRoomSession).toHaveBeenCalledWith('SAVE42', {
+      playerId: 'p1',
+      authToken: 'rt_saved_host'
+    }));
     await waitFor(() => expect(screen.getByTestId('room-session-card')).toBeInTheDocument());
     expect(screen.getByTestId('room-selected-roster-hint')).toHaveTextContent(/host one/i);
     expect(screen.getByTestId('room-selected-roster-hint')).toHaveTextContent(/bob/i);

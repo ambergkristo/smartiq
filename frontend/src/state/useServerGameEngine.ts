@@ -191,7 +191,7 @@ function mapSnapshot(snapshot, languageFallback, targetScoreFallback) {
       cardId: `${snapshot?.gameId || 'server'}-round-${roundNumber}`,
       topic: String(snapshot?.boardState?.topic || ''),
       category: String(snapshot?.boardState?.category || 'OPEN'),
-      language: String(languageFallback || 'en'),
+      language: String(snapshot?.boardState?.language || languageFallback || 'en'),
       question: String(snapshot?.boardState?.question || ''),
       questionText: String(snapshot?.boardState?.question || ''),
       options: fallbackAnswers,
@@ -243,11 +243,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   const [actionTokensByPlayerId, setActionTokensByPlayerId] = useState({});
 
   const currentPlayer = players[currentPlayerIndex] ?? players[0] ?? DEFAULT_PLAYERS[0];
-  const currentActorPlayerId = String(activeSnapshot?.roundState?.currentPlayerId || '').trim();
-  const currentRoundScore = Number.isInteger(activeSnapshot?.roundScores?.[currentActorPlayerId])
-    ? activeSnapshot.roundScores[currentActorPlayerId]
-    : 0;
-  const canPass = phase === GamePhase.CHOOSING && currentRoundScore > 0;
+  const canPass = phase === GamePhase.CHOOSING;
 
   const applyMappedSnapshot = useCallback((snapshot, mapped, phaseOverride = null) => {
     setActiveSnapshot(snapshot);
@@ -277,6 +273,32 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     setPhase(mapped.backendPhase === GamePhase.GAME_OVER ? GamePhase.GAME_OVER : GamePhase.CHOOSING);
   }, []);
 
+  const hydrateSnapshot = useCallback((snapshot, request = {}, actionTokens = null, resetStats = false) => {
+    const mapped = mapSnapshot(snapshot, request.language, targetScore);
+    const normalizedActionTokens = normalizeActionTokens(actionTokens);
+    if (Object.keys(normalizedActionTokens).length > 0) {
+      setActionTokensByPlayerId(normalizedActionTokens);
+    } else if (resetStats) {
+      setActionTokensByPlayerId(fallbackActionTokens(snapshot));
+    }
+    if (resetStats) {
+      setStats(initialStats(mapped.players));
+    } else {
+      setStats((prev) => mergeStats(mapped.players, prev));
+    }
+    setControlledPlayer(null);
+    setLanguage(String(request.language || mapped.card.language || 'en'));
+    setStartRequest({
+      players: mapped.players,
+      language: request.language || mapped.card.language,
+      topic: request.topic || mapped.card.topic || undefined,
+      winCondition: Number.isInteger(request.winCondition) ? request.winCondition : mapped.targetScore,
+      roomCode: request.roomCode
+    });
+    applyMappedSnapshot(snapshot, mapped, mapped.backendPhase === GamePhase.GAME_OVER ? GamePhase.GAME_OVER : GamePhase.CHOOSING);
+    return mapped.players;
+  }, [applyMappedSnapshot, targetScore]);
+
   const adoptCreatedSession = useCallback((response, request = {}) => {
     const snapshot = response?.snapshot && typeof response.snapshot === 'object'
       ? response.snapshot
@@ -285,21 +307,12 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     const resolvedActionTokens = Object.keys(responseActionTokens).length > 0
       ? responseActionTokens
       : fallbackActionTokens(snapshot);
-    setActionTokensByPlayerId(resolvedActionTokens);
-    const mapped = mapSnapshot(snapshot, request.language, targetScore);
-    setStats(initialStats(mapped.players));
-    // The desktop host console drives every turn in the current product flow.
-    setControlledPlayer(null);
-    setStartRequest({
-      players: mapped.players,
-      language: request.language || mapped.card.language,
-      topic: mapped.card.topic || undefined,
-      winCondition: mapped.targetScore,
-      roomCode: request.roomCode
-    });
-    applyMappedSnapshot(snapshot, mapped, mapped.backendPhase === GamePhase.GAME_OVER ? GamePhase.GAME_OVER : GamePhase.CHOOSING);
-    return mapped.players;
-  }, [applyMappedSnapshot, targetScore]);
+    return hydrateSnapshot(snapshot, request, resolvedActionTokens, true);
+  }, [hydrateSnapshot]);
+
+  const restoreSnapshot = useCallback((snapshot, request = {}) => (
+    hydrateSnapshot(snapshot, request, null, false)
+  ), [hydrateSnapshot]);
 
   const startRound = useCallback(async (input = {}) => {
     if (requestInFlight) {
@@ -366,9 +379,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
 
     try {
       const snapshot = await fetchServerGameSession(activeSnapshot.gameId);
-      const mapped = mapSnapshot(snapshot, language, targetScore);
-      setControlledPlayer(null);
-      applyMappedSnapshot(snapshot, mapped);
+      restoreSnapshot(snapshot, startRequest || { language });
       setQueuedSnapshot(null);
       setQueuedTransition('none');
     } catch (error) {
@@ -381,7 +392,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     } finally {
       setRequestInFlight(false);
     }
-  }, [activeSnapshot, applyMappedSnapshot, language, requestInFlight, startRequest, startRound, targetScore]);
+  }, [activeSnapshot, language, requestInFlight, restoreSnapshot, startRequest, startRound, targetScore]);
 
   const toggleOption = useCallback((index) => {
     if (phase !== GamePhase.CHOOSING && phase !== GamePhase.CONFIRMING) {
@@ -564,14 +575,6 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     if (!activeSnapshot?.gameId || requestInFlight) {
       return;
     }
-    if (currentRoundScore < 1) {
-      const message = `${currentPlayer} must answer correctly before passing`;
-      setErrorMessage(message);
-      setLastAction(message);
-      setPhase(GamePhase.CHOOSING);
-      return;
-    }
-
     const actingPlayer = currentPlayer;
     const actorPlayerId = String(activeSnapshot?.roundState?.currentPlayerId || '').trim();
     const actionToken = String(actionTokensByPlayerId?.[actorPlayerId] || '').trim();
@@ -600,7 +603,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     } finally {
       setRequestInFlight(false);
     }
-  }, [activeSnapshot, actionTokensByPlayerId, currentPlayer, currentRoundScore, phase, queueOutcome, requestInFlight]);
+  }, [activeSnapshot, actionTokensByPlayerId, currentPlayer, phase, queueOutcome, requestInFlight]);
 
   const nextStep = useCallback(() => {
     if (phase === GamePhase.ROUND_SUMMARY) {
@@ -732,6 +735,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     resetToSetup,
     activeSnapshot,
     startRequest,
-    actionTokensByPlayerId
+    actionTokensByPlayerId,
+    restoreSnapshot
   };
 }

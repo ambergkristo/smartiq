@@ -29,6 +29,7 @@ class GameSessionSnapshotContractTest {
                         "Question text?",
                         "OPEN",
                         "Science",
+                        "en",
                         List.of(
                                 new PegSnapshot(0, "hidden", "Mercury"),
                                 new PegSnapshot(1, "selected", "Mars")
@@ -50,6 +51,7 @@ class GameSessionSnapshotContractTest {
         assertThat(node.path("players").get(1).path("displayName").asText()).isEqualTo("Player 2");
         assertThat(node.path("roundState").path("phase").asText()).isEqualTo("CHOOSING");
         assertThat(node.path("boardState").path("question").asText()).isEqualTo("Question text?");
+        assertThat(node.path("boardState").path("language").asText()).isEqualTo("en");
         assertThat(node.path("boardState").path("pegs").get(1).path("state").asText()).isEqualTo("selected");
         assertThat(node.path("boardState").path("pegs").get(0).path("value").asText()).isEqualTo("Mercury");
         assertThat(node.at("/statuses/p1").asText()).isEqualTo("ACTIVE");

@@ -33,9 +33,6 @@ export function getActionHint(phase, currentPlayer, category, selectedRank, cont
 
   switch (phase) {
     case 'CHOOSING':
-      if (!canPass) {
-        return `${currentPlayer}: reveal a correct answer before PASS is available.`;
-      }
       return `${currentPlayer}: choose one answer, then ANSWER or PASS.`;
     case 'CONFIRMING':
       return `${currentPlayer}: LOCK IN or go BACK.`;

@@ -90,6 +90,19 @@ class GameSessionServiceTest {
     }
 
     @Test
+    void createGamePreservesRequestedEstonianLanguageInSnapshot() {
+        when(cardService.getNextRandomCard(eq("et"), anyString(), eq(null)))
+                .thenReturn(etOpenCard("card-et-1", 0, "Kusimus 1"));
+
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "et", null, 30)
+        );
+
+        assertThat(created.snapshot().boardState().language()).isEqualTo("et");
+        verify(cardService).getNextRandomCard(eq("et"), anyString(), eq(null));
+    }
+
+    @Test
     void createGameFallsBackToDefaultLanguageForUnsupportedTag() {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
                 .thenReturn(openCard("card-1", 0, "Question 1"));
@@ -201,23 +214,13 @@ class GameSessionServiceTest {
     @Test
     void passMarksPlayerAndMovesTurn() {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
-                .thenReturn(openCardWithCorrectIndexes("card-1", List.of(0, 1), "Question 1"));
+                .thenReturn(openCard("card-1", 0, "Question 1"));
 
         GameSessionCreateResponse created = gameSessionService.createGameWithControl(
                 new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
         );
         String p1Token = created.actionTokens().get("p1");
-        String p2Token = created.actionTokens().get("p2");
         String gameId = created.snapshot().gameId();
-
-        gameSessionService.applyAction(
-                gameId,
-                new GameActionRequest("ANSWER", 0, null, "p1", p1Token, "req-pass-0")
-        );
-        gameSessionService.applyAction(
-                gameId,
-                new GameActionRequest("ANSWER", 1, null, "p2", p2Token, "req-pass-0b")
-        );
         GameSessionSnapshot afterPass = gameSessionService.applyAction(
                 gameId,
                 new GameActionRequest("PASS", null, null, "p1", p1Token, "req-pass-1")
@@ -253,7 +256,7 @@ class GameSessionServiceTest {
     void roundEndsAndStartsNextRoundWhenNoActivePlayersRemain() {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
                 .thenReturn(
-                        openCard("card-1", 0, "Question 1"),
+                        openCardWithCorrectIndexes("card-1", List.of(0, 7), "Question 1"),
                         openCard("card-2", 0, "Question 2")
                 );
 
@@ -293,19 +296,41 @@ class GameSessionServiceTest {
         );
         String gameId = created.snapshot().gameId();
         String p1Token = created.actionTokens().get("p1");
-        String p2Token = created.actionTokens().get("p2");
-
-        gameSessionService.applyAction(gameId, new GameActionRequest("ANSWER", 0, null, "p1", p1Token, "req-win-1"));
-        gameSessionService.applyAction(gameId, new GameActionRequest("ANSWER", 1, null, "p2", p2Token, "req-win-2"));
         GameSessionSnapshot gameOver = gameSessionService.applyAction(
                 gameId,
-                new GameActionRequest("PASS", null, null, "p1", p1Token, "req-win-3")
+                new GameActionRequest("ANSWER", 0, null, "p1", p1Token, "req-win-1")
         );
 
         assertThat(gameOver.roundState().phase()).isEqualTo("GAME_OVER");
         assertThat(gameOver.totalScores().get("p1")).isEqualTo(1);
         assertThat(gameOver.roundState().lastAction()).isEqualTo("Alice reached 1 points");
         verify(cardService, times(1)).getNextRandomCard(eq("en"), anyString(), eq(null));
+    }
+
+    @Test
+    void singleCorrectAnswerEndsRoundImmediatelyAfterReveal() {
+        when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
+                .thenReturn(
+                        openCard("card-1", 0, "Question 1"),
+                        openCard("card-2", 0, "Question 2")
+                );
+
+        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
+                new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
+        );
+        String p1Token = created.actionTokens().get("p1");
+
+        GameSessionSnapshot nextRound = gameSessionService.applyAction(
+                created.snapshot().gameId(),
+                new GameActionRequest("ANSWER", 0, null, "p1", p1Token, "req-single-correct-1")
+        );
+
+        assertThat(nextRound.roundState().roundNumber()).isEqualTo(2);
+        assertThat(nextRound.totalScores().get("p1")).isEqualTo(1);
+        assertThat(nextRound.roundState().starterPlayerId()).isEqualTo("p2");
+        assertThat(nextRound.roundState().currentPlayerId()).isEqualTo("p2");
+        assertThat(nextRound.boardState().question()).isEqualTo("Question 2");
+        verify(cardService, times(2)).getNextRandomCard(eq("en"), anyString(), eq(null));
     }
 
     @Test
@@ -329,7 +354,7 @@ class GameSessionServiceTest {
     @Test
     void cannotAnswerAlreadyOpenedTile() {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
-                .thenReturn(openCard("card-1", 0, "Question 1"));
+                .thenReturn(openCardWithCorrectIndexes("card-1", List.of(0, 7), "Question 1"));
 
         GameSessionCreateResponse created = gameSessionService.createGameWithControl(
                 new CreateGameRequest(List.of("Alice", "Bob"), "en", null, 30)
@@ -365,13 +390,9 @@ class GameSessionServiceTest {
         assertThat(createdSnapshot.players().get(0).displayName()).isEqualTo("Alice");
         assertThat(createdSnapshot.roundState().currentPlayerId()).isEqualTo("p1");
 
-        gameSessionService.applyAction(
-                createdSnapshot.gameId(),
-                new GameActionRequest("ANSWER", 0, null, "p1", p1Token, "req-single-0")
-        );
         GameSessionSnapshot nextRound = gameSessionService.applyAction(
                 createdSnapshot.gameId(),
-                new GameActionRequest("PASS", null, null, "p1", p1Token, "req-single-1")
+                new GameActionRequest("ANSWER", 0, null, "p1", p1Token, "req-single-0")
         );
 
         assertThat(nextRound.roundState().roundNumber()).isEqualTo(2);
@@ -392,19 +413,16 @@ class GameSessionServiceTest {
         );
         String gameId = created.snapshot().gameId();
         String p1Token = created.actionTokens().get("p1");
-        String p2Token = created.actionTokens().get("p2");
 
         gameSessionService.applyAction(gameId, new GameActionRequest("ANSWER", 0, null, "p1", p1Token, "req-metric-1"));
-        gameSessionService.applyAction(gameId, new GameActionRequest("ANSWER", 1, null, "p2", p2Token, "req-metric-2"));
-        gameSessionService.applyAction(gameId, new GameActionRequest("PASS", null, null, "p1", p1Token, "req-metric-3"));
 
         assertThat(counterValue("smartiq.game.session.started.total")).isEqualTo(1.0);
         assertThat(counterValue("smartiq.game.session.completed.total")).isEqualTo(1.0);
         assertThat(counterValue("smartiq.game.round.completed.total")).isEqualTo(1.0);
-        assertThat(counterValue("smartiq.game.action.total", "type", "answer")).isEqualTo(2.0);
-        assertThat(counterValue("smartiq.game.action.total", "type", "pass")).isEqualTo(1.0);
+        assertThat(counterValue("smartiq.game.action.total", "type", "answer")).isEqualTo(1.0);
+        assertThat(counterValue("smartiq.game.action.total", "type", "pass")).isEqualTo(0.0);
         assertThat(counterValue("smartiq.game.answer.total", "outcome", "correct")).isEqualTo(1.0);
-        assertThat(counterValue("smartiq.game.answer.total", "outcome", "wrong")).isEqualTo(1.0);
+        assertThat(counterValue("smartiq.game.answer.total", "outcome", "wrong")).isEqualTo(0.0);
         assertThat(timerCount("smartiq.game.round.duration.seconds")).isEqualTo(1L);
         assertThat(timerCount("smartiq.game.duration.seconds")).isEqualTo(1L);
     }
@@ -530,7 +548,7 @@ class GameSessionServiceTest {
     }
 
     @Test
-    void rejectsPassBeforeAnyCorrectAnswerInRound() {
+    void allowsPassBeforeAnyCorrectAnswerInRound() {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
                 .thenReturn(openCard("card-1", 0, "Question 1"));
 
@@ -539,12 +557,14 @@ class GameSessionServiceTest {
         );
         String p1Token = created.actionTokens().get("p1");
 
-        assertThatThrownBy(() -> gameSessionService.applyAction(
+        GameSessionSnapshot afterPass = gameSessionService.applyAction(
                 created.snapshot().gameId(),
-                new GameActionRequest("PASS", null, null, "p1", p1Token, "req-pass-denied-1")
-        ))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("pass requires at least one correct answer in current round");
+                new GameActionRequest("PASS", null, null, "p1", p1Token, "req-pass-anytime-1")
+        );
+
+        assertThat(afterPass.statuses().get("p1")).isEqualTo(PlayerRoundStatus.PASSED);
+        assertThat(afterPass.roundState().currentPlayerId()).isEqualTo("p2");
+        assertThat(afterPass.roundState().phase()).isEqualTo("CHOOSING");
     }
 
     @Test
@@ -741,7 +761,7 @@ class GameSessionServiceTest {
     @Test
     void restoresPersistedSessionStateAfterServiceRestart() {
         when(cardService.getNextRandomCard(eq("en"), anyString(), eq(null)))
-                .thenReturn(openCard("persist-1", 0, "Persist Question 1"));
+                .thenReturn(openCardWithCorrectIndexes("persist-1", List.of(0, 7), "Persist Question 1"));
 
         InMemoryGameSessionStore store = new InMemoryGameSessionStore();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -844,6 +864,21 @@ class GameSessionServiceTest {
                 question,
                 options(),
                 Map.of("correctIndexes", correctIndexes),
+                "2",
+                "smartiq-v2",
+                null
+        );
+    }
+
+    private static CardDeckResponse etOpenCard(String cardId, int correctIndex, String question) {
+        return new CardDeckResponse(
+                cardId,
+                "OPEN",
+                "Teadus",
+                "et",
+                question,
+                options(),
+                Map.of("correctIndexes", List.of(correctIndex)),
                 "2",
                 "smartiq-v2",
                 null

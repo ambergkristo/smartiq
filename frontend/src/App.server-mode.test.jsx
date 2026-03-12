@@ -64,6 +64,7 @@ function makeServerSnapshot({
   activePlayerIndex = 0,
   question = 'Server question',
   category = 'OPEN',
+  language = 'en',
   lastAction = 'Server action',
   statuses = { p1: 'ACTIVE', p2: 'ACTIVE' },
   totalScores = { p1: 0, p2: 0 },
@@ -91,6 +92,7 @@ function makeServerSnapshot({
       question,
       category,
       topic: 'History',
+      language,
       pegs: Array.from({ length: 8 }, (_, index) => {
         const state = pegStateByIndex[index] || 'hidden';
         return {
@@ -210,7 +212,7 @@ describe('App server-authoritative mode', () => {
     await waitFor(() => expect(screen.getByRole('button', { name: /next question/i })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /next question/i }));
 
-    await waitFor(() => expect(screen.getByTestId('action-hint')).toHaveTextContent(/bob: reveal a correct answer before pass is available/i));
+    await waitFor(() => expect(screen.getByTestId('action-hint')).toHaveTextContent(/bob: choose one answer, then answer or pass/i));
     expect(screen.getByRole('button', { name: /^answer-2\b/i })).toBeEnabled();
 
     fireEvent.click(screen.getByRole('button', { name: /^answer-2\b/i }));
@@ -297,30 +299,60 @@ describe('App server-authoritative mode', () => {
     await startServerMultiplayer();
 
     const passButton = screen.getByRole('button', { name: /pass/i });
-    expect(passButton).toBeDisabled();
+    expect(passButton).toBeEnabled();
     expect(screen.getByRole('button', { name: /^answer-1\b/i })).toBeEnabled();
-    expect(screen.getByTestId('action-hint')).toHaveTextContent(/bob: reveal a correct answer before pass is available/i);
+    expect(screen.getByTestId('action-hint')).toHaveTextContent(/bob: choose one answer, then answer or pass/i);
 
     fireEvent.click(screen.getByRole('button', { name: /^answer-1\b/i }));
     await waitFor(() => expect(screen.getByRole('button', { name: /^answer$/i })).toBeEnabled());
   });
 
-  test('keeps PASS disabled until active player has at least one correct answer', async () => {
+  test('keeps PASS available immediately for the active player', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
     createServerGameSession.mockResolvedValue(makeServerSnapshot({
       gameId: 'game-pass-locked',
       roundScores: { p1: 0, p2: 0 }
     }));
+    sendServerGameAction.mockResolvedValue(
+      makeServerSnapshot({
+        gameId: 'game-pass-locked',
+        activePlayerIndex: 1,
+        statuses: { p1: 'PASSED', p2: 'ACTIVE' },
+        lastAction: 'Alice passed'
+      })
+    );
 
     render(<App />);
     await startServerMultiplayer();
 
     const passButton = screen.getByRole('button', { name: /pass/i });
-    expect(passButton).toBeDisabled();
-    expect(screen.getByTestId('action-hint')).toHaveTextContent(/before pass is available/i);
+    expect(passButton).toBeEnabled();
+    expect(screen.getByTestId('action-hint')).toHaveTextContent(/choose one answer, then answer or pass/i);
 
     fireEvent.click(passButton);
-    expect(sendServerGameAction).not.toHaveBeenCalled();
+    await waitFor(() =>
+      expect(sendServerGameAction).toHaveBeenCalledWith(
+        'game-pass-locked',
+        expect.objectContaining({ type: 'PASS' })
+      )
+    );
+  });
+
+  test('uses estonian language when the ET toggle is selected', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({
+      gameId: 'game-et',
+      language: 'et'
+    }));
+
+    render(<App />);
+    await waitFor(() => expect(screen.getByRole('button', { name: /^et$/i })).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /^et$/i }));
+    await startServerMultiplayer();
+
+    expect(createServerGameSession).toHaveBeenCalledWith(
+      expect.objectContaining({ language: 'et' })
+    );
   });
 
   test('shows round summary and then advances to next round from server snapshot', async () => {

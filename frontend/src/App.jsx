@@ -1402,6 +1402,9 @@ function GameApp() {
   const onboardingWorkspaceInputRef = useRef(null);
   const signInEmailInputRef = useRef(null);
   const liveGameRestoreAttemptedRef = useRef(false);
+  const storedRoomResumeAttemptedRef = useRef(false);
+  const initialStoredRoomSessionRef = useRef(storedRoomSession);
+  const playerGameSyncKeyRef = useRef('');
   const activePlayerRouteRoomCode = String(playerJoinRoute || '').trim();
   const playerRouteMatchesSavedPlayerSession = roomSession?.role === 'player'
     && normalizeRoomCodeInput(roomSession?.roomCode) === activePlayerRouteRoomCode;
@@ -1583,6 +1586,11 @@ function GameApp() {
   }, [activePlayerRouteRoomCode]);
 
   useEffect(() => {
+    const liveGamePersistenceEnabled = roomSession?.role !== 'player';
+    if (!liveGamePersistenceEnabled) {
+      persistLiveGameSession(null);
+      return;
+    }
     const hasActiveSnapshot = serverEngine.phase !== GamePhase.SETUP
       && serverEngine.activeSnapshot?.gameId
       && Object.keys(serverEngine.actionTokensByPlayerId || {}).length > 0;
@@ -1624,7 +1632,7 @@ function GameApp() {
     if (startup.phase !== STARTUP_PHASE.READY || liveGameRestoreAttemptedRef.current) {
       return;
     }
-    if (!storedLiveGameSession?.gameId || serverEngine.phase !== GamePhase.SETUP) {
+    if (roomSession?.role === 'player' || !storedLiveGameSession?.gameId || serverEngine.phase !== GamePhase.SETUP) {
       liveGameRestoreAttemptedRef.current = true;
       return;
     }
@@ -1652,7 +1660,7 @@ function GameApp() {
     return () => {
       cancelled = true;
     };
-  }, [serverEngine, startup.phase, storedLiveGameSession]);
+  }, [roomSession?.role, serverEngine, startup.phase, storedLiveGameSession]);
 
   useEffect(() => {
     localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(config));
@@ -1743,6 +1751,103 @@ function GameApp() {
       setPlayerRoutePreview(normalizedRoomState);
     }
   }, [activePlayerRouteRoomCode, roomSession?.roomCode]);
+
+  useEffect(() => {
+    if (startup.phase !== STARTUP_PHASE.READY || storedRoomResumeAttemptedRef.current) {
+      return;
+    }
+    const savedRoomSession = initialStoredRoomSessionRef.current;
+    if (!savedRoomSession?.roomCode || !savedRoomSession?.playerId || !savedRoomSession?.authToken) {
+      storedRoomResumeAttemptedRef.current = true;
+      return;
+    }
+
+    storedRoomResumeAttemptedRef.current = true;
+    let cancelled = false;
+
+    rejoinRoomSession(savedRoomSession.roomCode, {
+      playerId: savedRoomSession.playerId,
+      authToken: savedRoomSession.authToken
+    })
+      .then((resumed) => {
+        if (cancelled) {
+          return;
+        }
+        applyRoomSession({
+          ...savedRoomSession,
+          roomCode: resumed.roomCode,
+          playerId: resumed.playerId,
+          authToken: resumed.authToken,
+          roomState: resumed.roomState
+        });
+      })
+      .catch(() => {
+        if (!cancelled) {
+          persistRoomSession(null);
+          setRoomSession(null);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [applyRoomSession, startup.phase]);
+
+  useEffect(() => {
+    const playerActiveGame = roomSession?.role === 'player'
+      ? roomSession?.roomState?.activeGame
+      : null;
+    if (startup.phase !== STARTUP_PHASE.READY || !playerActiveGame?.gameId || !roomSession?.roomCode) {
+      playerGameSyncKeyRef.current = '';
+      if (roomSession?.role === 'player' && serverEngine.phase !== GamePhase.SETUP) {
+        serverEngine.resetToSetup();
+      }
+      return;
+    }
+
+    const syncKey = [
+      playerActiveGame.gameId,
+      playerActiveGame.roundNumber,
+      playerActiveGame.phase,
+      playerActiveGame.lastAction
+    ].join('|');
+    if (playerGameSyncKeyRef.current === syncKey
+      && serverEngine.activeSnapshot?.gameId === playerActiveGame.gameId) {
+      return;
+    }
+
+    playerGameSyncKeyRef.current = syncKey;
+    let cancelled = false;
+
+    fetchServerGameSession(playerActiveGame.gameId)
+      .then((snapshot) => {
+        if (cancelled) {
+          return;
+        }
+        serverEngine.clearError();
+        serverEngine.restoreSnapshot(snapshot, {
+          language: snapshot?.boardState?.language || config.lang,
+          topic: snapshot?.boardState?.topic || undefined,
+          roomCode: roomSession.roomCode,
+          winCondition: snapshot?.winCondition
+        });
+      })
+      .catch(() => {});
+
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    config.lang,
+    roomSession?.role,
+    roomSession?.roomCode,
+    roomSession?.roomState?.activeGame?.gameId,
+    roomSession?.roomState?.activeGame?.lastAction,
+    roomSession?.roomState?.activeGame?.phase,
+    roomSession?.roomState?.activeGame?.roundNumber,
+    serverEngine,
+    startup.phase
+  ]);
 
   useEffect(() => {
     if (typeof WebSocket !== 'function') {
@@ -2792,7 +2897,7 @@ function GameApp() {
   }
 
   const activeError = serverEngine.errorMessage;
-  const controlsDisabled = !serverEngine.isLocalTurn;
+  const controlsDisabled = roomSession?.role === 'player' || !serverEngine.isLocalTurn;
   const setupPlayers = parsePlayers(config.playersText);
   const setupDraftPlayers = parsePlayers(setupPlayerDraft);
   const setupMergedPlayerCount = Array.from(new Set([...setupPlayers, ...setupDraftPlayers])).length;

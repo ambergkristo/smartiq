@@ -343,6 +343,7 @@ class GameSessionControllerTest {
                         "Question",
                         "OPEN",
                         "Science",
+                        "en",
                         List.of(new PegSnapshot(0, "hidden", null))
                 ),
                 Map.of("p1", 0, "p2", 0),
