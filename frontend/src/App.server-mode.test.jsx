@@ -113,8 +113,8 @@ async function startServerMultiplayer(players = 'Alice, Bob') {
 }
 
 async function startSoloMode() {
-  const soloButton = await screen.findByRole('button', { name: /play solo/i });
-  fireEvent.click(soloButton);
+  const playButton = await screen.findByRole('button', { name: /play/i });
+  fireEvent.click(playButton);
   await waitFor(() => expect(createServerGameSession).toHaveBeenCalled());
 }
 
@@ -408,6 +408,47 @@ describe('App server-authoritative mode', () => {
     fireEvent.click(screen.getByRole('button', { name: /back to setup/i }));
     await startSoloMode();
     await waitFor(() => expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('0'));
+  });
+
+  test('home shows Play, Join Game, Host Game, and the guest profile summary', async () => {
+    window.location.hash = '';
+
+    render(<App />);
+
+    expect(await screen.findByTestId('home-screen')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /play/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /join game/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /host game/i })).toBeInTheDocument();
+    expect(screen.getByTestId('home-screen-profile')).toHaveTextContent(/level 1/i);
+    expect(screen.getByTestId('home-screen-profile')).toHaveTextContent(/0 xp saved locally on this browser/i);
+  });
+
+  test('renders the Join Game shell and navigates back home', async () => {
+    window.location.hash = '';
+
+    render(<App />);
+
+    fireEvent.click(await screen.findByRole('button', { name: /join game/i }));
+    expect(await screen.findByTestId('home-join-panel')).toBeInTheDocument();
+    expect(screen.getByText(/join a cherrypick game/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/game code/i)).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: /back to home/i }));
+    expect(await screen.findByTestId('home-screen')).toBeInTheDocument();
+  });
+
+  test('renders the Host Game shell and navigates back home', async () => {
+    window.location.hash = '';
+
+    render(<App />);
+
+    fireEvent.click(await screen.findByRole('button', { name: /host game/i }));
+    expect(await screen.findByTestId('host-game-panel')).toBeInTheDocument();
+    expect(screen.getByText(/host cherrypick/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /host mode coming next/i })).toBeDisabled();
+
+    fireEvent.click(screen.getByRole('button', { name: /back to home/i }));
+    expect(await screen.findByTestId('home-screen')).toBeInTheDocument();
   });
 
   test('creates a guest profile and persists solo totals across refresh', async () => {

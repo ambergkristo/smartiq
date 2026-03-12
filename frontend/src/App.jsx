@@ -35,6 +35,7 @@ import HostDashboard from './components/HostDashboard';
 import PlayerJoin from './components/PlayerJoin';
 import RoundSummary from './components/RoundSummary';
 import HomeScreen from './components/home/HomeScreen';
+import HostGameScreen from './components/home/HostGameScreen';
 import JoinGameScreen from './components/home/JoinGameScreen';
 import PracticePlaceholder from './components/home/PracticePlaceholder';
 import GameplayActionBar from './components/gameplay/GameplayActionBar';
@@ -66,9 +67,9 @@ import {
 import { DEFAULT_LANGS, GamePhase } from './state/types';
 
 const STRINGS = {
-  title: 'SmartIQ',
-  subtitle: 'Pick a topic, add players, then open a room or start the live game.',
-  homeTagline: 'Fast entry for live quiz hosts, players, and quick solo practice.',
+  title: 'CherryPick',
+  subtitle: 'Pick the mode that fits the moment: solo play now, join a live game, or prepare the host path.',
+  homeTagline: 'Choose a CherryPick mode: play now, join a live code, or prepare the upcoming host path.',
   loadingTopics: 'Loading topics...',
   noTopics: 'No topics yet.',
   noTopicsHint: 'Import clean cards to populate topics and retry.',
@@ -295,9 +296,10 @@ const STARTUP_PHASE = {
 };
 const ENTRY_ROUTE = {
   HOME: 'home',
+  PLAY: 'play',
   START: 'start',
   JOIN: 'join',
-  PRACTICE: 'practice',
+  HOST: 'host',
   HOST_TRIAL: 'host-trial',
   HOST_SIGNIN: 'host-signin'
 };
@@ -630,14 +632,17 @@ function resolveEntryRoute() {
     return ENTRY_ROUTE.HOME;
   }
   const hash = String(window.location?.hash || '').trim().toLowerCase();
+  if (hash === '#/play' || hash === '#/practice') {
+    return ENTRY_ROUTE.PLAY;
+  }
   if (hash === '#/start') {
     return ENTRY_ROUTE.START;
   }
   if (hash === '#/join') {
     return ENTRY_ROUTE.JOIN;
   }
-  if (hash === '#/practice') {
-    return ENTRY_ROUTE.PRACTICE;
+  if (hash === '#/host') {
+    return ENTRY_ROUTE.HOST;
   }
   if (hash === '#/host/trial') {
     return ENTRY_ROUTE.HOST_TRIAL;
@@ -1489,7 +1494,7 @@ function GameApp() {
   }, []);
 
   useEffect(() => {
-    if (entryRoute !== ENTRY_ROUTE.PRACTICE) {
+    if (entryRoute !== ENTRY_ROUTE.PLAY) {
       soloLaunchAttemptedRef.current = false;
     }
   }, [entryRoute]);
@@ -2216,11 +2221,21 @@ function GameApp() {
       return;
     }
     if (nextRoute === ENTRY_ROUTE.JOIN) {
+      if (!String(roomDraft.displayName || '').trim() && String(playerProfile.displayName || '').trim()) {
+        setRoomDraft((current) => ({
+          ...current,
+          displayName: String(current.displayName || '').trim() ? current.displayName : playerProfile.displayName
+        }));
+      }
       window.location.hash = '#/join';
       return;
     }
-    if (nextRoute === ENTRY_ROUTE.PRACTICE) {
-      window.location.hash = '#/practice';
+    if (nextRoute === ENTRY_ROUTE.PLAY) {
+      window.location.hash = '#/play';
+      return;
+    }
+    if (nextRoute === ENTRY_ROUTE.HOST) {
+      window.location.hash = '#/host';
       return;
     }
     if (nextRoute === ENTRY_ROUTE.HOST_TRIAL) {
@@ -2657,7 +2672,7 @@ function GameApp() {
   }
 
   useEffect(() => {
-    if (entryRoute !== ENTRY_ROUTE.PRACTICE) {
+    if (entryRoute !== ENTRY_ROUTE.PLAY) {
       return;
     }
     if (startup.phase !== STARTUP_PHASE.READY) {
@@ -2838,15 +2853,16 @@ function GameApp() {
       profileLevel={playerProfile.level}
       profileXp={playerProfile.totalXp}
       onProfileNameChange={handlePlayerProfileNameChange}
-      onStartGame={() => handleNavigateEntry(ENTRY_ROUTE.START)}
+      onPlay={() => handleNavigateEntry(ENTRY_ROUTE.PLAY)}
       onJoinGame={() => handleNavigateEntry(ENTRY_ROUTE.JOIN)}
-      onPractice={() => handleNavigateEntry(ENTRY_ROUTE.PRACTICE)}
+      onHostGame={() => handleNavigateEntry(ENTRY_ROUTE.HOST)}
     />
   ) : null;
   const joinEntryPanel = (
     <JoinGameScreen
+      appTitle={appTitle}
       roomCode={roomDraft.roomCode}
-      displayName={roomDraft.displayName}
+      displayName={roomDraft.displayName || playerProfile.displayName}
       pending={roomPending}
       message={roomMessage}
       error={roomError}
@@ -2864,6 +2880,9 @@ function GameApp() {
   );
   const practiceEntryPanel = (
     <PracticePlaceholder onBack={() => handleNavigateEntry(ENTRY_ROUTE.HOME)} />
+  );
+  const hostEntryPanel = (
+    <HostGameScreen onBack={() => handleNavigateEntry(ENTRY_ROUTE.HOME)} />
   );
   const setupActionBar = !roomSession ? (
     <PrimaryActionBar>
@@ -3106,8 +3125,11 @@ function GameApp() {
           {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && showProductHome && entryRoute === ENTRY_ROUTE.JOIN ? (
             joinEntryPanel
           ) : null}
-          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && showProductHome && entryRoute === ENTRY_ROUTE.PRACTICE ? (
+          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && showProductHome && entryRoute === ENTRY_ROUTE.PLAY ? (
             practiceEntryPanel
+          ) : null}
+          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && showProductHome && entryRoute === ENTRY_ROUTE.HOST ? (
+            hostEntryPanel
           ) : null}
           {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && showProductHome && entryRoute === ENTRY_ROUTE.HOST_TRIAL ? (
             <OnboardingPanel

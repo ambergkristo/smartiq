@@ -329,7 +329,8 @@ h1 {
 }
 
 .home-screen-panel,
-.practice-screen {
+.practice-screen,
+.mode-shell-screen {
   width: min(520px, 100%);
   margin: 0 auto;
   padding: clamp(28px, 4vw, 40px);
@@ -341,7 +342,8 @@ h1 {
 }
 
 .home-screen-panel::before,
-.practice-screen::before {
+.practice-screen::before,
+.mode-shell-screen::before {
   content: '';
   position: absolute;
   inset: -18% auto auto -12%;
@@ -360,7 +362,8 @@ h1 {
 }
 
 .home-screen-panel h1,
-.practice-screen h1 {
+.practice-screen h1,
+.mode-shell-screen h1 {
   font-size: clamp(3rem, 9vw, 4.8rem);
   line-height: 0.9;
   letter-spacing: 0.08em;
@@ -442,9 +445,41 @@ h1 {
 }
 
 .home-join-screen,
-.practice-screen {
+.practice-screen,
+.mode-shell-screen {
   max-width: min(520px, 100%);
   margin: 0 auto;
+}
+
+.mode-shell-summary {
+  display: grid;
+  gap: 10px;
+  text-align: left;
+}
+
+.mode-shell-card {
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  display: grid;
+  gap: 6px;
+}
+
+.mode-shell-card span {
+  color: var(--muted);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mode-shell-card strong {
+  font-size: 1rem;
+}
+
+.mode-shell-actions {
+  display: grid;
+  gap: 10px;
 }
 
 .host-launch-panel {

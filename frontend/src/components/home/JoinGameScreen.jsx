@@ -1,6 +1,7 @@
 import PlayerJoinFlow from '../player/PlayerJoinFlow';
 
 export default function JoinGameScreen({
+  appTitle,
   roomCode,
   displayName,
   pending,
@@ -14,11 +15,11 @@ export default function JoinGameScreen({
   return (
     <PlayerJoinFlow
       screenTestId="home-join-panel"
-      brandTitle="SmartIQ"
+      brandTitle={appTitle}
       chipLabel="Join game"
-      title="Join live room"
+      title="Join a CherryPick game"
       roomCode={roomCode}
-      roomCodeLabel="Room code"
+      roomCodeLabel="Game code"
       roomCodePlaceholder="ABC123"
       displayName={displayName}
       displayNameLabel="Your display name"
@@ -27,9 +28,9 @@ export default function JoinGameScreen({
       message={message}
       error={error}
       previewMissingLabel="Enter a room code to continue."
-      introCopy="Enter the code from the host screen to move into the join flow."
-      roomStepCopy="Enter the room code shown by the host."
-      nameStepCopy="Enter your display name, then join the waiting room."
+      introCopy="Enter the game code to move into the CherryPick join flow."
+      roomStepCopy="Enter the code shared by the host."
+      nameStepCopy="Confirm your display name, then continue into the room."
       statusPendingLabel="Joining room..."
       nextLabel="Next"
       joinLabel="Join game"
