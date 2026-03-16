@@ -2949,6 +2949,7 @@ function GameApp() {
   ) : null;
   const hostEntryPanel = (
     <HostGameScreen
+      appTitle={appTitle}
       topics={topics}
       selectedTopic={config.topic}
       hostName={roomDraft.displayName || playerProfile.displayName}

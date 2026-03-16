@@ -749,6 +749,250 @@ h1 {
   gap: 10px;
 }
 
+.host-mode-screen {
+  width: min(960px, 100%);
+  max-width: none;
+  gap: 22px;
+  text-align: left;
+  padding: clamp(28px, 4vw, 40px);
+  border-radius: 30px;
+  border: 1px solid rgba(122, 30, 44, 0.46);
+  background:
+    radial-gradient(circle at top left, rgba(197, 51, 70, 0.16), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(122, 30, 44, 0.2), transparent 30%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)),
+    rgba(18, 10, 14, 0.98);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+.host-mode-screen::before {
+  inset: -12% auto auto -6%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(197, 51, 70, 0.18), rgba(197, 51, 70, 0));
+}
+
+.host-mode-brand-block,
+.host-mode-layout,
+.host-mode-actions {
+  position: relative;
+  z-index: 1;
+}
+
+.host-mode-brand-block {
+  display: grid;
+  gap: 14px;
+  max-width: 44rem;
+}
+
+.host-mode-brand-heading {
+  display: flex;
+  justify-content: flex-start;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.host-mode-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.24fr) minmax(260px, 0.76fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.host-mode-main,
+.host-mode-side-panel {
+  display: grid;
+  gap: 14px;
+}
+
+.host-mode-intro-card,
+.host-mode-side-card {
+  display: grid;
+  gap: 8px;
+  padding: 18px 18px 20px;
+  border-radius: 24px;
+  border: 1px solid rgba(122, 30, 44, 0.42);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.024), rgba(255, 255, 255, 0)),
+    rgba(36, 19, 23, 0.82);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.022);
+}
+
+.host-mode-intro-card strong,
+.host-mode-side-card strong {
+  font-size: 1.05rem;
+  color: #F6EEF0;
+}
+
+.host-mode-intro-card p:last-child,
+.host-mode-side-note {
+  margin: 0;
+  color: rgba(246, 238, 240, 0.72);
+  line-height: 1.55;
+}
+
+.host-mode-form {
+  gap: 14px;
+  padding: 18px;
+  border-radius: 24px;
+  border: 1px solid rgba(122, 30, 44, 0.42);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.024), rgba(255, 255, 255, 0)),
+    rgba(36, 19, 23, 0.82);
+}
+
+.host-mode-field {
+  gap: 10px;
+}
+
+.host-mode-field span {
+  color: rgba(246, 238, 240, 0.64);
+  letter-spacing: 0.14em;
+}
+
+.host-mode-field select,
+.host-mode-field input {
+  min-height: 60px;
+  border-radius: 20px;
+  border: 1px solid rgba(122, 30, 44, 0.42);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
+    rgba(42, 21, 26, 0.94);
+  color: #F6EEF0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+.host-mode-field select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(246, 238, 240, 0.65) 50%),
+    linear-gradient(135deg, rgba(246, 238, 240, 0.65) 50%, transparent 50%);
+  background-position:
+    calc(100% - 22px) calc(50% - 3px),
+    calc(100% - 16px) calc(50% - 3px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 44px;
+}
+
+.host-mode-field input::placeholder {
+  color: rgba(246, 238, 240, 0.34);
+}
+
+.host-mode-field select:focus-visible,
+.host-mode-field input:focus-visible {
+  outline: none;
+  border-color: rgba(224, 58, 78, 0.58);
+  box-shadow: 0 0 0 3px rgba(197, 51, 70, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.024);
+}
+
+.host-mode-screen .mode-shell-summary {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.host-mode-screen .mode-shell-card {
+  padding: 16px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(122, 30, 44, 0.42);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.024), rgba(255, 255, 255, 0)),
+    rgba(36, 19, 23, 0.82);
+}
+
+.host-mode-screen .mode-shell-card strong {
+  color: #F6EEF0;
+}
+
+.host-mode-side-metrics {
+  display: grid;
+  gap: 10px;
+}
+
+.host-mode-side-metrics article {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(122, 30, 44, 0.36);
+  background: rgba(42, 21, 26, 0.72);
+}
+
+.host-mode-side-metrics span {
+  color: rgba(246, 238, 240, 0.6);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.host-mode-roster {
+  padding: 18px;
+  border-radius: 24px;
+  border: 1px solid rgba(122, 30, 44, 0.42);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.024), rgba(255, 255, 255, 0)),
+    rgba(30, 17, 21, 0.82);
+}
+
+.host-mode-roster-head strong {
+  font-family: "Nunito", "Inter", sans-serif;
+  font-size: 1.25rem;
+  color: #F6EEF0;
+  letter-spacing: -0.02em;
+}
+
+.host-mode-roster li {
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(122, 30, 44, 0.32);
+  background: rgba(42, 21, 26, 0.76);
+}
+
+.host-mode-actions {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
+}
+
+.host-mode-primary-button {
+  min-height: 60px;
+  border-radius: 20px;
+  border: 1px solid rgba(224, 58, 78, 0.54);
+  background:
+    radial-gradient(circle at top right, rgba(224, 58, 78, 0.18), transparent 42%),
+    linear-gradient(180deg, rgba(224, 58, 78, 0.22), rgba(122, 30, 44, 0.18)),
+    rgba(58, 21, 29, 0.98);
+  color: #FFF8F4;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.host-mode-primary-button:not(:disabled):hover {
+  border-color: rgba(224, 58, 78, 0.68);
+  background:
+    radial-gradient(circle at top right, rgba(224, 58, 78, 0.22), transparent 42%),
+    linear-gradient(180deg, rgba(224, 58, 78, 0.26), rgba(122, 30, 44, 0.2)),
+    rgba(67, 24, 33, 0.98);
+}
+
+.host-mode-actions .secondary-action {
+  min-width: 180px;
+  border-radius: 18px;
+  border: 1px solid rgba(122, 30, 44, 0.42);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
+    rgba(42, 21, 26, 0.88);
+  color: #F6EEF0;
+}
+
+.host-mode-actions .secondary-action:not(:disabled):hover {
+  border-color: rgba(197, 51, 70, 0.46);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.034), rgba(255, 255, 255, 0)),
+    rgba(52, 24, 30, 0.92);
+}
+
 .host-mode-form,
 .host-mode-roster {
   display: grid;
@@ -3924,6 +4168,22 @@ button:disabled {
   .scoreboard-panel-head {
     display: grid;
     grid-template-columns: 1fr;
+  }
+
+  .host-mode-screen {
+    width: min(100%, 620px);
+    gap: 18px;
+    padding: 24px;
+  }
+
+  .host-mode-layout,
+  .host-mode-screen .mode-shell-summary,
+  .host-mode-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .host-mode-actions .secondary-action {
+    min-width: 0;
   }
 
   .question-card {
