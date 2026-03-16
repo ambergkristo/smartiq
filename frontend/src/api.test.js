@@ -45,6 +45,16 @@ describe('api error mapping', () => {
     expect(state.kind).toBe('server-error');
   });
 
+  test('maps content health failure from topics flow', () => {
+    const state = resolveTopicsErrorState({
+      status: 503,
+      code: 'CONTENT_UNHEALTHY',
+      detail: 'CherryPick content failed to load. Please check runtime dataset configuration.'
+    });
+    expect(state.kind).toBe('content-unhealthy');
+    expect(state.title).toBe('CherryPick content failed to load. Please check runtime dataset configuration.');
+  });
+
   test('maps missing API base configuration error', () => {
     const state = resolveTopicsErrorState({ code: 'CONFIG_ERROR' });
     expect(state.kind).toBe('config-error');

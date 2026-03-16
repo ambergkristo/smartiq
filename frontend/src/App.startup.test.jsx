@@ -243,6 +243,21 @@ describe('App startup resilience', () => {
     await waitFor(() => expect(screen.getByText(/no topics yet/i)).toBeInTheDocument());
   });
 
+  test('shows content failure state instead of empty topics retry copy', async () => {
+    fetchTopics.mockRejectedValue(new Error('content unhealthy'));
+    resolveTopicsErrorState.mockReturnValue({
+      title: 'CherryPick content failed to load. Please check runtime dataset configuration.',
+      detail: 'Backend reported missing or broken CherryPick runtime content.',
+      kind: 'content-unhealthy'
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByText(/cherrypick content failed to load/i)).toBeInTheDocument());
+    expect(screen.queryByText(/no topics yet/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/import clean cards to populate topics and retry/i)).not.toBeInTheDocument();
+  });
+
   test('renders the simplified home screen when topics are available', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
 

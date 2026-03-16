@@ -220,6 +220,16 @@ class CardControllerTest {
     }
 
     @Test
+    void topicsEndpointReturnsContentHealthFailureWhenPlayableContentIsMissing() throws Exception {
+        cardRepository.deleteAll();
+
+        mockMvc.perform(get("/api/topics"))
+                .andExpect(status().isServiceUnavailable())
+                .andExpect(jsonPath("$.code").value("CONTENT_UNHEALTHY"))
+                .andExpect(jsonPath("$.error").value("CherryPick content failed to load. Please check runtime dataset configuration."));
+    }
+
+    @Test
     void returnsRandomCardByTopic() throws Exception {
         mockMvc.perform(get("/api/cards/random").param("topic", "Science"))
                 .andExpect(status().isOk())

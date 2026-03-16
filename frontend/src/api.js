@@ -627,6 +627,16 @@ export async function fetchTopics({ onWarmupChange } = {}) {
 }
 
 export function resolveTopicsErrorState(error) {
+  if (error?.code === 'CONTENT_UNHEALTHY') {
+    return {
+      title: 'CherryPick content failed to load. Please check runtime dataset configuration.',
+      detail: typeof error?.detail === 'string' && error.detail.trim().length > 0
+        ? error.detail
+        : 'Backend reported missing or broken CherryPick runtime content.',
+      kind: 'content-unhealthy'
+    };
+  }
+
   if (error?.code === 'WARMUP_FAILED') {
     return {
       title: 'Backend unavailable.',

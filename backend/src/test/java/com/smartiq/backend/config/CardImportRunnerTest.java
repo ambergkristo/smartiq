@@ -7,7 +7,9 @@ import ch.qos.logback.core.read.ListAppender;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.card.CardRepository;
 import com.smartiq.backend.card.CardSourcePolicy;
+import com.smartiq.backend.card.ContentHealthGuard;
 import com.smartiq.backend.card.LabelCountView;
+import com.smartiq.backend.card.StartupContentHealthReport;
 import com.smartiq.backend.card.TopicCountView;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +24,9 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 import org.slf4j.LoggerFactory;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,6 +34,9 @@ class CardImportRunnerTest {
 
     @Mock
     private CardRepository cardRepository;
+
+    @Mock
+    private ContentHealthGuard contentHealthGuard;
 
     private ObjectMapper objectMapper;
     private SimpleMeterRegistry meterRegistry;
@@ -52,6 +59,7 @@ class CardImportRunnerTest {
         CardImportRunner runner = new CardImportRunner(
                 cardRepository,
                 new ImportProperties(false, "", true),
+                contentHealthGuard,
                 objectMapper,
                 meterRegistry,
                 100
@@ -77,6 +85,7 @@ class CardImportRunnerTest {
         CardImportRunner runner = new CardImportRunner(
                 cardRepository,
                 new ImportProperties(false, "", false),
+                contentHealthGuard,
                 objectMapper,
                 meterRegistry,
                 100
@@ -119,6 +128,7 @@ class CardImportRunnerTest {
         CardImportRunner runner = new CardImportRunner(
                 cardRepository,
                 new ImportProperties(true, "classpath:import/cherrypick/cards.en.json", false),
+                contentHealthGuard,
                 objectMapper,
                 meterRegistry,
                 0
@@ -139,6 +149,52 @@ class CardImportRunnerTest {
                         .contains("Runtime dataset resource found location=classpath:import/cherrypick/cards.en.json"))
                 .anySatisfy(event -> assertThat(event.getFormattedMessage())
                         .contains("Runtime dataset import ready source=classpath:import/cherrypick/cards.en.json found=true imported=2 topicsCreated=2"));
+        verify(contentHealthGuard).recordStartupReport(argThat(StartupContentHealthReport::healthy));
+    }
+
+    @Test
+    void recordsCriticalStartupFailureWhenRuntimeContentIsEmpty() throws Exception {
+        when(cardRepository.countBySourcesLower(CardSourcePolicy.DEPRECATED_SOURCES)).thenReturn(0L);
+        when(cardRepository.deleteBySourcesLower(any())).thenReturn(0);
+        when(cardRepository.count()).thenReturn(0L);
+        when(cardRepository.findCategoryCounts()).thenReturn(List.of());
+        when(cardRepository.findTopicCounts()).thenReturn(List.of());
+        when(cardRepository.findLanguageCounts()).thenReturn(List.of());
+        when(cardRepository.countBySourcesLower(CardSourcePolicy.ALLOWED_SOURCES)).thenReturn(0L);
+
+        CardImportRunner runner = new CardImportRunner(
+                cardRepository,
+                new ImportProperties(true, "classpath:import/cherrypick/missing.json", false),
+                contentHealthGuard,
+                objectMapper,
+                meterRegistry,
+                0
+        );
+
+        Logger logger = (Logger) LoggerFactory.getLogger(CardImportRunner.class);
+        ListAppender<ILoggingEvent> appender = new ListAppender<>();
+        appender.start();
+        logger.addAppender(appender);
+        try {
+            runner.run(new DefaultApplicationArguments());
+        } finally {
+            logger.detachAppender(appender);
+        }
+
+        assertThat(appender.list)
+                .anySatisfy(event -> {
+                    assertThat(event.getLevel()).isEqualTo(Level.ERROR);
+                    assertThat(event.getFormattedMessage()).contains("CRITICAL STARTUP CONTENT FAILURE");
+                    assertThat(event.getFormattedMessage()).contains("datasetFound=false");
+                    assertThat(event.getFormattedMessage()).contains("cardsImported=0");
+                    assertThat(event.getFormattedMessage()).contains("topicsCreated=0");
+                });
+        verify(contentHealthGuard).recordStartupReport(argThat(report ->
+                !report.healthy()
+                        && !report.datasetFound()
+                        && report.cardsImported() == 0
+                        && report.topicsCreated() == 0
+        ));
     }
 
     private static final class SimpleLabelCount implements LabelCountView {

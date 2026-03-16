@@ -6,10 +6,12 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.smartiq.backend.card.AnswerOptionNormalizer;
 import com.smartiq.backend.card.Card;
+import com.smartiq.backend.card.ContentHealthGuard;
 import com.smartiq.backend.card.CardSourcePolicy;
 import com.smartiq.backend.card.CardRepository;
 import com.smartiq.backend.card.InvalidCardContractException;
 import com.smartiq.backend.card.LabelCountView;
+import com.smartiq.backend.card.StartupContentHealthReport;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,6 +67,7 @@ public class CardImportRunner implements ApplicationRunner {
 
     private final CardRepository cardRepository;
     private final ImportProperties importProperties;
+    private final ContentHealthGuard contentHealthGuard;
     private final ObjectMapper objectMapper;
     private final int minimumCategoryThreshold;
     private final boolean failOnThreshold;
@@ -72,11 +75,13 @@ public class CardImportRunner implements ApplicationRunner {
 
     public CardImportRunner(CardRepository cardRepository,
                             ImportProperties importProperties,
+                            ContentHealthGuard contentHealthGuard,
                             ObjectMapper objectMapper,
                             MeterRegistry meterRegistry,
                             @Value("${smartiq.dataset.min-category-threshold:100}") int minimumCategoryThreshold) {
         this.cardRepository = cardRepository;
         this.importProperties = importProperties;
+        this.contentHealthGuard = contentHealthGuard;
         this.objectMapper = objectMapper;
         this.minimumCategoryThreshold = minimumCategoryThreshold;
         this.failOnThreshold = importProperties.failOnCategoryThreshold();
@@ -89,14 +94,25 @@ public class CardImportRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         warnIfDeprecatedSourcesDetected();
+        ImportAudit audit = new ImportAudit(importProperties.enabled(), importProperties.path());
 
-        if (importProperties.enabled()) {
-            cleanupRuntimeManagedSources();
-            resolveImportPaths(importProperties.path())
-                    .forEach(this::importLocation);
+        try {
+            if (importProperties.enabled()) {
+                cleanupRuntimeManagedSources();
+                resolveImportPaths(importProperties.path())
+                        .forEach(importLocation -> audit.record(importLocation(importLocation)));
+            }
+
+            DatasetSummary datasetSummary = logDatasetSummary();
+            StartupContentHealthReport report = buildStartupContentHealthReport(audit, datasetSummary);
+            contentHealthGuard.recordStartupReport(report);
+            logCriticalStartupFailure(report);
+        } catch (RuntimeException ex) {
+            StartupContentHealthReport report = buildImportFailureReport(audit, ex);
+            contentHealthGuard.recordStartupReport(report);
+            logCriticalStartupFailure(report);
+            throw ex;
         }
-
-        logDatasetSummary();
     }
 
     private void cleanupRuntimeManagedSources() {
@@ -113,7 +129,7 @@ public class CardImportRunner implements ApplicationRunner {
         }
     }
 
-    private void logDatasetSummary() {
+    private DatasetSummary logDatasetSummary() {
         long totalCards = cardRepository.count();
         Map<String, Long> categories = toCountMap(cardRepository.findCategoryCounts());
         Map<String, Long> topics = cardRepository.findTopicCounts().stream()
@@ -147,6 +163,8 @@ public class CardImportRunner implements ApplicationRunner {
             log.warn("Dataset threshold warnings will not block startup categories={} minThreshold={} strictDatasetValidation={}",
                     belowThreshold, minimumCategoryThreshold, failOnThreshold);
         }
+
+        return new DatasetSummary(totalCards, allowedSourceCards, topics.size());
     }
 
     private List<String> belowThresholdCategories(Map<String, Long> categories) {
@@ -168,56 +186,58 @@ public class CardImportRunner implements ApplicationRunner {
         return map;
     }
 
-    private void importLocation(String importLocation) {
+    private ImportLocationResult importLocation(String importLocation) {
         if (!StringUtils.hasText(importLocation)) {
-            return;
+            return ImportLocationResult.notFound();
         }
         String trimmed = importLocation.trim();
         if (trimmed.startsWith("classpath:")) {
-            importClasspathResource(trimmed);
-            return;
+            return importClasspathResource(trimmed);
         }
 
-        importPath(Path.of(trimmed).normalize());
+        return importPath(Path.of(trimmed).normalize());
     }
 
-    private void importClasspathResource(String importLocation) {
+    private ImportLocationResult importClasspathResource(String importLocation) {
         String resourcePath = importLocation.substring("classpath:".length()).trim();
         if (!StringUtils.hasText(resourcePath)) {
-            return;
+            return ImportLocationResult.notFound();
         }
 
         Resource resource = new ClassPathResource(resourcePath);
         if (!resource.exists()) {
             log.warn("Runtime dataset resource missing location={}", importLocation);
-            return;
+            return ImportLocationResult.notFound();
         }
 
         log.info("Runtime dataset resource found location={}", importLocation);
-        importResource(resource, importLocation);
+        return importResource(resource, importLocation);
     }
 
-    private void importPath(Path importPath) {
+    private ImportLocationResult importPath(Path importPath) {
         if (!Files.exists(importPath)) {
             log.warn("Runtime dataset path missing location={}", importPath);
-            return;
+            return ImportLocationResult.notFound();
         }
 
         if (Files.isDirectory(importPath)) {
+            List<ImportLocationResult> results = new ArrayList<>();
             try (Stream<Path> fileStream = Files.list(importPath)) {
                 fileStream
                         .filter(p -> p.getFileName().toString().endsWith(".json"))
                         .sorted()
-                        .forEach(this::importFile);
+                        .forEach(path -> results.add(importFile(path)));
             } catch (IOException ex) {
                 throw new IllegalStateException("Failed to import cards from path " + importPath, ex);
             }
-            return;
+            return results.stream()
+                    .reduce(ImportLocationResult.notFound(), ImportLocationResult::combine);
         }
 
         if (importPath.getFileName().toString().endsWith(".json")) {
-            importFile(importPath);
+            return importFile(importPath);
         }
+        return ImportLocationResult.notFound();
     }
 
     private List<String> resolveImportPaths(String importPathRaw) {
@@ -235,23 +255,23 @@ public class CardImportRunner implements ApplicationRunner {
         return paths;
     }
 
-    private void importFile(Path path) {
+    private ImportLocationResult importFile(Path path) {
         try (InputStream inputStream = Files.newInputStream(path)) {
-            importSeedStream(inputStream, path.getFileName().toString());
+            return importSeedStream(inputStream, path.getFileName().toString());
         } catch (IOException ex) {
             throw new IllegalStateException("Failed to import cards from " + path, ex);
         }
     }
 
-    private void importResource(Resource resource, String sourceLabel) {
+    private ImportLocationResult importResource(Resource resource, String sourceLabel) {
         try (InputStream inputStream = resource.getInputStream()) {
-            importSeedStream(inputStream, sourceLabel);
+            return importSeedStream(inputStream, sourceLabel);
         } catch (IOException ex) {
             throw new IllegalStateException("Failed to import cards from " + sourceLabel, ex);
         }
     }
 
-    private void importSeedStream(InputStream inputStream, String sourceLabel) {
+    private ImportLocationResult importSeedStream(InputStream inputStream, String sourceLabel) {
         try {
             SeedReadResult readResult = readSeeds(inputStream);
             List<CardSeed> seeds = readResult.seeds();
@@ -280,9 +300,77 @@ public class CardImportRunner implements ApplicationRunner {
                     sourceLabel, inserted, importedTopics.size());
             log.info("Card import completed file={} total={} inserted={} duplicates={} invalid={}",
                     sourceLabel, seeds.size(), inserted, duplicates, invalid);
+            return new ImportLocationResult(true, inserted, importedTopics.size());
         } catch (IOException ex) {
             throw new IllegalStateException("Failed to import cards from " + sourceLabel, ex);
         }
+    }
+
+    private StartupContentHealthReport buildStartupContentHealthReport(ImportAudit audit, DatasetSummary datasetSummary) {
+        List<String> reasons = new ArrayList<>();
+
+        if (audit.importEnabled() && !StringUtils.hasText(audit.importPath())) {
+            reasons.add("runtime dataset path is blank");
+        }
+        if (audit.importEnabled() && !audit.datasetFound()) {
+            reasons.add("runtime dataset file not found");
+        }
+        if (audit.importEnabled() && audit.cardsImported() <= 0) {
+            reasons.add("runtime dataset import produced zero cards");
+        }
+        if (audit.importEnabled() && audit.topicsCreated() <= 0) {
+            reasons.add("runtime dataset import produced zero topics");
+        }
+        if (datasetSummary.allowedSourceCards() <= 0) {
+            reasons.add("runtime dataset has zero playable cards");
+        }
+        if (datasetSummary.publicTopics() <= 0) {
+            reasons.add("runtime dataset has zero playable topics");
+        }
+
+        boolean healthy = reasons.isEmpty();
+        return new StartupContentHealthReport(
+                healthy,
+                audit.importEnabled(),
+                audit.importEnabled(),
+                audit.datasetFound(),
+                audit.cardsImported(),
+                audit.topicsCreated(),
+                datasetSummary.allowedSourceCards(),
+                datasetSummary.publicTopics(),
+                healthy ? "" : ContentHealthGuard.FRONTEND_MESSAGE + " " + String.join("; ", reasons)
+        );
+    }
+
+    private StartupContentHealthReport buildImportFailureReport(ImportAudit audit, RuntimeException ex) {
+        String reason = ContentHealthGuard.FRONTEND_MESSAGE + " import failure: " + ex.getMessage();
+        return new StartupContentHealthReport(
+                false,
+                audit.importEnabled(),
+                audit.importEnabled(),
+                audit.datasetFound(),
+                audit.cardsImported(),
+                audit.topicsCreated(),
+                0,
+                0,
+                reason
+        );
+    }
+
+    private void logCriticalStartupFailure(StartupContentHealthReport report) {
+        if (report.healthy()) {
+            return;
+        }
+
+        log.error("CRITICAL STARTUP CONTENT FAILURE: reason=\"{}\" importEnabled={} datasetFound={} cardsImported={} topicsCreated={} allowedSourceCards={} publicTopics={} importPath={}",
+                report.reason(),
+                report.importEnabled(),
+                report.datasetFound(),
+                report.cardsImported(),
+                report.topicsCreated(),
+                report.allowedSourceCards(),
+                report.publicTopics(),
+                importProperties.path());
     }
 
     private SeedReadResult readSeeds(InputStream inputStream) throws IOException {
@@ -737,6 +825,63 @@ public class CardImportRunner implements ApplicationRunner {
     private record SeedReadResult(
             List<CardSeed> seeds,
             int invalidCount
+    ) {
+    }
+
+    private record ImportLocationResult(
+            boolean datasetFound,
+            int cardsImported,
+            int topicsCreated
+    ) {
+        private static ImportLocationResult notFound() {
+            return new ImportLocationResult(false, 0, 0);
+        }
+
+        private ImportLocationResult combine(ImportLocationResult other) {
+            return new ImportLocationResult(
+                    datasetFound || other.datasetFound,
+                    cardsImported + other.cardsImported,
+                    topicsCreated + other.topicsCreated
+            );
+        }
+    }
+
+    private record ImportAudit(
+            boolean importEnabled,
+            String importPath,
+            AtomicInteger datasetFoundCounter,
+            AtomicInteger cardsImportedCounter,
+            AtomicInteger topicsCreatedCounter
+    ) {
+        private ImportAudit(boolean importEnabled, String importPath) {
+            this(importEnabled, importPath, new AtomicInteger(0), new AtomicInteger(0), new AtomicInteger(0));
+        }
+
+        private void record(ImportLocationResult result) {
+            if (result.datasetFound()) {
+                datasetFoundCounter.incrementAndGet();
+            }
+            cardsImportedCounter.addAndGet(result.cardsImported());
+            topicsCreatedCounter.addAndGet(result.topicsCreated());
+        }
+
+        private boolean datasetFound() {
+            return datasetFoundCounter.get() > 0;
+        }
+
+        private int cardsImported() {
+            return cardsImportedCounter.get();
+        }
+
+        private int topicsCreated() {
+            return topicsCreatedCounter.get();
+        }
+    }
+
+    private record DatasetSummary(
+            long totalCards,
+            long allowedSourceCards,
+            long publicTopics
     ) {
     }
 }

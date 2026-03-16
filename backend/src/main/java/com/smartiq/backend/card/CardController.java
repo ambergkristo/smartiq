@@ -23,19 +23,34 @@ public class CardController {
 
     private static final String DEPRECATION_LINK = "</api/cards/nextRandom>; rel=\"successor-version\"";
     private static final String SUNSET_DATE = "Thu, 31 Dec 2026 23:59:59 GMT";
+    private static final String CONTENT_UNHEALTHY_CODE = "CONTENT_UNHEALTHY";
 
     private final CardService cardService;
+    private final ContentHealthGuard contentHealthGuard;
     private final Environment environment;
 
-    public CardController(CardService cardService, Environment environment) {
+    public CardController(CardService cardService,
+                          ContentHealthGuard contentHealthGuard,
+                          Environment environment) {
         this.cardService = cardService;
+        this.contentHealthGuard = contentHealthGuard;
         this.environment = environment;
     }
 
     @GetMapping("/topics")
-    public List<TopicCountResponse> getTopics() {
+    public ResponseEntity<?> getTopics() {
         log.info("api_topics_fetch");
-        return cardService.getTopicCounts();
+        ContentHealthStatus status = contentHealthGuard.currentStatus();
+        if (!status.healthy()) {
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                    .body(ApiErrorResponse.of(
+                            HttpStatus.SERVICE_UNAVAILABLE,
+                            CONTENT_UNHEALTHY_CODE,
+                            status.message(),
+                            "/api/topics"
+                    ));
+        }
+        return ResponseEntity.ok(cardService.getTopicCounts());
     }
 
     @GetMapping("/cards/random")

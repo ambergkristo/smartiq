@@ -294,6 +294,7 @@ const STARTUP_PHASE = {
   LOADING: 'loading',
   WARMING: 'warming',
   BACKEND_UNREACHABLE: 'backend-unreachable',
+  CONTENT_UNHEALTHY: 'content-unhealthy',
   FORBIDDEN: 'forbidden',
   SERVER_ERROR: 'server-error',
   NOT_FOUND: 'not-found',
@@ -1474,7 +1475,9 @@ function GameApp() {
       const resolved = resolveTopicsErrorState(error);
       setStartup({
         phase:
-          resolved.kind === 'forbidden'
+          resolved.kind === 'content-unhealthy'
+            ? STARTUP_PHASE.CONTENT_UNHEALTHY
+            : resolved.kind === 'forbidden'
             ? STARTUP_PHASE.FORBIDDEN
             : resolved.kind === 'server-error'
               ? STARTUP_PHASE.SERVER_ERROR
