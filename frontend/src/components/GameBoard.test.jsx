@@ -41,8 +41,13 @@ describe('GameBoard layout', () => {
   test('renders a fixed 8-answer board', () => {
     render(<GameBoard {...makeProps()} />);
 
+    const boardLayout = screen.getByTestId('gameplay-board-layout');
+    expect(boardLayout).toBeInTheDocument();
+
+    const questionPrompt = screen.getByTestId('question-prompt');
     const grid = screen.getByTestId('answer-grid');
     expect(grid).toHaveAttribute('data-layout', 'canonical-2x4');
+    expect(questionPrompt.compareDocumentPosition(grid) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(within(grid).getAllByRole('button')).toHaveLength(8);
     expect(screen.getByTestId('phase-pill')).toHaveTextContent('QUESTION ACTIVE');
   });

@@ -144,21 +144,23 @@ export default function GameBoard({
           />
         </RevealPanel>
       ) : (
-        <>
-          <QuestionPrompt
-            question={card.question}
-            categoryColor={CATEGORY_COLORS[category] || '#53bde0'}
-            isLongQuestion={isLongQuestion}
-            questionExpanded={questionExpanded}
-            onToggle={() => setQuestionExpanded((prev) => !prev)}
-          />
-          <BoardStatusBar
-            actionHint={getActionHint(phase, currentPlayer, category, controlsDisabled)}
-            selectedIndexes={selectedIndexes}
-            revealedIndexes={revealedIndexes}
-            wrongIndexes={wrongIndexes}
-            optionCount={Math.min(card.options.length, 8)}
-          />
+        <div className="gameplay-board-layout" data-testid="gameplay-board-layout">
+          <div className="gameplay-board-question-stack">
+            <QuestionPrompt
+              question={card.question}
+              categoryColor={CATEGORY_COLORS[category] || '#53bde0'}
+              isLongQuestion={isLongQuestion}
+              questionExpanded={questionExpanded}
+              onToggle={() => setQuestionExpanded((prev) => !prev)}
+            />
+            <BoardStatusBar
+              actionHint={getActionHint(phase, currentPlayer, category, controlsDisabled)}
+              selectedIndexes={selectedIndexes}
+              revealedIndexes={revealedIndexes}
+              wrongIndexes={wrongIndexes}
+              optionCount={Math.min(card.options.length, 8)}
+            />
+          </div>
           <AnswerGrid
             card={card}
             selectedIndexes={selectedIndexes}
@@ -168,7 +170,7 @@ export default function GameBoard({
             toggleIndex={toggleIndex}
             disabled={!canChoose}
           />
-        </>
+        </div>
       )}
       <p className="sr-only" aria-live="polite" aria-atomic="true" data-testid="board-live-region">
         {liveMessage}
