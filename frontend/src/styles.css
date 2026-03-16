@@ -85,10 +85,17 @@ main[data-phase='game'] {
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) minmax(320px, 0.82fr);
   gap: 14px;
+  align-items: stretch;
 }
 
 .app-shell-body--single {
   grid-template-columns: minmax(0, 1fr);
+}
+
+.app-shell-body--game {
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 360px);
+  gap: 18px;
+  align-items: start;
 }
 
 .app-header {
@@ -242,8 +249,18 @@ main[data-phase='game'] {
   overflow: hidden;
 }
 
+.app-shell--game .app-shell-stage,
+.app-shell--game .app-shell-side {
+  align-self: start;
+}
+
 .app-shell-side {
   overflow: hidden;
+}
+
+.app-shell--game .app-shell-side {
+  display: grid;
+  align-content: start;
 }
 
 .host-shell-stack {
@@ -2170,12 +2187,12 @@ button:disabled {
 }
 
 .gameplay-header {
-  width: min(100%, 1100px);
+  width: min(100%, 920px);
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 14px;
+  gap: 16px;
 }
 
 .gameplay-board-layout {
@@ -2184,13 +2201,13 @@ button:disabled {
   margin: 0 auto;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
-  gap: 14px;
+  gap: 16px;
   align-content: start;
 }
 
 .gameplay-board-question-stack {
   display: grid;
-  gap: 14px;
+  gap: 16px;
 }
 
 .gameplay-header-copy {
@@ -2255,11 +2272,11 @@ button:disabled {
 }
 
 .question-card {
-  width: min(100%, 900px);
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
   padding: 26px 28px;
   display: grid;
-  gap: 14px;
+  gap: 16px;
   overflow: hidden;
   background:
     radial-gradient(circle at top center, rgba(224, 58, 78, 0.08), transparent 58%),
@@ -2287,6 +2304,12 @@ button:disabled {
   justify-content: space-between;
   gap: 12px;
   align-items: center;
+}
+
+.question-prompt,
+.board-status-bar {
+  width: min(100%, 920px);
+  margin: 0 auto;
 }
 
 .cherry-round-indicator {
@@ -2496,13 +2519,12 @@ button:disabled {
 
 .question-prompt {
   min-height: 0;
-  margin-bottom: 10px;
 }
 
 .board-status-bar {
   display: grid;
-  gap: 10px;
-  padding: 12px 14px;
+  gap: 12px;
+  padding: 14px 16px;
   border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background:
@@ -2943,6 +2965,7 @@ button:disabled {
   display: grid;
   grid-template-rows: auto auto auto minmax(0, 1fr);
   gap: 16px;
+  align-content: start;
   background:
     radial-gradient(circle at top right, rgba(197, 51, 70, 0.08), transparent 38%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0)),
@@ -3407,6 +3430,10 @@ button:disabled {
     grid-template-columns: 1fr;
   }
 
+  .app-shell-body--game {
+    gap: 16px;
+  }
+
   .app-shell-stage > * {
     height: auto;
   }
@@ -3448,6 +3475,12 @@ button:disabled {
   .gameplay-board-layout,
   .gameplay-board-question-stack {
     gap: 12px;
+  }
+
+  .gameplay-header,
+  .question-prompt,
+  .board-status-bar {
+    width: min(100%, 920px);
   }
 
   .answer-state-row {
@@ -3496,6 +3529,12 @@ button:disabled {
   .question-card {
     padding: 22px 20px;
     gap: 12px;
+  }
+
+  .gameplay-header,
+  .question-prompt,
+  .board-status-bar {
+    width: 100%;
   }
 
   .cherry-round-indicator {
