@@ -36,7 +36,7 @@ export default function LobbyPlayerPanel({
       </div>
       <p className="field-hint room-selected-roster-hint" data-testid="room-selected-roster-hint">
         Players joined: {roomPlayers.length}
-        {selectedPlayers.length > 0 ? ` • Start with: ${selectedPlayers.join(', ')}` : ` • ${strings.roomSelectedRosterEmpty}`}
+        {selectedPlayers.length > 0 ? ` - Start with: ${selectedPlayers.join(', ')}` : ` - ${strings.roomSelectedRosterEmpty}`}
       </p>
       {roomPlayers.length > 0 ? (
         <ul className="lobby-player-list">

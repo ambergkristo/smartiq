@@ -8,7 +8,7 @@ export default function LobbySupportPanel({ roomCode, joinLink, onBackHome }) {
       <QrPlaceholder roomCode={roomCode} />
       <section className="room-lobby-support-actions board-surface">
         <button type="button" className="secondary-action lobby-back-action" onClick={onBackHome}>
-          ← Back to home
+          Back to home
         </button>
       </section>
     </div>
