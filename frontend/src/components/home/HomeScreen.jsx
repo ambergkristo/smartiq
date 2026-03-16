@@ -8,11 +8,15 @@ export default function HomeScreen({
   profileName = '',
   profileLevel = 1,
   profileXp = 0,
+  profileGamesPlayed = 0,
+  profileRoundsWon = 0,
   onProfileNameChange,
   onPlay,
   onJoinGame,
   onHostGame
 }) {
+  const displayProfileName = profileName || 'Solo Player';
+
   return (
     <section className="home-screen" data-testid="home-screen">
       <div className="home-screen-panel board-surface">
@@ -59,10 +63,25 @@ export default function HomeScreen({
 
           <aside className="home-screen-side-panel">
             <div className="home-screen-profile" data-testid="home-screen-profile">
-              <div className="home-screen-profile-head">
-                <p className="section-title">Player profile</p>
-                <strong>Local solo progress</strong>
+              <div className="home-screen-profile-topline">
+                <div className="home-screen-profile-head">
+                  <p className="section-title">Player profile</p>
+                  <strong>Local solo progress</strong>
+                </div>
+                <span className="home-screen-profile-badge">Level {profileLevel}</span>
               </div>
+
+              <div className="home-screen-profile-hero">
+                <div>
+                  <span className="home-screen-profile-hero-label">Current player</span>
+                  <h2>{displayProfileName}</h2>
+                </div>
+                <p className="home-screen-profile-hero-xp">
+                  <span>Total XP</span>
+                  <strong>{profileXp}</strong>
+                </p>
+              </div>
+
               <label htmlFor="guest-display-name">Guest name</label>
               <input
                 id="guest-display-name"
@@ -72,7 +91,21 @@ export default function HomeScreen({
                 placeholder="Solo Player"
                 autoComplete="nickname"
               />
-              <p className="field-hint">Level {profileLevel} | {profileXp} XP saved locally on this browser.</p>
+              <div className="home-screen-profile-metrics" role="list" aria-label="Profile progression summary">
+                <article className="home-screen-profile-metric home-screen-profile-metric--emphasis" role="listitem">
+                  <span>Saved XP</span>
+                  <strong>{profileXp}</strong>
+                </article>
+                <article className="home-screen-profile-metric" role="listitem">
+                  <span>Games</span>
+                  <strong>{profileGamesPlayed}</strong>
+                </article>
+                <article className="home-screen-profile-metric" role="listitem">
+                  <span>Rounds won</span>
+                  <strong>{profileRoundsWon}</strong>
+                </article>
+              </div>
+              <p className="field-hint">Level {profileLevel} profile saved locally on this browser.</p>
             </div>
 
             {warning ? <p className="field-hint runtime-warning">{warning}</p> : null}

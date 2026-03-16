@@ -460,7 +460,9 @@ describe('App server-authoritative mode', () => {
     expect(screen.getByRole('button', { name: /join game/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /host game/i })).toBeInTheDocument();
     expect(screen.getByTestId('home-screen-profile')).toHaveTextContent(/level 1/i);
-    expect(screen.getByTestId('home-screen-profile')).toHaveTextContent(/0 xp saved locally on this browser/i);
+    expect(screen.getByTestId('home-screen-profile')).toHaveTextContent(/solo player/i);
+    expect(screen.getByTestId('home-screen-profile')).toHaveTextContent(/saved xp/i);
+    expect(screen.getByTestId('home-screen-profile')).toHaveTextContent(/0/i);
   });
 
   test('renders the Join Game shell and navigates back home', async () => {
@@ -727,6 +729,10 @@ describe('App server-authoritative mode', () => {
     render(<App />);
     await screen.findByTestId('home-screen-profile');
     expect(screen.getByTestId('home-screen-profile')).toHaveTextContent('Level 2');
+    expect(screen.getByTestId('home-screen-profile')).toHaveTextContent('Games');
+    expect(screen.getByTestId('home-screen-profile')).toHaveTextContent('3');
+    expect(screen.getByTestId('home-screen-profile')).toHaveTextContent('Rounds won');
+    expect(screen.getByTestId('home-screen-profile')).toHaveTextContent('2');
     expect(screen.getByDisplayValue('Kai')).toBeInTheDocument();
 
     await startSoloMode();

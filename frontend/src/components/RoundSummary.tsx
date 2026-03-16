@@ -74,6 +74,7 @@ export default function RoundSummary({
             <div>
               <p className="section-title">Progress recap</p>
               <h2>{profileName}</h2>
+              <p className="round-summary-progress-copy">Your CherryPick profile totals stay saved on this browser.</p>
             </div>
             <span className="round-summary-progress-badge">Level {profileLevel}</span>
           </div>

@@ -99,14 +99,23 @@ export default function ScoreBoard({
 
       {isSoloMode ? (
         <div className="scoreboard-solo-recap" data-testid="solo-scoreboard">
-          <p className="scoreboard-solo-metric"><span>Player</span><strong>{profileName || players[0] || 'Solo Player'}</strong></p>
-          <p className="scoreboard-solo-metric"><span>Level</span><strong>{profileLevel}</strong></p>
-          <p className="scoreboard-solo-metric is-emphasis"><span>Total XP</span><strong>{profileXp}</strong></p>
-          <p className="scoreboard-solo-metric"><span>Multiplier</span><strong>{roundReward.multiplierLabel}</strong></p>
-          <p className="scoreboard-solo-metric is-emphasis"><span>Session XP</span><strong>{sessionXp}</strong></p>
-          <p className="scoreboard-solo-metric"><span>Round XP</span><strong>{lastRoundXp}</strong></p>
-          <p className="scoreboard-solo-metric"><span>Games</span><strong>{profileGamesPlayed}</strong></p>
-          <p className="scoreboard-solo-metric"><span>Rounds won</span><strong>{profileRoundsWon}</strong></p>
+          <div className="scoreboard-solo-recap-head">
+            <div>
+              <p className="section-title">Profile snapshot</p>
+              <h3>{profileName || players[0] || 'Solo Player'}</h3>
+            </div>
+            <span className="scoreboard-solo-badge">Level {profileLevel}</span>
+          </div>
+          <article className="scoreboard-solo-hero" aria-label="Total progression">
+            <span>Total XP</span>
+            <strong>{profileXp}</strong>
+            <p>Saved solo progress for this browser.</p>
+          </article>
+          <article className="scoreboard-solo-metric is-emphasis"><span>Session XP</span><strong>{sessionXp}</strong></article>
+          <article className="scoreboard-solo-metric"><span>Round XP</span><strong>{lastRoundXp}</strong></article>
+          <article className="scoreboard-solo-metric"><span>Multiplier</span><strong>{roundReward.multiplierLabel}</strong></article>
+          <article className="scoreboard-solo-metric"><span>Games</span><strong>{profileGamesPlayed}</strong></article>
+          <article className="scoreboard-solo-metric"><span>Rounds won</span><strong>{profileRoundsWon}</strong></article>
         </div>
       ) : (
         <ul className="scoreboard-player-list" aria-label="Player scoreboard">

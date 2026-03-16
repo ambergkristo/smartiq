@@ -2903,6 +2903,8 @@ function GameApp() {
       profileName={playerProfile.displayName}
       profileLevel={playerProfile.level}
       profileXp={playerProfile.totalXp}
+      profileGamesPlayed={playerProfile.gamesPlayed}
+      profileRoundsWon={playerProfile.roundsWon}
       onProfileNameChange={handlePlayerProfileNameChange}
       onPlay={() => handleNavigateEntry(ENTRY_ROUTE.PLAY)}
       onJoinGame={() => handleNavigateEntry(ENTRY_ROUTE.JOIN)}
