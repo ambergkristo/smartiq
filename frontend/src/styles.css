@@ -17,6 +17,7 @@
   --brand-cherry-dark: #7A1E2C;
   --brand-leaf-green: #4E8F67;
   --brand-cream: #FFF8F4;
+  --warning: #D39A4A;
   --danger: #ff2e2e;
   --success: #00ff7b;
   --panel-shadow: 0 26px 56px rgba(0, 0, 0, 0.44);
@@ -2410,6 +2411,22 @@ button:disabled {
 }
 
 .answer-grid-shell {
+  --answer-card-bg: #2A151A;
+  --answer-card-bg-hover: #341a20;
+  --answer-card-bg-selected: #3A1E24;
+  --answer-card-bg-locked: #442029;
+  --answer-card-border: #4A232A;
+  --answer-card-border-hover: #6A313A;
+  --answer-card-border-selected: #9A4451;
+  --answer-card-border-locked: #C53346;
+  --answer-card-text: #F6EEF0;
+  --answer-card-success-bg: #1D2A22;
+  --answer-card-success-border: #4E8F67;
+  --answer-card-wrong-bg: #3A171D;
+  --answer-card-wrong-border: #E03A4E;
+  --answer-card-shadow: 0 14px 28px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --answer-card-shadow-hover: 0 18px 36px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(197, 51, 70, 0.08);
+  --answer-card-shadow-active: 0 18px 36px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(197, 51, 70, 0.12);
   width: 100%;
   min-height: 0;
   display: grid;
@@ -2421,40 +2438,45 @@ button:disabled {
   display: grid;
   height: 100%;
   min-height: 0;
-  gap: 10px;
+  gap: 12px;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(88px, 1fr));
 }
 
 .answer-tile {
-  min-height: clamp(72px, 10vh, 94px);
-  padding: 10px 12px;
-  border-radius: 22px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(180deg, rgba(24, 26, 32, 0.98), rgba(12, 13, 18, 0.98));
-  color: var(--text);
+  min-height: 88px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--answer-card-border);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
+    var(--answer-card-bg);
+  color: var(--answer-card-text);
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
   gap: 10px;
-  align-items: start;
-  justify-items: start;
+  align-items: center;
+  justify-items: stretch;
   transition:
     transform 150ms ease-out,
     box-shadow 150ms ease-out,
     background 150ms ease-out,
     border-color 150ms ease-out,
     opacity 150ms ease-out;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 8px 14px rgba(0, 0, 0, 0.22);
+  box-shadow: var(--answer-card-shadow);
 }
 
 .answer-tile:not(:disabled):hover {
   transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, 0.18);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 12px 24px rgba(0, 0, 0, 0.28);
+  border-color: var(--answer-card-border-hover);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0)),
+    var(--answer-card-bg-hover);
+  box-shadow: var(--answer-card-shadow-hover);
 }
 
 .answer-tile:focus-visible {
-  outline: 2px solid rgba(0, 255, 123, 0.9);
+  outline: 2px solid rgba(197, 51, 70, 0.9);
   outline-offset: 3px;
 }
 
@@ -2466,9 +2488,9 @@ button:disabled {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--text);
+  background: rgba(246, 238, 240, 0.05);
+  border: 1px solid rgba(246, 238, 240, 0.1);
+  color: rgba(246, 238, 240, 0.94);
   font-weight: 700;
   font-size: 0.78rem;
   letter-spacing: 0.08em;
@@ -2483,9 +2505,11 @@ button:disabled {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  text-align: left;
+  text-align: center;
   font-size: clamp(0.9rem, 1.02vw, 1rem);
-  line-height: 1.15;
+  line-height: 1.22;
+  color: var(--answer-card-text);
+  align-self: center;
 }
 
 .slot-state-row {
@@ -2514,52 +2538,56 @@ button:disabled {
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(246, 238, 240, 0.12);
+  background: rgba(246, 238, 240, 0.06);
 }
 
 .slot-state-chip--selected {
-  border-color: rgba(0, 255, 123, 0.34);
-  background: rgba(0, 255, 123, 0.12);
-  color: var(--accent);
+  border-color: rgba(197, 51, 70, 0.34);
+  background: rgba(197, 51, 70, 0.12);
+  color: #f8d7dd;
 }
 
 .slot-state-chip--locked {
-  border-color: rgba(255, 212, 0, 0.4);
-  background: rgba(255, 212, 0, 0.12);
-  color: var(--warning);
+  border-color: rgba(197, 51, 70, 0.44);
+  background: rgba(197, 51, 70, 0.16);
+  color: #fff0f2;
 }
 
 .slot-state-chip--correct {
-  border-color: rgba(0, 255, 123, 0.36);
-  background: rgba(0, 255, 123, 0.14);
-  color: #c7ffd2;
+  border-color: rgba(78, 143, 103, 0.5);
+  background: rgba(78, 143, 103, 0.16);
+  color: #d7f0e0;
 }
 
 .slot-state-chip--wrong {
-  border-color: rgba(255, 46, 46, 0.42);
-  background: rgba(255, 46, 46, 0.16);
-  color: #ffd0d0;
+  border-color: rgba(224, 58, 78, 0.46);
+  background: rgba(224, 58, 78, 0.18);
+  color: #ffe0e5;
 }
 
 .answer-tile.is-correct .slot-marker {
-  color: #c7ffd2;
+  color: #d7f0e0;
 }
 
 .answer-tile.is-wrong .slot-marker {
-  color: #ffd0d0;
+  color: #ffe0e5;
 }
 
 .answer-tile.is-selected {
-  border-color: var(--accent);
-  background: linear-gradient(180deg, rgba(0, 255, 123, 0.22), rgba(10, 76, 43, 0.4));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 0 1px rgba(0, 255, 123, 0.18), 0 16px 30px rgba(0, 0, 0, 0.26);
+  border-color: var(--answer-card-border-selected);
+  background:
+    linear-gradient(180deg, rgba(197, 51, 70, 0.12), rgba(197, 51, 70, 0)),
+    var(--answer-card-bg-selected);
+  box-shadow: var(--answer-card-shadow-active);
 }
 
 .answer-tile.is-locked {
-  border-color: var(--warning);
-  background: linear-gradient(180deg, rgba(255, 212, 0, 0.26), rgba(114, 88, 6, 0.5));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 0 0 1px rgba(255, 212, 0, 0.18), 0 14px 24px rgba(0, 0, 0, 0.24);
+  border-color: var(--answer-card-border-locked);
+  background:
+    linear-gradient(180deg, rgba(197, 51, 70, 0.16), rgba(197, 51, 70, 0)),
+    var(--answer-card-bg-locked);
+  box-shadow: var(--answer-card-shadow-active);
 }
 
 .answer-tile.is-default .slot-marker {
@@ -2567,18 +2595,22 @@ button:disabled {
 }
 
 .answer-tile.is-locked .slot-marker {
-  color: var(--warning);
+  color: #fff0f2;
 }
 
 .answer-tile.is-correct {
-  border-color: var(--success);
-  background: linear-gradient(180deg, rgba(0, 255, 123, 0.34), rgba(19, 93, 57, 0.72));
+  border-color: var(--answer-card-success-border);
+  background:
+    linear-gradient(180deg, rgba(78, 143, 103, 0.16), rgba(78, 143, 103, 0)),
+    var(--answer-card-success-bg);
   animation: answer-reveal 180ms ease-out;
 }
 
 .answer-tile.is-wrong {
-  border-color: var(--danger);
-  background: linear-gradient(180deg, rgba(255, 46, 46, 0.28), rgba(122, 24, 24, 0.68));
+  border-color: var(--answer-card-wrong-border);
+  background:
+    linear-gradient(180deg, rgba(224, 58, 78, 0.14), rgba(224, 58, 78, 0)),
+    var(--answer-card-wrong-bg);
   animation: answer-reveal 180ms ease-out;
 }
 
@@ -2587,11 +2619,11 @@ button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03), 0 6px 12px rgba(0, 0, 0, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03), 0 10px 18px rgba(0, 0, 0, 0.16);
 }
 
 .answer-tile.is-revealed {
-  background: rgba(255, 236, 211, 0.17);
+  background: rgba(246, 238, 240, 0.08);
 }
 
 .reveal-panel,
@@ -3223,7 +3255,8 @@ button:disabled {
   }
 
   .answer-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(88px, 1fr));
   }
 }
 
@@ -3331,7 +3364,12 @@ button:disabled {
     min-height: 54px;
   }
 
-  .answer-grid,
+  .answer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(88px, 1fr));
+    gap: 12px;
+  }
+
   .gameplay-action-buttons,
   .answer-state-row {
     grid-template-columns: 1fr;
@@ -3349,7 +3387,7 @@ button:disabled {
   }
 
   .answer-tile {
-    min-height: 72px;
+    min-height: 88px;
     padding: 12px 14px;
   }
 

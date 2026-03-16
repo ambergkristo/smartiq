@@ -42,6 +42,7 @@ describe('GameBoard layout', () => {
     render(<GameBoard {...makeProps()} />);
 
     const grid = screen.getByTestId('answer-grid');
+    expect(grid).toHaveAttribute('data-layout', 'canonical-2x4');
     expect(within(grid).getAllByRole('button')).toHaveLength(8);
     expect(screen.getByTestId('phase-pill')).toHaveTextContent('QUESTION ACTIVE');
   });

@@ -11,8 +11,8 @@ export default function AnswerGrid({
   disabled
 }) {
   return (
-    <div className="answer-grid-shell">
-      <div className="answer-grid" data-testid="answer-grid">
+    <div className="answer-grid-shell" data-board-layout="canonical-2x4">
+      <div className="answer-grid answer-grid--canonical" data-testid="answer-grid" data-layout="canonical-2x4">
         {card.options.slice(0, 8).map((option, index) => (
           <AnswerTile
             key={`${card.cardId || card.id}-${index}`}
