@@ -3349,6 +3349,13 @@ function GameApp() {
                 scores={engine.scores}
                 stats={engine.stats}
                 roundNumber={engine.roundNumber}
+                mode={soloModeActive ? 'solo' : 'standard'}
+                sessionXp={engine.sessionXp}
+                profileName={playerProfile.displayName}
+                profileLevel={playerProfile.level}
+                profileXp={playerProfile.totalXp}
+                profileGamesPlayed={playerProfile.gamesPlayed}
+                profileRoundsWon={playerProfile.roundsWon}
                 onNextRound={engine.nextStep}
                 onRestart={handleRestart}
                 onPlayAgain={handlePlayAgain}
