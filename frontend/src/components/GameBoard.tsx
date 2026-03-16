@@ -135,11 +135,13 @@ export default function GameBoard({
               currentPlayerIndex={currentPlayerIndex}
               resolutionState={resolutionState || { outcome: 'locked', actingPlayer: currentPlayer }}
               eliminatedPlayers={eliminatedPlayers}
+              tone={revealTone}
             />
           )}
           <NextStepActionArea
             nextActionLabel={isConfirmPhase ? 'LOCK IN' : nextActionLabel}
             note={nextActionNote}
+            tone={revealTone}
           />
         </RevealPanel>
       ) : (

@@ -115,6 +115,7 @@ describe('GameBoard layout', () => {
     expect(screen.getByTestId('correct-answer-display')).toHaveTextContent('B');
     expect(screen.getByTestId('resolution-summary')).toHaveTextContent(/round failed/i);
     expect(screen.getByTestId('player-result-list')).toHaveTextContent(/fail/i);
+    expect(screen.getByTestId('next-step-action-area')).toHaveAttribute('data-tone', 'incorrect');
   });
 
   test('shows solo round XP and correct answers after resolution', () => {
@@ -145,6 +146,8 @@ describe('GameBoard layout', () => {
     expect(screen.getByTestId('solo-round-result')).toHaveTextContent('600');
     expect(screen.getByTestId('solo-round-result')).toHaveTextContent('900');
     expect(screen.getByTestId('solo-round-result')).toHaveTextContent('A, C');
+    expect(screen.getByTestId('solo-round-result')).toHaveAttribute('data-outcome', 'success');
+    expect(screen.getByTestId('solo-round-result-reward')).toBeInTheDocument();
   });
 
   test('shows Cherry round designation before answering begins', () => {

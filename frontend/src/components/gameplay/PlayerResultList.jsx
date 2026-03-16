@@ -15,10 +15,15 @@ export default function PlayerResultList({
   scores,
   currentPlayerIndex,
   resolutionState,
-  eliminatedPlayers
+  eliminatedPlayers,
+  tone = 'neutral'
 }) {
   return (
-    <section className="player-result-list" data-testid="player-result-list">
+    <section
+      className={`player-result-list player-result-list--${tone}`}
+      data-tone={tone}
+      data-testid="player-result-list"
+    >
       <div className="player-result-list-head">
         <p className="section-title">Player results</p>
         <strong>{resolutionState?.actingPlayer || 'Live room'}</strong>
