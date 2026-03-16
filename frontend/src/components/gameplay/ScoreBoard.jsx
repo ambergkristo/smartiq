@@ -57,9 +57,9 @@ export default function ScoreBoard({
   const leadingScore = leadingPlayer ? scores[leadingPlayer] ?? 0 : 0;
 
   return (
-    <aside className="scoreboard-panel board-surface" data-testid="score-board">
+    <aside className="scoreboard-panel board-surface" data-testid="score-board" data-mode={isSoloMode ? 'solo' : 'standard'}>
       <div className="scoreboard-panel-head">
-        <div>
+        <div className="scoreboard-panel-copy">
           <p className="section-title">{isSoloMode ? 'Solo run' : 'Live scoreboard'}</p>
           <h2>Round {roundNumber}</h2>
         </div>
@@ -69,7 +69,7 @@ export default function ScoreBoard({
         </div>
       </div>
 
-      <div className="scoreboard-summary">
+      <div className="scoreboard-summary" data-testid="scoreboard-summary">
         {isSoloMode ? (
           <>
             <span className="player-chip active-chip">{roundReward.badgeLabel}</span>
@@ -84,7 +84,7 @@ export default function ScoreBoard({
         )}
       </div>
 
-      <div className="scoreboard-status-card">
+      <div className="scoreboard-status-card" data-testid="scoreboard-status-card">
         <div className="scoreboard-turn-spotlight">
           <span>Current turn</span>
           <strong>{currentPlayer}</strong>
@@ -99,14 +99,14 @@ export default function ScoreBoard({
 
       {isSoloMode ? (
         <div className="scoreboard-solo-recap" data-testid="solo-scoreboard">
-          <p><span>Player</span><strong>{profileName || players[0] || 'Solo Player'}</strong></p>
-          <p><span>Level</span><strong>{profileLevel}</strong></p>
-          <p><span>Total XP</span><strong>{profileXp}</strong></p>
-          <p><span>Multiplier</span><strong>{roundReward.multiplierLabel}</strong></p>
-          <p><span>Session XP</span><strong>{sessionXp}</strong></p>
-          <p><span>Round XP</span><strong>{lastRoundXp}</strong></p>
-          <p><span>Games</span><strong>{profileGamesPlayed}</strong></p>
-          <p><span>Rounds won</span><strong>{profileRoundsWon}</strong></p>
+          <p className="scoreboard-solo-metric"><span>Player</span><strong>{profileName || players[0] || 'Solo Player'}</strong></p>
+          <p className="scoreboard-solo-metric"><span>Level</span><strong>{profileLevel}</strong></p>
+          <p className="scoreboard-solo-metric is-emphasis"><span>Total XP</span><strong>{profileXp}</strong></p>
+          <p className="scoreboard-solo-metric"><span>Multiplier</span><strong>{roundReward.multiplierLabel}</strong></p>
+          <p className="scoreboard-solo-metric is-emphasis"><span>Session XP</span><strong>{sessionXp}</strong></p>
+          <p className="scoreboard-solo-metric"><span>Round XP</span><strong>{lastRoundXp}</strong></p>
+          <p className="scoreboard-solo-metric"><span>Games</span><strong>{profileGamesPlayed}</strong></p>
+          <p className="scoreboard-solo-metric"><span>Rounds won</span><strong>{profileRoundsWon}</strong></p>
         </div>
       ) : (
         <ul className="scoreboard-player-list" aria-label="Player scoreboard">
