@@ -1,3 +1,5 @@
+import CherryPickLogo, { isCherryPickBrand } from '../branding/CherryPickLogo';
+
 export default function AppHeader({
   title,
   eyebrow,
@@ -10,7 +12,9 @@ export default function AppHeader({
       <div className="app-header-copy">
         {eyebrow ? <p className="app-header-eyebrow">{eyebrow}</p> : null}
         <div className="app-header-title-row">
-          <h1>{title}</h1>
+          <h1 className={isCherryPickBrand(title) ? 'app-header-brand-heading' : ''}>
+            {isCherryPickBrand(title) ? <CherryPickLogo size="header" /> : title}
+          </h1>
           {status ? <span className="app-header-status">{status}</span> : null}
         </div>
       </div>

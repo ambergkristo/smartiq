@@ -1,4 +1,5 @@
 import HomeActionButton from './HomeActionButton';
+import CherryPickLogo, { isCherryPickBrand } from '../branding/CherryPickLogo';
 
 export default function HomeScreen({
   appTitle,
@@ -16,7 +17,9 @@ export default function HomeScreen({
     <section className="home-screen" data-testid="home-screen">
       <div className="home-screen-panel board-surface">
         <p className="home-screen-kicker">CherryPick modes</p>
-        <h1>{appTitle}</h1>
+        <h1 className={isCherryPickBrand(appTitle) ? 'home-screen-brand-heading' : ''}>
+          {isCherryPickBrand(appTitle) ? <CherryPickLogo size="hero" /> : appTitle}
+        </h1>
         <p className="home-screen-tagline">{tagline}</p>
         <div className="home-screen-profile" data-testid="home-screen-profile">
           <label htmlFor="guest-display-name">Guest name</label>

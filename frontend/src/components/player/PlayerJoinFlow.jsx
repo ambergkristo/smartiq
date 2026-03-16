@@ -3,6 +3,7 @@ import JoinButton from './JoinButton';
 import JoinStatusPanel from './JoinStatusPanel';
 import PlayerNameInput from './PlayerNameInput';
 import RoomCodeInput from './RoomCodeInput';
+import CherryPickLogo, { isCherryPickBrand } from '../branding/CherryPickLogo';
 
 const STEP = {
   ROOM: 'room',
@@ -57,7 +58,9 @@ export default function PlayerJoinFlow({
   return (
     <section className="player-join-screen board-surface" data-testid={screenTestId}>
       <div className="player-join-screen-head">
-        <p className="player-join-brand">{brandTitle}</p>
+        <p className="player-join-brand">
+          {isCherryPickBrand(brandTitle) ? <CherryPickLogo size="compact" /> : brandTitle}
+        </p>
         <span className="player-join-chip">{chipLabel}</span>
       </div>
 

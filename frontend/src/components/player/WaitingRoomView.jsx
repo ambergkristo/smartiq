@@ -1,3 +1,5 @@
+import CherryPickLogo, { isCherryPickBrand } from '../branding/CherryPickLogo';
+
 export default function WaitingRoomView({
   appTitle,
   roomCode,
@@ -18,7 +20,9 @@ export default function WaitingRoomView({
   return (
     <section className="player-waiting-room" data-testid="player-lobby-panel" style={style}>
       <div className="player-waiting-room-head">
-        <p className="player-waiting-room-brand">{appTitle}</p>
+        <p className="player-waiting-room-brand">
+          {isCherryPickBrand(appTitle) ? <CherryPickLogo size="compact" /> : appTitle}
+        </p>
         <div className="player-waiting-room-code-block">
           <span>Room code</span>
           <strong>{roomCode}</strong>
