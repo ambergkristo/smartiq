@@ -44,11 +44,6 @@ export default function GameBoard({
   const selectedOption = selectedIndex != null ? card.options[selectedIndex] ?? '' : 'Choose an answer';
   const nextActionLabel = getNextActionLabel(nextTransition);
   const roundReward = getCherryRoundReward(roundNumber);
-  const questionRoundIndicator = roundReward?.type === 'double-cherry'
-    ? 'Double Cherry'
-    : roundReward?.type === 'cherry'
-      ? 'Cherry Round'
-      : '';
   const isResolutionPhase = phase === 'ROUND_REVEAL' || phase === 'ROUND_SUCCESS' || phase === 'ROUND_FAIL';
   const isConfirmPhase = phase === 'ANSWER_SELECTED';
   const revealTone = isConfirmPhase
@@ -107,7 +102,6 @@ export default function GameBoard({
         topic={card.topic}
         language={card.language}
         currentPlayer={currentPlayer}
-        roundReward={roundReward}
       />
       {isConfirmPhase || isResolutionPhase ? (
         <RevealPanel phase={phase} tone={revealTone}>
@@ -153,7 +147,7 @@ export default function GameBoard({
           <div className="gameplay-board-question-stack">
             <QuestionPrompt
               question={card.question}
-              roundIndicator={questionRoundIndicator}
+              roundReward={roundReward}
               isLongQuestion={isLongQuestion}
               questionExpanded={questionExpanded}
               onToggle={() => setQuestionExpanded((prev) => !prev)}

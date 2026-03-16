@@ -151,6 +151,7 @@ describe('GameBoard layout', () => {
     render(<GameBoard {...makeProps()} mode="solo" roundNumber={5} />);
 
     expect(screen.getByTestId('question-card-round-indicator')).toHaveTextContent('Cherry Round');
+    expect(screen.getByTestId('question-card-round-indicator')).toHaveTextContent('XP x2');
     expect(screen.getByTestId('board-status-bar')).toBeInTheDocument();
   });
 

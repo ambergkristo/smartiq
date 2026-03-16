@@ -1,6 +1,8 @@
+import CherryRoundIndicator from './CherryRoundIndicator';
+
 export default function QuestionCard({
   question,
-  roundIndicator,
+  roundReward,
   isLongQuestion,
   questionExpanded,
   onToggle
@@ -19,11 +21,11 @@ export default function QuestionCard({
           </button>
         ) : null}
       </div>
-      {roundIndicator ? (
-        <p className="question-card-round-indicator" data-testid="question-card-round-indicator">
-          {roundIndicator}
-        </p>
-      ) : null}
+      <CherryRoundIndicator
+        type={roundReward?.type}
+        label={roundReward?.type === 'cherry' ? 'Cherry Round' : roundReward?.badgeLabel}
+        multiplierLabel={roundReward?.multiplierLabel}
+      />
       <p className={`question-card-text${questionExpanded ? '' : ' is-clamped'}`} data-testid="question-card">
         {question}
       </p>
