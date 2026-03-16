@@ -150,7 +150,7 @@ describe('GameBoard layout', () => {
   test('shows Cherry round designation before answering begins', () => {
     render(<GameBoard {...makeProps()} mode="solo" roundNumber={5} />);
 
-    expect(screen.getByText('Cherry')).toBeInTheDocument();
+    expect(screen.getByTestId('question-card-round-indicator')).toHaveTextContent('Cherry Round');
     expect(screen.getByTestId('board-status-bar')).toBeInTheDocument();
   });
 

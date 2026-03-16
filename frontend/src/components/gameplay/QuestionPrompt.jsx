@@ -2,7 +2,7 @@ import QuestionCard from './QuestionCard';
 
 export default function QuestionPrompt({
   question,
-  categoryColor,
+  roundIndicator,
   isLongQuestion,
   questionExpanded,
   onToggle
@@ -11,7 +11,7 @@ export default function QuestionPrompt({
     <div className="question-prompt" data-testid="question-prompt">
       <QuestionCard
         question={question}
-        categoryColor={categoryColor}
+        roundIndicator={roundIndicator}
         isLongQuestion={isLongQuestion}
         questionExpanded={questionExpanded}
         onToggle={onToggle}

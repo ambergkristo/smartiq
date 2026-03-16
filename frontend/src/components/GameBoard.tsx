@@ -10,7 +10,7 @@ import ResolutionSummary from './gameplay/ResolutionSummary';
 import RevealPanel from './gameplay/RevealPanel';
 import SoloRoundResult from './gameplay/SoloRoundResult';
 import { getCherryRoundReward } from '../state/cherryRounds';
-import { CATEGORY_COLORS, getActionHint, getCardCategory, getNextActionLabel } from './gameplay/gameplayState';
+import { getActionHint, getCardCategory, getNextActionLabel } from './gameplay/gameplayState';
 
 export default function GameBoard({
   card,
@@ -44,6 +44,11 @@ export default function GameBoard({
   const selectedOption = selectedIndex != null ? card.options[selectedIndex] ?? '' : 'Choose an answer';
   const nextActionLabel = getNextActionLabel(nextTransition);
   const roundReward = getCherryRoundReward(roundNumber);
+  const questionRoundIndicator = roundReward?.type === 'double-cherry'
+    ? 'Double Cherry'
+    : roundReward?.type === 'cherry'
+      ? 'Cherry Round'
+      : '';
   const isResolutionPhase = phase === 'ROUND_REVEAL' || phase === 'ROUND_SUCCESS' || phase === 'ROUND_FAIL';
   const isConfirmPhase = phase === 'ANSWER_SELECTED';
   const revealTone = isConfirmPhase
@@ -148,7 +153,7 @@ export default function GameBoard({
           <div className="gameplay-board-question-stack">
             <QuestionPrompt
               question={card.question}
-              categoryColor={CATEGORY_COLORS[category] || '#53bde0'}
+              roundIndicator={questionRoundIndicator}
               isLongQuestion={isLongQuestion}
               questionExpanded={questionExpanded}
               onToggle={() => setQuestionExpanded((prev) => !prev)}
