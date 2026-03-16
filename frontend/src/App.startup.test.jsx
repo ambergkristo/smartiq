@@ -309,9 +309,9 @@ describe('App startup resilience', () => {
     fireEvent.click(screen.getByRole('button', { name: /join game/i }));
     await waitFor(() => expect(screen.getByTestId('home-join-panel')).toBeInTheDocument());
 
-    expect(screen.getByLabelText(/^room code$/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^game code$/i)).toBeInTheDocument();
     expect(screen.queryByLabelText(/your display name/i)).not.toBeInTheDocument();
-    fireEvent.change(screen.getByLabelText(/^room code$/i), { target: { value: 'quiz42' } });
+    fireEvent.change(screen.getByLabelText(/^game code$/i), { target: { value: 'quiz42' } });
     fireEvent.click(screen.getByRole('button', { name: /^next$/i }));
 
     expect(screen.getByLabelText(/your display name/i)).toBeInTheDocument();
@@ -1156,7 +1156,7 @@ describe('App startup resilience', () => {
     expect(screen.queryByTestId('room-panel')).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /start game/i })).not.toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole('button', { name: /back to smartiq/i }));
+    fireEvent.click(screen.getByRole('button', { name: /back to cherrypick/i }));
 
     await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
     expect(window.location.hash).toBe('');

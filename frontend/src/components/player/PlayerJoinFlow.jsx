@@ -56,7 +56,7 @@ export default function PlayerJoinFlow({
   );
 
   return (
-    <section className="player-join-screen board-surface" data-testid={screenTestId}>
+    <section className="player-join-screen board-surface" data-step={step} data-testid={screenTestId}>
       <div className="player-join-screen-head">
         <p className="player-join-brand">
           {isCherryPickBrand(brandTitle) ? <CherryPickLogo size="compact" /> : brandTitle}
