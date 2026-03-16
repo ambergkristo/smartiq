@@ -70,7 +70,7 @@ import { DEFAULT_LANGS, GamePhase } from './state/types';
 const STRINGS = {
   title: 'CherryPick',
   subtitle: 'Pick the mode that fits the moment: solo play now, join a live game, or prepare the host path.',
-  homeTagline: 'Choose a CherryPick mode: play now, join a live code, or prepare the upcoming host path.',
+  homeTagline: 'Play solo now, join a live room code, or open the host path for the next CherryPick board.',
   loadingTopics: 'Loading topics...',
   noTopics: 'No topics yet.',
   noTopicsHint: 'Import clean cards to populate topics and retry.',

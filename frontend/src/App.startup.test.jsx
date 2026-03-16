@@ -264,39 +264,40 @@ describe('App startup resilience', () => {
     render(<App />);
 
     await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
-    expect(screen.getByRole('heading', { level: 1, name: 'SmartIQ' })).toBeInTheDocument();
-    expect(screen.getByText(/fast entry for live quiz hosts, players, and quick solo practice/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /start game/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: /cherrypick/i })).toBeInTheDocument();
+    expect(screen.getByText(/play solo now, join a live room code, or open the host path/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /play/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /join game/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /practice/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /host game/i })).toBeInTheDocument();
     expect(screen.queryByText(/workspace name/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/host email/i)).not.toBeInTheDocument();
   });
 
-  test('home actions navigate to start, join, and practice entry screens', async () => {
+  test('home actions navigate to play, join, and host entry screens', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
 
-    render(<App />);
+    const { unmount } = render(<App />);
 
     await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
 
-    fireEvent.click(screen.getByRole('button', { name: /start game/i }));
-    await waitFor(() => expect(screen.getByRole('radiogroup', { name: /topic options/i })).toBeInTheDocument());
-    expect(screen.getAllByText(/host setup/i).length).toBeGreaterThan(0);
-    expect(screen.getByTestId('host-setup-summary')).toBeInTheDocument();
-    expect(screen.queryByText(/launch console/i)).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /play/i }));
+    await waitFor(() => expect(screen.queryByTestId('home-screen')).not.toBeInTheDocument());
 
+    unmount();
     window.location.hash = '';
+
+    render(<App />);
     await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
+
     fireEvent.click(screen.getByRole('button', { name: /join game/i }));
     await waitFor(() => expect(screen.getByTestId('home-join-panel')).toBeInTheDocument());
-    expect(screen.getByLabelText(/^room code$/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^game code$/i)).toBeInTheDocument();
     expect(screen.queryByLabelText(/your display name/i)).not.toBeInTheDocument();
-
-    window.location.hash = '';
+    fireEvent.click(screen.getByRole('button', { name: /back to home/i }));
     await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
-    fireEvent.click(screen.getByRole('button', { name: /practice/i }));
-    await waitFor(() => expect(screen.getByTestId('practice-panel')).toBeInTheDocument());
+
+    fireEvent.click(screen.getByRole('button', { name: /host game/i }));
+    await waitFor(() => expect(screen.getByTestId('host-game-panel')).toBeInTheDocument());
   });
 
   test('home join screen uses room-code then name steps', async () => {

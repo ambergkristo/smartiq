@@ -454,10 +454,21 @@ h1 {
   min-height: calc(100dvh - 44px);
   display: grid;
   place-items: center;
-  padding: 24px 0;
+  padding: clamp(18px, 3vw, 32px) 0;
+  position: relative;
 }
 
-.home-screen-panel,
+.home-screen-panel {
+  width: min(980px, 100%);
+  margin: 0 auto;
+  padding: clamp(28px, 4vw, 42px);
+  display: grid;
+  gap: 24px;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
 .practice-screen,
 .mode-shell-screen {
   width: min(520px, 100%);
@@ -475,19 +486,39 @@ h1 {
 .mode-shell-screen::before {
   content: '';
   position: absolute;
-  inset: -18% auto auto -12%;
-  width: 220px;
-  height: 220px;
+  inset: -16% auto auto -8%;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 255, 123, 0.18), rgba(0, 255, 123, 0));
+  background: radial-gradient(circle, rgba(197, 51, 70, 0.2), rgba(197, 51, 70, 0));
+  pointer-events: none;
+}
+
+.home-screen-panel::after {
+  content: '';
+  position: absolute;
+  inset: auto -10% -24% auto;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(122, 30, 44, 0.28), rgba(122, 30, 44, 0));
   pointer-events: none;
 }
 
 .home-screen-kicker {
-  color: var(--muted);
+  margin: 0;
+  color: rgba(246, 238, 240, 0.68);
   font-size: 0.76rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+}
+
+.home-screen-brand-block {
+  display: grid;
+  gap: 14px;
+  max-width: 44rem;
+  position: relative;
+  z-index: 1;
 }
 
 .home-screen-panel h1,
@@ -501,20 +532,74 @@ h1 {
 
 .home-screen-tagline,
 .practice-screen-copy {
-  max-width: 28ch;
-  margin: 0 auto;
-  color: var(--muted);
-  font-size: 1rem;
+  max-width: 38ch;
+  margin: 0;
+  color: rgba(246, 238, 240, 0.78);
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+.home-screen-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.72fr);
+  gap: 20px;
+  align-items: start;
+  position: relative;
+  z-index: 1;
+}
+
+.home-screen-primary-column,
+.home-screen-side-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.home-screen-cta-intro {
+  padding: 16px 18px;
+  border-radius: 22px;
+  border: 1px solid rgba(122, 30, 44, 0.44);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)),
+    rgba(36, 19, 23, 0.82);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+.home-screen-cta-kicker {
+  margin: 0 0 8px;
+  color: rgba(246, 238, 240, 0.62);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.home-screen-cta-copy {
+  margin: 0;
+  color: rgba(246, 238, 240, 0.82);
+  font-size: 0.96rem;
+  line-height: 1.55;
 }
 
 .home-screen-profile {
   display: grid;
-  gap: 8px;
+  gap: 10px;
   text-align: left;
-  padding: 14px 16px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.04);
+  padding: 18px 18px 20px;
+  border-radius: 24px;
+  border: 1px solid rgba(122, 30, 44, 0.44);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0)),
+    rgba(36, 19, 23, 0.84);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+.home-screen-profile-head {
+  display: grid;
+  gap: 4px;
+}
+
+.home-screen-profile-head strong {
+  font-size: 1.05rem;
+  color: #F6EEF0;
 }
 
 .home-screen-profile label {
@@ -532,45 +617,77 @@ h1 {
 .home-screen-actions {
   display: grid;
   gap: 14px;
-  margin-top: 8px;
+  margin-top: 2px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .home-action-button {
   width: 100%;
-  min-height: 88px;
-  padding: 18px 20px;
+  min-height: 112px;
+  padding: 18px 20px 20px;
   border-radius: 24px;
   display: grid;
-  gap: 6px;
+  gap: 8px;
   justify-items: start;
   text-align: left;
+  border: 1px solid rgba(122, 30, 44, 0.44);
   background:
-    linear-gradient(180deg, rgba(0, 255, 123, 0.22), rgba(0, 255, 123, 0.12)),
-    rgba(255, 255, 255, 0.04);
-  color: #03150d;
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
+    rgba(42, 21, 26, 0.94);
+  color: #F6EEF0;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  transition: transform 140ms ease-out, border-color 140ms ease-out, background 140ms ease-out, box-shadow 140ms ease-out;
 }
 
-.home-action-button strong {
-  font-family: "Rajdhani", "Inter", sans-serif;
-  font-size: 1.5rem;
-  letter-spacing: 0.08em;
+.home-action-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(197, 51, 70, 0.56);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.036), rgba(255, 255, 255, 0)),
+    rgba(54, 25, 31, 0.98);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.026);
+}
+
+.home-action-button:focus-visible {
+  outline: 2px solid rgba(255, 248, 244, 0.88);
+  outline-offset: 3px;
+}
+
+.home-action-button--primary {
+  grid-column: 1 / -1;
+  min-height: 132px;
+  padding-top: 20px;
+  border-color: rgba(224, 58, 78, 0.54);
+  background:
+    radial-gradient(circle at top right, rgba(224, 58, 78, 0.18), transparent 42%),
+    linear-gradient(180deg, rgba(224, 58, 78, 0.22), rgba(122, 30, 44, 0.18)),
+    rgba(58, 21, 29, 0.98);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.home-action-button-eyebrow {
+  color: rgba(246, 238, 240, 0.62);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
-.home-action-button span {
-  color: rgba(3, 21, 13, 0.82);
-  font-size: 0.88rem;
+.home-action-button strong {
+  font-family: "Nunito", "Inter", sans-serif;
+  font-size: 1.4rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.home-action-button-detail {
+  color: rgba(246, 238, 240, 0.76);
+  font-size: 0.92rem;
+  line-height: 1.45;
 }
 
 .home-action-button--secondary {
-  color: var(--text);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03)),
-    rgba(255, 255, 255, 0.03);
-}
-
-.home-action-button--secondary span {
-  color: var(--muted);
+  min-height: 118px;
 }
 
 .home-join-screen,
@@ -604,7 +721,7 @@ h1 {
 
 .home-screen-brand-heading {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   text-transform: none;
   letter-spacing: 0;
 }
@@ -3602,6 +3719,37 @@ button:disabled {
 
   .setup-panel {
     padding: 24px;
+  }
+
+  .home-screen {
+    padding: 14px 0;
+  }
+
+  .home-screen-panel {
+    width: min(100%, 620px);
+    gap: 20px;
+  }
+
+  .home-screen-content,
+  .home-screen-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-screen-brand-block,
+  .home-screen-cta-intro,
+  .home-screen-profile,
+  .home-screen-panel {
+    text-align: left;
+  }
+
+  .home-screen-brand-heading {
+    justify-content: flex-start;
+  }
+
+  .home-action-button--primary,
+  .home-action-button--secondary {
+    grid-column: auto;
+    min-height: 108px;
   }
 
   .room-code-hero-head,
