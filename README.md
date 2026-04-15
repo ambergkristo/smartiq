@@ -1,254 +1,281 @@
-# smartiq
+# SmartIQ / CherryPick
 
-Monorepo for SmartIQ services and tooling.
+This repository is a mixed-state quiz game monorepo. The codebase still uses `SmartIQ` names for packages, environment variables, deployment files, and much of the multi-tenant host backend, while the frontend experience and current pivot docs brand the product as `CherryPick`. Today the repo contains a working CherryPick gameplay/runtime on top of SmartIQ foundations: a Spring Boot 3.4 backend, a React 18 + Vite frontend, curated JSON card datasets, and Node-based validation, content, and release tooling.
 
-## Repository Layout
+## First 10 Minutes
+
+1. Install Java 21, Maven, Node.js LTS, and npm. Docker is only needed for the PostgreSQL-backed local path.
+2. Run the root install:
+
+   ```bash
+   npm ci
+   ```
+
+3. Start the fastest local runtime:
+
+   ```bash
+   npm run dev:smoke
+   ```
+
+4. Open:
+   - Frontend: `http://localhost:5173`
+   - Backend health: `http://localhost:8081/health`
+5. Read these entrypoints first:
+   - `frontend/src/App.jsx`
+   - `frontend/src/state/useServerGameEngine.ts`
+   - `backend/src/main/java/com/smartiq/backend/game/GameSessionService.java`
+   - `backend/src/main/java/com/smartiq/backend/config/CardImportRunner.java`
+6. For product context, read `docs/cherrypick/PROJECT_PIVOT_NOTE.md`. For older SmartIQ strategy tracks, read `docs/archive/smartiq/`.
+
+## Product Overview
+
+### What exists now
+
+- A CherryPick-branded frontend with three visible entry paths: `PLAY`, `JOIN`, and `HOST`.
+- A server-authoritative quiz game loop backed by `POST /api/game`, `GET /api/game/{gameId}`, and `POST /api/game/{gameId}/action`.
+- Room-code based live session support with HTTP create/join/rejoin flows and WebSocket room-state broadcasts.
+- Local solo progression stored in browser storage (`cherrypick.playerProfile.v1`) with XP, levels, games played, and rounds won.
+- Multi-tenant host runtime surfaces for onboarding, sign-in, branding, session templates, session review notes, subscription state, usage tracking, and billing checkout/webhook flows.
+
+### Gameplay concept in plain English
+
+CherryPick currently plays as a server-authoritative quiz round on an 8-answer board. A game session loads one board at a time, tracks the active player, reveals correct and wrong picks on the backend, and advances through rounds until a player reaches the win condition. In solo mode, successful rounds award XP; every 5th round is a `Cherry` round (`x2`) and every 10th round is a `Double Cherry` round (`x3`).
+
+### Current implementation maturity
+
+- `PLAY`: implemented and usable as the fastest local path.
+- `JOIN`: implemented with room-code entry, preview, join, rejoin, and waiting-room flows.
+- `HOST`: implemented, including room creation and hosted game launch; also connected to tenant/auth/billing/runtime workspace surfaces.
+- White-label/admin operations: implemented enough to have real backend routes and a frontend admin console at `/admin`, but still named around SmartIQ white-label concepts.
+
+### Product Direction
+
+The pivot docs in `docs/cherrypick/` move the product away from the older SmartIQ recurring-host SaaS framing and toward a broader CherryPick game platform. That direction is only partially reflected in code right now.
+
+Implemented or partially implemented in code:
+
+- CherryPick branding in the main frontend experience.
+- Solo XP and cherry multipliers.
+- Join-code live sessions and host flows.
+
+Present in docs but not fully implemented in runtime code:
+
+- Couch mode.
+- Daily challenge.
+- Golden Cherry (`x1000`) rewards.
+- Registered-account identity and leaderboard systems as first-class gameplay features.
+
+Because of that split, the safest mental model is: the repo is currently CherryPick on the surface, SmartIQ in many internals, and not yet fully renamed or fully converged.
+
+## Repository Structure
 
 - `backend/`
+  - Spring Boot application, REST/WebSocket runtime, Flyway migrations, Dockerfile, and Java tests.
+  - Main entrypoint: `backend/src/main/java/com/smartiq/backend/SmartiqBackendApplication.java`
 - `frontend/`
+  - React + Vite client for CherryPick gameplay, live rooms, host workspace, and admin surfaces.
+  - Main entrypoints: `frontend/src/main.jsx`, `frontend/src/App.jsx`
+- `data/`
+  - Runtime card datasets, raw/generated inputs, and review artifacts.
+  - Key runtime files: `data/smart10/cards.en.json`, `data/smart10/cards.et.json`
 - `docs/`
-- `data/raw/`
-- `data/smart10/`
+  - Product, deployment, runtime, data-quality, and operational documentation.
+  - Current pivot docs: `docs/cherrypick/`
+  - Archived SmartIQ plans: `docs/archive/smartiq/`
 - `tools/`
+  - Node scripts for validation, content pipeline, release checks, smoke tests, and reporting.
+- `scripts/`
+  - Runtime verification helpers such as `scripts/verify_runtime_deck.js`.
+- `ops/`
+  - Operational artifacts such as Prometheus beta KPI alert rules.
+- `.github/workflows/`
+  - CI, release-readiness, smoke, content refresh, and pilot/ops workflows.
 
-## Prerequisites
+## Architecture
 
-- JDK 21
-- Node.js LTS (with npm)
-- Docker (only for PostgreSQL-backed local runtime)
+### Backend
 
-## Local Setup
+The backend is a Spring Boot 3.4 application with:
 
-Trusted local path (from repo root):
+- REST controllers under `card`, `game`, `room`, `tenant`, and `web`.
+- Spring Data JPA + Flyway for persistence and schema management.
+- Optional Redis-backed stores for gameplay/session state, with in-memory defaults in non-production paths.
+- Micrometer Prometheus metrics, explicit rate limiting, CORS configuration, and internal-access gating.
 
-1. Create env file:
-   - `cp .env.example .env` (macOS/Linux)
-   - `Copy-Item .env.example .env` (PowerShell)
-2. Install dependencies:
-   - `npm ci`
-   - Root `npm ci` installs frontend dependencies via `postinstall`.
-   - Fallback (frontend-only install): `npm --prefix frontend ci`
-3. Run deterministic smoke dev (no Docker required):
-   - `npm run dev:smoke`
+Key backend areas:
 
-`dev:smoke` uses backend `dev` profile with in-memory H2 + Flyway on `8081`, so it does not depend on external Postgres credentials.
+- `card/`
+  - Dataset import, topic listing, deck selection, source filtering, and anti-repeat logic.
+- `game/`
+  - Server-authoritative session lifecycle, scoring, round transitions, action-token enforcement, and duplicate-action protection.
+- `room/`
+  - Room creation/join/rejoin/remove-player flows and WebSocket room broadcasts.
+- `tenant/`
+  - Onboarding, runtime auth, branding, settings, templates, review notes, subscription, billing, usage, audit, and admin operations.
 
-## One-Command Dev Run
+### Frontend
 
-Postgres-backed local runtime:
+The frontend is a Vite React app with:
+
+- `src/App.jsx` as the main application shell and route switch.
+- `src/api.js` as the HTTP gateway and contract normalization layer.
+- `src/state/useServerGameEngine.ts` as the current server-authoritative gameplay engine.
+- `src/components/home/` for CherryPick entry surfaces.
+- `src/components/player/` and `src/components/room/` for join-code and room UX.
+- `src/admin/` for the internal white-label admin console.
+
+There is no Vite proxy configured. The frontend always talks to the backend through `VITE_API_BASE_URL`.
+
+### Data Pipeline
+
+The content pipeline is file-based:
+
+- `data/raw/` stores raw or generated card inputs.
+- `data/review/` stores review artifacts such as approved/flagged/report JSON files.
+- `data/smart10/` stores the curated runtime datasets.
+- `tools/build-content-pipeline.js` drives the generate -> review -> validate pipeline exposed as `npm run pipeline:cards`.
+
+One important runtime distinction:
+
+- Source datasets in `data/smart10/*.json` still contain 10 options per card.
+- The CherryPick runtime normalizes imported cards down to 8 playable answers per board.
+
+## Local Development
+
+### Prerequisites
+
+- Java 21
+- Maven (`mvn`)
+- Node.js LTS + npm
+- Docker Desktop or another Docker engine if you want the PostgreSQL-backed local path
+- `make` only if you want to use `make dev`
+
+### Fastest local path: smoke runtime
+
+This path does not need Docker or PostgreSQL.
+
+```bash
+npm ci
+npm run dev:smoke
+```
+
+What it starts:
+
+- Backend on `http://localhost:8081`
+- Frontend on `http://localhost:5173`
+
+Smoke runtime details:
+
+- Backend uses the Spring `dev` profile.
+- Database is in-memory H2.
+- Frontend reads `frontend/.env.local`, which currently points `VITE_API_BASE_URL` at `http://localhost:8081`.
+
+### PostgreSQL-backed local runtime
+
+Use this when you want the `local` Spring profile instead of the in-memory smoke path.
+
+```bash
+docker compose up -d
+npm run dev:all
+```
+
+Equivalent shortcut where `make` is available:
 
 ```bash
 make dev
 ```
 
-Equivalent command chain (if `make` is unavailable):
+What it starts:
 
-```bash
-docker compose up -d
-npm run dev:all
-```
+- PostgreSQL 16 on `localhost:5432`
+- Backend on `http://localhost:8081`
+- Frontend on `http://localhost:5173`
 
-Endpoints:
-
-- Frontend: `http://localhost:5173`
-- Backend API: `http://localhost:8080/api`
-- Backend health: `http://localhost:8080/health`
-- Backend version: `http://localhost:8080/version`
-- Backend metrics: `http://localhost:8080/actuator/prometheus`
-- Internal pool stats: `http://localhost:8080/internal/pool-stats`
-
-## Windows Quickstart (8081 + 5173)
-
-PowerShell commands from repo root:
-
-```powershell
-npm ci
-npm run dev:smoke
-```
-
-This starts:
+### Useful local endpoints
 
 - Frontend: `http://localhost:5173`
-- Backend: `http://localhost:8081`
-- Health check: `http://localhost:8081/health`
-- Cards API smoke URL: `http://localhost:8081/api/cards/nextRandom?language=en&gameId=local-dev`
+- Backend health: `http://localhost:8081/health`
+- Backend version: `http://localhost:8081/version`
+- Prometheus metrics: `http://localhost:8081/actuator/prometheus`
+- Topics API: `http://localhost:8081/api/topics`
 
-Use PostgreSQL-backed runtime only when you need it:
+## Environment and Configuration
 
-```powershell
-docker compose down -v
-docker compose up -d
-npm run dev:all
-```
+### Required to understand
 
-## API Base URL Contract
+- `frontend/.env.local`
+  - Auto-read by Vite.
+  - Currently sets `VITE_API_BASE_URL=http://localhost:8081`.
+- `VITE_API_BASE_URL`
+  - Required for the frontend and admin console.
+  - Frontend builds are intentionally blocked when this value is missing, invalid, or points at localhost for deployment builds.
+- Root `.env.example`
+  - Exists as a reference file.
+  - Current npm/Maven dev commands do not automatically load `.env`.
 
-- Canonical frontend backend pointer: `VITE_API_BASE_URL`.
-- Local smoke default: `http://localhost:8081`.
-- Local Postgres runtime default: `http://localhost:8080`.
-- Vercel build is blocked when `VITE_API_BASE_URL` is missing, invalid, or points to localhost.
+### Backend profile behavior
 
-PowerShell examples:
+- `dev` profile (`npm run dev:backend:smoke`)
+  - H2 in-memory database
+  - backend on `:8081`
+- `local` profile (`npm run dev:backend`)
+  - PostgreSQL at `localhost:5432`
+  - backend on `:8081`
+- `prod` profile
+  - explicit datasource required
+  - stricter CORS and internal-access behavior
+  - game session store defaults to Redis (`SMARTIQ_GAME_SESSION_STORE=redis`)
 
-```powershell
-$env:VITE_API_BASE_URL="http://localhost:8081"
-```
+### Dataset import behavior
 
-ET language is feature-flagged:
+- Default backend import path in `application.yml` is `classpath:data/cards.en.json`.
+- If you want the backend to import from the repo dataset directory instead, export:
 
-```powershell
-# frontend language selector (default false in production)
-$env:VITE_ENABLE_ET="true"
+  ```bash
+  SMARTIQ_IMPORT_PATH=../data/smart10
+  ```
 
-# backend acceptance for /api/cards/nextRandom language=et
-$env:SMARTIQ_LANGUAGE_ET_ENABLED="true"
-```
+- Import can be disabled with `SMARTIQ_IMPORT_ENABLED=false`.
 
-## Local Dev Port and CORS Behavior
+### Deployment-critical variables
 
-- Vite prefers port `5173` but can move to another free localhost port when `5173` is busy.
-- Backend dev CORS accepts localhost origins on any port:
-  - `http://localhost:*`
-  - `http://127.0.0.1:*`
-- Production CORS should be explicit with `APP_CORS_ALLOWED_ORIGINS` (preferred). `SMARTIQ_CORS_ALLOWED_ORIGIN_PUBLIC` is a compatibility fallback.
+- Backend:
+  - `SPRING_PROFILES_ACTIVE=prod`
+  - `SPRING_DATASOURCE_URL`
+  - `SPRING_DATASOURCE_USERNAME`
+  - `SPRING_DATASOURCE_PASSWORD`
+  - `APP_CORS_ALLOWED_ORIGINS` or `SMARTIQ_CORS_ALLOWED_ORIGIN_PUBLIC`
+  - `SMARTIQ_INTERNAL_ACCESS_ENABLED=true`
+  - `SMARTIQ_INTERNAL_API_KEY`
+- Frontend:
+  - `VITE_API_BASE_URL=https://<backend-domain>`
 
-Optional Windows helpers to free common dev ports:
+### Optional but important operational knobs
 
-```powershell
-netstat -ano | findstr :5173
-taskkill /PID <PID> /F
-```
+These are defined in `.env.example` and/or `application.yml`:
 
-Frontend API base URL examples:
+- Pool sizing and low-bank behavior
+- Session retention and store selection
+- Room retention and store selection
+- Rate-limit thresholds
+- Billing provider and webhook settings
+- Build metadata (`SMARTIQ_BUILD_SHA`, `SMARTIQ_BUILD_TIME`)
 
-```powershell
-# local smoke backend
-$env:VITE_API_BASE_URL="http://localhost:8081"
-# deployed backend
-$env:VITE_API_BASE_URL="https://<your-backend-domain>"
-```
+### ET locale note
 
-## API Endpoints
+The repo contains a full ET dataset and ET-related validation workflows, but the current import runner only activates `en` cards at runtime. Treat ET as validated content work, not as a fully active runtime locale.
 
-- `GET /api/topics`
-- `GET /api/me` (white-label auth context via bearer JWT)
-- `GET /api/me/tenant-settings` (selected tenant runtime settings for authenticated member)
-- `GET /api/me/tenant-branding` (selected tenant branding for authenticated member)
-- `GET /api/me/tenant-subscription` (selected tenant subscription for authenticated member)
-- `GET /api/cards/nextRandom?language=&gameId=&topic=` (preferred)
-- `GET /api/cards/next?topic=&difficulty=&sessionId=&lang=` (legacy/custom mode, deprecated in `prod`)
-- `GET /api/cards/random?topic=` (legacy/backward-compatible, deprecated in `prod`)
-- `POST /api/game`
-- `GET /api/game/{gameId}`
-- `POST /api/game/{gameId}/action`
+## Testing and Quality Gates
 
-Internal white-label admin endpoints (protected by internal API key in `prod`):
+### Core local checks
 
-- `POST /internal/wl/tenants`
-- `GET /internal/wl/tenants`
-- `GET /internal/wl/tenants/{tenantId}`
-- `POST /internal/wl/tenants/{tenantId}/members`
-- `PATCH /internal/wl/tenants/{tenantId}/members/{membershipId}`
-- `DELETE /internal/wl/tenants/{tenantId}/members/{membershipId}`
-- `GET /internal/wl/tenants/{tenantId}/members`
-- `GET /internal/wl/tenants/{tenantId}/audit-events?limit=` (optional `1..200`, default `50`)
-- `GET /internal/wl/tenants/{tenantId}/subscription`
-- `PUT /internal/wl/tenants/{tenantId}/subscription`
-- `POST /internal/wl/tenants/{tenantId}/usage-events`
-- `GET /internal/wl/tenants/{tenantId}/usage-events?eventType=&limit=` (optional `limit: 1..500`, default `100`)
-- `GET /internal/wl/tenants/{tenantId}/settings`
-- `PUT /internal/wl/tenants/{tenantId}/settings`
-- `PATCH /internal/wl/tenants/{tenantId}/branding`
-
-`GET /api/me` auth-context contract:
-
-- Primary: `Authorization: Bearer <jwt>`
-- Current adapter extracts claims from JWT payload and assumes upstream token verification.
-- Email claim priority: `email`, `preferred_username`, `upn`, `sub`
-- Optional tenant claim: `tenant_id` (UUID)
-- Dev fallback (disabled in `prod`): `X-SmartIQ-User-Email`, `X-SmartIQ-Tenant-Id`
-
-Tenant settings schema (`schemaVersion: 1`) for internal `PUT /internal/wl/tenants/{tenantId}/settings`:
-
-- `theme`: `classic|ember|ocean` (default: `classic`)
-- `game.maxPlayers`: integer `1..50` (default: `10`)
-- `game.roundsPerMatch`: integer `1..30` (default: `10`)
-- `features.leaderboardEnabled`: boolean (default: `false`)
-- `features.teamsEnabled`: boolean (default: `false`)
-
-Tenant member update schema for internal `PATCH /internal/wl/tenants/{tenantId}/members/{membershipId}`:
-
-- `role`: optional `owner|admin|editor|viewer`
-- `status`: optional `active|suspended`
-- At least one field (`role` or `status`) must be provided
-- Membership removal endpoint: `DELETE /internal/wl/tenants/{tenantId}/members/{membershipId}` (hard-delete membership)
-- Guardrail: cannot demote/suspend or remove the last `active owner`
-
-Tenant subscription schema for internal `PUT /internal/wl/tenants/{tenantId}/subscription`:
-
-- `planCode`: string, lowercase `[a-z0-9._-]{2,64}`
-- `status`: `trialing|active|past_due|canceled`
-- `billingCycle`: `monthly|annual`
-- `trialEndsAt`: optional ISO-8601 timestamp
-- `currentPeriodStartsAt`: optional ISO-8601 timestamp
-- `currentPeriodEndsAt`: optional ISO-8601 timestamp (must be after `currentPeriodStartsAt` when both are set)
-
-Tenant usage event schema for internal `POST /internal/wl/tenants/{tenantId}/usage-events`:
-
-- `eventType`: string, lowercase `[a-z0-9._-]{2,64}`
-- `eventValue`: integer `>= 0`
-- `eventTime`: optional ISO-8601 timestamp (default: server `now`)
-- `metadata`: optional JSON object
-
-Server-authoritative action payload contract:
-
-```json
-{
-  "type": "ANSWER|PASS",
-  "tileIndex": 0,
-  "rank": 1,
-  "actorPlayerId": "p1",
-  "actionToken": "at_...",
-  "actionRequestId": "ga_..."
-}
-```
-
-Duplicate action replays with the same `actionRequestId` are rejected with `409 Conflict`.
-
-Server game create response includes:
-
-```json
-{
-  "snapshot": { "...": "GameSessionSnapshot" },
-  "actionTokens": {
-    "p1": "at_...",
-    "p2": "at_..."
-  }
-}
-```
-
-In `prod` profile, legacy endpoints return deprecation headers:
-- `Deprecation: true`
-- `Sunset: Thu, 31 Dec 2026 23:59:59 GMT`
-- `Link: </api/cards/nextRandom>; rel="successor-version"`
-
-## Game Flow v1
-
-- Start screen allows selecting `topic`, `difficulty` (1-3), `language`, round length, and player names.
-- Game board fetches cards from `GET /api/cards/nextRandom` and renders 10 answer tiles.
-- Players use `ANSWER -> LOCK IN`; `PASS` is available after at least one correct answer in the current round, then continue with `NEXT`.
-- Round rotates turns by player and shows a summary after the configured card count.
-- Full UI/state-machine reference: `docs/ui.md`.
-
-## Validation Commands
-
-Backend tests (repo root):
+Backend:
 
 ```bash
 mvn -q -f backend/pom.xml test
 ```
 
-Frontend lint/test/build (repo root):
+Frontend:
 
 ```bash
 npm --prefix frontend run lint
@@ -256,240 +283,262 @@ npm --prefix frontend run test -- --run
 npm --prefix frontend run build
 ```
 
-Data validation:
-
-```bash
-node tools/validate_cards_v2.js data/smart10/cards.en.json
-node tools/validate_cards_v2.js data/smart10/cards.en.json --max-warnings=0
-node tools/validate_cards_v2.js data/smart10/cards.et.json --max-warnings=0
-node tools/validate_locale_packs.js data/smart10
-```
-
-Dataset quality score (warning gate):
-
-```bash
-node tools/score_cards_quality.js data/smart10/cards.en.json
-node tools/score_cards_quality.js data/smart10/cards.et.json
-```
-
-One-command local verification gate:
+Repository gate:
 
 ```bash
 npm run gate:local
 ```
 
-Canonical gate commands and aliases:
+Release-readiness gate:
 
-- `docs/local-gate.md`
+```bash
+npm run release:check
+```
 
-Content refresh pipeline (generate -> review -> validate):
+### Data/content checks
+
+Checks aligned with current CI/release workflows:
+
+```bash
+npm run validate:cards:et
+npm run validate:locale-packs
+npm run score:cards:quality
+npm run score:cards:quality:et
+npm run test:golden
+```
+
+Stricter CherryPick dataset/import-path audit:
+
+```bash
+npm run validate:cards:cherrypick
+```
+
+Important note:
+
+- In the current repo snapshot this command fails, because `tools/validate_cherrypick_dataset.js` expects `application.yml` to import from `../data/smart10/cards.en.json`, while the committed backend config still defaults to `classpath:data/cards.en.json`.
+
+Content pipeline:
 
 ```bash
 npm run pipeline:cards
 ```
 
-Review artifact summary:
-
-```bash
-npm run review:summary
-```
-
-Golden dataset validation:
-
-```bash
-npm run test:golden
-```
-
-Scale generation target for runtime planning:
-
-```powershell
-$env:TARGET_PER_KEY="1000"; npm run pipeline:cards
-```
-
-Load test (500 sessions / 10k requests default):
-
-```bash
-npm run load:test
-```
-
-Public/local smoke test:
-
-```powershell
-$env:BACKEND_URL="https://<backend-domain>"; npm run smoke:test
-# local backend example:
-$env:BACKEND_URL="http://localhost:8080"; npm run smoke:test
-```
-
-Stability gate (production readiness check):
-
-```bash
-npm run stability:gate
-```
-
-Monthly scheduler:
-
-- GitHub Actions workflow: `.github/workflows/content-refresh.yml`
-- Schedule: first day of each month at 03:00 UTC
-
-## Public Deployment
-
-Deployment target for MVP:
-
-- Frontend: Vercel
-- Backend: Render
-- Database: Managed Postgres
-
-Deployment contract:
-
-- Vercel is frontend-only. Backend must be deployed separately and reachable publicly.
-- Required frontend env: `VITE_API_BASE_URL=https://<backend-domain>`.
-- Required backend env: `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, `SPRING_DATASOURCE_PASSWORD`.
-- Required backend CORS allowlist: `APP_CORS_ALLOWED_ORIGINS=https://<vercel-domain>` (preferred) or `SMARTIQ_CORS_ALLOWED_ORIGIN_PUBLIC`.
-- Verify backend health before wiring frontend:
-  - `curl https://<backend-domain>/health`
-  - Expected: HTTP `200` with `{"status":"UP"}`.
-
-Detailed steps: `docs/deploy.md`
-Release gate checklist: `docs/release.md`
-Closed beta operations: `docs/beta-runbook-v1.md`
-Legacy endpoint retirement plan: `docs/legacy-endpoint-retirement-plan.md`
-Legacy endpoint migration guide: `docs/legacy-cards-endpoint-migration.md`
-Branch governance and cleanup policy: `docs/branch-governance.md`
-Full branch consolidation audit: `docs/branch-consolidation-full-audit-2026-02-24.md`
-Latest branch consolidation snapshot (auto-generated): `docs/branch-consolidation-audit-latest.md`
-Generate latest branch consolidation snapshot: `npm run report:branches:consolidation`
-White-label canonical masterplan (business-first v3): `docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md`
-White-label sprint and milestone source of truth: `docs/plans/2026-03-05-white-label-milestones-v3.md`
-White-label promotion gates source of truth: `docs/plans/2026-03-05-white-label-gates-v3.md`
-Recurring Host SaaS canonical masterplan v1: `docs/plans/2026-03-06-recurring-host-saas-masterplan-v1.md`
-Recurring Host SaaS sprint and milestone source of truth: `docs/plans/2026-03-06-recurring-host-saas-milestones-v1.md`
-Recurring Host SaaS promotion gates source of truth: `docs/plans/2026-03-06-recurring-host-saas-gates-v1.md`
-Quiz Night SaaS canonical masterplan v1: `docs/plans/2026-03-06-quiz-night-saas-masterplan-v1.md`
-Quiz Night SaaS sprint and milestone source of truth: `docs/plans/2026-03-06-quiz-night-saas-milestones-v1.md`
-Quiz Night SaaS promotion gates source of truth: `docs/plans/2026-03-06-quiz-night-saas-gates-v1.md`
-Quiz Night SaaS completion evidence (M0-M9): `docs/reports/2026-03-06-quiz-night-saas-milestone-evidence-m0-m9.md`
-Quiz Night SaaS launch decision (`GO`): `docs/reports/2026-03-06-quiz-night-saas-m8-go-no-go-report.md`
-Quiz Night SaaS post-launch hardening package (M9): `docs/reports/2026-03-06-quiz-night-saas-m9-post-launch-hardening-pack.md`
-Superseded white-label program snapshot: `docs/plans/2026-03-03-white-label-program-v1.md`
-Legacy dual-AI protocol (optional compatibility): `docs/plans/2026-03-03-dual-ai-delivery-protocol.md`
-Legacy dual-AI ownership policy (optional compatibility): `docs/policies/dual-ai-file-ownership.json`
-
-Legacy dual-AI helper commands (optional; not required in experimental multi-agent mode):
-
-```powershell
-# initialize Team A + Team B worktrees
-npm run ops:worktrees:init
-
-# validate current branch file ownership for a team
-npm run validate:dual-ai:ownership -- --team=team-a --base=origin/main
-npm run validate:dual-ai:ownership -- --team=team-b --base=origin/main
-
-# if shared locked files are intentionally coordinated in this batch
-npm run validate:dual-ai:ownership -- --team=team-a --base=origin/main --allow-shared-locked
-```
-
-Observability reference: `docs/observability.md`
-
-Question pool sizing (backend env vars):
-
-```bash
-SMARTIQ_POOL_ENABLED=true
-MIN_BANK_SIZE=1000
-POOL_LOW_WATERMARK=800
-POOL_TARGET=1200
-SMARTIQ_BLOCK_ON_LOW_BANK=false
-SMARTIQ_TRIGGER_PIPELINE_ON_LOW_BANK=false
-```
-
-Session de-duplication (per sessionId):
-
-```bash
-SMARTIQ_SESSION_DEDUP_ENABLED=true
-SMARTIQ_SESSION_TTL_MINUTES=120
-SMARTIQ_SESSION_MAX=50000
-```
-
-Server-authoritative game session retention:
-
-```bash
-SMARTIQ_GAME_SESSION_RETENTION_MINUTES=180
-SMARTIQ_GAME_SESSION_MAX=50000
-```
-
-Room state retention:
-
-```bash
-SMARTIQ_ROOM_RETENTION_MINUTES=180
-SMARTIQ_ROOM_MAX=20000
-```
-
-Rate limiting (forwarded header trust is opt-in):
-
-```bash
-SMARTIQ_RATE_LIMIT_ENABLED=true
-SMARTIQ_RATE_LIMIT_WINDOW_SECONDS=60
-SMARTIQ_RATE_LIMIT_TRUST_FORWARDED_FOR=false
-SMARTIQ_RATE_LIMIT_COUNTER_MAX=50000
-SMARTIQ_RATE_LIMIT_WS_ROOMS_PER_MINUTE=120
-```
-
-Set `SMARTIQ_RATE_LIMIT_TRUST_FORWARDED_FOR=true` only when the backend is exclusively behind a trusted proxy/load balancer that rewrites `X-Forwarded-For`.
-
-Language feature flag:
-
-```bash
-# application.yml default: true (dev)
-# application-prod.yml default: false (EN-only unless explicitly enabled)
-SMARTIQ_LANGUAGE_ET_ENABLED=false
-```
-
-Manual e2e checklist script:
-
-```bash
-bash tools/manual-e2e.sh
-```
-
 Runtime deck verification:
 
 ```bash
-node scripts/verify_runtime_deck.js
+npm run verify:runtime:deck
 ```
 
-## Data Pipeline
+### CI workflows in the repo
 
-- Raw card inputs live in `data/raw/`.
-- Runtime-approved card inputs live in `data/smart10/`.
-- Backend boot import defaults to `data/smart10`.
-- You can override import sources with `SMARTIQ_IMPORT_PATH` (comma-separated paths).
-- Pipeline details: `docs/data-pipeline.md`
-- Dataset quality guardrails: `docs/dataset-quality.md`
+Primary CI and release workflows:
 
-## CI
+- `.github/workflows/backend-ci.yml`
+- `.github/workflows/frontend-ci.yml`
+- `.github/workflows/release-readiness.yml`
 
-- Backend workflow: `mvn -q test` + package build.
-- Frontend workflow: `npm ci` + `npm run lint` + `npm run build`.
+Operational and content workflows:
 
-## Canonical Development Priority
+- `.github/workflows/content-refresh.yml`
+- `.github/workflows/smoke-public.yml`
+- `.github/workflows/runtime-smoke-et.yml`
+- `.github/workflows/beta-go-no-go.yml`
+- `.github/workflows/phase7-beta-dry-run.yml`
+- `.github/workflows/recurring-host-pilot-seed.yml`
+- `.github/workflows/recurring-host-pilot-capture.yml`
 
-- Active masterplan and roadmap source of truth:
-  - `docs/plans/2026-03-06-recurring-host-saas-masterplan-v1.md`
-  - `docs/plans/2026-03-06-recurring-host-saas-milestones-v1.md`
-  - `docs/plans/2026-03-06-recurring-host-saas-gates-v1.md`
-  - `docs/plans/2026-03-06-quiz-night-saas-masterplan-v1.md`
-  - `docs/plans/2026-03-06-quiz-night-saas-milestones-v1.md`
-  - `docs/plans/2026-03-06-quiz-night-saas-gates-v1.md`
-  - `docs/plans/2026-03-03-masterplan-roadmap-to-beta.md`
-  - `docs/plans/2026-03-05-white-label-masterplan-v3-business-first.md`
-  - `docs/plans/2026-03-05-white-label-milestones-v3.md`
-  - `docs/plans/2026-03-05-white-label-gates-v3.md`
-  - Canonical business end-goal baseline (ET): `docs/plans/2026-03-05-business-end-goal-assessment-et.md`
-  - White-label Codex execution contract is defined in the v3 docs (`one milestone at a time`, `tests green before next M`).
-- Historical plan snapshot:
-  - `docs/plans/2026-03-05-white-label-masterplan-v2-multi-agent-lean.md`
-  - `docs/plans/2026-03-03-white-label-program-v1.md`
-  - `docs/plan.md`
-- If planning or scope conflicts occur, the canonical masterplan takes priority.
+What should pass before merge:
 
-## Contributing
+- At minimum, the checks covered by `npm run gate:local`.
+- Prefer running `npm run release:check` before opening or merging a substantial PR.
 
-See `CONTRIBUTING.md` for branch, validation, and PR expectations.
+## Gameplay and Runtime Notes
+
+### Current gameplay loop
+
+- The current gameplay engine is server-authoritative.
+- Games are created through `POST /api/game`.
+- Actions are limited to `ANSWER` and `ADVANCE`.
+- `PASS` is not part of the current CherryPick server-action contract.
+- Default win condition is `30`.
+- A round ends in success when all correct answers on the current 8-answer board are revealed.
+- A round ends in failure when the active player picks a wrong answer.
+
+### Card selection behavior
+
+`GET /api/cards/nextRandom` is the current deck-selection API.
+
+Verified behavior from code:
+
+- Tracks recent history per `gameId`
+- Avoids immediate category repeats when alternatives exist
+- Avoids immediate topic repeats when alternatives exist
+- Avoids repeating recent card IDs from the last 20 draws when alternatives exist
+- Relaxes constraints in this order when the pool is tight:
+  1. card ID
+  2. topic
+  3. category
+- Falls back from the requested language to `en` if the requested language pool is empty and the request language is not already `en`
+
+### Room/runtime behavior
+
+- Room codes are six characters long.
+- Rejoin is HTTP-first: `POST /api/rooms/{roomCode}/rejoin` returns the latest snapshot and rotates the auth token.
+- WebSocket is broadcast-only and used for room-state updates.
+- Client gameplay actions are submitted over HTTP, not WebSocket.
+
+### Legacy APIs
+
+The older `/api/cards/random` and `/api/cards/next` endpoints still exist for compatibility, but `nextRandom` is the current public draw path and legacy endpoints are retired in `prod`.
+
+## Data and Content Quality
+
+### Where the card data lives
+
+- Canonical curated datasets:
+  - `data/smart10/cards.en.json`
+  - `data/smart10/cards.et.json`
+- Golden fixture:
+  - `data/smart10/golden/golden.dataset.json`
+- Raw inputs:
+  - `data/raw/`
+- Review outputs:
+  - `data/review/`
+
+### What is currently in the committed datasets
+
+- `cards.en.json`: 1080 cards
+- `cards.et.json`: 1080 cards
+- Distribution in both locales: `6 topics x 6 categories x 30 cards`
+- Current committed source tag: `smartiq-v2`
+
+### What the runtime actually imports
+
+The current import runner does not expose the entire dataset as-is.
+
+Runtime-active today:
+
+- Language: `en`
+- Categories:
+  - `TRUE_FALSE`
+  - `NUMBER`
+  - `CENTURY_DECADE`
+  - `COLOR`
+  - `OPEN`
+
+Present in dataset and validators but not activated by the current import runner:
+
+- `ORDER`
+- `et`
+
+### Source restrictions
+
+Only these card sources are considered runtime-allowed:
+
+- `smartiq-v2`
+- `smartiq-human`
+- `smartiq-verified`
+
+Deprecated sources such as `smartiq-factory` and earlier generator tags are excluded from live selection.
+
+## Deployment
+
+The committed deployment story is documented, not fully automated end-to-end.
+
+Verified repo assets:
+
+- `backend/Dockerfile`
+- `render.yaml`
+- `docs/deploy.md`
+
+Documented deployment target:
+
+- Frontend on Vercel
+- Backend on Render
+- Managed PostgreSQL
+
+Important honesty notes:
+
+- The repo includes Render configuration, but no committed Vercel config file.
+- The frontend is deployed separately from the backend and must be pointed at a public backend URL through `VITE_API_BASE_URL`.
+- Production health endpoint is `/health`.
+
+Useful deployment commands and checks:
+
+```bash
+npm run validate:deploy-env
+npm run smoke:test
+npm run smoke:postdeploy
+```
+
+## Current Status
+
+### Stable now
+
+- Spring Boot backend + React frontend monorepo is wired and runnable through the documented local scripts.
+- CherryPick-branded home/play/join/host frontend exists.
+- Server-authoritative game sessions and room-code flows are implemented.
+- Dataset validation, release-readiness, and deployment-check tooling exist and are wired into CI.
+
+### In progress
+
+- Product naming consolidation from SmartIQ to CherryPick.
+- Alignment between CherryPick gameplay direction and older SmartIQ host/white-label infrastructure.
+- Documentation cleanup across active docs, plans, and archived material.
+
+### Known gaps
+
+- The repo still has conflicting naming and roadmap sources.
+- `docs/plans/README.md`, `CONTRIBUTING.md`, and the PR template still reference SmartIQ plans that are now archived or missing from `docs/plans/`.
+- ET content is heavily validated in CI, but current runtime import remains EN-only.
+- Older SmartIQ/Smart10-era documentation still describes 10-answer behavior in places, while the current CherryPick runtime plays on 8-answer boards.
+- The current repository snapshot does not pass `npm run gate:local` cleanly; backend tests are failing.
+- `npm run validate:cards:cherrypick` is currently red because the validator and committed import-path configuration disagree.
+
+## Troubleshooting
+
+### Frontend starts but cannot reach the backend
+
+- Check `frontend/.env.local` or your exported `VITE_API_BASE_URL`.
+- The frontend does not use a Vite proxy.
+- The admin console at `/admin` also requires `VITE_API_BASE_URL`.
+
+### Backend health stays `DOWN`
+
+- `GET /health` runs a database query.
+- On the PostgreSQL-backed local path, make sure `docker compose up -d` is running.
+- If you want to avoid PostgreSQL entirely, use `npm run dev:smoke`.
+
+### You expected cards from `data/smart10`, but the backend is serving something else
+
+- Default import source is `classpath:data/cards.en.json`.
+- Export `SMARTIQ_IMPORT_PATH=../data/smart10` before starting the backend if you want the repo dataset directory to drive imports.
+
+### Ports do not match older docs or `.env.example`
+
+- Current npm dev scripts run the backend on `8081`.
+- The frontend prefers `5173` but can move if the port is busy (`strictPort: false` in `vite.config.js`).
+
+### Dataset or CI failures appear to be about ET even when you are working on EN runtime behavior
+
+- That is expected in this repo.
+- ET locale packs are part of the validation surface in CI even though the runtime importer is currently EN-only.
+
+## Contribution Workflow
+
+- Create a feature branch from `main`.
+- Make focused changes and run the relevant local checks.
+- Use `npm run gate:local` for the standard local gate.
+- Use `npm run release:check` before merging more substantial work.
+- Open a PR with the existing template in `.github/pull_request_template.md`.
+
+Important contributor note:
+
+- `CONTRIBUTING.md` and some plan indexes still point at SmartIQ milestone docs that are now archived or missing from their original paths.
+- For current product direction, start with `docs/cherrypick/`.
+- For historical SmartIQ context, use `docs/archive/smartiq/`.
+
+## License and Notes
+
+- No `LICENSE` file is committed at the repository root.
+- Until the repository owner adds one, treat licensing as undefined from the repo itself.
