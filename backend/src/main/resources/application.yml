@@ -74,6 +74,7 @@ smartiq:
     api-key-header: ${SMARTIQ_INTERNAL_API_KEY_HEADER:X-Internal-Api-Key}
     api-key: ${SMARTIQ_INTERNAL_API_KEY:}
     protected-actuator-paths:
+      - /actuator/prometheus
       - /actuator/metrics
       - /actuator/env
       - /actuator/configprops

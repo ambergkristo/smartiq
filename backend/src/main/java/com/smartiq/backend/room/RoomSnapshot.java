@@ -7,6 +7,15 @@ public record RoomSnapshot(
         String roomCode,
         UUID tenantId,
         RoomBrandingSnapshot branding,
-        List<RoomPlayerSnapshot> players
+        List<RoomPlayerSnapshot> players,
+        RoomPhase phase,
+        boolean joinable,
+        RoomActiveGameSnapshot activeGame
 ) {
+    public RoomSnapshot(String roomCode,
+                        UUID tenantId,
+                        RoomBrandingSnapshot branding,
+                        List<RoomPlayerSnapshot> players) {
+        this(roomCode, tenantId, branding, players, RoomPhase.WAITING, true, null);
+    }
 }

@@ -300,7 +300,10 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       language: request.language || mapped.card.language,
       topic: mapped.card.topic || undefined,
       winCondition: mapped.targetScore,
-      mode: request.mode === GAME_MODE_SOLO ? GAME_MODE_SOLO : GAME_MODE_STANDARD
+      mode: request.mode === GAME_MODE_SOLO ? GAME_MODE_SOLO : GAME_MODE_STANDARD,
+      roomCode: request.roomCode,
+      roomPlayerId: request.roomPlayerId,
+      roomAuthToken: request.roomAuthToken
     });
     applyMappedSnapshot(snapshot, mapped, mapped.backendPhase === GamePhase.GAME_OVER ? GamePhase.GAME_OVER : GamePhase.QUESTION_ACTIVE);
     return mapped.players;
@@ -308,7 +311,11 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
 
   const startRound = useCallback(async (input = {}) => {
     if (requestInFlight) {
-      return players;
+      return {
+        players,
+        started: false,
+        errorMessage: ''
+      };
     }
 
     const normalizedPlayers = normalizePlayers(input.players);
@@ -317,7 +324,10 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       language: input.language,
       topic: input.topic,
       winCondition: Number.isInteger(input.winCondition) ? input.winCondition : targetScore,
-      mode: input.mode === GAME_MODE_SOLO ? GAME_MODE_SOLO : GAME_MODE_STANDARD
+      mode: input.mode === GAME_MODE_SOLO ? GAME_MODE_SOLO : GAME_MODE_STANDARD,
+      roomCode: input.roomCode,
+      roomPlayerId: input.roomPlayerId,
+      roomAuthToken: input.roomAuthToken
     };
 
     setRequestInFlight(true);
@@ -340,16 +350,25 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
 
     try {
       const response = await createServerGameSession(request);
-      return adoptCreatedSession(response, request);
+      const nextPlayers = adoptCreatedSession(response, request);
+      return {
+        players: nextPlayers,
+        started: true,
+        errorMessage: ''
+      };
     } catch (error) {
       const message = resolveGameSessionErrorMessage(error);
       setErrorMessage(message);
       setLastAction(message);
-      setPhase(GamePhase.LOADING_CARD);
+      setPhase(GamePhase.SETUP);
       setCard(null);
       setActionTokensByPlayerId({});
       setResolutionState(null);
-      return [];
+      return {
+        players: [],
+        started: false,
+        errorMessage: message
+      };
     } finally {
       setRequestInFlight(false);
     }

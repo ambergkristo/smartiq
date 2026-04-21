@@ -10,7 +10,7 @@ owner: backend+frontend
 
 Purpose
 -------
-Defines the canonical v1 wire contract for SmartIQ server-authoritative game sessions and reconnect semantics.
+Defines the canonical v1 wire contract for CherryPick server-authoritative game sessions and reconnect semantics.
 
 Compatibility policy
 --------------------
@@ -99,9 +99,9 @@ Validation rules:
 
 Enum sets:
 
-1. `roundState.phase`: `CHOOSING`, `GAME_OVER`
+1. `roundState.phase`: `QUESTION_ACTIVE`, `ROUND_SUCCESS`, `ROUND_FAIL`, `GAME_OVER`
 2. `boardState.pegs[*].state`: `hidden`, `revealed`, `wrong`
-3. `statuses[*]`: `ACTIVE`, `PASSED`, `OUT`
+3. `statuses[*]`: `ACTIVE`, `OUT`
 
 `POST /api/game/{gameId}/action` request
 ----------------------------------------
@@ -119,7 +119,7 @@ Enum sets:
 
 Rules:
 
-1. `type` required: `ANSWER` or `PASS`.
+1. `type` required: `ANSWER` or `ADVANCE`.
 2. `tileIndex` required only for `ANSWER`.
 3. `rank` required for `ORDER` category answers.
 4. `actorPlayerId` required, canonical format `p<1..8>`.
@@ -191,3 +191,9 @@ Quick verification command:
 ```bash
 npm run test:contracts
 ```
+
+CherryPick note
+---------------
+
+- `PASS` is not part of the active CherryPick action contract.
+- Difficulty is not part of the public game-session creation contract.

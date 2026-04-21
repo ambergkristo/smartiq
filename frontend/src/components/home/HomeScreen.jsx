@@ -47,7 +47,7 @@ export default function HomeScreen({
               <HomeActionButton
                 label="Join Game"
                 eyebrow="Live room"
-                detail="Enter a room code and continue into a live CherryPick board."
+                detail="Enter a room code, join the live roster, and follow the host-led session from your device."
                 onClick={onJoinGame}
                 variant="secondary"
               />

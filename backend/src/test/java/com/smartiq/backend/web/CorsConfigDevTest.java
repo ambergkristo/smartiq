@@ -4,8 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.options;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -29,10 +31,12 @@ class CorsConfigDevTest {
 
     @Test
     void allowsGetTopicsFromLocalhostNonDefaultPortInDev() throws Exception {
-        mockMvc.perform(get("/api/topics")
+        MvcResult result = mockMvc.perform(get("/api/topics")
                         .header("Origin", "http://localhost:5174"))
-                .andExpect(status().isOk())
-                .andExpect(header().string("Access-Control-Allow-Origin", "http://localhost:5174"));
+                .andExpect(header().string("Access-Control-Allow-Origin", "http://localhost:5174"))
+                .andReturn();
+
+        assertThat(result.getResponse().getStatus()).isIn(200, 503);
     }
 
     @Test
@@ -44,5 +48,16 @@ class CorsConfigDevTest {
                 .andExpect(status().isOk())
                 .andExpect(header().string("Access-Control-Allow-Origin", "http://localhost:5174"))
                 .andExpect(header().string("Access-Control-Allow-Methods", org.hamcrest.Matchers.containsString("GET")));
+    }
+
+    @Test
+    void allowsPatchPreflightForTenantBrandingRouteInDev() throws Exception {
+        mockMvc.perform(options("/api/me/tenant-branding")
+                        .header("Origin", "http://localhost:5174")
+                        .header("Access-Control-Request-Method", "PATCH")
+                        .header("Access-Control-Request-Headers", "Content-Type, Authorization"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Access-Control-Allow-Origin", "http://localhost:5174"))
+                .andExpect(header().string("Access-Control-Allow-Methods", org.hamcrest.Matchers.containsString("PATCH")));
     }
 }

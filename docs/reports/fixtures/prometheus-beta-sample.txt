@@ -1,0 +1,17 @@
+smartiq_game_session_started_total 24
+smartiq_game_session_completed_total 19
+smartiq_game_round_completed_total 41
+smartiq_game_duration_seconds_count 14
+smartiq_game_duration_seconds_sum 4780
+smartiq_game_round_duration_seconds_count 41
+smartiq_game_round_duration_seconds_sum 3295
+smartiq_game_action_total{type="pass"} 23
+smartiq_game_action_total{type="answer"} 137
+smartiq_game_answer_total{outcome="wrong"} 39
+smartiq_game_answer_total{outcome="correct"} 98
+smartiq_room_rejoin_total{result="success"} 19
+smartiq_room_rejoin_total{result="failure"} 2
+smartiq_room_join_total{result="success"} 36
+smartiq_room_join_total{result="failure"} 3
+smartiq_room_ws_connect_total{result="success"} 72
+smartiq_room_ws_connect_total{result="failure"} 4

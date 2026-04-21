@@ -55,7 +55,7 @@ export default function LobbyPlayerPanel({
                   />
                   <span className="sr-only">Include in launch</span>
                   <span className="lobby-player-meta">
-                    <strong>{player.displayName || player.playerId}</strong>
+                    <strong>{player.displayName || 'Player'}</strong>
                     <small>{selected ? 'Ready to launch' : 'Not in launch roster'}</small>
                   </span>
                 </label>

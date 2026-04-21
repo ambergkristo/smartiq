@@ -1482,25 +1482,6 @@ button:disabled {
   font-weight: 600;
 }
 
-.difficulty-pills {
-  display: flex;
-  gap: 8px;
-}
-
-.pill {
-  flex: 1;
-  color: var(--text);
-  background: rgba(255, 236, 208, 0.08);
-  border-radius: 999px;
-  min-height: 44px;
-}
-
-.pill.selected {
-  background: linear-gradient(180deg, var(--accent2), var(--accent));
-  color: #2b1207;
-  border-color: rgba(255, 189, 115, 0.75);
-}
-
 .players-chips {
   display: flex;
   gap: 8px;
@@ -1611,7 +1592,6 @@ button:disabled {
 
 .room-code-hero,
 .room-join-info,
-.room-qr-placeholder,
 .lobby-player-panel,
 .lobby-status-summary {
   display: grid;
@@ -1639,7 +1619,6 @@ button:disabled {
 
 .room-code-hero-head .section-title,
 .room-join-info .section-title,
-.room-qr-placeholder .section-title,
 .lobby-player-panel .section-title,
 .lobby-status-summary .section-title {
   color: rgba(246, 238, 240, 0.58);
@@ -1690,8 +1669,7 @@ button:disabled {
   color: #F6EEF0;
 }
 
-.room-join-info,
-.room-qr-placeholder {
+.room-join-info {
   gap: 12px;
   padding: 20px;
   background:
@@ -1722,49 +1700,6 @@ button:disabled {
 
 .room-join-link-card a {
   word-break: break-all;
-  color: #FFF8F4;
-}
-
-.room-qr-placeholder {
-  justify-items: center;
-  text-align: center;
-}
-
-.room-qr-placeholder-box {
-  position: relative;
-  width: min(100%, 178px);
-  aspect-ratio: 1;
-  border-radius: 24px;
-  border: 1px solid rgba(224, 58, 78, 0.28);
-  background:
-    radial-gradient(circle at top left, rgba(197, 51, 70, 0.16), transparent 48%),
-    linear-gradient(135deg, rgba(255, 248, 244, 0.04), rgba(255, 248, 244, 0)),
-    rgba(29, 15, 18, 0.9);
-  overflow: hidden;
-  box-shadow: inset 0 1px 0 rgba(255, 248, 244, 0.02);
-}
-
-.room-qr-placeholder-grid,
-.room-qr-placeholder-grid--overlay {
-  position: absolute;
-  inset: 18px;
-  border-radius: 12px;
-  background-image:
-    linear-gradient(90deg, rgba(246, 238, 240, 0.08) 1px, transparent 1px),
-    linear-gradient(rgba(246, 238, 240, 0.08) 1px, transparent 1px);
-  background-size: 18px 18px;
-}
-
-.room-qr-placeholder-grid--overlay {
-  inset: 34px;
-  background-size: 12px 12px;
-  opacity: 0.66;
-}
-
-.room-qr-placeholder strong {
-  font-family: "Nunito", "Inter", sans-serif;
-  font-size: 1.5rem;
-  letter-spacing: 0.08em;
   color: #FFF8F4;
 }
 
@@ -5035,8 +4970,7 @@ button:disabled {
     gap: 8px;
   }
 
-  .topic-grid,
-  .difficulty-pills {
+  .topic-grid {
     grid-template-columns: 1fr;
   }
 
@@ -5046,10 +4980,6 @@ button:disabled {
 
   .topic-tile {
     min-height: 108px;
-  }
-
-  .pill {
-    min-height: 48px;
   }
 
   .player-token {

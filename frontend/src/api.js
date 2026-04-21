@@ -513,7 +513,7 @@ function normalizeLanguage(lang) {
   return 'en';
 }
 
-export function buildServerGamePayload({ players, language, topic, winCondition } = {}) {
+export function buildServerGamePayload({ players, language, topic, winCondition, roomCode, roomPlayerId, roomAuthToken } = {}) {
   const payload = {};
 
   if (Array.isArray(players)) {
@@ -533,6 +533,13 @@ export function buildServerGamePayload({ players, language, topic, winCondition 
 
   if (Number.isInteger(winCondition) && winCondition > 0) {
     payload.winCondition = winCondition;
+  }
+
+  const normalizedRoomCode = String(roomCode || '').trim().toUpperCase();
+  if (normalizedRoomCode) {
+    payload.roomCode = normalizedRoomCode;
+    payload.roomPlayerId = normalizeRequiredField(roomPlayerId, 'roomPlayerId');
+    payload.roomAuthToken = normalizeRequiredField(roomAuthToken, 'roomAuthToken');
   }
 
   return payload;
@@ -1053,7 +1060,7 @@ export function resolveGameSessionErrorMessage(error) {
 export function resolveRoomSessionErrorMessage(error, { action = 'join' } = {}) {
   const normalizedAction = String(action || 'join').trim().toLowerCase();
   const waitingLabel = normalizedAction === 'resume'
-    ? 'restore the joined game'
+    ? 'restore the room session'
     : normalizedAction === 'create'
       ? 'create the host room'
       : 'join this game';

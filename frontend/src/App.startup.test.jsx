@@ -28,6 +28,17 @@ vi.mock('./api', () => {
     removeRoomPlayerFromSession: vi.fn(),
     rejoinRoomSession: vi.fn(),
     requestRuntimeAuthLink: vi.fn(),
+    resolveRoomSessionErrorMessage: vi.fn((error, { action = 'join' } = {}) => {
+      if (error?.code === 'NETWORK_ERROR') {
+        return 'CherryPick could not reach the live game service. Retry in a moment.';
+      }
+      if (error?.code === 'INVALID_ROOM_TOKEN') {
+        return action === 'resume'
+          ? 'Could not restore the room session. Retry in a moment.'
+          : 'This game is not open for joining right now.';
+      }
+      return 'Could not join this game. Retry in a moment.';
+    }),
     setRuntimeAuthContext: vi.fn(),
     upsertRuntimeSessionReviewNote: vi.fn(),
     upsertRuntimeSessionTemplate: vi.fn(),
@@ -108,13 +119,15 @@ function makeServerSnapshot({
 
 async function openStartSelection() {
   await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
-  fireEvent.click(screen.getByRole('button', { name: /start game/i }));
+  window.location.hash = '#/start';
+  fireEvent(window, new HashChangeEvent('hashchange'));
   await waitFor(() => expect(screen.getByRole('radiogroup', { name: /topic options/i })).toBeInTheDocument());
 }
 
 async function openStartSetupWithRoomPanel() {
   await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
-  fireEvent.click(screen.getByRole('button', { name: /start game/i }));
+  window.location.hash = '#/start';
+  fireEvent(window, new HashChangeEvent('hashchange'));
   await waitFor(() => expect(screen.getByTestId('room-panel')).toBeInTheDocument());
 }
 
@@ -198,6 +211,15 @@ describe('App startup resilience', () => {
     expect(screen.getByTestId('setup-skeleton')).toBeInTheDocument();
   });
 
+  test('keeps the internal admin console disabled in the public app by default', () => {
+    window.history.pushState({}, '', '/admin');
+
+    render(<App />);
+
+    expect(screen.getByTestId('admin-console-disabled')).toHaveTextContent('Admin console unavailable');
+    expect(screen.getByTestId('admin-console-disabled')).toHaveTextContent('does not expose the internal admin console');
+  });
+
   test('shows dev build badge marker', () => {
     fetchTopics.mockImplementation(() => new Promise(() => {}));
 
@@ -265,7 +287,7 @@ describe('App startup resilience', () => {
 
     await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
     expect(screen.getByRole('heading', { level: 1, name: /cherrypick/i })).toBeInTheDocument();
-    expect(screen.getByText(/play solo now, join a live room code, or open the host path/i)).toBeInTheDocument();
+    expect(screen.getByText(/play instantly on your own, join a host-led live room, or open the host path/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /play/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /join game/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /host game/i })).toBeInTheDocument();
@@ -316,6 +338,18 @@ describe('App startup resilience', () => {
 
     expect(screen.getByLabelText(/your display name/i)).toBeInTheDocument();
     expect(screen.getByText('QUIZ42')).toBeInTheDocument();
+  });
+
+  test('start setup hides cosmetic difficulty controls and summarizes language instead', async () => {
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+
+    render(<App />);
+
+    await openStartSelection();
+
+    expect(screen.queryByRole('radiogroup', { name: /difficulty/i })).not.toBeInTheDocument();
+    expect(screen.getByTestId('host-setup-summary')).toHaveTextContent(/language/i);
+    expect(screen.getByTestId('active-filter')).toHaveTextContent(/any topic \| en/i);
   });
 
   test('persists audio controls state between renders', async () => {
@@ -930,7 +964,7 @@ describe('App startup resilience', () => {
     });
     await waitFor(() => expect(screen.getByTestId('room-code-hero')).toBeInTheDocument());
     expect(screen.getByTestId('join-info-block')).toBeInTheDocument();
-    expect(screen.getByTestId('room-qr-placeholder')).toBeInTheDocument();
+    expect(screen.queryByTestId('room-qr-placeholder')).not.toBeInTheDocument();
     expect(screen.getByTestId('room-code-hero')).toHaveTextContent('QUIZ42');
     expect(screen.getByTestId('lobby-player-panel')).toHaveTextContent(/players joined/i);
     expect(screen.getAllByText('Host One').length).toBeGreaterThan(0);
@@ -1005,7 +1039,7 @@ describe('App startup resilience', () => {
     fireEvent.click(screen.getByRole('button', { name: /create room/i }));
 
     await waitFor(() => expect(screen.getByTestId('room-code-hero')).toBeInTheDocument());
-    fireEvent.click(screen.getByRole('button', { name: /back to home/i }));
+    fireEvent.click(screen.getByRole('button', { name: /leave host room/i }));
 
     await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
     expect(screen.queryByTestId('room-code-hero')).not.toBeInTheDocument();
@@ -1099,6 +1133,116 @@ describe('App startup resilience', () => {
     expect(screen.getByTestId('room-selected-roster-hint')).toHaveTextContent(/bob/i);
   });
 
+  test('keeps saved host room session when room resume fails transiently', async () => {
+    window.location.hash = '#/start';
+    localStorage.setItem('smartiq.roomSession', JSON.stringify({
+      roomCode: 'SAVE42',
+      playerId: 'p1',
+      authToken: 'rt_saved_host',
+      displayName: 'Host One',
+      role: 'host',
+      roomState: {
+        roomCode: 'SAVE42',
+        players: [
+          { playerId: 'p1', displayName: 'Host One' },
+          { playerId: 'p2', displayName: 'Alice' }
+        ]
+      }
+    }));
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    rejoinRoomSession.mockRejectedValueOnce({ code: 'NETWORK_ERROR' });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('room-session-card')).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /resume room/i }));
+
+    await waitFor(() => expect(rejoinRoomSession).toHaveBeenCalledWith('SAVE42', {
+      playerId: 'p1',
+      authToken: 'rt_saved_host'
+    }));
+    expect(screen.getByTestId('room-session-card')).toBeInTheDocument();
+    expect(screen.getByTestId('room-error')).toHaveTextContent(/retry in a moment/i);
+    expect(localStorage.getItem('smartiq.roomSession')).toContain('"roomCode":"SAVE42"');
+  });
+
+  test('clears invalid saved host room session and shows recovery error in setup shell', async () => {
+    window.location.hash = '#/start';
+    localStorage.setItem('smartiq.roomSession', JSON.stringify({
+      roomCode: 'SAVE42',
+      playerId: 'p1',
+      authToken: 'rt_saved_host',
+      displayName: 'Host One',
+      role: 'host',
+      roomState: {
+        roomCode: 'SAVE42',
+        players: [
+          { playerId: 'p1', displayName: 'Host One' },
+          { playerId: 'p2', displayName: 'Alice' }
+        ]
+      }
+    }));
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    rejoinRoomSession.mockRejectedValueOnce({ code: 'INVALID_ROOM_TOKEN', status: 403 });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('room-session-card')).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /resume room/i }));
+
+    await waitFor(() => expect(screen.getByTestId('host-launch-panel')).toBeInTheDocument());
+    expect(screen.queryByTestId('room-session-card')).not.toBeInTheDocument();
+    expect(screen.getByTestId('host-setup-error')).toHaveTextContent(/could not restore the room session/i);
+    expect(localStorage.getItem('smartiq.roomSession')).toBeNull();
+  });
+
+  test('keeps host in lobby and syncs live room state when launch fails against an already-live room', async () => {
+    window.location.hash = '#/start';
+    localStorage.setItem('smartiq.roomSession', JSON.stringify({
+      roomCode: 'SAVE42',
+      playerId: 'p1',
+      authToken: 'rt_saved_host',
+      displayName: 'Host One',
+      role: 'host',
+      roomState: {
+        roomCode: 'SAVE42',
+        players: [
+          { playerId: 'p1', displayName: 'Host One' },
+          { playerId: 'p2', displayName: 'Alice' }
+        ]
+      }
+    }));
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    createServerGameSession.mockRejectedValueOnce({ status: 409 });
+    fetchRoomPreview.mockResolvedValueOnce({
+      roomCode: 'SAVE42',
+      phase: 'LIVE',
+      joinable: false,
+      activeGame: {
+        gameId: 'game-live',
+        topic: 'Math',
+        status: 'QUESTION_ACTIVE',
+        roundNumber: 1
+      },
+      players: [
+        { playerId: 'p1', displayName: 'Host One' },
+        { playerId: 'p2', displayName: 'Alice' }
+      ]
+    });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('room-session-card')).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /start game/i }));
+
+    await waitFor(() => expect(createServerGameSession).toHaveBeenCalled());
+    await waitFor(() => expect(fetchRoomPreview).toHaveBeenCalledWith('SAVE42'));
+    expect(screen.getByTestId('room-session-card')).toBeInTheDocument();
+    expect(screen.getByTestId('room-error')).toHaveTextContent(/already live/i);
+    expect(screen.getByRole('button', { name: /game live/i })).toBeDisabled();
+    expect(screen.queryByText(/question ready/i)).not.toBeInTheDocument();
+  });
+
   test('joins a room into a dedicated player lobby surface', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
     joinRoomSession.mockResolvedValue({
@@ -1126,19 +1270,22 @@ describe('App startup resilience', () => {
 
     render(<App />);
 
-    await openStartSetupWithRoomPanel();
+    await waitFor(() => expect(screen.getByTestId('home-screen')).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /join game/i }));
+    await waitFor(() => expect(screen.getByTestId('home-join-panel')).toBeInTheDocument());
+    fireEvent.change(screen.getByLabelText(/^game code$/i), { target: { value: 'quiz42' } });
+    fireEvent.click(screen.getByRole('button', { name: /^next$/i }));
     fireEvent.change(screen.getByLabelText(/your display name/i), { target: { value: 'Alice' } });
-    fireEvent.change(screen.getByLabelText(/room code/i), { target: { value: 'quiz42' } });
-    fireEvent.click(screen.getByRole('button', { name: /join room/i }));
+    fireEvent.click(screen.getByRole('button', { name: /join game/i }));
 
     await waitFor(() => expect(joinRoomSession).toHaveBeenCalledWith('QUIZ42', { displayName: 'Alice' }));
     await waitFor(() => expect(screen.getByTestId('player-lobby-panel')).toBeInTheDocument());
     expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('QUIZ42');
     expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('Alice');
     expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('Northwind Quiz');
-    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent(/waiting for the host/i);
+    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent(/the host will launch the live game when the roster is ready/i);
     expect(screen.queryByLabelText(/room display name/i)).not.toBeInTheDocument();
-    expect(screen.queryByLabelText(/room code/i)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(/^game code$/i)).not.toBeInTheDocument();
   });
 
   test('renders dedicated player join route and returns to host setup on back', async () => {
@@ -1204,11 +1351,12 @@ describe('App startup resilience', () => {
     await waitFor(() => expect(screen.getByTestId('player-lobby-panel')).toBeInTheDocument());
     expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('Northwind Quiz');
     expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('Alice');
-    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent(/waiting for the host/i);
+    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent(/the host will launch the live game when the roster is ready/i);
     expect(screen.queryByTestId('player-route-panel')).not.toBeInTheDocument();
   });
 
   test('resumes a saved room session from local storage', async () => {
+    window.location.hash = '#/join/save42';
     localStorage.setItem('smartiq.roomSession', JSON.stringify({
       roomCode: 'SAVE42',
       playerId: 'p3',
@@ -1226,6 +1374,18 @@ describe('App startup resilience', () => {
       }
     }));
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    fetchRoomPreview.mockResolvedValue({
+      roomCode: 'SAVE42',
+      branding: {
+        appName: 'Saved Quiz',
+        primaryColor: '#114455',
+        secondaryColor: '#22aacc'
+      },
+      players: [
+        { playerId: 'p1', displayName: 'Host' },
+        { playerId: 'p3', displayName: 'Saved Player' }
+      ]
+    });
     rejoinRoomSession.mockResolvedValue({
       roomCode: 'SAVE42',
       playerId: 'p3',
@@ -1246,21 +1406,113 @@ describe('App startup resilience', () => {
 
     render(<App />);
 
-    await waitFor(() => expect(screen.getByRole('button', { name: /resume room/i })).toBeInTheDocument());
-    fireEvent.click(screen.getByRole('button', { name: /resume room/i }));
+    await waitFor(() => expect(screen.getByTestId('player-lobby-panel')).toBeInTheDocument());
+    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('Saved Quiz');
+    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent(/the host will launch the live game when the roster is ready/i);
+    expect(screen.getAllByText('Saved Player').length).toBeGreaterThan(0);
+    await waitFor(() => expect(screen.getByRole('button', { name: /refresh lobby/i })).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /refresh lobby/i }));
 
     await waitFor(() => expect(rejoinRoomSession).toHaveBeenCalledWith('SAVE42', {
       playerId: 'p3',
       authToken: 'rt_saved'
     }));
     expect(screen.getByText(/resumed room: SAVE42/i)).toBeInTheDocument();
+  });
+
+  test('keeps saved player room session when lobby refresh fails transiently', async () => {
+    window.location.hash = '#/join/save42';
+    localStorage.setItem('smartiq.roomSession', JSON.stringify({
+      roomCode: 'SAVE42',
+      playerId: 'p3',
+      authToken: 'rt_saved',
+      displayName: 'Saved Player',
+      role: 'player',
+      roomState: {
+        roomCode: 'SAVE42',
+        branding: {
+          appName: 'Saved Quiz',
+          primaryColor: '#114455',
+          secondaryColor: '#22aacc'
+        },
+        players: [{ playerId: 'p3', displayName: 'Saved Player' }]
+      }
+    }));
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    fetchRoomPreview.mockResolvedValue({
+      roomCode: 'SAVE42',
+      branding: {
+        appName: 'Saved Quiz',
+        primaryColor: '#114455',
+        secondaryColor: '#22aacc'
+      },
+      players: [
+        { playerId: 'p1', displayName: 'Host' },
+        { playerId: 'p3', displayName: 'Saved Player' }
+      ]
+    });
+    rejoinRoomSession.mockRejectedValueOnce({ code: 'NETWORK_ERROR' });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('player-lobby-panel')).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /refresh lobby/i }));
+
+    await waitFor(() => expect(rejoinRoomSession).toHaveBeenCalledWith('SAVE42', {
+      playerId: 'p3',
+      authToken: 'rt_saved'
+    }));
     expect(screen.getByTestId('player-lobby-panel')).toBeInTheDocument();
-    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent('Saved Quiz');
-    expect(screen.getByTestId('player-lobby-panel')).toHaveTextContent(/waiting for the host/i);
-    expect(screen.getAllByText('Saved Player').length).toBeGreaterThan(0);
+    expect(screen.getByTestId('room-error')).toHaveTextContent(/retry in a moment/i);
+    expect(localStorage.getItem('smartiq.roomSession')).toContain('"roomCode":"SAVE42"');
+  });
+
+  test('clears invalid saved player room session and returns to the join route with error copy', async () => {
+    window.location.hash = '#/join/save42';
+    localStorage.setItem('smartiq.roomSession', JSON.stringify({
+      roomCode: 'SAVE42',
+      playerId: 'p3',
+      authToken: 'rt_saved',
+      displayName: 'Saved Player',
+      role: 'player',
+      roomState: {
+        roomCode: 'SAVE42',
+        branding: {
+          appName: 'Saved Quiz',
+          primaryColor: '#114455',
+          secondaryColor: '#22aacc'
+        },
+        players: [{ playerId: 'p3', displayName: 'Saved Player' }]
+      }
+    }));
+    fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
+    fetchRoomPreview.mockResolvedValue({
+      roomCode: 'SAVE42',
+      branding: {
+        appName: 'Saved Quiz',
+        primaryColor: '#114455',
+        secondaryColor: '#22aacc'
+      },
+      players: [
+        { playerId: 'p1', displayName: 'Host' },
+        { playerId: 'p3', displayName: 'Saved Player' }
+      ]
+    });
+    rejoinRoomSession.mockRejectedValueOnce({ code: 'INVALID_ROOM_TOKEN', status: 403 });
+
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId('player-lobby-panel')).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: /refresh lobby/i }));
+
+    await waitFor(() => expect(screen.getByTestId('player-route-panel')).toBeInTheDocument());
+    expect(screen.queryByTestId('player-lobby-panel')).not.toBeInTheDocument();
+    expect(screen.getByText(/could not restore the room session/i)).toBeInTheDocument();
+    expect(localStorage.getItem('smartiq.roomSession')).toBeNull();
   });
 
   test('restores saved host room launch roster selection from local storage', async () => {
+    window.location.hash = '#/start';
     localStorage.setItem('smartiq.roomSession', JSON.stringify({
       roomCode: 'SAVE42',
       playerId: 'p1',

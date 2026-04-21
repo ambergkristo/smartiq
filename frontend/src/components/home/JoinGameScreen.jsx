@@ -16,8 +16,8 @@ export default function JoinGameScreen({
     <PlayerJoinFlow
       screenTestId="home-join-panel"
       brandTitle={appTitle}
-      chipLabel="Join game"
-      title="Join a CherryPick game"
+      chipLabel="Join live room"
+      title="Join a CherryPick live room"
       roomCode={roomCode}
       roomCodeLabel="Game code"
       roomCodePlaceholder="ABC123"
@@ -28,9 +28,9 @@ export default function JoinGameScreen({
       message={message}
       error={error}
       previewMissingLabel="Enter a room code to continue."
-      introCopy="Enter the game code to move into the CherryPick join flow."
-      roomStepCopy="Enter the code shared by the host."
-      nameStepCopy="Confirm your display name, then continue into the room."
+      introCopy="Enter the host's code to follow a live CherryPick session from your device."
+      roomStepCopy="Enter the code shared by the host to open the room roster."
+      nameStepCopy="Choose the display name that will appear in the host's live roster."
       statusPendingLabel="Joining room..."
       nextLabel="Next"
       joinLabel="Join game"

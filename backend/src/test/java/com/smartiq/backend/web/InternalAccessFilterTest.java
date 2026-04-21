@@ -45,6 +45,18 @@ class InternalAccessFilterTest {
     }
 
     @Test
+    void blocksPrometheusEndpointWithoutApiKeyInProd() throws Exception {
+        mockMvc.perform(get("/actuator/prometheus"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void allowsPrometheusEndpointWithApiKeyInProd() throws Exception {
+        mockMvc.perform(get("/actuator/prometheus").header("X-Internal-Api-Key", "test-internal-key"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     void keepsHealthEndpointPublicInProd() throws Exception {
         mockMvc.perform(get("/health"))
                 .andExpect(status().isOk());

@@ -27,7 +27,7 @@ export default function PlayerJoin({
       <PlayerJoinFlow
         screenTestId="player-route-panel"
         brandTitle={previewTitle}
-        chipLabel="Join game"
+        chipLabel="Join live room"
         title={strings.playerRouteTitle}
         roomCode={roomCode}
         roomCodeLabel={strings.roomCodeLabel}
@@ -42,8 +42,8 @@ export default function PlayerJoin({
         preview={preview}
         previewMissingLabel={strings.playerRoutePreviewMissing}
         introCopy={strings.playerRouteHint}
-        roomStepCopy="Confirm the room code, then continue to enter your display name."
-        nameStepCopy="Enter your display name, then join the waiting room."
+        roomStepCopy="Confirm the room code, then continue into the live room check-in."
+        nameStepCopy="Enter the display name that should appear in the host's live roster."
         statusPendingLabel={strings.playerRouteLoading}
         nextLabel="Next"
         joinLabel={strings.playerRouteJoinSubmit}

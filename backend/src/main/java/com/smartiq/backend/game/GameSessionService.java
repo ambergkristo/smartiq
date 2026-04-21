@@ -164,7 +164,7 @@ public class GameSessionService {
         List<String> players = state.players.stream()
                 .map(PlayerState::displayName)
                 .toList();
-        return new CreateGameRequest(players, state.language, state.topic, state.winCondition);
+        return new CreateGameRequest(players, state.language, state.topic, state.winCondition, null, null, null);
     }
 
     public synchronized GameSessionCreateResponse duplicateGameWithControl(String gameId,

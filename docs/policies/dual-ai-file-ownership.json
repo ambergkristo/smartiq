@@ -1,0 +1,33 @@
+{
+  "shared_locked": [
+    "README.md",
+    "package.json",
+    "docs/plans/",
+    "docs/policies/",
+    ".github/workflows/"
+  ],
+  "teams": {
+    "team-a": {
+      "allowed": [
+        "backend/",
+        "tools/",
+        "docs/plans/",
+        "docs/policies/"
+      ],
+      "forbidden": [
+        "frontend/"
+      ]
+    },
+    "team-b": {
+      "allowed": [
+        "frontend/",
+        "docs/prompts/",
+        "docs/plans/",
+        "docs/policies/"
+      ],
+      "forbidden": [
+        "backend/"
+      ]
+    }
+  }
+}

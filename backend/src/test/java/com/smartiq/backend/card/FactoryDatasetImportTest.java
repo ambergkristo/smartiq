@@ -24,13 +24,13 @@ class FactoryDatasetImportTest {
 
     @Test
     void importsFactoryDatasetBlocksOnStartupNormalizesCardsAndSkipsInvalidCards() {
-        assertThat(cardRepository.count()).isEqualTo(4);
+        assertThat(cardRepository.count()).isEqualTo(2);
 
         Card first = cardRepository.findById("science_truefalse_001").orElseThrow();
         assertThat(first.getTopic()).isEqualTo("Science");
         assertThat(first.getSubtopic()).isEqualTo("TRUE_FALSE");
         assertThat(first.getDifficulty()).isEqualTo("2");
-        assertThat(first.getOptions()).hasSize(10);
+        assertThat(first.getOptions()).hasSize(8).contains("Option 10");
         assertThat(first.getCorrectIndex()).isNull();
         assertThat(first.getCorrectFlags()).contains("true");
 
@@ -38,13 +38,8 @@ class FactoryDatasetImportTest {
         assertThat(second.getDifficulty()).isEqualTo("1");
         assertThat(second.getCorrectIndex()).isEqualTo(0);
 
-        Card normalized = cardRepository.findById("science_number_short_001").orElseThrow();
-        assertThat(normalized.getOptions()).hasSize(10);
-        assertThat(normalized.getCorrectIndex()).isEqualTo(0);
-
-        Card guaranteedCorrect = cardRepository.findById("art_number_001").orElseThrow();
-        assertThat(guaranteedCorrect.getCorrectIndex()).isEqualTo(0);
-
+        assertThat(cardRepository.existsById("science_number_short_001")).isFalse();
+        assertThat(cardRepository.existsById("art_number_001")).isFalse();
         assertThat(cardRepository.existsById("science_invalid_category_001")).isFalse();
     }
 }

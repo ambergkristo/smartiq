@@ -3,8 +3,10 @@ import CherryPickLogo, { isCherryPickBrand } from '../branding/CherryPickLogo';
 export default function WaitingRoomView({
   appTitle,
   roomCode,
+  hostPlayerId = '',
   playerName,
   waitingLabel,
+  phaseLabel = '',
   savedHint,
   playersTitle,
   players,
@@ -30,7 +32,7 @@ export default function WaitingRoomView({
       </div>
 
       <div className="player-waiting-room-hero">
-        <p className="section-title">Waiting room</p>
+        <p className="section-title">Live room</p>
         <h2>{playerName}</h2>
         <p>{waitingLabel}</p>
       </div>
@@ -38,7 +40,7 @@ export default function WaitingRoomView({
       <div className="player-waiting-room-meta">
         <article>
           <span>Status</span>
-          <strong>{waitingLabel}</strong>
+          <strong>{phaseLabel || waitingLabel}</strong>
         </article>
         <article>
           <span>Players joined</span>
@@ -64,8 +66,8 @@ export default function WaitingRoomView({
           <ul>
             {players.map((player) => (
               <li key={player.playerId || player.displayName}>
-                <strong>{player.displayName || player.playerId}</strong>
-                <span>{player.playerId}</span>
+                <strong>{player.displayName || 'Player'}</strong>
+                <span>{player.playerId === hostPlayerId ? 'Host' : 'Joined in this room'}</span>
               </li>
             ))}
           </ul>

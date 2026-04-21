@@ -1,6 +1,8 @@
 # Recurring Host Launch Incident Runbook
 
-Use this runbook for the narrow recurring-host launch path. It is scoped to the incidents most likely to break first-time host trust:
+Use this runbook only for internal recurring-host pilot surfaces. It does not define the public CherryPick game launch gate.
+
+It is scoped to the incidents most likely to break first-time host trust:
 
 1. auth or sign-in failures,
 2. billing checkout or entitlement recovery failures,
@@ -18,7 +20,7 @@ Use this runbook for the narrow recurring-host launch path. It is scoped to the 
    ```
 3. Confirm metrics export:
    ```powershell
-   curl -i https://<backend-domain>/actuator/prometheus
+   curl -i -H "X-Internal-Api-Key: <internal-api-key>" https://<backend-domain>/actuator/prometheus
    ```
 4. Confirm the current recurring-host KPI snapshot exists:
    ```powershell

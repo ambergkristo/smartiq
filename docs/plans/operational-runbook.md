@@ -18,7 +18,7 @@ First-response runbook for production incidents and release-day operational chec
    ```
 3. Confirm metrics endpoint availability:
    ```bash
-   curl -i https://<backend-domain>/actuator/prometheus
+   curl -i -H "X-Internal-Api-Key: <internal-api-key>" https://<backend-domain>/actuator/prometheus
    ```
 4. If `/health` is not `UP`, move to immediate rollback decision.
 
@@ -26,7 +26,7 @@ First-response runbook for production incidents and release-day operational chec
 -----------------------------
 
 - `/health`: binary service health.
-- `/actuator/prometheus`: runtime counters/timers and deployment diagnostics.
+- `/actuator/prometheus`: runtime counters/timers and deployment diagnostics, protected by the internal API key in `prod`.
 - `/version`: build identity (`commitSha`, `buildTime`).
 
 3. Metric playbooks
@@ -173,6 +173,20 @@ Escalate and prepare rollback when one or more conditions persist over 10 minute
 - action reject spikes block gameplay
 - dataset threshold gate fails with production fail-on-threshold enabled
 
+6.1 Rollback procedure
+
+1. Pause new launch traffic and stop active outreach.
+2. Roll backend to the previous known-good deployment or release SHA.
+3. Roll frontend to the previous known-good deployment if frontend is part of the incident.
+4. Re-run:
+   - `npm run smoke:postdeploy`
+   - `npm run smoke:ops`
+5. Record:
+   - failed SHA
+   - restored SHA
+   - rollback timestamp
+   - smoke results
+
 References
 ----------
 
@@ -185,3 +199,4 @@ References
 - `docs/plans/2026-03-03-phase7-beta-go-no-go-dry-run-checklist.md`
 - `tools/run_phase7_dry_run.js`
 - `tools/validate_session_capacity_guardrails.js`
+- `docs/runbooks/cherrypick-launch-runbook.md`

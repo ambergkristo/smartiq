@@ -1,19 +1,29 @@
 # Deployment Guide
 
-This project uses:
+This guide covers the current CherryPick production deployment shape.
 
-- Frontend: Vercel
-- Backend: Render (Spring Boot service)
-- Database: Managed PostgreSQL (Render Postgres or external managed provider)
+## 1. Launch scope
 
-## 1. Backend (Render)
+Public production deployment is scoped to the CherryPick game runtime:
 
-Create a new Web Service from this repository:
+- `PLAY`
+- `JOIN`
+- `HOST`
+- `EN` only by default
 
-- Root directory: `backend`
-- Build command: `mvn -q -DskipTests package`
-- Start command: `mvn -q spring-boot:run`
-- Optional infra file: `render.yaml` includes `healthCheckPath: /health`
+Keep these surfaces out of the public launch unless they are separately hardened:
+
+- `/admin`
+- recurring-host billing/auth rollout
+- ET public rollout
+
+## 2. Backend
+
+Expected backend platform:
+
+- Render or equivalent Spring Boot host
+- managed PostgreSQL
+- Redis for game and room session stores
 
 Set environment variables:
 
@@ -21,85 +31,66 @@ Set environment variables:
 - `SPRING_DATASOURCE_URL`
 - `SPRING_DATASOURCE_USERNAME`
 - `SPRING_DATASOURCE_PASSWORD`
-- `APP_CORS_ALLOWED_ORIGINS=https://<your-vercel-domain>` (preferred explicit allowlist)
-- `SMARTIQ_CORS_ALLOWED_ORIGIN_PUBLIC=https://<your-vercel-domain>` (compatibility fallback)
+- `APP_CORS_ALLOWED_ORIGINS=https://<your-frontend-domain>`
 - `SMARTIQ_IMPORT_ENABLED=true`
 - `SMARTIQ_IMPORT_PATH=../data/smart10`
-- `SMARTIQ_POOL_ENABLED=true`
-- `MIN_BANK_SIZE=1000`
-- `POOL_LOW_WATERMARK=800`
-- `POOL_TARGET=1200`
-- `SMARTIQ_SESSION_DEDUP_ENABLED=true`
-- `SMARTIQ_SESSION_TTL_MINUTES=120`
-- `SMARTIQ_SESSION_MAX=50000`
+- `SMARTIQ_GAME_SESSION_STORE=redis`
+- `SMARTIQ_ROOM_SESSION_STORE=redis`
 - `SMARTIQ_INTERNAL_ACCESS_ENABLED=true`
 - `SMARTIQ_INTERNAL_API_KEY_HEADER=X-Internal-Api-Key`
 - `SMARTIQ_INTERNAL_API_KEY=<strong-random-value>`
+- `SMARTIQ_BUILD_SHA=<commit-sha>`
+- `SMARTIQ_BUILD_TIME=<utc-build-time>`
 
-Boot preflight protection:
+Production backend contract:
 
-- Backend startup fails fast with a clear error when `SPRING_DATASOURCE_URL` is PostgreSQL and `SPRING_DATASOURCE_PASSWORD` is missing.
+- `/health` is public
+- `/version` is public
+- `/internal/*` requires the internal API key
+- `/actuator/prometheus` requires the internal API key
+- prod actuator exposure remains limited to `health`, `info`, and `prometheus`
 
-Health check endpoint:
+## 3. Frontend
 
-- `/health`
-- Dev-only CORS convenience (`localhost:*`, `127.0.0.1:*`) is profile-gated and not active in `prod`
-- `/internal/*` now requires `X-Internal-Api-Key` in `prod`
-- `/api/admin/*` is disabled in `prod` by profile
-- Actuator in `prod` exposes only `health`, `info`, and `prometheus`
+Expected frontend platform:
 
-## 2. Frontend (Vercel)
+- Vercel
 
-Create a Vercel project from this repository:
-
-- Root directory: `frontend`
-- Build command: `npm run build`
-- Output directory: `dist`
-
-Set frontend environment variable:
+Set environment variables:
 
 - `VITE_API_BASE_URL=https://<your-backend-domain>`
-- Optional alias: `VITE_BACKEND_URL=https://<your-backend-domain>`
-- Team-facing var naming: `BACKEND_URL=https://<your-backend-domain>` (map to `VITE_*` in Vercel env)
-- Vercel build is blocked if `VITE_API_BASE_URL` is missing, invalid, or points to localhost.
+- `VITE_ENABLE_ADMIN_CONSOLE=false`
+- `VITE_ENABLE_ET=false`
 
-Vercel deployment contract:
+Frontend deployment contract:
 
-- Vercel deploys frontend only.
-- Backend must be up first (`/health` must return `200`) before pointing `VITE_API_BASE_URL` to it.
+- public build is blocked if `VITE_API_BASE_URL` is missing, invalid, or points to localhost
+- admin console stays disabled unless explicitly enabled in an internal environment
 
-Validate deployment env vars locally:
+## 4. Post-deploy verification
 
-```bash
-npm run validate:deploy-env
-```
-
-## 3. Post-deploy checks
-
-1. `curl -i https://<backend-domain>/health` returns HTTP `200` and body `{\"status\":\"UP\"}`.
-2. Frontend loads topics from backend.
-3. `/api/cards/nextRandom?language=en&gameId=smoke-deploy` works from deployed frontend domain without CORS errors.
-4. `/internal/pool-stats` returns `401` without API key and `200` with API key.
-
-Post-deploy smoke command (required for Go/No-Go):
+Required commands:
 
 ```powershell
-$env:BACKEND_URL="https://<backend-domain>"; $env:FRONTEND_URL="https://<frontend-domain>"; npm run smoke:postdeploy
+$env:BACKEND_URL="https://<backend-domain>"
+$env:FRONTEND_URL="https://<frontend-domain>"
+$env:SMARTIQ_INTERNAL_API_KEY="<internal-api-key>"
+npm run smoke:postdeploy
+npm run smoke:ops
 ```
 
-Public smoke test command:
+The ops smoke verifies:
 
-```powershell
-$env:BACKEND_URL="https://<backend-domain>"; npm run smoke:test
-```
+- `/version` returns build identity
+- `/internal/pool-stats` is `401` without key and `200` with key
+- `/actuator/prometheus` is `401` without key and `200` with key
 
-## Key Rotation Runbook
+Canonical workflow:
 
-1. Generate a new strong key value and store it in Render as `SMARTIQ_INTERNAL_API_KEY`.
-2. Redeploy backend service (or trigger manual deploy) so new env var is active.
-3. Update operational clients/monitoring checks to send the new `X-Internal-Api-Key`.
-4. Validate:
-   - `/health` still public `200`
-   - `/internal/pool-stats` old key rejected (`401`)
-   - `/internal/pool-stats` new key accepted (`200`)
-5. Remove any old key references from local `.env` or secret managers.
+- `.github/workflows/smoke-public.yml`
+
+## 5. Rollback reference
+
+Use the step-by-step rollback flow in:
+
+- `docs/runbooks/cherrypick-launch-runbook.md`

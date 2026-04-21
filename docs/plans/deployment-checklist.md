@@ -40,7 +40,7 @@ Canonical production deployment checklist for SmartIQ operators. This file is th
 | session dedup | `smartiq.session.ttl-minutes` | `SMARTIQ_SESSION_TTL_MINUTES` | yes | Default `120`; tune per memory budget. |
 | session dedup | `smartiq.session.max-sessions` | `SMARTIQ_SESSION_MAX` | yes | Capacity guardrail. |
 | session dedup | `smartiq.session.redis-prefix` | `SMARTIQ_SESSION_REDIS_PREFIX` | no | Needed only with Redis-backed store. |
-| language | `smartiq.language.et-enabled` | `SMARTIQ_LANGUAGE_ET_ENABLED` | yes | `true` unless ET rollout is intentionally paused. |
+| language | `smartiq.language.et-enabled` | `SMARTIQ_LANGUAGE_ET_ENABLED` | yes | `false` for the current EN-only CherryPick launch; enable only for an intentional ET rollout. |
 | game | `smartiq.game.session-retention-minutes` | `SMARTIQ_GAME_SESSION_RETENTION_MINUTES` | yes | Session eviction retention (prod default `180`, do not set below `120` without incident sign-off). |
 | game | `smartiq.game.session-max` | `SMARTIQ_GAME_SESSION_MAX` | yes | Capacity limit for active game sessions (prod default `50000`). |
 | game session store | `smartiq.game.session-store` | `SMARTIQ_GAME_SESSION_STORE` | yes | `redis` in production; `memory` only for local/dev fallback. |
@@ -143,6 +143,20 @@ Expected:
 ```powershell
 $env:BACKEND_URL="https://<backend-domain>"; $env:FRONTEND_URL="https://<frontend-domain>"; npm run smoke:postdeploy
 ```
+
+4.6 Ops protection smoke
+
+```powershell
+$env:BACKEND_URL="https://<backend-domain>"
+$env:SMARTIQ_INTERNAL_API_KEY="<internal-api-key>"
+npm run smoke:ops
+```
+
+Expected:
+
+- `/version` returns non-empty build identity
+- `/internal/pool-stats` is `401` without key and `200` with key
+- `/actuator/prometheus` is `401` without key and `200` with key
 
 5. Rollback trigger conditions
 ------------------------------

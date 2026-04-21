@@ -2,6 +2,7 @@ package com.smartiq.backend.room;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.config.RoomProperties;
+import com.smartiq.backend.game.GameSessionCreateResponse;
 import com.smartiq.backend.shared.RuntimeLimits;
 import com.smartiq.backend.tenant.ForbiddenTenantAccessException;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -21,6 +22,7 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
 @Service
@@ -135,6 +137,9 @@ public class RoomService {
         try {
             evictExpiredRooms();
             RoomState room = requireRoom(roomCode, tenantIdContext);
+            if (room.phase != RoomPhase.WAITING) {
+                throw new RoomClosedException("room is no longer open for joining");
+            }
             if (room.players.size() >= MAX_PLAYERS) {
                 throw new IllegalArgumentException("room is full");
             }
@@ -153,6 +158,39 @@ public class RoomService {
             incrementCounter(METRIC_ROOM_JOIN, "failure", classifyJoinFailure(ex));
             throw ex;
         }
+    }
+
+    public synchronized RoomLaunchResult launchRoom(String roomCode,
+                                                    LaunchRoomGameRequest request,
+                                                    UUID tenantIdContext,
+                                                    Function<List<String>, GameSessionCreateResponse> launcher) {
+        evictExpiredRooms();
+        if (request == null) {
+            throw new IllegalArgumentException("launch room payload is required");
+        }
+        if (launcher == null) {
+            throw new IllegalArgumentException("launch room callback is required");
+        }
+
+        RoomState room = requireRoom(roomCode, tenantIdContext);
+        if (room.phase != RoomPhase.WAITING) {
+            throw new RoomClosedException("room is no longer open for joining");
+        }
+
+        String hostPlayerId = normalizePlayerId(request.hostPlayerId());
+        String hostAuthToken = normalizeAuthToken(request.hostAuthToken());
+        requireHostAuthority(room, hostPlayerId, hostAuthToken);
+
+        List<String> launchPlayers = resolveLaunchPlayers(room, request.players());
+        GameSessionCreateResponse created = launcher.apply(launchPlayers);
+        RoomActiveGameSnapshot activeGame = toActiveGameSnapshot(created);
+
+        room.phase = RoomPhase.LIVE;
+        room.activeGame = activeGame;
+        room.lastTouchedAtMillis = nowMillis();
+        persistRoom(room);
+
+        return new RoomLaunchResult(created, toSnapshot(room));
     }
 
     public synchronized RoomSnapshot getRoomSnapshot(String roomCode) {
@@ -253,6 +291,20 @@ public class RoomService {
         } catch (RuntimeException ex) {
             incrementCounter(METRIC_ROOM_REJOIN, "failure", classifyRejoinFailure(ex));
             throw ex;
+        }
+    }
+
+    private static void requireHostAuthority(RoomState room, String hostPlayerId, String hostAuthToken) {
+        String expectedHostToken = room.playerTokens.get(hostPlayerId);
+        if (expectedHostToken == null) {
+            throw new NoSuchElementException("player not found: " + hostPlayerId);
+        }
+        if (!secureEquals(expectedHostToken, hostAuthToken)) {
+            throw new IllegalArgumentException("invalid room token");
+        }
+        String roomHostPlayerId = room.hostPlayerId();
+        if (!hostPlayerId.equals(roomHostPlayerId)) {
+            throw new IllegalArgumentException("only host can launch room");
         }
     }
 
@@ -365,7 +417,9 @@ public class RoomService {
                 room.hostUserEmail,
                 players,
                 Map.copyOf(room.playerTokens),
-                room.lastTouchedAtMillis
+                room.lastTouchedAtMillis,
+                room.phase,
+                room.activeGame
         );
     }
 
@@ -395,6 +449,8 @@ public class RoomService {
             room.playerTokens.putAll(stored.playerTokens());
         }
         room.lastTouchedAtMillis = stored.lastTouchedAtMillis();
+        room.phase = stored.phase() == null ? RoomPhase.WAITING : stored.phase();
+        room.activeGame = stored.activeGame();
         return room;
     }
 
@@ -479,6 +535,41 @@ public class RoomService {
             throw new IllegalArgumentException("invalid room token");
         }
         return normalized;
+    }
+
+    private static List<String> resolveLaunchPlayers(RoomState room, List<String> requestedPlayers) {
+        List<String> availablePlayers = room.players.stream()
+                .map(PlayerState::displayName)
+                .map(RoomService::normalizeSelectablePlayerName)
+                .filter(name -> !name.isBlank())
+                .distinct()
+                .toList();
+        if (availablePlayers.isEmpty()) {
+            throw new IllegalArgumentException("room has no launchable players");
+        }
+        if (requestedPlayers == null || requestedPlayers.isEmpty()) {
+            return availablePlayers;
+        }
+
+        List<String> normalizedRequestedPlayers = requestedPlayers.stream()
+                .map(RoomService::normalizeSelectablePlayerName)
+                .filter(name -> !name.isBlank())
+                .distinct()
+                .toList();
+        if (normalizedRequestedPlayers.isEmpty()) {
+            throw new IllegalArgumentException("launch players are required");
+        }
+
+        for (String player : normalizedRequestedPlayers) {
+            if (!availablePlayers.contains(player)) {
+                throw new IllegalArgumentException("launch players must belong to the room roster");
+            }
+        }
+        return normalizedRequestedPlayers;
+    }
+
+    private static String normalizeSelectablePlayerName(String value) {
+        return String.join(" ", String.valueOf(value == null ? "" : value).trim().split("\\s+")).trim();
     }
 
     private static String issueToken() {
@@ -615,7 +706,27 @@ public class RoomService {
         List<RoomPlayerSnapshot> players = room.players.stream()
                 .map(player -> new RoomPlayerSnapshot(player.playerId(), player.displayName()))
                 .toList();
-        return new RoomSnapshot(room.code, room.tenantId, null, players);
+        return new RoomSnapshot(
+                room.code,
+                room.tenantId,
+                null,
+                players,
+                room.phase,
+                room.phase == RoomPhase.WAITING,
+                room.activeGame
+        );
+    }
+
+    private static RoomActiveGameSnapshot toActiveGameSnapshot(GameSessionCreateResponse created) {
+        if (created == null || created.snapshot() == null) {
+            throw new IllegalArgumentException("game launch callback must return a game snapshot");
+        }
+        return new RoomActiveGameSnapshot(
+                created.snapshot().gameId(),
+                created.snapshot().boardState() == null ? null : created.snapshot().boardState().topic(),
+                created.snapshot().roundState() == null ? null : created.snapshot().roundState().phase(),
+                created.snapshot().roundState() == null ? null : created.snapshot().roundState().roundNumber()
+        );
     }
 
     private static final class RoomState {
@@ -624,6 +735,8 @@ public class RoomService {
         private String hostUserEmail;
         private final List<PlayerState> players = new ArrayList<>();
         private final Map<String, String> playerTokens = new ConcurrentHashMap<>();
+        private RoomPhase phase = RoomPhase.WAITING;
+        private RoomActiveGameSnapshot activeGame;
         private long lastTouchedAtMillis;
 
         private RoomState(String code) {
@@ -667,7 +780,9 @@ public class RoomService {
             String hostUserEmail,
             List<StoredRoomPlayer> players,
             Map<String, String> playerTokens,
-            long lastTouchedAtMillis
+            long lastTouchedAtMillis,
+            RoomPhase phase,
+            RoomActiveGameSnapshot activeGame
     ) {
     }
 

@@ -1,36 +1,66 @@
-# UI and State Machine
+# CherryPick UI and Runtime Flow
 
-This document describes the SmartIQ frontend UX and Smart10-style round flow.
+This document describes the current CherryPick frontend behavior after the game-first recovery work.
 
-## Screens
+## Public Entry Flows
 
-## Setup
+### Home
 
-- Inputs: `topic`, `difficulty (1-3)`, `language`, players list.
-- Action: `Start game`.
-- Behavior:
-  - Generates a game id (`crypto.randomUUID()` fallback to timestamp id) and stores it in localStorage.
-  - `Any Topic` is the default and uses full random deck mode.
-  - Moves to `LOADING_CARD`.
+- Home is the public product entry.
+- Primary choices:
+  - `Play`: start a solo CherryPick run immediately
+  - `Join Game`: enter the live-room join flow
+  - `Host Game`: prepare and launch a host-led live room
 
-## Play Board
+### Join
 
-- Left panel:
-  - Player list with active player highlight.
-  - Score per player.
-  - Round number and target points (30).
-  - Current phase and last action text.
-- Center panel:
-  - Card metadata (topic, difficulty, language).
-  - Question text.
-  - 10 answer slots in wheel layout (fallback grid on narrow screens).
-  - Action bar (`ANSWER`, `PASS`, `LOCK IN`, `NEXT`) based on phase.
+- `#/join` is the canonical public room-code flow.
+- `#/join/:roomCode` is the canonical deep-link flow.
+- Join is currently honest host-led live play:
+  - joined devices enter the room roster
+  - the host remains the gameplay driver
+  - late joins close once the room is live
 
-## Round Summary / Game Over
+### Host
 
-- Round summary appears after each one-card round.
-- `NEXT ROUND` loads a new card for the next round.
-- `GAME OVER` appears when a player reaches 30 points.
+- `#/host` is the canonical public host flow.
+- Host prepares the topic and room, shares the code, then starts the live session.
+- Authenticated host workspace/runtime surfaces are secondary operator tools, not the public product story.
+
+## Setup and Launch
+
+### Quick Start Setup
+
+- The setup shell supports:
+  - `topic`
+  - `language`
+  - `players`
+- `difficulty` is not a public runtime control because it is not wired through the current game creation contract.
+- `Any Topic` remains the default and uses random deck mode.
+
+### Room Launch
+
+- Host room creation produces a shareable room code.
+- Joined players appear in the host roster before launch.
+- Starting a host room creates a room-backed live game.
+- Once launched, the room becomes `LIVE` and new joins are blocked.
+
+## Gameplay Surface
+
+- The frontend uses server-authoritative game sessions.
+- The board shows:
+  - topic/language card metadata from backend snapshots
+  - question text
+  - 8 answer tiles
+  - action flow built around `ANSWER`, `LOCK IN`, and `NEXT ROUND`
+- CherryPick does not expose a `PASS` action in the current runtime.
+
+## Summary / Game Over
+
+- Round summary appears after each round.
+- `NEXT ROUND` advances to the next server-authoritative round.
+- `GAME OVER` appears when a player reaches the win condition.
+- Summary UI reports score, correct answers, and wrong answers only.
 
 ## GamePhase Model
 
@@ -41,90 +71,37 @@ Defined in `frontend/src/state/types.ts`.
 - `CHOOSING`
 - `CONFIRMING`
 - `RESOLVED`
-- `PASSED`
 - `ROUND_SUMMARY`
 - `GAME_OVER`
 
-## Smart10 Round Rules (Frontend)
+## Core Rules
 
 - One round = one card.
 - Players take turns on the same card.
-- Wrong answer eliminates that player for the current round only.
-- Pass is allowed after the current player has at least one correct answer in the round, then skips turn and marks player as passed for the current round.
-- Round ends when all players are passed/eliminated or all answer slots are resolved.
-- First player to 30 total points wins the game.
+- Wrong answers eliminate the acting player for the current round.
+- There is no pass mechanic in the CherryPick runtime contract.
+- First player to the configured target score wins the game.
 
 ## API Integration
 
-- Preferred endpoint:
-  - `GET /api/cards/nextRandom?language=&gameId=&topic=`
 - Topics endpoint:
   - `GET /api/topics`
 - Server-authoritative game endpoints:
   - `POST /api/game`
   - `GET /api/game/{gameId}`
   - `POST /api/game/{gameId}/action`
-- `POST /api/game` returns:
-  - `snapshot` (`GameSessionSnapshot`)
-  - `actionTokens` (`playerId -> token`) used by frontend to authorize actions
-- `POST /api/game/{gameId}/action` request payload includes:
-  - `type`, `tileIndex?`, `rank?`
-  - `actorPlayerId` (required)
-  - `actionToken` (required)
-  - `actionRequestId` (required; duplicate replay key)
-- Duplicate `actionRequestId` on same game session returns `409 Conflict`.
-- Frontend behavior:
-  - Uses timeout + retry for transient/network errors.
-  - Shows backend error details on `404` when available.
-  - For `Any Topic`, requests cards without topic filter.
-  - Reuses persisted `gameId` across reloads for per-game anti-repeat behavior.
+- Room endpoints:
+  - create, join, rejoin, preview, and launch live-room state
+- `POST /api/game/{gameId}/action` supports CherryPick gameplay actions only; `PASS` is unsupported.
 
-## Random Deck Rules
-
-- Server-side anti-repeat for `nextRandom` per `gameId`:
-  - Avoid same category back-to-back when alternatives exist.
-  - Avoid same topic back-to-back when alternatives exist.
-  - Avoid repeating recent card ids in last K=20 when alternatives exist.
-  - Relax order if pool is too small: `cardId` -> `topic` -> `category`.
-
-## Manual QA (Windows PowerShell)
+## Manual QA
 
 1. Start backend and frontend:
    - `mvn -q -f backend/pom.xml test`
    - `npm --prefix frontend ci`
    - `npm --prefix frontend run dev`
-2. Open app, keep `Any Topic` selected, add at least 1 player, click `Start game`.
-3. Play 10 rounds with PASS/ANSWER mix and verify:
-   - No immediate same category in consecutive rounds (when alternatives exist).
-   - No immediate same topic in consecutive rounds (when alternatives exist).
-4. Reload page and start another round:
-   - Confirm game still loads cards with same persisted `gameId`.
-5. Optional filter check:
-   - Select one topic on setup and verify cards come from that topic while randomizing categories.
-6. Empty-pool check:
-   - Request unavailable filter/language and verify user sees a meaningful `404` detail message, not generic fallback.
-
-## NextRandom Edge-Case QA
-
-Run these backend checks directly against API:
-
-1. Topic trim behavior:
-   - `curl.exe -s "http://localhost:8081/api/cards/nextRandom?language=en&gameId=qa-trim&topic=%20%20Math%20%20"`
-   - Expect `200` and response `topic` value equals `Math`.
-2. Language fallback behavior (`et` -> `en`):
-   - `curl.exe -s "http://localhost:8081/api/cards/nextRandom?language=et&gameId=qa-fallback&topic=Math"`
-   - Expect `200` with `language` set to `en` when ET pool is empty.
-3. Relax-order behavior on constrained pools:
-   - In test suite, verify relaxation sequence remains `cardId -> topic -> category` (never skipped).
-4. Empty-pool contract:
-   - `curl.exe -s -i "http://localhost:8081/api/cards/nextRandom?language=en&gameId=qa-empty&topic=Unknown"`
-   - Expect `404` and JSON body with `error` field (`No cards available for language=en, topic=Unknown`).
-
-## Test Coverage
-
-- State machine transitions:
-  - `frontend/src/state/useGameEngine.test.jsx`
-- Round flow UI:
-  - `frontend/src/App.test.jsx`
-- Wheel layout rendering/fallback:
-  - `frontend/src/components/GameBoard.test.jsx`
+2. Verify home shows `Play`, `Join Game`, and `Host Game`.
+3. Verify `Play` starts solo without a placeholder handoff screen.
+4. Verify `Join Game` uses the two-step room-code then name flow.
+5. Verify host room creation shows the share link and roster with no QR demo block.
+6. Launch a room and verify late joins are blocked once the room is live.

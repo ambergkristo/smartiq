@@ -2,6 +2,24 @@ export function normalizePlayerName(name) {
   return String(name || '').replace(/\s+/g, ' ').trim();
 }
 
+export function getRoomLifecycle(roomSessionOrPreview) {
+  const source = roomSessionOrPreview?.roomState && typeof roomSessionOrPreview.roomState === 'object'
+    ? roomSessionOrPreview.roomState
+    : roomSessionOrPreview;
+  const phase = String(source?.phase || '').trim().toUpperCase();
+  return phase === 'LIVE' ? 'LIVE' : 'WAITING';
+}
+
+export function isRoomJoinable(roomSessionOrPreview) {
+  const source = roomSessionOrPreview?.roomState && typeof roomSessionOrPreview.roomState === 'object'
+    ? roomSessionOrPreview.roomState
+    : roomSessionOrPreview;
+  if (source && source.joinable === false) {
+    return false;
+  }
+  return getRoomLifecycle(source) === 'WAITING';
+}
+
 export function normalizeRoomCodeInput(value) {
   return String(value || '').trim().toUpperCase();
 }

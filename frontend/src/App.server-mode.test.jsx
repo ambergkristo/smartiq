@@ -60,6 +60,7 @@ vi.mock('./api', () => {
 import {
   createRoomSession,
   createServerGameSession,
+  fetchRoomPreview,
   fetchTopics,
   joinRoomSession,
   rejoinRoomSession,
@@ -165,6 +166,7 @@ describe('App server-authoritative mode', () => {
     localStorage.clear();
     window.location.hash = '#/start';
     fetchTopics.mockResolvedValue([{ topic: 'History', count: 20 }]);
+    fetchRoomPreview.mockResolvedValue({ players: [] });
   });
 
   afterEach(() => {
@@ -472,7 +474,7 @@ describe('App server-authoritative mode', () => {
 
     await openJoinFlow({ roomCode: 'JOIN42' });
     expect(await screen.findByTestId('home-join-panel')).toBeInTheDocument();
-    expect(screen.getByText(/join a cherrypick game/i)).toBeInTheDocument();
+    expect(screen.getByText(/join a cherrypick live room/i)).toBeInTheDocument();
     expect(screen.getByText('JOIN42')).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', { name: /^back$/i }));
@@ -525,7 +527,10 @@ describe('App server-authoritative mode', () => {
     expect(await screen.findByTestId('player-lobby-panel')).toBeInTheDocument();
     expect(screen.getByText('JOIN42')).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 2, name: 'Kai' })).toBeInTheDocument();
-    expect(screen.getAllByText(/waiting for the host to launch or resume the live session/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/the host will launch the live game when the roster is ready/i).length).toBeGreaterThan(0);
+    expect(window.location.hash).toBe('#/join/JOIN42');
+    expect(screen.queryByText('player-1')).not.toBeInTheDocument();
+    expect(screen.queryByText('player-2')).not.toBeInTheDocument();
   });
 
   test('shows a clean error when the game code is invalid', async () => {
@@ -608,6 +613,8 @@ describe('App server-authoritative mode', () => {
     expect(await screen.findByTestId('host-player-list')).toBeInTheDocument();
     expect(screen.getByTestId('host-player-list')).toHaveTextContent('Hosty');
     expect(screen.getByTestId('host-player-list')).toHaveTextContent('Mia');
+    expect(screen.queryByText('host-2')).not.toBeInTheDocument();
+    expect(screen.queryByText('player-3')).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', { name: /start game/i }));
 
@@ -663,7 +670,39 @@ describe('App server-authoritative mode', () => {
     fireEvent.click(screen.getByRole('button', { name: /join game/i }));
 
     expect(await screen.findByTestId('player-lobby-panel')).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: /back to home/i }));
+    fireEvent.click(screen.getByRole('button', { name: /leave room/i }));
+    expect(await screen.findByTestId('home-screen')).toBeInTheDocument();
+  });
+
+  test('saved player room does not override the home route', async () => {
+    window.location.hash = '';
+    joinRoomSession.mockResolvedValue({
+      roomCode: 'HOME42',
+      playerId: 'player-home',
+      authToken: 'auth-home'
+    });
+    rejoinRoomSession.mockResolvedValue({
+      roomCode: 'HOME42',
+      playerId: 'player-home',
+      authToken: 'auth-home',
+      roomState: {
+        hostPlayerId: 'host-home',
+        players: [
+          { playerId: 'host-home', displayName: 'Hosty' },
+          { playerId: 'player-home', displayName: 'Nora' }
+        ]
+      }
+    });
+
+    render(<App />);
+
+    await openJoinFlow({ roomCode: 'HOME42', displayName: 'Nora' });
+    fireEvent.click(screen.getByRole('button', { name: /join game/i }));
+    expect(await screen.findByTestId('player-lobby-panel')).toBeInTheDocument();
+
+    window.location.hash = '';
+    fireEvent(window, new HashChangeEvent('hashchange'));
+
     expect(await screen.findByTestId('home-screen')).toBeInTheDocument();
   });
 

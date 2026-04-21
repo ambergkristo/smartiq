@@ -1,14 +1,11 @@
 import {
+  getRoomLifecycle,
   getRoomPlayerNames,
   getSelectedRoomPlayerNames,
-  normalizePlayerName,
-  normalizeRoomCodeInput
+  isRoomJoinable,
+  normalizePlayerName
 } from '../roomRuntime';
 import LobbyPlayerPanel from './room/LobbyPlayerPanel';
-import JoinButton from './player/JoinButton';
-import JoinStatusPanel from './player/JoinStatusPanel';
-import PlayerNameInput from './player/PlayerNameInput';
-import RoomCodeInput from './player/RoomCodeInput';
 import WaitingRoomView from './player/WaitingRoomView';
 import RoomCodeHero from './room/RoomCodeHero';
 
@@ -51,6 +48,15 @@ export default function GameRoom({
     : undefined;
   const hasLobbySession = Boolean(roomSession) && !isPlayerLobby;
   const canUseRoomPlayers = roomSession?.role === 'host' && roomPlayerNames.length > 0;
+  const roomLifecycle = getRoomLifecycle(roomSession);
+  const roomJoinable = isRoomJoinable(roomSession);
+  const playerWaitingLabel = roomJoinable
+    ? strings.roomPlayerLobbyWaiting
+    : strings.roomPlayerLobbyLive;
+  const playerPhaseLabel = roomJoinable ? 'Waiting' : 'Live';
+  const playerPrimaryLabel = roomJoinable
+    ? strings.roomPlayerLobbyRefreshSubmit
+    : strings.roomPlayerLobbyLiveRefreshSubmit;
 
   return (
     <section className={`setup-panel board-surface room-panel${hasLobbySession ? ' room-panel--lobby' : ''}`} data-testid="room-panel">
@@ -65,15 +71,17 @@ export default function GameRoom({
         <WaitingRoomView
           appTitle={playerLobbyAppTitle}
           roomCode={roomSession.roomCode}
-          playerName={roomSession.displayName || roomSession.playerId}
-          waitingLabel={strings.roomPlayerLobbyWaiting}
+          hostPlayerId={roomSession?.roomState?.hostPlayerId}
+          playerName={roomSession.displayName || 'Player'}
+          waitingLabel={playerWaitingLabel}
+          phaseLabel={playerPhaseLabel}
           savedHint={strings.roomSavedHint}
           playersTitle={strings.roomPlayerLobbyRosterTitle}
           players={roomPlayers}
           noPlayersLabel={strings.roomNoPlayers}
           switchHint={strings.roomPlayerLobbySwitchHint}
-          primaryLabel={strings.roomPlayerLobbyRefreshSubmit}
-          secondaryLabel={strings.roomPlayerLobbyBackHomeSubmit}
+          primaryLabel={playerPrimaryLabel}
+          secondaryLabel={strings.roomPlayerLobbyLeaveSubmit}
           pending={pending}
           onPrimary={onResumeRoom}
           onSecondary={onClearRoom}
@@ -126,50 +134,20 @@ export default function GameRoom({
           <section className="room-entry-card room-entry-card--secondary">
             <div className="player-join-card-head">
               <div>
-                <p className="section-title">Player join</p>
-                <h3>Join a live room</h3>
+                <p className="section-title">Canonical flow</p>
+                <h3>Player join stays on the public join screen</h3>
               </div>
-              <span className="player-join-chip">Simple flow</span>
+              <span className="player-join-chip">Host only</span>
             </div>
-            <p>{strings.playerRouteHint}</p>
-            <div className="player-join-form player-join-form--compact">
-              <RoomCodeInput
-                id="room-code"
-                label={strings.roomCodeLabel}
-                value={draft.roomCode}
-                placeholder={strings.roomCodePlaceholder}
-                disabled={pending}
-                onChange={(event) => onDraftChange((prev) => ({ ...prev, roomCode: normalizeRoomCodeInput(event.target.value) }))}
-              />
-              <PlayerNameInput
-                id="room-player-display-name"
-                label={strings.playerRouteDisplayNameLabel}
-                value={draft.displayName}
-                placeholder={strings.roomDisplayNamePlaceholder}
-                disabled={pending}
-                onChange={(event) => onDraftChange((prev) => ({ ...prev, displayName: event.target.value }))}
-              />
-              <JoinStatusPanel
-                pending={pending}
-                pendingLabel={strings.roomPending}
-                message={message}
-                error={error}
-              />
-              <div className="player-join-actions">
-                <JoinButton
-                  label={strings.roomJoinSubmit}
-                  disabled={pending}
-                  onClick={onJoinRoom}
-                />
-              </div>
-            </div>
+            <p>CherryPick now keeps one public join path: players enter a room code from the dedicated JOIN screen or a host share link.</p>
+            <p className="field-hint">Create the host lobby here, then share the room code once it is ready.</p>
           </section>
         </div>
       )}
 
       {hasLobbySession && canUseRoomPlayers && typeof onStartRoomSession === 'function' ? (
         <span className="sr-only" aria-live="polite">
-          {strings.roomStartSelectedLiveSubmit}
+          {roomLifecycle === 'LIVE' ? strings.roomAlreadyLive : strings.roomStartSelectedLiveSubmit}
         </span>
       ) : null}
     </section>

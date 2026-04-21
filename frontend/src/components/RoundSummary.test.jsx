@@ -10,7 +10,7 @@ describe('RoundSummary', () => {
       <RoundSummary
         players={['Kai']}
         scores={{ Kai: 30 }}
-        stats={{ Kai: { correct: 6, wrong: 1, passes: 0 } }}
+        stats={{ Kai: { correct: 6, wrong: 1 } }}
         roundNumber={7}
         winner="Kai"
         mode="solo"
@@ -49,9 +49,9 @@ describe('RoundSummary', () => {
         players={['Host One', 'Alice', 'Bob']}
         scores={{ 'Host One': 12, Alice: 18, Bob: 5 }}
         stats={{
-          'Host One': { correct: 2, wrong: 1, passes: 0 },
-          Alice: { correct: 4, wrong: 0, passes: 1 },
-          Bob: { correct: 1, wrong: 2, passes: 1 }
+          'Host One': { correct: 2, wrong: 1 },
+          Alice: { correct: 4, wrong: 0 },
+          Bob: { correct: 1, wrong: 2 }
         }}
         roundNumber={4}
         onNextRound={onNextRound}

@@ -1,14 +1,15 @@
 import JoinInfoBlock from './JoinInfoBlock';
-import QrPlaceholder from './QrPlaceholder';
 
-export default function LobbySupportPanel({ roomCode, joinLink, onBackHome }) {
+export default function LobbySupportPanel({ roomCode, joinLink, onResumeRoom, onBackHome, pending = false }) {
   return (
     <div className="room-lobby-support-stack" data-testid="lobby-support-panel">
       <JoinInfoBlock roomCode={roomCode} joinLink={joinLink} />
-      <QrPlaceholder roomCode={roomCode} />
       <section className="room-lobby-support-actions board-surface">
-        <button type="button" className="secondary-action lobby-back-action" onClick={onBackHome}>
-          Back to home
+        <button type="button" className="secondary-action" onClick={onResumeRoom} disabled={pending}>
+          Resume room
+        </button>
+        <button type="button" className="secondary-action lobby-back-action" onClick={onBackHome} disabled={pending}>
+          Leave host room
         </button>
       </section>
     </div>

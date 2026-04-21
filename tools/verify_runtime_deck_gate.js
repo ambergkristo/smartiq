@@ -1,19 +1,19 @@
 #!/usr/bin/env node
 
 const { execSync, spawn } = require('node:child_process');
+const net = require('node:net');
 const path = require('node:path');
 
 const DEFAULT_PORT = Number.parseInt(process.env.RUNTIME_DECK_BACKEND_PORT || '8081', 10);
 const STARTUP_TIMEOUT_MS = Number.parseInt(process.env.RUNTIME_DECK_STARTUP_TIMEOUT_MS || '120000', 10);
 const HEALTH_POLL_MS = Number.parseInt(process.env.RUNTIME_DECK_HEALTH_POLL_MS || '1500', 10);
 const DATA_READY_TIMEOUT_MS = Number.parseInt(process.env.RUNTIME_DECK_DATA_READY_TIMEOUT_MS || '180000', 10);
-const EXTERNAL_BACKEND_MIN_READY_TOPIC_CARD_COUNT = 1;
+const DEFAULT_MIN_READY_TOPIC_CARD_COUNT = 1;
 const MAVEN_BIN = process.platform === 'win32' ? 'mvn.cmd' : 'mvn';
 
 const explicitApiBase = process.env.API_BASE_URL || process.env.BACKEND_URL;
-const apiBaseUrl = (explicitApiBase || `http://localhost:${DEFAULT_PORT}`).replace(/\/+$/, '');
 const MIN_READY_TOPIC_CARD_COUNT = Number.parseInt(
-  process.env.RUNTIME_DECK_MIN_TOPIC_CARD_COUNT || (explicitApiBase ? String(EXTERNAL_BACKEND_MIN_READY_TOPIC_CARD_COUNT) : '1000'),
+  process.env.RUNTIME_DECK_MIN_TOPIC_CARD_COUNT || String(DEFAULT_MIN_READY_TOPIC_CARD_COUNT),
   10
 );
 
@@ -23,7 +23,7 @@ function sleep(ms) {
   });
 }
 
-function startBackend() {
+function startBackend(port) {
   const backendEnv = {
     ...process.env,
     SPRING_DATASOURCE_URL: process.env.SPRING_DATASOURCE_URL || 'jdbc:h2:mem:smartiq_runtime_gate;MODE=PostgreSQL;DB_CLOSE_DELAY=-1',
@@ -42,7 +42,7 @@ function startBackend() {
     '-f',
     'backend/pom.xml',
     'spring-boot:run',
-    `-Dspring-boot.run.arguments=--server.port=${DEFAULT_PORT}`
+    `-Dspring-boot.run.arguments=--server.port=${port}`
   ];
 
   const command = process.platform === 'win32' ? 'cmd.exe' : MAVEN_BIN;
@@ -81,7 +81,45 @@ function stopBackend(backendProcess) {
   }
 }
 
-async function waitForHealth(backendProcess) {
+function isPortAvailable(port) {
+  return new Promise((resolve) => {
+    const server = net.createServer();
+    server.unref();
+    server.on('error', () => resolve(false));
+    server.listen(port, '127.0.0.1', () => {
+      server.close(() => resolve(true));
+    });
+  });
+}
+
+async function resolveBackendPort(preferredPort) {
+  if (await isPortAvailable(preferredPort)) {
+    return preferredPort;
+  }
+
+  return new Promise((resolve, reject) => {
+    const server = net.createServer();
+    server.unref();
+    server.on('error', reject);
+    server.listen(0, '127.0.0.1', () => {
+      const address = server.address();
+      const fallbackPort = address && typeof address === 'object' ? address.port : null;
+      server.close((closeError) => {
+        if (closeError) {
+          reject(closeError);
+          return;
+        }
+        if (!fallbackPort) {
+          reject(new Error('Could not resolve an available backend port for runtime deck verify.'));
+          return;
+        }
+        resolve(fallbackPort);
+      });
+    });
+  });
+}
+
+async function waitForHealth(backendProcess, apiBaseUrl) {
   const deadline = Date.now() + STARTUP_TIMEOUT_MS;
 
   while (Date.now() < deadline) {
@@ -107,7 +145,7 @@ async function waitForHealth(backendProcess) {
   throw new Error(`Timed out waiting for backend health at ${apiBaseUrl}/health`);
 }
 
-async function waitForDeckData(backendProcess) {
+async function waitForDeckData(backendProcess, apiBaseUrl) {
   const deadline = Date.now() + DATA_READY_TIMEOUT_MS;
 
   while (Date.now() < deadline) {
@@ -142,17 +180,19 @@ async function waitForDeckData(backendProcess) {
 async function main() {
   const useExternalBackend = Boolean(explicitApiBase);
   let backendProcess = null;
+  const backendPort = useExternalBackend ? null : await resolveBackendPort(DEFAULT_PORT);
+  const apiBaseUrl = (explicitApiBase || `http://localhost:${backendPort}`).replace(/\/+$/, '');
 
   try {
     if (useExternalBackend) {
       process.stdout.write(`\n> Using external backend for runtime deck verify: ${apiBaseUrl}\n`);
     } else {
-      process.stdout.write(`\n> Starting backend for runtime deck verify on port ${DEFAULT_PORT}\n`);
-      backendProcess = startBackend();
+      process.stdout.write(`\n> Starting backend for runtime deck verify on port ${backendPort}\n`);
+      backendProcess = startBackend(backendPort);
     }
 
-    await waitForHealth(backendProcess);
-    await waitForDeckData(backendProcess);
+    await waitForHealth(backendProcess, apiBaseUrl);
+    await waitForDeckData(backendProcess, apiBaseUrl);
     process.stdout.write('\n> node scripts/verify_runtime_deck.js\n');
     execSync('node scripts/verify_runtime_deck.js', {
       stdio: 'inherit',

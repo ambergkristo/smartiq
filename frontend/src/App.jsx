@@ -38,7 +38,6 @@ import RoundSummary from './components/RoundSummary';
 import HomeScreen from './components/home/HomeScreen';
 import HostGameScreen from './components/home/HostGameScreen';
 import JoinGameScreen from './components/home/JoinGameScreen';
-import PracticePlaceholder from './components/home/PracticePlaceholder';
 import GameplayActionBar from './components/gameplay/GameplayActionBar';
 import ScoreBoard from './components/gameplay/ScoreBoard';
 import { getCanAnswer, getCardCategory, getPhaseLabel } from './components/gameplay/gameplayState';
@@ -52,8 +51,10 @@ import { useAudioFeedback } from './audio/useAudioFeedback';
 import { MAX_PLAYERS_PER_ROOM } from './constants/runtime';
 import {
   buildPlayerJoinUrl,
+  getRoomLifecycle,
   getRoomPlayerNames,
   getSelectedRoomPlayerNames,
+  isRoomJoinable,
   normalizePlayerName,
   normalizeRoomCodeInput
 } from './roomRuntime';
@@ -67,10 +68,12 @@ import {
 } from './state/playerProfile';
 import { DEFAULT_LANGS, GamePhase } from './state/types';
 
+const ADMIN_CONSOLE_ENABLED = String(import.meta.env.VITE_ENABLE_ADMIN_CONSOLE || '').trim().toLowerCase() === 'true';
+
 const STRINGS = {
   title: 'CherryPick',
-  subtitle: 'Pick the mode that fits the moment: solo play now, join a live game, or prepare the host path.',
-  homeTagline: 'Play solo now, join a live room code, or open the host path for the next CherryPick board.',
+  subtitle: 'Fast solo rounds, honest live-room join, and one clear host launch path.',
+  homeTagline: 'Play instantly on your own, join a host-led live room, or open the host path to run the next CherryPick board.',
   loadingTopics: 'Loading topics...',
   noTopics: 'No topics yet.',
   noTopicsHint: 'Import clean cards to populate topics and retry.',
@@ -81,7 +84,6 @@ const STRINGS = {
   openHealth: 'Open health',
   backendWarmupTitle: 'Waking up backend...',
   backendWarmupDetail: 'Render free instances can take a while to start. CherryPick is retrying automatically.',
-  passNote: 'Pass keeps points and skips your turn for this round (after at least one correct answer).',
   cardErrorFallback: 'Could not load card from backend. Retry to continue.',
   deckExhausted: 'No playable cards for this filter.',
   deckExhaustedHint: 'Change filters or restart game to continue.',
@@ -193,14 +195,13 @@ const STRINGS = {
   hostedPlayerCapPrefix: 'Hosted player cap:',
   hostedPlayerCapUpgrade: 'This plan allows fewer hosted players. Upgrade to launch larger sessions.',
   roomPanelTitle: 'Live room',
-  roomPanelHint: 'Create a shareable room code for players, or join an existing room and resume it later on this device.',
+  roomPanelHint: 'Create the host room here, then share the code so players can join from the dedicated CherryPick join flow.',
   roomJoinLinkLabel: 'Player join link',
   roomDisplayNameLabel: 'Room display name',
   roomDisplayNamePlaceholder: 'Host or player name',
   roomCodeLabel: 'Room code',
   roomCodePlaceholder: 'ABC123',
   roomCreateSubmit: 'Create room',
-  roomJoinSubmit: 'Join room',
   roomResumeSubmit: 'Resume room',
   roomClearSubmit: 'Clear saved room',
   roomPending: 'Working on room session...',
@@ -211,19 +212,22 @@ const STRINGS = {
   hostStartTopicRequired: 'Choose a topic before starting the game.',
   hostRoomRequired: 'Create a host room before starting the game.',
   roomPlayerLobbyRefreshSubmit: 'Refresh lobby',
-  roomPlayerLobbyBackHomeSubmit: 'Back to home',
+  roomPlayerLobbyLiveRefreshSubmit: 'Refresh game status',
+  roomPlayerLobbyLeaveSubmit: 'Leave room',
   roomPlayersTitle: 'Players in room',
   roomNoPlayers: 'No players visible yet.',
   roomSavedHint: 'This room session is saved locally on this browser.',
   roomHostBadge: 'Host',
   roomPlayerBadge: 'Player',
   roomPlayerLobbyTitle: 'Player lobby',
-  roomPlayerLobbyHint: 'Your browser is attached to this live room. Rejoin to refresh the roster or leave to switch rooms.',
-  roomPlayerLobbyWaiting: 'Waiting for the host to launch or resume the live session.',
-  roomPlayerLobbyRosterTitle: 'Players in this room',
+  roomPlayerLobbyHint: 'Your browser is attached to this live room. Refresh to sync the roster, or leave before joining a different room code.',
+  roomPlayerLobbyWaiting: 'You are checked into this room. The host will launch the live game when the roster is ready.',
+  roomPlayerLobbyLive: 'This room is live. Joined devices follow the host-led session, and new joins are now closed.',
+  roomPlayerLobbyRosterTitle: 'Live room roster',
   roomPlayerLobbySwitchHint: 'Leave this room before joining a different room code.',
+  roomAlreadyLive: 'This room is already live.',
   playerRouteTitle: 'Join live room',
-  playerRouteHint: 'Enter your display name and join the host room from a dedicated player entry surface.',
+  playerRouteHint: 'Join the live room with your own display name, then follow the host-led CherryPick session from this device.',
   playerRouteDisplayNameLabel: 'Your display name',
   playerRouteJoinSubmit: 'Join room',
   playerRouteBackSubmit: 'Back to CherryPick',
@@ -284,7 +288,10 @@ const STRINGS = {
   recentHostedSessionStatusLive: 'Live',
   recentHostedSessionStatusCompleted: 'Completed',
   recentHostedSessionReviewError: 'Could not launch duplicate session from host history.',
-  recentHostedSessionReviewLoadError: 'Could not load session review from host history.'
+  recentHostedSessionReviewLoadError: 'Could not load session review from host history.',
+  adminConsoleDisabledTitle: 'Admin console unavailable',
+  adminConsoleDisabledDetail: 'This public CherryPick deployment does not expose the internal admin console.',
+  adminConsoleDisabledHint: 'Use the main game entry at / or enable the admin surface explicitly in an internal environment.'
 };
 const CONFIG_STORAGE_KEY = 'smartiq.roundConfig';
 const ROOM_SESSION_STORAGE_KEY = 'smartiq.roomSession';
@@ -315,12 +322,6 @@ const SOLO_WIN_CONDITION = 1_000_000;
 const SHOW_BUILD_BADGE = import.meta.env.DEV
   || String(import.meta.env.VITE_SHOW_BUILD_BADGE || '').toLowerCase() === 'true';
 const BUILD_SHA = String(import.meta.env.VITE_BUILD_SHA || '').trim();
-
-const DIFFICULTY_OPTIONS = [
-  { value: '1', label: 'Easy' },
-  { value: '2', label: 'Medium' },
-  { value: '3', label: 'Hard' }
-];
 
 const THEME_OPTIONS = [
   { value: 'classic', label: 'Classic' },
@@ -660,6 +661,14 @@ function resolveEntryRoute() {
   return ENTRY_ROUTE.HOME;
 }
 
+function navigateToRoomJoinRoute(roomCode) {
+  const normalizedRoomCode = normalizeRoomCodeInput(roomCode);
+  if (typeof window === 'undefined' || !normalizedRoomCode) {
+    return;
+  }
+  window.location.hash = `#/join/${normalizedRoomCode}`;
+}
+
 function resolveBillingReturnState() {
   if (typeof window === 'undefined') {
     return null;
@@ -677,6 +686,27 @@ function resolveBillingReturnState() {
     return queryState;
   }
   return null;
+}
+
+function shouldClearRoomSessionAfterResumeFailure(error) {
+  if (!error || typeof error !== 'object') {
+    return false;
+  }
+  if (error.code === 'CONFIG_ERROR' || error.code === 'TIMEOUT' || error.code === 'NETWORK_ERROR') {
+    return false;
+  }
+  if (typeof error.status === 'number') {
+    if (error.status >= 500) {
+      return false;
+    }
+    if (error.status >= 400) {
+      return true;
+    }
+  }
+  return error.code === 'ROOM_NOT_FOUND'
+    || error.code === 'INVALID_ROOM_TOKEN'
+    || error.code === 'PLAYER_NOT_FOUND'
+    || error.code === 'VALIDATION_ERROR';
 }
 
 function SetupSkeleton({ appTitle }) {
@@ -807,6 +837,8 @@ function StartScreen({
   appTitle,
   runtimeSnapshot,
   runtimeWarning,
+  roomMessage = '',
+  roomError = '',
   hostLaunchBlocked,
   playerDraft,
   onPlayerDraftChange,
@@ -818,7 +850,6 @@ function StartScreen({
   const draftPlayers = parsePlayers(playerDraft);
   const activeTopic = config.topic || 'Any Topic';
   const activeLanguage = String(config.lang || 'en').toUpperCase();
-  const activeDifficulty = DIFFICULTY_OPTIONS.find((entry) => entry.value === config.difficulty)?.label || 'Medium';
   const tenantId = runtimeSnapshot?.me?.selectedTenantId || '';
   const planCode = runtimeSnapshot?.subscription?.planCode || '';
   const capabilities = runtimeSnapshot?.capabilities || null;
@@ -850,14 +881,16 @@ function StartScreen({
       {runtimeWarning ? (
         <p className="field-hint runtime-warning" data-testid="tenant-runtime-warning">{runtimeWarning}</p>
       ) : null}
+      {roomMessage ? <p className="field-hint" data-testid="host-setup-message">{roomMessage}</p> : null}
+      {roomError ? <p className="error" data-testid="host-setup-error">{roomError}</p> : null}
       <div className="host-setup-summary" data-testid="host-setup-summary">
         <div className="host-setup-summary-card">
           <span>Topic</span>
           <strong>{activeTopic}</strong>
         </div>
         <div className="host-setup-summary-card">
-          <span>Difficulty</span>
-          <strong>{activeDifficulty}</strong>
+          <span>Language</span>
+          <strong>{activeLanguage}</strong>
         </div>
         <div className="host-setup-summary-card">
           <span>Players</span>
@@ -893,23 +926,6 @@ function StartScreen({
         })}
       </div>
 
-      <h2 className="section-title">Difficulty</h2>
-      <div className="difficulty-pills" role="radiogroup" aria-label="Difficulty">
-        {DIFFICULTY_OPTIONS.map((entry) => {
-          const selected = config.difficulty === entry.value;
-          return (
-            <button
-              key={entry.value}
-              type="button"
-              className={`pill${selected ? ' selected' : ''}`}
-              onClick={() => setConfig((prev) => ({ ...prev, difficulty: entry.value }))}
-              aria-pressed={selected}
-            >
-              {entry.label}
-            </button>
-          );
-        })}
-      </div>
       <p className="field-hint active-filter" data-testid="active-filter">
         Active filter: {activeTopic} | {activeLanguage}
       </p>
@@ -1186,6 +1202,18 @@ function loadStoredRoomSession() {
       roomState: Array.isArray(parsed.roomState?.players)
         ? {
           roomCode,
+          phase: String(parsed.roomState?.phase || '').trim().toUpperCase() || 'WAITING',
+          joinable: parsed.roomState?.joinable !== false,
+          activeGame: parsed.roomState?.activeGame && typeof parsed.roomState.activeGame === 'object'
+            ? {
+              gameId: String(parsed.roomState.activeGame.gameId || '').trim(),
+              topic: String(parsed.roomState.activeGame.topic || '').trim(),
+              status: String(parsed.roomState.activeGame.status || '').trim(),
+              roundNumber: Number.isInteger(parsed.roomState.activeGame.roundNumber)
+                ? parsed.roomState.activeGame.roundNumber
+                : null
+            }
+            : null,
           branding: parsed.roomState?.branding && typeof parsed.roomState.branding === 'object'
             ? {
               appName: String(parsed.roomState.branding.appName || '').trim(),
@@ -1397,7 +1425,8 @@ function GameApp() {
   const signInEmailInputRef = useRef(null);
   const activePlayerRouteRoomCode = String(playerJoinRoute || '').trim();
   const playerRouteMatchesSavedPlayerSession = roomSession?.role === 'player'
-    && normalizeRoomCodeInput(roomSession?.roomCode) === activePlayerRouteRoomCode;
+    && normalizeRoomCodeInput(roomSession?.roomCode) === activePlayerRouteRoomCode
+    && (!playerRoutePreview || getRoomLifecycle(playerRoutePreview) === getRoomLifecycle(roomSession));
   const canLaunchRecentHostedSessions = useCallback((session) => {
     if (String(session?.gameId || '').trim()) {
       return true;
@@ -2174,6 +2203,7 @@ function GameApp() {
         role: 'player',
         roomState: resumed.roomState
       }, `${STRINGS.roomJoinedPrefix} ${resumed.roomCode}`);
+      navigateToRoomJoinRoute(resumed.roomCode);
     } catch (error) {
       setRoomError(resolveRoomSessionErrorMessage(error, { action: 'join' }));
     } finally {
@@ -2189,6 +2219,9 @@ function GameApp() {
     setPlayerRouteError('');
     setPlayerRouteMessage('');
     try {
+      if (playerRoutePreview && !isRoomJoinable(playerRoutePreview)) {
+        throw { code: 'ROOM_CLOSED' };
+      }
       const displayName = String(playerRouteDisplayName || roomDraft.displayName || playerProfile.displayName || '').trim();
       if (!displayName) {
         throw { code: 'VALIDATION_ERROR', message: 'displayName is required' };
@@ -2209,6 +2242,7 @@ function GameApp() {
       setPlayerRouteMessage(`${STRINGS.roomJoinedPrefix} ${resumed.roomCode}`);
       setPlayerRoutePreview(resumed.roomState || null);
       setRoomDraft((prev) => ({ ...prev, roomCode: resumed.roomCode, displayName }));
+      navigateToRoomJoinRoute(resumed.roomCode);
     } catch (error) {
       setPlayerRouteError(resolveRoomSessionErrorMessage(error, { action: 'join' }));
     } finally {
@@ -2251,6 +2285,15 @@ function GameApp() {
       return;
     }
     if (nextRoute === ENTRY_ROUTE.PLAY) {
+      if (
+        startup.phase === STARTUP_PHASE.READY
+        && !roomSession
+        && !activePlayerRouteRoomCode
+        && serverEngine.phase === GamePhase.SETUP
+      ) {
+        handleStartSoloMode();
+        return;
+      }
       window.location.hash = '#/play';
       return;
     }
@@ -2287,9 +2330,22 @@ function GameApp() {
         roomState: resumed.roomState
       }, `${STRINGS.roomResumedPrefix} ${resumed.roomCode}`);
     } catch (error) {
-      persistRoomSession(null);
-      setRoomSession(null);
-      setRoomError(resolveRoomSessionErrorMessage(error, { action: 'resume' }));
+      const resolvedMessage = resolveRoomSessionErrorMessage(error, { action: 'resume' });
+      const shouldClearSession = shouldClearRoomSessionAfterResumeFailure(error);
+      if (shouldClearSession) {
+        persistRoomSelection(roomSession?.roomCode, []);
+        persistRoomSession(null);
+        setRoomSession(null);
+        setSelectedRoomPlayerNames([]);
+        if (roomSession?.role === 'player' && activePlayerRouteRoomCode) {
+          setPlayerRouteError(resolvedMessage);
+          setRoomError('');
+        } else {
+          setRoomError(resolvedMessage);
+        }
+      } else {
+        setRoomError(resolvedMessage);
+      }
     } finally {
       setRoomPending(false);
     }
@@ -2321,22 +2377,59 @@ function GameApp() {
     setRoomError('');
   }
 
-  function handleStartRoomSession() {
+  async function handleStartRoomSession() {
     const roomPlayerNames = getSelectedRoomPlayerNames(roomSession, selectedRoomPlayerNames);
     if (roomPlayerNames.length === 0) {
       setRoomError(STRINGS.roomSelectedRosterEmpty);
-      return;
+      return [];
     }
     setConfig((prev) => ({
       ...prev,
       playersText: roomPlayerNames.join(', ')
     }));
     setRoomMessage(`${STRINGS.roomSelectedRosterStartPrefix} ${roomPlayerNames.join(', ')}`);
-    launchRound({
+    const launchResult = await launchRound({
       playersText: roomPlayerNames.join(', '),
       topic: config.topic,
-      language: config.lang
+      language: config.lang,
+      roomCode: roomSession?.roomCode,
+      roomPlayerId: roomSession?.playerId,
+      roomAuthToken: roomSession?.authToken
     });
+    if (!launchResult?.started) {
+      setRoomMessage('');
+      let refreshedPreview = null;
+      if (roomSession?.roomCode) {
+        try {
+          refreshedPreview = await fetchRoomPreview(roomSession.roomCode);
+          applyRoomSession({
+            ...roomSession,
+            roomState: refreshedPreview
+          }, '');
+        } catch {
+          // Keep the existing host lobby visible even if preview refresh fails.
+        }
+      }
+      if (refreshedPreview && !isRoomJoinable(refreshedPreview)) {
+        setRoomError(STRINGS.roomAlreadyLive);
+      } else if (launchResult?.errorMessage) {
+        setRoomError(launchResult.errorMessage);
+      }
+      return [];
+    }
+    const launchedPlayers = launchResult.players;
+    if (launchedPlayers.length > 0 && roomSession?.roomCode) {
+      try {
+        const nextRoomState = await fetchRoomPreview(roomSession.roomCode);
+        applyRoomSession({
+          ...roomSession,
+          roomState: nextRoomState
+        }, `${STRINGS.roomSelectedRosterStartPrefix} ${roomPlayerNames.join(', ')}`);
+      } catch {
+        // Keep the host game running even if room preview refresh fails.
+      }
+    }
+    return launchedPlayers;
   }
 
   function handleStartHostedGame() {
@@ -2636,27 +2729,37 @@ function GameApp() {
     lastWrongCountRef.current = wrongCount;
   }, [engine.card, engine.phase, engine.revealedIndexes, engine.wrongIndexes, playCorrect, playRoundIntro, playWrong]);
 
-  function launchRound({
+  const launchRound = useCallback(async ({
     playersText = config.playersText,
     topic = config.topic,
     language = config.lang,
     mode = 'standard',
-    winCondition = 30
-  } = {}) {
+    winCondition = 30,
+    roomCode = null,
+    roomPlayerId = null,
+    roomAuthToken = null
+  } = {}) => {
     if (hostLaunchBlocked) {
       setRuntimeWarning(hostLaunchMessage || STRINGS.hostedRuntimeBlocked);
-      return;
+      return {
+        players: [],
+        started: false,
+        errorMessage: hostLaunchMessage || STRINGS.hostedRuntimeBlocked
+      };
     }
     const parsedPlayers = parsePlayers(playersText);
     serverEngine.clearError();
-    serverEngine.startRound({
+    return serverEngine.startRound({
       players: parsedPlayers,
       language,
       topic: topic || undefined,
       winCondition,
-      mode
+      mode,
+      roomCode,
+      roomPlayerId,
+      roomAuthToken
     });
-  }
+  }, [config.lang, config.playersText, config.topic, hostLaunchBlocked, hostLaunchMessage, serverEngine]);
 
   function handleStartRound(playersTextOverride = null) {
     launchRound({
@@ -2699,7 +2802,7 @@ function GameApp() {
     }
   }
 
-  function handleStartSoloMode() {
+  const handleStartSoloMode = useCallback(() => {
     processedSoloResolutionRef.current = '';
     setPlayerProfile((prev) => recordSoloGameStarted(prev));
     launchRound({
@@ -2709,7 +2812,7 @@ function GameApp() {
       mode: 'solo',
       winCondition: SOLO_WIN_CONDITION
     });
-  }
+  }, [launchRound, resolvedSoloPlayerName]);
 
   function handleExitSoloMode() {
     serverEngine.resetToSetup();
@@ -2740,7 +2843,7 @@ function GameApp() {
     }
     soloLaunchAttemptedRef.current = true;
     handleStartSoloMode();
-  }, [activePlayerRouteRoomCode, entryRoute, roomSession, serverEngine.phase, startup.phase]);
+  }, [activePlayerRouteRoomCode, entryRoute, handleStartSoloMode, roomSession, serverEngine.phase, startup.phase]);
 
   useEffect(() => {
     if (serverEngine.gameMode !== 'solo') {
@@ -2778,6 +2881,7 @@ function GameApp() {
   const setupDraftPlayers = parsePlayers(setupPlayerDraft);
   const setupMergedPlayerCount = Array.from(new Set([...setupPlayers, ...setupDraftPlayers])).length;
   const hostRoomSession = roomSession?.role === 'host' ? roomSession : null;
+  const hostRoomLifecycle = getRoomLifecycle(hostRoomSession);
   const selectedRoomPlayers = hostRoomSession ? getSelectedRoomPlayerNames(hostRoomSession, selectedRoomPlayerNames) : [];
   const roomPlayerCount = Array.isArray(roomSession?.roomState?.players) ? roomSession.roomState.players.length : 0;
   const tenantId = runtimeSnapshot?.me?.selectedTenantId || '';
@@ -2886,6 +2990,8 @@ function GameApp() {
       appTitle={appTitle}
       runtimeSnapshot={runtimeSnapshot}
       runtimeWarning={runtimeWarning}
+      roomMessage={roomMessage}
+      roomError={roomError}
       hostLaunchBlocked={hostLaunchBlocked}
       playerDraft={setupPlayerDraft}
       onPlayerDraftChange={setSetupPlayerDraft}
@@ -2894,7 +3000,7 @@ function GameApp() {
       showStartButton={false}
     />
   );
-  const showProductHome = !runtimeSnapshot && !roomSession;
+  const showProductHome = !runtimeSnapshot;
   const homeEntryPanel = showProductHome ? (
     <HomeScreen
       appTitle={appTitle}
@@ -2931,24 +3037,7 @@ function GameApp() {
       onBack={() => handleNavigateEntry(ENTRY_ROUTE.HOME)}
     />
   );
-  const practiceEntryPanel = (
-    <PracticePlaceholder onBack={() => handleNavigateEntry(ENTRY_ROUTE.HOME)} />
-  );
-  const playerWaitingShell = roomSession?.role === 'player' ? (
-    <AppShell
-      mode="setup"
-      header={(
-        <AppHeader
-          title={String(roomSession?.roomState?.branding?.appName || appTitle).trim() || appTitle}
-          eyebrow={shellEyebrow}
-          status={shellStatus}
-          languageControl={languageControl}
-          utilityArea={utilityArea}
-        />
-      )}
-      main={<MainStage>{sharedRoomPanel}</MainStage>}
-    />
-  ) : null;
+  const playerWaitingShell = roomSession?.role === 'player' ? sharedRoomPanel : null;
   const hostEntryPanel = (
     <HostGameScreen
       appTitle={appTitle}
@@ -2998,9 +3087,9 @@ function GameApp() {
         type="button"
         className="app-shell-primary-button"
         onClick={handleStartRoomSession}
-        disabled={roomPending || selectedRoomPlayers.length === 0 || hostLaunchBlocked}
+        disabled={roomPending || selectedRoomPlayers.length === 0 || hostLaunchBlocked || hostRoomLifecycle === 'LIVE'}
       >
-        {STRINGS.startRound}
+        {hostRoomLifecycle === 'LIVE' ? 'Game live' : STRINGS.startRound}
       </button>
     </PrimaryActionBar>
   ) : (
@@ -3015,6 +3104,8 @@ function GameApp() {
     <LobbySupportPanel
       roomCode={hostRoomSession.roomCode}
       joinLink={buildPlayerJoinUrl(hostRoomSession.roomCode)}
+      onResumeRoom={handleResumeRoom}
+      pending={roomPending}
       onBackHome={() => {
         handleClearRoom();
         handleNavigateEntry(ENTRY_ROUTE.HOME);
@@ -3202,9 +3293,6 @@ function GameApp() {
           {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && showProductHome && entryRoute === ENTRY_ROUTE.JOIN ? (
             joinEntryPanel
           ) : null}
-          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && showProductHome && entryRoute === ENTRY_ROUTE.PLAY ? (
-            practiceEntryPanel
-          ) : null}
           {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && entryRoute === ENTRY_ROUTE.HOST && (!roomSession || roomSession.role === 'host') ? (
             hostEntryPanel
           ) : null}
@@ -3229,9 +3317,6 @@ function GameApp() {
               onSubmit={handleSignIn}
               emailInputRef={signInEmailInputRef}
             />
-          ) : null}
-          {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && roomSession?.role === 'player' ? (
-            playerWaitingShell
           ) : null}
           {!activePlayerRouteRoomCode && startup.phase === STARTUP_PHASE.READY && topics.length > 0 && roomSession?.role !== 'player' && entryRoute !== ENTRY_ROUTE.HOST && (!showProductHome || entryRoute === ENTRY_ROUTE.START) ? (
             <AppShell
@@ -3373,7 +3458,19 @@ function GameApp() {
 
 export default function App() {
   if (isAdminConsoleRoute()) {
-    return <AdminConsole />;
+    if (ADMIN_CONSOLE_ENABLED) {
+      return <AdminConsole />;
+    }
+    return (
+      <main className="app-shell startup-root">
+        <section className="board-surface" data-testid="admin-console-disabled">
+          <p className="kicker">{STRINGS.adminConsoleDisabledTitle}</p>
+          <h1>{STRINGS.title}</h1>
+          <p>{STRINGS.adminConsoleDisabledDetail}</p>
+          <p>{STRINGS.adminConsoleDisabledHint}</p>
+        </section>
+      </main>
+    );
   }
   return <GameApp />;
 }

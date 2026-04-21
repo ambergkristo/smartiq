@@ -119,7 +119,10 @@ public class RoomController {
                         branding.branding().primaryColor(),
                         branding.branding().secondaryColor()
                 ),
-                snapshot.players()
+                snapshot.players(),
+                snapshot.phase(),
+                snapshot.joinable(),
+                snapshot.activeGame()
         );
     }
 }

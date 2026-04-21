@@ -164,6 +164,21 @@ class RoomControllerTest {
     }
 
     @Test
+    void joinLiveRoomMapsToRoomClosedCode() throws Exception {
+        when(roomService.joinRoom(eq("ABC123"), any(), isNull()))
+                .thenThrow(new RoomClosedException("room is no longer open for joining"));
+
+        mockMvc.perform(post("/api/rooms/ABC123/join")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new JoinRoomRequest("Bob"))))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("ROOM_CLOSED"))
+                .andExpect(jsonPath("$.error").value("room is no longer open for joining"))
+                .andExpect(jsonPath("$.status").value(409))
+                .andExpect(jsonPath("$.path").value("/api/rooms/ABC123/join"));
+    }
+
+    @Test
     void joinInvalidRoomCodeMapsToBadRequestErrorShape() throws Exception {
         when(roomService.joinRoom(eq("MISSING"), any(), isNull()))
                 .thenThrow(new IllegalArgumentException("room code format is invalid"));

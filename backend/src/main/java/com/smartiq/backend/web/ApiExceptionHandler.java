@@ -3,6 +3,7 @@ package com.smartiq.backend.web;
 import com.smartiq.backend.card.InvalidCardContractException;
 import com.smartiq.backend.game.DuplicateGameActionException;
 import com.smartiq.backend.game.ForbiddenGameActionException;
+import com.smartiq.backend.room.RoomClosedException;
 import com.smartiq.backend.tenant.DuplicateTenantMembershipException;
 import com.smartiq.backend.tenant.ForbiddenTenantAccessException;
 import com.smartiq.backend.tenant.LastOwnerProtectionException;
@@ -32,6 +33,7 @@ public class ApiExceptionHandler {
     private static final String CODE_PLAN_LIMIT_REACHED = "PLAN_LIMIT_REACHED";
     private static final String CODE_GAME_NOT_FOUND = "GAME_NOT_FOUND";
     private static final String CODE_ROOM_NOT_FOUND = "ROOM_NOT_FOUND";
+    private static final String CODE_ROOM_CLOSED = "ROOM_CLOSED";
     private static final String CODE_PLAYER_NOT_FOUND = "PLAYER_NOT_FOUND";
     private static final String CODE_TENANT_NOT_FOUND = "TENANT_NOT_FOUND";
     private static final String CODE_USER_NOT_FOUND = "USER_NOT_FOUND";
@@ -88,6 +90,11 @@ public class ApiExceptionHandler {
     @ExceptionHandler(ForbiddenGameActionException.class)
     public ResponseEntity<Object> handleForbiddenAction(ForbiddenGameActionException ex, HttpServletRequest request) {
         return build(HttpStatus.FORBIDDEN, CODE_FORBIDDEN_ACTOR, ex.getMessage(), request.getRequestURI());
+    }
+
+    @ExceptionHandler(RoomClosedException.class)
+    public ResponseEntity<Object> handleRoomClosed(RoomClosedException ex, HttpServletRequest request) {
+        return build(HttpStatus.CONFLICT, CODE_ROOM_CLOSED, ex.getMessage(), request.getRequestURI());
     }
 
     @ExceptionHandler(ForbiddenTenantAccessException.class)

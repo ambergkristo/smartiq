@@ -22,7 +22,7 @@ SmartIQ runtime uses a split contract on purpose:
 ### HTTP
 
 - Room HTTP routes create, join, rejoin, resume, and moderate room membership
-- Game HTTP routes create server sessions and submit actions such as answer, pass, confirm, and next-step transitions
+- Game HTTP routes create server sessions and submit actions such as answer, confirm, and next-step transitions
 - Billing, tenant, and host workspace operations stay on HTTP
 
 ## Reconnect Contract

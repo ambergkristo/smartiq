@@ -1,8 +1,20 @@
 # Release Checklist
 
-Use this checklist before calling the current build "playable now".
+Use this checklist before calling the current CherryPick build production-ready.
 
-## 1. Local Gate (must pass first)
+## Current launch scope
+
+This checklist is for the narrow CherryPick launch path only:
+
+- language: `EN`
+- public flows: `PLAY`, `JOIN`, `HOST`
+- live mode: host-led room launch
+- out of scope for this launch:
+  - public `/admin`
+  - tenant onboarding/auth/billing rollout
+  - ET public rollout
+
+## 1. Local gate
 
 Run from repo root:
 
@@ -19,7 +31,7 @@ Expected:
 - all commands exit `0`
 - no failing tests
 
-## 2. Local Runtime Gate
+## 2. Local runtime gate
 
 ```powershell
 docker compose up -d
@@ -28,14 +40,16 @@ make dev
 
 Verify manually:
 
-1. Setup screen renders and topic list loads.
-2. Start a game with at least 1 player.
-3. Card loads with 10 answer tiles.
-4. `ANSWER -> LOCK IN` works.
-5. `PASS` works and turn advances.
-6. Round summary appears and `NEXT ROUND` loads another card.
+1. Home renders and topics load.
+2. `PLAY` starts a solo round directly from home.
+3. Solo board renders with `8` answer tiles.
+4. `HOST` creates a room and shows a shareable room code.
+5. `JOIN` reaches the dedicated join flow and lands in the player lobby.
+6. Host launch starts the live board from the saved room roster.
+7. A live room no longer accepts new joins.
+8. No `PASS` action is shown anywhere in the CherryPick runtime.
 
-## 3. Backend Smoke Gate (public or local)
+## 3. Backend smoke gate
 
 ```powershell
 $env:BACKEND_URL="https://<backend-domain>"; npm run smoke:test
@@ -49,61 +63,65 @@ The smoke test must validate:
 - `GET /api/topics` -> `200` + non-empty array
 - `GET /api/cards/nextRandom?language=en&gameId=smoke` -> `200` + card schema
 
-## 4. ET Release Gate
+## 4. Optional ET rollout gate
 
-Run from repo root:
+Run this only when ET launch is intentionally in scope.
 
 ```powershell
-## single-command gate
 $env:BACKEND_URL="http://localhost:8081"; npm run gate:et:release
-
-## equivalent explicit steps
-node tools/validate_cards_v2.js data/smart10/cards.et.json --max-warnings=0
-node tools/validate_locale_packs.js data/smart10
-node tools/audit_locale_coverage.js data/smart10 --required=en,et --min-per-combo=30
-node tools/score_cards_quality.js data/smart10/cards.et.json --fail-threshold=0.85
-$env:BACKEND_URL="http://localhost:8081"; npm run report:et:runtime
 ```
 
-Expected:
+ET rollout requirements:
 
-- all ET commands exit `0`
-- generated runtime report exists under `docs/reports/et-runtime-smoke-*.md`
-- report summary status is `PASS`
-
-ET launch gate (must all hold before enabling in production):
-
-- ET dataset coverage: `6 categories x 6 topics x minimum 30 cards` (>= 1080 cards total).
-- ET schema and locale-pack validation pass (`validate_cards_v2`, `validate_locale_packs`, `audit_locale_coverage`).
-- ET quality score gate passes (`score_cards_quality >= 0.85`).
-- Runtime smoke for `language=et` passes and returns ET cards.
-- Feature flags enabled explicitly:
+- ET dataset coverage and quality gates pass.
+- ET runtime smoke passes.
+- feature flags are enabled explicitly:
   - frontend: `VITE_ENABLE_ET=true`
   - backend: `SMARTIQ_LANGUAGE_ET_ENABLED=true`
 
-## 5. Public Deployment Gate
+Default narrow launch posture:
 
-- Frontend (Vercel) live and points to backend via `VITE_API_BASE_URL`.
-- Backend (Render) live with `SPRING_PROFILES_ACTIVE=prod`.
+- frontend: `VITE_ENABLE_ET=false`
+- backend: `SMARTIQ_LANGUAGE_ET_ENABLED=false`
+
+## 5. Public deployment gate
+
+- Frontend (Vercel) is live and points to backend via `VITE_API_BASE_URL`.
+- Backend (Render or equivalent) is live with `SPRING_PROFILES_ACTIVE=prod`.
+- `SMARTIQ_ROOM_SESSION_STORE=redis` is active in production.
 - CORS allows only expected frontend origin(s).
 - `/version` returns commit SHA and build time.
-- Post-deploy smoke is mandatory:
-  - `$env:BACKEND_URL="https://<backend-domain>"; $env:FRONTEND_URL="https://<frontend-domain>"; npm run smoke:postdeploy`
-  - Must return `ok: true`.
+- `/internal/pool-stats` returns `401` without internal API key.
+- `/actuator/prometheus` returns `401` without internal API key.
 
-## 6. Security Gate
+Required verification:
 
-- `/health`, `/api/topics`, `/api/cards/nextRandom` are publicly accessible.
-- `/internal/*` returns `401` without internal API key in `prod`.
-- `/api/admin/*` is disabled or protected in `prod`.
-- Prod actuator exposure is limited as documented in `docs/deploy.md`.
+```powershell
+$env:BACKEND_URL="https://<backend-domain>"
+$env:FRONTEND_URL="https://<frontend-domain>"
+$env:SMARTIQ_INTERNAL_API_KEY="<internal-api-key>"
+npm run smoke:postdeploy
+npm run smoke:ops
+```
 
-## 7. Content/Refresh Gate
+Canonical workflow:
+
+- `.github/workflows/smoke-public.yml`
+
+## 6. Security gate
+
+- `/health`, `/version`, `/api/topics`, and `/api/cards/nextRandom` remain public.
+- `/internal/*` requires the internal API key in `prod`.
+- `/actuator/prometheus` requires the internal API key in `prod`.
+- `/api/admin/*` is not part of the public CherryPick launch path.
+- public frontend keeps `VITE_ENABLE_ADMIN_CONSOLE=false`.
+
+## 7. Content gate
 
 - `npm run test:golden` passes.
-- Monthly content refresh workflow remains green and PR-capable.
+- content refresh workflow remains green and PR-capable.
 
 ## Go / No-Go
 
-- `GO`: all seven gates pass.
-- `NO-GO`: any gate fails; fix in follow-up PR and rerun checklist.
+- `GO`: all seven gates pass for the scoped launch above.
+- `NO-GO`: any gate fails; fix in follow-up PR and rerun the checklist.

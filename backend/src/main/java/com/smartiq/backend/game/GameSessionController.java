@@ -4,6 +4,14 @@ import com.smartiq.backend.auth.AuthContextResolver;
 import com.smartiq.backend.auth.ResolvedAuthContext;
 import com.smartiq.backend.game.contract.GameSessionSnapshot;
 import com.smartiq.backend.game.contract.PlayerSnapshot;
+import com.smartiq.backend.room.LaunchRoomGameRequest;
+import com.smartiq.backend.room.RoomActiveGameSnapshot;
+import com.smartiq.backend.room.RoomBrandingSnapshot;
+import com.smartiq.backend.room.RoomLaunchResult;
+import com.smartiq.backend.room.RoomService;
+import com.smartiq.backend.room.RoomSnapshot;
+import com.smartiq.backend.room.ws.RoomWsGateway;
+import com.smartiq.backend.tenant.TenantBrandingRuntimeResponse;
 import com.smartiq.backend.tenant.TenantService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,13 +28,19 @@ import java.util.Comparator;
 public class GameSessionController {
 
     private final GameSessionService gameSessionService;
+    private final RoomService roomService;
+    private final RoomWsGateway roomWsGateway;
     private final AuthContextResolver authContextResolver;
     private final TenantService tenantService;
 
     public GameSessionController(GameSessionService gameSessionService,
+                                 RoomService roomService,
+                                 RoomWsGateway roomWsGateway,
                                  AuthContextResolver authContextResolver,
                                  TenantService tenantService) {
         this.gameSessionService = gameSessionService;
+        this.roomService = roomService;
+        this.roomWsGateway = roomWsGateway;
         this.authContextResolver = authContextResolver;
         this.tenantService = tenantService;
     }
@@ -42,11 +56,27 @@ public class GameSessionController {
                     request == null ? null : request.players()
             );
         }
-        GameSessionCreateResponse created = gameSessionService.createGameWithControl(
-                request,
-                context == null ? null : context.tenantId(),
-                context == null ? null : context.userEmail()
-        );
+        GameSessionCreateResponse created;
+        if (request != null && request.hasRoomLaunchContext()) {
+            RoomLaunchResult launched = roomService.launchRoom(
+                    request.roomCode(),
+                    new LaunchRoomGameRequest(request.roomPlayerId(), request.roomAuthToken(), request.players()),
+                    context == null ? null : context.tenantId(),
+                    resolvedPlayers -> gameSessionService.createGameWithControl(
+                            request.withoutRoomLaunchContext(resolvedPlayers),
+                            context == null ? null : context.tenantId(),
+                            context == null ? null : context.userEmail()
+                    )
+            );
+            created = launched.gameSession();
+            roomWsGateway.sendRoomState(request.roomCode(), decorateRoomSnapshot(launched.roomState()));
+        } else {
+            created = gameSessionService.createGameWithControl(
+                    request,
+                    context == null ? null : context.tenantId(),
+                    context == null ? null : context.userEmail()
+            );
+        }
         if (context != null && context.tenantId() != null) {
             int playerCount = request == null || request.players() == null ? 0 : request.players().size();
             tenantService.recordHostGameSessionCreated(
@@ -144,5 +174,31 @@ public class GameSessionController {
             );
         }
         return snapshot;
+    }
+
+    private RoomSnapshot decorateRoomSnapshot(RoomSnapshot snapshot) {
+        if (snapshot == null || snapshot.tenantId() == null) {
+            return snapshot;
+        }
+        TenantBrandingRuntimeResponse branding = tenantService.getTenantBrandingForRuntimeTenant(snapshot.tenantId());
+        return new RoomSnapshot(
+                snapshot.roomCode(),
+                snapshot.tenantId(),
+                new RoomBrandingSnapshot(
+                        branding.branding().appName(),
+                        branding.branding().logoUrl(),
+                        branding.branding().primaryColor(),
+                        branding.branding().secondaryColor()
+                ),
+                snapshot.players(),
+                snapshot.phase(),
+                snapshot.joinable(),
+                snapshot.activeGame() == null ? null : new RoomActiveGameSnapshot(
+                        snapshot.activeGame().gameId(),
+                        snapshot.activeGame().topic(),
+                        snapshot.activeGame().status(),
+                        snapshot.activeGame().roundNumber()
+                )
+        );
     }
 }

@@ -8,6 +8,8 @@ import com.smartiq.backend.game.contract.PegSnapshot;
 import com.smartiq.backend.game.contract.PlayerRoundStatus;
 import com.smartiq.backend.game.contract.PlayerSnapshot;
 import com.smartiq.backend.game.contract.RoundStateSnapshot;
+import com.smartiq.backend.room.RoomService;
+import com.smartiq.backend.room.ws.RoomWsGateway;
 import com.smartiq.backend.tenant.TenantService;
 import com.smartiq.backend.web.ApiExceptionHandler;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +40,12 @@ class GameSessionControllerTest {
     private GameSessionService gameSessionService;
 
     @Mock
+    private RoomService roomService;
+
+    @Mock
+    private RoomWsGateway roomWsGateway;
+
+    @Mock
     private AuthContextResolver authContextResolver;
 
     @Mock
@@ -49,7 +57,13 @@ class GameSessionControllerTest {
     @BeforeEach
     void setUp() {
         when(authContextResolver.resolveOptional(any())).thenReturn(null);
-        mockMvc = MockMvcBuilders.standaloneSetup(new GameSessionController(gameSessionService, authContextResolver, tenantService))
+        mockMvc = MockMvcBuilders.standaloneSetup(new GameSessionController(
+                gameSessionService,
+                roomService,
+                roomWsGateway,
+                authContextResolver,
+                tenantService
+        ))
                 .setControllerAdvice(new ApiExceptionHandler(false))
                 .build();
     }

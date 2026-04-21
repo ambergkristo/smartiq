@@ -2,6 +2,13 @@ package com.smartiq.backend.room;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartiq.backend.config.RoomProperties;
+import com.smartiq.backend.game.GameSessionCreateResponse;
+import com.smartiq.backend.game.contract.BoardStateSnapshot;
+import com.smartiq.backend.game.contract.GameSessionSnapshot;
+import com.smartiq.backend.game.contract.PegSnapshot;
+import com.smartiq.backend.game.contract.PlayerRoundStatus;
+import com.smartiq.backend.game.contract.PlayerSnapshot;
+import com.smartiq.backend.game.contract.RoundStateSnapshot;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +17,7 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -277,6 +285,28 @@ class RoomServiceTest {
     }
 
     @Test
+    void launchRoomMarksRoomLiveAndBlocksLaterJoin() {
+        RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Host"));
+        roomService.joinRoom(created.roomCode(), new JoinRoomRequest("Alice"));
+
+        RoomLaunchResult launched = roomService.launchRoom(
+                created.roomCode(),
+                new LaunchRoomGameRequest(created.playerId(), created.authToken(), List.of("Host", "Alice")),
+                null,
+                players -> createLaunchResponse("game-live", players)
+        );
+
+        assertThat(launched.roomState().phase()).isEqualTo(RoomPhase.LIVE);
+        assertThat(launched.roomState().joinable()).isFalse();
+        assertThat(launched.roomState().activeGame()).isNotNull();
+        assertThat(launched.roomState().activeGame().gameId()).isEqualTo("game-live");
+
+        assertThatThrownBy(() -> roomService.joinRoom(created.roomCode(), new JoinRoomRequest("Bob")))
+                .isInstanceOf(RoomClosedException.class)
+                .hasMessage("room is no longer open for joining");
+    }
+
+    @Test
     void recordsJoinAndRejoinSuccessAndFailureMetrics() {
         RoomParticipantResponse created = roomService.createRoom(new CreateRoomRequest("Alice"));
         roomService.joinRoom(created.roomCode(), new JoinRoomRequest("Bob"));
@@ -392,6 +422,85 @@ class RoomServiceTest {
                 new RejoinRoomRequest(created.playerId(), created.authToken())
         );
         assertThat(resumed.authToken()).isEqualTo(created.authToken());
+    }
+
+    @Test
+    void restoresLaunchedRoomFromStoreAfterServiceRestart() {
+        InMemoryRoomSessionStore store = new InMemoryRoomSessionStore();
+        ObjectMapper objectMapper = new ObjectMapper();
+        RoomService firstInstance = new RoomService(
+                meterRegistry,
+                new RoomProperties(180, 20000),
+                store,
+                objectMapper,
+                testClock
+        );
+        RoomParticipantResponse created = firstInstance.createRoom(new CreateRoomRequest("Host"));
+        firstInstance.joinRoom(created.roomCode(), new JoinRoomRequest("Alice"));
+        firstInstance.launchRoom(
+                created.roomCode(),
+                new LaunchRoomGameRequest(created.playerId(), created.authToken(), List.of("Host", "Alice")),
+                null,
+                players -> createLaunchResponse("game-persisted", players)
+        );
+
+        RoomService restartedInstance = new RoomService(
+                meterRegistry,
+                new RoomProperties(180, 20000),
+                store,
+                objectMapper,
+                testClock
+        );
+
+        RoomSnapshot restored = restartedInstance.getRoomSnapshot(created.roomCode());
+        assertThat(restored.phase()).isEqualTo(RoomPhase.LIVE);
+        assertThat(restored.joinable()).isFalse();
+        assertThat(restored.activeGame()).isNotNull();
+        assertThat(restored.activeGame().gameId()).isEqualTo("game-persisted");
+    }
+
+    private static GameSessionCreateResponse createLaunchResponse(String gameId, List<String> players) {
+        List<PlayerSnapshot> playerSnapshots = java.util.stream.IntStream.range(0, players.size())
+                .mapToObj(index -> new PlayerSnapshot("p" + (index + 1), players.get(index)))
+                .toList();
+        java.util.Map<String, Integer> totals = playerSnapshots.stream()
+                .collect(java.util.stream.Collectors.toMap(
+                        PlayerSnapshot::playerId,
+                        player -> 0,
+                        (left, right) -> left,
+                        java.util.LinkedHashMap::new
+                ));
+        java.util.Map<String, PlayerRoundStatus> statuses = playerSnapshots.stream()
+                .collect(java.util.stream.Collectors.toMap(
+                        PlayerSnapshot::playerId,
+                        player -> PlayerRoundStatus.ACTIVE,
+                        (left, right) -> left,
+                        java.util.LinkedHashMap::new
+                ));
+        return new GameSessionCreateResponse(
+                new GameSessionSnapshot(
+                        GameSessionSnapshot.CURRENT_API_VERSION,
+                        gameId,
+                        30,
+                        0,
+                        playerSnapshots,
+                        new RoundStateSnapshot(1, "QUESTION_ACTIVE", "p1", "p1", "Game started"),
+                        new BoardStateSnapshot(
+                                "Question",
+                                "OPEN",
+                                "History",
+                                List.of(
+                                        new PegSnapshot(0, "hidden", "A"),
+                                        new PegSnapshot(1, "hidden", "B")
+                                ),
+                                List.of(0)
+                        ),
+                        totals,
+                        totals,
+                        statuses
+                ),
+                java.util.Map.of("p1", "at_1")
+        );
     }
 
     private double counterValue(String name, String... tags) {

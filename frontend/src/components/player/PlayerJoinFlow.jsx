@@ -41,14 +41,21 @@ export default function PlayerJoinFlow({
 }) {
   const [step, setStep] = useState(STEP.ROOM);
   const previewPlayers = Array.isArray(preview?.players) ? preview.players : [];
+  const previewPhase = String(preview?.phase || '').trim().toUpperCase();
+  const previewJoinable = preview ? preview.joinable !== false && previewPhase !== 'LIVE' : true;
+  const previewStatusLabel = preview
+    ? previewJoinable
+      ? 'Open for room entry'
+      : 'Host session already live'
+    : 'Waiting for room preview';
 
   useEffect(() => {
     setStep(STEP.ROOM);
   }, [roomCode]);
 
   const canAdvance = useMemo(
-    () => String(roomCode || '').trim().length > 0,
-    [roomCode]
+    () => String(roomCode || '').trim().length > 0 && previewJoinable,
+    [previewJoinable, roomCode]
   );
   const canJoin = useMemo(
     () => String(displayName || '').trim().length > 0 && canAdvance,
@@ -66,7 +73,7 @@ export default function PlayerJoinFlow({
 
       <div className="player-join-step-indicator" data-testid={`${screenTestId}-step-indicator`}>
         <span className={`player-join-step${step === STEP.ROOM ? ' is-current' : ' is-complete'}`}>
-          1. Room
+          1. Code
         </span>
         <span className={`player-join-step${step === STEP.NAME ? ' is-current' : ''}`}>
           2. Name
@@ -91,10 +98,13 @@ export default function PlayerJoinFlow({
             onChange={onRoomCodeChange}
           />
           <div className="player-join-support-card">
-            <span>Players joined</span>
-            <strong>{previewPlayers.length}</strong>
+            <span>Status</span>
+            <strong>{previewStatusLabel}</strong>
             <p>{introCopy}</p>
           </div>
+          {preview && !previewJoinable ? (
+            <p className="field-hint">This room is already live. New joins are closed while CherryPick runs as a host-led live game.</p>
+          ) : null}
           <JoinStatusPanel
             pending={pending}
             pendingLabel={statusPendingLabel}
@@ -140,16 +150,16 @@ export default function PlayerJoinFlow({
       {preview ? (
         <div className="player-route-preview" data-testid="player-route-preview">
           <div className="player-route-preview-head">
-            <p className="section-title">Waiting room</p>
+            <p className="section-title">{previewJoinable ? 'Room roster' : 'Live roster'}</p>
             <strong>{previewPlayers.length}</strong>
           </div>
-          <p className="field-hint">Players joined: {previewPlayers.length}</p>
+          <p className="field-hint">{previewStatusLabel}</p>
           {previewPlayers.length > 0 ? (
             <ul className="player-route-preview-list">
               {previewPlayers.map((player) => (
                 <li key={player.playerId || player.displayName}>
-                  <strong>{player.displayName || player.playerId}</strong>
-                  <span>{player.playerId}</span>
+                  <strong>{player.displayName || 'Player'}</strong>
+                  <span>{previewJoinable ? 'Joined to the room' : 'Following the host session'}</span>
                 </li>
               ))}
             </ul>

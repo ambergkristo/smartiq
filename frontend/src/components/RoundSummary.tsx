@@ -24,7 +24,6 @@ export default function RoundSummary({
   const leaderScore = leader ? scores[leader] ?? 0 : 0;
   const totalCorrect = sumPlayerStat(players, stats, 'correct');
   const totalWrong = sumPlayerStat(players, stats, 'wrong');
-  const totalPasses = sumPlayerStat(players, stats, 'passes');
   const isSoloMode = mode === 'solo';
   const title = winner ? 'Game Summary' : 'Round Summary';
   const kicker = winner ? 'Session complete' : 'Round complete';
@@ -62,8 +61,8 @@ export default function RoundSummary({
             <strong>{totalCorrect}</strong>
           </article>
           <article className="round-summary-metric">
-            <span>{winner ? 'Passes' : 'Wrong'}</span>
-            <strong>{winner ? totalPasses : totalWrong}</strong>
+            <span>Wrong</span>
+            <strong>{totalWrong}</strong>
           </article>
         </div>
       </div>
@@ -113,7 +112,6 @@ export default function RoundSummary({
             <span role="columnheader">Score</span>
             <span role="columnheader">Correct</span>
             <span role="columnheader">Wrong</span>
-            <span role="columnheader">Pass</span>
           </div>
           {sorted.map((player, index) => (
             <div
@@ -129,7 +127,6 @@ export default function RoundSummary({
               <strong>{scores[player] ?? 0}</strong>
               <span>{stats[player]?.correct ?? 0}</span>
               <span>{stats[player]?.wrong ?? 0}</span>
-              <span>{stats[player]?.passes ?? 0}</span>
             </div>
           ))}
         </div>

@@ -1,4 +1,5 @@
 import CherryPickLogo, { isCherryPickBrand } from '../branding/CherryPickLogo';
+import { getRoomLifecycle } from '../../roomRuntime';
 
 export default function HostGameScreen({
   appTitle = 'CherryPick',
@@ -17,10 +18,13 @@ export default function HostGameScreen({
 }) {
   const roomPlayers = Array.isArray(roomSession?.roomState?.players) ? roomSession.roomState.players : [];
   const hasRoom = roomSession?.role === 'host' && Boolean(roomSession?.roomCode);
+  const roomLifecycle = getRoomLifecycle(roomSession);
   const sessionStatus = hasRoom
-    ? roomPlayers.length > 1
-      ? 'Players joined. Ready to start.'
-      : 'Room live. Waiting for players.'
+    ? roomLifecycle === 'LIVE'
+      ? 'Game launched. New joins are now closed.'
+      : roomPlayers.length > 1
+        ? 'Players joined. Ready to start.'
+        : 'Room live. Waiting for players.'
     : 'Choose a topic and create a host room.';
   const topicSummary = selectedTopic || 'Choose topic';
   const hostNameSummary = String(hostName || '').trim() || 'Host';
@@ -107,8 +111,8 @@ export default function HostGameScreen({
                 <ul>
                   {roomPlayers.map((player) => (
                     <li key={player.playerId || player.displayName}>
-                      <strong>{player.displayName || player.playerId}</strong>
-                      <span>{player.playerId}</span>
+                      <strong>{player.displayName || 'Player'}</strong>
+                      <span>{player.playerId === roomSession?.playerId ? 'Host' : 'Joined player'}</span>
                     </li>
                   ))}
                 </ul>
@@ -147,8 +151,8 @@ export default function HostGameScreen({
 
       <div className="mode-shell-actions host-mode-actions">
         {hasRoom ? (
-          <button type="button" className="host-mode-primary-button" onClick={onStartGame} disabled={pending}>
-            Start game
+          <button type="button" className="host-mode-primary-button" onClick={onStartGame} disabled={pending || roomLifecycle === 'LIVE'}>
+            {roomLifecycle === 'LIVE' ? 'Game live' : 'Start game'}
           </button>
         ) : (
           <button type="button" className="host-mode-primary-button" onClick={onCreateRoom} disabled={pending}>
@@ -156,7 +160,7 @@ export default function HostGameScreen({
           </button>
         )}
         <button type="button" className="secondary-action" onClick={onBack} disabled={pending}>
-          Back to home
+          {hasRoom ? 'Leave host room' : 'Back to home'}
         </button>
       </div>
     </section>
