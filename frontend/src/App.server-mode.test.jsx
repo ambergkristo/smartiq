@@ -132,13 +132,15 @@ async function startServerMultiplayer(players = 'Alice, Bob') {
 }
 
 async function startSoloMode() {
-  const playButton = await screen.findByRole('button', { name: /play/i });
+  const playButton = await screen.findByRole('button', { name: /play solo/i });
   fireEvent.click(playButton);
   await waitFor(() => expect(createServerGameSession).toHaveBeenCalled());
 }
 
 async function openJoinFlow({ roomCode = 'ABC123', displayName } = {}) {
-  fireEvent.click(await screen.findByRole('button', { name: /join game/i }));
+  window.location.hash = '#/join';
+  fireEvent(window, new HashChangeEvent('hashchange'));
+  await screen.findByTestId('home-join-panel');
   fireEvent.change(await screen.findByLabelText(/game code/i), { target: { value: roomCode } });
   fireEvent.click(screen.getByRole('button', { name: /^next$/i }));
   const displayNameInput = await screen.findByLabelText(/your display name/i);
@@ -149,7 +151,9 @@ async function openJoinFlow({ roomCode = 'ABC123', displayName } = {}) {
 }
 
 async function openHostFlow({ topic = 'History', hostName } = {}) {
-  fireEvent.click(await screen.findByRole('button', { name: /host game/i }));
+  window.location.hash = '#/host';
+  fireEvent(window, new HashChangeEvent('hashchange'));
+  await screen.findByTestId('host-game-panel');
   const topicSelect = await screen.findByLabelText(/topic/i);
   fireEvent.change(topicSelect, { target: { value: topic } });
   const hostNameInput = await screen.findByLabelText(/host name/i);
@@ -189,7 +193,7 @@ describe('App server-authoritative mode', () => {
         })
       )
     );
-    expect(screen.getByRole('button', { name: /^answer$/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /submit pick/i })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /pass/i })).not.toBeInTheDocument();
   }, 15000);
 
@@ -218,8 +222,8 @@ describe('App server-authoritative mode', () => {
     await startServerMultiplayer();
 
     fireEvent.click(screen.getByRole('button', { name: /^answer-1\b/i }));
-    await waitFor(() => expect(screen.getByRole('button', { name: /^answer$/i })).toBeEnabled());
-    fireEvent.click(screen.getByRole('button', { name: /^answer$/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /submit pick/i })).toBeEnabled());
+    fireEvent.click(screen.getByRole('button', { name: /submit pick/i }));
     await waitFor(() => expect(screen.getByRole('button', { name: /lock in/i })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
 
@@ -257,8 +261,8 @@ describe('App server-authoritative mode', () => {
     await startServerMultiplayer();
 
     fireEvent.click(screen.getByRole('button', { name: /^answer-1\b/i }));
-    await waitFor(() => expect(screen.getByRole('button', { name: /^answer$/i })).toBeEnabled());
-    fireEvent.click(screen.getByRole('button', { name: /^answer$/i }));
+    await waitFor(() => expect(screen.getByRole('button', { name: /submit pick/i })).toBeEnabled());
+    fireEvent.click(screen.getByRole('button', { name: /submit pick/i }));
     await waitFor(() => expect(screen.getByRole('button', { name: /lock in/i })).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: /lock in/i }));
 
@@ -271,7 +275,7 @@ describe('App server-authoritative mode', () => {
       expect.objectContaining({ type: 'ADVANCE' })
     ));
     await waitFor(() => expect(screen.getByText(/round two question/i)).toBeInTheDocument());
-    expect(screen.getByRole('button', { name: /^answer$/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /submit pick/i })).toBeInTheDocument();
   });
 
   test('starts solo mode from the home entry and applies Cherry XP on the 5th round', async () => {
@@ -314,10 +318,10 @@ describe('App server-authoritative mode', () => {
     ));
 
     fireEvent.click(await screen.findByRole('button', { name: /^answer-1\b/i }));
-    fireEvent.click(screen.getByRole('button', { name: /^answer$/i }));
+    fireEvent.click(screen.getByRole('button', { name: /submit pick/i }));
     fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
 
-    await waitFor(() => expect(screen.getByTestId('solo-round-result')).toHaveTextContent('SUCCESS'));
+    await waitFor(() => expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Reward secured'));
     expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Cherry');
     expect(screen.getByTestId('solo-round-result')).toHaveTextContent('XP x2');
     expect(screen.getByTestId('solo-round-result')).toHaveTextContent('200');
@@ -349,13 +353,13 @@ describe('App server-authoritative mode', () => {
     await startSoloMode();
 
     fireEvent.click(await screen.findByRole('button', { name: /^answer-1\b/i }));
-    fireEvent.click(screen.getByRole('button', { name: /^answer$/i }));
+    fireEvent.click(screen.getByRole('button', { name: /submit pick/i }));
     fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
 
-    await waitFor(() => expect(screen.getByTestId('solo-round-result')).toHaveTextContent('FAIL'));
+    await waitFor(() => expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Reward lost'));
     expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Cherry');
     expect(screen.getByTestId('solo-round-result')).toHaveTextContent('XP x2');
-    expect(screen.getByTestId('solo-round-result')).toHaveTextContent('XP gained');
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Round XP');
     expect(screen.getByTestId('solo-round-result')).toHaveTextContent('0');
     expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Option 2, Option 4');
   });
@@ -382,7 +386,7 @@ describe('App server-authoritative mode', () => {
     await startSoloMode();
 
     fireEvent.click(await screen.findByRole('button', { name: /^answer-1\b/i }));
-    fireEvent.click(screen.getByRole('button', { name: /^answer$/i }));
+    fireEvent.click(screen.getByRole('button', { name: /submit pick/i }));
     fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
 
     await waitFor(() => expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Double Cherry'));
@@ -435,7 +439,7 @@ describe('App server-authoritative mode', () => {
     await startSoloMode();
 
     fireEvent.click(await screen.findByRole('button', { name: /^answer-1\b/i }));
-    fireEvent.click(screen.getByRole('button', { name: /^answer$/i }));
+    fireEvent.click(screen.getByRole('button', { name: /submit pick/i }));
     fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
     await waitFor(() => expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('100'));
 
@@ -443,7 +447,7 @@ describe('App server-authoritative mode', () => {
     await waitFor(() => expect(screen.getByText(/solo round two/i)).toBeInTheDocument());
 
     fireEvent.click(screen.getByRole('button', { name: /^answer-2\b/i }));
-    fireEvent.click(screen.getByRole('button', { name: /^answer$/i }));
+    fireEvent.click(screen.getByRole('button', { name: /submit pick/i }));
     fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
     await waitFor(() => expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('200'));
 
@@ -452,15 +456,16 @@ describe('App server-authoritative mode', () => {
     await waitFor(() => expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('0'));
   });
 
-  test('home shows Play, Join Game, Host Game, and the guest profile summary', async () => {
+  test('home shows the solo-first CherryPick entry and guest profile summary', async () => {
     window.location.hash = '';
 
     render(<App />);
 
     expect(await screen.findByTestId('home-screen')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /play/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /join game/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /host game/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /play solo/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /choose topic/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /join soon/i })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /host soon/i })).toBeDisabled();
     expect(screen.getByTestId('home-screen-profile')).toHaveTextContent(/level 1/i);
     expect(screen.getByTestId('home-screen-profile')).toHaveTextContent(/solo player/i);
     expect(screen.getByTestId('home-screen-profile')).toHaveTextContent(/saved xp/i);
@@ -731,7 +736,7 @@ describe('App server-authoritative mode', () => {
 
     await startSoloMode();
     fireEvent.click(await screen.findByRole('button', { name: /^answer-1\b/i }));
-    fireEvent.click(screen.getByRole('button', { name: /^answer$/i }));
+    fireEvent.click(screen.getByRole('button', { name: /submit pick/i }));
     fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
 
     await waitFor(() => expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('100'));

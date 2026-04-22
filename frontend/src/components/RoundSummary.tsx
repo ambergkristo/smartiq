@@ -1,5 +1,16 @@
+import { getCherryRoundReward } from '../state/cherryRounds';
+
 function sumPlayerStat(players, stats, key) {
   return players.reduce((total, player) => total + (stats[player]?.[key] ?? 0), 0);
+}
+
+function formatRoundReward(roundNumber) {
+  const reward = getCherryRoundReward(roundNumber);
+  return {
+    label: reward?.label || 'Normal round',
+    multiplierLabel: reward?.multiplierLabel || 'XP x1',
+    multiplier: reward?.multiplier || 1
+  };
 }
 
 export default function RoundSummary({
@@ -13,6 +24,7 @@ export default function RoundSummary({
   winner,
   mode = 'standard',
   sessionXp = 0,
+  lastRoundXp = 0,
   profileName = 'Solo Player',
   profileLevel = 1,
   profileXp = 0,
@@ -25,9 +37,15 @@ export default function RoundSummary({
   const totalCorrect = sumPlayerStat(players, stats, 'correct');
   const totalWrong = sumPlayerStat(players, stats, 'wrong');
   const isSoloMode = mode === 'solo';
-  const title = winner ? 'Game Summary' : 'Round Summary';
-  const kicker = winner ? 'Session complete' : 'Round complete';
-  const lede = winner ? `${winner} reached 30 points.` : `Round ${roundNumber} complete.`;
+  const title = winner ? 'Run complete' : 'Round complete';
+  const kicker = winner ? 'Session result' : 'Round result';
+  const reward = formatRoundReward(roundNumber);
+  const roundOutcome = lastRoundXp > 0 ? 'Reward secured' : 'Reward lost';
+  const roundBaseXp = reward.multiplier > 0 ? Math.round(lastRoundXp / reward.multiplier) : lastRoundXp;
+  const levelBaseXp = Math.max((profileLevel - 1) * 500, 0);
+  const levelProgressXp = Math.max(profileXp - levelBaseXp, 0);
+  const levelProgressPercent = Math.max(8, Math.min((levelProgressXp / 500) * 100, 100));
+  const primaryAction = winner ? onPlayAgain : onNextRound;
 
   return (
     <section
@@ -41,41 +59,98 @@ export default function RoundSummary({
           <p className="section-title">{kicker}</p>
           <div className="round-summary-title-row">
             <h1>{title}</h1>
-            <span className={`round-summary-result-badge${winner ? ' is-winner' : ''}`}>
-              {winner ? `Winner: ${winner}` : `Round ${roundNumber}`}
+            <span className={`round-summary-result-badge${winner || lastRoundXp > 0 ? ' is-winner' : ''}`}>
+              {isSoloMode ? roundOutcome : winner ? `Winner: ${winner}` : reward.label}
             </span>
           </div>
-          <p className="round-summary-lede">{lede}</p>
+          <p className="round-summary-lede">
+            {isSoloMode
+              ? lastRoundXp > 0
+                ? 'The board paid out. Bank the XP, keep the tempo, and press straight into the next round.'
+                : 'The miss cut the round reward immediately. The next board is the recovery path.'
+              : winner
+                ? `${winner} reached the winning score.`
+                : `Round ${roundNumber} is locked and the standings are updated.`}
+          </p>
+          {isSoloMode ? (
+            <div className="round-summary-hero-chips">
+              <span className="round-summary-progress-badge">{reward.label}</span>
+              <span className="round-summary-progress-badge">{reward.multiplierLabel}</span>
+              <span className="round-summary-progress-badge">Round XP {lastRoundXp}</span>
+            </div>
+          ) : null}
         </div>
-        <div className="round-summary-metrics" data-testid="round-summary-metrics">
-          <article className="round-summary-metric round-summary-metric--emphasis">
-            <span>{winner ? 'Winning score' : 'Current lead'}</span>
-            <strong>{leaderScore}</strong>
-          </article>
-          <article className="round-summary-metric">
-            <span>Players</span>
-            <strong>{players.length}</strong>
-          </article>
-          <article className="round-summary-metric">
-            <span>Correct</span>
-            <strong>{totalCorrect}</strong>
-          </article>
-          <article className="round-summary-metric">
-            <span>Wrong</span>
-            <strong>{totalWrong}</strong>
-          </article>
-        </div>
+
+        <section className="round-summary-spotlight" data-testid="round-summary-metrics">
+          <p className="section-title">{isSoloMode ? 'XP readout' : 'Session snapshot'}</p>
+          <h2>{isSoloMode ? `${lastRoundXp} XP this round` : leader ? `${leader} leads` : 'No leader yet'}</h2>
+          {isSoloMode ? (
+            <div className="round-summary-level-meter" aria-label="Level progress">
+              <div className="round-summary-level-meter-fill" style={{ width: `${levelProgressPercent}%` }} />
+            </div>
+          ) : null}
+          <div className="round-summary-stat-grid">
+            <article className="round-summary-stat-card">
+              <span>{isSoloMode ? 'Session XP' : winner ? 'Winning score' : 'Lead score'}</span>
+              <strong>{isSoloMode ? sessionXp : leaderScore}</strong>
+            </article>
+            <article className="round-summary-stat-card">
+              <span>Correct picks</span>
+              <strong>{totalCorrect}</strong>
+            </article>
+            <article className="round-summary-stat-card">
+              <span>Wrong picks</span>
+              <strong>{totalWrong}</strong>
+            </article>
+            <article className="round-summary-stat-card">
+              <span>{isSoloMode ? 'Next level' : 'Players'}</span>
+              <strong>{isSoloMode ? `${Math.max(500 - levelProgressXp, 0)} XP` : players.length}</strong>
+            </article>
+          </div>
+        </section>
       </div>
 
-      {isSoloMode ? (
+      <div className="round-summary-body">
+        <section className="round-summary-breakdown">
+          <div>
+            <p className="section-title">XP breakdown</p>
+            <h2>{profileName}</h2>
+            <p className="round-summary-progress-copy">
+              Clear results should be readable at a glance: what the round paid, what the session gained,
+              and how far the profile moved.
+            </p>
+          </div>
+          <div className="round-summary-breakdown-grid">
+            <article className="round-summary-breakdown-card">
+              <span>Base XP</span>
+              <strong>{roundBaseXp}</strong>
+            </article>
+            <article className="round-summary-breakdown-card round-summary-breakdown-card--reward">
+              <span>Cherry multiplier</span>
+              <strong>{reward.multiplierLabel}</strong>
+            </article>
+            <article className="round-summary-breakdown-card round-summary-breakdown-card--reward">
+              <span>Round XP</span>
+              <strong>{lastRoundXp}</strong>
+            </article>
+            <article className="round-summary-breakdown-card round-summary-breakdown-card--reward">
+              <span>Session XP</span>
+              <strong>{sessionXp}</strong>
+            </article>
+          </div>
+        </section>
+
         <section className="round-summary-progress" data-testid="round-summary-progress">
           <div className="round-summary-progress-head">
             <div>
-              <p className="section-title">Progress recap</p>
+              <p className="section-title">Profile progression</p>
               <h2>{profileName}</h2>
-              <p className="round-summary-progress-copy">Your CherryPick profile totals stay saved on this browser.</p>
+              <p className="round-summary-progress-copy">Your solo totals stay saved on this browser between runs.</p>
             </div>
             <span className="round-summary-progress-badge">Level {profileLevel}</span>
+          </div>
+          <div className="round-summary-level-meter" aria-label="Profile level progress">
+            <div className="round-summary-level-meter-fill" style={{ width: `${levelProgressPercent}%` }} />
           </div>
           <div className="round-summary-progress-grid">
             <article className="round-summary-progress-card round-summary-progress-card--reward">
@@ -83,10 +158,6 @@ export default function RoundSummary({
               <strong>{profileXp}</strong>
             </article>
             <article className="round-summary-progress-card round-summary-progress-card--reward">
-              <span>Session XP</span>
-              <strong>{sessionXp}</strong>
-            </article>
-            <article className="round-summary-progress-card">
               <span>Games</span>
               <strong>{profileGamesPlayed}</strong>
             </article>
@@ -94,15 +165,19 @@ export default function RoundSummary({
               <span>Rounds won</span>
               <strong>{profileRoundsWon}</strong>
             </article>
+            <article className="round-summary-progress-card">
+              <span>Next focus</span>
+              <strong>{lastRoundXp > 0 ? 'Keep the streak alive' : 'Recover on the next board'}</strong>
+            </article>
           </div>
         </section>
-      ) : null}
+      </div>
 
       <section className="summary-standings" data-testid="summary-standings">
         <div className="summary-standings-head">
           <div>
-            <p className="section-title">Final standings</p>
-            <h2>{winner ? 'Session results' : 'Round results'}</h2>
+            <p className="section-title">Standings</p>
+            <h2>{winner ? 'Final results' : 'Current results'}</h2>
           </div>
           {leader ? <span className="summary-standings-chip">Leader: {leader}</span> : null}
         </div>
@@ -133,15 +208,9 @@ export default function RoundSummary({
       </section>
 
       <div className="summary-actions">
-        {!winner ? (
-          <button onClick={onNextRound} type="button">
-            NEXT ROUND
-          </button>
-        ) : (
-          <button onClick={onPlayAgain} type="button">
-            Play again
-          </button>
-        )}
+        <button onClick={primaryAction} type="button">
+          Play next round
+        </button>
         <button onClick={onRestart} type="button" className="secondary-action">
           Change topic
         </button>

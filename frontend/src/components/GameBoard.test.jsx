@@ -68,7 +68,7 @@ describe('GameBoard layout', () => {
       />
     );
 
-    expect(screen.getByRole('button', { name: 'ANSWER' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'SUBMIT PICK' })).toBeDisabled();
     expect(screen.queryByRole('button', { name: 'PASS' })).not.toBeInTheDocument();
 
     rerender(
@@ -85,7 +85,7 @@ describe('GameBoard layout', () => {
       />
     );
 
-    expect(screen.getByRole('button', { name: 'ANSWER' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'SUBMIT PICK' })).toBeEnabled();
   });
 
   test('shows lock-in panel when an answer is selected', () => {
@@ -140,7 +140,7 @@ describe('GameBoard layout', () => {
       />
     );
 
-    expect(screen.getByTestId('solo-round-result')).toHaveTextContent(/success/i);
+    expect(screen.getByTestId('solo-round-result')).toHaveTextContent(/reward secured/i);
     expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Double Cherry');
     expect(screen.getByTestId('solo-round-result')).toHaveTextContent('XP x3');
     expect(screen.getByTestId('solo-round-result')).toHaveTextContent('600');
@@ -233,7 +233,7 @@ describe('GameBoard layout', () => {
       />
     );
 
-    const answerButton = screen.getByRole('button', { name: 'ANSWER' });
+    const answerButton = screen.getByRole('button', { name: 'SUBMIT PICK' });
     await waitFor(() => expect(answerButton).toHaveFocus());
     await user.keyboard('{Enter}');
     expect(props.onAnswer).toHaveBeenCalledTimes(1);

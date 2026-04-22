@@ -19,7 +19,7 @@ export default function SoloRoundResult({
   xpGained = 0,
   totalXp = 0
 }) {
-  const resultLabel = outcome === 'success' ? 'SUCCESS' : 'FAIL';
+  const resultLabel = outcome === 'success' ? 'Reward secured' : 'Reward lost';
   const rewardType = resolveRoundRewardType(roundLabel);
   const outcomeTone = outcome === 'success' ? 'success' : 'fail';
 
@@ -44,11 +44,11 @@ export default function SoloRoundResult({
           <strong>{xpMultiplierLabel}</strong>
         </p>
         <p className="solo-round-result-metric">
-          <span>Selected answers</span>
+          <span>Your picks</span>
           <strong>{selectedOptions.length > 0 ? selectedOptions.join(', ') : selectedOption || 'No answer selected'}</strong>
         </p>
         <p className="solo-round-result-metric solo-round-result-metric--reward">
-          <span>XP gained</span>
+          <span>Round XP</span>
           <strong>{xpGained}</strong>
         </p>
         <p className="solo-round-result-metric solo-round-result-metric--emphasis">

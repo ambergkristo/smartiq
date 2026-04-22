@@ -27,14 +27,14 @@ describe('RoundSummary', () => {
     );
 
     expect(screen.getByTestId('round-summary')).toHaveAttribute('data-mode', 'solo');
-    expect(screen.getByTestId('round-summary')).toHaveTextContent('Game Summary');
+    expect(screen.getByTestId('round-summary')).toHaveTextContent('Run complete');
     expect(screen.getByTestId('round-summary-progress')).toHaveTextContent('Total XP');
     expect(screen.getByTestId('round-summary-progress')).toHaveTextContent('1840');
-    expect(screen.getByTestId('round-summary-progress')).toHaveTextContent('Session XP');
-    expect(screen.getByTestId('round-summary-progress')).toHaveTextContent('420');
+    expect(screen.getByTestId('round-summary')).toHaveTextContent('Session XP');
+    expect(screen.getByTestId('round-summary')).toHaveTextContent('420');
     expect(screen.getByTestId('summary-standings')).toHaveTextContent('Winner');
 
-    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
+    fireEvent.click(screen.getByRole('button', { name: /play next round/i }));
     fireEvent.click(screen.getByRole('button', { name: /change topic/i }));
 
     expect(onPlayAgain).toHaveBeenCalledTimes(1);

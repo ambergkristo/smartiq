@@ -21,6 +21,11 @@ export default function QuestionCard({
           </button>
         ) : null}
       </div>
+      <div className="question-card-reward-row" aria-label="Round context">
+        <span className="question-meta-chip is-reward">{roundReward?.label || 'Normal round'}</span>
+        <span className="question-meta-chip">{roundReward?.multiplierLabel || 'XP x1'}</span>
+        <span className="question-meta-chip">One wrong pick ends the reward</span>
+      </div>
       <CherryRoundIndicator
         type={roundReward?.type}
         label={roundReward?.type === 'cherry' ? 'Cherry Round' : roundReward?.badgeLabel}
@@ -29,6 +34,7 @@ export default function QuestionCard({
       <p className={`question-card-text${questionExpanded ? '' : ' is-clamped'}`} data-testid="question-card">
         {question}
       </p>
+      <p className="question-card-rule">Select every correct answer. The first wrong tile ends the round immediately.</p>
     </article>
   );
 }

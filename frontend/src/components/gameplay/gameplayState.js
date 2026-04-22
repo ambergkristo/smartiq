@@ -35,7 +35,7 @@ export function getActionHint(phase, currentPlayer, category, controlsDisabled) 
 
   switch (phase) {
     case 'QUESTION_ACTIVE':
-      return `${currentPlayer}: choose one answer, then ANSWER.`;
+      return `${currentPlayer}: choose one answer, then SUBMIT PICK.`;
     case 'ANSWER_SELECTED':
       return `${currentPlayer}: LOCK IN or go BACK.`;
     case 'ROUND_REVEAL':
@@ -67,7 +67,7 @@ export function getAnswerStateCounts(selectedIndexes, revealedIndexes, wrongInde
 
 export function getNextActionLabel(nextTransition) {
   if (nextTransition === 'game-over') {
-    return 'VIEW WINNER';
+    return 'VIEW RESULTS';
   }
   if (nextTransition === 'round') {
     return 'NEXT ROUND';

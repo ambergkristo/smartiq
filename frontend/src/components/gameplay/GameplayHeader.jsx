@@ -6,7 +6,8 @@ export default function GameplayHeader({
   category,
   topic,
   language,
-  currentPlayer
+  currentPlayer,
+  roundReward
 }) {
   return (
     <header className="gameplay-header">
@@ -15,8 +16,9 @@ export default function GameplayHeader({
         <h2>{topic}</h2>
         <div className="gameplay-header-meta">
           <span>{category.replace(/_/g, ' ')}</span>
+          <span>{roundReward?.multiplierLabel || 'XP x1'}</span>
           <span>{String(language || 'en').toUpperCase()}</span>
-          <span>Turn {currentPlayer}</span>
+          <span>Runner {currentPlayer}</span>
         </div>
       </div>
       <PhaseStatusChip phase={phase} />

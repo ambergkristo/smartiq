@@ -1,0 +1,482 @@
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scene-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tile-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes phase-glow {
+  0% {
+    box-shadow: 0 0 0 rgba(255, 198, 134, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(255, 198, 134, 0.22);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(255, 198, 134, 0);
+  }
+}
+
+@keyframes answer-reveal {
+  from {
+    transform: scale(0.96);
+    filter: brightness(1.08);
+  }
+  to {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .setup-panel,
+  .gameplay-stage,
+  .scoreboard-panel,
+  .topic-tile,
+  .card-loading-panel,
+  .question-card,
+  .answer-tile.is-correct,
+  .answer-tile.is-wrong {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  button,
+  .answer-tile {
+    transition: none !important;
+  }
+}
+
+@media (min-width: 1260px) {
+  .topic-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 980px) {
+  .host-app {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .app-shell {
+    grid-template-rows: auto auto auto;
+  }
+
+  .app-shell-body {
+    grid-template-columns: 1fr;
+  }
+
+  .app-shell-body--game {
+    gap: 16px;
+  }
+
+  .app-shell-stage > * {
+    height: auto;
+  }
+
+  .app-shell-actionbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .app-shell--game .app-shell-actionbar {
+    gap: 14px;
+  }
+
+  .room-lobby-overview,
+  .room-entry-grid,
+  .lobby-player-list,
+  .lobby-status-summary-grid,
+  .player-waiting-room-meta,
+  .player-waiting-room-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  main[data-phase='game'] {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .gameplay-stage,
+  .scoreboard-panel {
+    height: auto;
+  }
+
+  .reveal-panel {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, auto);
+  }
+
+  .player-result-list {
+    grid-column: auto;
+  }
+
+  .gameplay-board-layout,
+  .gameplay-board-question-stack {
+    gap: 12px;
+  }
+
+  .gameplay-header,
+  .question-prompt,
+  .board-status-bar {
+    width: min(100%, 920px);
+  }
+
+  .answer-state-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .answer-grid {
+    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(88px, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  main {
+    padding: 16px;
+  }
+
+  .audio-volume-label {
+    display: none;
+  }
+
+  .audio-volume-slider {
+    width: 72px;
+  }
+
+  .setup-panel {
+    padding: 24px;
+  }
+
+  .home-screen {
+    padding: 14px 0;
+  }
+
+  .home-screen-panel {
+    width: min(100%, 620px);
+    gap: 20px;
+  }
+
+  .home-screen-content,
+  .home-screen-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-screen-brand-block,
+  .home-screen-cta-intro,
+  .home-screen-profile,
+  .home-screen-panel {
+    text-align: left;
+  }
+
+  .home-screen-profile-topline,
+  .home-screen-profile-hero,
+  .scoreboard-solo-recap-head {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+
+  .home-screen-profile-hero-xp {
+    justify-items: start;
+    text-align: left;
+  }
+
+  .home-screen-profile-metrics,
+  .scoreboard-solo-recap {
+    grid-template-columns: 1fr;
+  }
+
+  .home-screen-brand-heading {
+    justify-content: flex-start;
+  }
+
+  .round-summary {
+    padding: 22px;
+  }
+
+  .round-summary-hero,
+  .round-summary-metrics,
+  .round-summary-progress-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .round-summary-progress,
+  .summary-standings {
+    padding: 18px;
+  }
+
+  .home-action-button--primary,
+  .home-action-button--secondary {
+    grid-column: auto;
+    min-height: 108px;
+  }
+
+  .room-code-hero-head,
+  .lobby-player-panel-head,
+  .lobby-status-summary-head,
+  .player-join-screen-head,
+  .player-join-card-head,
+  .player-waiting-room-head,
+  .player-route-preview-head,
+  .player-waiting-room-roster-head,
+  .player-result-list-head,
+  .solo-round-result-head,
+  .round-summary-title-row,
+  .round-summary-progress-head,
+  .summary-standings-head,
+  .gameplay-header,
+  .question-card-head,
+  .scoreboard-panel-head {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .host-mode-screen {
+    width: min(100%, 620px);
+    gap: 18px;
+    padding: 24px;
+  }
+
+  .host-mode-layout,
+  .host-mode-screen .mode-shell-summary,
+  .host-mode-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .host-mode-actions .secondary-action {
+    min-width: 0;
+  }
+
+  .question-card {
+    padding: 22px 20px;
+    gap: 12px;
+  }
+
+  .correct-answer-display,
+  .resolution-summary,
+  .player-result-list,
+  .next-step-action-area,
+  .solo-round-result {
+    padding: 18px;
+  }
+
+  .gameplay-header,
+  .question-prompt,
+  .board-status-bar {
+    width: 100%;
+  }
+
+  .cherry-round-indicator {
+    width: 100%;
+    justify-content: center;
+    padding: 8px 12px;
+  }
+
+  .cherry-round-indicator-copy {
+    justify-content: center;
+  }
+
+  .question-card-text {
+    max-width: 100%;
+    font-size: 1.2rem;
+  }
+
+  .launch-panel-hero,
+  .launch-panel-grid {
+    grid-template-columns: 1fr;
+  }
+
+  select,
+  input,
+  button {
+    font-size: 16px;
+  }
+
+  .setup-toolbar {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-self: stretch;
+    gap: 8px;
+  }
+
+  .topic-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .host-setup-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .topic-tile {
+    min-height: 108px;
+  }
+
+  .player-token {
+    min-height: 44px;
+    padding: 10px 12px;
+  }
+
+  .host-workspace-header,
+  .host-workspace-grid,
+  .app-header,
+  .app-header-controls,
+  .app-shell-actionbar,
+  .host-launch-panel-header,
+  .host-console-status-head {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .player-join-screen,
+  .player-waiting-room,
+  .player-join-hero,
+  .player-waiting-room-hero,
+  .room-session-header,
+  .room-player-list li,
+  .player-route-preview-list li,
+  .player-waiting-room-roster li,
+  .room-actions,
+  .host-session-actions,
+  .player-waiting-room-actions,
+  .player-waiting-room-meta,
+  .player-result-row {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .player-join-screen {
+    min-height: calc(100dvh - 32px);
+    padding: 20px;
+    gap: 14px;
+  }
+
+  .player-join-screen-head {
+    gap: 10px;
+    align-items: start;
+  }
+
+  .player-join-hero {
+    padding: 16px;
+  }
+
+  .player-join-code-callout,
+  .player-join-support-card,
+  .player-route-preview {
+    padding: 14px 16px;
+  }
+
+  .player-join-field--code input {
+    text-align: center;
+  }
+
+  .start-cta {
+    width: 100%;
+    min-height: 54px;
+  }
+
+  .answer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(88px, 1fr));
+    gap: 12px;
+  }
+
+  .gameplay-action-buttons,
+  .answer-state-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .app-shell--game .app-shell-action-copy {
+    padding: 0;
+  }
+
+  .gameplay-action-copy strong {
+    max-width: 100%;
+  }
+
+  .rank-selector {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .rank-chip {
+    min-height: 44px;
+    font-size: 0.9rem;
+  }
+
+  .answer-tile {
+    min-height: 88px;
+    padding: 12px 14px;
+  }
+
+  .slot-index {
+    min-width: 2rem;
+    min-height: 2rem;
+  }
+
+  .gameplay-action-buttons button {
+    min-height: 56px;
+  }
+
+  .app-shell--game .app-shell-actionbar .app-shell-primary-button,
+  .app-shell--game .app-shell-actionbar .secondary-action,
+  .gameplay-back-button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .scoreboard-player-row,
+  .scoreboard-status-card p {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 52px;
+  }
+
+  .summary-head,
+  .summary-row {
+    grid-template-columns: 1.5fr repeat(4, 1fr);
+    font-size: 0.85rem;
+  }
+
+  .summary-player-cell {
+    display: grid;
+    justify-items: start;
+  }
+
+  .summary-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+

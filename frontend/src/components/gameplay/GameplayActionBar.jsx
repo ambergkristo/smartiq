@@ -12,7 +12,7 @@ export default function GameplayActionBar({
   onCancelConfirm,
   onNext,
   onBackToLobby,
-  backLabel = 'ā† Back to lobby',
+  backLabel = 'Back to lobby',
   currentPlayer
 }) {
   const answerButtonRef = useRef(null);
@@ -59,7 +59,7 @@ export default function GameplayActionBar({
             onClick={onAnswer}
             disabled={!canAnswer}
           >
-            ANSWER
+            SUBMIT PICK
           </button>
         ) : null}
         {phase === 'ANSWER_SELECTED' ? (

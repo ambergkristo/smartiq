@@ -61,7 +61,7 @@ export default function ScoreBoard({
       <div className="scoreboard-panel-head">
         <div className="scoreboard-panel-copy">
           <p className="section-title">{isSoloMode ? 'Solo run' : 'Live scoreboard'}</p>
-          <h2>Round {roundNumber}</h2>
+          <h2>{isSoloMode ? 'Cherry pressure' : `Round ${roundNumber}`}</h2>
         </div>
         <div className="scoreboard-target">
           <span>{isSoloMode ? 'Session XP' : 'Target'}</span>
@@ -86,14 +86,14 @@ export default function ScoreBoard({
 
       <div className="scoreboard-status-card" data-testid="scoreboard-status-card">
         <div className="scoreboard-turn-spotlight">
-          <span>Current turn</span>
+          <span>{isSoloMode ? 'Current runner' : 'Current turn'}</span>
           <strong>{currentPlayer}</strong>
           <em>{phaseLabel}</em>
         </div>
         <div className="scoreboard-status-grid">
-          <p><span>{isSoloMode ? 'Mode' : 'Starter'}</span><strong>{isSoloMode ? 'Solo' : starterPlayer}</strong></p>
-          <p><span>{isSoloMode ? 'Round type' : 'Leading'}</span><strong>{isSoloMode ? roundReward.label : leadingPlayer ? `${leadingPlayer} - ${leadingScore}` : 'n/a'}</strong></p>
-          <p><span>Last call</span><strong>{lastAction || 'Waiting for host action'}</strong></p>
+          <p><span>{isSoloMode ? 'Mode' : 'Starter'}</span><strong>{isSoloMode ? 'Single player' : starterPlayer}</strong></p>
+          <p><span>{isSoloMode ? 'Reward state' : 'Leading'}</span><strong>{isSoloMode ? roundReward.label : leadingPlayer ? `${leadingPlayer} - ${leadingScore}` : 'n/a'}</strong></p>
+          <p><span>Last call</span><strong>{lastAction || (isSoloMode ? 'Waiting for your next pick' : 'Waiting for host action')}</strong></p>
         </div>
       </div>
 
@@ -109,13 +109,12 @@ export default function ScoreBoard({
           <article className="scoreboard-solo-hero" aria-label="Total progression">
             <span>Total XP</span>
             <strong>{profileXp}</strong>
-            <p>Saved solo progress for this browser.</p>
+            <p>Saved local progression for this browser.</p>
           </article>
           <article className="scoreboard-solo-metric is-emphasis"><span>Session XP</span><strong>{sessionXp}</strong></article>
           <article className="scoreboard-solo-metric"><span>Round XP</span><strong>{lastRoundXp}</strong></article>
           <article className="scoreboard-solo-metric"><span>Multiplier</span><strong>{roundReward.multiplierLabel}</strong></article>
           <article className="scoreboard-solo-metric"><span>Games</span><strong>{profileGamesPlayed}</strong></article>
-          <article className="scoreboard-solo-metric"><span>Rounds won</span><strong>{profileRoundsWon}</strong></article>
         </div>
       ) : (
         <ul className="scoreboard-player-list" aria-label="Player scoreboard">

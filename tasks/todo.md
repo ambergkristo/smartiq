@@ -162,3 +162,182 @@
 - Residual follow-up after Sprint 3:
   - live production rehearsal still needs real deployment URLs and secrets at rollout time, but the repo-side workflow and runbook path are now in place
   - Mockito inline agent warnings still remain in the Java toolchain output and should be cleaned up before a stricter JDK upgrade
+
+## Large File Refactor
+
+### Scope
+
+- [x] Audit the largest active source files and separate intentional data files from real structural debt.
+- [x] Reduce `frontend/src/App.jsx` by extracting stable constants, pure helpers, and presentational panels into dedicated modules.
+- [x] Keep existing startup/server-mode coverage green after the extraction.
+- [x] Record the first-pass refactor results and the next likely targets below.
+
+## Sprint 4: Complete Restructuring
+
+### Scope
+
+- [x] Extract the remaining room-session and route-orchestration clusters out of `frontend/src/App.jsx`.
+- [x] Split `backend/src/main/java/com/smartiq/backend/tenant/TenantService.java` into smaller runtime-access and billing/usage-focused services.
+- [x] Re-audit the next-largest production files after those extractions and only continue splitting files that still carry real structural debt.
+- [x] Run focused backend/frontend verification after each major extraction and capture final results below.
+
+### Review
+
+- Large-file audit on April 21, 2026 separated intentional bulk from real structural debt:
+  - `backend/src/main/resources/data/cards.en.json` is intentionally large content data, not a structural problem
+  - real code debt remains in `frontend/src/App.jsx`, `frontend/src/styles.css`, and `backend/src/main/java/com/smartiq/backend/tenant/TenantService.java`
+- First-pass `App.jsx` extraction landed:
+  - stable config/constants moved to `frontend/src/app/appConfig.js`
+  - persistence and route/storage helpers moved to `frontend/src/app/appPersistence.js`
+  - pure session/runtime helpers moved to `frontend/src/app/appSessionUtils.js`
+  - startup and launch-presentational panels moved to `frontend/src/app/AppPanels.jsx`
+- `frontend/src/App.jsx` dropped from roughly 3300+ lines to 2166 lines while keeping the runtime behavior intact.
+- `frontend/src/styles.css` is no longer a monolith:
+  - the old 4600+ line stylesheet is now a manifest that imports `frontend/src/styles/base.css`, `home.css`, `room.css`, `workspace.css`, `gameplay.css`, `responsive.css`, and `admin.css`
+  - the split is mechanical and order-preserving, so no visual redesign was introduced during the refactor
+- `backend/src/main/java/com/smartiq/backend/tenant/TenantService.java` got its first backend extraction:
+  - support-case listing, creation, update, audit reconstruction, and validation moved into `backend/src/main/java/com/smartiq/backend/tenant/TenantSupportCaseService.java`
+  - `TenantService` now delegates support-case endpoints to that dedicated service instead of carrying the whole workflow inline
+  - `TenantService` dropped from 2523 lines to 2309 lines after the extraction
+- `TenantService` got its second backend extraction:
+  - tenant settings, runtime branding, session templates, review notes, and their JSON normalization/audit flow moved into `backend/src/main/java/com/smartiq/backend/tenant/TenantRuntimeSettingsService.java`
+  - `TenantService` now delegates those runtime/settings responsibilities instead of carrying both orchestration and storage normalization inline
+  - `TenantService` dropped further from 2309 lines to 1605 lines
+- `frontend/src/App.jsx` got a second frontend extraction:
+  - setup/game/game-over view composition moved into `frontend/src/app/GameAppViews.jsx`
+  - the render monolith is now separated from the state/action logic, reducing `App.jsx` from 2166 lines to 2155 lines while moving the high-churn JSX branches out of the main file
+- `backend/src/main/java/com/smartiq/backend/game/GameSessionService.java` is no longer carrying persistence DTOs inline:
+  - stored session/player/peg state moved into `backend/src/main/java/com/smartiq/backend/game/GameSessionState.java`
+  - JSON serialization, deserialization, and stored-state normalization moved into `backend/src/main/java/com/smartiq/backend/game/GameSessionStateCodec.java`
+  - `GameSessionService` now focuses on session orchestration and dropped from 1173 lines to 806 lines
+- `frontend/src/App.jsx` got a third frontend extraction:
+  - runtime auth, billing recovery, branding, session templates, tenant workspace insights, and reviewed-session notes moved into `frontend/src/app/useRuntimeWorkspace.js`
+  - hosted-session duplicate/review/resume/launch orchestration moved into `frontend/src/app/useHostedSessionHistory.js`
+  - `App.jsx` dropped further from 2155 lines to 1582 lines while keeping the runtime shell behavior and tests green
+- `frontend/src/api.js` is no longer a monolith:
+  - low-level request/config helpers moved to `frontend/src/api/core.js`
+  - runtime auth + tenant runtime endpoints moved to `frontend/src/api/runtime.js`
+  - topics/cards content endpoints moved to `frontend/src/api/content.js`
+  - server game-session endpoints moved to `frontend/src/api/game.js`
+  - room/join/rejoin endpoints moved to `frontend/src/api/room.js`
+  - `frontend/src/api.js` is now a 49-line public barrel that preserves the existing import surface
+- `frontend/src/admin/AdminConsole.jsx` is no longer one large tab renderer:
+  - branding, members, settings, subscription, and usage/audit tab content moved into `frontend/src/admin/AdminConsolePanels.jsx`
+  - `AdminConsole.jsx` dropped from 989 lines to 640 lines while keeping its existing admin API wiring and tests intact
+- Sprint 4 finish pass landed on April 22, 2026:
+  - `frontend/src/App.jsx` no longer owns solo/gameplay lifecycle or startup/hash/config persistence inline
+  - solo round lifecycle moved to `frontend/src/app/useGameplayFlow.js`
+  - startup topic loading, hash-route synchronization, and config/theme persistence moved to `frontend/src/app/useAppShellLifecycle.js`
+  - the remaining setup/runtime/gameplay shell cluster now renders through `frontend/src/app/AppShellSections.jsx`
+  - `App.jsx` dropped again from 1187 lines to 973 lines and is now a real app container instead of the last frontend monolith
+- `backend/src/main/java/com/smartiq/backend/tenant/TenantService.java` is no longer the last backend megaservice:
+  - tenant create/list/detail/status/branding/member/audit admin flows moved into `backend/src/main/java/com/smartiq/backend/tenant/TenantAdminService.java`
+  - `TenantService` now stays focused on orchestration across admin, runtime access, billing/usage, support, and runtime settings services
+  - `TenantService` dropped from 978 lines to 402 lines
+- `backend/src/main/java/com/smartiq/backend/game/GameSessionService.java` got a second cleanup pass:
+  - action parsing, score/player normalization, and validation helpers moved into `backend/src/main/java/com/smartiq/backend/game/GameSessionSupport.java`
+  - `GameSessionService` dropped further to 553 lines
+- `backend/src/main/java/com/smartiq/backend/tenant/TenantRuntimeSettingsService.java` got a second cleanup pass:
+  - host session-template and review-note catalog normalization moved into `backend/src/main/java/com/smartiq/backend/tenant/TenantRuntimeSessionCatalogSupport.java`
+  - `TenantRuntimeSettingsService` dropped to 460 lines
+- CSS area files no longer remain as 1k+ surfaces:
+  - `frontend/src/styles/home.css`, `workspace.css`, `gameplay.css`, and `room.css` are now thin manifests importing `*.part1.css` and `*.part2.css`
+  - the split is mechanical and order-preserving, so runtime styling did not change
+- Verification passed on April 21, 2026:
+  - `npm --prefix frontend run lint`
+  - `npm --prefix frontend run test -- --run src/App.startup.test.jsx src/App.server-mode.test.jsx`
+  - `npm --prefix frontend run build`
+  - `mvn -q -f backend/pom.xml -Dtest=TenantAdminControllerTest test`
+  - `mvn -q -f backend/pom.xml "-Dtest=TenantAdminControllerTest,TenantMeControllerTest,TenantMeControllerProdAuthContextTest,BillingServiceTest" test`
+  - `mvn -q -f backend/pom.xml "-Dtest=GameSessionControllerTest,RoomControllerTest,RoomServiceTest" test`
+  - `npm --prefix frontend run test -- --run src/api.test.js src/api.cherrypick.test.js src/App.startup.test.jsx src/App.server-mode.test.jsx`
+  - `npm --prefix frontend run test -- --run src/admin/AdminConsole.test.jsx`
+  - `npm --prefix frontend run test -- --run src/api.test.js src/api.cherrypick.test.js src/App.startup.test.jsx src/App.server-mode.test.jsx src/App.tenant-runtime.test.jsx src/admin/AdminConsole.test.jsx`
+- Verification passed on April 22, 2026:
+  - `npm --prefix frontend run lint`
+  - `npm --prefix frontend run build`
+  - `npm --prefix frontend run test -- --run src/App.startup.test.jsx src/App.server-mode.test.jsx src/App.tenant-runtime.test.jsx`
+  - `mvn -q -f backend/pom.xml "-Dtest=TenantAdminControllerTest,TenantMeControllerTest,TenantMeControllerProdAuthContextTest,BillingServiceTest,GameSessionControllerTest,RoomControllerTest,RoomServiceTest" test`
+
+## Sprint 5: CherryPick Single-Player UI
+
+### Scope
+
+- [x] Rebuild the frontend visual identity around a premium dark-cherry CherryPick design system.
+- [x] Redesign home as a single-player-first product surface and demote `JOIN` / `HOST` to future-scope affordances.
+- [x] Reframe `#/start` as a topic-select shell that supports fast solo play without reintroducing fake multiplayer prominence.
+- [x] Rework gameplay and result surfaces to emphasize all-or-nothing tension, reward clarity, and progression.
+- [x] Update focused frontend tests to assert the new CherryPick UI contract and run build/lint verification.
+
+### Review
+
+- Sprint 5 landed on April 22, 2026 as the CherryPick UI identity pass.
+- Design-system reset landed in `frontend/src/styles/cherrypick-ui.css` and now overrides the older SmartIQ/green bias with:
+  - dark cherry / magenta / violet token palette
+  - premium `Space Grotesk` + `Manrope` typography pairing
+  - consistent rounded glass-panel, chip, CTA, and answer-tile styling across home, setup, gameplay, and summary
+- Home is now explicitly single-player first:
+  - `frontend/src/components/home/HomeScreen.jsx` uses a left-rail app shell, a dominant `Play Solo` hero, daily challenge / leaderboard / profile cards, and disabled `Join soon` / `Host soon` placeholders
+  - `PLAY` remains the immediate fast path, while `Choose topic` now exposes `#/start` as the intentional solo setup route
+- Topic select is no longer framed like host setup:
+  - `frontend/src/app/AppPanels.jsx` now renders `StartScreen` as a topic-first solo surface with reward/risk context and a compact runner/setup side panel
+  - host/runtime sessions still use the same component without losing tenant/runtime status visibility
+- Gameplay and result surfaces now match the all-or-nothing product identity more closely:
+  - `QuestionCard`, `GameplayHeader`, `BoardStatusBar`, `ScoreBoard`, `SoloRoundResult`, and `RoundSummary` now keep reward state, multiplier context, and progression visible without flattening into admin/dashboard styling
+  - copy now reinforces the round-risk rule instead of generic host-led language on solo-critical surfaces
+- Browser polish pass landed on April 22, 2026 after live checks against the local app and the visual prototype:
+  - `#/start` no longer hides the topic grid below the fold on the tested laptop-height viewport; the public solo setup now uses a denser 4-column topic grid and a smaller setup chrome footprint
+  - gameplay now keeps the full 8-answer board visible in the tested viewport by compressing low-value chrome on shorter heights instead of shrinking the board into unusability
+  - a second browser pass exposed an accessibility/UX gap where the gameplay action bar could still sit below the fold on very short viewports; low-height game shells now pin the action bar to the bottom so `ANSWER`, `LOCK IN`, and `NEXT ROUND` stay reachable during live play
+  - runtime fail-state result flow was manually verified in-browser after that footer fix; the lock/reveal panels stay visually coherent and the fail state keeps clear consequence messaging instead of dropping into a dead-looking screen
+  - solo setup regained small compatibility hooks (`host-setup-summary`, setup error/message visibility) so the runtime shell still exposes the expected recovery state without reintroducing the old bulky layout
+  - the host-route startup tests were updated to reflect the actual public host flow (`#/host` / `HostGameScreen`) instead of the older `#/start` room-panel contract
+- Focused verification passed on April 22, 2026:
+  - `npm --prefix frontend run lint`
+  - `npm --prefix frontend run build`
+  - `npm --prefix frontend run test -- --run src/components/RoundSummary.test.jsx src/components/GameBoard.test.jsx src/App.startup.test.jsx src/App.server-mode.test.jsx`
+  - `npm run gate:coreflows`
+  - `npm run release:check`
+- Final re-audit result on April 22, 2026:
+  - there are no remaining 1k+ production runtime files in the active app/backend surface
+  - the only 1k+ files left are large test suites such as `frontend/src/App.startup.test.jsx`, `frontend/src/App.tenant-runtime.test.jsx`, and `backend/src/test/java/com/smartiq/backend/tenant/TenantMeControllerTest.java`
+  - those remaining large files are test coverage suites rather than the same production-structure debt that triggered this refactor sprint
+
+## Sprint 6: Neon Single-Player Correction
+
+### Scope
+
+- [x] Remove more of the boxed dashboard feel from the solo home, topic-select, gameplay, and result surfaces.
+- [x] Re-center gameplay around the 8-tile board and keep the single-player progression context inline instead of in a heavy right rail.
+- [x] Keep the round flow explicit with visible `SUBMIT PICK`, `LOCK IN`, and `NEXT ROUND` actions.
+- [x] Re-check the main solo screens against a browser viewport pass and focused frontend verification.
+
+### Review
+
+- Sprint 6 landed on April 22, 2026 as the single-player correction pass after the earlier UI identity rework still felt too card-heavy and fragmented.
+- Home now uses one unified premium shell instead of a left-rail dashboard:
+  - `frontend/src/components/home/HomeScreen.jsx`
+  - `frontend/src/styles/cherrypick-ui.css`
+  - solo play is the only dominant CTA
+  - `JOIN` / `HOST` remain visibly demoted as disabled future-mode chips/buttons
+- Topic select now behaves like a full-width solo setup surface instead of a constrained leftover panel:
+  - `frontend/src/app/AppPanels.jsx`
+  - `frontend/src/styles/cherrypick-ui.css`
+  - the runner alias, topic grid, and daily-challenge context all fit in one viewport-oriented shell
+- Solo gameplay now uses a wider single-column stage:
+  - `frontend/src/App.jsx`
+  - `frontend/src/components/GameBoard.tsx`
+  - `frontend/src/components/gameplay/GameplayActionBar.jsx`
+  - `frontend/src/components/gameplay/gameplayState.js`
+  - the solo side scoreboard is removed from the live game shell
+  - XP / reward / runner context is surfaced inline above the board
+  - the board stays visible through confirm and resolution states instead of disappearing into a separate reveal screen
+  - the game footer is now pinned so the next action stays reachable
+- Result/XP summary now reads more like a reward screen than a report table:
+  - `frontend/src/components/RoundSummary.tsx`
+  - clearer success/fail badge, stronger next-round CTA, and visible level-progress meter
+- Focused verification passed on April 22, 2026:
+  - `npm --prefix frontend run lint`
+  - `npm --prefix frontend run test -- --run src/components/GameBoard.test.jsx src/components/RoundSummary.test.jsx src/App.startup.test.jsx src/App.server-mode.test.jsx`
+  - `npm --prefix frontend run build`
+  - browser pass on `http://localhost:5173/`, `#/start`, and `#/play` using `agent-browser`
