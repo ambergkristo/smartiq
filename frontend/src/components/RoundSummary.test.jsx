@@ -15,11 +15,22 @@ describe('RoundSummary', () => {
         winner="Kai"
         mode="solo"
         sessionXp={420}
+        lastRoundXp={420}
+        lastRoundRewardBreakdown={{
+          baseXp: 210,
+          speedBonusXp: 0,
+          cherryBoostXp: 210,
+          totalXp: 420
+        }}
         profileName="Kai"
         profileLevel={4}
         profileXp={1840}
         profileGamesPlayed={12}
         profileRoundsWon={9}
+        profileRoundsPlayed={11}
+        profileBestRoundXp={520}
+        profileBestSessionXp={1840}
+        profileBestWinStreak={5}
         onNextRound={() => {}}
         onRestart={onRestart}
         onPlayAgain={onPlayAgain}
@@ -32,6 +43,12 @@ describe('RoundSummary', () => {
     expect(screen.getByTestId('round-summary-progress')).toHaveTextContent('1840');
     expect(screen.getByTestId('round-summary')).toHaveTextContent('Session XP');
     expect(screen.getByTestId('round-summary')).toHaveTextContent('420');
+    expect(screen.getByTestId('round-summary')).toHaveTextContent('Speed bonus');
+    expect(screen.getByTestId('round-summary')).toHaveTextContent('Cherry boost');
+    expect(screen.getByTestId('round-summary-progress')).toHaveTextContent('Best run');
+    expect(screen.getByTestId('round-summary-progress')).toHaveTextContent('Best round');
+    expect(screen.getByTestId('round-summary-progress')).toHaveTextContent('Best streak');
+    expect(screen.getByTestId('round-summary-progress')).toHaveTextContent('9 / 11');
     expect(screen.getByTestId('summary-standings')).toHaveTextContent('Winner');
 
     fireEvent.click(screen.getByRole('button', { name: /play next round/i }));

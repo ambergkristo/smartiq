@@ -5,7 +5,7 @@ import {
   resolveGameSessionErrorMessage,
   sendServerGameAction
 } from '../api';
-import { calculateSoloRoundXp, getCherryRoundReward } from './cherryRounds';
+import { calculateSoloRoundXp, getCherryRoundReward, getSoloRoundXpBreakdown } from './cherryRounds';
 import { DEFAULT_PLAYERS, GamePhase } from './types';
 
 const TARGET_SCORE_DEFAULT = 30;
@@ -14,6 +14,7 @@ const SUPPORTED_GAME_SNAPSHOT_API_VERSION = '1';
 const BOARD_ANSWER_COUNT = 8;
 const GAME_MODE_STANDARD = 'standard';
 const GAME_MODE_SOLO = 'solo';
+const GAME_MODE_DAILY = 'daily';
 
 function initialScores(players) {
   return players.reduce((acc, player) => {
@@ -98,6 +99,10 @@ function createActionRequestId() {
     return `ga_${globalThis.crypto.randomUUID()}`;
   }
   return `ga_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function isSoloRewardMode(mode) {
+  return mode === GAME_MODE_SOLO || mode === GAME_MODE_DAILY;
 }
 
 function normalizeBackendPhase(rawPhase) {
@@ -259,6 +264,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   const [gameMode, setGameMode] = useState(GAME_MODE_STANDARD);
   const [sessionXp, setSessionXp] = useState(0);
   const [lastRoundXp, setLastRoundXp] = useState(0);
+  const [lastRoundRewardBreakdown, setLastRoundRewardBreakdown] = useState(null);
   const sessionXpRef = useRef(0);
 
   const currentPlayer = players[currentPlayerIndex] ?? players[0] ?? DEFAULT_PLAYERS[0];
@@ -300,7 +306,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       language: request.language || mapped.card.language,
       topic: mapped.card.topic || undefined,
       winCondition: mapped.targetScore,
-      mode: request.mode === GAME_MODE_SOLO ? GAME_MODE_SOLO : GAME_MODE_STANDARD,
+      mode: isSoloRewardMode(request.mode) ? request.mode : GAME_MODE_STANDARD,
       roomCode: request.roomCode,
       roomPlayerId: request.roomPlayerId,
       roomAuthToken: request.roomAuthToken
@@ -324,7 +330,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
       language: input.language,
       topic: input.topic,
       winCondition: Number.isInteger(input.winCondition) ? input.winCondition : targetScore,
-      mode: input.mode === GAME_MODE_SOLO ? GAME_MODE_SOLO : GAME_MODE_STANDARD,
+      mode: isSoloRewardMode(input.mode) ? input.mode : GAME_MODE_STANDARD,
       roomCode: input.roomCode,
       roomPlayerId: input.roomPlayerId,
       roomAuthToken: input.roomAuthToken
@@ -347,6 +353,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     sessionXpRef.current = 0;
     setSessionXp(0);
     setLastRoundXp(0);
+    setLastRoundRewardBreakdown(null);
 
     try {
       const response = await createServerGameSession(request);
@@ -472,18 +479,23 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     const selectedOptions = outcome === 'success'
       ? correctOptions
       : Array.from(new Set([...(revealedOptions || []), selectedOption].filter(Boolean)));
-    const roundXp = gameMode === GAME_MODE_SOLO
+    const roundRewardBreakdown = isSoloRewardMode(gameMode)
+      ? getSoloRoundXpBreakdown(mappedResponse.roundNumber, correctIndexes.length, backendPhase === GamePhase.ROUND_SUCCESS)
+      : null;
+    const roundXp = isSoloRewardMode(gameMode)
       ? calculateSoloRoundXp(mappedResponse.roundNumber, correctIndexes.length, backendPhase === GamePhase.ROUND_SUCCESS)
       : 0;
-    const nextSessionXp = gameMode === GAME_MODE_SOLO
+    const nextSessionXp = isSoloRewardMode(gameMode)
       ? sessionXpRef.current + roundXp
       : sessionXpRef.current;
-    if (gameMode === GAME_MODE_SOLO) {
+    if (isSoloRewardMode(gameMode)) {
       sessionXpRef.current = nextSessionXp;
       setSessionXp(nextSessionXp);
       setLastRoundXp(roundXp);
+      setLastRoundRewardBreakdown(roundRewardBreakdown);
     } else {
       setLastRoundXp(0);
+      setLastRoundRewardBreakdown(null);
     }
 
     setQueuedSnapshot(responseSnapshot);
@@ -552,7 +564,8 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
   }, [card?.options, gameMode, language, players, targetScore]);
 
   const confirmAnswer = useCallback(async () => {
-    if (phase !== GamePhase.ANSWER_SELECTED) {
+    const canConfirmFromSoloQuestion = isSoloRewardMode(gameMode) && phase === GamePhase.QUESTION_ACTIVE;
+    if (phase !== GamePhase.ANSWER_SELECTED && !canConfirmFromSoloQuestion) {
       return;
     }
     if (!activeSnapshot?.gameId || selectedIndexes.size === 0 || requestInFlight) {
@@ -596,6 +609,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     actionTokensByPlayerId,
     card?.options,
     currentPlayer,
+    gameMode,
     phase,
     queueOutcome,
     requestInFlight,
@@ -692,6 +706,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     sessionXpRef.current = 0;
     setSessionXp(0);
     setLastRoundXp(0);
+    setLastRoundRewardBreakdown(null);
   }, [targetScore]);
 
   const roundPoints = useMemo(() => initialScores(players), [players]);
@@ -718,6 +733,7 @@ export function useServerGameEngine(targetScore = TARGET_SCORE_DEFAULT) {
     gameMode,
     sessionXp,
     lastRoundXp,
+    lastRoundRewardBreakdown,
     lastAction,
     winner,
     resolutionState,

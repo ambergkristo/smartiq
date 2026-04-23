@@ -159,7 +159,7 @@ export function StartScreen({
   const headerCopy = isHostedRuntime
     ? 'Keep the hosted runtime honest: lock the topic, verify the roster, then launch when the room is actually ready.'
     : 'Pick a topic, keep the board readable, and remember that one wrong tile kills the reward.';
-  const rosterLabel = isHostedRuntime ? 'Players' : 'Players / runner alias';
+  const rosterLabel = isHostedRuntime ? 'Players' : 'Runner alias';
   const rosterHint = isHostedRuntime
     ? STRINGS.addPlayerHint
     : 'Use one runner alias for the cleanest solo loop.';
@@ -235,7 +235,7 @@ export function StartScreen({
               aria-pressed={config.topic === ''}
             >
               <span className="topic-title">Random topic</span>
-              <span className="topic-count">Fast pick • any deck</span>
+              <span className="topic-count">Fast pick - any deck</span>
             </button>
             {topics.map((topic) => {
               const selected = config.topic === topic.topic;
@@ -263,7 +263,7 @@ export function StartScreen({
               <h3>{appTitle}</h3>
               <p className="home-card-copy" data-testid={isHostedRuntime ? 'tenant-runtime-hint' : undefined}>
                 {isHostedRuntime
-                  ? `Tenant runtime active: ${tenantId}${planCode ? ` • plan ${planCode}` : ''}`
+                  ? `Tenant runtime active: ${tenantId}${planCode ? ` - plan ${planCode}` : ''}`
                   : 'Local solo progression stays on this browser, so each run feeds the same profile arc.'}
               </p>
             </div>
@@ -360,21 +360,24 @@ export function StartScreen({
             <section className="board-surface topic-select-card topic-select-card--solo-daily">
               <div>
                 <p className="topic-select-kicker">Daily challenge</p>
-                <h3>Cherry Gauntlet</h3>
-                <p className="home-card-copy">Featured board with a bigger payout, a harder miss penalty, and a fresh reset each day.</p>
+                <h3>Start the daily board from home.</h3>
+                <p className="home-card-copy">
+                  Topic select stays for repeatable practice runs. The daily challenge uses the live runtime too,
+                  but records one local result per calendar day from the home module.
+                </p>
               </div>
               <div className="topic-select-stats topic-select-stats--solo">
                 <article className="topic-select-stat">
-                  <span>Reset</span>
-                  <strong>13h 24m</strong>
+                  <span>Status</span>
+                  <strong>Live v1</strong>
                 </article>
                 <article className="topic-select-stat">
-                  <span>Bonus</span>
-                  <strong>+180 XP</strong>
+                  <span>Today</span>
+                  <strong>One board</strong>
                 </article>
                 <article className="topic-select-stat">
-                  <span>Mode</span>
-                  <strong>Double Cherry</strong>
+                  <span>Saved</span>
+                  <strong>Local profile</strong>
                 </article>
               </div>
             </section>

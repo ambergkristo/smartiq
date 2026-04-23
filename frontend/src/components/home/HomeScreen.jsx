@@ -9,18 +9,37 @@ export default function HomeScreen({
   profileLevel = 1,
   profileXp = 0,
   profileGamesPlayed = 0,
+  profileRoundsPlayed = 0,
   profileRoundsWon = 0,
+  profileBestRoundXp = 0,
+  profileBestSessionXp = 0,
+  profileCurrentWinStreak = 0,
+  profileBestWinStreak = 0,
+  analyticsSummary = null,
+  dailyChallenge = null,
   onProfileNameChange,
   onPlay,
-  onChooseTopic,
-  onJoinGame,
-  onHostGame
+  onDailyChallenge,
+  onChooseTopic
 }) {
   const displayProfileName = profileName || 'Solo Player';
   const currentLevelXp = profileXp % 500;
   const progressPercent = Math.max(8, Math.min((currentLevelXp / 500) * 100, 100));
-  const futureJoinAvailable = typeof onJoinGame === 'function';
-  const futureHostAvailable = typeof onHostGame === 'function';
+  const winRate = profileRoundsPlayed > 0 ? Math.round((profileRoundsWon / profileRoundsPlayed) * 100) : 0;
+  const dailyStatus = dailyChallenge?.status || 'available';
+  const dailyCompleted = dailyStatus === 'completed';
+  const dailyOutcomeLabel = dailyCompleted
+    ? dailyChallenge?.outcome === 'success'
+      ? 'Cleared today'
+      : 'Attempt complete'
+    : dailyStatus === 'started'
+      ? 'In progress'
+      : 'Ready today';
+  const runsStarted = analyticsSummary?.runsStarted || 0;
+  const replays = analyticsSummary?.replays || 0;
+  const roundWins = analyticsSummary?.roundWins || 0;
+  const roundFails = analyticsSummary?.roundFails || 0;
+  const resultViews = analyticsSummary?.resultViews || 0;
 
   return (
     <section className="home-screen" data-testid="home-screen">
@@ -35,8 +54,6 @@ export default function HomeScreen({
             <div className="home-command-status">
               <span className="home-shell-chip">Solo live now</span>
               <span className="home-shell-chip">8-tile board</span>
-              <span className="home-shell-chip home-shell-chip--future" aria-disabled="true">Join soon</span>
-              <span className="home-shell-chip home-shell-chip--future" aria-disabled="true">Host soon</span>
             </div>
           </header>
 
@@ -79,8 +96,14 @@ export default function HomeScreen({
                   <button type="button" className="secondary-action" onClick={onChooseTopic}>
                     Choose topic
                   </button>
-                  <button type="button" className="secondary-action" onClick={onChooseTopic}>
-                    Daily challenge
+                  <button
+                    type="button"
+                    className="secondary-action"
+                    onClick={onDailyChallenge}
+                    disabled={dailyCompleted || typeof onDailyChallenge !== 'function'}
+                    aria-disabled={dailyCompleted || typeof onDailyChallenge !== 'function'}
+                  >
+                    {dailyCompleted ? 'Daily complete' : 'Daily challenge'}
                   </button>
                 </div>
                 {warning ? <p className="field-hint runtime-warning">{warning}</p> : null}
@@ -135,69 +158,101 @@ export default function HomeScreen({
                   <span>Rounds won</span>
                   <strong>{profileRoundsWon}</strong>
                 </article>
+                <article className="home-screen-profile-metric" role="listitem">
+                  <span>Win rate</span>
+                  <strong>{winRate}%</strong>
+                </article>
               </div>
             </aside>
 
             <div className="home-support-strip">
               <section className="home-mini-module home-mini-module--daily">
                 <div>
-                  <p className="home-card-kicker">Daily Challenge</p>
-                  <h3>Cherry Gauntlet</h3>
-                  <p>One featured board, one reset timer, one clean leaderboard push.</p>
+                  <p className="home-card-kicker">Daily challenge</p>
+                  <h3>{dailyCompleted ? `${dailyChallenge?.sessionXp || 0} XP logged for today.` : 'One fresh board is ready today.'}</h3>
+                  <p>
+                    The daily board uses the live CherryPick runtime and records one local result per calendar day
+                    for this runner profile.
+                  </p>
                 </div>
                 <div className="home-module-stats" role="list" aria-label="Daily challenge details">
                   <article className="home-mini-stat" role="listitem">
-                    <span>Reset</span>
-                    <strong>13h 24m</strong>
+                    <span>Status</span>
+                    <strong>{dailyOutcomeLabel}</strong>
                   </article>
                   <article className="home-mini-stat" role="listitem">
-                    <span>Reward</span>
-                    <strong>+180 XP</strong>
+                    <span>Round XP</span>
+                    <strong>{dailyChallenge?.roundXp || 0}</strong>
                   </article>
                   <article className="home-mini-stat" role="listitem">
-                    <span>Risk</span>
-                    <strong>Double Cherry</strong>
+                    <span>Date</span>
+                    <strong>{dailyChallenge?.date || 'Today'}</strong>
                   </article>
                 </div>
+                <button
+                  type="button"
+                  className="secondary-action"
+                  onClick={onDailyChallenge}
+                  disabled={dailyCompleted || typeof onDailyChallenge !== 'function'}
+                >
+                  {dailyCompleted ? 'Come back tomorrow' : 'Play daily board'}
+                </button>
               </section>
 
               <section className="home-mini-module home-mini-module--leaderboard">
                 <div>
-                  <p className="home-card-kicker">Leaderboard</p>
-                  <h3>Tonight&apos;s pace</h3>
+                  <p className="home-card-kicker">Personal best</p>
+                  <h3>{profileBestSessionXp > 0 ? `${profileBestSessionXp} XP best run` : 'Set the first score to chase.'}</h3>
+                  <p>
+                    This is the live solo benchmark for {displayProfileName}. It updates from completed boards on
+                    this browser, so replay has a real target before public rankings ship.
+                  </p>
                 </div>
-                <ol aria-label="Leaderboard preview">
-                  <li>
-                    <span className="home-leaderboard-rank">1</span>
-                    <span className="home-leaderboard-player">Nova</span>
-                    <span className="home-leaderboard-xp">4,420 XP</span>
-                  </li>
-                  <li>
-                    <span className="home-leaderboard-rank">2</span>
-                    <span className="home-leaderboard-player">Vega</span>
-                    <span className="home-leaderboard-xp">4,080 XP</span>
-                  </li>
-                  <li>
-                    <span className="home-leaderboard-rank">3</span>
-                    <span className="home-leaderboard-player">{displayProfileName}</span>
-                    <span className="home-leaderboard-xp">{profileXp} XP</span>
-                  </li>
-                </ol>
+                <div className="home-module-stats" role="list" aria-label="Personal best summary">
+                  <article className="home-mini-stat" role="listitem">
+                    <span>Best run</span>
+                    <strong>{profileBestSessionXp}</strong>
+                  </article>
+                  <article className="home-mini-stat" role="listitem">
+                    <span>Best round</span>
+                    <strong>{profileBestRoundXp}</strong>
+                  </article>
+                  <article className="home-mini-stat" role="listitem">
+                    <span>Best streak</span>
+                    <strong>{profileBestWinStreak}</strong>
+                  </article>
+                </div>
+                <p className="field-hint">Current streak: {profileCurrentWinStreak}</p>
               </section>
 
               <section className="home-mini-module home-mini-module--future">
                 <div>
-                  <p className="home-card-kicker">Current scope</p>
-                  <h3>Solo owns the product surface right now.</h3>
-                  <p>Join and host stay visible as future modes, but the shipped loop is the solo board, daily challenge, and XP climb.</p>
+                  <p className="home-card-kicker">Replay rhythm</p>
+                  <h3>{runsStarted > 0 ? `${runsStarted} solo runs tracked.` : 'Your first run starts the funnel.'}</h3>
+                  <p>
+                    These local events measure first visit, run starts, round outcomes, result views, and replays
+                    for this runner profile.
+                  </p>
                 </div>
+                <div className="home-module-stats" role="list" aria-label="Replay funnel summary">
+                  <article className="home-mini-stat" role="listitem">
+                    <span>Replays</span>
+                    <strong>{replays}</strong>
+                  </article>
+                  <article className="home-mini-stat" role="listitem">
+                    <span>Wins / fails</span>
+                    <strong>{roundWins} / {roundFails}</strong>
+                  </article>
+                  <article className="home-mini-stat" role="listitem">
+                    <span>Results</span>
+                    <strong>{resultViews}</strong>
+                  </article>
+                </div>
+                <p className="field-hint">Backed by local replay-funnel events from the current runner profile.</p>
                 <div className="home-future-chips">
-                  <button type="button" className="secondary-action" disabled data-feature={futureJoinAvailable ? 'planned' : 'off'}>
-                    Join soon
-                  </button>
-                  <button type="button" className="secondary-action" disabled data-feature={futureHostAvailable ? 'planned' : 'off'}>
-                    Host soon
-                  </button>
+                  <span className="home-shell-chip">First visit</span>
+                  <span className="home-shell-chip">Run starts</span>
+                  <span className="home-shell-chip">Round outcomes</span>
                 </div>
               </section>
             </div>

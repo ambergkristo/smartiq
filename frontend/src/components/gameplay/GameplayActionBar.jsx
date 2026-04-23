@@ -7,6 +7,7 @@ export default function GameplayActionBar({
   nextTransition = 'none',
   controlsDisabled,
   canAnswer,
+  mode = 'standard',
   onAnswer,
   onConfirm,
   onCancelConfirm,
@@ -18,10 +19,14 @@ export default function GameplayActionBar({
   const answerButtonRef = useRef(null);
   const confirmButtonRef = useRef(null);
   const nextButtonRef = useRef(null);
+  const isSoloLikeMode = mode === 'solo' || mode === 'daily';
+  const isTerminalResolution = phase === 'ROUND_SUCCESS' || phase === 'ROUND_FAIL';
   const nextActionLabel = getNextActionLabel(nextTransition);
+  const resolutionActionLabel = mode === 'daily' && isTerminalResolution ? 'BACK HOME' : nextActionLabel;
+  const questionPhaseActionLabel = isSoloLikeMode ? 'LOCK IN' : 'SUBMIT PICK';
   const actionHint = phase === 'ROUND_REVEAL' || phase === 'ROUND_SUCCESS' || phase === 'ROUND_FAIL'
-    ? `Resolution ready. Press ${nextActionLabel}.`
-    : getActionHint(phase, currentPlayer, category, controlsDisabled);
+    ? `Resolution ready. Press ${resolutionActionLabel}.`
+    : getActionHint(phase, currentPlayer, category, controlsDisabled, isSoloLikeMode ? 'solo' : mode, canAnswer);
 
   useEffect(() => {
     if (phase === 'QUESTION_ACTIVE') {
@@ -56,10 +61,10 @@ export default function GameplayActionBar({
             ref={answerButtonRef}
             type="button"
             className="app-shell-primary-button"
-            onClick={onAnswer}
+            onClick={isSoloLikeMode ? onConfirm : onAnswer}
             disabled={!canAnswer}
           >
-            SUBMIT PICK
+            {questionPhaseActionLabel}
           </button>
         ) : null}
         {phase === 'ANSWER_SELECTED' ? (
@@ -91,7 +96,7 @@ export default function GameplayActionBar({
             onClick={onNext}
             disabled={controlsDisabled}
           >
-            {nextActionLabel}
+            {resolutionActionLabel}
           </button>
         ) : null}
         {phase === 'LOADING_CARD' ? (

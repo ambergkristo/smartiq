@@ -37,3 +37,6 @@ data/review/generation-budget.json
 # Local parallel-worktree orchestration
 worktrees/
 autogpt/
+
+# Local agent/review configuration
+compound-engineering.local.md

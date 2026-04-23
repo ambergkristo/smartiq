@@ -1,4 +1,4 @@
-import { calculateSoloRoundXp, getCherryRoundReward } from './cherryRounds';
+import { calculateSoloRoundXp, getCherryRoundReward, getSoloRoundXpBreakdown } from './cherryRounds';
 
 describe('Cherry round rewards', () => {
   test('marks every 5th round as Cherry', () => {
@@ -19,5 +19,16 @@ describe('Cherry round rewards', () => {
 
   test('awards zero XP on failed Cherry rounds', () => {
     expect(calculateSoloRoundXp(5, 3, false)).toBe(0);
+  });
+
+  test('returns a full XP breakdown for Double Cherry solo wins', () => {
+    expect(getSoloRoundXpBreakdown(10, 2, true)).toMatchObject({
+      roundLabel: 'Double Cherry',
+      multiplier: 3,
+      baseXp: 200,
+      speedBonusXp: 0,
+      cherryBoostXp: 400,
+      totalXp: 600
+    });
   });
 });

@@ -105,6 +105,32 @@ test('flags placeholder and trivial answer defects', () => {
   assert.equal(result.summary.issueCounts.trivialAnswerCards, 1);
 });
 
+test('flags trailing context and theme suffix scaffolding as unnatural phrasing', () => {
+  const result = analyzeCards([
+    buildCard({
+      id: 'en-context-tag',
+      question: 'History: In which year did WWII end? Context tag: Ancient Rome.'
+    }),
+    buildCard({
+      id: 'en-theme',
+      category: 'NUMBER',
+      question: 'History: Put these events in chronological order, earliest first. Theme: Ancient Rome.'
+    }),
+    buildCard({
+      id: 'et-context',
+      language: 'et',
+      question: 'Ajalugu: Mis aastal loppes Teine maailmasoda? Kontekst: Vana-Rooma.'
+    }),
+    buildCard({
+      id: 'et-theme',
+      language: 'et',
+      question: 'Ajalugu: Pane need sundmused ajateljele, varaseim enne. Teema: Viikingiaeg.'
+    })
+  ], 'fixture-theme-context-suffixes');
+
+  assert.equal(result.summary.issueCounts.unnaturalPhrasingCards, 4);
+});
+
 test('flags recycled option pools in repetitive true-false cards', () => {
   const repetitiveCards = Array.from({ length: 6 }, (_, index) => buildCard({ id: `recycled-${index + 1}` }));
   const result = analyzeCards(repetitiveCards, 'fixture-recycled');

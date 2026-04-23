@@ -23,7 +23,11 @@ const BANNED_STEM_PATTERNS = [
   /^according to the .*reference table/i,
   /assigned index/i,
   /record\s+\d+\s+is/i,
-  /^sample question/i
+  /^sample question/i,
+  /\bcontext tag:\s*[^.]+\.?$/i,
+  /\btheme:\s*[^.]+\.?$/i,
+  /\bkontekst:\s*[^.]+\.?$/i,
+  /\bteema:\s*[^.]+\.?$/i
 ];
 
 function normalizeText(value) {

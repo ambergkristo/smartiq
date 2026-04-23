@@ -31,11 +31,10 @@ This repository is a mixed-state quiz game monorepo. The codebase still uses `Sm
 
 ### What exists now
 
-- A CherryPick-branded frontend with three visible entry paths: `PLAY`, `JOIN`, and `HOST`.
+- A CherryPick-branded frontend optimized around the solo product path.
 - A server-authoritative quiz game loop backed by `POST /api/game`, `GET /api/game/{gameId}`, and `POST /api/game/{gameId}/action`.
-- Room-code based live session support with HTTP create/join/rejoin flows and WebSocket room-state broadcasts.
 - Local solo progression stored in browser storage (`cherrypick.playerProfile.v1`) with XP, levels, games played, and rounds won.
-- Multi-tenant host runtime surfaces for onboarding, sign-in, branding, session templates, session review notes, subscription state, usage tracking, and billing checkout/webhook flows.
+- A broader SmartIQ runtime still present in the repo for room-code sessions, tenant auth, billing, and admin operations, but not the active public product focus.
 
 ### Gameplay concept in plain English
 
@@ -43,10 +42,9 @@ CherryPick currently plays as a server-authoritative quiz round on an 8-answer b
 
 ### Current implementation maturity
 
-- `PLAY`: implemented and usable as the fastest local path.
-- `JOIN`: implemented with room-code entry, preview, join, rejoin, and waiting-room flows.
-- `HOST`: implemented, including room creation and hosted game launch; also connected to tenant/auth/billing/runtime workspace surfaces.
-- White-label/admin operations: implemented enough to have real backend routes and a frontend admin console at `/admin`, but still named around SmartIQ white-label concepts.
+- `PLAY`: the active product focus and the fastest usable local path.
+- `JOIN` / `HOST`: repo-supported legacy/future surfaces that should not drive current product decisions unless they affect solo release safety.
+- White-label/admin operations: still present and real in code, but internal to the broader SmartIQ runtime rather than the current CherryPick public story.
 
 ### Product Direction
 
@@ -56,14 +54,14 @@ Implemented or partially implemented in code:
 
 - CherryPick branding in the main frontend experience.
 - Solo XP and cherry multipliers.
-- Join-code live sessions and host flows.
+- Server-authoritative solo board flow.
 
-Present in docs but not fully implemented in runtime code:
+Planned but not yet real enough to advertise as live product systems:
 
-- Couch mode.
 - Daily challenge.
-- Golden Cherry (`x1000`) rewards.
-- Registered-account identity and leaderboard systems as first-class gameplay features.
+- Public leaderboard.
+- Registered-account identity as a first-class gameplay system.
+- Couch mode as a polished public mode.
 
 Because of that split, the safest mental model is: the repo is currently CherryPick on the surface, SmartIQ in many internals, and not yet fully renamed or fully converged.
 
@@ -120,8 +118,8 @@ The frontend is a Vite React app with:
 - `src/App.jsx` as the main application shell and route switch.
 - `src/api.js` as the HTTP gateway and contract normalization layer.
 - `src/state/useServerGameEngine.ts` as the current server-authoritative gameplay engine.
-- `src/components/home/` for CherryPick entry surfaces.
-- `src/components/player/` and `src/components/room/` for join-code and room UX.
+- `src/components/home/` for CherryPick solo entry surfaces.
+- `src/components/player/` and `src/components/room/` for retained room-code/host UX.
 - `src/admin/` for the internal white-label admin console.
 
 There is no Vite proxy configured. The frontend always talks to the backend through `VITE_API_BASE_URL`.
@@ -313,10 +311,6 @@ Stricter CherryPick dataset/import-path audit:
 npm run validate:cards:cherrypick
 ```
 
-Important note:
-
-- In the current repo snapshot this command fails, because `tools/validate_cherrypick_dataset.js` expects `application.yml` to import from `../data/smart10/cards.en.json`, while the committed backend config still defaults to `classpath:data/cards.en.json`.
-
 Content pipeline:
 
 ```bash
@@ -492,8 +486,7 @@ npm run smoke:postdeploy
 - `docs/plans/README.md`, `CONTRIBUTING.md`, and the PR template still reference SmartIQ plans that are now archived or missing from `docs/plans/`.
 - ET content is heavily validated in CI, but current runtime import remains EN-only.
 - Older SmartIQ/Smart10-era documentation still describes 10-answer behavior in places, while the current CherryPick runtime plays on 8-answer boards.
-- The current repository snapshot does not pass `npm run gate:local` cleanly; backend tests are failing.
-- `npm run validate:cards:cherrypick` is currently red because the validator and committed import-path configuration disagree.
+- The solo reward model is intentionally narrower than the long-range product vision: Cherry and Double Cherry are live, while speed bonus and Golden Cherry remain future work.
 
 ## Troubleshooting
 

@@ -25,27 +25,36 @@ export default function RoundSummary({
   mode = 'standard',
   sessionXp = 0,
   lastRoundXp = 0,
+  lastRoundRewardBreakdown = null,
   profileName = 'Solo Player',
   profileLevel = 1,
   profileXp = 0,
   profileGamesPlayed = 0,
-  profileRoundsWon = 0
+  profileRoundsWon = 0,
+  profileRoundsPlayed = 0,
+  profileBestRoundXp = 0,
+  profileBestSessionXp = 0,
+  profileBestWinStreak = 0
 }) {
   const sorted = [...players].sort((a, b) => (scores[b] ?? 0) - (scores[a] ?? 0));
   const leader = sorted[0] || '';
   const leaderScore = leader ? scores[leader] ?? 0 : 0;
   const totalCorrect = sumPlayerStat(players, stats, 'correct');
   const totalWrong = sumPlayerStat(players, stats, 'wrong');
-  const isSoloMode = mode === 'solo';
-  const title = winner ? 'Run complete' : 'Round complete';
-  const kicker = winner ? 'Session result' : 'Round result';
+  const isDailyMode = mode === 'daily';
+  const isSoloMode = mode === 'solo' || isDailyMode;
+  const title = isDailyMode ? 'Daily result' : winner ? 'Run complete' : 'Round complete';
+  const kicker = isDailyMode ? 'Daily challenge' : winner ? 'Session result' : 'Round result';
   const reward = formatRoundReward(roundNumber);
   const roundOutcome = lastRoundXp > 0 ? 'Reward secured' : 'Reward lost';
-  const roundBaseXp = reward.multiplier > 0 ? Math.round(lastRoundXp / reward.multiplier) : lastRoundXp;
+  const roundBaseXp = lastRoundRewardBreakdown?.baseXp ?? (reward.multiplier > 0 ? Math.round(lastRoundXp / reward.multiplier) : lastRoundXp);
+  const speedBonusXp = lastRoundRewardBreakdown?.speedBonusXp ?? 0;
+  const cherryBoostXp = lastRoundRewardBreakdown?.cherryBoostXp ?? Math.max(lastRoundXp - roundBaseXp - speedBonusXp, 0);
   const levelBaseXp = Math.max((profileLevel - 1) * 500, 0);
   const levelProgressXp = Math.max(profileXp - levelBaseXp, 0);
   const levelProgressPercent = Math.max(8, Math.min((levelProgressXp / 500) * 100, 100));
-  const primaryAction = winner ? onPlayAgain : onNextRound;
+  const primaryAction = isDailyMode ? onRestart : winner ? onPlayAgain : onNextRound;
+  const primaryActionLabel = isDailyMode ? 'Back home' : 'Play next round';
 
   return (
     <section
@@ -66,8 +75,12 @@ export default function RoundSummary({
           <p className="round-summary-lede">
             {isSoloMode
               ? lastRoundXp > 0
-                ? 'The board paid out. Bank the XP, keep the tempo, and press straight into the next round.'
-                : 'The miss cut the round reward immediately. The next board is the recovery path.'
+                ? isDailyMode
+                  ? 'The daily board paid out. Your result is saved for today.'
+                  : 'The board paid out. Bank the XP, keep the tempo, and press straight into the next round.'
+                : isDailyMode
+                  ? 'The daily board is complete for today. The next reset opens a fresh attempt.'
+                  : 'The miss cut the round reward immediately. The next board is the recovery path.'
               : winner
                 ? `${winner} reached the winning score.`
                 : `Round ${roundNumber} is locked and the standings are updated.`}
@@ -126,8 +139,12 @@ export default function RoundSummary({
               <strong>{roundBaseXp}</strong>
             </article>
             <article className="round-summary-breakdown-card round-summary-breakdown-card--reward">
-              <span>Cherry multiplier</span>
-              <strong>{reward.multiplierLabel}</strong>
+              <span>Speed bonus</span>
+              <strong>{speedBonusXp}</strong>
+            </article>
+            <article className="round-summary-breakdown-card round-summary-breakdown-card--reward">
+              <span>Cherry boost</span>
+              <strong>{cherryBoostXp}</strong>
             </article>
             <article className="round-summary-breakdown-card round-summary-breakdown-card--reward">
               <span>Round XP</span>
@@ -163,11 +180,19 @@ export default function RoundSummary({
             </article>
             <article className="round-summary-progress-card">
               <span>Rounds won</span>
-              <strong>{profileRoundsWon}</strong>
+              <strong>{profileRoundsWon}{profileRoundsPlayed > 0 ? ` / ${profileRoundsPlayed}` : ''}</strong>
             </article>
             <article className="round-summary-progress-card">
-              <span>Next focus</span>
-              <strong>{lastRoundXp > 0 ? 'Keep the streak alive' : 'Recover on the next board'}</strong>
+              <span>Best run</span>
+              <strong>{profileBestSessionXp}</strong>
+            </article>
+            <article className="round-summary-progress-card">
+              <span>Best round</span>
+              <strong>{profileBestRoundXp}</strong>
+            </article>
+            <article className="round-summary-progress-card">
+              <span>Best streak</span>
+              <strong>{profileBestWinStreak}</strong>
             </article>
           </div>
         </section>
@@ -209,7 +234,7 @@ export default function RoundSummary({
 
       <div className="summary-actions">
         <button onClick={primaryAction} type="button">
-          Play next round
+          {primaryActionLabel}
         </button>
         <button onClick={onRestart} type="button" className="secondary-action">
           Change topic

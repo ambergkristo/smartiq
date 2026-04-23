@@ -4,15 +4,15 @@ This guide covers the current CherryPick production deployment shape.
 
 ## 1. Launch scope
 
-Public production deployment is scoped to the CherryPick game runtime:
+Public production deployment is scoped to the CherryPick solo runtime:
 
 - `PLAY`
-- `JOIN`
-- `HOST`
 - `EN` only by default
 
 Keep these surfaces out of the public launch unless they are separately hardened:
 
+- `JOIN`
+- `HOST`
 - `/admin`
 - recurring-host billing/auth rollout
 - ET public rollout

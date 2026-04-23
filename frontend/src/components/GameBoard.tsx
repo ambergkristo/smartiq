@@ -99,7 +99,7 @@ export default function GameBoard({
         ? `Use ${nextActionLabel} to move into the next CherryPick board.`
         : `Use ${nextActionLabel} to continue the live session.`;
   const liveMessage = [
-    getActionHint(phase, currentPlayer, category, controlsDisabled),
+    getActionHint(phase, currentPlayer, category, controlsDisabled, mode, selectedIndexes.size > 0),
     lastAction,
     isResolutionPhase ? `Next action ${nextActionLabel}.` : null
   ]
@@ -152,7 +152,7 @@ export default function GameBoard({
             onToggle={() => setQuestionExpanded((prev) => !prev)}
           />
           <BoardStatusBar
-            actionHint={getActionHint(phase, currentPlayer, category, controlsDisabled)}
+            actionHint={getActionHint(phase, currentPlayer, category, controlsDisabled, mode, selectedIndexes.size > 0)}
             selectedIndexes={selectedIndexes}
             revealedIndexes={revealedIndexes}
             wrongIndexes={wrongIndexes}

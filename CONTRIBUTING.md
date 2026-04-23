@@ -4,10 +4,10 @@
 
 1. Create a feature branch from `main`.
 2. Review the canonical active masterplan before implementation:
-   - `docs/plans/2026-03-06-recurring-host-saas-masterplan-v1.md`
+   - `docs/cherrypick/CHERRYPICK_SINGLE_PLAYER_EXECUTION_MASTERPLAN.md`
 3. `SmartIQ` source control stays on GitHub for this repository.
 4. Do not add or use Gitea mirroring for `SmartIQ`.
-5. No later than `M4` completion, update the active SmartIQ branch into `main`.
+5. Treat the current public product as single-player-first unless a task explicitly targets internal host/runtime systems.
 6. Make focused changes and add tests when applicable.
 7. Run relevant checks locally:
    - Backend: `cd backend && mvn -q test`
@@ -18,10 +18,9 @@
 
 - Explain the change and reason.
 - Add a masterplan alignment note:
-  - phase
-  - roadmap item(s)
+  - execution sprint
+  - milestone / todo item(s)
   - deviation rationale (if applicable)
-- If the change closes `M4`, the PR must update `main` for `SmartIQ`; do not leave `M4` completion only on a feature branch.
 - Include screenshots for UI changes.
 - Document migration steps when data/schema changes are included.
 - Link related issues.

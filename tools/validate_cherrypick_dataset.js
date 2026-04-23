@@ -7,7 +7,9 @@ const BOARD_ANSWER_COUNT = 8;
 const ACTIVE_LANGUAGE = 'en';
 const ACTIVE_CATEGORIES = new Set(['TRUE_FALSE', 'NUMBER', 'CENTURY_DECADE', 'COLOR', 'OPEN']);
 const CANONICAL_SOURCE_PATH = '../data/smart10/cards.en.json';
+const CANONICAL_CLASSPATH_SOURCE = 'classpath:data/cards.en.json';
 const APPLICATION_YML = path.join('backend', 'src', 'main', 'resources', 'application.yml');
+const CLASSPATH_DATASET = path.join('backend', 'src', 'main', 'resources', 'data', 'cards.en.json');
 
 function fail(message) {
   console.error(`FAIL: ${message}`);
@@ -18,10 +20,22 @@ function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
 
-function validateConfig() {
+function validateConfig(datasetArg) {
   const raw = fs.readFileSync(APPLICATION_YML, 'utf8');
-  if (!raw.includes(`path: \${SMARTIQ_IMPORT_PATH:${CANONICAL_SOURCE_PATH}}`)) {
-    fail(`application.yml must use single canonical import path ${CANONICAL_SOURCE_PATH}`);
+  const usesFilesystemSource = raw.includes(`path: \${SMARTIQ_IMPORT_PATH:${CANONICAL_SOURCE_PATH}}`);
+  const usesClasspathSource = raw.includes(`path: \${SMARTIQ_IMPORT_PATH:${CANONICAL_CLASSPATH_SOURCE}}`);
+  if (!usesFilesystemSource && !usesClasspathSource) {
+    fail(`application.yml must use canonical CherryPick import path ${CANONICAL_SOURCE_PATH} or ${CANONICAL_CLASSPATH_SOURCE}`);
+  }
+  if (usesClasspathSource) {
+    const runtimeClasspathPath = path.resolve(process.cwd(), CLASSPATH_DATASET);
+    const canonicalDatasetPath = path.resolve(process.cwd(), datasetArg);
+    if (!fs.existsSync(runtimeClasspathPath)) {
+      fail(`Classpath dataset missing at ${CLASSPATH_DATASET}`);
+    }
+    if (fs.readFileSync(runtimeClasspathPath, 'utf8') !== fs.readFileSync(canonicalDatasetPath, 'utf8')) {
+      fail(`Classpath runtime dataset ${CLASSPATH_DATASET} must stay byte-for-byte aligned with ${datasetArg}`);
+    }
   }
   if (!raw.includes('et-enabled: ${SMARTIQ_LANGUAGE_ET_ENABLED:false}')) {
     fail('application.yml must disable ET runtime by default');
@@ -141,7 +155,7 @@ function validateCard(card) {
 
 function main() {
   const datasetArg = process.argv[2] || path.join('data', 'smart10', 'cards.en.json');
-  validateConfig();
+  validateConfig(datasetArg);
 
   const cards = readJson(datasetArg);
   if (!Array.isArray(cards)) {

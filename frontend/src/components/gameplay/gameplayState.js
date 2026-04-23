@@ -22,7 +22,7 @@ export function getPhaseLabel(phase) {
   return String(phase || '').replace(/_/g, ' ').toLowerCase();
 }
 
-export function getActionHint(phase, currentPlayer, category, controlsDisabled) {
+export function getActionHint(phase, currentPlayer, category, controlsDisabled, mode = 'standard', hasSelection = false) {
   if (controlsDisabled && (
     phase === 'QUESTION_ACTIVE'
     || phase === 'ANSWER_SELECTED'
@@ -35,6 +35,11 @@ export function getActionHint(phase, currentPlayer, category, controlsDisabled) 
 
   switch (phase) {
     case 'QUESTION_ACTIVE':
+      if (mode === 'solo') {
+        return hasSelection
+          ? `${currentPlayer}: LOCK IN to risk the round reward.`
+          : `${currentPlayer}: choose one answer, then LOCK IN.`;
+      }
       return `${currentPlayer}: choose one answer, then SUBMIT PICK.`;
     case 'ANSWER_SELECTED':
       return `${currentPlayer}: LOCK IN or go BACK.`;

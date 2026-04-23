@@ -88,6 +88,27 @@ describe('GameBoard layout', () => {
     expect(screen.getByRole('button', { name: 'SUBMIT PICK' })).toBeEnabled();
   });
 
+  test('solo action bar uses LOCK IN directly from question state', () => {
+    const props = makeProps();
+    render(
+      <GameplayActionBar
+        phase={props.phase}
+        category={props.card.category}
+        controlsDisabled={false}
+        canAnswer
+        mode="solo"
+        onAnswer={props.onAnswer}
+        onConfirm={props.onConfirm}
+        onCancelConfirm={props.onCancelConfirm}
+        onNext={props.onNext}
+        currentPlayer={props.currentPlayer}
+      />
+    );
+
+    expect(screen.getByRole('button', { name: 'LOCK IN' })).toBeEnabled();
+    expect(screen.queryByRole('button', { name: 'SUBMIT PICK' })).not.toBeInTheDocument();
+  });
+
   test('shows lock-in panel when an answer is selected', () => {
     render(<GameBoard {...makeProps()} phase="ANSWER_SELECTED" selectedIndexes={new Set([0])} />);
 
@@ -275,5 +296,29 @@ describe('GameBoard layout', () => {
     await waitFor(() => expect(nextButton).toHaveFocus());
     await user.keyboard('{Enter}');
     expect(props.onNext).toHaveBeenCalledTimes(1);
+  });
+
+  test('supports keyboard lock-in directly for solo question state', async () => {
+    const props = makeProps();
+    const user = userEvent.setup();
+    render(
+      <GameplayActionBar
+        phase="QUESTION_ACTIVE"
+        category={props.card.category}
+        controlsDisabled={false}
+        canAnswer
+        mode="solo"
+        onAnswer={props.onAnswer}
+        onConfirm={props.onConfirm}
+        onCancelConfirm={props.onCancelConfirm}
+        onNext={props.onNext}
+        currentPlayer={props.currentPlayer}
+      />
+    );
+
+    const lockInButton = screen.getByRole('button', { name: 'LOCK IN' });
+    await waitFor(() => expect(lockInButton).toHaveFocus());
+    await user.keyboard('{Enter}');
+    expect(props.onConfirm).toHaveBeenCalledTimes(1);
   });
 });

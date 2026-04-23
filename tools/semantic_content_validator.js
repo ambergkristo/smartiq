@@ -83,7 +83,11 @@ const TEMPLATE_SCAFFOLD_REGEXES = [
 const UNNATURAL_PHRASING_REGEXES = [
   /^\s*(history|sports|geography|culture|science|varia):\s*(which color matches|pick the color best matching|select the color for|which option names the right color for|choose the color cue|'.+' is closest to which color)/i,
   /^\s*(ajalugu|sport|geograafia|kultuur|teadus|varia):\s*(milline vĆ¤rv sobib|milline varv sobib|vali vĆ¤rv|vali varv|milline variant nimetab Ćµige vĆ¤rvi|milline variant nimetab oige varvi|vali vĆ¤rvivihje|vali varvivihje|'.+' on kĆµige lĆ¤hedasem millisele vĆ¤rvile|'.+' on koige lahedasem millisele varvile)/i,
-  /^\s*(ajalugu|sport|geograafia|kultuur|teadus|varia):\s*order\b/i
+  /^\s*(ajalugu|sport|geograafia|kultuur|teadus|varia):\s*order\b/i,
+  /\bcontext tag:\s*[^.]+\.?$/i,
+  /\btheme:\s*[^.]+\.?$/i,
+  /\bkontekst:\s*[^.]+\.?$/i,
+  /\bteema:\s*[^.]+\.?$/i
 ];
 
 const BROKEN_ESTONIAN_REGEXES = [

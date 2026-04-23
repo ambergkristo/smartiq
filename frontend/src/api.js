@@ -37,6 +37,10 @@ export {
   sendServerGameAction
 } from './api/game';
 export {
+  fetchRemotePlayerProfile,
+  upsertRemotePlayerProfile
+} from './api/playerProfile';
+export {
   buildRoomPlayerRemovalPayload,
   buildRoomRejoinPayload,
   buildRoomWebSocketUrl,

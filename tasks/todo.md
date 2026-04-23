@@ -259,6 +259,218 @@
   - `npm --prefix frontend run test -- --run src/App.startup.test.jsx src/App.server-mode.test.jsx src/App.tenant-runtime.test.jsx`
   - `mvn -q -f backend/pom.xml "-Dtest=TenantAdminControllerTest,TenantMeControllerTest,TenantMeControllerProdAuthContextTest,BillingServiceTest,GameSessionControllerTest,RoomControllerTest,RoomServiceTest" test`
 
+## 2026-04-23 CherryPick Audit -> Single-Player Execution Masterplan
+
+### Goal
+
+- [ ] Convert the audit findings into one active single-player-first delivery track.
+- [ ] Minimize sprint count by grouping the remaining work into a few large milestones instead of many micro-sprints.
+- [ ] Use this section as the active execution tracker until the solo product is launch-ready.
+
+### Success Bar
+
+- [ ] Solo CherryPick feels trustworthy, fast, and replayable.
+- [ ] Active runtime content is strong enough for repeat public play.
+- [ ] Home/product surfaces only advertise systems that are actually implemented.
+- [ ] Release gates, smoke checks, runtime config, and docs all describe the same product.
+- [ ] The product is ready for a narrow public launch without relying on JOIN/HOST as the main growth story.
+
+## Execution Sprint A: Product Truth + Release Contract
+
+### Scope
+
+- [x] Align runtime dataset import config, validators, and smoke scripts to one canonical CherryPick contract.
+- [x] Fix the active EN runtime dataset so obvious synthetic scaffolding and topic/question incoherence no longer ship.
+- [x] Tighten data validators so the current content-quality failures would block merges next time.
+- [x] Remove or replace fake public retention surfaces on home (`Daily Challenge`, leaderboard preview) with honest states.
+- [x] Rewrite active public/docs contributor guidance so single-player truth is the default repo story.
+- [x] Re-run the full local release gate and record the exact green commands below.
+
+### Exit Criteria
+
+- [x] `npm run validate:cards:cherrypick` passes.
+- [x] `npm run gate:local` passes.
+- [x] `npm run release:check` passes.
+- [x] Home no longer contains hardcoded fake daily/leaderboard product claims.
+- [x] `README.md`, `docs/ui.md`, `docs/deploy.md`, and `CONTRIBUTING.md` match the current solo-first product.
+
+### Review
+
+- Execution Sprint A landed on April 23, 2026 as the product-truth and release-contract sprint.
+- Runtime content truth pass completed:
+  - removed shipped `Context tag:` / `Theme:` scaffolding from the active EN dataset
+  - removed matching `Kontekst:` / `Teema:` scaffolding from ET
+  - diversified the repeated `NUMBER` / `ORDER` question stems in `data/smart10/cards.en.json`, `backend/src/main/resources/data/cards.en.json`, and `data/smart10/cards.et.json` so the active runtime packs no longer fail the quality gate on repetitive stem reuse
+- Validator honesty improved:
+  - `tools/semantic_content_validator.js` now treats trailing `context tag` / `theme` scaffolds as unnatural phrasing
+  - `tools/validate_cards_v2.js` now blocks these patterns at the question-stem level without false-positive hits on normal option text
+  - `tools/validate_cherrypick_dataset.js` now accepts either the canonical filesystem source or the classpath mirror, but also verifies that the mirrored classpath dataset exactly matches the active runtime file when that fallback is used
+- Home and setup honesty pass completed:
+  - `frontend/src/components/home/HomeScreen.jsx` no longer shows fake reset timers, fake XP rewards, or fake public leaderboard rows
+  - `frontend/src/app/AppPanels.jsx` no longer presents Daily Challenge in topic select as if it were already a live feature
+- Active repo narrative was realigned to the current solo-first product:
+  - `README.md`
+  - `docs/ui.md`
+  - `docs/deploy.md`
+  - `CONTRIBUTING.md`
+- Release/test drift fixed during the same sprint:
+  - `frontend/src/App.tenant-runtime.test.jsx` now asserts the current accessible answer-tile names instead of stale generic `answer` labels
+- Sprint A verification passed on April 23, 2026:
+  - `npm run validate:cards:cherrypick`
+  - `npm --prefix frontend run lint`
+  - `npm --prefix frontend run test -- --run src/App.tenant-runtime.test.jsx src/App.startup.test.jsx src/App.server-mode.test.jsx`
+  - `npm --prefix frontend run build`
+  - `node tools/semantic_content_validator.js data/smart10/cards.en.json --fail-threshold=0.95 --max-warnings=20`
+  - `node tools/score_cards_quality.js data/smart10/cards.en.json --fail-threshold=0.85`
+  - `node tools/semantic_content_validator.js data/smart10/cards.et.json --fail-threshold=0.95 --max-warnings=20`
+  - `node tools/score_cards_quality.js data/smart10/cards.et.json --fail-threshold=0.85`
+  - `npm run release:check`
+  - `npm run gate:local`
+- Residual note after Sprint A:
+  - the release/local gates are green, but they still emit existing Mockito inline-agent warnings during Maven runs; that remains tooling debt rather than a Sprint A blocker
+
+## Execution Sprint B: Solo Loop + Reward Contract
+
+### Scope
+
+- [x] Tighten the solo interaction loop so answer flow is faster and closer to CherryPick's intended risk rhythm.
+- [x] Decide and implement the real solo XP contract: speed bonus, cherry cadence, and any intentionally deferred reward mechanics.
+- [x] Update result and progression surfaces so the reward model is clear, honest, and motivating.
+- [x] Remove remaining stale solo-runtime drift such as unused difficulty semantics and multiplayer-default assumptions that leak into the public path.
+- [x] Add focused gameplay/browser coverage for the new solo loop and reward model.
+
+### Exit Criteria
+
+- [x] Solo gameplay no longer feels artificially slowed by extra confirmation steps that do not add value.
+- [x] XP and reward copy in gameplay/result/docs all match the implemented contract.
+- [x] Targeted gameplay tests and browser smoke cover the changed loop.
+
+### Review
+
+- Execution Sprint B started on April 23, 2026 with the solo pacing and reward-contract pass.
+- Landed in this pass:
+  - solo gameplay no longer uses the extra `SUBMIT PICK -> LOCK IN` step; from `QUESTION_ACTIVE`, solo now goes straight to `LOCK IN`
+  - the multiplayer/host path still keeps the two-step confirm flow, so the change is isolated to the public solo loop
+  - solo XP calculation now has one explicit breakdown helper in `frontend/src/state/cherryRounds.ts`
+  - result/progression UI now shows `Base XP`, `Speed bonus`, `Cherry boost`, `Round XP`, and `Session XP`
+  - stale stored `difficulty` config was removed from the active app-shell path
+  - README reward/gate notes were updated to match the current runtime truth instead of older broken-gate assumptions
+- Verification passed on April 23, 2026:
+  - `npm --prefix frontend run test -- --run src/App.startup.test.jsx src/App.server-mode.test.jsx src/state/cherryRounds.test.js src/components/GameBoard.test.jsx src/components/RoundSummary.test.jsx`
+  - `npm --prefix frontend run lint`
+  - `npm --prefix frontend run build`
+- Sprint B closeout completed on April 23, 2026:
+  - re-audited the active public solo path and removed remaining visible multiplayer-default leakage from Home and Topic Select
+  - Home no longer advertises disabled Join/Host future buttons in the active solo surface
+  - Topic Select now labels the public solo identity field as `Runner alias` instead of `Players / runner alias`
+  - real `agent-browser` smoke ran against `http://127.0.0.1:5173` with the H2-backed backend on `http://localhost:8081`
+  - smoke path: Home -> Play Solo -> select answer -> LOCK IN -> terminal round result -> NEXT ROUND -> next board -> Back to setup/Home
+  - the smoke confirmed the faster solo loop has no extra `SUBMIT PICK` step, reaches a result state, can advance, and can return home without a dead end
+  - focused verification passed after closeout:
+    - `npm.cmd --prefix frontend run lint`
+    - `npm.cmd --prefix frontend run test -- --run src/App.server-mode.test.jsx src/App.startup.test.jsx src/components/GameBoard.test.jsx src/components/RoundSummary.test.jsx src/state/playerProfile.test.js src/state/playerAnalytics.test.js`
+    - `npm.cmd --prefix frontend run build`
+
+## Execution Sprint C: Retention Systems
+
+### Scope
+
+- [x] Implement Daily Challenge v1 as a real backend/frontend feature instead of a visual placeholder.
+- [x] Add a real leaderboard-lite or personal-best system that gives solo replay a visible competitive arc.
+- [x] Move solo progression beyond browser-only fragility where needed for recurring-user retention.
+- [x] Add lightweight product analytics for first visit, run start, round fail, round win, result view, and replay.
+- [x] Rebuild home retention modules on top of real data from these systems.
+
+### Exit Criteria
+
+- [x] Home shows real daily challenge and leaderboard/personal-best data.
+- [x] Daily Challenge is playable end-to-end with reset behavior and result recording.
+- [x] Solo progression and retention behavior can be measured instead of guessed.
+
+### Review
+
+- Execution Sprint C started on April 23, 2026 with a browser-local personal-best retention slice.
+- Landed in this pass:
+  - solo profile persistence now records rounds played, best round XP, best session XP, current win streak, best win streak, and last played timestamp
+  - solo round-result recording now feeds the current session XP into the profile so best-run state is based on real completed boards
+  - home no longer treats the second retention module as a fake public leaderboard; it now shows the current runner's real personal-best targets from saved profile data
+  - solo result summary now includes best run, best round, and best streak alongside total XP, games, and won/played rounds
+- Daily Challenge v1 landed in this pass:
+  - the home Daily Challenge module is now a real playable entry point instead of roadmap copy
+  - daily runs use the live server game-session runtime with a dedicated `daily` client mode layered over the existing solo XP contract
+  - the runner profile records one local daily result per calendar day with status, outcome, round XP, session XP, start time, and completion time
+  - daily challenge completion disables the home daily CTA until the next local calendar day
+  - the topic-select side copy now points daily play back to the home module instead of claiming the feature is not live
+- Lightweight analytics v1 landed in this pass:
+  - the browser now stores local replay-funnel events for first visit, run start, round win, round fail, result view, and replay
+  - solo and daily gameplay both write analytics events through the existing gameplay flow
+  - the home retention strip now includes a real replay-funnel summary instead of a static current-scope placeholder
+  - focused analytics unit coverage was added, with App server-mode assertions for first-visit, daily run-start, and round-win event recording
+- Verification on April 23, 2026:
+  - `npm.cmd --prefix frontend run lint`
+  - `npm.cmd --prefix frontend run build`
+- Additional verification on April 23, 2026:
+  - `npm.cmd --prefix frontend run lint`
+  - `npm.cmd --prefix frontend run build`
+- Analytics verification on April 23, 2026:
+  - `npm.cmd --prefix frontend run lint`
+  - `npm.cmd --prefix frontend run build`
+- Progression persistence hardening landed on April 23, 2026:
+  - added backend `player_profiles` persistence with guest-token upsert/fetch endpoints and Flyway schema support
+  - wired the frontend player profile to opportunistically hydrate from and push to the backend when an API base URL is available
+  - added backend service coverage for profile creation, retrieval, guest-token mismatch rejection, and missing-profile handling
+- Progression persistence verification on April 23, 2026:
+  - `mvn -q "-Duser.home=C:\Users\Kasutaja" "-Dmaven.repo.local=C:\Users\Kasutaja\.m2\repository" -f backend/pom.xml "-Dtest=PlayerProfileControllerTest,PlayerProfileServiceTest" test`
+  - `npm.cmd --prefix frontend run lint`
+  - `npm.cmd --prefix frontend run build`
+- Earlier verification blockers, now resolved by the final closeout pass:
+  - `npm.cmd --prefix frontend run test -- --run src/state/playerProfile.test.js src/components/RoundSummary.test.jsx src/App.server-mode.test.jsx`
+  - `npm.cmd --prefix frontend run test -- --run src/state/playerProfile.test.js src/App.server-mode.test.jsx`
+  - `npm.cmd --prefix frontend run test -- --run src/state/playerAnalytics.test.js src/App.server-mode.test.jsx`
+  - Vitest did not reach test execution because Vite/Vitest config loading failed with Windows `spawn EPERM` while starting its config-time child process. The frontend production build still completed successfully through Vite.
+- Earlier browser smoke blockers, now resolved by the final closeout pass:
+  - Vite dev server failed during config loading with Windows `spawn EPERM`
+  - a static-dist fallback smoke could not be completed because the same Vite config-load `spawn EPERM` appeared during that shell's rebuild and `agent-browser` reported socket-directory access denied during cleanup
+  - approved retry attempted the static `frontend/dist` path without Vite and a Chrome DevTools Protocol fallback; foreground backend startup works, but local PowerShell process orchestration would not keep the Maven/Spring backend alive for browser automation, and `agent-browser` continued to fail with socket-directory access denied
+- Sprint C closeout completed on April 23, 2026:
+  - root cause found during the real browser smoke: daily mode showed `BACK HOME` for non-terminal correct reveal states, which could return home before daily completion/profile/analytics recording
+  - fix applied: daily mode now shows `NEXT` for intermediate reveals and reserves `BACK HOME` for terminal `ROUND_SUCCESS` / `ROUND_FAIL` result states
+  - root cause also found in analytics: result-view events only recorded for `GAME_OVER`, while the current solo/daily result panel is the terminal round result state
+  - fix applied: solo/daily terminal `ROUND_SUCCESS` and `ROUND_FAIL` panels now record `result_view` analytics
+  - real `agent-browser` smoke ran against `http://127.0.0.1:5173` with the H2-backed backend on `http://localhost:8081`
+  - smoke path: Home -> Play daily board -> select answer -> LOCK IN -> terminal result -> BACK HOME -> Home
+  - final Home verification showed `Daily complete`, disabled daily CTA, today's completed daily record, personal-best data, and replay-funnel analytics with run starts, round failures, and result views backed by local analytics events
+  - focused verification passed after closeout:
+    - `npm.cmd --prefix frontend run lint`
+    - `npm.cmd --prefix frontend run test -- --run src/App.server-mode.test.jsx src/App.startup.test.jsx src/components/GameBoard.test.jsx src/components/RoundSummary.test.jsx src/state/playerProfile.test.js src/state/playerAnalytics.test.js`
+    - `npm.cmd --prefix frontend run build`
+
+## Execution Sprint D: Launch Readiness
+
+### Scope
+
+- [ ] Complete mobile, viewport, and accessibility polish for Home, Topic Select, Gameplay, and Result screens.
+- [ ] Harden production env/docs/runbooks around the actual single-player launch path.
+- [ ] Add final release QA coverage for narrow public launch, including post-deploy smoke and rollback clarity.
+- [ ] Run a soft-launch proof pass against the real product path and capture launch blockers explicitly.
+
+### Exit Criteria
+
+- [ ] Core screens are stable and app-like across laptop and mobile breakpoints.
+- [ ] Launch runbook, deploy guide, and smoke workflow are green and aligned with current product truth.
+- [ ] Remaining blockers are minor enough for a narrow public launch.
+
+### Review
+
+- Execution Sprint D not started yet.
+
+## Current Order
+
+- [x] Execution Sprint A: Product Truth + Release Contract
+- [x] Execution Sprint B: Solo Loop + Reward Contract
+- [x] Execution Sprint C: Retention Systems
+- [ ] Execution Sprint D: Launch Readiness
+
 ## Sprint 5: CherryPick Single-Player UI
 
 ### Scope

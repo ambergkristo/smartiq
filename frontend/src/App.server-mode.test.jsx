@@ -15,6 +15,7 @@ vi.mock('./api', () => {
     fetchTenantAuditEvents: vi.fn(),
     fetchTopics: vi.fn(),
     fetchNextCard: vi.fn(),
+    fetchRemotePlayerProfile: vi.fn(() => Promise.resolve(null)),
     fetchTenantRuntimeSnapshot: vi.fn(),
     fetchTenantUsageSummary: vi.fn(),
     hasRuntimeAuthContext: vi.fn(() => false),
@@ -41,6 +42,7 @@ vi.mock('./api', () => {
         : 'Could not join this game. Retry in a moment.';
     }),
     setRuntimeAuthContext: vi.fn(),
+    upsertRemotePlayerProfile: vi.fn(() => Promise.resolve({})),
     upsertRuntimeSessionReviewNote: vi.fn(),
     upsertRuntimeSessionTemplate: vi.fn(),
     updateRuntimeTenantBranding: vi.fn(),
@@ -67,6 +69,7 @@ import {
   sendServerGameAction
 } from './api';
 import { PLAYER_PROFILE_STORAGE_KEY } from './state/playerProfile';
+import { PLAYER_ANALYTICS_STORAGE_KEY, PLAYER_ANALYTICS_EVENT } from './state/playerAnalytics';
 
 function makeServerSnapshot({
   gameId = 'game-1',
@@ -122,7 +125,7 @@ function makeServerSnapshot({
 }
 
 async function startServerMultiplayer(players = 'Alice, Bob') {
-  const playersInput = await screen.findByLabelText(/players/i);
+  const playersInput = await screen.findByLabelText(/runner alias/i);
   const startButton = screen.getByRole('button', { name: /start game/i });
   fireEvent.change(playersInput, { target: { value: players } });
   fireEvent.keyDown(playersInput, { key: 'Enter', code: 'Enter' });
@@ -318,8 +321,7 @@ describe('App server-authoritative mode', () => {
     ));
 
     fireEvent.click(await screen.findByRole('button', { name: /^answer-1\b/i }));
-    fireEvent.click(screen.getByRole('button', { name: /submit pick/i }));
-    fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^lock in$/i }));
 
     await waitFor(() => expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Reward secured'));
     expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Cherry');
@@ -353,8 +355,7 @@ describe('App server-authoritative mode', () => {
     await startSoloMode();
 
     fireEvent.click(await screen.findByRole('button', { name: /^answer-1\b/i }));
-    fireEvent.click(screen.getByRole('button', { name: /submit pick/i }));
-    fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^lock in$/i }));
 
     await waitFor(() => expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Reward lost'));
     expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Cherry');
@@ -386,8 +387,7 @@ describe('App server-authoritative mode', () => {
     await startSoloMode();
 
     fireEvent.click(await screen.findByRole('button', { name: /^answer-1\b/i }));
-    fireEvent.click(screen.getByRole('button', { name: /submit pick/i }));
-    fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^lock in$/i }));
 
     await waitFor(() => expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Double Cherry'));
     expect(screen.getByTestId('solo-round-result')).toHaveTextContent('XP x3');
@@ -439,16 +439,14 @@ describe('App server-authoritative mode', () => {
     await startSoloMode();
 
     fireEvent.click(await screen.findByRole('button', { name: /^answer-1\b/i }));
-    fireEvent.click(screen.getByRole('button', { name: /submit pick/i }));
-    fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^lock in$/i }));
     await waitFor(() => expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('100'));
 
     fireEvent.click(screen.getByRole('button', { name: /next round/i }));
     await waitFor(() => expect(screen.getByText(/solo round two/i)).toBeInTheDocument());
 
     fireEvent.click(screen.getByRole('button', { name: /^answer-2\b/i }));
-    fireEvent.click(screen.getByRole('button', { name: /submit pick/i }));
-    fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^lock in$/i }));
     await waitFor(() => expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('200'));
 
     fireEvent.click(screen.getByRole('button', { name: /back to setup/i }));
@@ -464,12 +462,80 @@ describe('App server-authoritative mode', () => {
     expect(await screen.findByTestId('home-screen')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /play solo/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /choose topic/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /join soon/i })).toBeDisabled();
-    expect(screen.getByRole('button', { name: /host soon/i })).toBeDisabled();
+    expect(screen.queryByRole('button', { name: /join soon/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /host soon/i })).not.toBeInTheDocument();
     expect(screen.getByTestId('home-screen-profile')).toHaveTextContent(/level 1/i);
     expect(screen.getByTestId('home-screen-profile')).toHaveTextContent(/solo player/i);
     expect(screen.getByTestId('home-screen-profile')).toHaveTextContent(/saved xp/i);
     expect(screen.getByTestId('home-screen-profile')).toHaveTextContent(/0/i);
+    expect(screen.getByRole('list', { name: /replay funnel summary/i })).toHaveTextContent('Replays');
+    expect(JSON.parse(localStorage.getItem(PLAYER_ANALYTICS_STORAGE_KEY))).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ eventType: PLAYER_ANALYTICS_EVENT.FIRST_VISIT })
+      ])
+    );
+  });
+
+  test('plays the daily challenge once and records the local daily result', async () => {
+    window.location.hash = '';
+    createServerGameSession.mockResolvedValue(makeServerSnapshot({
+      gameId: 'daily-success',
+      players: [{ playerId: 'p1', displayName: 'Solo Player' }],
+      correctAnswerIndexes: [0]
+    }));
+    sendServerGameAction.mockResolvedValue(makeServerSnapshot({
+      gameId: 'daily-success',
+      phase: 'ROUND_SUCCESS',
+      players: [{ playerId: 'p1', displayName: 'Solo Player' }],
+      correctAnswerIndexes: [0],
+      pegStateByIndex: { 0: 'revealed' },
+      lastAction: 'Solo Player cleared the daily board'
+    }));
+
+    render(<App />);
+
+    fireEvent.click(await screen.findByRole('button', { name: /^daily challenge$/i }));
+    await waitFor(() => expect(createServerGameSession).toHaveBeenCalledWith(
+      expect.objectContaining({
+        players: ['Solo Player'],
+        mode: 'daily',
+        winCondition: 1000000
+      })
+    ));
+
+    fireEvent.click(await screen.findByRole('button', { name: /^answer-1\b/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^lock in$/i }));
+
+    await waitFor(() => expect(screen.getByTestId('solo-round-result')).toHaveTextContent('Reward secured'));
+    await waitFor(() => expect(JSON.parse(localStorage.getItem(PLAYER_PROFILE_STORAGE_KEY))).toMatchObject({
+      totalXp: 100,
+      roundsPlayed: 1,
+      roundsWon: 1,
+      dailyChallenge: {
+        status: 'completed',
+        outcome: 'success',
+        roundXp: 100,
+        sessionXp: 100
+      }
+    }));
+    await waitFor(() => expect(JSON.parse(localStorage.getItem(PLAYER_ANALYTICS_STORAGE_KEY))).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ eventType: PLAYER_ANALYTICS_EVENT.FIRST_VISIT }),
+        expect.objectContaining({
+          eventType: PLAYER_ANALYTICS_EVENT.RUN_START,
+          payload: expect.objectContaining({ mode: 'daily' })
+        }),
+        expect.objectContaining({
+          eventType: PLAYER_ANALYTICS_EVENT.ROUND_WIN,
+          payload: expect.objectContaining({ mode: 'daily', roundXp: 100, sessionXp: 100 })
+        })
+      ])
+    ));
+
+    fireEvent.click(screen.getByRole('button', { name: /^back home$/i }));
+    expect(await screen.findByTestId('home-screen')).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /daily complete|come back tomorrow/i }).length).toBeGreaterThan(0);
+    expect(screen.getByRole('list', { name: /replay funnel summary/i })).toHaveTextContent('1 / 0');
   });
 
   test('renders the Join Game shell and navigates back home', async () => {
@@ -736,11 +802,19 @@ describe('App server-authoritative mode', () => {
 
     await startSoloMode();
     fireEvent.click(await screen.findByRole('button', { name: /^answer-1\b/i }));
-    fireEvent.click(screen.getByRole('button', { name: /submit pick/i }));
-    fireEvent.click(await screen.findByRole('button', { name: /lock in/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^lock in$/i }));
 
     await waitFor(() => expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('100'));
     await waitFor(() => expect(screen.getByTestId('solo-scoreboard')).toHaveTextContent('1'));
+    expect(JSON.parse(localStorage.getItem(PLAYER_PROFILE_STORAGE_KEY))).toMatchObject({
+      totalXp: 100,
+      roundsPlayed: 1,
+      roundsWon: 1,
+      bestRoundXp: 100,
+      bestSessionXp: 100,
+      currentWinStreak: 1,
+      bestWinStreak: 1
+    });
     firstRender.unmount();
 
     window.location.hash = '';
@@ -760,7 +834,12 @@ describe('App server-authoritative mode', () => {
       totalXp: 500,
       level: 2,
       gamesPlayed: 3,
+      roundsPlayed: 4,
       roundsWon: 2,
+      bestRoundXp: 300,
+      bestSessionXp: 900,
+      currentWinStreak: 1,
+      bestWinStreak: 2,
       createdAt: '2026-03-12T10:00:00.000Z',
       updatedAt: '2026-03-12T10:00:00.000Z'
     }));
@@ -777,6 +856,9 @@ describe('App server-authoritative mode', () => {
     expect(screen.getByTestId('home-screen-profile')).toHaveTextContent('3');
     expect(screen.getByTestId('home-screen-profile')).toHaveTextContent('Rounds won');
     expect(screen.getByTestId('home-screen-profile')).toHaveTextContent('2');
+    expect(screen.getByText(/900 XP best run/i)).toBeInTheDocument();
+    expect(screen.getByRole('list', { name: /personal best summary/i })).toHaveTextContent('300');
+    expect(screen.getByRole('list', { name: /personal best summary/i })).toHaveTextContent('2');
     expect(screen.getByDisplayValue('Kai')).toBeInTheDocument();
 
     await startSoloMode();

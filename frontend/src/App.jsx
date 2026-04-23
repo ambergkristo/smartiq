@@ -19,9 +19,18 @@ import {
 } from './roomRuntime';
 import { useServerGameEngine } from './state/useServerGameEngine';
 import {
+  getTodaysDailyChallenge,
   loadOrCreatePlayerProfile,
+  parsePlayerProfile,
   savePlayerProfile
 } from './state/playerProfile';
+import {
+  PLAYER_ANALYTICS_EVENT,
+  loadStoredPlayerAnalyticsEvents,
+  recordFirstVisitAnalyticsEvent,
+  recordPlayerAnalyticsEvent,
+  summarizePlayerAnalyticsEvents
+} from './state/playerAnalytics';
 import { DEFAULT_LANGS, GamePhase } from './state/types';
 import {
   ADMIN_CONSOLE_ENABLED,
@@ -64,6 +73,7 @@ import {
   StartupStatePanel
 } from './app/AppPanels';
 import { ActiveGameView, GameOverView, SetupPhaseView } from './app/GameAppViews';
+import { fetchRemotePlayerProfile, upsertRemotePlayerProfile } from './api';
 import {
   GameplayActionBarSection,
   GameplaySidePanelSection,
@@ -78,19 +88,28 @@ import {
   SharedRoomPanelSection
 } from './app/AppShellSections';
 
+function isSoloProfileModeForApp(mode) {
+  return mode === 'solo' || mode === 'daily';
+}
+
+function timestampValue(value) {
+  const parsed = Date.parse(String(value || ''));
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
 function GameApp() {
   const storedConfig = loadStoredConfig();
   const storedRoomSession = loadStoredRoomSession();
   const billingReturnState = resolveBillingReturnState();
   const [config, setConfig] = useState({
     topic: storedConfig?.topic ?? '',
-    difficulty: storedConfig?.difficulty ?? '2',
     lang: storedConfig?.lang ?? 'en',
     theme: storedConfig?.theme ?? 'classic',
     playersText: storedConfig?.playersText ?? ''
   });
   const [setupPlayerDraft, setSetupPlayerDraft] = useState('');
   const [playerProfile, setPlayerProfile] = useState(() => loadOrCreatePlayerProfile());
+  const [playerAnalyticsEvents, setPlayerAnalyticsEvents] = useState(() => loadStoredPlayerAnalyticsEvents());
   const {
     entryRoute,
     setEntryRoute,
@@ -121,6 +140,9 @@ function GameApp() {
   const lastWrongCountRef = useRef(0);
   const soloLaunchAttemptedRef = useRef(false);
   const processedSoloResolutionRef = useRef('');
+  const resultViewTrackingRef = useRef('');
+  const remoteProfileHydratedRef = useRef(false);
+  const remoteProfilePushKeyRef = useRef('');
   const activePlayerRouteRoomCode = String(playerJoinRoute || '').trim();
   const {
     runtimeSnapshot,
@@ -336,6 +358,113 @@ function GameApp() {
   }, [playerProfile]);
 
   useEffect(() => {
+    const guestToken = String(playerProfile?.guestToken || '').trim();
+    if (!guestToken || remoteProfileHydratedRef.current) {
+      return undefined;
+    }
+
+    let cancelled = false;
+    async function hydrateRemoteProfile() {
+      try {
+        const remote = await fetchRemotePlayerProfile(guestToken);
+        if (cancelled) {
+          return;
+        }
+        const remoteProfile = remote?.profile ? parsePlayerProfile(remote.profile) : null;
+        if (
+          remoteProfile
+          && timestampValue(remoteProfile.updatedAt) > timestampValue(playerProfile.updatedAt)
+        ) {
+          remoteProfilePushKeyRef.current = JSON.stringify(remoteProfile);
+          setPlayerProfile(remoteProfile);
+        } else if (!remoteProfile) {
+          remoteProfilePushKeyRef.current = JSON.stringify(playerProfile);
+          await upsertRemotePlayerProfile(playerProfile);
+        }
+      } catch {
+        // Remote profile sync is opportunistic; local progression remains the source of truth when offline.
+      } finally {
+        if (!cancelled) {
+          remoteProfileHydratedRef.current = true;
+        }
+      }
+    }
+
+    hydrateRemoteProfile();
+    return () => {
+      cancelled = true;
+    };
+  }, [playerProfile]);
+
+  useEffect(() => {
+    if (!remoteProfileHydratedRef.current) {
+      return;
+    }
+    const guestToken = String(playerProfile?.guestToken || '').trim();
+    if (!guestToken) {
+      return;
+    }
+    const pushKey = JSON.stringify(playerProfile);
+    if (remoteProfilePushKeyRef.current === pushKey) {
+      return;
+    }
+    remoteProfilePushKeyRef.current = pushKey;
+    upsertRemotePlayerProfile(playerProfile).catch(() => {
+      remoteProfilePushKeyRef.current = '';
+    });
+  }, [playerProfile]);
+
+  const trackPlayerEvent = useCallback((eventType, payload = {}) => {
+    const nextEvents = recordPlayerAnalyticsEvent(eventType, {
+      profileId: playerProfile.id,
+      guestToken: playerProfile.guestToken,
+      displayName: playerProfile.displayName,
+      ...payload
+    });
+    setPlayerAnalyticsEvents(nextEvents);
+    return nextEvents;
+  }, [playerProfile.displayName, playerProfile.guestToken, playerProfile.id]);
+
+  useEffect(() => {
+    setPlayerAnalyticsEvents(recordFirstVisitAnalyticsEvent(playerProfile));
+  }, [playerProfile]);
+
+  useEffect(() => {
+    if (engine.phase === GamePhase.SETUP) {
+      resultViewTrackingRef.current = '';
+      return;
+    }
+    const isSoloResultView = engine.phase === GamePhase.GAME_OVER
+      || engine.phase === GamePhase.ROUND_SUCCESS
+      || engine.phase === GamePhase.ROUND_FAIL;
+    if (!isSoloResultView || !isSoloProfileModeForApp(engine.gameMode)) {
+      return;
+    }
+
+    const resultViewKey = [
+      engine.gameMode,
+      engine.phase,
+      engine.roundNumber,
+      engine.sessionXp,
+      engine.lastRoundXp,
+      engine.winner || ''
+    ].join(':');
+
+    if (resultViewTrackingRef.current === resultViewKey) {
+      return;
+    }
+
+    resultViewTrackingRef.current = resultViewKey;
+    trackPlayerEvent(PLAYER_ANALYTICS_EVENT.RESULT_VIEW, {
+      mode: engine.gameMode,
+      roundNumber: engine.roundNumber,
+      sessionXp: engine.sessionXp,
+      lastRoundXp: engine.lastRoundXp,
+      winner: engine.winner || null
+    });
+  }, [engine.phase, engine.gameMode, engine.roundNumber, engine.sessionXp, engine.lastRoundXp, engine.winner, trackPlayerEvent]);
+
+  useEffect(() => {
     const cardId = engine.card?.cardId || engine.card?.id || '';
     if (!cardId || engine.phase === GamePhase.SETUP) {
       lastAudioCardRef.current = '';
@@ -464,11 +593,13 @@ function GameApp() {
   const {
     activeError,
     soloModeActive,
+    dailyModeActive,
     controlsDisabled,
     handleStartRound,
     handlePlayAgain,
     handleRestart,
     handleStartSoloMode,
+    handleStartDailyChallenge,
     handleExitSoloMode,
     handlePlayerProfileNameChange
   } = useGameplayFlow({
@@ -479,8 +610,10 @@ function GameApp() {
     activePlayerRouteRoomCode,
     serverEngine,
     launchRound,
+    playerProfile,
     resolvedSoloPlayerName,
     setPlayerProfile,
+    trackPlayerEvent,
     refreshWorkspaceInsights,
     runtimeTenantId: runtimeSnapshot?.me?.selectedTenantId,
     handleNavigateEntry,
@@ -488,6 +621,8 @@ function GameApp() {
     processedSoloResolutionRef
   });
   const setupPlayers = parsePlayers(config.playersText);
+  const dailyChallenge = getTodaysDailyChallenge(playerProfile);
+  const playerAnalyticsSummary = summarizePlayerAnalyticsEvents(playerAnalyticsEvents);
   const setupDraftPlayers = parsePlayers(setupPlayerDraft);
   const setupMergedPlayerCount = Array.from(new Set([...setupPlayers, ...setupDraftPlayers])).length;
   const hostRoomSession = roomSession?.role === 'host' ? roomSession : null;
@@ -610,9 +745,17 @@ function GameApp() {
       profileLevel={playerProfile.level}
       profileXp={playerProfile.totalXp}
       profileGamesPlayed={playerProfile.gamesPlayed}
+      profileRoundsPlayed={playerProfile.roundsPlayed}
       profileRoundsWon={playerProfile.roundsWon}
+      profileBestRoundXp={playerProfile.bestRoundXp}
+      profileBestSessionXp={playerProfile.bestSessionXp}
+      profileCurrentWinStreak={playerProfile.currentWinStreak}
+      profileBestWinStreak={playerProfile.bestWinStreak}
+      analyticsSummary={playerAnalyticsSummary}
+      dailyChallenge={dailyChallenge}
       onProfileNameChange={handlePlayerProfileNameChange}
       onPlay={() => handleNavigateEntry(ENTRY_ROUTE.PLAY)}
+      onDailyChallenge={dailyChallenge.status === 'completed' ? null : handleStartDailyChallenge}
       onChooseTopic={handleOpenSoloSetup}
       onJoinGame={() => handleNavigateEntry(ENTRY_ROUTE.JOIN)}
       onHostGame={() => handleNavigateEntry(ENTRY_ROUTE.HOST)}
@@ -788,6 +931,7 @@ function GameApp() {
       controlsDisabled={controlsDisabled}
       gameplayCanAnswer={gameplayCanAnswer}
       hostRoomSession={hostRoomSession}
+      dailyModeActive={dailyModeActive}
       onRestart={handleRestart}
     />
   );
@@ -936,6 +1080,7 @@ function GameApp() {
               mode={soloModeActive ? 'solo' : 'standard'}
               sessionXp={engine.sessionXp}
               lastRoundXp={engine.lastRoundXp}
+              lastRoundRewardBreakdown={engine.lastRoundRewardBreakdown}
               profileName={playerProfile.displayName}
               profileLevel={playerProfile.level}
               profileXp={playerProfile.totalXp}
@@ -960,7 +1105,7 @@ function GameApp() {
               scores={engine.scores}
               stats={engine.stats}
               roundNumber={engine.roundNumber}
-              mode={soloModeActive ? 'solo' : 'standard'}
+              mode={dailyModeActive ? 'daily' : soloModeActive ? 'solo' : 'standard'}
               sessionXp={engine.sessionXp}
               lastRoundXp={engine.lastRoundXp}
               profileName={playerProfile.displayName}
@@ -968,6 +1113,10 @@ function GameApp() {
               profileXp={playerProfile.totalXp}
               profileGamesPlayed={playerProfile.gamesPlayed}
               profileRoundsWon={playerProfile.roundsWon}
+              profileRoundsPlayed={playerProfile.roundsPlayed}
+              profileBestRoundXp={playerProfile.bestRoundXp}
+              profileBestSessionXp={playerProfile.bestSessionXp}
+              profileBestWinStreak={playerProfile.bestWinStreak}
               onNextRound={engine.nextStep}
               onRestart={handleRestart}
               onPlayAgain={handlePlayAgain}

@@ -105,7 +105,7 @@ export function SetupActionBarSection({
         <div className="app-shell-action-copy">
           <span>Lobby status</span>
           <strong>
-            {`${roomPlayerCount} joined${selectedRoomPlayers.length !== roomPlayerCount ? ` • ${selectedRoomPlayers.length} selected` : ''}`}
+            {`${roomPlayerCount} joined${selectedRoomPlayers.length !== roomPlayerCount ? ` - ${selectedRoomPlayers.length} selected` : ''}`}
           </strong>
         </div>
         <button
@@ -353,8 +353,13 @@ export function GameplayActionBarSection({
   controlsDisabled,
   gameplayCanAnswer,
   hostRoomSession,
+  dailyModeActive = false,
   onRestart
 }) {
+  const dailyTerminalResolution = dailyModeActive && (
+    engine.phase === 'ROUND_SUCCESS' || engine.phase === 'ROUND_FAIL'
+  );
+
   return (
     <PrimaryActionBar>
       <GameplayActionBar
@@ -363,10 +368,11 @@ export function GameplayActionBarSection({
         nextTransition={engine.nextTransition}
         controlsDisabled={controlsDisabled}
         canAnswer={gameplayCanAnswer}
+        mode={engine.gameMode}
         onAnswer={engine.requestConfirm}
         onConfirm={engine.confirmAnswer}
         onCancelConfirm={engine.cancelConfirm}
-        onNext={engine.nextStep}
+        onNext={dailyTerminalResolution ? onRestart : engine.nextStep}
         onBackToLobby={onRestart}
         backLabel={hostRoomSession ? 'Back to lobby' : 'Back to setup'}
         currentPlayer={engine.currentPlayer}

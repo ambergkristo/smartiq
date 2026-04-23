@@ -82,7 +82,6 @@ export function loadStoredConfig() {
     if (!parsed || typeof parsed !== 'object') return null;
     return {
       topic: typeof parsed.topic === 'string' ? parsed.topic : '',
-      difficulty: ['1', '2', '3'].includes(String(parsed.difficulty)) ? String(parsed.difficulty) : '2',
       lang: DEFAULT_LANGS.includes(parsed.lang) ? parsed.lang : 'en',
       theme: THEME_OPTIONS.some((entry) => entry.value === parsed.theme) ? parsed.theme : 'classic',
       playersText: typeof parsed.playersText === 'string' ? parsed.playersText : ''

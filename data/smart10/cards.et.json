@@ -5598,7 +5598,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal lõppes Teine maailmasõda? Kontekst: Vana-Rooma.",
+    "question": "Ajalugu: Mis aastal lõppes Teine maailmasõda?",
     "options": [
       "1975",
       "1935",
@@ -5624,7 +5624,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal langes Berliini müür? Kontekst: Viikingiaeg.",
+    "question": "Ajalugu: Mis aastal langes Berliini müür?",
     "options": [
       "2019",
       "1984",
@@ -5650,7 +5650,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal maandus Apollo 11? Kontekst: Renessanss.",
+    "question": "Ajalugu: Mis aastal maandus Apollo 11?",
     "options": [
       "1949",
       "1989",
@@ -5676,7 +5676,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta? Kontekst: Tööstusrevolutsioon.",
+    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta?",
     "options": [
       "1215",
       "1210",
@@ -5702,7 +5702,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal lagunes NSVL? Kontekst: Prantsuse revolutsioon.",
+    "question": "Ajalugu: Mis aastal lagunes NSVL?",
     "options": [
       "1971",
       "2011",
@@ -5728,7 +5728,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal algas Esimene maailmasõda? Kontekst: Siiditee.",
+    "question": "Ajalugu: Mis aastal algas Esimene maailmasõda?",
     "options": [
       "1904",
       "1934",
@@ -5754,7 +5754,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal lõppes Teine maailmasõda? Kontekst: Magna Carta.",
+    "question": "Ajalugu: Mis aastal lõppes Teine maailmasõda? Vali õige aasta.",
     "options": [
       "1955",
       "1950",
@@ -5780,7 +5780,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal langes Berliini müür? Kontekst: Osmanite riik.",
+    "question": "Ajalugu: Mis aastal langes Berliini müür? Vali õige aasta.",
     "options": [
       "2029",
       "1994",
@@ -5806,7 +5806,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal maandus Apollo 11? Kontekst: Mingi dünastia.",
+    "question": "Ajalugu: Mis aastal maandus Apollo 11? Vali õige aasta.",
     "options": [
       "1979",
       "1999",
@@ -5832,7 +5832,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta? Kontekst: Normanni vallutus.",
+    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta? Vali õige aasta.",
     "options": [
       "1185",
       "1255",
@@ -5858,7 +5858,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal lagunes NSVL? Kontekst: Napoleon.",
+    "question": "Ajalugu: Mis aastal lagunes NSVL? Vali õige aasta.",
     "options": [
       "1986",
       "1981",
@@ -5884,7 +5884,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal algas Esimene maailmasõda? Kontekst: Julius Caesar.",
+    "question": "Ajalugu: Mis aastal algas Esimene maailmasõda? Vali õige aasta.",
     "options": [
       "1934",
       "1954",
@@ -5910,7 +5910,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal lõppes Teine maailmasõda? Kontekst: Aleksander Suur.",
+    "question": "Ajalugu: Mis aastal lõppes Teine maailmasõda? Leia sobiv aasta.",
     "options": [
       "1955",
       "1925",
@@ -5936,7 +5936,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal langes Berliini müür? Kontekst: Gutenbergi trükipress.",
+    "question": "Ajalugu: Mis aastal langes Berliini müür? Leia sobiv aasta.",
     "options": [
       "1959",
       "1979",
@@ -5962,7 +5962,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal maandus Apollo 11? Kontekst: Rooma vabariik.",
+    "question": "Ajalugu: Mis aastal maandus Apollo 11? Leia sobiv aasta.",
     "options": [
       "1974",
       "1999",
@@ -5988,7 +5988,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta? Kontekst: Külm sõda.",
+    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta? Leia sobiv aasta.",
     "options": [
       "1255",
       "1195",
@@ -6014,7 +6014,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal lagunes NSVL? Kontekst: Berliini müür.",
+    "question": "Ajalugu: Mis aastal lagunes NSVL? Leia sobiv aasta.",
     "options": [
       "1996",
       "1971",
@@ -6040,7 +6040,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal algas Esimene maailmasõda? Kontekst: Apollo 11.",
+    "question": "Ajalugu: Mis aastal algas Esimene maailmasõda? Leia sobiv aasta.",
     "options": [
       "1884",
       "1919",
@@ -6066,7 +6066,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal lõppes Teine maailmasõda? Kontekst: Versailles' rahuleping.",
+    "question": "Ajalugu: Mis aastal lõppes Teine maailmasõda? Märgi õige aastaarv.",
     "options": [
       "1925",
       "1985",
@@ -6092,7 +6092,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal langes Berliini müür? Kontekst: Bütsantsi riik.",
+    "question": "Ajalugu: Mis aastal langes Berliini müür? Märgi õige aastaarv.",
     "options": [
       "1979",
       "2029",
@@ -6118,7 +6118,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal maandus Apollo 11? Kontekst: Meiji restauratsioon.",
+    "question": "Ajalugu: Mis aastal maandus Apollo 11? Märgi õige aastaarv.",
     "options": [
       "1964",
       "1974",
@@ -6144,7 +6144,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta? Kontekst: Avastusretkede ajastu.",
+    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta? Märgi õige aastaarv.",
     "options": [
       "1185",
       "1245",
@@ -6170,7 +6170,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal lagunes NSVL? Kontekst: Pronksiaeg.",
+    "question": "Ajalugu: Mis aastal lagunes NSVL? Märgi õige aastaarv.",
     "options": [
       "2031",
       "1971",
@@ -6196,7 +6196,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal algas Esimene maailmasõda? Kontekst: Rauaaeg.",
+    "question": "Ajalugu: Mis aastal algas Esimene maailmasõda? Märgi õige aastaarv.",
     "options": [
       "1954",
       "1914",
@@ -6222,7 +6222,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal lõppes Teine maailmasõda? Kontekst: Harlemi renessanss.",
+    "question": "Ajalugu: Mis aastal lõppes Teine maailmasõda? Mis aasta siia sobib?",
     "options": [
       "1940",
       "1975",
@@ -6248,7 +6248,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal langes Berliini müür? Kontekst: Trükipress.",
+    "question": "Ajalugu: Mis aastal langes Berliini müür? Mis aasta siia sobib?",
     "options": [
       "1994",
       "1984",
@@ -6274,7 +6274,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal maandus Apollo 11? Kontekst: Hani dünastia.",
+    "question": "Ajalugu: Mis aastal maandus Apollo 11? Mis aasta siia sobib?",
     "options": [
       "2009",
       "1999",
@@ -6300,7 +6300,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta? Kontekst: Pax Romana.",
+    "question": "Ajalugu: Mis aastal allkirjastati Magna Carta? Mis aasta siia sobib?",
     "options": [
       "1235",
       "1195",
@@ -6326,7 +6326,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal lagunes NSVL? Kontekst: Pärsia impeerium.",
+    "question": "Ajalugu: Mis aastal lagunes NSVL? Mis aasta siia sobib?",
     "options": [
       "2011",
       "1981",
@@ -6352,7 +6352,7 @@
     "topic": "History",
     "category": "NUMBER",
     "language": "et",
-    "question": "Ajalugu: Mis aastal algas Esimene maailmasõda? Kontekst: Maiade tsivilisatsioon.",
+    "question": "Ajalugu: Mis aastal algas Esimene maailmasõda? Mis aasta siia sobib?",
     "options": [
       "1919",
       "1894",
@@ -6378,7 +6378,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu mangijat on jalgpallitiimis valjakul? Kontekst: Football.",
+    "question": "Sport: Mitu mangijat on jalgpallitiimis valjakul?",
     "options": [
       "10",
       "8",
@@ -6404,7 +6404,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu punkti annab korvpalli vabavise? Kontekst: Basketball.",
+    "question": "Sport: Mitu punkti annab korvpalli vabavise?",
     "options": [
       "4",
       "1",
@@ -6430,7 +6430,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu rada on tavalises golfiringis? Kontekst: Tennis.",
+    "question": "Sport: Mitu rada on tavalises golfiringis?",
     "options": [
       "16",
       "21",
@@ -6456,7 +6456,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu setti on vaja meeste Grand Slami voitmiseks? Kontekst: Cricket.",
+    "question": "Sport: Mitu setti on vaja meeste Grand Slami voitmiseks?",
     "options": [
       "6",
       "2",
@@ -6482,7 +6482,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mis on maratoni pikkus kilomeetrites? Kontekst: Rugby.",
+    "question": "Sport: Mis on maratoni pikkus kilomeetrites?",
     "options": [
       "34",
       "54",
@@ -6508,7 +6508,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu minutit kestab uks jalgpalli poolaeg? Kontekst: Volleyball.",
+    "question": "Sport: Mitu minutit kestab uks jalgpalli poolaeg?",
     "options": [
       "40",
       "50",
@@ -6534,7 +6534,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu mangijat on jalgpallitiimis valjakul? Kontekst: Handball.",
+    "question": "Sport: Mitu mangijat on jalgpallitiimis valjakul? Vali õige arv.",
     "options": [
       "11",
       "9",
@@ -6560,7 +6560,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu punkti annab korvpalli vabavise? Kontekst: Baseball.",
+    "question": "Sport: Mitu punkti annab korvpalli vabavise? Vali õige arv.",
     "options": [
       "4",
       "8",
@@ -6586,7 +6586,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu rada on tavalises golfiringis? Kontekst: Hockey.",
+    "question": "Sport: Mitu rada on tavalises golfiringis? Vali õige arv.",
     "options": [
       "20",
       "22",
@@ -6612,7 +6612,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu setti on vaja meeste Grand Slami voitmiseks? Kontekst: Badminton.",
+    "question": "Sport: Mitu setti on vaja meeste Grand Slami voitmiseks? Vali õige arv.",
     "options": [
       "1",
       "2",
@@ -6638,7 +6638,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mis on maratoni pikkus kilomeetrites? Kontekst: Table Tennis.",
+    "question": "Sport: Mis on maratoni pikkus kilomeetrites? Vali õige arv.",
     "options": [
       "32",
       "50",
@@ -6664,7 +6664,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu minutit kestab uks jalgpalli poolaeg? Kontekst: Athletics.",
+    "question": "Sport: Mitu minutit kestab uks jalgpalli poolaeg? Vali õige arv.",
     "options": [
       "45",
       "40",
@@ -6690,7 +6690,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu mangijat on jalgpallitiimis valjakul? Kontekst: Swimming.",
+    "question": "Sport: Mitu mangijat on jalgpallitiimis valjakul? Leia õige kogus.",
     "options": [
       "9",
       "16",
@@ -6716,7 +6716,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu punkti annab korvpalli vabavise? Kontekst: Cycling.",
+    "question": "Sport: Mitu punkti annab korvpalli vabavise? Leia õige kogus.",
     "options": [
       "1",
       "10",
@@ -6742,7 +6742,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu rada on tavalises golfiringis? Kontekst: Boxing.",
+    "question": "Sport: Mitu rada on tavalises golfiringis? Leia õige kogus.",
     "options": [
       "17",
       "14",
@@ -6768,7 +6768,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu setti on vaja meeste Grand Slami voitmiseks? Kontekst: Fencing.",
+    "question": "Sport: Mitu setti on vaja meeste Grand Slami voitmiseks? Leia õige kogus.",
     "options": [
       "12",
       "10",
@@ -6794,7 +6794,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mis on maratoni pikkus kilomeetrites? Kontekst: Judo.",
+    "question": "Sport: Mis on maratoni pikkus kilomeetrites? Leia õige kogus.",
     "options": [
       "54",
       "44",
@@ -6820,7 +6820,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu minutit kestab uks jalgpalli poolaeg? Kontekst: Karate.",
+    "question": "Sport: Mitu minutit kestab uks jalgpalli poolaeg? Leia õige kogus.",
     "options": [
       "40",
       "50",
@@ -6846,7 +6846,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu mangijat on jalgpallitiimis valjakul? Kontekst: Golf.",
+    "question": "Sport: Mitu mangijat on jalgpallitiimis valjakul? Märgi sobiv arv.",
     "options": [
       "10",
       "16",
@@ -6872,7 +6872,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu punkti annab korvpalli vabavise? Kontekst: Snooker.",
+    "question": "Sport: Mitu punkti annab korvpalli vabavise? Märgi sobiv arv.",
     "options": [
       "3",
       "8",
@@ -6898,7 +6898,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu rada on tavalises golfiringis? Kontekst: Formula One.",
+    "question": "Sport: Mitu rada on tavalises golfiringis? Märgi sobiv arv.",
     "options": [
       "17",
       "15",
@@ -6924,7 +6924,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu setti on vaja meeste Grand Slami voitmiseks? Kontekst: MotoGP.",
+    "question": "Sport: Mitu setti on vaja meeste Grand Slami voitmiseks? Märgi sobiv arv.",
     "options": [
       "5",
       "8",
@@ -6950,7 +6950,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mis on maratoni pikkus kilomeetrites? Kontekst: Marathon.",
+    "question": "Sport: Mis on maratoni pikkus kilomeetrites? Märgi sobiv arv.",
     "options": [
       "47",
       "42",
@@ -6976,7 +6976,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu minutit kestab uks jalgpalli poolaeg? Kontekst: Triathlon.",
+    "question": "Sport: Mitu minutit kestab uks jalgpalli poolaeg? Märgi sobiv arv.",
     "options": [
       "50",
       "40",
@@ -7002,7 +7002,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu mangijat on jalgpallitiimis valjakul? Kontekst: Decathlon.",
+    "question": "Sport: Mitu mangijat on jalgpallitiimis valjakul? Mis on õige number?",
     "options": [
       "16",
       "13",
@@ -7028,7 +7028,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu punkti annab korvpalli vabavise? Kontekst: Wimbledon.",
+    "question": "Sport: Mitu punkti annab korvpalli vabavise? Mis on õige number?",
     "options": [
       "21",
       "3",
@@ -7054,7 +7054,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu rada on tavalises golfiringis? Kontekst: Olympics.",
+    "question": "Sport: Mitu rada on tavalises golfiringis? Mis on õige number?",
     "options": [
       "14",
       "15",
@@ -7080,7 +7080,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu setti on vaja meeste Grand Slami voitmiseks? Kontekst: World Cup.",
+    "question": "Sport: Mitu setti on vaja meeste Grand Slami voitmiseks? Mis on õige number?",
     "options": [
       "2",
       "7",
@@ -7106,7 +7106,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mis on maratoni pikkus kilomeetrites? Kontekst: UEFA Champions League.",
+    "question": "Sport: Mis on maratoni pikkus kilomeetrites? Mis on õige number?",
     "options": [
       "50",
       "32",
@@ -7132,7 +7132,7 @@
     "topic": "Sports",
     "category": "NUMBER",
     "language": "et",
-    "question": "Sport: Mitu minutit kestab uks jalgpalli poolaeg? Kontekst: NBA Finals.",
+    "question": "Sport: Mitu minutit kestab uks jalgpalli poolaeg? Mis on õige number?",
     "options": [
       "37",
       "35",
@@ -7158,7 +7158,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu mandrit loetletakse tavaliselt? Kontekst: Tallinn.",
+    "question": "Geograafia: Mitu mandrit loetletakse tavaliselt?",
     "options": [
       "6",
       "5",
@@ -7184,7 +7184,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu ookeani nimetatakse tavaliselt? Kontekst: Riga.",
+    "question": "Geograafia: Mitu ookeani nimetatakse tavaliselt?",
     "options": [
       "7",
       "8",
@@ -7210,7 +7210,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu riiki on EL-is (2026)? Kontekst: Vilnius.",
+    "question": "Geograafia: Mitu riiki on EL-is (2026)?",
     "options": [
       "35",
       "32",
@@ -7236,7 +7236,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu osariiki on USA-s? Kontekst: Helsinki.",
+    "question": "Geograafia: Mitu osariiki on USA-s?",
     "options": [
       "60",
       "58",
@@ -7262,7 +7262,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitut ajatsooni Hiina kasutab? Kontekst: Stockholm.",
+    "question": "Geograafia: Mitut ajatsooni Hiina kasutab?",
     "options": [
       "4",
       "6",
@@ -7288,7 +7288,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu kraadi on taisringis? Kontekst: Oslo.",
+    "question": "Geograafia: Mitu kraadi on taisringis?",
     "options": [
       "350",
       "355",
@@ -7314,7 +7314,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu mandrit loetletakse tavaliselt? Kontekst: Copenhagen.",
+    "question": "Geograafia: Mitu mandrit loetletakse tavaliselt? Vali õige arv.",
     "options": [
       "9",
       "5",
@@ -7340,7 +7340,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu ookeani nimetatakse tavaliselt? Kontekst: Reykjavik.",
+    "question": "Geograafia: Mitu ookeani nimetatakse tavaliselt? Vali õige arv.",
     "options": [
       "5",
       "4",
@@ -7366,7 +7366,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu riiki on EL-is (2026)? Kontekst: London.",
+    "question": "Geograafia: Mitu riiki on EL-is (2026)? Vali õige arv.",
     "options": [
       "39",
       "22",
@@ -7392,7 +7392,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu osariiki on USA-s? Kontekst: Paris.",
+    "question": "Geograafia: Mitu osariiki on USA-s? Vali õige arv.",
     "options": [
       "52",
       "60",
@@ -7418,7 +7418,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitut ajatsooni Hiina kasutab? Kontekst: Berlin.",
+    "question": "Geograafia: Mitut ajatsooni Hiina kasutab? Vali õige arv.",
     "options": [
       "1",
       "5",
@@ -7444,7 +7444,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu kraadi on taisringis? Kontekst: Rome.",
+    "question": "Geograafia: Mitu kraadi on taisringis? Vali õige arv.",
     "options": [
       "355",
       "380",
@@ -7470,7 +7470,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu mandrit loetletakse tavaliselt? Kontekst: Madrid.",
+    "question": "Geograafia: Mitu mandrit loetletakse tavaliselt? Leia õige kogus.",
     "options": [
       "3",
       "9",
@@ -7496,7 +7496,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu ookeani nimetatakse tavaliselt? Kontekst: Lisbon.",
+    "question": "Geograafia: Mitu ookeani nimetatakse tavaliselt? Leia õige kogus.",
     "options": [
       "2",
       "9",
@@ -7522,7 +7522,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu riiki on EL-is (2026)? Kontekst: Vienna.",
+    "question": "Geograafia: Mitu riiki on EL-is (2026)? Leia õige kogus.",
     "options": [
       "27",
       "25",
@@ -7548,7 +7548,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu osariiki on USA-s? Kontekst: Prague.",
+    "question": "Geograafia: Mitu osariiki on USA-s? Leia õige kogus.",
     "options": [
       "60",
       "58",
@@ -7574,7 +7574,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitut ajatsooni Hiina kasutab? Kontekst: Warsaw.",
+    "question": "Geograafia: Mitut ajatsooni Hiina kasutab? Leia õige kogus.",
     "options": [
       "18",
       "2",
@@ -7600,7 +7600,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu kraadi on taisringis? Kontekst: Budapest.",
+    "question": "Geograafia: Mitu kraadi on taisringis? Leia õige kogus.",
     "options": [
       "360",
       "370",
@@ -7626,7 +7626,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu mandrit loetletakse tavaliselt? Kontekst: Athens.",
+    "question": "Geograafia: Mitu mandrit loetletakse tavaliselt? Märgi sobiv arv.",
     "options": [
       "8",
       "12",
@@ -7652,7 +7652,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu ookeani nimetatakse tavaliselt? Kontekst: Dublin.",
+    "question": "Geograafia: Mitu ookeani nimetatakse tavaliselt? Märgi sobiv arv.",
     "options": [
       "8",
       "10",
@@ -7678,7 +7678,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu riiki on EL-is (2026)? Kontekst: Canberra.",
+    "question": "Geograafia: Mitu riiki on EL-is (2026)? Märgi sobiv arv.",
     "options": [
       "25",
       "39",
@@ -7704,7 +7704,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu osariiki on USA-s? Kontekst: Ottawa.",
+    "question": "Geograafia: Mitu osariiki on USA-s? Märgi sobiv arv.",
     "options": [
       "48",
       "52",
@@ -7730,7 +7730,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitut ajatsooni Hiina kasutab? Kontekst: Tokyo.",
+    "question": "Geograafia: Mitut ajatsooni Hiina kasutab? Märgi sobiv arv.",
     "options": [
       "12",
       "18",
@@ -7756,7 +7756,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu kraadi on taisringis? Kontekst: Seoul.",
+    "question": "Geograafia: Mitu kraadi on taisringis? Märgi sobiv arv.",
     "options": [
       "350",
       "355",
@@ -7782,7 +7782,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu mandrit loetletakse tavaliselt? Kontekst: Beijing.",
+    "question": "Geograafia: Mitu mandrit loetletakse tavaliselt? Mis on õige number?",
     "options": [
       "10",
       "4",
@@ -7808,7 +7808,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu ookeani nimetatakse tavaliselt? Kontekst: New Delhi.",
+    "question": "Geograafia: Mitu ookeani nimetatakse tavaliselt? Mis on õige number?",
     "options": [
       "10",
       "4",
@@ -7834,7 +7834,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu riiki on EL-is (2026)? Kontekst: Nile.",
+    "question": "Geograafia: Mitu riiki on EL-is (2026)? Mis on õige number?",
     "options": [
       "35",
       "19",
@@ -7860,7 +7860,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu osariiki on USA-s? Kontekst: Amazon.",
+    "question": "Geograafia: Mitu osariiki on USA-s? Mis on õige number?",
     "options": [
       "42",
       "55",
@@ -7886,7 +7886,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitut ajatsooni Hiina kasutab? Kontekst: Danube.",
+    "question": "Geograafia: Mitut ajatsooni Hiina kasutab? Mis on õige number?",
     "options": [
       "7",
       "9",
@@ -7912,7 +7912,7 @@
     "topic": "Geography",
     "category": "NUMBER",
     "language": "et",
-    "question": "Geograafia: Mitu kraadi on taisringis? Kontekst: Rhine.",
+    "question": "Geograafia: Mitu kraadi on taisringis? Mis on õige number?",
     "options": [
       "390",
       "330",
@@ -7938,7 +7938,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu keelt on viiulil? Kontekst: Mona Lisa.",
+    "question": "Kultuur: Mitu keelt on viiulil?",
     "options": [
       "7",
       "3",
@@ -7964,7 +7964,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu raamatut on Sormuste Isanda triloogias? Kontekst: Starry Night.",
+    "question": "Kultuur: Mitu raamatut on Sormuste Isanda triloogias?",
     "options": [
       "3",
       "15",
@@ -7990,7 +7990,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu Oscarit on EGOT lyhendis? Kontekst: Hamlet.",
+    "question": "Kultuur: Mitu Oscarit on EGOT lyhendis?",
     "options": [
       "3",
       "2",
@@ -8016,7 +8016,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu Harry Potteri raamatut on olemas? Kontekst: Macbeth.",
+    "question": "Kultuur: Mitu Harry Potteri raamatut on olemas?",
     "options": [
       "3",
       "10",
@@ -8042,7 +8042,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu vaatust on klassikalises draamas? Kontekst: The Odyssey.",
+    "question": "Kultuur: Mitu vaatust on klassikalises draamas?",
     "options": [
       "5",
       "4",
@@ -8068,7 +8068,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu rida on Shakespeare'i sonetis? Kontekst: The Iliad.",
+    "question": "Kultuur: Mitu rida on Shakespeare'i sonetis?",
     "options": [
       "16",
       "17",
@@ -8094,7 +8094,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu keelt on viiulil? Kontekst: Don Quixote.",
+    "question": "Kultuur: Mitu keelt on viiulil? Vali õige arv.",
     "options": [
       "6",
       "11",
@@ -8120,7 +8120,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu raamatut on Sormuste Isanda triloogias? Kontekst: The Great Gatsby.",
+    "question": "Kultuur: Mitu raamatut on Sormuste Isanda triloogias? Vali õige arv.",
     "options": [
       "3",
       "2",
@@ -8146,7 +8146,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu Oscarit on EGOT lyhendis? Kontekst: Pride and Prejudice.",
+    "question": "Kultuur: Mitu Oscarit on EGOT lyhendis? Vali õige arv.",
     "options": [
       "8",
       "4",
@@ -8172,7 +8172,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu Harry Potteri raamatut on olemas? Kontekst: War and Peace.",
+    "question": "Kultuur: Mitu Harry Potteri raamatut on olemas? Vali õige arv.",
     "options": [
       "8",
       "10",
@@ -8198,7 +8198,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu vaatust on klassikalises draamas? Kontekst: The Godfather.",
+    "question": "Kultuur: Mitu vaatust on klassikalises draamas? Vali õige arv.",
     "options": [
       "9",
       "8",
@@ -8224,7 +8224,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu rida on Shakespeare'i sonetis? Kontekst: Casablanca.",
+    "question": "Kultuur: Mitu rida on Shakespeare'i sonetis? Vali õige arv.",
     "options": [
       "12",
       "10",
@@ -8250,7 +8250,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu keelt on viiulil? Kontekst: Citizen Kane.",
+    "question": "Kultuur: Mitu keelt on viiulil? Leia õige kogus.",
     "options": [
       "4",
       "9",
@@ -8276,7 +8276,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu raamatut on Sormuste Isanda triloogias? Kontekst: The Beatles.",
+    "question": "Kultuur: Mitu raamatut on Sormuste Isanda triloogias? Leia õige kogus.",
     "options": [
       "8",
       "3",
@@ -8302,7 +8302,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu Oscarit on EGOT lyhendis? Kontekst: Mozart.",
+    "question": "Kultuur: Mitu Oscarit on EGOT lyhendis? Leia õige kogus.",
     "options": [
       "9",
       "8",
@@ -8328,7 +8328,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu Harry Potteri raamatut on olemas? Kontekst: Beethoven.",
+    "question": "Kultuur: Mitu Harry Potteri raamatut on olemas? Leia õige kogus.",
     "options": [
       "5",
       "3",
@@ -8354,7 +8354,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu vaatust on klassikalises draamas? Kontekst: Bach.",
+    "question": "Kultuur: Mitu vaatust on klassikalises draamas? Leia õige kogus.",
     "options": [
       "1",
       "8",
@@ -8380,7 +8380,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu rida on Shakespeare'i sonetis? Kontekst: Chopin.",
+    "question": "Kultuur: Mitu rida on Shakespeare'i sonetis? Leia õige kogus.",
     "options": [
       "12",
       "10",
@@ -8406,7 +8406,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu keelt on viiulil? Kontekst: Picasso.",
+    "question": "Kultuur: Mitu keelt on viiulil? Märgi sobiv arv.",
     "options": [
       "3",
       "5",
@@ -8432,7 +8432,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu raamatut on Sormuste Isanda triloogias? Kontekst: Van Gogh.",
+    "question": "Kultuur: Mitu raamatut on Sormuste Isanda triloogias? Märgi sobiv arv.",
     "options": [
       "10",
       "6",
@@ -8458,7 +8458,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu Oscarit on EGOT lyhendis? Kontekst: Michelangelo.",
+    "question": "Kultuur: Mitu Oscarit on EGOT lyhendis? Märgi sobiv arv.",
     "options": [
       "9",
       "2",
@@ -8484,7 +8484,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu Harry Potteri raamatut on olemas? Kontekst: Da Vinci.",
+    "question": "Kultuur: Mitu Harry Potteri raamatut on olemas? Märgi sobiv arv.",
     "options": [
       "10",
       "12",
@@ -8510,7 +8510,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu vaatust on klassikalises draamas? Kontekst: Shakespeare.",
+    "question": "Kultuur: Mitu vaatust on klassikalises draamas? Märgi sobiv arv.",
     "options": [
       "8",
       "9",
@@ -8536,7 +8536,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu rida on Shakespeare'i sonetis? Kontekst: Jane Austen.",
+    "question": "Kultuur: Mitu rida on Shakespeare'i sonetis? Märgi sobiv arv.",
     "options": [
       "17",
       "13",
@@ -8562,7 +8562,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu keelt on viiulil? Kontekst: Tolstoy.",
+    "question": "Kultuur: Mitu keelt on viiulil? Mis on õige number?",
     "options": [
       "4",
       "1",
@@ -8588,7 +8588,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu raamatut on Sormuste Isanda triloogias? Kontekst: Dostoevsky.",
+    "question": "Kultuur: Mitu raamatut on Sormuste Isanda triloogias? Mis on õige number?",
     "options": [
       "8",
       "1",
@@ -8614,7 +8614,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu Oscarit on EGOT lyhendis? Kontekst: Homer.",
+    "question": "Kultuur: Mitu Oscarit on EGOT lyhendis? Mis on õige number?",
     "options": [
       "2",
       "7",
@@ -8640,7 +8640,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu Harry Potteri raamatut on olemas? Kontekst: Sculpture.",
+    "question": "Kultuur: Mitu Harry Potteri raamatut on olemas? Mis on õige number?",
     "options": [
       "8",
       "11",
@@ -8666,7 +8666,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu vaatust on klassikalises draamas? Kontekst: Opera.",
+    "question": "Kultuur: Mitu vaatust on klassikalises draamas? Mis on õige number?",
     "options": [
       "9",
       "2",
@@ -8692,7 +8692,7 @@
     "topic": "Culture",
     "category": "NUMBER",
     "language": "et",
-    "question": "Kultuur: Mitu rida on Shakespeare'i sonetis? Kontekst: Ballet.",
+    "question": "Kultuur: Mitu rida on Shakespeare'i sonetis? Mis on õige number?",
     "options": [
       "16",
       "15",
@@ -8718,7 +8718,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu planeeti on Paikesesusteemis? Kontekst: Atom.",
+    "question": "Teadus: Mitu planeeti on Paikesesusteemis?",
     "options": [
       "11",
       "6",
@@ -8744,7 +8744,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu luud on taiskasvanud inimese kehas? Kontekst: Molecule.",
+    "question": "Teadus: Mitu luud on taiskasvanud inimese kehas?",
     "options": [
       "246",
       "196",
@@ -8770,7 +8770,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu elementi on perioodilisustabelis? Kontekst: Electron.",
+    "question": "Teadus: Mitu elementi on perioodilisustabelis?",
     "options": [
       "118",
       "113",
@@ -8796,7 +8796,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu kanoonilist DNA alust on? Kontekst: Proton.",
+    "question": "Teadus: Mitu kanoonilist DNA alust on?",
     "options": [
       "4",
       "3",
@@ -8822,7 +8822,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu minutit on uhes paevas? Kontekst: Neutron.",
+    "question": "Teadus: Mitu minutit on uhes paevas?",
     "options": [
       "1450",
       "1445",
@@ -8848,7 +8848,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu prootonit on sasinikul? Kontekst: Photon.",
+    "question": "Teadus: Mitu prootonit on sasinikul?",
     "options": [
       "2",
       "5",
@@ -8874,7 +8874,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu planeeti on Paikesesusteemis? Kontekst: Gravity.",
+    "question": "Teadus: Mitu planeeti on Paikesesusteemis? Vali õige arv.",
     "options": [
       "12",
       "5",
@@ -8900,7 +8900,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu luud on taiskasvanud inimese kehas? Kontekst: Velocity.",
+    "question": "Teadus: Mitu luud on taiskasvanud inimese kehas? Vali õige arv.",
     "options": [
       "201",
       "206",
@@ -8926,7 +8926,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu elementi on perioodilisustabelis? Kontekst: Acceleration.",
+    "question": "Teadus: Mitu elementi on perioodilisustabelis? Vali õige arv.",
     "options": [
       "123",
       "116",
@@ -8952,7 +8952,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu kanoonilist DNA alust on? Kontekst: Momentum.",
+    "question": "Teadus: Mitu kanoonilist DNA alust on? Vali õige arv.",
     "options": [
       "11",
       "7",
@@ -8978,7 +8978,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu minutit on uhes paevas? Kontekst: Energy.",
+    "question": "Teadus: Mitu minutit on uhes paevas? Vali õige arv.",
     "options": [
       "1410",
       "1420",
@@ -9004,7 +9004,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu prootonit on sasinikul? Kontekst: Entropy.",
+    "question": "Teadus: Mitu prootonit on sasinikul? Vali õige arv.",
     "options": [
       "6",
       "10",
@@ -9030,7 +9030,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu planeeti on Paikesesusteemis? Kontekst: Oxygen.",
+    "question": "Teadus: Mitu planeeti on Paikesesusteemis? Leia õige kogus.",
     "options": [
       "10",
       "6",
@@ -9056,7 +9056,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu luud on taiskasvanud inimese kehas? Kontekst: Hydrogen.",
+    "question": "Teadus: Mitu luud on taiskasvanud inimese kehas? Leia õige kogus.",
     "options": [
       "206",
       "196",
@@ -9082,7 +9082,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu elementi on perioodilisustabelis? Kontekst: Nitrogen.",
+    "question": "Teadus: Mitu elementi on perioodilisustabelis? Leia õige kogus.",
     "options": [
       "128",
       "126",
@@ -9108,7 +9108,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu kanoonilist DNA alust on? Kontekst: Carbon.",
+    "question": "Teadus: Mitu kanoonilist DNA alust on? Leia õige kogus.",
     "options": [
       "5",
       "2",
@@ -9134,7 +9134,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu minutit on uhes paevas? Kontekst: Helium.",
+    "question": "Teadus: Mitu minutit on uhes paevas? Leia õige kogus.",
     "options": [
       "1430",
       "1480",
@@ -9160,7 +9160,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu prootonit on sasinikul? Kontekst: Neon.",
+    "question": "Teadus: Mitu prootonit on sasinikul? Leia õige kogus.",
     "options": [
       "4",
       "6",
@@ -9186,7 +9186,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu planeeti on Paikesesusteemis? Kontekst: Sodium.",
+    "question": "Teadus: Mitu planeeti on Paikesesusteemis? Märgi sobiv arv.",
     "options": [
       "12",
       "11",
@@ -9212,7 +9212,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu luud on taiskasvanud inimese kehas? Kontekst: Potassium.",
+    "question": "Teadus: Mitu luud on taiskasvanud inimese kehas? Märgi sobiv arv.",
     "options": [
       "246",
       "186",
@@ -9238,7 +9238,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu elementi on perioodilisustabelis? Kontekst: Calcium.",
+    "question": "Teadus: Mitu elementi on perioodilisustabelis? Märgi sobiv arv.",
     "options": [
       "130",
       "118",
@@ -9264,7 +9264,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu kanoonilist DNA alust on? Kontekst: Iron.",
+    "question": "Teadus: Mitu kanoonilist DNA alust on? Märgi sobiv arv.",
     "options": [
       "1",
       "4",
@@ -9290,7 +9290,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu minutit on uhes paevas? Kontekst: Copper.",
+    "question": "Teadus: Mitu minutit on uhes paevas? Märgi sobiv arv.",
     "options": [
       "1440",
       "1470",
@@ -9316,7 +9316,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu prootonit on sasinikul? Kontekst: Silver.",
+    "question": "Teadus: Mitu prootonit on sasinikul? Märgi sobiv arv.",
     "options": [
       "8",
       "10",
@@ -9342,7 +9342,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu planeeti on Paikesesusteemis? Kontekst: Gold.",
+    "question": "Teadus: Mitu planeeti on Paikesesusteemis? Mis on õige number?",
     "options": [
       "6",
       "12",
@@ -9368,7 +9368,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu luud on taiskasvanud inimese kehas? Kontekst: Mercury.",
+    "question": "Teadus: Mitu luud on taiskasvanud inimese kehas? Mis on õige number?",
     "options": [
       "186",
       "226",
@@ -9394,7 +9394,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu elementi on perioodilisustabelis? Kontekst: Venus.",
+    "question": "Teadus: Mitu elementi on perioodilisustabelis? Mis on õige number?",
     "options": [
       "130",
       "110",
@@ -9420,7 +9420,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu kanoonilist DNA alust on? Kontekst: Earth.",
+    "question": "Teadus: Mitu kanoonilist DNA alust on? Mis on õige number?",
     "options": [
       "5",
       "9",
@@ -9446,7 +9446,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu minutit on uhes paevas? Kontekst: Mars.",
+    "question": "Teadus: Mitu minutit on uhes paevas? Mis on õige number?",
     "options": [
       "1460",
       "1450",
@@ -9472,7 +9472,7 @@
     "topic": "Science",
     "category": "NUMBER",
     "language": "et",
-    "question": "Teadus: Mitu prootonit on sasinikul? Kontekst: Jupiter.",
+    "question": "Teadus: Mitu prootonit on sasinikul? Mis on õige number?",
     "options": [
       "9",
       "5",
@@ -9498,7 +9498,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu paeva on liigaaastas? Kontekst: Calendar.",
+    "question": "Varia: Mitu paeva on liigaaastas?",
     "options": [
       "396",
       "406",
@@ -9524,7 +9524,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu kuud on uhes aastas? Kontekst: Compass.",
+    "question": "Varia: Mitu kuud on uhes aastas?",
     "options": [
       "16",
       "15",
@@ -9550,7 +9550,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu tundi on uhes paevas? Kontekst: Keyboard.",
+    "question": "Varia: Mitu tundi on uhes paevas?",
     "options": [
       "22",
       "32",
@@ -9576,7 +9576,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu minutit on uhes tunnis? Kontekst: Notebook.",
+    "question": "Varia: Mitu minutit on uhes tunnis?",
     "options": [
       "62",
       "70",
@@ -9602,7 +9602,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu tahte on inglise tahestikus? Kontekst: Backpack.",
+    "question": "Varia: Mitu tahte on inglise tahestikus?",
     "options": [
       "24",
       "31",
@@ -9628,7 +9628,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu paeva on uhes nadalas? Kontekst: Umbrella.",
+    "question": "Varia: Mitu paeva on uhes nadalas?",
     "options": [
       "3",
       "9",
@@ -9654,7 +9654,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu paeva on liigaaastas? Kontekst: Clock.",
+    "question": "Varia: Mitu paeva on liigaaastas? Vali õige arv.",
     "options": [
       "346",
       "376",
@@ -9680,7 +9680,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu kuud on uhes aastas? Kontekst: Watch.",
+    "question": "Varia: Mitu kuud on uhes aastas? Vali õige arv.",
     "options": [
       "12",
       "14",
@@ -9706,7 +9706,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu tundi on uhes paevas? Kontekst: Bicycle.",
+    "question": "Varia: Mitu tundi on uhes paevas? Vali õige arv.",
     "options": [
       "14",
       "36",
@@ -9732,7 +9732,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu minutit on uhes tunnis? Kontekst: Scooter.",
+    "question": "Varia: Mitu minutit on uhes tunnis? Vali õige arv.",
     "options": [
       "62",
       "70",
@@ -9758,7 +9758,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu tahte on inglise tahestikus? Kontekst: Elevator.",
+    "question": "Varia: Mitu tahte on inglise tahestikus? Vali õige arv.",
     "options": [
       "21",
       "18",
@@ -9784,7 +9784,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu paeva on uhes nadalas? Kontekst: Subway.",
+    "question": "Varia: Mitu paeva on uhes nadalas? Vali õige arv.",
     "options": [
       "8",
       "5",
@@ -9810,7 +9810,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu paeva on liigaaastas? Kontekst: Airport.",
+    "question": "Varia: Mitu paeva on liigaaastas? Leia õige kogus.",
     "options": [
       "336",
       "396",
@@ -9836,7 +9836,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu kuud on uhes aastas? Kontekst: Library.",
+    "question": "Varia: Mitu kuud on uhes aastas? Leia õige kogus.",
     "options": [
       "9",
       "8",
@@ -9862,7 +9862,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu tundi on uhes paevas? Kontekst: Museum.",
+    "question": "Varia: Mitu tundi on uhes paevas? Leia õige kogus.",
     "options": [
       "14",
       "26",
@@ -9888,7 +9888,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu minutit on uhes tunnis? Kontekst: Restaurant.",
+    "question": "Varia: Mitu minutit on uhes tunnis? Leia õige kogus.",
     "options": [
       "55",
       "62",
@@ -9914,7 +9914,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu tahte on inglise tahestikus? Kontekst: Recipe.",
+    "question": "Varia: Mitu tahte on inglise tahestikus? Leia õige kogus.",
     "options": [
       "26",
       "16",
@@ -9940,7 +9940,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu paeva on uhes nadalas? Kontekst: Sandwich.",
+    "question": "Varia: Mitu paeva on uhes nadalas? Leia õige kogus.",
     "options": [
       "6",
       "9",
@@ -9966,7 +9966,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu paeva on liigaaastas? Kontekst: Pasta.",
+    "question": "Varia: Mitu paeva on liigaaastas? Märgi sobiv arv.",
     "options": [
       "366",
       "346",
@@ -9992,7 +9992,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu kuud on uhes aastas? Kontekst: Chocolate.",
+    "question": "Varia: Mitu kuud on uhes aastas? Märgi sobiv arv.",
     "options": [
       "8",
       "16",
@@ -10018,7 +10018,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu tundi on uhes paevas? Kontekst: Coffee.",
+    "question": "Varia: Mitu tundi on uhes paevas? Märgi sobiv arv.",
     "options": [
       "34",
       "14",
@@ -10044,7 +10044,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu minutit on uhes tunnis? Kontekst: Tea.",
+    "question": "Varia: Mitu minutit on uhes tunnis? Märgi sobiv arv.",
     "options": [
       "72",
       "50",
@@ -10070,7 +10070,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu tahte on inglise tahestikus? Kontekst: Orange.",
+    "question": "Varia: Mitu tahte on inglise tahestikus? Märgi sobiv arv.",
     "options": [
       "31",
       "36",
@@ -10096,7 +10096,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu paeva on uhes nadalas? Kontekst: Banana.",
+    "question": "Varia: Mitu paeva on uhes nadalas? Märgi sobiv arv.",
     "options": [
       "6",
       "7",
@@ -10122,7 +10122,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu paeva on liigaaastas? Kontekst: Apple.",
+    "question": "Varia: Mitu paeva on liigaaastas? Mis on õige number?",
     "options": [
       "356",
       "346",
@@ -10148,7 +10148,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu kuud on uhes aastas? Kontekst: Laptop.",
+    "question": "Varia: Mitu kuud on uhes aastas? Mis on õige number?",
     "options": [
       "11",
       "17",
@@ -10174,7 +10174,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu tundi on uhes paevas? Kontekst: Smartphone.",
+    "question": "Varia: Mitu tundi on uhes paevas? Mis on õige number?",
     "options": [
       "29",
       "26",
@@ -10200,7 +10200,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu minutit on uhes tunnis? Kontekst: Headphones.",
+    "question": "Varia: Mitu minutit on uhes tunnis? Mis on õige number?",
     "options": [
       "55",
       "70",
@@ -10226,7 +10226,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu tahte on inglise tahestikus? Kontekst: Camera.",
+    "question": "Varia: Mitu tahte on inglise tahestikus? Mis on õige number?",
     "options": [
       "26",
       "21",
@@ -10252,7 +10252,7 @@
     "topic": "Varia",
     "category": "NUMBER",
     "language": "et",
-    "question": "Varia: Mitu paeva on uhes nadalas? Kontekst: Printer.",
+    "question": "Varia: Mitu paeva on uhes nadalas? Mis on õige number?",
     "options": [
       "9",
       "8",
@@ -10278,7 +10278,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Vana-Rooma.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette.",
     "options": [
       "Esimene maailmasõda algab",
       "Teine maailmasõda algab",
@@ -10314,7 +10314,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Viikingiaeg.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette.",
     "options": [
       "Keskaeg",
       "Tööstusrevolutsioon",
@@ -10350,7 +10350,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Renessanss.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette.",
     "options": [
       "1215",
       "1989",
@@ -10386,7 +10386,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Tööstusrevolutsioon.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "Teine maailmasõda algab",
       "Columbus jõuab Ameerikasse",
@@ -10422,7 +10422,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Prantsuse revolutsioon.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "Valgustusaeg",
       "Rauaaeg",
@@ -10458,7 +10458,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Siiditee.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "1776",
       "1989",
@@ -10494,7 +10494,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Magna Carta.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Koosta järjestus algusest lõpuni.",
     "options": [
       "Columbus jõuab Ameerikasse",
       "Apollo 11 maandub Kuul",
@@ -10530,7 +10530,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Osmanite riik.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Koosta järjestus algusest lõpuni.",
     "options": [
       "Keskaeg",
       "Renessanss",
@@ -10566,7 +10566,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Mingi dünastia.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Koosta järjestus algusest lõpuni.",
     "options": [
       "1776",
       "1492",
@@ -10602,7 +10602,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Normanni vallutus.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "Berliini müür langeb",
       "Columbus jõuab Ameerikasse",
@@ -10638,7 +10638,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Napoleon.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "Keskaeg",
       "Klassikaline antiikaeg",
@@ -10674,7 +10674,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Julius Caesar.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "1215",
       "1939",
@@ -10710,7 +10710,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Aleksander Suur.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "Apollo 11 maandub Kuul",
       "Berliini müür langeb",
@@ -10746,7 +10746,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Gutenbergi trükipress.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "Valgustusaeg",
       "Keskaeg",
@@ -10782,7 +10782,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Rooma vabariik.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "1789",
       "1989",
@@ -10818,7 +10818,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Külm sõda.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Sea vastused õigesse järjestusse.",
     "options": [
       "Prantsuse revolutsioon algab",
       "NSVL laguneb",
@@ -10854,7 +10854,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Berliini müür.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Sea vastused õigesse järjestusse.",
     "options": [
       "Tööstusrevolutsioon",
       "Valgustusaeg",
@@ -10890,7 +10890,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Apollo 11.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Sea vastused õigesse järjestusse.",
     "options": [
       "1939",
       "1989",
@@ -10926,7 +10926,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Versailles’ leping.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "NSVL laguneb",
       "Teine maailmasõda algab",
@@ -10962,7 +10962,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Bütsantsi riik.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "Teine maailmasõda",
       "Renessanss",
@@ -10998,7 +10998,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Meiji reformid.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "1215",
       "1989",
@@ -11034,7 +11034,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Suurte maadeavastuste ajastu.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "Apollo 11 maandub Kuul",
       "Prantsuse revolutsioon algab",
@@ -11070,7 +11070,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Pronksiaeg.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "Klassikaline antiikaeg",
       "Keskaeg",
@@ -11106,7 +11106,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Rauaaeg.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "1776",
       "1969",
@@ -11142,7 +11142,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Harlemi renessanss.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Liigu esimesest kirjest viimaseni.",
     "options": [
       "Apollo 11 maandub Kuul",
       "Waterloo lahing",
@@ -11178,7 +11178,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Trükipress.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Liigu esimesest kirjest viimaseni.",
     "options": [
       "Valgustusaeg",
       "Klassikaline antiikaeg",
@@ -11214,7 +11214,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Hani dünastia.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Liigu esimesest kirjest viimaseni.",
     "options": [
       "1066",
       "1215",
@@ -11250,7 +11250,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Teema: Pax Romana.",
+    "question": "Ajalugu: Pane need sündmused kronoloogilisse järjekorda, varaseim ette. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "Prantsuse revolutsioon algab",
       "Teine maailmasõda lõpeb",
@@ -11286,7 +11286,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Teema: Pärsia riik.",
+    "question": "Ajalugu: Pane need ajastud kronoloogilisse järjekorda, vanim ette. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "Tööstusrevolutsioon",
       "Klassikaline antiikaeg",
@@ -11322,7 +11322,7 @@
     "topic": "History",
     "category": "ORDER",
     "language": "et",
-    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Teema: Maiade tsivilisatsioon.",
+    "question": "Ajalugu: Pane need aastad kronoloogilisse järjekorda, varaseim ette. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "1492",
       "1939",
@@ -11358,7 +11358,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: jalgpall.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette.",
     "options": [
       "poolmaraton",
       "400 m sprint",
@@ -11394,7 +11394,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: korvpall.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette.",
     "options": [
       "tennise sett",
       "pesapallimäng",
@@ -11430,7 +11430,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: tennis.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette.",
     "options": [
       "veepall",
       "võrkpall",
@@ -11466,7 +11466,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: kriket.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "maraton",
       "400 m sprint",
@@ -11502,7 +11502,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: ragbi.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "poksi raund",
       "ragbi poolaeg",
@@ -11538,7 +11538,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: võrkpall.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "pesapall",
       "võrkpall",
@@ -11574,7 +11574,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: käsipall.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Koosta järjestus algusest lõpuni.",
     "options": [
       "400 m sprint",
       "50 km käimine",
@@ -11610,7 +11610,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: pesapall.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Koosta järjestus algusest lõpuni.",
     "options": [
       "pesapallimäng",
       "ragbi poolaeg",
@@ -11646,7 +11646,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: hoki.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Koosta järjestus algusest lõpuni.",
     "options": [
       "korvpall",
       "kriket",
@@ -11682,7 +11682,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: sulgpall.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "1500 m jooks",
       "maraton",
@@ -11718,7 +11718,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: lauatennis.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "tennise sett",
       "ragbi poolaeg",
@@ -11754,7 +11754,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: kergejõustik.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "tennise üksikmäng",
       "jalgpall",
@@ -11790,7 +11790,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: ujumine.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "5000 m jooks",
       "200 m sprint",
@@ -11826,7 +11826,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: rattasõit.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "pesapallimäng",
       "tennise sett",
@@ -11862,7 +11862,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: poks.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "Austraalia jalgpall",
       "võrkpall",
@@ -11898,7 +11898,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: vehklemine.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Sea vastused õigesse järjestusse.",
     "options": [
       "5000 m jooks",
       "800 m jooks",
@@ -11934,7 +11934,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: judo.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Sea vastused õigesse järjestusse.",
     "options": [
       "testkriketi mängupäev",
       "lauatennise pallivahetus",
@@ -11970,7 +11970,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: karate.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Sea vastused õigesse järjestusse.",
     "options": [
       "pesapall",
       "rannavõrkpall",
@@ -12006,7 +12006,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: golf.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "maraton",
       "100 m sprint",
@@ -12042,7 +12042,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: snooker.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "kriketi T20 mäng",
       "100 m jooks",
@@ -12078,7 +12078,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: Vormel 1.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "tennise üksikmäng",
       "võrkpall",
@@ -12114,7 +12114,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: MotoGP.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "100 m sprint",
       "poolmaraton",
@@ -12150,7 +12150,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: maraton.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "lauatennise pallivahetus",
       "korvpalli veerandaeg",
@@ -12186,7 +12186,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: triatlon.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "kriket",
       "tennise üksikmäng",
@@ -12222,7 +12222,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: kümnevõistlus.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Liigu esimesest kirjest viimaseni.",
     "options": [
       "poolmaraton",
       "5000 m jooks",
@@ -12258,7 +12258,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: Wimbledon.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Liigu esimesest kirjest viimaseni.",
     "options": [
       "pesapallimäng",
       "tennise sett",
@@ -12294,7 +12294,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: olümpiamängud.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Liigu esimesest kirjest viimaseni.",
     "options": [
       "tennise üksikmäng",
       "veepall",
@@ -12330,7 +12330,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Teema: MM.",
+    "question": "Sport: Pane need võistlusmaad järjekorda, lühim ette. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "200 m sprint",
       "50 km käimine",
@@ -12366,7 +12366,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need kestused järjekorda, lühim ette. Teema: Meistrite liiga.",
+    "question": "Sport: Pane need kestused järjekorda, lühim ette. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "100 m jooks",
       "lauatennise pallivahetus",
@@ -12402,7 +12402,7 @@
     "topic": "Sports",
     "category": "ORDER",
     "language": "et",
-    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Teema: NBA finaalid.",
+    "question": "Sport: Pane need võistkonna suurused järjekorda, väikseim ette. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "tennise üksikmäng",
       "rannavõrkpall",
@@ -12438,7 +12438,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Tallinn.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette.",
     "options": [
       "Argentina",
       "Kasahstan",
@@ -12474,7 +12474,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Riia.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda.",
     "options": [
       "Canberra",
       "Reykjavik",
@@ -12510,7 +12510,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Vilnius.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette.",
     "options": [
       "Mont Blanc",
       "Kanchenjunga",
@@ -12546,7 +12546,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Helsingi.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "Ukraina",
       "Island",
@@ -12582,7 +12582,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Stockholm.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "Kaplinn",
       "Buenos Aires",
@@ -12618,7 +12618,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Oslo.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "Vinsoni massiiv",
       "Kilimanjaro",
@@ -12654,7 +12654,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Kopenhaagen.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Koosta järjestus algusest lõpuni.",
     "options": [
       "Hiina",
       "Venemaa",
@@ -12690,7 +12690,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Reykjavik.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Koosta järjestus algusest lõpuni.",
     "options": [
       "Stockholm",
       "Ateena",
@@ -12726,7 +12726,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: London.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Koosta järjestus algusest lõpuni.",
     "options": [
       "Vinsoni massiiv",
       "Kilimanjaro",
@@ -12762,7 +12762,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Pariis.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "Ühendkuningriik",
       "Kasahstan",
@@ -12798,7 +12798,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Berliin.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "Nairobi",
       "Kairo",
@@ -12834,7 +12834,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Rooma.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "Denali",
       "Mont Blanc",
@@ -12870,7 +12870,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Madrid.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "Kasahstan",
       "Prantsusmaa",
@@ -12906,7 +12906,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Lissabon.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "Nairobi",
       "Kaplinn",
@@ -12942,7 +12942,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Viin.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "Everest",
       "Kanchenjunga",
@@ -12978,7 +12978,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Praha.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Sea vastused õigesse järjestusse.",
     "options": [
       "Island",
       "Kasahstan",
@@ -13014,7 +13014,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Varssavi.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Sea vastused õigesse järjestusse.",
     "options": [
       "Ateena",
       "Nairobi",
@@ -13050,7 +13050,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Budapest.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Sea vastused õigesse järjestusse.",
     "options": [
       "Kanchenjunga",
       "Aconcagua",
@@ -13086,7 +13086,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Ateena.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "Prantsusmaa",
       "Kanada",
@@ -13122,7 +13122,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Dublin.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "Kairo",
       "Nairobi",
@@ -13158,7 +13158,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Canberra.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "Vinsoni massiiv",
       "K2",
@@ -13194,7 +13194,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Ottawa.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "Kasahstan",
       "India",
@@ -13230,7 +13230,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Tokyo.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "Nairobi",
       "Kaplinn",
@@ -13266,7 +13266,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Soul.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "Mont Blanc",
       "Kanchenjunga",
@@ -13302,7 +13302,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Peking.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Liigu esimesest kirjest viimaseni.",
     "options": [
       "Ukraina",
       "Kasahstan",
@@ -13338,7 +13338,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Uus Delhi.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Liigu esimesest kirjest viimaseni.",
     "options": [
       "Reykjavik",
       "Nairobi",
@@ -13374,7 +13374,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Niilus.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Liigu esimesest kirjest viimaseni.",
     "options": [
       "Aconcagua",
       "K2",
@@ -13410,7 +13410,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Teema: Amazonas.",
+    "question": "Geograafia: Pane need riigid pindala järgi järjekorda, väikseim ette. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "Prantsusmaa",
       "Kanada",
@@ -13446,7 +13446,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Teema: Doonau.",
+    "question": "Geograafia: Pane need linnad lõunast põhja järjekorda. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "Singapur",
       "Stockholm",
@@ -13482,7 +13482,7 @@
     "topic": "Geography",
     "category": "ORDER",
     "language": "et",
-    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Teema: Rein.",
+    "question": "Geograafia: Pane need mäed kõrguse järgi järjekorda, madalaim ette. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "Lhotse",
       "Everest",
@@ -13518,7 +13518,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Mona Lisa.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette.",
     "options": [
       "Barokk",
       "Kubism",
@@ -13554,7 +13554,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Tähine öö.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette.",
     "options": [
       "Blade Runner",
       "The Godfather",
@@ -13590,7 +13590,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Hamlet.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette.",
     "options": [
       "Modernism",
       "Realism",
@@ -13626,7 +13626,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Macbeth.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "Popkunst",
       "Neoklassitsism",
@@ -13662,7 +13662,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Odüsseia.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "Pulp Fiction",
       "The Godfather",
@@ -13698,7 +13698,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Ilias.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "Romantism",
       "Eepilise luule ajastu",
@@ -13734,7 +13734,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Don Quijote.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Koosta järjestus algusest lõpuni.",
     "options": [
       "Sürrealism",
       "Neoklassitsism",
@@ -13770,7 +13770,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Suur Gatsby.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Koosta järjestus algusest lõpuni.",
     "options": [
       "Jaws",
       "Pulp Fiction",
@@ -13806,7 +13806,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Uhkus ja eelarvamus.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Koosta järjestus algusest lõpuni.",
     "options": [
       "Renessansikirjandus",
       "Klassikaline draama",
@@ -13842,7 +13842,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Sõda ja rahu.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "Sürrealism",
       "Klassikaline kunst",
@@ -13878,7 +13878,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Ristiisa.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "Blade Runner",
       "Inception",
@@ -13914,7 +13914,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Casablanca.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "Romantism",
       "Valgustusaja kirjandus",
@@ -13950,7 +13950,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Kodanik Kane.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "Romantism",
       "Klassikaline kunst",
@@ -13986,7 +13986,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: The Beatles.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "The Matrix",
       "Casablanca",
@@ -14022,7 +14022,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Mozart.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "Renessansikirjandus",
       "Romantism",
@@ -14058,7 +14058,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Beethoven.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Sea vastused õigesse järjestusse.",
     "options": [
       "Neoklassitsism",
       "Romantism",
@@ -14094,7 +14094,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Bach.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Sea vastused õigesse järjestusse.",
     "options": [
       "Pulp Fiction",
       "Star Wars",
@@ -14130,7 +14130,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Chopin.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Sea vastused õigesse järjestusse.",
     "options": [
       "Valgustusaja kirjandus",
       "Postmodernism",
@@ -14166,7 +14166,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Picasso.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "Neoklassitsism",
       "Romantism",
@@ -14202,7 +14202,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Van Gogh.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "Blade Runner",
       "Jaws",
@@ -14238,7 +14238,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Michelangelo.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "Nüüdiskirjandus",
       "Romantism",
@@ -14274,7 +14274,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: da Vinci.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "Barokk",
       "Kubism",
@@ -14310,7 +14310,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Shakespeare.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "Star Wars",
       "The Godfather",
@@ -14346,7 +14346,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Jane Austen.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "Valgustusaja kirjandus",
       "Postmodernism",
@@ -14382,7 +14382,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Tolstoi.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Liigu esimesest kirjest viimaseni.",
     "options": [
       "Keskaegne kunst",
       "Popkunst",
@@ -14418,7 +14418,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Dostojevski.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Liigu esimesest kirjest viimaseni.",
     "options": [
       "Casablanca",
       "Pulp Fiction",
@@ -14454,7 +14454,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Homeros.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Liigu esimesest kirjest viimaseni.",
     "options": [
       "Eepilise luule ajastu",
       "Renessansikirjandus",
@@ -14490,7 +14490,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Teema: Skulptuur.",
+    "question": "Kultuur: Pane need kunstiajastud kronoloogilisse järjekorda, varaseim ette. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "Renessanss",
       "Sürrealism",
@@ -14526,7 +14526,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Teema: Ooper.",
+    "question": "Kultuur: Pane need teosed ilmumisaja järgi järjekorda, vanim ette. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "Citizen Kane",
       "The Godfather",
@@ -14562,7 +14562,7 @@
     "topic": "Culture",
     "category": "ORDER",
     "language": "et",
-    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Teema: Ballett.",
+    "question": "Kultuur: Pane need kirjandusajastud kronoloogilisse järjekorda, varaseim ette. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "Postmodernism",
       "Renessansikirjandus",
@@ -14598,7 +14598,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Aatom.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole.",
     "options": [
       "Jupiter",
       "Eris",
@@ -14634,7 +14634,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Molekul.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette.",
     "options": [
       "hekto",
       "senti",
@@ -14670,7 +14670,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Elektron.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette.",
     "options": [
       "rakk",
       "bakter",
@@ -14706,7 +14706,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Prooton.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "Merkuur",
       "Marss",
@@ -14742,7 +14742,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Neutron.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "mikro",
       "põhiühik",
@@ -14778,7 +14778,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Footon.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "rakk",
       "elund",
@@ -14814,7 +14814,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Gravitatsioon.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Koosta järjestus algusest lõpuni.",
     "options": [
       "Merkuur",
       "Saturn",
@@ -14850,7 +14850,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Kiirus.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Koosta järjestus algusest lõpuni.",
     "options": [
       "milli",
       "põhiühik",
@@ -14886,7 +14886,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Kiirendus.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Koosta järjestus algusest lõpuni.",
     "options": [
       "kude",
       "rakk",
@@ -14922,7 +14922,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Impulss.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "Pluuto",
       "Saturn",
@@ -14958,7 +14958,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Energia.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "hekto",
       "nano",
@@ -14994,7 +14994,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Entroopia.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "ökosüsteem",
       "aatom",
@@ -15030,7 +15030,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Hapnik.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "Veenus",
       "Uraan",
@@ -15066,7 +15066,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Vesinik.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "põhiühik",
       "kilo",
@@ -15102,7 +15102,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Lämmastik.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "molekul",
       "elund",
@@ -15138,7 +15138,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Süsinik.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Sea vastused õigesse järjestusse.",
     "options": [
       "Eris",
       "Veenus",
@@ -15174,7 +15174,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Heelium.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Sea vastused õigesse järjestusse.",
     "options": [
       "deka",
       "hekto",
@@ -15210,7 +15210,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Neoon.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Sea vastused õigesse järjestusse.",
     "options": [
       "molekul",
       "kude",
@@ -15246,7 +15246,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Naatrium.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "Saturn",
       "Uraan",
@@ -15282,7 +15282,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Kaalium.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "mega",
       "senti",
@@ -15318,7 +15318,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Kaltsium.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "molekul",
       "kude",
@@ -15354,7 +15354,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Raud.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "Pluuto",
       "Neptuun",
@@ -15390,7 +15390,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Vask.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "nano",
       "senti",
@@ -15426,7 +15426,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Hõbe.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "viirus",
       "kude",
@@ -15462,7 +15462,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Kuld.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Liigu esimesest kirjest viimaseni.",
     "options": [
       "Maa",
       "Veenus",
@@ -15498,7 +15498,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Merkuur.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Liigu esimesest kirjest viimaseni.",
     "options": [
       "mega",
       "detsi",
@@ -15534,7 +15534,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Veenus.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Liigu esimesest kirjest viimaseni.",
     "options": [
       "ökosüsteem",
       "molekul",
@@ -15570,7 +15570,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Teema: Maa.",
+    "question": "Teadus: Pane need planeedid järjekorda Päikesest väljapoole. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "Saturn",
       "Marss",
@@ -15606,7 +15606,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Teema: Marss.",
+    "question": "Teadus: Pane need SI-eesliited järjekorda, väikseim ette. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "kilo",
       "deka",
@@ -15642,7 +15642,7 @@
     "topic": "Science",
     "category": "ORDER",
     "language": "et",
-    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Teema: Jupiter.",
+    "question": "Teadus: Pane need mõõtkavad järjekorda, väikseim ette. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "ökosüsteem",
       "molekul",
@@ -15678,7 +15678,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: kalender.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette.",
     "options": [
       "sekund",
       "päev",
@@ -15714,7 +15714,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: kompass.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette.",
     "options": [
       "gigabait",
       "kilobait",
@@ -15750,7 +15750,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: klaviatuur.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette.",
     "options": [
       "10 senti",
       "1 dollar",
@@ -15786,7 +15786,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: märkmik.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "kuu",
       "tund",
@@ -15822,7 +15822,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: seljakott.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "petabait",
       "eksabait",
@@ -15858,7 +15858,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: vihmavari.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Alusta vastusest, mis peab tulema esimesena.",
     "options": [
       "50 senti",
       "1 dollar",
@@ -15894,7 +15894,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: kell.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Koosta järjestus algusest lõpuni.",
     "options": [
       "aastatuhat",
       "sajand",
@@ -15930,7 +15930,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: käekell.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Koosta järjestus algusest lõpuni.",
     "options": [
       "megabait",
       "bitt",
@@ -15966,7 +15966,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: jalgratas.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Koosta järjestus algusest lõpuni.",
     "options": [
       "50 senti",
       "1 sent",
@@ -16002,7 +16002,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: tõukeratas.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "minut",
       "aastatuhat",
@@ -16038,7 +16038,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: lift.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "petabait",
       "gigabait",
@@ -16074,7 +16074,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: Subway.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Vali õige järjekord esimesest viimaseni.",
     "options": [
       "1 dollar",
       "50 senti",
@@ -16110,7 +16110,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: lennujaam.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "tund",
       "aasta",
@@ -16146,7 +16146,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: raamatukogu.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "petabait",
       "kilobait",
@@ -16182,7 +16182,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: muuseum.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Sorteeri kõik neli selle reegli järgi.",
     "options": [
       "5 senti",
       "10 dollarit",
@@ -16218,7 +16218,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: restoran.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Sea vastused õigesse järjestusse.",
     "options": [
       "tund",
       "päev",
@@ -16254,7 +16254,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: retsept.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Sea vastused õigesse järjestusse.",
     "options": [
       "zettabait",
       "kilobait",
@@ -16290,7 +16290,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: võileib.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Sea vastused õigesse järjestusse.",
     "options": [
       "5 senti",
       "10 dollarit",
@@ -16326,7 +16326,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: pasta.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "päev",
       "kümnend",
@@ -16362,7 +16362,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: šokolaad.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "eksabait",
       "terabait",
@@ -16398,7 +16398,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: kohv.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Pane kogu nimekiri õigesse järjekorda.",
     "options": [
       "20 dollarit",
       "10 dollarit",
@@ -16434,7 +16434,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: tee.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "kuu",
       "kümnend",
@@ -16470,7 +16470,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: apelsin.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "bait",
       "terabait",
@@ -16506,7 +16506,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: banaan.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Alusta kirjest, mis kuulub ettepoole.",
     "options": [
       "5 senti",
       "20 dollarit",
@@ -16542,7 +16542,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: õun.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Liigu esimesest kirjest viimaseni.",
     "options": [
       "tund",
       "minut",
@@ -16578,7 +16578,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: sülearvuti.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Liigu esimesest kirjest viimaseni.",
     "options": [
       "megabait",
       "bait",
@@ -16614,7 +16614,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: nutitelefon.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Liigu esimesest kirjest viimaseni.",
     "options": [
       "10 dollarit",
       "2 dollarit",
@@ -16650,7 +16650,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Teema: kõrvaklapid.",
+    "question": "Varia: Pane need ajaühikud järjekorda, lühim ette. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "aasta",
       "aastatuhat",
@@ -16686,7 +16686,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Teema: kaamera.",
+    "question": "Varia: Pane need failimahud järjekorda, väikseim ette. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "bait",
       "bitt",
@@ -16722,7 +16722,7 @@
     "topic": "Varia",
     "category": "ORDER",
     "language": "et",
-    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Teema: printer.",
+    "question": "Varia: Pane need rahasummad järjekorda, väikseim ette. Järgi seda järjestusreeglit lõpuni välja.",
     "options": [
       "10 dollarit",
       "1 sent",

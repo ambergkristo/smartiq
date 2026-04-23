@@ -17,6 +17,7 @@ vi.mock('./api', () => {
     fetchTenantAuditEvents: vi.fn(),
     fetchTopics: vi.fn(),
     fetchNextCard: vi.fn(),
+    fetchRemotePlayerProfile: vi.fn(() => Promise.resolve(null)),
     fetchServerGameSession: vi.fn(),
     resumeServerGameSession: vi.fn(),
     fetchTenantRuntimeSnapshot: vi.fn(),
@@ -40,6 +41,7 @@ vi.mock('./api', () => {
       return 'Could not join this game. Retry in a moment.';
     }),
     setRuntimeAuthContext: vi.fn(),
+    upsertRemotePlayerProfile: vi.fn(() => Promise.resolve({})),
     upsertRuntimeSessionReviewNote: vi.fn(),
     upsertRuntimeSessionTemplate: vi.fn(),
     updateRuntimeTenantBranding: vi.fn(),
@@ -296,8 +298,8 @@ describe('App startup resilience', () => {
     expect(screen.getByText(/premium all-or-nothing quiz rounds built for fast repeat play/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /play solo/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /choose topic/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /join soon/i })).toBeDisabled();
-    expect(screen.getByRole('button', { name: /host soon/i })).toBeDisabled();
+    expect(screen.queryByRole('button', { name: /join soon/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /host soon/i })).not.toBeInTheDocument();
     expect(screen.queryByText(/workspace name/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/host email/i)).not.toBeInTheDocument();
   });

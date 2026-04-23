@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,7 +31,29 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
+
+import static com.smartiq.backend.game.GameSessionSupport.activeStatuses;
+import static com.smartiq.backend.game.GameSessionSupport.assertTenantAccess;
+import static com.smartiq.backend.game.GameSessionSupport.buildPlayers;
+import static com.smartiq.backend.game.GameSessionSupport.classifyActionFailure;
+import static com.smartiq.backend.game.GameSessionSupport.hiddenPegs;
+import static com.smartiq.backend.game.GameSessionSupport.isCorrect;
+import static com.smartiq.backend.game.GameSessionSupport.issueActionTokens;
+import static com.smartiq.backend.game.GameSessionSupport.normalizeActionRequestId;
+import static com.smartiq.backend.game.GameSessionSupport.normalizeActionType;
+import static com.smartiq.backend.game.GameSessionSupport.normalizeLanguage;
+import static com.smartiq.backend.game.GameSessionSupport.normalizeOptionalHostUserEmail;
+import static com.smartiq.backend.game.GameSessionSupport.normalizePlayers;
+import static com.smartiq.backend.game.GameSessionSupport.normalizeRequiredField;
+import static com.smartiq.backend.game.GameSessionSupport.normalizeTopic;
+import static com.smartiq.backend.game.GameSessionSupport.playerNameById;
+import static com.smartiq.backend.game.GameSessionSupport.requireActionTokenFormat;
+import static com.smartiq.backend.game.GameSessionSupport.requireActorPlayerIdFormat;
+import static com.smartiq.backend.game.GameSessionSupport.resolveCorrectIndexes;
+import static com.smartiq.backend.game.GameSessionSupport.resolveWinCondition;
+import static com.smartiq.backend.game.GameSessionSupport.secureEquals;
+import static com.smartiq.backend.game.GameSessionSupport.validateGameId;
+import static com.smartiq.backend.game.GameSessionSupport.zeroScores;
 
 @Service
 public class GameSessionService {
@@ -41,9 +61,6 @@ public class GameSessionService {
     private static final int DEFAULT_WIN_CONDITION = 30;
     private static final int BOARD_ANSWER_COUNT = 8;
     private static final int MAX_CARD_FETCH_ATTEMPTS = 24;
-    private static final int MIN_PLAYERS = 1;
-    private static final int MAX_PLAYERS = RuntimeLimits.MAX_PLAYERS_PER_ROOM;
-    private static final String DEFAULT_LANGUAGE = "en";
     private static final String PHASE_QUESTION_ACTIVE = "QUESTION_ACTIVE";
     private static final String PHASE_ROUND_SUCCESS = "ROUND_SUCCESS";
     private static final String PHASE_ROUND_FAIL = "ROUND_FAIL";
@@ -61,27 +78,19 @@ public class GameSessionService {
     private static final String METRIC_ROUND_DURATION = "smartiq.game.round.duration.seconds";
     private static final String METRIC_SESSION_EVICTED = "smartiq.game.session.evicted.total";
     private static final int ACTION_REQUEST_HISTORY_LIMIT = 512;
-    private static final int MAX_GAME_ID_LENGTH = 128;
     private static final int MAX_PLAYER_ID_LENGTH = 64;
     private static final int MAX_ACTION_TOKEN_LENGTH = 128;
-    private static final int MAX_ACTION_REQUEST_ID_LENGTH = 128;
-    private static final int MAX_TOPIC_LENGTH = 128;
-    private static final Pattern ACTOR_PLAYER_ID_PATTERN = Pattern.compile("^p[1-9][0-9]*$");
-    private static final Pattern ACTION_TOKEN_PATTERN = Pattern.compile("^at_[a-f0-9]{32}$");
-    private static final Pattern ACTION_REQUEST_ID_PATTERN = Pattern.compile("^[A-Za-z0-9_-]+$");
-    private static final Set<String> SUPPORTED_LANGUAGES = Set.of("en", "et");
-    private static final int MAX_PLAYER_DISPLAY_NAME_LENGTH = 64;
     private static final int DEFAULT_SESSION_RETENTION_MINUTES = 180;
     private static final int DEFAULT_SESSION_MAX = 50000;
 
     private final CardService cardService;
     private final MeterRegistry meterRegistry;
     private final GameSessionStore gameSessionStore;
-    private final ObjectMapper objectMapper;
+    private final GameSessionStateCodec gameSessionStateCodec;
     private final Clock clock;
     private final long sessionRetentionMillis;
     private final int sessionMax;
-    private final ConcurrentMap<String, SessionState> sessions = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, GameSessionState> sessions = new ConcurrentHashMap<>();
 
     @Autowired
     public GameSessionService(CardService cardService,
@@ -101,7 +110,7 @@ public class GameSessionService {
         this.cardService = cardService;
         this.meterRegistry = meterRegistry;
         this.gameSessionStore = gameSessionStore;
-        this.objectMapper = objectMapper;
+        this.gameSessionStateCodec = new GameSessionStateCodec(objectMapper);
         this.clock = clock;
         int retentionMinutes = gameSessionProperties == null
                 ? DEFAULT_SESSION_RETENTION_MINUTES
@@ -147,7 +156,7 @@ public class GameSessionService {
                                                                         String hostUserEmail) {
         evictExpiredSessions();
         evictOldestUntilCapacityAvailable();
-        SessionState state = createSession(request, tenantId, hostUserEmail);
+        GameSessionState state = createSession(request, tenantId, hostUserEmail);
         return new GameSessionCreateResponse(
                 toSnapshot(state),
                 Collections.unmodifiableMap(new LinkedHashMap<>(state.actionTokens))
@@ -160,7 +169,7 @@ public class GameSessionService {
 
     public synchronized CreateGameRequest buildDuplicateRequest(String gameId, UUID tenantIdContext) {
         evictExpiredSessions();
-        SessionState state = requireSession(gameId, tenantIdContext);
+        GameSessionState state = requireSession(gameId, tenantIdContext);
         List<String> players = state.players.stream()
                 .map(PlayerState::displayName)
                 .toList();
@@ -176,7 +185,7 @@ public class GameSessionService {
 
     public synchronized GameSessionCreateResponse getGameWithControl(String gameId, UUID tenantIdContext) {
         evictExpiredSessions();
-        SessionState state = requireSession(gameId, tenantIdContext);
+        GameSessionState state = requireSession(gameId, tenantIdContext);
         state.lastTouchedAtMillis = nowMillis();
         persistSession(state);
         return new GameSessionCreateResponse(
@@ -202,9 +211,9 @@ public class GameSessionService {
         return !resolveCorrectIndexes(card.correct() == null ? Map.of() : card.correct()).isEmpty();
     }
 
-    private SessionState createSession(CreateGameRequest request, UUID tenantId, String hostUserEmail) {
+    private GameSessionState createSession(CreateGameRequest request, UUID tenantId, String hostUserEmail) {
         List<String> displayNames = normalizePlayers(request == null ? null : request.players());
-        int winCondition = resolveWinCondition(request == null ? null : request.winCondition());
+        int winCondition = resolveWinCondition(request == null ? null : request.winCondition(), DEFAULT_WIN_CONDITION);
         String language = normalizeLanguage(request == null ? null : request.language());
         String topic = normalizeTopic(request == null ? null : request.topic());
         long nowMillis = nowMillis();
@@ -217,7 +226,7 @@ public class GameSessionService {
         Map<String, String> actionTokens = issueActionTokens(players);
         CardDeckResponse card = loadCherryPickCard(language, gameId, topic);
 
-        SessionState state = new SessionState(
+        GameSessionState state = new GameSessionState(
                 gameId,
                 tenantId,
                 normalizeOptionalHostUserEmail(hostUserEmail),
@@ -230,6 +239,7 @@ public class GameSessionService {
                 statuses,
                 actionTokens,
                 card,
+                hiddenPegs(BOARD_ANSWER_COUNT),
                 nowMillis
         );
         sessions.put(gameId, state);
@@ -244,7 +254,7 @@ public class GameSessionService {
 
     public synchronized GameSessionSnapshot getSnapshot(String gameId, UUID tenantIdContext) {
         evictExpiredSessions();
-        SessionState state = requireSession(gameId, tenantIdContext);
+        GameSessionState state = requireSession(gameId, tenantIdContext);
         state.lastTouchedAtMillis = nowMillis();
         persistSession(state);
         return toSnapshot(state);
@@ -257,7 +267,7 @@ public class GameSessionService {
     public synchronized GameSessionSnapshot applyAction(String gameId, GameActionRequest request, UUID tenantIdContext) {
         try {
             evictExpiredSessions();
-            SessionState state = requireSession(gameId, tenantIdContext);
+            GameSessionState state = requireSession(gameId, tenantIdContext);
             if (request == null) {
                 throw new IllegalArgumentException("action payload is required");
             }
@@ -290,7 +300,7 @@ public class GameSessionService {
         }
     }
 
-    private void applyAnswer(SessionState state, Integer tileIndex) {
+    private void applyAnswer(GameSessionState state, Integer tileIndex) {
         if (!PHASE_QUESTION_ACTIVE.equals(state.phase)) {
             throw new IllegalArgumentException("round is not accepting answers");
         }
@@ -333,7 +343,7 @@ public class GameSessionService {
         }
     }
 
-    private void applyAdvance(SessionState state) {
+    private void applyAdvance(GameSessionState state) {
         if (!PHASE_ROUND_SUCCESS.equals(state.phase) && !PHASE_ROUND_FAIL.equals(state.phase)) {
             throw new IllegalArgumentException("round is not ready to advance");
         }
@@ -341,7 +351,7 @@ public class GameSessionService {
         finishRound(state);
     }
 
-    private void finishRound(SessionState state) {
+    private void finishRound(GameSessionState state) {
         recordElapsed(METRIC_ROUND_DURATION, state.roundStartedAtMillis, "language", state.language);
         incrementCounter(METRIC_ROUND_COMPLETED, "language", state.language);
         String winnerId = resolveWinner(state);
@@ -356,7 +366,7 @@ public class GameSessionService {
         startNextRound(state);
     }
 
-    private void startNextRound(SessionState state) {
+    private void startNextRound(GameSessionState state) {
         state.roundNumber += 1;
         state.starterPlayerIndex = (state.starterPlayerIndex + 1) % state.players.size();
         state.activePlayerIndex = state.starterPlayerIndex;
@@ -369,7 +379,7 @@ public class GameSessionService {
         state.roundStartedAtMillis = nowMillis();
     }
 
-    private static void commitRoundScores(SessionState state) {
+    private static void commitRoundScores(GameSessionState state) {
         for (PlayerState player : state.players) {
             String playerId = player.playerId();
             int merged = state.totalScores.getOrDefault(playerId, 0) + state.roundScores.getOrDefault(playerId, 0);
@@ -377,19 +387,19 @@ public class GameSessionService {
         }
     }
 
-    private static void resetRoundScores(SessionState state) {
+    private static void resetRoundScores(GameSessionState state) {
         for (PlayerState player : state.players) {
             state.roundScores.put(player.playerId(), 0);
         }
     }
 
-    private static void resetStatuses(SessionState state) {
+    private static void resetStatuses(GameSessionState state) {
         for (PlayerState player : state.players) {
             state.statuses.put(player.playerId(), PlayerRoundStatus.ACTIVE);
         }
     }
 
-    private static boolean allCorrectAnswersRevealed(SessionState state) {
+    private static boolean allCorrectAnswersRevealed(GameSessionState state) {
         Set<Integer> correctIndexes = resolveCorrectIndexes(state.card.correct() == null ? Map.of() : state.card.correct());
         if (correctIndexes.isEmpty()) {
             throw new IllegalArgumentException("card is missing CherryPick-compatible correct answers");
@@ -405,7 +415,7 @@ public class GameSessionService {
         return true;
     }
 
-    private static String resolveWinner(SessionState state) {
+    private static String resolveWinner(GameSessionState state) {
         String winnerId = null;
         int bestScore = Integer.MIN_VALUE;
         for (PlayerState player : state.players) {
@@ -419,13 +429,13 @@ public class GameSessionService {
         return winnerId;
     }
 
-    private static void requireActivePlayer(SessionState state, String playerId) {
+    private static void requireActivePlayer(GameSessionState state, String playerId) {
         if (state.statuses.get(playerId) != PlayerRoundStatus.ACTIVE) {
             throw new IllegalArgumentException("current player is not active");
         }
     }
 
-    private static void requireActionActor(SessionState state, String actorPlayerId, String actionToken) {
+    private static void requireActionActor(GameSessionState state, String actorPlayerId, String actionToken) {
         String expectedToken = state.actionTokens.get(actorPlayerId);
         if (expectedToken == null) {
             throw new ForbiddenGameActionException("unknown action actor");
@@ -438,13 +448,13 @@ public class GameSessionService {
         }
     }
 
-    private static void requireUniqueActionRequestId(SessionState state, String actionRequestId) {
+    private static void requireUniqueActionRequestId(GameSessionState state, String actionRequestId) {
         if (state.processedActionRequestIds.contains(actionRequestId)) {
             throw new DuplicateGameActionException("duplicate actionRequestId");
         }
     }
 
-    private static void rememberActionRequestId(SessionState state, String actionRequestId) {
+    private static void rememberActionRequestId(GameSessionState state, String actionRequestId) {
         state.processedActionRequestIds.add(actionRequestId);
         while (state.processedActionRequestIds.size() > ACTION_REQUEST_HISTORY_LIMIT) {
             String oldest = state.processedActionRequestIds.iterator().next();
@@ -452,278 +462,14 @@ public class GameSessionService {
         }
     }
 
-    private static boolean isCorrect(CardDeckResponse card, int tileIndex) {
-        Map<String, Object> correct = card.correct() == null ? Map.of() : card.correct();
-        return resolveCorrectIndexes(correct).contains(tileIndex);
-    }
-
-    private static Set<Integer> resolveCorrectIndexes(Map<String, Object> correct) {
-        List<Integer> indexes = asIntegerList(correct.get("correctIndexes"));
-        if (!indexes.isEmpty()) {
-            return Set.copyOf(indexes);
-        }
-        Integer single = asInteger(correct.get("correctIndex"));
-        if (single != null) {
-            return Set.of(single);
-        }
-        return Set.of();
-    }
-
-    private static Integer asInteger(Object value) {
-        if (value instanceof Number number) {
-            return number.intValue();
-        }
-        if (value instanceof String text && !text.isBlank()) {
-            try {
-                return Integer.parseInt(text.trim());
-            } catch (NumberFormatException ignored) {
-                return null;
-            }
-        }
-        return null;
-    }
-
-    private static List<Integer> asIntegerList(Object value) {
-        if (!(value instanceof List<?> list)) {
-            return List.of();
-        }
-        List<Integer> parsed = new ArrayList<>();
-        for (Object entry : list) {
-            Integer parsedInt = asInteger(entry);
-            if (parsedInt != null) {
-                parsed.add(parsedInt);
-            }
-        }
-        return parsed;
-    }
-
-    private static List<PlayerState> buildPlayers(List<String> displayNames) {
-        List<PlayerState> players = new ArrayList<>();
-        for (int idx = 0; idx < displayNames.size(); idx += 1) {
-            players.add(new PlayerState("p" + (idx + 1), displayNames.get(idx)));
-        }
-        return players;
-    }
-
-    private static Map<String, Integer> zeroScores(List<PlayerState> players) {
-        Map<String, Integer> scores = new LinkedHashMap<>();
-        for (PlayerState player : players) {
-            scores.put(player.playerId(), 0);
-        }
-        return scores;
-    }
-
-    private static Map<String, PlayerRoundStatus> activeStatuses(List<PlayerState> players) {
-        Map<String, PlayerRoundStatus> statuses = new LinkedHashMap<>();
-        for (PlayerState player : players) {
-            statuses.put(player.playerId(), PlayerRoundStatus.ACTIVE);
-        }
-        return statuses;
-    }
-
-    private static Map<String, String> issueActionTokens(List<PlayerState> players) {
-        Map<String, String> tokens = new LinkedHashMap<>();
-        for (PlayerState player : players) {
-            tokens.put(player.playerId(), "at_" + UUID.randomUUID().toString().replace("-", ""));
-        }
-        return tokens;
-    }
-
-    private static List<PegState> hiddenPegs(int count) {
-        List<PegState> pegs = new ArrayList<>();
-        for (int idx = 0; idx < count; idx += 1) {
-            pegs.add(new PegState(idx, PEG_HIDDEN));
-        }
-        return pegs;
-    }
-
-    private static String normalizeActionType(String rawType) {
-        if (rawType == null || rawType.isBlank()) {
-            throw new IllegalArgumentException("type is required");
-        }
-        return rawType.trim().toUpperCase(Locale.ROOT);
-    }
-
-    private static List<String> normalizePlayers(List<String> rawPlayers) {
-        if (rawPlayers == null || rawPlayers.isEmpty()) {
-            return List.of("Player 1", "Player 2");
-        }
-
-        List<String> normalized = rawPlayers.stream()
-                .map(GameSessionService::normalizePlayerDisplayName)
-                .filter(value -> !value.isBlank())
-                .toList();
-
-        if (normalized.size() < MIN_PLAYERS || normalized.size() > MAX_PLAYERS) {
-            throw new IllegalArgumentException("players must be between " + MIN_PLAYERS + " and " + MAX_PLAYERS);
-        }
-
-        return normalized;
-    }
-
-    private static String normalizePlayerDisplayName(String rawName) {
-        String normalized = rawName == null ? "" : rawName.trim();
-        if (normalized.length() > MAX_PLAYER_DISPLAY_NAME_LENGTH) {
-            throw new IllegalArgumentException("player displayName is too long");
-        }
-        if (containsControlChars(normalized)) {
-            throw new IllegalArgumentException("player displayName contains control characters");
-        }
-        return normalized;
-    }
-
-    private static int resolveWinCondition(Integer requested) {
-        if (requested == null) {
-            return DEFAULT_WIN_CONDITION;
-        }
-        if (requested < 1) {
-            throw new IllegalArgumentException("winCondition must be >= 1");
-        }
-        return requested;
-    }
-
-    private static String normalizeLanguage(String language) {
-        if (language == null || language.isBlank()) {
-            return DEFAULT_LANGUAGE;
-        }
-        String normalized = language.trim().toLowerCase(Locale.ROOT);
-        if (!SUPPORTED_LANGUAGES.contains(normalized)) {
-            return DEFAULT_LANGUAGE;
-        }
-        return normalized;
-    }
-
-    private static String normalizeTopic(String topic) {
-        if (topic == null || topic.isBlank()) {
-            return null;
-        }
-        String normalized = topic.trim();
-        if (normalized.length() > MAX_TOPIC_LENGTH) {
-            throw new IllegalArgumentException("topic is too long");
-        }
-        if (containsControlChars(normalized)) {
-            throw new IllegalArgumentException("topic contains control characters");
-        }
-        return normalized;
-    }
-
-    private static String normalizeRequiredField(String value, String fieldName, int maxLength) {
-        if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException(fieldName + " is required");
-        }
-        String normalized = value.trim();
-        if (normalized.length() > maxLength) {
-            throw new IllegalArgumentException(fieldName + " is too long");
-        }
-        return normalized;
-    }
-
-    private static String normalizeActionRequestId(String value) {
-        String normalized = normalizeRequiredField(value, "actionRequestId", MAX_ACTION_REQUEST_ID_LENGTH);
-        if (!ACTION_REQUEST_ID_PATTERN.matcher(normalized).matches()) {
-            throw new IllegalArgumentException("actionRequestId format is invalid");
-        }
-        return normalized;
-    }
-
-    private static void requireActionTokenFormat(String actionToken) {
-        if (!ACTION_TOKEN_PATTERN.matcher(actionToken).matches()) {
-            throw new ForbiddenGameActionException("invalid action token");
-        }
-    }
-
-    private static void requireActorPlayerIdFormat(String actorPlayerId) {
-        if (!ACTOR_PLAYER_ID_PATTERN.matcher(actorPlayerId).matches()) {
-            throw new IllegalArgumentException("actorPlayerId format is invalid");
-        }
-        int actorNumber;
-        try {
-            actorNumber = Integer.parseInt(actorPlayerId.substring(1));
-        } catch (NumberFormatException ex) {
-            throw new IllegalArgumentException("actorPlayerId format is invalid");
-        }
-        if (actorNumber < 1 || actorNumber > MAX_PLAYERS) {
-            throw new IllegalArgumentException("actorPlayerId format is invalid");
-        }
-    }
-
-    private static boolean secureEquals(String expected, String provided) {
-        return MessageDigest.isEqual(
-                expected.getBytes(StandardCharsets.UTF_8),
-                provided.getBytes(StandardCharsets.UTF_8)
-        );
-    }
-
-    private static boolean containsControlChars(String value) {
-        return value.chars().anyMatch(ch -> Character.isISOControl((char) ch));
-    }
-
-    private static String classifyActionFailure(RuntimeException ex) {
-        if (ex instanceof DuplicateGameActionException) {
-            return "duplicate_action_request";
-        }
-        if (ex instanceof ForbiddenGameActionException) {
-            String message = normalizeMessage(ex);
-            if (message.contains("invalid action token")) {
-                return "invalid_action_token";
-            }
-            if (message.contains("unknown action actor")) {
-                return "unknown_action_actor";
-            }
-            if (message.contains("actor is not active player")) {
-                return "actor_not_active";
-            }
-            return "forbidden_action";
-        }
-        if (ex instanceof NoSuchElementException) {
-            String message = normalizeMessage(ex);
-            if (message.contains("game not found")) {
-                return "game_not_found";
-            }
-            return "not_found";
-        }
-        if (ex instanceof IllegalArgumentException) {
-            String message = normalizeMessage(ex);
-            if (message.contains("action payload is required")) {
-                return "invalid_payload";
-            }
-            if (message.contains("actorplayerid")) {
-                return "invalid_actor_player_id";
-            }
-            if (message.contains("actionrequestid")) {
-                return "invalid_action_request_id";
-            }
-            if (message.contains("actiontoken")) {
-                return "invalid_action_token";
-            }
-            return "invalid_request";
-        }
-        return "internal_error";
-    }
-
-    private static String normalizeMessage(RuntimeException ex) {
-        if (ex.getMessage() == null) {
-            return "";
-        }
-        return ex.getMessage().trim().toLowerCase(Locale.ROOT);
-    }
-
-    private SessionState requireSession(String gameId, UUID tenantIdContext) {
-        if (gameId == null || gameId.isBlank()) {
-            throw new IllegalArgumentException("gameId is required");
-        }
+    private GameSessionState requireSession(String gameId, UUID tenantIdContext) {
+        validateGameId(gameId);
         String normalized = gameId.trim();
-        if (normalized.length() > MAX_GAME_ID_LENGTH) {
-            throw new IllegalArgumentException("gameId is too long");
-        }
-        if (containsControlChars(normalized)) {
-            throw new IllegalArgumentException("gameId contains control characters");
-        }
-        SessionState state = sessions.get(normalized);
+        GameSessionState state = sessions.get(normalized);
         if (state == null) {
-            SessionState stored = loadPersistedSession(normalized);
+            GameSessionState stored = loadPersistedSession(normalized);
             if (stored != null) {
-                SessionState existing = sessions.putIfAbsent(normalized, stored);
+                GameSessionState existing = sessions.putIfAbsent(normalized, stored);
                 state = existing == null ? stored : existing;
             }
         }
@@ -738,24 +484,6 @@ public class GameSessionService {
             throw new NoSuchElementException("game not found: " + normalized);
         }
         return state;
-    }
-
-    private static void assertTenantAccess(SessionState state, UUID tenantIdContext) {
-        if (tenantIdContext == null || state.tenantId == null) {
-            return;
-        }
-        if (!tenantIdContext.equals(state.tenantId)) {
-            throw new ForbiddenTenantAccessException("tenant does not have access to game session");
-        }
-    }
-
-    private static String playerNameById(SessionState state, String playerId) {
-        for (PlayerState player : state.players) {
-            if (player.playerId().equals(playerId)) {
-                return player.displayName();
-            }
-        }
-        return playerId;
     }
 
     private void incrementCounter(String metricName, String... tags) {
@@ -782,22 +510,21 @@ public class GameSessionService {
         throw new IllegalStateException("failed to allocate gameId");
     }
 
-    private void persistSession(SessionState state) {
+    private void persistSession(GameSessionState state) {
         try {
-            gameSessionStore.write(state.gameId, objectMapper.writeValueAsString(toStoredSessionState(state)));
+            gameSessionStore.write(state.gameId, gameSessionStateCodec.serialize(state));
         } catch (Exception ex) {
             throw new IllegalStateException("failed to persist game session", ex);
         }
     }
 
-    private SessionState loadPersistedSession(String gameId) {
+    private GameSessionState loadPersistedSession(String gameId) {
         String payload = gameSessionStore.read(gameId);
         if (payload == null || payload.isBlank()) {
             return null;
         }
         try {
-            StoredGameSessionState stored = objectMapper.readValue(payload, StoredGameSessionState.class);
-            return fromStoredSessionState(gameId, stored, nowMillis());
+            return gameSessionStateCodec.deserialize(gameId, payload, nowMillis());
         } catch (Exception ignored) {
             gameSessionStore.delete(gameId);
             return null;
@@ -806,9 +533,9 @@ public class GameSessionService {
 
     private void evictExpiredSessions() {
         long nowMillis = nowMillis();
-        for (Map.Entry<String, SessionState> entry : sessions.entrySet()) {
+        for (Map.Entry<String, GameSessionState> entry : sessions.entrySet()) {
             String gameId = entry.getKey();
-            SessionState state = entry.getValue();
+            GameSessionState state = entry.getValue();
             if (state == null || !isExpired(state, nowMillis)) {
                 continue;
             }
@@ -821,7 +548,7 @@ public class GameSessionService {
 
     private void evictOldestUntilCapacityAvailable() {
         while (sessions.size() >= sessionMax) {
-            Map.Entry<String, SessionState> oldest = sessions.entrySet().stream()
+            Map.Entry<String, GameSessionState> oldest = sessions.entrySet().stream()
                     .min(Comparator.comparingLong(entry -> entry.getValue().lastTouchedAtMillis))
                     .orElse(null);
             if (oldest == null) {
@@ -834,255 +561,11 @@ public class GameSessionService {
         }
     }
 
-    private boolean isExpired(SessionState state, long nowMillis) {
+    private boolean isExpired(GameSessionState state, long nowMillis) {
         return nowMillis - state.lastTouchedAtMillis >= sessionRetentionMillis;
     }
 
-    private static StoredGameSessionState toStoredSessionState(SessionState state) {
-        List<StoredPlayerState> players = state.players.stream()
-                .map(player -> new StoredPlayerState(player.playerId(), player.displayName()))
-                .toList();
-        List<StoredPegState> pegs = state.pegs.stream()
-                .map(peg -> new StoredPegState(peg.index(), peg.state()))
-                .toList();
-        return new StoredGameSessionState(
-                state.gameId,
-                state.tenantId,
-                state.hostUserEmail,
-                state.language,
-                state.topic,
-                state.winCondition,
-                players,
-                new LinkedHashMap<>(state.totalScores),
-                new LinkedHashMap<>(state.roundScores),
-                new LinkedHashMap<>(state.statuses),
-                new LinkedHashMap<>(state.actionTokens),
-                new ArrayList<>(state.processedActionRequestIds),
-                state.roundNumber,
-                state.starterPlayerIndex,
-                state.activePlayerIndex,
-                state.phase,
-                state.lastAction,
-                state.card,
-                pegs,
-                state.gameStartedAtMillis,
-                state.roundStartedAtMillis,
-                state.lastTouchedAtMillis
-        );
-    }
-
-    private static SessionState fromStoredSessionState(String gameId, StoredGameSessionState stored, long nowMillis) {
-        if (stored == null || stored.players() == null || stored.players().isEmpty()) {
-            throw new IllegalArgumentException("stored session is missing players");
-        }
-        if (stored.card() == null || stored.card().options() == null || stored.card().options().isEmpty()) {
-            throw new IllegalArgumentException("stored session is missing card data");
-        }
-
-        List<PlayerState> players = new ArrayList<>();
-        for (StoredPlayerState storedPlayer : stored.players()) {
-            if (storedPlayer == null || storedPlayer.playerId() == null || storedPlayer.playerId().isBlank()) {
-                continue;
-            }
-            String displayName = storedPlayer.displayName() == null ? "" : storedPlayer.displayName();
-            players.add(new PlayerState(storedPlayer.playerId(), displayName));
-        }
-        if (players.isEmpty()) {
-            throw new IllegalArgumentException("stored session has no valid players");
-        }
-
-        String language = normalizeLanguage(stored.language());
-        String topic = normalizeTopic(stored.topic());
-        int winCondition = stored.winCondition() == null || stored.winCondition() < 1
-                ? DEFAULT_WIN_CONDITION
-                : stored.winCondition();
-        Map<String, Integer> totalScores = normalizeStoredScores(stored.totalScores(), players);
-        Map<String, Integer> roundScores = normalizeStoredScores(stored.roundScores(), players);
-        Map<String, PlayerRoundStatus> statuses = normalizeStoredStatuses(stored.statuses(), players);
-        Map<String, String> actionTokens = normalizeStoredTokens(stored.actionTokens(), players);
-        LinkedHashSet<String> processedActionRequestIds = normalizeProcessedActionRequestIds(stored.processedActionRequestIds());
-        int roundNumber = stored.roundNumber() == null || stored.roundNumber() < 1 ? 1 : stored.roundNumber();
-        int starterPlayerIndex = normalizeStoredIndex(stored.starterPlayerIndex(), players.size(), 0);
-        int activePlayerIndex = normalizeStoredIndex(stored.activePlayerIndex(), players.size(), starterPlayerIndex);
-        String phase = normalizeStoredPhase(stored.phase());
-        String lastAction = normalizeStoredLastAction(stored.lastAction());
-        List<PegState> pegs = normalizeStoredPegs(stored.pegs(), stored.card().options().size());
-        long gameStartedAtMillis = normalizeStoredTimestamp(stored.gameStartedAtMillis(), nowMillis);
-        long roundStartedAtMillis = normalizeStoredTimestamp(stored.roundStartedAtMillis(), nowMillis);
-        long lastTouchedAtMillis = normalizeStoredTimestamp(stored.lastTouchedAtMillis(), nowMillis);
-
-        return new SessionState(
-                gameId,
-                stored.tenantId(),
-                normalizeOptionalHostUserEmail(stored.hostUserEmail()),
-                language,
-                topic,
-                winCondition,
-                players,
-                totalScores,
-                roundScores,
-                statuses,
-                actionTokens,
-                processedActionRequestIds,
-                roundNumber,
-                starterPlayerIndex,
-                activePlayerIndex,
-                phase,
-                lastAction,
-                stored.card(),
-                pegs,
-                gameStartedAtMillis,
-                roundStartedAtMillis,
-                lastTouchedAtMillis
-        );
-    }
-
-    private static Map<String, Integer> normalizeStoredScores(Map<String, Integer> source, List<PlayerState> players) {
-        Map<String, Integer> scores = new LinkedHashMap<>();
-        for (PlayerState player : players) {
-            Integer score = source == null ? null : source.get(player.playerId());
-            scores.put(player.playerId(), score == null ? 0 : Math.max(0, score));
-        }
-        return scores;
-    }
-
-    private static Map<String, PlayerRoundStatus> normalizeStoredStatuses(Map<String, PlayerRoundStatus> source,
-                                                                           List<PlayerState> players) {
-        Map<String, PlayerRoundStatus> statuses = new LinkedHashMap<>();
-        for (PlayerState player : players) {
-            PlayerRoundStatus status = source == null ? null : source.get(player.playerId());
-            statuses.put(player.playerId(), status == null ? PlayerRoundStatus.ACTIVE : status);
-        }
-        return statuses;
-    }
-
-    private static Map<String, String> normalizeStoredTokens(Map<String, String> source, List<PlayerState> players) {
-        if (source == null) {
-            throw new IllegalArgumentException("stored session is missing action tokens");
-        }
-        Map<String, String> tokens = new LinkedHashMap<>();
-        for (PlayerState player : players) {
-            String token = source.get(player.playerId());
-            if (token == null || token.isBlank()) {
-                throw new IllegalArgumentException("stored session is missing action token");
-            }
-            if (!ACTION_TOKEN_PATTERN.matcher(token).matches()) {
-                throw new IllegalArgumentException("stored session has invalid action token");
-            }
-            tokens.put(player.playerId(), token);
-        }
-        return tokens;
-    }
-
-    private static LinkedHashSet<String> normalizeProcessedActionRequestIds(List<String> source) {
-        LinkedHashSet<String> actionRequestIds = new LinkedHashSet<>();
-        if (source == null) {
-            return actionRequestIds;
-        }
-        for (String candidate : source) {
-            if (candidate == null || candidate.isBlank()) {
-                continue;
-            }
-            String normalized = candidate.trim();
-            if (normalized.length() > MAX_ACTION_REQUEST_ID_LENGTH) {
-                continue;
-            }
-            if (!ACTION_REQUEST_ID_PATTERN.matcher(normalized).matches()) {
-                continue;
-            }
-            actionRequestIds.add(normalized);
-            while (actionRequestIds.size() > ACTION_REQUEST_HISTORY_LIMIT) {
-                String oldest = actionRequestIds.iterator().next();
-                actionRequestIds.remove(oldest);
-            }
-        }
-        return actionRequestIds;
-    }
-
-    private static List<PegState> normalizeStoredPegs(List<StoredPegState> source, int expectedCount) {
-        List<PegState> pegs = hiddenPegs(expectedCount);
-        if (source == null || source.isEmpty()) {
-            return pegs;
-        }
-        for (StoredPegState storedPeg : source) {
-            if (storedPeg == null || storedPeg.index() == null) {
-                continue;
-            }
-            int index = storedPeg.index();
-            if (index < 0 || index >= expectedCount) {
-                continue;
-            }
-            pegs.set(index, new PegState(index, normalizeStoredPegState(storedPeg.state())));
-        }
-        return pegs;
-    }
-
-    private static String normalizeStoredPegState(String state) {
-        if (state == null || state.isBlank()) {
-            return PEG_HIDDEN;
-        }
-        String normalized = state.trim().toLowerCase(Locale.ROOT);
-        if (PEG_REVEALED.equals(normalized)) {
-            return PEG_REVEALED;
-        }
-        if (PEG_WRONG.equals(normalized)) {
-            return PEG_WRONG;
-        }
-        return PEG_HIDDEN;
-    }
-
-    private static int normalizeStoredIndex(Integer candidate, int size, int fallback) {
-        if (candidate == null || size <= 0) {
-            return fallback;
-        }
-        if (candidate < 0 || candidate >= size) {
-            return fallback;
-        }
-        return candidate;
-    }
-
-    private static String normalizeStoredPhase(String phase) {
-        if (phase == null || phase.isBlank()) {
-            return PHASE_QUESTION_ACTIVE;
-        }
-        String normalized = phase.trim().toUpperCase(Locale.ROOT);
-        if ("CHOOSING".equals(normalized)) {
-            return PHASE_QUESTION_ACTIVE;
-        }
-        if (PHASE_QUESTION_ACTIVE.equals(normalized)
-                || PHASE_ROUND_SUCCESS.equals(normalized)
-                || PHASE_ROUND_FAIL.equals(normalized)) {
-            return normalized;
-        }
-        if (PHASE_GAME_OVER.equals(normalized)) {
-            return PHASE_GAME_OVER;
-        }
-        return PHASE_QUESTION_ACTIVE;
-    }
-
-    private static String normalizeStoredLastAction(String lastAction) {
-        if (lastAction == null || lastAction.isBlank()) {
-            return "Game resumed";
-        }
-        return lastAction;
-    }
-
-    private static long normalizeStoredTimestamp(Long candidate, long fallback) {
-        if (candidate == null || candidate <= 0L) {
-            return fallback;
-        }
-        return candidate;
-    }
-
-    private static String normalizeOptionalHostUserEmail(String hostUserEmail) {
-        if (hostUserEmail == null) {
-            return null;
-        }
-        String normalized = hostUserEmail.trim().toLowerCase(Locale.ROOT);
-        return normalized.isEmpty() ? null : normalized;
-    }
-
-    private static GameSessionSnapshot toSnapshot(SessionState state) {
+    private static GameSessionSnapshot toSnapshot(GameSessionState state) {
         List<PlayerSnapshot> players = state.players.stream()
                 .map(player -> new PlayerSnapshot(player.playerId(), player.displayName()))
                 .toList();
@@ -1127,159 +610,4 @@ public class GameSessionService {
         );
     }
 
-    private static final class SessionState {
-        private final String gameId;
-        private final UUID tenantId;
-        private final String hostUserEmail;
-        private final String language;
-        private final String topic;
-        private final int winCondition;
-        private final List<PlayerState> players;
-        private final Map<String, Integer> totalScores;
-        private final Map<String, Integer> roundScores;
-        private final Map<String, PlayerRoundStatus> statuses;
-        private final Map<String, String> actionTokens;
-        private final LinkedHashSet<String> processedActionRequestIds;
-        private int roundNumber;
-        private int starterPlayerIndex;
-        private int activePlayerIndex;
-        private String phase;
-        private String lastAction;
-        private CardDeckResponse card;
-        private List<PegState> pegs;
-        private final long gameStartedAtMillis;
-        private long roundStartedAtMillis;
-        private long lastTouchedAtMillis;
-
-        private SessionState(String gameId,
-                             UUID tenantId,
-                             String hostUserEmail,
-                             String language,
-                             String topic,
-                             int winCondition,
-                             List<PlayerState> players,
-                             Map<String, Integer> totalScores,
-                             Map<String, Integer> roundScores,
-                             Map<String, PlayerRoundStatus> statuses,
-                             Map<String, String> actionTokens,
-                             CardDeckResponse card,
-                             long nowMillis) {
-            this(
-                    gameId,
-                    tenantId,
-                    hostUserEmail,
-                    language,
-                    topic,
-                    winCondition,
-                    players,
-                    totalScores,
-                    roundScores,
-                    statuses,
-                    actionTokens,
-                    new LinkedHashSet<>(),
-                    1,
-                    0,
-                    0,
-                    PHASE_QUESTION_ACTIVE,
-                    "Game started",
-                    card,
-                    hiddenPegs(BOARD_ANSWER_COUNT),
-                    nowMillis,
-                    nowMillis,
-                    nowMillis
-            );
-        }
-
-        private SessionState(String gameId,
-                             UUID tenantId,
-                             String hostUserEmail,
-                             String language,
-                             String topic,
-                             int winCondition,
-                             List<PlayerState> players,
-                             Map<String, Integer> totalScores,
-                             Map<String, Integer> roundScores,
-                             Map<String, PlayerRoundStatus> statuses,
-                             Map<String, String> actionTokens,
-                             LinkedHashSet<String> processedActionRequestIds,
-                             int roundNumber,
-                             int starterPlayerIndex,
-                             int activePlayerIndex,
-                             String phase,
-                             String lastAction,
-                             CardDeckResponse card,
-                             List<PegState> pegs,
-                             long gameStartedAtMillis,
-                             long roundStartedAtMillis,
-                             long lastTouchedAtMillis) {
-            this.gameId = gameId;
-            this.tenantId = tenantId;
-            this.hostUserEmail = hostUserEmail;
-            this.language = language;
-            this.topic = topic;
-            this.winCondition = winCondition;
-            this.players = players;
-            this.totalScores = totalScores;
-            this.roundScores = roundScores;
-            this.statuses = statuses;
-            this.actionTokens = actionTokens;
-            this.processedActionRequestIds = processedActionRequestIds;
-            this.roundNumber = roundNumber;
-            this.starterPlayerIndex = starterPlayerIndex;
-            this.activePlayerIndex = activePlayerIndex;
-            this.phase = phase;
-            this.lastAction = lastAction;
-            this.card = card;
-            this.pegs = pegs;
-            this.gameStartedAtMillis = gameStartedAtMillis;
-            this.roundStartedAtMillis = roundStartedAtMillis;
-            this.lastTouchedAtMillis = lastTouchedAtMillis;
-        }
-
-        private String currentPlayerId() {
-            return players.get(activePlayerIndex).playerId();
-        }
-
-        private String currentPlayerName() {
-            return players.get(activePlayerIndex).displayName();
-        }
-    }
-
-    private record PlayerState(String playerId, String displayName) {
-    }
-
-    private record PegState(int index, String state) {
-    }
-
-    private record StoredGameSessionState(
-            String gameId,
-            UUID tenantId,
-            String hostUserEmail,
-            String language,
-            String topic,
-            Integer winCondition,
-            List<StoredPlayerState> players,
-            Map<String, Integer> totalScores,
-            Map<String, Integer> roundScores,
-            Map<String, PlayerRoundStatus> statuses,
-            Map<String, String> actionTokens,
-            List<String> processedActionRequestIds,
-            Integer roundNumber,
-            Integer starterPlayerIndex,
-            Integer activePlayerIndex,
-            String phase,
-            String lastAction,
-            CardDeckResponse card,
-            List<StoredPegState> pegs,
-            Long gameStartedAtMillis,
-            Long roundStartedAtMillis,
-            Long lastTouchedAtMillis
-    ) {
-    }
-
-    private record StoredPlayerState(String playerId, String displayName) {
-    }
-
-    private record StoredPegState(Integer index, String state) {
-    }
 }

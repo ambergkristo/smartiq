@@ -15,6 +15,7 @@ vi.mock('./api', () => ({
   fetchTenantAuditEvents: vi.fn(),
   fetchTopics: vi.fn(),
   fetchNextCard: vi.fn(),
+  fetchRemotePlayerProfile: vi.fn(() => Promise.resolve(null)),
   fetchServerGameSession: vi.fn(),
   resumeServerGameSession: vi.fn(),
   fetchTenantRuntimeSnapshot: vi.fn(),
@@ -27,6 +28,7 @@ vi.mock('./api', () => ({
   rejoinRoomSession: vi.fn(),
   requestRuntimeAuthLink: vi.fn(),
   setRuntimeAuthContext: vi.fn(),
+  upsertRemotePlayerProfile: vi.fn(() => Promise.resolve({})),
   upsertRuntimeSessionReviewNote: vi.fn(),
   upsertRuntimeSessionTemplate: vi.fn(),
   updateRuntimeTenantBranding: vi.fn(),
@@ -421,7 +423,7 @@ describe('App tenant runtime integration', () => {
 
     await waitFor(() => expect(duplicateServerGameSession).toHaveBeenCalledWith('game-99'));
     await waitFor(() => expect(screen.getByText(/duplicate question/i)).toBeInTheDocument());
-    expect(screen.getByRole('button', { name: /^answer$/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^answer-1 available$/i })).toBeInTheDocument();
   });
 
   test('resumes live hosted session from recent host history', async () => {
@@ -481,7 +483,7 @@ describe('App tenant runtime integration', () => {
 
     await waitFor(() => expect(resumeServerGameSession).toHaveBeenCalledWith('game-resume'));
     await waitFor(() => expect(screen.getByText(/resume question/i)).toBeInTheDocument());
-    expect(screen.getByRole('button', { name: /^answer$/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^answer-1 available$/i })).toBeInTheDocument();
   });
 
   test('reviews recent hosted session state from host history', async () => {
