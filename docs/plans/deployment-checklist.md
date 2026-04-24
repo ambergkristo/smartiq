@@ -113,21 +113,26 @@ Expected:
 - HTTP `200` or `204`
 - `Access-Control-Allow-Origin` matches deployed frontend origin
 
-4.3 WebSocket handshake success
+4.3 Solo session create and fetch
 
-1. Create room:
+1. Create solo session:
    ```bash
-   curl -s -X POST "https://<backend-domain>/api/rooms" \
+   curl -s -X POST "https://<backend-domain>/api/game" \
      -H "Content-Type: application/json" \
-     -d "{\"displayName\":\"Host\"}"
+     -d "{\"players\":[\"Smoke Runner\"],\"language\":\"en\",\"topic\":\"Math\",\"winCondition\":30}"
    ```
-2. Use returned `roomCode`, `playerId`, and `authToken` to open websocket:
+2. Confirm response includes:
+   - `snapshot.gameId`
+   - `snapshot.roundState.phase`
+   - `actionTokens`
+3. Fetch the created game session:
    ```bash
-   npx wscat -c "wss://<backend-domain>/ws/rooms/<ROOM_CODE>?playerId=<PLAYER_ID>&authToken=<AUTH_TOKEN>"
+   curl -s "https://<backend-domain>/api/game/<GAME_ID>"
    ```
-3. Expect first server message with `type` = `ROOM_STATE`.
-4. Confirm metric increment:
-   - `smartiq.room.ws.connect.total{result="success"}`
+4. Expect:
+   - matching `gameId`
+   - non-empty `roundState.phase`
+   - non-empty `boardState.pegs`
 
 4.4 Dataset threshold gate
 
@@ -143,6 +148,14 @@ Expected:
 ```powershell
 $env:BACKEND_URL="https://<backend-domain>"; $env:FRONTEND_URL="https://<frontend-domain>"; npm run smoke:postdeploy
 ```
+
+Expected:
+
+- frontend serves HTML
+- `/api/topics` returns a launchable list
+- `/api/cards/nextRandom` serves a playable deck
+- `/api/game` creates a solo session
+- `/api/game/{gameId}` fetches the created session
 
 4.6 Ops protection smoke
 
@@ -163,7 +176,7 @@ Expected:
 
 Rollback immediately when any of these persist beyond 10 minutes:
 - `/health` not `UP`
-- websocket handshake failures exceed successes
+- solo session create/fetch failures stay elevated
 - `smartiq.game.action.rejected.total` spikes from baseline and blocks play
 - dataset threshold gate fails on startup
 

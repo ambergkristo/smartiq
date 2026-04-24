@@ -7,9 +7,12 @@ Use this checklist before calling the current CherryPick build production-ready.
 This checklist is for the narrow CherryPick launch path only:
 
 - language: `EN`
-- public flows: `PLAY`, `JOIN`, `HOST`
-- live mode: host-led room launch
+- public flow: `PLAY`
+- runtime: solo-first single-player launch
 - out of scope for this launch:
+  - public `JOIN`
+  - public `HOST`
+  - host-led live room launch
   - public `/admin`
   - tenant onboarding/auth/billing rollout
   - ET public rollout
@@ -42,12 +45,11 @@ Verify manually:
 
 1. Home renders and topics load.
 2. `PLAY` starts a solo round directly from home.
-3. Solo board renders with `8` answer tiles.
-4. `HOST` creates a room and shows a shareable room code.
-5. `JOIN` reaches the dedicated join flow and lands in the player lobby.
-6. Host launch starts the live board from the saved room roster.
-7. A live room no longer accepts new joins.
-8. No `PASS` action is shown anywhere in the CherryPick runtime.
+3. Topic select launches a filtered solo round.
+4. Solo board renders with `8` answer tiles.
+5. Result screen shows XP/profile progression and replay controls.
+6. Daily challenge returns home with updated daily/profile state.
+7. No `PASS` action is shown anywhere in the CherryPick runtime.
 
 ## 3. Backend smoke gate
 
@@ -62,6 +64,8 @@ The smoke test must validate:
 - `GET /health` -> `200`
 - `GET /api/topics` -> `200` + non-empty array
 - `GET /api/cards/nextRandom?language=en&gameId=smoke` -> `200` + card schema
+- `POST /api/game` -> `200` + solo session snapshot + action tokens
+- `GET /api/game/{gameId}` -> `200` + matching session snapshot
 
 ## 4. Optional ET rollout gate
 
@@ -108,9 +112,12 @@ Canonical workflow:
 
 - `.github/workflows/smoke-public.yml`
 
+The public smoke is only good when it proves the actual solo launch path, not just static frontend reachability.
+
 ## 6. Security gate
 
 - `/health`, `/version`, `/api/topics`, and `/api/cards/nextRandom` remain public.
+- `/api/game` and `/api/game/*` remain public for the solo runtime.
 - `/internal/*` requires the internal API key in `prod`.
 - `/actuator/prometheus` requires the internal API key in `prod`.
 - `/api/admin/*` is not part of the public CherryPick launch path.

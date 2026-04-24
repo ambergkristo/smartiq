@@ -356,6 +356,32 @@ describe('App startup resilience', () => {
     expect(screen.getByTestId('active-filter')).toHaveTextContent(/any topic \| en/i);
   });
 
+  test('topic selection supports radio semantics and arrow-key navigation', async () => {
+    fetchTopics.mockResolvedValue([
+      { topic: 'Math', count: 20 },
+      { topic: 'Science', count: 18 },
+      { topic: 'History', count: 16 }
+    ]);
+
+    render(<App />);
+
+    await openStartSelection();
+
+    const topicOptions = screen.getAllByRole('radio');
+    expect(topicOptions[0]).toHaveAttribute('aria-checked', 'true');
+    expect(topicOptions[1]).toHaveAttribute('tabindex', '-1');
+
+    topicOptions[0].focus();
+    fireEvent.keyDown(topicOptions[0], { key: 'ArrowRight' });
+
+    await waitFor(() => expect(screen.getByRole('radio', { name: /math/i })).toHaveAttribute('aria-checked', 'true'));
+
+    fireEvent.keyDown(screen.getByRole('radio', { name: /math/i }), { key: 'End' });
+
+    await waitFor(() => expect(screen.getByRole('radio', { name: /history/i })).toHaveAttribute('aria-checked', 'true'));
+    expect(screen.getByTestId('active-filter')).toHaveTextContent(/history \| en/i);
+  });
+
   test('persists audio controls state between renders', async () => {
     fetchTopics.mockResolvedValue([{ topic: 'Math', count: 20 }]);
 

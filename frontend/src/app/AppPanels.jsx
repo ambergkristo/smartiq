@@ -154,6 +154,15 @@ export function StartScreen({
   const overHostedPlayerCap = maxHostedPlayers != null && mergedPlayerCount > maxHostedPlayers;
   const canStart = (players.length > 0 || draftPlayers.length > 0) && !overHostedPlayerCap;
   const isHostedRuntime = Boolean(tenantId);
+  const topicOptions = [
+    { value: '', title: 'Random topic', detail: 'Fast pick - any deck' },
+    ...topics.map((topic) => ({
+      value: topic.topic,
+      title: topic.topic,
+      detail: `${topic.count} cards ready`
+    }))
+  ];
+  const selectedTopicIndex = Math.max(topicOptions.findIndex((option) => option.value === config.topic), 0);
   const headerKicker = isHostedRuntime ? 'Launch setup' : 'Topic select';
   const headerTitle = isHostedRuntime ? 'Prepare the next CherryPick session.' : 'Choose the board.';
   const headerCopy = isHostedRuntime
@@ -163,6 +172,30 @@ export function StartScreen({
   const rosterHint = isHostedRuntime
     ? STRINGS.addPlayerHint
     : 'Use one runner alias for the cleanest solo loop.';
+  const selectTopic = (topic) => setConfig((prev) => ({ ...prev, topic }));
+  const handleTopicTileKeyDown = (event, index) => {
+    let nextIndex = null;
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+      nextIndex = (index + 1) % topicOptions.length;
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      nextIndex = (index - 1 + topicOptions.length) % topicOptions.length;
+    } else if (event.key === 'Home') {
+      nextIndex = 0;
+    } else if (event.key === 'End') {
+      nextIndex = topicOptions.length - 1;
+    }
+
+    if (nextIndex == null) {
+      return;
+    }
+
+    event.preventDefault();
+    selectTopic(topicOptions[nextIndex].value);
+    const nextButton = event.currentTarget.parentElement?.querySelectorAll('[role="radio"]')?.[nextIndex];
+    if (typeof nextButton?.focus === 'function') {
+      window.requestAnimationFrame(() => nextButton.focus());
+    }
+  };
 
   return (
     <section className="setup-panel board-surface host-launch-panel" data-testid="host-launch-panel">
@@ -227,28 +260,25 @@ export function StartScreen({
             </section>
           ) : null}
 
-          <div className="topic-grid" role="radiogroup" aria-label="Topic options">
-            <button
-              type="button"
-              className={`topic-tile${config.topic === '' ? ' selected' : ''}`}
-              onClick={() => setConfig((prev) => ({ ...prev, topic: '' }))}
-              aria-pressed={config.topic === ''}
-            >
-              <span className="topic-title">Random topic</span>
-              <span className="topic-count">Fast pick - any deck</span>
-            </button>
-            {topics.map((topic) => {
-              const selected = config.topic === topic.topic;
+          <p id="topic-options-help" className="sr-only">
+            Use the arrow keys to move between topics. Press Enter or Space to keep the selected topic.
+          </p>
+          <div className="topic-grid" role="radiogroup" aria-label="Topic options" aria-describedby="topic-options-help">
+            {topicOptions.map((option, index) => {
+              const selected = selectedTopicIndex === index;
               return (
                 <button
-                  key={topic.topic}
+                  key={option.value || 'random-topic'}
                   type="button"
+                  role="radio"
                   className={`topic-tile${selected ? ' selected' : ''}`}
-                  onClick={() => setConfig((prev) => ({ ...prev, topic: topic.topic }))}
-                  aria-pressed={selected}
+                  onClick={() => selectTopic(option.value)}
+                  onKeyDown={(event) => handleTopicTileKeyDown(event, index)}
+                  aria-checked={selected}
+                  tabIndex={selected ? 0 : -1}
                 >
-                  <span className="topic-title">{topic.topic}</span>
-                  <span className="topic-count">{topic.count} cards ready</span>
+                  <span className="topic-title">{option.title}</span>
+                  <span className="topic-count">{option.detail}</span>
                 </button>
               );
             })}

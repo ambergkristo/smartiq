@@ -12,13 +12,13 @@ function assert(condition, message) {
   }
 }
 
-async function fetchWithTimeout(url) {
+async function fetchWithTimeout(url, init = {}) {
   let timeoutId = null;
   const timeoutPromise = new Promise((_, reject) => {
     timeoutId = setTimeout(() => reject(new Error(`Timeout while requesting ${url}`)), timeoutMs);
   });
   try {
-    const response = await Promise.race([fetch(url), timeoutPromise]);
+    const response = await Promise.race([fetch(url, init), timeoutPromise]);
     const text = await response.text();
     return {
       status: response.status,
@@ -77,6 +77,32 @@ async function findPlayableDeck(topicEntries) {
   throw new Error(`/api/cards/nextRandom expected 200 for at least one topic, last status ${lastStatus ?? 'unknown'}`);
 }
 
+async function createSoloGame(topic) {
+  const response = await fetchWithTimeout(`${backendUrl}/api/game`, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({
+      players: ['Smoke Runner'],
+      language: smokeLanguage,
+      topic,
+      winCondition: 30
+    })
+  });
+  assert(response.status === 200, `/api/game expected 200, got ${response.status}`);
+
+  const payload = parseJsonBody(response, '/api/game response must be JSON');
+  const snapshot = payload?.snapshot;
+  const gameId = String(snapshot?.gameId || '').trim();
+  assert(gameId, 'Game create response missing snapshot.gameId');
+  assert(snapshot?.apiVersion === '1' || snapshot?.apiVersion === 1, 'Game create response missing supported apiVersion');
+  assert(Array.isArray(snapshot?.players) && snapshot.players.length > 0, 'Game create response missing players');
+  assert(payload?.actionTokens && typeof payload.actionTokens === 'object', 'Game create response missing action tokens');
+
+  return { gameId, snapshot };
+}
+
 async function main() {
   assert(backendUrl, 'BACKEND_URL is required');
   assert(frontendUrl, 'FRONTEND_URL is required');
@@ -96,6 +122,14 @@ async function main() {
   assert(cardId, 'Card payload missing cardId/id');
   assert(Array.isArray(card?.options) && card.options.length === 10, 'Card payload must include 10 options');
 
+  const createdGame = await createSoloGame(resolvedTopic);
+  const gameSnapshot = await fetchWithTimeout(`${backendUrl}/api/game/${encodeURIComponent(createdGame.gameId)}`);
+  assert(gameSnapshot.status === 200, `/api/game/{gameId} expected 200, got ${gameSnapshot.status}`);
+  const liveSnapshot = parseJsonBody(gameSnapshot, '/api/game/{gameId} response must be JSON');
+  assert(String(liveSnapshot?.gameId || '') === createdGame.gameId, 'Fetched game session did not match created gameId');
+  assert(liveSnapshot?.roundState?.phase, 'Fetched game session missing roundState.phase');
+  assert(Array.isArray(liveSnapshot?.boardState?.pegs), 'Fetched game session missing boardState.pegs');
+
   const frontend = await fetchWithTimeout(frontendUrl);
   assert(frontend.status >= 200 && frontend.status < 400, `Frontend URL expected 2xx/3xx, got ${frontend.status}`);
   const contentType = (frontend.headers.get('content-type') || '').toLowerCase();
@@ -108,7 +142,9 @@ async function main() {
     smokeLanguage,
     smokeTopic: resolvedTopic,
     smokeGameId,
-    servedCardId: cardId
+    servedCardId: cardId,
+    createdGameId: createdGame.gameId,
+    createdGamePhase: createdGame.snapshot.roundState?.phase || null
   }, null, 2));
 }
 

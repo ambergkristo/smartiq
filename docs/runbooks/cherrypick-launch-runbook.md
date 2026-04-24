@@ -7,11 +7,14 @@ This runbook is the canonical operator flow for the current CherryPick productio
 This runbook applies to:
 
 - `EN` launch
-- public `PLAY`, `JOIN`, and `HOST`
-- host-led live room sessions
+- public `PLAY`
+- solo-first single-player runtime
 
 This runbook does not certify:
 
+- public `JOIN`
+- public `HOST`
+- host-led live room sessions
 - public `/admin`
 - tenant-runtime SaaS rollout
 - ET public launch
@@ -50,34 +53,42 @@ Canonical workflow:
 Do not call the deployment good until all of these are true:
 
 - frontend loads
-- backend smoke passes
+- backend solo smoke passes
 - `/version` returns the expected build identity
 - `/internal/pool-stats` is protected without key and reachable with key
 - `/actuator/prometheus` is protected without key and reachable with key
+
+The public smoke must prove the real solo path:
+
+- `/api/topics` returns launchable topics
+- `/api/cards/nextRandom` serves a playable deck
+- `/api/game` creates a solo session
+- `/api/game/{gameId}` returns the created session snapshot
 
 ## Pilot loop
 
 Use a narrow pilot first:
 
-- `3-5` real hosts
+- `5-10` real solo players
 - desktop + mobile browser mix
 - one named support owner monitoring the rollout window
 
 Capture during pilot:
 
-- room code
-- host device/browser
-- whether session launched successfully
-- whether room stayed resumable after refresh/reopen
-- whether any player was incorrectly allowed into a live room
+- runner alias
+- player device/browser
+- topic path used (`PLAY` direct or topic-select)
+- whether the solo session created and the board rendered cleanly
+- whether result -> back-home reflected updated daily/profile state
+- whether replay from result/home stayed stable after refresh/reopen
 
 ## Rollback procedure
 
 Trigger rollback when one of these persists beyond 10 minutes:
 
 - `/health` is not `UP`
-- room create/join/rejoin failure rate stays elevated
-- live host launch cannot start or resume broadly
+- solo session create/fetch failure rate stays elevated
+- solo result or back-home progression sync is broadly broken
 - post-deploy smoke fails and cannot be corrected quickly
 
 Rollback steps:
@@ -93,7 +104,7 @@ Rollback steps:
    - restored SHA
    - rollback timestamp
    - smoke command outputs
-   - affected host/session list if known
+   - affected player/session list if known
 
 ## References
 

@@ -54,7 +54,7 @@ export default function RoundSummary({
   const levelProgressXp = Math.max(profileXp - levelBaseXp, 0);
   const levelProgressPercent = Math.max(8, Math.min((levelProgressXp / 500) * 100, 100));
   const primaryAction = isDailyMode ? onRestart : winner ? onPlayAgain : onNextRound;
-  const primaryActionLabel = isDailyMode ? 'Back home' : 'Play next round';
+  const primaryActionLabel = isDailyMode ? 'Back home' : winner ? 'Play again' : 'Play next round';
 
   return (
     <section

@@ -73,8 +73,8 @@ sum by (reason) (rate(smartiq_game_action_rejected_total[5m]))
 
 Action by dominant reason:
 1. `invalid_action_token`, `unknown_action_actor`, `actor_not_active`:
-   - Check client reconnect path and stale token usage.
-   - Confirm websocket reconnect and `/api/rooms/{roomCode}/rejoin` behavior.
+   - Check stale solo-session state, duplicate tabs, or mixed frontend/backend build versions.
+   - Confirm a fresh `POST /api/game` creates a usable session and that old cached game IDs are not being resumed incorrectly.
 2. `duplicate_action_request`:
    - Check client idempotency/request-id behavior.
 3. `invalid_request`, `invalid_payload`:
@@ -120,40 +120,33 @@ Reject rate should normalize and active game completion should recover.
 3. Re-deploy last known good backend build.
 4. Keep import gate enabled; do not bypass with relaxed threshold in production without explicit incident approval.
 
-5. Outage reconnect and cleanup
+5. Solo session recovery and cleanup
 -------------------------------
 
 Goal:
-- Restore room/game continuity and remove stale state after outage.
+- Restore public solo-session continuity and remove stale state after outage.
 
-5.1 Reconnect flow
+5.1 Recovery flow
 
-1. Ensure clients reconnect and call room rejoin endpoint.
-2. `POST /api/rooms/{roomCode}/rejoin` now rotates `authToken` on success.
-   - Client must replace cached token with returned token before next reconnect attempt.
-3. On websocket close/error, `RoomWebSocketHandler` triggers `RoomWsGateway.unregister(session)` automatically.
-4. Confirm reconnect metrics recover:
+1. Ensure clients can refresh and start a fresh solo run through `POST /api/game`.
+2. Confirm `GET /api/topics` and `GET /api/cards/nextRandom` return cleanly before retrying the public launch.
+3. If cached clients are failing against an outdated build, push them toward a hard refresh and confirm `/version` matches the expected frontend/backend pair.
+4. Confirm session metrics recover:
    ```promql
-   sum(rate(smartiq_room_rejoin_total{result="success"}[5m]))
-   sum(rate(smartiq_room_ws_connect_total{result="success"}[5m]))
+   sum(rate(smartiq_game_session_started_total[5m]))
+   sum(rate(smartiq_game_session_completed_total[5m]))
    ```
 
 5.2 Cleanup rerun steps
 
 Cleanup is executed inside service flows. Trigger those flows intentionally after outage:
-1. Trigger room cleanup loops via room APIs:
-   ```bash
-   curl -s -X POST "https://<backend-domain>/api/rooms" \
-     -H "Content-Type: application/json" \
-     -d "{\"displayName\":\"ops-cleanup\"}" > /dev/null
-   ```
-2. Trigger game cleanup loops via game APIs:
+1. Trigger game cleanup loops via game APIs:
    ```bash
    curl -s -X POST "https://<backend-domain>/api/game" \
      -H "Content-Type: application/json" \
-     -d "{\"players\":[\"ops-a\",\"ops-b\"],\"language\":\"en\"}" > /dev/null
+     -d "{\"players\":[\"ops-runner\"],\"language\":\"en\"}" > /dev/null
    ```
-3. Trigger card history cleanup loop:
+2. Trigger card history cleanup loop:
    ```bash
    curl -s "https://<backend-domain>/api/cards/nextRandom?language=en&gameId=ops-cleanup" > /dev/null
    ```
@@ -161,7 +154,7 @@ Cleanup is executed inside service flows. Trigger those flows intentionally afte
 5.3 Validate post-outage stability
 
 1. `/health` remains `UP` for at least 15 minutes.
-2. Success metrics exceed failure metrics for room join/rejoin/websocket connect.
+2. Solo session starts and completions return toward baseline.
 3. `smartiq.game.action.rejected.total` and `smartiq.game.session.evicted.total` return to baseline.
 
 6. Escalation and rollback decision
@@ -169,7 +162,7 @@ Cleanup is executed inside service flows. Trigger those flows intentionally afte
 
 Escalate and prepare rollback when one or more conditions persist over 10 minutes:
 - `/health` flaps or stays down
-- websocket connect failures dominate successes
+- solo session create/fetch failures dominate successes
 - action reject spikes block gameplay
 - dataset threshold gate fails with production fail-on-threshold enabled
 

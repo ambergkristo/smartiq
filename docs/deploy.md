@@ -79,6 +79,14 @@ npm run smoke:postdeploy
 npm run smoke:ops
 ```
 
+The post-deploy smoke now verifies the narrow solo path directly:
+
+- frontend shell responds with HTML
+- `/api/topics` returns launchable topics
+- `/api/cards/nextRandom` serves a playable EN deck
+- `/api/game` creates a solo session
+- `/api/game/{gameId}` fetches the created session snapshot
+
 The ops smoke verifies:
 
 - `/version` returns build identity

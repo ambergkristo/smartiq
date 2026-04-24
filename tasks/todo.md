@@ -449,20 +449,43 @@
 
 ### Scope
 
-- [ ] Complete mobile, viewport, and accessibility polish for Home, Topic Select, Gameplay, and Result screens.
-- [ ] Harden production env/docs/runbooks around the actual single-player launch path.
-- [ ] Add final release QA coverage for narrow public launch, including post-deploy smoke and rollback clarity.
+- [x] Complete mobile, viewport, and accessibility polish for Home, Topic Select, Gameplay, and Result screens.
+- [x] Harden production env/docs/runbooks around the actual single-player launch path.
+- [x] Add final release QA coverage for narrow public launch, including post-deploy smoke and rollback clarity.
 - [ ] Run a soft-launch proof pass against the real product path and capture launch blockers explicitly.
 
 ### Exit Criteria
 
-- [ ] Core screens are stable and app-like across laptop and mobile breakpoints.
-- [ ] Launch runbook, deploy guide, and smoke workflow are green and aligned with current product truth.
+- [x] Core screens are stable and app-like across laptop and mobile breakpoints.
+- [x] Launch runbook, deploy guide, and smoke workflow are green and aligned with current product truth.
 - [ ] Remaining blockers are minor enough for a narrow public launch.
 
 ### Review
 
-- Execution Sprint D not started yet.
+- Sprint D launch-readiness implementation progressed on April 23, 2026:
+  - topic select now behaves like a real radio group with arrow-key navigation, checked-state semantics, and tighter mobile card behavior
+  - Home, Gameplay, and Result shells received responsive polish for narrow widths, including cleaner header stacking and full-width result actions
+  - post-deploy smoke now validates the actual solo launch contract by creating and fetching a live `/api/game` session instead of stopping at static HTML and deck reachability
+  - launch docs and runbooks are aligned to the current public truth: `PLAY` + EN solo-first launch, with `JOIN`, `HOST`, and hosted room flows explicitly out of scope
+- Sprint D soft-launch proof pass attempted on April 23, 2026 against the deployed public pair:
+  - frontend: `https://smartiq-nine.vercel.app`
+  - backend: `https://smartiq-63tk.onrender.com`
+- Live proof result: blocked, not complete.
+  - `curl` to `https://smartiq-63tk.onrender.com/health` timed out repeatedly, including a `120s` wake-up attempt
+  - `node tools/post-deploy-smoke.js` failed immediately on backend `/health` timeout for the same deployed backend
+  - `agent-browser` on the deployed frontend loaded the real production shell but did not reach Home or gameplay
+  - browser-observed user path:
+    - `Waking up backend...`
+    - `Retry 1 of 3`
+    - `Retry 2 of 3`
+    - final degraded state: `Backend unavailable. Backend did not wake up after multiple attempts.`
+  - the frontend itself is deployed and serving HTML, but the current public solo launch path is blocked before topic load because the configured production backend is unreachable
+- Additional Sprint D blocker captured during the live pass:
+  - ops smoke could not be completed from this environment because `SMARTIQ_INTERNAL_API_KEY` was not available locally, so protected endpoint verification remains pending even after backend recovery
+- Sprint D remains open until:
+  - the deployed backend responds to `/health`, `/api/topics`, and `/api/game`
+  - the deployed frontend reaches the real solo Home/runtime path instead of the backend warmup failure state
+  - post-deploy smoke and ops smoke are rerun successfully against the live deployment
 
 ## Current Order
 

@@ -48,25 +48,23 @@ Prometheus metrics include:
 
 For the current CherryPick launch, monitor these first:
 
-1. room creation/join/rejoin/websocket failures
+1. solo game-session create/completion drop-off
 2. game-session eviction spikes
 3. action rejection spikes
 4. dataset threshold failures
 
 Suggested PromQL:
 
-- room join failure rate:
-  - `sum(rate(smartiq_room_join_total{result="failure"}[15m])) / clamp_min(sum(rate(smartiq_room_join_total[15m])), 1e-9)`
-- room rejoin success rate:
-  - `sum(rate(smartiq_room_rejoin_total{result="success"}[15m])) / clamp_min(sum(rate(smartiq_room_rejoin_total[15m])), 1e-9)`
-- websocket failure rate:
-  - `sum(rate(smartiq_room_ws_connect_total{result="failure"}[15m])) / clamp_min(sum(rate(smartiq_room_ws_connect_total[15m])), 1e-9)`
 - game drop-off rate:
   - `(sum(rate(smartiq_game_session_started_total[1d])) - sum(rate(smartiq_game_session_completed_total[1d]))) / clamp_min(sum(rate(smartiq_game_session_started_total[1d])), 1e-9)`
+- game-session eviction rate:
+  - `sum(rate(smartiq_game_session_evicted_total[15m]))`
 - wrong-answer rate:
   - `sum(rate(smartiq_game_answer_total{outcome="wrong"}[1d])) / clamp_min(sum(rate(smartiq_game_answer_total[1d])), 1e-9)`
 - action rejection rate:
   - `sum(rate(smartiq_game_action_rejected_total[15m]))`
+- deck fallback DB hits:
+  - `sum(rate(smartiq_pool_fallback_db_hits[15m]))`
 
 ## Alerting posture
 
@@ -75,7 +73,7 @@ Validated alert rules in this repo still cover the older closed-beta KPI gate:
 - `ops/prometheus/smartiq-beta-kpi-alert-rules.yml`
 - `npm run validate:beta:alerts`
 
-For the current CherryPick launch, treat auth/billing/admin/tenant workflows as out of scope for the public game release. The production launch watchlist above is the authoritative gameplay/room reliability surface.
+For the current CherryPick launch, treat auth/billing/admin/tenant workflows as out of scope for the public game release. Room and websocket metrics stay useful for internal hosted-runtime checks, but the watchlist above is the authoritative public solo-launch surface.
 
 ## Deck event logs
 

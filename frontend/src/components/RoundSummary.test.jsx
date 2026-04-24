@@ -51,7 +51,7 @@ describe('RoundSummary', () => {
     expect(screen.getByTestId('round-summary-progress')).toHaveTextContent('9 / 11');
     expect(screen.getByTestId('summary-standings')).toHaveTextContent('Winner');
 
-    fireEvent.click(screen.getByRole('button', { name: /play next round/i }));
+    fireEvent.click(screen.getByRole('button', { name: /play again/i }));
     fireEvent.click(screen.getByRole('button', { name: /change topic/i }));
 
     expect(onPlayAgain).toHaveBeenCalledTimes(1);
